@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>phpLogCon Design Goals</title></head>
+	<body>
+		<h1>Design Goals</h1>
+		<p>phpLogCon&nbsp;enables the system administrator to quickly and easily review his 
+			central log repository. It provides views typically used on log data. It 
+			integrates with web resources for easy analysis of data found in the logs.</p>
+		<h2>Main Usage Points</h2>
+		<p>phpLogCon&nbsp;is primarily being used for</p>
+		<ul>
+			<li>
+			quick overview over current system activity
+			<li>
+				accessing the log data while not being able to access the admin workstation 
+				(e.g. being on the road or roaming through the enterprise)</li>
+		</ul>
+		<p>For in-depth analysis, we recommend using the MonitorWare Console. It provides 
+			advanced analysis capabilities not found inside phpLogCon.</p>
+		<h2>Portability</h2>
+		<p>phpLogCon&nbsp;is being implemented as a set of PHP scripts to ensure 
+			portability between different platforms. Target platforms for&nbsp;phpLogCon 
+			are:</p>
+		<ul>
+			<li>
+			Windows with IIS
+			<li>
+			Windows with Apache
+			<li>
+				Linux / *nix with Apache</li>
+		</ul>
+		<p>The standard set of database systems is supported, that is</p>
+		<ul>
+			<li>
+			Microsoft SQL Server (via ODBC)
+			<li>
+			Microsoft Jet (aka Access, via ODBC)
+			<li>
+				MySQL (via ODBC and via native classes)
+				<span style="BACKGROUND-COLOR: #ffff00">to be determined! Native 
+  mysql is recommended for the
+    best performance!</span></li>
+		</ul>
+		<p>Of course, other database systems can most likely be used with&nbsp;phpLogCon - 
+			we just can't guarantee that it will work (and we are also unable to reproduce 
+			any issues in our lab, thus the need for limitation).&nbsp;</p>
+		<p><small><a href="index.htm">[Doc Home]</a> <a href="http://www.monitorware.com">[MonitorWare 
+					Web Site]</a></small></p>
+		<p>Copyright &copy; 2003 by <a href="http://www.adiscon.com">Adiscon</a>. Initiated by <a href="mailto:rgerhards@adiscon.com">
+				Rainer Gerhards</a>. See <a href="license.htm">license</a> for details.</p>
+	</body>
+</html>

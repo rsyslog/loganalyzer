@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<title>phpLogCon - Using</title></head>
+	<body>
+		<h1>Using the Web Interface</h1>
+		<h2>General concepts</h2>
+		<h3>Overall Event Filter</h3>
+		<p>
+			All processing done by&nbsp;phpLogCon is relative to a user-selected filter. 
+			That is, only events that match the applicable filter condition will be show. 
+			In the initial release, the filter condition will be solely time-based. The 
+			default filter is "today". Other filters are "the last nn minutes", 
+			"the last nn hours", "today", "this week" and "from date ... to date ...". 
+      The filter can always be set by following a link on top 
+			of each web page.<h3>Page Layout</h3>
+		<p>Every page will follow a standard layout. It has three areas
+			<ul>
+				<li>
+				header
+				<li>
+				main work area
+				<li>
+					footer</li>
+			</ul>
+		<p>The <b>header</b> holds the top menu items and the current date and time. It 
+			also has quick links to:</p>
+		<ul>
+			<li>
+			MonitorWare's Event Repository
+			<li>
+			MonitorWare's Event Discussion Groups
+			<li>
+			a text box with buttons to search Google and Google Groups
+			<li>
+			... other things may come up during developmen ...
+			<li>
+				a short description of the current filter as well as a way to change it (in the 
+				initial release, a drop down list will do)</li>
+		</ul>
+		<p>When we have the notation of a user inside phpLogCon, this should probably come 
+			out of the user profile. Over time, we may also provide dynamic links based on 
+			what the user did last.</p>
+		<p>The <b>main work area </b>is the primary display/work space. Obviously its 
+			content is depending on the called function.</p>
+		<p>The <b>footer</b> holds some general information:</p>
+		<ul>
+			<li>
+				copyright notice, credits to authors &amp; links to license</li>
+		</ul>
+		<h2>Homepage</h2>
+		<p>The main work area of the home displays statistical information:
+			<ul>
+				<li>
+				number of syslog events
+				<li>
+				number of event log events
+				<li>
+					top 5 devices reporting</li>
+			</ul>
+		<p>Of course, all of this in respect to the current filter.</p>
+		<h2>Utility functions</h2>
+		<h3>Configuration Page</h3>
+		<p>The configuration page allows the user to specify settings important for the 
+			overall operation of phpLogCon. So far, it will allow to configure:
+			<UL>
+				<li>
+					connection string for the database (please note that passwords will be stored 
+					unencrypted as of now)
+					<span style="BACKGROUND-COLOR: #ffff00">Question:
+    any easy way to avoid this?&nbsp;</span></li></UL>
+		<p><small><a href="index.htm">[Doc Home]</a> <a href="http://www.monitorware.com">[MonitorWare 
+					Web Site]</a></small></p>
+		<p>Copyright &copy; 2003 by <a href="http://www.adiscon.com">Adiscon</a>. Initiated by <a href="mailto:rgerhards@adiscon.com">
+				Rainer Gerhards</a>. See <a href="license.htm">license</a> for details.</p>
+	</body>
+</html>

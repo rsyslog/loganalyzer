@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>phpLogCon - Developer notes</title></head>
+	<body>
+		<h1>Developer notes</h1>
+		<p>
+			phpLogCon is an open source project. Feel free to change what you want. Here 
+			you will find some hints and background knowledge about phpLogCon.</p>
+		<h2>Gernarel database connection functions</h2>
+		<p>The database function in phpLogCon are called similar to well-know commands from 
+			e.g. php mysql functions. All database functions beginn with "db_" and 
+			then a word that best describes the instruction. Sample: db_connect() - 
+			should open a connection to the database. This is according to mysql_connect(). 
+			So you know if you find db_fetch_array in phpLogCon for example, that this 
+			function should fetch a result row as an associative array, a numeric array, or 
+			both.</p>
+		<H2>ODBC functions</H2>
+		<P>phpLogCon support also database connection via ODBC. You can find the functions in 
+			db-drv\odbc.php. The most functions are in a very low basic level. The 
+			reason, a lot of the php ODBC functions don't work with all 
+			versions of php. Also the usability often depends on the ODBC driver.</P>
+    <p><b>Known Issues</b><br />At the moment you can only use ODBC for query Microsoft databases like MSSQL, 
+    Jet, ... A second database layer which can handle different sql formats should be implement in the future!</p>
+		<H2>Include files</H2>
+		<H2>include.php</H2>
+		<P>This file is very important. There, all other files to 
+			include are embedded (e. g. config files and so on). So if you 
+			include include.php you have always include automatically all genral "include 
+			files". Also you can find useful function in include.php. All functions 
+			which should reachable at the whole program, you find there (or there 
+			included).</P>
+		<P>Note: At each page of phpLogCon, include.php should be included!</P>
+		<P>&nbsp;</P>
+		<P><small><a href="index.htm">[Doc Home]</a> <a href="http://www.monitorware.com">[MonitorWare 
+					Web Site]</a></small></P>
+		<p>Copyright &copy; 2003 by <a href="http://www.adiscon.com">Adiscon</a>. Initiated by <a href="mailto:rgerhards@adiscon.com">
+				Rainer Gerhards</a>. See <a href="license.htm">license</a> for details.</p>
+	</body>
+</html>
