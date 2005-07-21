@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -91,7 +91,7 @@ it become a reality.
 	 */
 	function db_num_rows($res)
 	{
-		$result = mysql_num_rows($res) or db_die_with_error(_MSGNoRes);
+		$result = mysql_num_rows($res);
 		return $result;
 	}
 
@@ -103,7 +103,7 @@ it become a reality.
 	 */
 	function db_fetch_array($res)
 	{
-		$result = mysql_fetch_array($res);// or db_die_with_error(_MSGNoRes);
+		$result = mysql_fetch_array($res);
 		return $result;
 	}
 
@@ -113,7 +113,7 @@ it become a reality.
 	*/
 	function db_fetch_singleresult($result)
 	{
-		$result = mysql_fetch_array($result) or db_die_with_error(_MSGNoRes);
+		$result = mysql_fetch_array($result);
 		return $result;
 	}
 
@@ -146,15 +146,21 @@ it become a reality.
 	 * the array points to the first data record you want to display
 	 * at current page. You need it for paging.
 	 */
-	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage)
-	{   
+	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage, $order)
+	{
 		$cmdSQL = $cmdSQLfirst_part . $cmdSQLmain_part . $cmdSQLwhere_part . " limit ".($limitlower-1)."," . $perpage;
-    return db_exec($db, $cmdSQL);
+	    return db_exec($db, $cmdSQL);
 	}
 
 	function db_free_result($result)
 	{
 		return mysql_free_result($result);
+	}
+
+	function db_get_tables($dbCon, $dbName)
+	{
+		$query = "SHOW TABLES FROM " . $dbName;
+		return mysql_query($query);
 	}
 
 	function db_errno()

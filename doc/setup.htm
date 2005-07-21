@@ -1,34 +1,47 @@
 <html>
 	<head>
-		<title>phpLogCon - Setup</title></head>
+		<title>phpLogCon Manual :: phpLogCon Setup</title>
+		<META NAME="robots" CONTENT="INDEX,FOLLOW">
+		<META NAME="copyright" CONTENT="Copyright (C) 2003 Adiscon GmbH, Erftstadt - www.adiscon.com">
+		<META name="Keywords" content="<? echo $strKeywords ?> sql server win NT windows 7 2000 replication merge nt transactional date time resolver">
+		<META http-equiv="pragma" CONTENT="no-cache">
+		<link rel="stylesheet" href="../layout/phplogcon.css" type="text/css">
+	</head>
 	<body>
-		<h1>
-			phpLogCon&nbsp;Setup</h1>
+		<table align="center" width="100%" cellspacing="0" cellpadding="0" border="0" CLASS="EventTable">	
+			<tr>
+				<td width="220" align="left"><img src="../images/phplogcon.gif" border="0"></td>
+				<td align="left">
+    				<h1>phpLogCon monitoring</h1>
+				</td>
+			</tr>
+		</table>
+		
+		<p><small><a href="index.htm">[Doc Home]</a></small></p>
+		<h2><a name="top">3. phpLogCon Setup</a></h2>
 		<ul>
-			<li>
-			For Windows installations, a setup program is included. Please note that the 
-			product is also being installed by running either the WinSyslog or MonitorWare 
-			Agent Setup programs.
-			<li>
-			For other environments, there is a zip file containing the full project 
-			(including all pages and full documentation)
-			<li>
-				It is assumed that the MonitorWare database is already existing 
-				-&nbsp;phpLogCon will NOT create it</li>
+			<li><a href="#3_1">3.1 Configuration Settings</a></li>
 		</ul>
-		<p>If you intend to use phpLogCon with a non-MonitorWare generated database, you 
-			can easily do so. The key point is to make sure that the database contains all 
-			necessary data at the right locations. You might want to look up the 
-			MonitorWare schema to see what is needed. For syslog events, this should be 
-			fairly simple to acomplish as only a limited set of fields is to be provided. 
-			If you purchase our low-priced support contract, we will gladly assist you in 
-			getting this going ;). Currently, the link to the schema is missing. This is 
-			not by intention. If it is missing by the time you read us, contact <a href="mailto:support@adiscon.com">
-				support@adiscon.com</a>. The schema is of course provided freely, was just 
-			not at hand while writing this...</p>
-		<p><small><a href="index.htm">[Doc Home]</a> <a href="http://www.monitorware.com">[MonitorWare 
-					Web Site]</a></small></p>
-		<p>Copyright &copy; 2003 by <a href="http://www.adiscon.com">Adiscon</a>. Initiated by <a href="mailto:rgerhards@adiscon.com">
-				Rainer Gerhards</a>. See <a href="license.htm">license</a> for details.</p>
+		<br>
+		<p>For an installing that runs on every operating system, we created a 'install.php', that you will find in phpLogCon/install. You only have to point to install/install.php in your browser! The Installation-Assistant will guide you through the installation.</p>
+		<p>Note: Don't forget to delete whole 'install/' directory! Also remember, that the user who runs the web server (i.e. www-data) must have 'write'-rights (chmod 666) on the 'config.php'! Remove these rights after installing (chmod 644)!</p>
+		<h3><a name="3_1">3.1 Configuration Settings</a></h3>
+		<h4>Config.php</h4>
+		<p>The setup created a 'config.php' in the root directory. This file contains all info you have entered at the install process. Here you can alter the 'config.php' every time you want to your need.</p>
+		<h4>phplogcon.ini</h4>
+		<p>You will find a file named 'phplogcon.ini' in the root directory. Here you can set some external information. For now, there is only the 'wordsdontshow'-function available. Here you can enter some words, followed by a separator. These words will be hided in events display and details.</p>
+		<small><a href="#top">[Top]</a></small>
+		
+		<p><small><a href="index.htm">[Doc Home]</a>&nbsp;<a href="http://www.monitorware.com" target="_blank">[MonitorWare Web Site]</a></small></p>
+		<center>
+		<table>
+			<tr>
+				<td>
+					<br /><br />
+					<small><i><a href="http://www.phplogcon.com/" target="phplogcon">phpLogCon</a>, Copyright &copy; 2003 - 2004 <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a></i></small>
+				</td>
+			</tr>
+		</table>
+		</center>
 	</body>
 </html>

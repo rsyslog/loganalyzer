@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -95,8 +95,7 @@ it become a reality.
 	 */
 	function db_fetch_array($res)
 	{
-		odbc_fetch_into($res, $myarray);
-		return $myarray;
+		return odbc_fetch_array($res);
 	}
 
 	/*
@@ -136,7 +135,7 @@ it become a reality.
 	 * the array points to the first data record you want to display
 	 * at current page. You need it for paging.
 	 */
-	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage)
+	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage, $order)
 	{   
 		$cmdSQL = $cmdSQLfirst_part . $cmdSQLmain_part . $cmdSQLwhere_part . " limit ".($limitlower-1)."," . $perpage;
 		return db_exec($db, $cmdSQL);
@@ -145,6 +144,11 @@ it become a reality.
 	function db_free_result($result)
 	{
 		return odbc_free_result($result);
+	}
+
+	function db_get_tables($dbCon, $dbName)
+	{
+		return odbc_tables($dbCon);
 	}
 
 	function db_errno()

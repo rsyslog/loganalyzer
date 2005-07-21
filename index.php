@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### ####
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -33,6 +33,7 @@ it become a reality.
 			if ($_GET['do'] == 'logout')
 			{
 				setcookie("usr", "|", _COOKIE_EXPIRE, "/");
+				setcookie("usrdis", "|", _COOKIE_EXPIRE, "/");
 				setcookie("valid", "0", _COOKIE_EXPIRE, "/");
 				session_unset();
 				header("Location: index.php");
@@ -50,6 +51,8 @@ it become a reality.
 		{
 			WriteHead("phpLogCon :: Index", "", "", "phpLogCon");
 			echo "<br>";
+			CheckInstallDir();
+			echo "<br>";
 
 			echo '<font><b>', _MSG001, '.</b></font>';
 			echo '<form action="submit.php" method="POST">';
@@ -64,7 +67,9 @@ it become a reality.
 		{
 			// reload
 			session_register('usr');
+			session_register('usrdis');
 			$_SESSION['usr'] = $_COOKIE['usr'];
+			$_SESSION['usrdis'] = $_COOKIE['usrdis'];
 			LoadUserConfig();
 			header("Location: index.php");
 			exit;
@@ -77,9 +82,8 @@ it become a reality.
 		}
 	}
 
-	WriteHead("phpLogCon :: Index", "", "", "phpLogCon");
-	echo "<br>";
-
+	WriteStandardHeader('Index');
+	echo '<br>';
 	include _CLASSES . 'eventfilter.php';
 
 	//the splitted sql statement
@@ -90,7 +94,7 @@ it become a reality.
 
 	//define the last part of the sql statment, e.g. the where part, ordery by, etc.
 	$myFilter = New EventFilter;
-	$cmdSQLlast_part .= $myFilter->GetSQLWherePart(1);
+	$cmdSQLlast_part .= $myFilter->GetSQLWherePart(0);
 	$cmdSQLlast_part .= $myFilter->GetSQLSort();
 
 	$myEventsNavigation = new EventsNavigation(5);
@@ -101,18 +105,10 @@ it become a reality.
 	$num = $myEventsNavigation->GetEventCount();
 
 	if(_ENABLEUI)
-	{
-		echo '<table align="right">';
-		echo '<tr>';
-		echo '<td><a href="index.php?do=logout">' . _MSGLogout . '</a></td>';
-		echo '</tr>';
-		echo '</table>';
-		echo '..:: ',  _MSGLogSuc , ' ::..<br><br>';
-	}
-	if(_ENABLEUI)
-		echo _MSGWel . ", <font color=\"blue\">" . $_SESSION["usr"] . "</font>" . _MSGChoOpt;
+		echo _MSGWel . ", <font color=\"blue\">" . $_SESSION["usrdis"] . "</font>" . _MSGChoOpt;
 	else
 		echo  _MSGWel . _MSGChoOpt;
+	
 	$SQLcmdfirst_part = "SELECT DISTINCT ";
 	$SQLcmdmain_part = "(*) FROM "._DBTABLENAME;
 	$SQLcmdlast_part = " WHERE ";
@@ -127,10 +123,15 @@ it become a reality.
 	$row_er = db_fetch_array($result_er);
 	db_free_result($result_er);
 
+	if(strtolower(_DB_APP) == "mssql")
+		$rowIndex = 'num';
+	else
+		$rowIndex = 0;
+
 	echo "<br><br><b>" . _MSGQuiInf . "</b>:";
 	echo "<table border='0' cellspacing='0' class=\"EventTable\"><br>";
-	echo "<tr><td CLASS=TDHEADER>" . _MSGNumSLE . "</td><td CLASS=TD1>" . $row_sl[0] . "</td></tr>";
-	echo "<tr><td CLASS=TDHEADER>" . _MSGNumERE . "</td><td CLASS=TD2>" . $row_er[0] . "</td></tr>";
+	echo "<tr><td CLASS=TDHEADER>" . _MSGNumSLE . "</td><td CLASS=TD1>" . $row_sl['num'] . "</td></tr>";
+	echo "<tr><td CLASS=TDHEADER>" . _MSGNumERE . "</td><td CLASS=TD2>" . $row_er['num'] . "</td></tr>";
 	echo "</table>";
 	echo "<br><b>" . _MSGTop5 . ":</b><br><br>";
 	if($num == 0)
@@ -150,8 +151,8 @@ it become a reality.
 		echo "<td>" . _MSGMsg . "</td>";
 		echo "</tr>";
 
-		$res = db_exec_limit($global_Con, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLlast_part, 1, 5);
-
+		$res = db_exec_limit($global_Con, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLlast_part, 1, 5, $myFilter->OrderBy);
+		$i = 0;
 		while($row = db_fetch_array($res))
 		{
 			if (db_errno() != 0)
@@ -160,7 +161,7 @@ it become a reality.
 			}
 	
 			//choose InfoUnitdType  1 = SL = Syslog, 3 = Eventreport, O = Other
-			switch ($row[6]) 
+			switch ($row['InfoUnitID']) 
 			{
 			  case 1:
 				$infounit = "SL";
@@ -173,32 +174,25 @@ it become a reality.
 			}
 			static $tc = 1;
 			echo '<tr>';
-			echo '<td CLASS=TD', $tc, '><nobr>',$row[1],'</nobr></td>'; //date
-			echo '<td CLASS=TD', $tc, '>',$row[2],'</td>'; //facility
+			echo '<td CLASS=TD', $tc, '><nobr>',$row[_DATE],'</nobr></td>'; //date
+			echo '<td CLASS=TD', $tc, '>',$row['Facility'],'</td>'; //facility
 			
 			// get the description of priority (and get the the right color, if enabled)
 			$pricol = 'TD' . $tc;
-			$priword = FormatPriority($row[3], $pricol);
+			$priword = FormatPriority($row['Priority'], $pricol);
 			echo '<td CLASS=', $pricol, '>', $priword, '</td>'; 		
 			
 			echo "<td CLASS=TD" . $tc . ">".$infounit."</td>"; //InfoUnit
-			echo "<td CLASS=TD" . $tc . ">".$row[4]."</td>"; //host
-			$message = $row[5];
+			echo "<td CLASS=TD" . $tc . ">".$row['FromHost']."</td>"; //host
+			$message = $row['Message'];
 			$message = str_replace("<", "&lt;", $message);
 			$message = str_replace(">", "&gt;", $message);
 
-			echo '<td CLASS=TD', $tc, '><a CLASS="Msg" href="details.php?lid=', $row[0], '">', $message,  '</a></td>'; //message
+			echo '<td CLASS=TD', $tc, '><a CLASS="Msg" href="details.php?lid=', $row['ID'], '">', $message,  '</a></td>'; //message
 
 			//for changing colors
 			if($tc == 1) $tc = 2;
 			else $tc = 1;
-			/*
-			echo "<tr bgcolor=\"#ffffcc\"><td>".$row['ReceivedAt']."</td>";
-			echo "<td>".$row['Facility']."</td>";
-			echo "<td>".$row['Priority']."</td>";
-			echo "<td>".$row['FromHost']."</td>";
-			echo "<td>".$row['Message']."</td>";
-			*/
 			echo "</tr>";
 		}
 		echo "</table>";

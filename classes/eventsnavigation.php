@@ -88,8 +88,8 @@ it become a reality.
 			$page = ($this->EventCount < $this->GetPageSize()) ? 1 : ceil($this->EventCount / $this->GetPageSize()); 
 			if($this->GetPageNumber() > 1)
 			{
-				$this->NavigationLeftArrow = "<a href=\"" .$_SERVER['PHP_SELF']."?".$url_query."&pagenum=".($this->GetPageNumber()-1)."\" class=\"searchlink\"> &laquo; </a>"; 
-				$this->NavigationFirstPage = "<a href=\"" .$_SERVER['PHP_SELF']."?".$url_query."&pagenum=1\" class=\"searchlink\"> &laquo;&laquo; </a>"; 
+				$this->NavigationLeftArrow = "<a href=\"" .$_SERVER['PHP_SELF']."?pagenum=".($this->GetPageNumber()-1)."&" . $url_query . "\" class=\"searchlink\"> &laquo; </a>"; 
+				$this->NavigationFirstPage = "<a href=\"" .$_SERVER['PHP_SELF']."?pagenum=1&" . $url_query . "\" class=\"searchlink\"> &laquo;&laquo; </a>"; 
 			}
 			else
 			{
@@ -99,8 +99,8 @@ it become a reality.
 			
 			if($this->GetPageNumber() < $page)
 			{
-				$this->NavigationRightArrow = "<a href=\"" .$_SERVER['PHP_SELF']."?".$url_query."&pagenum=".($this->GetPageNumber()+1)."\" class=\"searchlink\"> &raquo; </a>"; 
-				$this->NavigationLastPage = "<a href=\"" .$_SERVER['PHP_SELF']."?".$url_query."&pagenum=".$page."\" class=\"searchlink\"> &raquo;&raquo; </a>"; 
+				$this->NavigationRightArrow = "<a href=\"" .$_SERVER['PHP_SELF']."?pagenum=".($this->GetPageNumber()+1)."&" . $url_query . "\" class=\"searchlink\"> &raquo; </a>"; 
+				$this->NavigationLastPage = "<a href=\"" .$_SERVER['PHP_SELF']."?pagenum=".$page. "&" . $url_query . "\" class=\"searchlink\"> &raquo;&raquo; </a>"; 
 			}
 			else
 			{
@@ -116,7 +116,9 @@ it become a reality.
 		{
 			//query string without pagenum
 			$url_para = RemoveArgFromURL($_SERVER['QUERY_STRING'], "pagenum");
-			
+			if(isset($_GET['slt']))
+				$url_para = "slt=" . $_GET['slt'];
+
 			$page = $this->SetNavigation($url_para);
 			echo $this->NavigationFirstPage." ".$this->NavigationLeftArrow;
 			for($a=$this->GetPageNumber()-3;$a<=$this->GetPageNumber()+3;$a++)
@@ -126,7 +128,7 @@ it become a reality.
 					if($a==$this->GetPageNumber())
 						echo "&nbsp;<span class=\"thissite\">$a</span>";
 					else
-						echo "&nbsp;<a href=\"" .$_SERVER['PHP_SELF']."?".$url_para."&pagenum=".$a."\" class=\"searchlink\">".$a."</a>";
+						echo "&nbsp;<a href=\"" .$_SERVER['PHP_SELF']."?pagenum=".$a."&" . $url_para . "\" class=\"searchlink\">".$a."</a>";
 			}
 			}
 			echo $this->NavigationRightArrow." ".$this->NavigationLastPage;
@@ -135,11 +137,18 @@ it become a reality.
 		//! send a database query to get the total number of events which are available
 		//! save the result in $EventCount
 		function SetEventCount($db_con, $restriction)
-		{	   
+		{
 			//get the counter result without limitation
 			$result = db_exec($db_con, db_num_count($restriction));
-			$result = db_fetch_array($result);
-			$this->EventCount = $result[0]; //so many data records were found
+			$row = db_fetch_array($result);
+			$num = db_num_rows($result);
+			// If you have a group clause in your query, the COUNT(*) clause doesn't
+			// calculates the grouped rows; you get the number of all affected rows!
+			// db_num_rows() gives the correct number in this case!
+			if($num <= 1)
+				$this->EventCount = $row['num']; //so many data records were foundy
+			else
+				$this->EventCount = $num;
 		}
 
 		//! returns the total number of available events

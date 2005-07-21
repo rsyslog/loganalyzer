@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -84,8 +84,9 @@ it become a reality.
   	<tr>
   		<td align="left">
 			<a href="index.php"><?php echo _MSGHom; ?></a> | <a href="events-display.php"><?php echo _MSGShwEvn; ?></a>
+			| <a href="syslog-index.php"><?php echo _MSGShwSlt; ?></a>
 			| <a href="filter-config.php"><?php echo _MSGFOpt; ?></a> | <a href="user-config.php"><?php echo _MSGUOpt; ?></a> | 
-			<a href="<? echo $_SERVER['PHP_SELF'] . GetSortedArgs(); ?>"><?php echo _MSGRef; ?></a> | <a href="doc/index.htm"><?php echo _MSGHlp; ?></a>
+			<a href="<? echo $_SERVER['PHP_SELF'] . GetSortedArgs(0); ?>"><?php echo _MSGRef; ?></a> | <a href="doc/index.htm" target="_blank"><?php echo _MSGHlp; ?></a>
 			<?php if($_SESSION['debug'] == 1)echo _MSGMenInf1 . "<font color=\"red\">" . strtoupper(_CON_MODE) . "</font>" . _MSGMenInf2 . "<font color=\"red\">" . strtoupper(_DB_APP) . "</font>" . _MSGMenInf3 . "<font color=\"red\">" . strtoupper(_DBNAME) . "</font>";?>
 		</td>
   		<td align="left">&nbsp;</td>
@@ -164,7 +165,7 @@ it become a reality.
 <tr>
 	<td>
 		<br /><br />
-		<small><i><a href="http://www.phplogcon.com/" target="phplogcon">phpLogCon</a>, Copyright &copy; 2003 - 2004 <a href="http://www.adiscon.com" target="Adiscon">Adiscon GmbH</a></i></small>
+		<small><i><a href="http://www.phplogcon.com/" target="_blank">phpLogCon</a>, Copyright &copy; 2003 - 2004 <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a></i></small>
 	</td>
 </tr>
 </table>

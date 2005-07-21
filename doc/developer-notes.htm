@@ -1,39 +1,57 @@
 <html>
 	<head>
-		<title>phpLogCon - Developer notes</title></head>
+		<title>phpLogCon Manual :: Developer Notes</title>
+		<META NAME="robots" CONTENT="INDEX,FOLLOW">
+		<META NAME="copyright" CONTENT="Copyright (C) 2003 Adiscon GmbH, Erftstadt - www.adiscon.com">
+		<META name="Keywords" content="<? echo $strKeywords ?> sql server win NT windows 7 2000 replication merge nt transactional date time resolver">
+		<META http-equiv="pragma" CONTENT="no-cache">
+		<link rel="stylesheet" href="../layout/phplogcon.css" type="text/css">
+	</head>
 	<body>
-		<h1>Developer notes</h1>
-		<p>
-			phpLogCon is an open source project. Feel free to change what you want. Here 
-			you will find some hints and background knowledge about phpLogCon.</p>
-		<h2>Gernarel database connection functions</h2>
-		<p>The database function in phpLogCon are called similar to well-know commands from 
-			e.g. php mysql functions. All database functions beginn with "db_" and 
-			then a word that best describes the instruction. Sample: db_connect() - 
-			should open a connection to the database. This is according to mysql_connect(). 
-			So you know if you find db_fetch_array in phpLogCon for example, that this 
-			function should fetch a result row as an associative array, a numeric array, or 
-			both.</p>
-		<H2>ODBC functions</H2>
-		<P>phpLogCon support also database connection via ODBC. You can find the functions in 
-			db-drv\odbc.php. The most functions are in a very low basic level. The 
-			reason, a lot of the php ODBC functions don't work with all 
-			versions of php. Also the usability often depends on the ODBC driver.</P>
-    <p><b>Known Issues</b><br />At the moment you can only use ODBC for query Microsoft databases like MSSQL, 
-    Jet, ... A second database layer which can handle different sql formats should be implement in the future!</p>
-		<H2>Include files</H2>
-		<H2>include.php</H2>
-		<P>This file is very important. There, all other files to 
-			include are embedded (e. g. config files and so on). So if you 
-			include include.php you have always include automatically all genral "include 
-			files". Also you can find useful function in include.php. All functions 
-			which should reachable at the whole program, you find there (or there 
-			included).</P>
-		<P>Note: At each page of phpLogCon, include.php should be included!</P>
-		<P>&nbsp;</P>
-		<P><small><a href="index.htm">[Doc Home]</a> <a href="http://www.monitorware.com">[MonitorWare 
-					Web Site]</a></small></P>
-		<p>Copyright &copy; 2003 by <a href="http://www.adiscon.com">Adiscon</a>. Initiated by <a href="mailto:rgerhards@adiscon.com">
-				Rainer Gerhards</a>. See <a href="license.htm">license</a> for details.</p>
+		<table align="center" width="100%" cellspacing="0" cellpadding="0" border="0" CLASS="EventTable">	
+			<tr>
+				<td width="220" align="left"><img src="../images/phplogcon.gif" border="0"></td>
+				<td align="left">
+    				<h1>phpLogCon monitoring</h1>
+				</td>
+			</tr>
+		</table>
+
+		<p><small><a href="index.htm">[Doc Home]</a></small></p>
+		<h2><a name="top">6. Developer notes</a></h2>
+		<ul>
+			<li><a href="#6_1">6.1 General Database Connection Functions</a></li>
+			<li><a href="#6_2">6.2 ODBC Connection functions</a></li>
+			<li><a href="#6_3">6.3 Include Files</a></li>
+		</ul>
+		<br>
+		<p>phpLogCon is an open source project. Feel free to change what you want. Here you will find some hints and background knowledge about phpLogCon.</p>
+		<h3><a name="6_1">6.1 Gernarel database connection functions</a></h3>
+		<p>The database functions in phpLogCon are called similar to well-know commands from e.g. php mysql functions. All database functions start with "db_" and then a word that best describes the instruction. Sample: db_connect() - should open a connection to the database. This is according to mysql_connect(). So you know if you find db_fetch_array in phpLogCon for example, that this function should fetch a result row as an associative array, a numeric array, or both.</p>
+		<small><a href="#top">[Top]</a></small>
+		<h3><a name="6_2">6.2 ODBC functions</a></h3>
+		<p>phpLogCon support also database connection via ODBC. You can find the functions in 'db-drv\odbc_mssql.php' and 'db-drv\odbc_mysql.php'. Like you can see, there are two different drivers for ODBC. That's because the syntax of MySql and MsSql are different. The most functions are in a very low basic level. The reason, a lot of the php ODBC functions don't work with all versions of php. Also the usability often depends on the ODBC driver.</p>
+	    <h4>Known Issues</h4>
+		<p>At the moment you can only use ODBC for query Microsoft databases like MSSQL, etc and for MySql. A second database layer which can handle different sql formats should be implemented in the future!</p>
+		<small><a href="#top">[Top]</a></small>
+		<h3><a name="6_3">6.3 Include files</a></h3>
+		<h4>include.php</h4>
+		<p>This file is very important. There, all other files to include are embedded (e. g. config files and so on). So if you include include.php you have always include automatically all genral "include files". Also you can find useful function in include.php. All functions which should reachable at the whole program, you find there (or there included).</p>
+		<p>Note: At each page of phpLogCon, include.php should be included!</p>
+		<h4>config.php</h4>
+		<p>Here are the whole config of phpLogCon saved. It is included already by include.php, so you don't have to include it separately. If you want to set a new config variable, do it here! But if you only want to set a default variable for a variable, anywhere in the script, so do it there or in include.php! Config.php is only for global configuration variables with it's default values.</p>
+		<small><a href="#top">[Top]</a></small>
+
+		<p><small><a href="index.htm">[Doc Home]</a>&nbsp;<a href="http://www.monitorware.com" target="_blank">[MonitorWare Web Site]</a></small></p>
+		<center>
+		<table>
+			<tr>
+				<td>
+					<br /><br />
+					<small><i><a href="http://www.phplogcon.com/" target="phplogcon">phpLogCon</a>, Copyright &copy; 2003 - 2004 <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a></i></small>
+				</td>
+			</tr>
+		</table>
+		</center>
 	</body>
 </html>

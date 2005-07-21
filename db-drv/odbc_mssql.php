@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -78,12 +78,7 @@ SQL_CURSOR_STATIC (integer)
 	
 	function db_fetch_array($res)
 	{
-		//odbc_fetch_into replaced odbc_fetch_array, because
-		//in various php version the fetch_array doesnt work
-
-		//odbc_fetch_into($res, $myarray);
-		odbc_fetch_into($res, $myarray);
-		return $myarray;
+		return odbc_fetch_array($res);
 	}
 
 	function db_result($res, $res_name)
@@ -98,7 +93,21 @@ SQL_CURSOR_STATIC (integer)
 
 	function db_num_count($cmdSQLwhere_part)
 	{
-		return 'SELECT DISTINCT COUNT(*) AS num FROM ' . _DBTABLENAME . substr($cmdSQLwhere_part, 0, strpos($cmdSQLwhere_part, 'ORDER BY'));
+		if(stristr($cmdSQLwhere_part, "order by") != FALSE)
+			return 'SELECT DISTINCT COUNT(*) AS num FROM ' . _DBTABLENAME . substr($cmdSQLwhere_part, 0, strpos($cmdSQLwhere_part, 'ORDER BY'));
+		else
+			return 'SELECT DISTINCT COUNT(*) AS num FROM ' . _DBTABLENAME . $cmdSQLwhere_part;
+	}
+
+	// This function is for getting the correct row count! db_num_rows is BUGGED! >_<
+	// THX to 'deejay_' from PHP.net for this function! 
+	function odbc_record_count($odbcDbId, $query)
+	{
+		$countQueryString = "SELECT COUNT(*) as results FROM (" . $query . ")";
+//		echo $countQueryString;
+		$count = odbc_exec ($odbcDbId, $countQueryString);
+		$numRecords = odbc_result ($count, "results");
+		return $numRecords;
 	}
 
 	/*
@@ -106,26 +115,47 @@ SQL_CURSOR_STATIC (integer)
 	* the array points to the first data record you want to display
 	* at current page. You need it for paging.
 	*/
-	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage)
+	function db_exec_limit($db, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLwhere_part, $limitlower, $perpage, $order)
 	{
-		//you must move through the recordset
-		//until you reach the data record you want
-		//***if you know a better and more efficent methode, please let us know, too!
+		//Because ODBC doesn't know LIMIT we have to do it with subselects
 
+		if(strtolower($order) == "date")
+			$order = _DATE;
+		elseif(strtolower($order) == "host")
+			$order = "[FromHost]";
+		elseif(strtolower($order) == "facilitydate")
+			$order = "[Facility], [" . _DATE . "]";
+		elseif(strtolower($order) == "prioritydate")
+			$order = "[Priority], [" . _DATE . "]";
+		else
+			$order = "[" . $order . "]";
+		//now we have to check in wich order the results will be listed.
+		//we have to fit our query to this.
+		if( stristr(strtolower($cmdSQLwhere_part), "desc") == FALSE)
+		{
+			$sort1 = "DESC";
+			$sort2 = "ASC";
+		}
+		else
+		{
+			$sort1 = "ASC";
+			$sort2 = "DESC";
+		}
+		//now the big statement will be created! Have fun! ;)
 		$tmp = $perpage + $limitlower - 1;
-		$cmdSQL = $cmdSQLfirst_part . "TOP " . $tmp . " " .  $cmdSQLmain_part . $cmdSQLwhere_part;
+		$cmdSQL = "SELECT * FROM ( SELECT TOP " . $perpage . " * FROM ( " . $cmdSQLfirst_part . "TOP " . $tmp . " " . $cmdSQLmain_part . $cmdSQLwhere_part . " ) AS blub ORDER BY " . $order . " " . $sort1 . " ) AS blubblub ORDER BY " . $order . " " . $sort2;
+//		echo $cmdSQL . "<br>";
 		return db_exec($db, $cmdSQL);
-/*
-		for($i = 1; $i < $limitlower; $i++)
-			$row = odbc_fetch_row($result);
-
-		return $result;
-		*/
 	}
 
 	function db_free_result($result)
 	{
 		return odbc_free_result($result);
+	}
+
+	function db_get_tables($dbCon, $dbName)
+	{
+		return odbc_tables($dbCon);
 	}
 
 	function db_errno()
@@ -158,4 +188,5 @@ SQL_CURSOR_STATIC (integer)
   {
     return '%';
   }
+
 ?>

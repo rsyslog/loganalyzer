@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -20,11 +20,10 @@ it become a reality.
 
 
 
-	require("include.php");
+	include "include.php";
 	WriteStandardHeader(_MSGFilConf);
 
 	// If filter settings have been changed in quick filter, reload the old settings
-
 	if(isset($_SESSION['ti_old']))
 	{
 		$_SESSION['ti'] = $_SESSION['ti_old'];
@@ -32,6 +31,8 @@ it become a reality.
 		$_SESSION['infounit_er'] = $_SESSION['infounit_er_old'];
 		$_SESSION['infounit_o'] = $_SESSION['infounit_o_old'];
 		$_SESSION['order'] = $_SESSION['order_old'];
+		$_SESSION['tag_order'] = $_SESSION['tag_order_old'];
+		$_SESSION['tag_sort'] = $_SESSION['tag_sort_old'];
 		$_SESSION['refresh'] = $_SESSION['refresh_old'];
 
 		session_unregister('ti_old');
@@ -39,43 +40,12 @@ it become a reality.
 		session_unregister('infounit_er_old');
 		session_unregister('infounit_o_old');
 		session_unregister('order_old');
+		session_unregister('tag_order_old');
+		session_unregister('tag_sort_old');
 		session_unregister('refresh_old');
 	}
 
 ?>
-
-<?php /* Disabled!?>
-<br>
-<form method="POST" action="configuration-page-process.php" name="ConnectionConfig">
-<input type="hidden" name="conConf" value="ConnectionConfig">
-<center><h3>..:: <?php echo _MSGBscSet; ?> ::..</h3></center>
-
-<center>
-<table border="0" cellpadding="2" cellspacing="0" width="700" align="center" Class="ConfigTable">
-	<tr>
-		<td Class="Header1" colspan="2"><b><?php echo _MSGConSet; ?>:</b></td>
-	</tr>
-	<tr>
-		<td width="200" nowrap"><?php echo _MSGConMod; ?>:</td>
-		<td width="100%" align="right">
-<?php
-			ComboBoxWithFilenames(_DB_DRV, "connection_mode");
-?>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><font color="red">This function has been turned off! Set this in config.php!</font></td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<input type="submit" value="<?php echo _MSGChg; ?>">
-		</td>
-		<td></td>
-	</tr>
-</table>
-</form>
-</center>
-<?php End Disabled*/ ?>
 
 <br>
 
@@ -130,9 +100,10 @@ it become a reality.
 		<input type=checkbox name="priority_6" value="1" <?php if ($_SESSION['priority_6'] == 1) echo 'checked'; ?>>Info (6)<br>
 		<input type=checkbox name="priority_7" value="1" <?php if ($_SESSION['priority_7'] == 1) echo 'checked'; ?>>Debug (7)<br>
 	</td>
+</tr>
+<?php /* This is not implemented yet!
+<tr>
 	<td>
-  
-  <?php /* This is not implemented yet! 
 		<select name='color'>
 			<option value='red' style="background-color:red"<?php if ($_GET["color"] == "red") echo " selected";?>><?php echo $msg105;?></option>
 			<option value='blue' style="background-color:blue"<?php if ($_GET["color"] == "blue") echo " selected";?>><?php echo $msg106;?></option>
@@ -140,16 +111,31 @@ it become a reality.
 			<option value='yellow' style="background-color:yellow"<?php if ($_GET["color"] == "yellow") echo " selected";?>><?php echo $msg108;?></option>
 			<option value='orange' style="background-color:orange"<?php if ($_GET["color"] == "orange") echo " selected";?>><?php echo $msg109;?></option>
 		</select>
-    End this is not implemented yet! */ ?>
-    
-    
-    
 	</td>
 </tr>
+End this is not implemented yet! */ ?>
 
 <tr>
 	<td>&nbsp;</td>
 </tr>
+<tr>
+	<td colspan="3" Class="Header1">
+		<?php echo _MSGSltFil; ?>:
+	</td>
+</tr>
+<tr>
+	<td><?php echo _MSGOrdBy; ?>:</td>
+	<td>
+    <?php include _FORMS.'tag-order-by.php'; ?>
+	</td>
+</tr>
+<tr>
+	<td><?php echo _MSGTagSort; ?>:</td>
+	<td>
+    <?php include _FORMS.'tag-sort.php'; ?>
+	</td>
+</tr>
+<tr>
 	<td colspan="2" Class="Header1">
 		<?php echo _MSGEnbQF; ?>:
 	</td>

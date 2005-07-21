@@ -27,41 +27,76 @@ WriteHead("phpLogCon :: Installation Progress");
 
 ?>
 
-<center>Checking users input...
+<center><?php echo _InsPer1; ?>
 
 <?php
 
 // if there are fields missing, create an error message
 $strErrorMsg = "";
-if($_POST["dbhost"] == "" && $_POST['dbcon'] != "odbc")
+
+/*
+ * 2004-12-13 by mm
+ * Check if we use odbc, this is the case if the dbcon starts with
+ * the string "odbc". 
+ * 
+ * Using ODBC we need also the database type.
+ */
+if(substr($_POST['dbcon'], 0, 4) == 'odbc')
+{
+	$bIsODBC = true;
+	$dbcon = 'odbc';
+	if (substr($_POST['dbcon'], 4)=='mysql')
+		$dbapp = 'mysql';
+	elseif(substr($_POST['dbcon'], 4)=='mssql')
+		$dbapp = 'mssql';
+	else
+		die('connection type unspecified');
+}
+else
+{
+	$bIsODBC = false;
+	// currently only mysql is supported in non-odbc mode
+	$dbcon = 'native';
+	$dbapp = 'mysql';
+}
+
+
+if($_POST["dbhost"] == "" && !$bIsODBC)
 	$strErrorMsg .= "Host/IP";
 if($_POST["dbport"] == "")
 	$_POST["dbport"] = 0;
-if($_POST["dbuser"] == "")
+if($_POST["dbuser"] == "" && !$bIsODBC)
 {
 	if($strErrorMsg != "")
 		$strErrorMsg .= " - ";
 	$strErrorMsg .= "User";
 }
-if($_POST["dbpass"] == "")
+/*
+ * 2004-12-13 by mm
+ * Also with an mysql connection you can use a 
+ * user without password. In fact, this is not
+ * really a good idea, but that's not our choise.
+ * 
+if($_POST["dbpass"] == "" && !$bIsODBC)
 {
 	if($strErrorMsg != "")
 		$strErrorMsg .= " - ";
 	$strErrorMsg .= "Password";
 }
-if($_POST["dbpassre"] == "")
+if($_POST["dbpassre"] == "" && !$bIsODBC)
 {
 	if($strErrorMsg != "")
 		$strErrorMsg .= " - ";
 	$strErrorMsg .= "Re-type Password";
 }
+*/
 if($_POST["dbname"] == "")
 {
 	if($strErrorMsg != "")
 		$strErrorMsg .= " - ";
 	$strErrorMsg .= "Database/DSN name";
 }
-if($_POST["dbpass"] != "" && $_POST["dbpassre"] != "")
+if($_POST["dbpass"] != "" && $_POST["dbpassre"] != "" && !$bIsODBC)
 {
 	if(strcmp($_POST["dbpass"], $_POST["dbpassre"]) != 0)
 	{
@@ -82,7 +117,7 @@ else
 	$_POST["ui"] = 0;
 
 $strErrorMsg = "";
-if($_POST["ui"] == 1 )
+if($_POST["ui"] == 1)
 {
 	if($_POST["uiuser"] != "")
 	{
@@ -110,30 +145,40 @@ if($_POST["ui"] == 1 )
 		else
 			$strUiErrMsg = "";
 	}
+	else
+		$strUiErrMsg = "";
 }
+else
+	$strUiErrMsg = "";
 
 if($strDbErrMsg != "" || $strUiErrMsg != "")
 {
 	echo "</center>";
 	echo "While installing phpLogCon, there caused an error (Date: ".date("d.m.Y @ H:i")."):<br><br>";
 	echo "<u><b>Operation:</b></u> Check user's input!<br>";
-	echo "<u><b>Error:</b></u> <font color=red>You have to fill out following fields: <b>" . $strDbErrMsg . "<br>" . $strUiErrMsg . "</b></font><br><br>Go back and correct this!<br>..:: <a href='install.php'>Go back to installation</a> ::..<br>";
+	echo "<u><b>Error:</b></u> <font color=red>You have to fill out following fields: <b>" . $strDbErrMsg . "<br>" . $strUiErrMsg . "</b></font><br><br>Go back and correct this!<br>..:: <a href=\"javascript:history.back()\">Go back to installation</a> ::..<br>";
 	echo "<br><br>";
 	exit;
 }
 
 ?>
 
-<b><font color="red">Done!</font></b></center>
-<center>Creating required tables...
+<b><font color="red"><?php echo _InsPerDone; ?></font></b></center>
+<center><?php echo _InsPer2; ?>
 
 <?php
 
 // include database driver
-if($_POST['dbcon'] == "odbc")
-	include "../db-drv/odbc_" . $_POST["dbapp"] . ".php";
+if($bIsODBC)
+{
+	include '../db-drv/odbc_' . $dbapp . '.php';
+	$tableIndex = 'TABLE_NAME';
+}
 else
+{
 	include "../db-drv/mysql.php";
+	$tableIndex = 0;
+}
 
 // connect to database
 $installCon = db_own_connection($_POST["dbhost"], $_POST["dbport"], $_POST["dbuser"], $_POST["dbpass"], $_POST["dbname"]);
@@ -143,28 +188,50 @@ $installCon = db_own_connection($_POST["dbhost"], $_POST["dbport"], $_POST["dbus
 //  BEGIN CREATING TABLES
 // ***********************
 
-// Get SQL Queries from File
-$strQueryFile = "EventTables.sql";
-$arQueries = GetSQLQueries($strQueryFile);
+//Create an Array with all tablenames. If there are a new table assigned to phplogcon, add it here, too.
+$arTables[0] = "SystemEvents";
+$arTables[1] = "SystemEventsProperties";
+$arTables[2] = "Users";
+$arTables[3] = "UserPrefs";
 
-// Execute Queries
-for($i = 0; $i < count($arQueries); $i++)
-	db_exec($installCon, $arQueries[$i]);
+// Check which tables are currently existing
+$tableRes = db_get_tables($installCon, $_POST["dbname"]);
+for($i = 0; $res = db_fetch_array($tableRes); $i++)
+	$arCurTables[$i] = $res[$tableIndex];
 
-// If user interface is enabled, create tables
-if($_POST["ui"] == 1 )
+if(!isset($arCurTables))
+	$arCurTables = array();
+
+for($i = 0; $i < count($arTables); $i++)
 {
-	$strQueryFile = "UserTables.sql";
-	$arQueries = GetSQLQueries($strQueryFile);
+	if( array_search($arTables[$i], $arCurTables) == FALSE )
+	{
+		if( !isset($arNewTables) )
+			$arNewTables[0] = $arTables[$i];
+		else
+			$arNewTables[count($arNewTables)] = $arTables[$i];
+	}
+}
 
-	for($i = 0; $i < count($arQueries); $i++)
-		db_exec($installCon, $arQueries[$i]);
+//Create not existing tables
+if(isset($arNewTables))
+{
+	for($i = 0; $i < count($arNewTables); $i++)
+	{
+		//Get queries from file
+		$strQueryFile = $dbapp . '_ct' . $arNewTables[$i] . '.sql';
+		$arQueries = GetSQLQueries($strQueryFile);
+
+		// Execute Queries
+		for($j = 0; $j < count($arQueries); $j++)
+			db_exec($installCon, $arQueries[$j]);
+	}
 }
 
 ?>
 
-<b><font color="red">Done!</font></b></center>
-<center>Inserting values into tables...
+<b><font color="red"><?php echo _InsPerDone; ?></font></b></center>
+<center><?php echo _InsPer3; ?>
 
 <?php
 
@@ -199,8 +266,11 @@ if($_POST["ui"] == 1 && $_POST["uiuser"] != "")
 		elseif( stristr($arQueries[$i], "INSERT INTO UserPrefs") )
 		{
 			$arQueries[$i] = ereg_replace("<username>", $_POST['uiuser'], $arQueries[$i]);
+			$arQueries[$i] = ereg_replace("<lang>", $_POST['uilang'], $arQueries[$i]);
 			db_exec($installCon, $arQueries[$i]);
 		}
+		elseif( stristr($arQueries[$i], "SET IDENTITY_INSERT UserPrefs") )
+			db_exec($installCon, $arQueries[$i]);
 	}
 }
 
@@ -209,8 +279,8 @@ db_close($installCon);
 
 ?>
 
-<b><font color="red">Done!</font></b></center>
-<center>Creating your config file (config.php)...
+<b><font color="red"><?php echo _InsPerDone; ?></font></b></center>
+<center><?php echo _InsPer4; ?>
 
 <?php
 
@@ -219,7 +289,7 @@ db_close($installCon);
 // ***************************
 
 //open file handle
-$hConfigSrc = fopen("scripts/config.php.ex", "r");
+$hConfigSrc = fopen("../scripts/config.php.ex", "r");
 $hConfigDes = fopen("../config.php", "w");
 
 while (!feof($hConfigSrc))
@@ -240,9 +310,9 @@ while (!feof($hConfigSrc))
 	elseif(stristr($strLine, "define('_DBPWD'"))
 		fwrite($hConfigDes, "  define('_DBPWD', '" . $_POST["dbpass"] . "');\r\n");
 	elseif(stristr($strLine, "define('_CON_MODE'"))
-		fwrite($hConfigDes, "  define('_CON_MODE', '" . $_POST["dbcon"] . "');\r\n");
+		fwrite($hConfigDes, "  define('_CON_MODE', '" . $dbcon . "');\r\n");
 	elseif(stristr($strLine, "define('_DB_APP'"))
-		fwrite($hConfigDes, "  define('_DB_APP', '" . $_POST["dbapp"] . "');\r\n");
+		fwrite($hConfigDes, "  define('_DB_APP', '" . $dbapp . "');\r\n");
 	elseif(stristr($strLine, "define('_ENABLEUI'"))
 		fwrite($hConfigDes, "  define('_ENABLEUI', " . $_POST["ui"] . ");\r\n");
 	elseif(stristr($strLine, "define('_DEFLANG'"))
@@ -264,10 +334,10 @@ fclose($hConfigDes);
 
 ?>
 
-<b><font color="red">Done!</font></b></center>
+<b><font color="red"><?php echo _InsPerDone; ?></font></b></center>
 <br>
 
-<center><b>All processes have been done clearly!<br>Congratulations! You've successfully installed phpLogCon!<br>A file named 'config.php' is stored in the root directory of phpLogCon. In this file there are the whole information you have entered before! You can edit it to your needs if you want to.<br><br>Move to 'index.php' in root directory to start working with phpLogCon!<br><br><font color="red">Don't forget to delete 'install.php', 'progress.php' and 'include.php' (NOT from root directory) from the 'install'-directory!<br>These files could be user for a DoS on your phpLogCon!</font></b></center>
+<center><b><?php echo _InsPer5; ?><br><?php echo _InsPer6; ?><br><?php echo _InsPer7; ?><br><br><?php echo _InsPer8; ?><br><br><font color="red"><?php echo _InsPer9; ?><br><?php echo _InsPer10; ?></font><br><br><?php echo _InsPer11; ?><a href="../index.php"><?php echo _InsPer12; ?></a>.</b></center>
 <br><br>
 
 <?php

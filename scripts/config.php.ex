@@ -3,7 +3,7 @@
 /*#### #### #### #### #### #### #### #### #### #### 
 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2004  Adiscon GmbH
+Copyright (C) 2003  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -44,10 +44,10 @@ it become a reality.
   define('_DBNAME', 'monitorware');
 
 	// Userid for database connection ***
-  define('_DBUSERID', 'user');
+  define('_DBUSERID', 'root');
 
 	// Password for database connection ***
-  define('_DBPWD', 'pass');
+  define('_DBPWD', '');
 
 	// table name
   define('_DBTABLENAME', 'SystemEvents');
@@ -103,7 +103,7 @@ it become a reality.
   define('_DEFLANG', 'en');
 
 	// Use UTC time
-  define('_UTCtime', 1);
+  define('_UTCtime', 0);
   
 	// Get messages date by ReceivedAt or DeviceReportedTime
   define('_DATE', 'ReceivedAt');

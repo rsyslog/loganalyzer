@@ -61,7 +61,7 @@ function WriteFoot()
 function GetSQLQueries($strFilePath)
 {
 	// Get SQL queries from file
-	$arQueryFile = file("scripts/" . $strFilePath);
+	$arQueryFile = file("../scripts/" . $strFilePath);
 
 	for($i = 0, $j = 0; $i < count($arQueryFile); $i++)
 	{

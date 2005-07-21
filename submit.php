@@ -3,7 +3,7 @@
 /*#### #### #### #### #### #### #### #### #### ####
 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -39,7 +39,7 @@ it become a reality.
 	}
 	else
 	{	
-		$query  = "SELECT UserIDText, Password FROM Users WHERE UserIDText LIKE '" . $_POST['usr'] . "' AND Password LIKE '" . $_POST['pass'] . "'";
+		$query  = "SELECT UserIDText, Password, DisplayName FROM Users WHERE UserIDText LIKE '" . $_POST['usr'] . "' AND Password LIKE '" . $_POST['pass'] . "'";
 		$result = db_exec($global_Con, $query);// or die(db_die_with_error(_MSGInvQur . " :" . $query));
 		$num    = db_num_rows($result);
 		$result = db_fetch_singleresult($result);
@@ -61,22 +61,25 @@ it become a reality.
 		else
 		{
 			// $dat = now();
-			// db_exec($global_Con, "UPDATE users SET phplogcon_lastlogin = ".dbc_sql_timeformat($dat)." WHERE UserIDText LIKE '".$_POST["usr"]."'");
+			// db_exec($global_Con, "UPDATE Users SET phplogcon_lastlogin = ".dbc_sql_timeformat($dat)." WHERE UserIDText LIKE '".$_POST["usr"]."'");
 			session_register('save_cookies');
 			if($_POST['save_cookies'] == 1)
 			{
 				$_SESSION['save_cookies'] = $_POST['save_cookies'];
 				setcookie("valid", 1, _COOKIE_EXPIRE, "/");
 				setcookie("usr", $result["UserIDText"], _COOKIE_EXPIRE, "/");
+				setcookie("usrdis", $result["DisplayName"], _COOKIE_EXPIRE, "/");
 			}
 			else
 				$_SESSION['save_cookies'] = 0;
 
 			session_register("usr");
+			session_register("usrdis");
 			$_SESSION["usr"] = $result["UserIDText"];
+			$_SESSION["usrdis"] = $result["DisplayName"];
 
 			LoadUserConfig();
-			// Loading Users Config when enabled
+			// Loading Users Filter Config when enabled
 			if($_SESSION['savefiltersettings'])
 				LoadFilterConfig();
 

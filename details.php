@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -21,6 +21,12 @@ it become a reality.
 
 
 	require("include.php");
+
+	if( !isset($_GET['lid']) )
+	{
+		header("Location: events-display.php");
+		exit;
+	}
 
 	WriteStandardHeader(_MSGShwEvnDet);
 

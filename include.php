@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -25,7 +25,7 @@ it become a reality.
   * and provide some usefull functions
   */
   
-  // disable error reporting
+  // enable it only for testing purposes
   error_reporting(E_ALL);
 
 	header("Pragma: no-cache");
@@ -204,18 +204,34 @@ it become a reality.
 	$_SESSION['infounit_er_old'] = $_SESSION['infounit_er'];
 	$_SESSION['infounit_o_old'] = $_SESSION['infounit_o'];
 	$_SESSION['order_old'] = $_SESSION['order'];
+	$_SESSION['tag_order_old'] = $_SESSION['tag_order'];
+	$_SESSION['tag_sort_old'] = $_SESSION['tag_sort'];
 	$_SESSION['refresh_old'] = $_SESSION['refresh'];
 
-    $_SESSION['ti'] = $_POST['ti'];
+	if( isset($_POST['ti']) )
+	    $_SESSION['ti'] = $_POST['ti'];
     $_SESSION['infounit_sl'] = (isset($_POST['infounit_sl'])) ? 1 : 0;
     $_SESSION['infounit_er'] = (isset($_POST['infounit_er'])) ? 1 : 0;
     $_SESSION['infounit_o'] = (isset($_POST['infounit_o'])) ? 1 : 0;
-    $_SESSION['order'] = $_POST['order'];
+	if( !isset($_POST['order']) )
+	{
+		$_POST['order'] = '';
+		$_SESSION['tag_order'] = $_POST['tag_order'];
+	}
+	else
+	{
+		$_POST['tag_order'] = '';
+		$_SESSION['order'] = $_POST['order'];
+	}
+	if( isset($_POST['tag_sort']) )
+		$_SESSION['tag_sort'] = $_POST['tag_sort'];
     $_SESSION['refresh'] = $_POST['refresh'];
+	if( isset($_POST['show_methode']) )
+		$_SESSION['show_methode'] = $_POST['show_methode'];
   }
   
 
-  //events-display.php 
+  //events-display.php
   
 	// InitVariable(2, "search", "");
 	// InitVariable(1, "regexp", "");
@@ -230,7 +246,7 @@ it become a reality.
     $_SESSION['infounit_er'] = 1;
   if (!isset($_SESSION['infounit_o']))
     $_SESSION['infounit_o'] = 1; 
-    
+
   if (!isset($_SESSION['priority_0']))
     $_SESSION['priority_0'] = 1;
   if (!isset($_SESSION['priority_1']))
@@ -258,16 +274,27 @@ it become a reality.
   // validation in eventfilter.php
   if (!isset($_SESSION['order']))
     $_SESSION['order'] = 'date';
+
+  // forms/tag-order-by.php
+  // validation in eventfilter.php
+  if (!isset($_SESSION['tag_order']))
+    $_SESSION['tag_order'] = 'Occurences';
+
+  // forms/tag-sort.php
+  // check sort ascending/descending
+  if (!isset($_SESSION['tag_sort']))
+    $_SESSION['tag_sort'] = 'Asc';
  
   // forms/refresh.php
   if (!isset($_SESSION['refresh']))
     $_SESSION['refresh'] = 0; // default
-        
- 
-  /*
-  * forms/logs-per-page.php
-  * number of lines to be displayed, only numbers are allowed
-  */
+
+  //syslog-index.php
+  if( !isset($_SESSION['show_methode']) )
+	$_SESSION['show_methode'] = "SysLogTag";
+
+  // forms/logs-per-page.php
+  // number of lines to be displayed, only numbers are allowed
   if (isset($_POST['epp']))
   {
     if (is_numeric($_POST['epp']))
@@ -386,15 +413,15 @@ it become a reality.
 		{
 			if( !isset($_COOKIE['valid']) || $_COOKIE['valid'] == "0" )
 			{
-				WriteHead("phpLogCon :: " . _MSGAccDen, "", "", _MSGAccDen, 0);
-				echo "<br><b>..:: " . _MSGAccDen . " ::..</b>";
-				echo "<br><br>..:: <a href='index.php'>" . _MSGBac2Ind . "</a> ::..";
+				header("Location: index.php");
 				exit;
 			}
 			else
 			{
 				session_register('usr');
+				session_register('usrdis');
 				$_SESSION['usr'] = $_COOKIE['usr'];
+				$_SESSION['usrdis'] = $_COOKIE['usrdis'];
 				LoadUserConfig();
 			}
 		}
@@ -522,6 +549,7 @@ it become a reality.
 			*/
 			WriteHead("phpLogCon :: " . $myMsg , "", "", $myMsg);
 		}
+		CheckInstallDir();
 	}
 	
 	/*!
@@ -586,24 +614,39 @@ it become a reality.
 	/*!
 	Gets Args from the active URL and returns them.
 	!*/
-	 function GetSortedArgs()
+	 function GetSortedArgs($mode)
 	 {
 		 $arCount = count($_SERVER["argv"]);
-		 $sArgs = "?";
 
-		 if($arCount == 0)
+		 if($arCount == 0 || $mode != 1)
 			 $sArgs = "";
 		 else
 		 {
+			 $sArgs = "";
 			 for($i = 0; $i < $arCount; $i++)
 			 {
 				 if($i > 0)
-					 $sArgs .= "&" . $_SERVER["argv"][$i];
+				 {
+					 if( stristr($_SERVER["argv"][$i], "pagenum=") == FALSE)
+						 $sArgs .= "&" . $_SERVER["argv"][$i];
+				 }
 				 else
-					 $sArgs .= $_SERVER["argv"][$i];
+				 {
+					 if( stristr($_SERVER["argv"][$i], "pagenum=") == FALSE)
+						 $sArgs .= $_SERVER["argv"][$i];
+				 }
 			 }
 		 }
 		 return $sArgs;
+	 }
+
+	 function CheckInstallDir()
+	 {
+		 if(file_exists("install/"))
+		 {
+			 echo "<h3><font color=\"red\">" . _MSGInstDir . "</font></h3>";
+		 }
+		 clearstatcache();
 	 }
 
 	/*!
@@ -627,7 +670,7 @@ it become a reality.
 	{
 		global $global_Con;
 
-		$query = "SELECT Name, PropValue FROM userprefs WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_u%'";
+		$query = "SELECT Name, PropValue FROM UserPrefs WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_u%'";
 		$result = db_exec($global_Con, $query);
 		while($value = db_fetch_array($result))
 		{
@@ -687,35 +730,36 @@ it become a reality.
 		else
 			$query[10] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_priority_7'";
 
-
 		$query[11] = "UPDATE UserPrefs SET PropValue='" . $_POST['ti'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_ti'";
 		$query[12] = "UPDATE UserPrefs SET PropValue='" . $_POST['order'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_order'";
-		$query[13] = "UPDATE UserPrefs SET PropValue='" . $_POST['refresh'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_refresh'";
+		$query[13] = "UPDATE UserPrefs SET PropValue='" . $_POST['tag_order'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_tag_order'";
+		$query[14] = "UPDATE UserPrefs SET PropValue='" . $_POST['tag_sort'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_tag_sort'";
+		$query[15] = "UPDATE UserPrefs SET PropValue='" . $_POST['refresh'] . "' WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_refresh'";
 
 		if( !isset($_POST['FilterInfoUnit']) )
-			$query[14] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterInfoUnit'";
+			$query[16] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterInfoUnit'";
 		else
-			$query[14] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterInfoUnit'";
+			$query[16] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterInfoUnit'";
 		if( !isset($_POST['FilterOrderby']) )
-			$query[15] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterOrderby'";
+			$query[17] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterOrderby'";
 		else
-			$query[15] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterOrderby'";
+			$query[17] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterOrderby'";
 		if( !isset($_POST['FilterRefresh']) )
-			$query[16] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterRefresh'";
+			$query[18] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterRefresh'";
 		else
-			$query[16] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterRefresh'";
+			$query[18] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterRefresh'";
 		if( !isset($_POST['FilterColExp']) )
-			$query[17] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterColExp'";
+			$query[19] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterColExp'";
 		else
-			$query[17] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterColExp'";
+			$query[19] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterColExp'";
 		if( !isset($_POST['FilterHost']) )
-			$query[18] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterHost'";
+			$query[20] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterHost'";
 		else
-			$query[18] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterHost'";
+			$query[20] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterHost'";
 		if( !isset($_POST['FilterMsg']) )
-			$query[19] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterMsg'";
+			$query[21] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterMsg'";
 		else
-			$query[19] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterMsg'";
+			$query[21] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_FilterMsg'";
 
 		return $query;
 	}
@@ -730,11 +774,11 @@ it become a reality.
 		else
 			$query[2] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_uSaveFilterSettings'";
 		if( !isset($_POST['debug']) )
-			$query[2] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_uDebug'";
+			$query[3] = "UPDATE UserPrefs SET PropValue=0 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_uDebug'";
 		else
-			$query[2] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_uDebug'";
+			$query[3] = "UPDATE UserPrefs SET PropValue=1 WHERE UserLogin LIKE '" . $_SESSION['usr'] . "' AND Name LIKE 'PHPLOGCON_uDebug'";
 
 		return $query;
 	}
-
+	
 ?>

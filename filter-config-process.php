@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -38,41 +38,6 @@ $szDescription = "";
 
 global $global_Con;
 
-/*
-	// Get Action
-	if ( !isset($_POST['action'] ) )
-		$_POST['action'] = "";
-
-	if ($_POST['action'] == "ChangeGeneralConfig")
-	{
-		if ( !isset($_POST["enableui"]) )
-			$_POST["enableui"] = 0;
-
-		setcookie("connection_mode", $_POST['connection_mode'], time()+(60*60*24*365*10), "/");
-    
-*/
-
-/*		if( strcmp($_POST["enableui"], $_COOKIE["enable_ui"]) != 0)
-		{
-			if($_POST["enableui"] == "0")
-			{
-				setcookie("usr", "standard", _COOKIE_EXPIRE, "/");
-				setcookie("sesid", "0", _COOKIE_EXPIRE, "/");
-			}
-			else
-			{
-				setcookie("usr", "|", _COOKIE_EXPIRE, "/");
-				setcookie("sesid", "|", _COOKIE_EXPIRE, "/");
-			}
-			setcookie("enable_ui", $_POST['enableui'], time()+(60*60*24*365*10), "/");
-		}
-
-
-$szRedirectLink = "index.php";
-$szDescription = "General settings have been updated";
-*/
-
-
 if( !isset($_POST['filConf']) )
 	$_POST['filConf'] = "";
 
@@ -81,6 +46,8 @@ if($_POST['filConf'] == "FilterConfig")
 	// configure filter settings
 	$_SESSION['ti'] = $_POST['ti'];
     $_SESSION['order'] = $_POST['order'];
+	$_SESSION['tag_order'] = $_POST['tag_order'];
+	$_SESSION['tag_sort'] = $_POST['tag_sort'];
 	$_SESSION['refresh'] = $_POST['refresh']+0; // +0 make sure that is numeric
 
 	// enable/disable quick filter options
@@ -112,7 +79,7 @@ if($_POST['filConf'] == "FilterConfig")
 	// If all infounits are unchecked it makes no sense,
 	// because in this case, no messages were displayed.
 	// So, activate all infounit types
-	if($_SESSION['infounit_sl'] == 0 && $_SESSION['infounit_er'] == 0 & $_SESSION['infounit_o'] == 0)
+	if($_SESSION['infounit_sl'] == 0 && $_SESSION['infounit_er'] == 0 && $_SESSION['infounit_o'] == 0)
 	{
 		$_SESSION['infounit_sl'] = 1;
 		$_SESSION['infounit_er'] = 1;
@@ -122,7 +89,7 @@ if($_POST['filConf'] == "FilterConfig")
 	// If all priorities are unchecked it makes no sense,
 	// because in this case, no messages were displayed.
 	// So, activate all priority types
-	if($_SESSION['priority_0'] == 0 and $_SESSION['priority_1'] == 0 and $_SESSION['priority_2'] == 0 and $_SESSION['priority_3'] == 0 and $_SESSION['priority_4'] == 0 and $_SESSION['priority_5'] == 0 and $_SESSION['priority_6'] == 0 and $_SESSION['priority_7'] == 0)
+	if($_SESSION['priority_0'] == 0 && $_SESSION['priority_1'] == 0 && $_SESSION['priority_2'] == 0 && $_SESSION['priority_3'] == 0 && $_SESSION['priority_4'] == 0 && $_SESSION['priority_5'] == 0 && $_SESSION['priority_6'] == 0 && $_SESSION['priority_7'] == 0)
 	{
 		$_SESSION['priority_0'] = 1;
 	    $_SESSION['priority_1'] = 1;

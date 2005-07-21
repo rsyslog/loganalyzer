@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -18,7 +18,7 @@ it become a reality.
 
 */#### #### #### #### #### #### #### #### #### #### 
 
-	require('include.php');
+	include 'include.php';
 
 	WriteStandardHeader(_MSGShwEvn);
   
@@ -35,7 +35,6 @@ it become a reality.
 	$myFilter = New EventFilter;
 	$cmdSQLlast_part .= $myFilter->GetSQLWherePart(0);
 	$cmdSQLlast_part .= $myFilter->GetSQLSort();
-
 
 	//Set Priority Filter if activated
 	/*if ($Priority!=0) {
@@ -61,11 +60,10 @@ it become a reality.
 	echo "\t<font color=red>Temporally UNAVAIBLE!!</font>";
 	echo "</form>";
 */
-
 	echo '<br><table>';
 
 	//SQL statement to get result with limitation
-	$res = db_exec_limit($global_Con, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLlast_part, $myEventsNavigation->GetLimitLower(), $myEventsNavigation->GetPageSize());
+	$res = db_exec_limit($global_Con, $cmdSQLfirst_part, $cmdSQLmain_part, $cmdSQLlast_part, $myEventsNavigation->GetLimitLower(), $myEventsNavigation->GetPageSize(), $myFilter->OrderBy);
  
 	if($num == 0)
 	{
@@ -125,6 +123,7 @@ it become a reality.
 			$numarraywords = count($words);
 		}
 
+		$tc = 1;
 		while($row = db_fetch_array($res))
 		{
 			if (db_errno() != 0)
@@ -132,8 +131,8 @@ it become a reality.
 				echo db_errno() . ': ' . db_error(). '\n';
 			}
 		
-			//choose InfoUnitdType  1 = SL = Syslog, 3 = Eventreporter, O = Other
-			switch ($row[6]) 
+			//choose InfoUnitdType  1 = SL => Syslog ; 3 = ER => Eventreporter ; O = O => Other
+			switch ($row['InfoUnitID'])
 			{
 			  case 1:
 				$infounit = 'SL';
@@ -144,24 +143,23 @@ it become a reality.
 			  default:
 				$infounit = 'O';
 			}
-			static $tc = 1;
 
-			if($row[5] == "")
+			if($row['Message'] == "")
 				$message = _MSGNoMsg;
 			else
-				$message = $row[5];
+				$message = $row['Message'];
 
 			echo '<tr>';
-			echo '<td CLASS=TD' . $tc . '><nobr>'.$row[1].'</nobr></td>'; //date
-			echo '<td CLASS=TD' . $tc . '>'.$row[2].'</td>'; //facility
+			echo '<td CLASS=TD' . $tc . '><nobr>'.$row[_DATE].'</nobr></td>'; //date
+			echo '<td CLASS=TD' . $tc . '>'.$row['Facility'].'</td>'; //facility
 			
 			// get the description of priority (and get the the right color, if enabled)
 			$pricol = 'TD' . $tc;
-			$priword = FormatPriority($row[3], $pricol);
+			$priword = FormatPriority($row['Priority'], $pricol);
 			echo '<td CLASS=', $pricol, '>', $priword, '</td>'; 
 
 			echo '<td CLASS=TD' . $tc . '>'.$infounit.'</td>'; //InfoUnit
-			echo '<td CLASS=TD' . $tc . '>'.$row[4].'</td>'; //host
+			echo '<td CLASS=TD' . $tc . '>'.$row['FromHost'].'</td>'; //host
 			
 			$message = htmlspecialchars($message);
 			
@@ -207,7 +205,7 @@ it become a reality.
 				}
 			}
 
-			echo '<td CLASS=TD', $tc, '><a CLASS="Msg" href="details.php?lid=', $row[0] , '">', $message, '</a></td>'; //message
+			echo '<td CLASS=TD', $tc, '><a CLASS="Msg" href="details.php?lid=', $row['ID'] , '">', $message, '</a></td>'; //message
 
 			//for changing colors
 			if($tc == 1) $tc = 2;
@@ -217,8 +215,7 @@ it become a reality.
 			*/
 			echo '</tr>';
 		}
-
+		echo '</table>';
 	}
-	echo '</table>';
 	WriteFood();
 ?>

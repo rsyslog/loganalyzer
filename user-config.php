@@ -2,7 +2,7 @@
 
 /*#### #### #### #### #### #### #### #### #### #### 
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2003  Adiscon GmbH
+Copyright (C) 2004  Adiscon GmbH
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -29,7 +29,7 @@ it become a reality.
 <form method="POST" action="user-config-process.php" name="UserConfiguration">
 <input type="hidden" name="userConfig" value="UserConfiguration">
 
-<center><h3>..:: <?php echo _MSGUsrSet; ?> ::..</h3></td></center>
+<table align="center"><tr><td><h3>..:: <?php echo _MSGUsrSet; ?> ::..</h3></td></tr></table>
 
 <center>
 <table border="" cellpadding="2" cellspacing="0" width="700" align="center" Class="ConfigTable">
@@ -101,6 +101,9 @@ it become a reality.
 </form>
 </center>
 
+<?php
+/*
+?>
 <form method="POST" action="user-config-process.php" name="BookmarkConfiguration">
 <input type="hidden" name="bookmarkConfig" value="BookmarkDelete">
 <center>
@@ -129,7 +132,8 @@ it become a reality.
 		$result = db_fetch_singleresult($result);
 		if($num != 0)
 		{
-			echo '<select name="favorites">';
+			echo '<select name="favorites" onchange="window.open(this.options[this.selectedIndex].value, \'\'); return true;">';
+			echo '<option value="" selected>Select your Bookmark</option>';
 			$sites = explode(",", $result["PropValue"]);
 			$sitecntr = count($sites);
 			for($i = 0; $i < $sitecntr; $i++)
@@ -138,9 +142,7 @@ it become a reality.
 				echo "<option value='http://" . $site[0] . "'>" . $site[1] . "</option>";
 			}
 			echo '</select>';
-			echo "\t<input type=\"button\" value=\"Go to\">\t";
 			echo "\t<input type=\"submit\" value=\"" . _MSGDel . "\">\t";
-			echo "Sorry, GoTo Site is disabled at the moment!";
 		}
 		else
 			echo _MSGNoFav
@@ -171,7 +173,7 @@ it become a reality.
 </center>
 
 <?php
-
+*/
 	WriteFood();
 
 ?>

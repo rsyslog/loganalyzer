@@ -44,11 +44,13 @@ it become a reality.
 		var $UserDefaultTimeInterval; //!< The time interval set as default in the user's options menu
 		var $SQLWhereTime; //!< Contains the where part of the SQL statement
 		var $OrderBy; //!< Sorting argument
+		var $GroupBy; //!< Grouping Argument
+		var $Sort; //!< Ascending/Descending
 		var $SQLWherePart; //!< Contains the whole SQL where part
 		var $SQLWhereInfoUnit; //!< Restriction of InfoUnit type
 		var $SQLWherePriority; //!< Restriction of Priority
-    var $SQLWhereHost; //!< Restriction of ip/host
-    var $SQLWhereMsg; //!< Message must contain a certain string
+		var $SQLWhereHost; //!< Restriction of ip/host
+		var $SQLWhereMsg; //!< Message must contain a certain string
 	 
 		/*! Constructor
 		* 
@@ -56,13 +58,12 @@ it become a reality.
 		* from the database.
 		*/ 
 		function EventFilter()
-		{
-      
-      // get the selected mode (time period)
+		{      
+			// get the selected mode (time period)
 			$this->TimeInterval = $_SESSION['ti'];
       
-      //Order argument
-      $this->OrderBy = $_SESSION['order'];  
+			//Order argument
+			$this->OrderBy = $_SESSION['order'];
 
 			if($_SESSION['change'] == 'Predefined')
 			{
@@ -295,25 +296,25 @@ it become a reality.
 		*/
 		function SetSQLWhereInfoUnit()
 		{   
-      // sl = 1, er = 3, o
-      // sl-er-o (matrix)
-      // 0-0-0 -> all InfoUnit  #0
-      // 0-0-1 -> only o        #1
-      // 0-1-0 -> only er       #2
-      // 0-1-1 -> not sl        #3
-      // 1-0-0 -> only sl       #4
-      // 1-0-1 -> not er        #5
-      // 1-1-0 -> only sl and er#6
-      // 1-1-1 -> all InfoUnit  #7
-      $tmpSQL[0][0][0]= '';
-      $tmpSQL[0][0][1]= ' AND (InfoUnitID<>1 AND InfoUnitID<>3) ';
-      $tmpSQL[0][1][0]= ' AND InfoUnitID=3 ';
-      $tmpSQL[0][1][1]= ' AND InfoUnitID<>1 ';
-      $tmpSQL[1][0][0]= ' AND InfoUnitID=1 ';
-      $tmpSQL[1][0][1]= ' AND InfoUnitID<>3 ';
-      $tmpSQL[1][1][0]= ' AND (InfoUnitID=1 or InfoUnitID=3) ';
-      $tmpSQL[1][1][1]= '';
-      $this->SQLWhereInfoUnit = $tmpSQL[$_SESSION['infounit_sl']][$_SESSION['infounit_er']][$_SESSION['infounit_o']];
+		  // sl = 1, er = 3, o
+		  // sl-er-o (matrix)
+		  // 0-0-0 -> all InfoUnit  #0
+		  // 0-0-1 -> only o        #1
+		  // 0-1-0 -> only er       #2
+		  // 0-1-1 -> not sl        #3
+		  // 1-0-0 -> only sl       #4
+		  // 1-0-1 -> not er        #5
+		  // 1-1-0 -> only sl and er#6
+		  // 1-1-1 -> all InfoUnit  #7
+		  $tmpSQL[0][0][0]= '';
+		  $tmpSQL[0][0][1]= ' AND (InfoUnitID<>1 AND InfoUnitID<>3) ';
+		  $tmpSQL[0][1][0]= ' AND InfoUnitID=3 ';
+		  $tmpSQL[0][1][1]= ' AND InfoUnitID<>1 ';
+		  $tmpSQL[1][0][0]= ' AND InfoUnitID=1 ';
+		  $tmpSQL[1][0][1]= ' AND InfoUnitID<>3 ';
+		  $tmpSQL[1][1][0]= ' AND (InfoUnitID=1 or InfoUnitID=3) ';
+		  $tmpSQL[1][1][1]= '';
+		  $this->SQLWhereInfoUnit = $tmpSQL[$_SESSION['infounit_sl']][$_SESSION['infounit_er']][$_SESSION['infounit_o']];
      
 /*      
       if ($_SESSION['infounit_sl'] == 1)
@@ -517,16 +518,18 @@ it become a reality.
 		* Use this to get a part of the sql where clause. 
 		* This is responsilbe for the limitation of the requested data by time. 
 		*/
-		function SetSQLWherePart($time_only)
+		function SetSQLWherePart($whereMode)
 		{
-			if($time_only == 1)
-			{
-				$this->SQLWherePart = $this->GetSQLWhereTime();
-			}
-			else
+			//Mode 0 => I.e for events-display
+			if($whereMode == 0)
 			{
 				$this->SQLWherePart = $this->GetSQLWhereTime().$this->GetSQLWhereInfoUnit().$this->GetSQLWherePriority().$this->GetSQLWhereHost().$this->GetSQLWhereMsg();
 			}
+			elseif($whereMode == 1)
+			{
+				$this->SQLWherePart = $this->GetSQLWhereTime().$this->GetSQLWherePriority().$this->GetSQLWhereHost().$this->GetSQLWhereMsg();
+			}
+			
 		}
         
 
@@ -554,7 +557,6 @@ it become a reality.
 		 */
 		function GetSQLSort()
 		{
-  
 			switch ($this->OrderBy)
 			{
 				case "Date":
@@ -580,7 +582,50 @@ it become a reality.
 					break;
 			}
 			return $tmpSQL;
-		}	 
+		}
+
+		function GetSysLogTagSQLSort()
+		{
+			$this->OrderBy = $_SESSION['tag_order'];
+			switch ($this->OrderBy)
+			{
+				case "SysLogTag":
+					$tmpSQL = ' ORDER BY SysLogTag ' . $_SESSION['tag_sort'];
+					break;
+				case "Occurences":
+					$tmpSQL = ' ORDER BY occurences ' . $_SESSION['tag_sort'];
+					break;
+				case "Host":
+					$tmpSQL = ' ORDER BY FromHost ' . $_SESSION['tag_sort'];
+					break;
+				default:
+					$tmpSQL = ' ORDER BY SysLogTag ' . $_SESSION['tag_sort'];
+					break;
+			}
+			return $tmpSQL;
+		}
+
+		function SetSQLGroup($groupBy)
+		{
+			$this->GroupBy = $groupBy;
+		}
+
+		function GetSQLGroup()
+		{
+			switch($this->GroupBy)
+			{
+				case "SysLogTag":
+					$tmpSQL = " GROUP BY SysLogTag";
+					break;
+				case "SysLogTagHost":
+					$tmpSQL = " GROUP BY SysLogTag, FromHost";
+					break;
+				default:
+					$tmpSQL = " GROUP BY SysLogTag";
+					break;
+			}
+			return $tmpSQL;
+		}
 	}
 
 ?>

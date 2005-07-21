@@ -37,7 +37,7 @@ All Events between:
 
 ?>
 
-</select>&nbsp;
+</select>&nbsp;-
 <Select name="m1">
 
 <?php
@@ -52,7 +52,7 @@ All Events between:
 
 ?>
 
-</select>&nbsp;
+</select>&nbsp;-
 <Select name="d1">
 
 <?php
@@ -67,7 +67,7 @@ All Events between:
 
 ?>
 
-</select>&nbsp;and &nbsp;
+</select>&nbsp;&nbsp;<?php echo _MSGAnd;?>&nbsp;
 <Select name="y2">
 
 <?php
@@ -82,7 +82,7 @@ All Events between:
 
 ?>
 
-</select>&nbsp;
+</select>&nbsp;-
 <Select name="m2">
 
 <?php
@@ -97,7 +97,7 @@ All Events between:
 ?>
 				
 <% FOR P = 1 TO 12 %>
-</select>&nbsp;
+</select>&nbsp;-
 <Select name="d2">
 
 <?php
