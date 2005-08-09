@@ -176,7 +176,7 @@ define('_MSGApply', 'Apply Filters');
 define('_MSGDisSlt', 'Display');
 define('_MSGMethSlt', 'SysLogTags');
 define('_MSGMethHost', 'SysLogTags corresponding to hosts');
-define('_MSGInstDir', 'System Note: You haven\'t deleted the \'install/\' directory!! This causes a high security risk!!');
+define('_MSGInstDir', 'The \'install\' directory does still exist! If you configured phplogcon already, please delete or rename it. This causes a high security risk! Otherwise please click <a href="install/install.php">HERE</A> to start the installation script.');
 
 define('_InsWelc1', 'Welcome to the installation of phpLogCon, the WebInterface to log data.');
 define('_InsWelc2', 'The following steps will guide you through the installation and help you to install and configure phpLogCon correctly.');

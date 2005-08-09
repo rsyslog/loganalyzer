@@ -288,9 +288,28 @@ db_close($installCon);
 //  BEGIN EDITING CONFIG.PHP
 // ***************************
 
+// First check if the File is writeable!
+if (is_writable("../config.php") == FALSE)
+{
+	$strDbErrMsg = "Database Settings: ";
+	echo "<BR><u><b>Error:</b></u> <font color=red>The file '../config.php' is not writeable. Please check the permissions</b></font><br><br>Go back and correct this!<br>..:: <a href=\"javascript:history.back()\">Go back to installation</a> ::..<br>";
+	echo "<br><br></body></html>";
+	exit;
+}
+
+
 //open file handle
 $hConfigSrc = fopen("../scripts/config.php.ex", "r");
-$hConfigDes = fopen("../config.php", "w");
+$hConfigDes = @fopen("../config.php", "w");
+
+if ($hConfigDes == FALSE)
+{
+	$strDbErrMsg = "Database Settings: ";
+	echo "<BR><u><b>Error:</b></u> <font color=red>The file '../config.php' is not writeable. Please check the permissions</b></font><br><br>Go back and correct this!<br>..:: <a href=\"javascript:history.back()\">Go back to installation</a> ::..<br>";
+	echo "<br><br></body></html>";
+	exit;
+
+}
 
 while (!feof($hConfigSrc))
 {

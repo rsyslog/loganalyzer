@@ -86,7 +86,14 @@ it become a reality.
 			<a href="index.php"><?php echo _MSGHom; ?></a> | <a href="events-display.php"><?php echo _MSGShwEvn; ?></a>
 			| <a href="syslog-index.php"><?php echo _MSGShwSlt; ?></a>
 			| <a href="filter-config.php"><?php echo _MSGFOpt; ?></a> | <a href="user-config.php"><?php echo _MSGUOpt; ?></a> | 
-			<a href="<? echo $_SERVER['PHP_SELF'] . GetSortedArgs(0); ?>"><?php echo _MSGRef; ?></a> | <a href="doc/index.htm" target="_blank"><?php echo _MSGHlp; ?></a>
+			<a href="
+			<? echo  $_SERVER['PHP_SELF'];
+			   $i = strpos($_SERVER['REQUEST_URI'], '?');
+			   if ($i>0)
+				   echo substr($_SERVER['REQUEST_URI'], $i);
+			   ?>
+			">
+			<?php echo _MSGRef; ?></a> | <a href="doc/index.htm" target="_blank"><?php echo _MSGHlp; ?></a>
 			<?php if($_SESSION['debug'] == 1)echo _MSGMenInf1 . "<font color=\"red\">" . strtoupper(_CON_MODE) . "</font>" . _MSGMenInf2 . "<font color=\"red\">" . strtoupper(_DB_APP) . "</font>" . _MSGMenInf3 . "<font color=\"red\">" . strtoupper(_DBNAME) . "</font>";?>
 		</td>
   		<td align="left">&nbsp;</td>

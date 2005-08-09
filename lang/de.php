@@ -176,7 +176,7 @@ define('_MSGApply', 'Filter anwenden');
 define('_MSGShow', 'Show');
 define('_MSGMethSlt', 'SysLogTags');
 define('_MSGMethHost', 'SysLogTags auf Hosts beziehend');
-define('_MSGInstDir', 'System Meldung: Sie haben den \'install/\' Ordner nicht gelöscht!! Dies verursacht ein hohes sicherheitsrisiko!!');
+define('_MSGInstDir', 'Das \'install\' Verzeichnis existiert noch! Wenn Sie phplogcon schon komnfiguriert haben, löschen oder benennen Sie dieses Verzeichnis um. Dies verursacht sonst ein hohes sicherheitsrisiko! Anderfalls klicken Sie <a href="install/install.php">HIER</A> um die Installation von PHPLogCon zu starten.');
 
 define('_InsWelc1', 'Willkommen zur Installation von phpLogCon, dem Logging-WebInterface.');
 define('_InsWelc2', 'Die folgenden Schritte werden Sie durch die Installation begleiten und Ihnen bei der korrekten Installation und Konfiguration von phpLogCon helfen.');

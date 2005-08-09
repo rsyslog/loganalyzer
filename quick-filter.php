@@ -114,13 +114,10 @@ function ShowVarFilter()
 
 ?>
 </form>
-
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] . GetSortedArgs(1); ?>">
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ; ?>">
 <input type="hidden" name="quickFilter" value="change">
 <?php
-
 	ShowVarFilter();
-
 ?>
 
 <input type="submit" name="form" value="Submit">

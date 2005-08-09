@@ -62,7 +62,7 @@ else
 						<select name="dbcon">
 							<option value="nativemysql" selected>MySQL</Option>
 							<option value="odbcmysql">MySQL via ODBC</Option>
-							<option value="odbcmssql">MSSQL via ODBC</Option>
+							<option value="odbcmssql">MSSQL/MSAccess via ODBC</Option>
 						</select>
 					</td>
 				</tr>
