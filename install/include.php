@@ -10,10 +10,7 @@ function WriteHead($title)
 	<head>
 		<title><?php echo $title; ?></title>
 		<META NAME="robots" CONTENT="INDEX,FOLLOW">
-		<META NAME="copyright" CONTENT="Copyright (C) 2003 Adiscon GmbH, Erftstadt - www.adiscon.com">
-		<META name="Keywords" content="sql server win NT windows 7 2000 replication merge nt transactional date time resolver">
 		<META http-equiv="pragma" CONTENT="no-cache">
-		<META name="Description" content="">
 		<link rel="stylesheet" href="../layout/phplogcon.css" type="text/css">
 	</head>
 	<body>
@@ -40,13 +37,14 @@ function WriteFoot()
 {
 
 ?>
-	<!-- Foot creation -->
+	<!-- Footer creation -->
 		<center>
 		<table>
 			<tr>
 				<td>
 					<br /><br />
-					<small><i><a href="http://www.phplogcon.com/" target="phplogcon">phpLogCon</a>, Copyright &copy; 2003 - 2004 <a href="http://www.adiscon.com" target="Adiscon">Adiscon GmbH</a></i></small>
+					<small><i><a href="http://www.phplogcon.org/" target="phplogcon">phpLogCon</a>,
+					Copyright &copy; 2003 - 2005 <a href="http://www.adiscon.com" target="Adiscon">Adiscon GmbH</a>. Part of the <a href="http://www.monitorware.com/">MonitorWare line of Products</a>.</i></small>
 				</td>
 			</tr>
 		</table>
