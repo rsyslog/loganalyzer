@@ -1,20 +1,29 @@
 <?php
 
-/*#### #### #### #### #### #### #### #### #### #### 
+/*#### #### #### #### #### #### #### #### #### ####
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2004  Adiscon GmbH
+Copyright (C) 2004-2005  Adiscon GmbH
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Version 1.1
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-If you have questions about phpLogCon in general, please email info@adiscon.com. To learn more about phpLogCon, please visit 
-http://www.phplogcon.com.
+You should have received a copy of the GNU General Public License along with this program; 
+if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
+MA  02111-1307, USA.
 
-This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. See AUTHORS to learn who helped make 
-it become a reality.
+If you have questions about phpLogCon in general, please email info@adiscon.com. 
+To learn more about phpLogCon, please visit http://www.phplogcon.com.
+
+This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. 
+See AUTHORS to learn who helped make it become a reality.
 
 */#### #### #### #### #### #### #### #### #### #### 
 
@@ -73,7 +82,8 @@ it become a reality.
 	  }
 	  return ($ntseverity_txt);
 	}
-
+	
+	
 ?>
 
 <br>
@@ -178,16 +188,96 @@ if($row['InfoUnitID'] == 3)
 		}
 	}
 
+// by therget - for renaming of severity states
+// --->
+function SeverityText($severity)
+{
+  switch ($severity) //Severity
+  {
+	case 0:
+		 $severity_txt = 'EMERGENCY';
+		 break;
+	case 1:
+		 $severity_txt = 'ALERT';
+		 break;
+	case 2:
+		 $severity_txt = 'CRITICAL';
+		 break;
+	case 3:
+		 $severity_txt = 'ERROR';
+		 break;
+	case 4:
+		 $severity_txt = 'WARNING';
+		 break;
+	case 5:
+		 $severity_txt = 'NOTICE';
+		 break;
+	case 6:
+		 $severity_txt = 'INFO';
+		 break;
+	case 7:
+		 $severity_txt = 'DEBUG';
+		 break;
+	default:
+		 die('Error Invalid Severity number!');
+  }
+  return ($severity_txt);
+}
+// <---- end
+
+// backgroundcolor regarding severity state
+$severity = SeverityText($row['Priority']);
+if ($severity == "EMERGENCY")
+{
+	$class = "CLASS=PriorityEmergency";
+}
+elseif ($severity == "ALERT")
+{
+	$class = "CLASS=PriorityAlert";
+}
+elseif ($severity == "CRITICAL")
+{
+	$class = "CLASS=PriorityCritical";
+}
+elseif ($severity == "ERROR")
+{
+	$class = "CLASS=PriorityError";
+}
+elseif ($severity == "WARNING")
+{
+	$class = "CLASS=PriorityWarning";
+}
+elseif ($severity == "NOTICE")
+{
+	$class = "CLASS=PriorityNotice";
+}
+elseif ($severity == "INFO")
+{
+	$class = "CLASS=PriorityInfo";
+}
+elseif ($severity == "DEBUG")
+{
+	$class = "CLASS=PriorityDebug";
+}
+
+
+$importance = $row['Importance'];
 ?>
 
 <tr><td CLASS=TDHEADER><b><?php echo _MSGMsg; ?></b></td><td CLASS=TD2><?php echo $tmpmsg; ?></td></tr>
 <tr><td CLASS=TDHEADER><?php echo _MSGFac; ?></td><td CLASS=TD1><?php echo $row['Facility']; ?></td></tr>
-<tr><td CLASS=TDHEADER><?php echo _MSGPri; ?></td><td CLASS=TD2><?php echo $row['Priority']; ?></td></tr>
-<tr><td CLASS=TDHEADER><?php echo _MSGImp; ?></td><td CLASS=TD1><?php echo $row['Importance']; ?></td></tr>
+<tr><td CLASS=TDHEADER><?php echo _MSGPri; ?></td><td <?php echo $class ?> ><?php echo $severity ?></td></tr>
+
+<tr><td CLASS=TDHEADER><?php echo "SysLogTag"; ?></td><td CLASS=TD1><?php echo $row['SysLogTag']; ?></td></tr>
+<?php 
+if ($importance != "")
+{
+	echo "<tr><td CLASS=TDHEADER>", _MSGImp," </td><td CLASS=TD2> $importance </td></tr>";
+}
+?>
 </table>
 
 <?php
-
 	echo "</table>";
-	WriteFood();
+	WriteFooter();
 ?>

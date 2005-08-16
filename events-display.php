@@ -1,23 +1,31 @@
 <?php
 
-/*#### #### #### #### #### #### #### #### #### #### 
+/*#### #### #### #### #### #### #### #### #### ####
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2004  Adiscon GmbH
+Copyright (C) 2004-2005  Adiscon GmbH
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Version 1.1
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-If you have questions about phpLogCon in general, please email info@adiscon.com. To learn more about phpLogCon, please visit 
-http://www.phplogcon.com.
+You should have received a copy of the GNU General Public License along with this program; 
+if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
+MA  02111-1307, USA.
 
-This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. See AUTHORS to learn who helped make 
-it become a reality.
+If you have questions about phpLogCon in general, please email info@adiscon.com. 
+To learn more about phpLogCon, please visit http://www.phplogcon.com.
+
+This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. 
+See AUTHORS to learn who helped make it become a reality.
 
 */#### #### #### #### #### #### #### #### #### #### 
-
 	include 'include.php';
 
 	WriteStandardHeader(_MSGShwEvn);
@@ -33,7 +41,9 @@ it become a reality.
 
 	//define the last part of the sql statment, e.g. the where part, ordery by, etc.
 	$myFilter = New EventFilter;
+	
 	$cmdSQLlast_part .= $myFilter->GetSQLWherePart(0);
+	
 	$cmdSQLlast_part .= $myFilter->GetSQLSort();
 
 	//Set Priority Filter if activated
@@ -149,8 +159,19 @@ it become a reality.
 			else
 				$message = $row['Message'];
 
-			echo '<tr>';
-			echo '<td CLASS=TD' . $tc . '><nobr>'.$row[_DATE].'</nobr></td>'; //date
+			// If date is today, only show the time --->
+			$current_date = $row[_DATE];
+			$now = date("Y-m-d 00:00:00");
+			if ($current_date > $now)
+			{
+				$current_date = substr($current_date, 10, 16);
+			}
+			// <---
+			
+
+
+			echo '<tr>';			
+			echo '<td CLASS=TD' . $tc . '><nobr>'.$current_date.'</nobr></td>'; //date
 			echo '<td CLASS=TD' . $tc . '>'.$row['Facility'].'</td>'; //facility
 			
 			// get the description of priority (and get the the right color, if enabled)
@@ -213,9 +234,9 @@ it become a reality.
 			/*
 			echo "<td>".$row['Priority']."</td>";
 			*/
-			echo '</tr>';
+			echo '</tr>', "\r\n";
 		}
 		echo '</table>';
 	}
-	WriteFood();
+	WriteFooter();
 ?>

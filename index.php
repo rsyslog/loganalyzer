@@ -4,22 +4,26 @@
 phpLogCon - A Web Interface to Log Data.
 Copyright (C) 2004-2005  Adiscon GmbH
 
- Version 1.1
+Version 1.1
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your
 option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+You should have received a copy of the GNU General Public License along with this program; 
+if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
+MA  02111-1307, USA.
 
-If you have questions about phpLogCon in general, please email info@adiscon.com. To learn more about phpLogCon, please visit
-http://www.phplogcon.com.
+If you have questions about phpLogCon in general, please email info@adiscon.com. 
+To learn more about phpLogCon, please visit http://www.phplogcon.com.
 
-This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. See AUTHORS to learn who helped make
-it become a reality.
+This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. 
+See AUTHORS to learn who helped make it become a reality.
 
 */#### #### #### #### #### #### #### #### #### #### 
 
@@ -203,5 +207,5 @@ it become a reality.
 		echo "</table>";
 	}
 
-	WriteFood();
+	WriteFooter();
 ?>
