@@ -38,7 +38,7 @@ define('_MSGLogSuc', 'Login erfolgreich');
 define('_MSGWel', 'Willkommen bei phpLogCon');
 define('_MSGChoOpt', '! Wählen sie unter den Optionen aus dem obrigen Menü aus');
 define('_MSGQuiInf', 'Kurz-Info (Unter Berücksichtigung der Filtereinstellungen)');
-define('_MSGTop5', 'Top fünf Logs (Unter Berücksichtigung der Filtereinstellungen)');
+define('_MSGTop5', 'Letzte fünf Logs (Unter Berücksichtigung der Filtereinstellungen)');
 define('_MSGNoData', 'Keine Daten gefunden');
 define('_MSGDate', 'Datum');
 define('_MSGFac', 'Facility');

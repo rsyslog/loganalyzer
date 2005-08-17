@@ -53,7 +53,7 @@ See AUTHORS to learn who helped make it become a reality.
 	*/
 	//amount of data records displayed
 	
-	if($_SESSION['epp'] < 1 || $_SESSION['epp'] > 100)
+	if($_SESSION['epp'] < 1 || $_SESSION['epp'] > 2000)
 		$myEventsNavigation = new EventsNavigation(20);
 	else
 		$myEventsNavigation = new EventsNavigation($_SESSION['epp']);

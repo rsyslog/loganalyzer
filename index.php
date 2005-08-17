@@ -136,6 +136,11 @@ See AUTHORS to learn who helped make it become a reality.
 		$rowIndex = 'num';
 	else
 		$rowIndex = 0;
+	
+	if (_AdminMessage != "")
+	{
+		echo "<br><br><b>"._AdminMessage."</b><br>";
+	}
 
 	echo "<br><br><b>" . _MSGQuiInf . "</b>:";
 	echo "<table border='0' cellspacing='0' class=\"EventTable\"><br>";
@@ -205,6 +210,20 @@ See AUTHORS to learn who helped make it become a reality.
 			echo "</tr>";
 		}
 		echo "</table>";
+		echo "<a href=\"events-display.php\"><b>[more...]</b></a>";
+
+		// 2005-08-17 by therget --->
+		// If any date is in the future, show a message on the homepage.		
+		$now = date("Y-m-d g:i:s");		
+		$sqlstatement = "SELECT COUNT(*) AS datecount FROM "._DBTABLENAME ." WHERE "._DATE." > '".$now."'";		
+		$result = db_exec($global_Con,$sqlstatement);				
+		$db_datecount = db_fetch_array($result, "datecount");		
+
+		if ($db_datecount[0] > 0)
+		{
+			echo "<br><br><b>Note:</b> There are ".$db_datecount[0]." Events in the Database, which are in the future";
+		}
+		// <--- End 2005-08-17 by therget
 	}
 
 	WriteFooter();

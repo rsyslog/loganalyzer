@@ -36,5 +36,8 @@ See AUTHORS to learn who helped make it become a reality.
 	<option value="20" <?php if ($_SESSION["epp"] == 20) echo "selected"; ?>>20 per page</option>
 	<option value="25" <?php if ($_SESSION["epp"] == 25) echo "selected"; ?>>25 per page</option>
 	<option value="50" <?php if ($_SESSION["epp"] == 50) echo "selected"; ?>>50 per page</option>
-  <option value="100" <?php if ($_SESSION["epp"] == 100) echo "selected"; ?>>100 per page</option>
+	<option value="100" <?php if ($_SESSION["epp"] == 100) echo "selected"; ?>>100 per page</option>
+	<option value="500" <?php if ($_SESSION["epp"] == 500) echo "selected"; ?>>500 per page</option>
+	<option value="1000" <?php if ($_SESSION["epp"] == 1000) echo "selected"; ?>>1000 per page</option>
+	<option value="2000" <?php if ($_SESSION["epp"] == 2000) echo "selected"; ?>>2000 per page</option>
 </Select>

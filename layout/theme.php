@@ -43,7 +43,6 @@ See AUTHORS to learn who helped make it become a reality.
 	*/
   
   /*!
-  * Include the stylesheeh
   *
   */ 
 
@@ -52,6 +51,10 @@ See AUTHORS to learn who helped make it become a reality.
 	* generate the url for pint version
 	* /return The Url refer to the pint version of the current page.
 	*/
+
+	// very important to include config settings at beginning! (enable header setting)
+	// include 'config.php';
+
 	function GetPrinterURL()
 	{
 		global $PHP_SELF, $QUERY_STRING;
@@ -81,10 +84,15 @@ See AUTHORS to learn who helped make it become a reality.
 
 <table align="center" width="100%" cellspacing="0" cellpadding="0" border="0" CLASS="EventTable">	
 	<tr>
-		<td width="220" align="left"><img src="<? echo _ADLibPathImage; ?>phplogcon.gif" border="0"></td>
-		<td align="left">
-    		<h1>phpLogCon monitoring</h1>
-		</td>
+		<?php
+			if (_ENABLEHEADER == "1")
+			{
+				echo "<td width=\"220\" align=\"left\"><img src=\"",_ADLibPathImage,"phplogcon.gif\" border=\"0\"></td>
+				<td align=\"left\">
+				<h1>phpLogCon monitoring</h1>
+				</td>";
+			}
+		?>
 	</tr>
 </table>
     

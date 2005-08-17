@@ -1,23 +1,31 @@
 <?php
 
-/*#### #### #### #### #### #### #### #### #### #### 
-
+/*#### #### #### #### #### #### #### #### #### ####
 phpLogCon - A Web Interface to Log Data.
-Copyright (C) 2004  Adiscon GmbH
+Copyright (C) 2004-2005  Adiscon GmbH
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Version 1.1
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-If you have questions about phpLogCon in general, please email info@adiscon.com. To learn more about phpLogCon, please visit
-http://www.phplogcon.com.
+You should have received a copy of the GNU General Public License along with this program; 
+if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
+MA  02111-1307, USA.
 
-This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. See AUTHORS to learn who helped make
-it become a reality.
+If you have questions about phpLogCon in general, please email info@adiscon.com. 
+To learn more about phpLogCon, please visit http://www.phplogcon.com.
 
-*/#### #### #### #### #### #### #### #### #### ####
+This Project was intiated and is maintened by Rainer Gerhards <rgerhards@hq.adiscon.com>. 
+See AUTHORS to learn who helped make it become a reality.
+
+*/#### #### #### #### #### #### #### #### #### #### 
 
 
 	// Set some defaults
@@ -95,6 +103,8 @@ it become a reality.
 /*
 ***** BEGIN VARIOUS SETTINGS *****
 */
+	//Set to 1 and the Header (image/introduce sentence) will be used! Set 0 to disable it.
+  define('_ENABLEHEADER', 1);
 
 	//Set to 1 and User Interface will be used! Set 0 to disable it.
   define('_ENABLEUI', 0);
@@ -103,13 +113,25 @@ it become a reality.
   define('_DEFLANG', 'en');
 
 	// Use UTC time
-  define('_UTCtime', 1);
+  define('_UTCtime', 0);
   
 	// Get messages date by ReceivedAt or DeviceReportedTime
   define('_DATE', 'ReceivedAt');
   
 	// Coloring priority
   define('_COLPriority', 1);
+
+	// Custom Admin Message (appears on the homepage)
+  define('_AdminMessage', "Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
+  ja, dieser Satz steht absichtlich 8 mal untereinander :P Damit ich nicht nur eine Zeile hab, mir fiel nicht mehr ein ^^");
+
 
 /*
 ***** END VARIOUS SETTINGS *****
