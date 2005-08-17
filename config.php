@@ -122,15 +122,7 @@ See AUTHORS to learn who helped make it become a reality.
   define('_COLPriority', 1);
 
 	// Custom Admin Message (appears on the homepage)
-  define('_AdminMessage', "Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  Ich bin Timm Herget und dies ist mein phpLogCon, ich bin hier der Admin >_<<br>
-  ja, dieser Satz steht absichtlich 8 mal untereinander :P Damit ich nicht nur eine Zeile hab, mir fiel nicht mehr ein ^^");
+  define('_AdminMessage', "");
 
 
 /*
