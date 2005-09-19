@@ -56,7 +56,7 @@ if( !isset($_SESSION['save_cookies']) )
 // use the language code, only two letters are permitted
 if (!isset($_SESSION['language']))
 {
-$_SESSION['language'] = _DEFLANG;
+	$_SESSION['language'] = _DEFLANG;
 }
 
 /*
@@ -65,17 +65,17 @@ $_SESSION['language'] = _DEFLANG;
 */
 if (!isset($_SESSION['stylesheet']))
 {
-$_SESSION['stylesheet'] = 'phplogcon'; // default
+	$_SESSION['stylesheet'] = 'phplogcon'; // default
 }
 
 if (!isset($_SESSION['debug']))
 {
-$_SESSION['debug'] = 0; // default
+	$_SESSION['debug'] = 0; // default
 }
 
 if (!isset($_SESSION['savefiltersettings']))
 {
-$_SESSION['savefiltersettings'] = 0; // default
+	$_SESSION['savefiltersettings'] = 0; // default
 }
 
 /*
@@ -83,17 +83,17 @@ $_SESSION['savefiltersettings'] = 0; // default
 * if the quick filter settings not configured yet.
 */
 if (!isset($_SESSION['FilterInfoUnit'])) 
-$_SESSION['FilterInfoUnit'] = _FilterInfoUnit;
+	$_SESSION['FilterInfoUnit'] = _FilterInfoUnit;
 if (!isset($_SESSION['FilterOrderby'])) 
-$_SESSION['FilterOrderby'] = _FilterOrderby;
+	$_SESSION['FilterOrderby'] = _FilterOrderby;
 if (!isset($_SESSION['FilterRefresh'])) 
-$_SESSION['FilterRefresh'] = _FilterRefresh;
+	$_SESSION['FilterRefresh'] = _FilterRefresh;
 if (!isset($_SESSION['FilterColExp'])) 
-$_SESSION['FilterColExp'] = _FilterColExp;  
+	$_SESSION['FilterColExp'] = _FilterColExp;  
 if (!isset($_SESSION['FilterHost'])) 
-$_SESSION['FilterHost'] = _FilterHost;
+	$_SESSION['FilterHost'] = _FilterHost;
 if (!isset($_SESSION['FilterMsg'])) 
-$_SESSION['FilterMsg'] = _FilterMsg;
+	$_SESSION['FilterMsg'] = _FilterMsg;
 
 /*
 * Filtering by ip/host
@@ -101,11 +101,13 @@ $_SESSION['FilterMsg'] = _FilterMsg;
 */
 if (isset($_POST['filhost']))
 {
-$_SESSION['filhost'] = PreStrFromTxt4DB($_POST['filhost']); 
-$_POST['filhost'] = PreStrFromTxt4Out($_POST['filhost']);       
+	$_SESSION['filhost'] = PreStrFromTxt4DB($_POST['filhost']);       
 }
 else
-$_SESSION['filhost'] = '';
+{
+	if (!isset($_SESSION['filhost']))
+		$_SESSION['filhost'] = '';
+}
 
 
 /*
@@ -114,11 +116,29 @@ $_SESSION['filhost'] = '';
 */
 if (isset($_POST['searchmsg']))
 {
-$_SESSION['searchmsg'] = PreStrFromTxt4DB($_POST['searchmsg']);
-$_POST['searchmsg'] = PreStrFromTxt4Out($_POST['searchmsg']);         
+	$_SESSION['searchmsg'] = PreStrFromTxt4DB($_POST['searchmsg']);        
 }
 else
-$_SESSION['searchmsg'] = '';
+{
+	if (!isset($_SESSION['searchmsg']))
+		$_SESSION['searchmsg'] = '';
+}
+
+/*
+* Color an Expression 
+*/
+if (isset($_POST['regexp']))
+{
+	$_SESSION['regexp'] = $_POST['regexp'];
+	$_SESSION['color'] = $_POST['color'];
+}
+else
+{
+	if (!isset($_SESSION['regexp']))
+		$_SESSION['regexp'] = '';
+	if (!isset($_SESSION['color']))
+		$_SESSION['color'] = 'red';
+}
 
 if (isset($_POST['d1']))
 {
@@ -197,15 +217,6 @@ if( isset($_POST['show_methode']) )
 	$_SESSION['show_methode'] = $_POST['show_methode'];
 }
 
-
-//events-display.php
-
-// InitVariable(2, "search", "");
-// InitVariable(1, "regexp", "");
-
-
-// implement this
-//InitVariable(1, "color", "red");
 
 if (!isset($_SESSION['infounit_sl']))
 $_SESSION['infounit_sl'] = 1;

@@ -49,13 +49,13 @@ See AUTHORS to learn who helped make it become a reality.
   define('_DBSERVER', 'localhost');
 
 	// DSN (ODBC) or database name (Mysql)
-  define('_DBNAME', 'monitorware');
+  define('_DBNAME', 'phplogcon');
 
 	// Userid for database connection ***
-  define('_DBUSERID', 'user');
+  define('_DBUSERID', 'root');
 
 	// Password for database connection ***
-  define('_DBPWD', 'pass');
+  define('_DBPWD', '');
 
 	// table name
   define('_DBTABLENAME', 'SystemEvents');

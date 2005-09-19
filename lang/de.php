@@ -228,3 +228,5 @@ define('_InsPer9', 'Vergessen Sie nicht den kompletten Ordner \'install/\' zu lö
 define('_InsPer10', 'Diese Datein können für einen DoS auf Ihr phpLogCon genutzt werden!');
 define('_InsPer11', 'Nach Löschen des Ordners können Sie zum ');
 define('_InsPer12', 'Index wecheln!');
+define('_NoteMsgInFuture1', '<br><br><b>Hinweis:</b> Es sind ');
+define('_NoteMsgInFuture2', ' Events in der Datenbank, die ein Datum haben, das in der Zukunft liegt!');

@@ -214,14 +214,19 @@ See AUTHORS to learn who helped make it become a reality.
 
 		// 2005-08-17 by therget --->
 		// If any date is in the future, show a message on the homepage.		
-		$now = date("Y-m-d g:i:s");		
-		$sqlstatement = "SELECT COUNT(*) AS datecount FROM "._DBTABLENAME ." WHERE "._DATE." > '".$now."'";		
+
+		/* 2005-09-19 by mm
+		 * $now = date("Y-m-d g:i:s"); // <-- this is a bug use H for 0 - 23 hours.
+		 * Furthermore, use the database driver for date/time stuff!
+		 */		
+		$sqlstatement = "SELECT COUNT(*) AS datecount FROM "._DBTABLENAME ." WHERE "._DATE." > ".dbc_sql_timeformat(time());
+
 		$result = db_exec($global_Con,$sqlstatement);				
 		$db_datecount = db_fetch_array($result, "datecount");		
 
 		if ($db_datecount[0] > 0)
 		{
-			echo "<br><br><b>Note:</b> There are ".$db_datecount[0]." Events in the Database, which are in the future";
+			echo _NoteMsgInFuture1, $db_datecount[0], _NoteMsgInFuture2;
 		}
 		// <--- End 2005-08-17 by therget
 	}

@@ -228,3 +228,5 @@ define('_InsPer9', 'Don\'t forget to delete whole \'install/\' directory!');
 define('_InsPer10', 'These files could be user for a DoS on your phpLogCon!');
 define('_InsPer11', 'After deleting the directory, you can go to ');
 define('_InsPer12', 'index');
+define('_NoteMsgInFuture1', '<br><br><b>Note:</b> There are ');
+define('_NoteMsgInFuture2', ' events in the database, which are in the future!');

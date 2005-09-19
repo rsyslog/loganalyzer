@@ -184,15 +184,15 @@ See AUTHORS to learn who helped make it become a reality.
 			
 			$message = htmlspecialchars($message);
 			
-			if(isset($_POST['regexp']) && $_POST['regexp'] != "")
+			if(isset($_SESSION['regexp']) && $_SESSION['regexp'] != '')
 			{
-				$_POST['regexp'] = trim($_POST['regexp']);
+				$_SESSION['regexp'] = trim($_SESSION['regexp']);
 				$messageUp = strtoupper($message);
-				$regexpUp = strtoupper($_POST['regexp']);
+				$regexpUp = strtoupper($_SESSION['regexp']);
 				$search_pos = strpos($messageUp, $regexpUp);
 				if($search_pos !== FALSE)
 				{
-					$regexpLng = strlen($_POST['regexp']);
+					$regexpLng = strlen($_SESSION['regexp']);
 					$strCount = substr_count($messageUp, $regexpUp);
 					$strTmp = $message;
 
@@ -204,7 +204,7 @@ See AUTHORS to learn who helped make it become a reality.
 						$subStrSt = substr($strTmp, 0 , $search_pos);
 						$subStrExp = substr($strTmp, $search_pos, $regexpLng);
 						$subStrEnd = substr($strTmp, ($search_pos + $regexpLng));
-						$message .= $subStrSt . '<font color="' . $_POST['color'] . '">' . $subStrExp . '</font>';
+						$message .= $subStrSt . '<font color="' . $_SESSION['color'] . '">' . $subStrExp . '</font>';
 						if($i == ($strCount - 1))
 							$message .= $subStrEnd;
 
