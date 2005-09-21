@@ -4,8 +4,6 @@
 phpLogCon - A Web Interface to Log Data.
 Copyright (C) 2004-2005  Adiscon GmbH
 
-Version 1.1
-
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your
@@ -52,10 +50,10 @@ See AUTHORS to learn who helped make it become a reality.
   define('_DBNAME', 'phplogcon');
 
 	// Userid for database connection ***
-  define('_DBUSERID', 'root');
+  define('_DBUSERID', 'MonitorWareUser');
 
 	// Password for database connection ***
-  define('_DBPWD', '');
+  define('_DBPWD', 'UsersPassword');
 
 	// table name
   define('_DBTABLENAME', 'SystemEvents');
@@ -124,6 +122,10 @@ See AUTHORS to learn who helped make it become a reality.
 	// Custom Admin Message (appears on the homepage)
   define('_AdminMessage', "");
 
+	// Version Number
+  define('_VersionMajor', "1");
+  define('_VersionMinor', "2");
+  define('_VersionPatchLevel', "0");
 
 /*
 ***** END VARIOUS SETTINGS *****

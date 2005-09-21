@@ -4,8 +4,6 @@
 phpLogCon - A Web Interface to Log Data.
 Copyright (C) 2004-2005  Adiscon GmbH
 
-Version 1.1
-
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your
@@ -28,12 +26,10 @@ See AUTHORS to learn who helped make it become a reality.
 */#### #### #### #### #### #### #### #### #### #### 
 
 
-
 	include 'include.php';
 	include _CLASSES . 'eventsnavigation.php';
 
-
-
+	
 	if(_ENABLEUI == 1)
 	{
 		// *** WHEN TRUE, LOGOUT USER ***
@@ -92,6 +88,11 @@ See AUTHORS to learn who helped make it become a reality.
 	}
 
 	WriteStandardHeader('Index');
+
+	// Show current Version Number (configurable in config.php):
+	echo "<br><b>phpLogCon version "._VersionMajor."."._VersionMinor."."._VersionPatchLevel."</b><br>";
+
+
 	echo '<br>';
 	include _CLASSES . 'eventfilter.php';
 
