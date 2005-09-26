@@ -124,6 +124,11 @@ See AUTHORS to learn who helped make it become a reality.
 	// Custom Admin Message (appears on the homepage)
   define('_AdminMessage', "");
 
+	// Version Number
+  define('_VersionMajor', "1");
+  define('_VersionMinor', "2");
+  define('_VersionPatchLevel', "0");
+
 
 /*
 ***** END VARIOUS SETTINGS *****

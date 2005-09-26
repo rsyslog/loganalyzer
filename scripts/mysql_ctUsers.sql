@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS Users (
   HomeTZ int(11) NOT NULL default '0',
   PrefCulture varchar(5) NOT NULL default '',
   PRIMARY KEY  (UserID)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM AUTO_INCREMENT=1

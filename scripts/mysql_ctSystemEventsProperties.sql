@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS SystemEventsProperties (
 	SystemEventID int NULL ,
 	ParamName varchar (255)  NULL ,
 	ParamValue varchar (255)  NULL 
-);
+)

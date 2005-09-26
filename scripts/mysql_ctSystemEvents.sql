@@ -30,4 +30,4 @@ CREATE TABLE IF NOT EXISTS SystemEvents (
   SystemID int(11) NOT NULL default '0',
   Checksum int(11) NOT NULL default '0',
   PRIMARY KEY  (ID)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM AUTO_INCREMENT=1

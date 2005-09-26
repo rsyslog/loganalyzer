@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS UserPrefs (
   Name varchar(255) NOT NULL default '',
   PropValue varchar(200) NOT NULL default '0',
   PRIMARY KEY  (ID)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM AUTO_INCREMENT=1
