@@ -35,7 +35,7 @@ See AUTHORS to learn who helped make it become a reality.
 */
 
 // enable it only for testing purposes
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 //if (!headers_sent()) { header("Pragma: no-cache"); }
 header("Pragma: no-cache");
