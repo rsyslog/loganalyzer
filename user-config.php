@@ -46,7 +46,6 @@ See AUTHORS to learn who helped make it become a reality.
 	<td colspan="2" Class="Header1">
 		<?php echo _MSGSty; ?>:
 	</td>
-	<td Class="Header1">&nbsp;</td>
 </tr>
 <tr>
 	<td><?php echo _MSGStyle;?></td>
@@ -79,7 +78,6 @@ See AUTHORS to learn who helped make it become a reality.
 	<td colspan="2" Class="Header1">
 		<?php echo _MSGSave; ?>
 	</td>
-	<td Class="Header1">&nbsp;</td>
 </tr>
 <tr>
 	<td><?php echo _MSGFilSave1;?></td>
@@ -97,7 +95,6 @@ See AUTHORS to learn who helped make it become a reality.
 	<td colspan="2" Class="Header1">
 		<?php echo _MSGAddInfo; ?>
 	</td>
-	<td Class="Header1">&nbsp;</td>
 </tr>
 <tr>
 	<td><?php echo _MSGDebug1;?></td>
@@ -122,10 +119,9 @@ See AUTHORS to learn who helped make it become a reality.
 	{
 ?>
 <tr>
-	<td Class="Header1">
+	<td colspan="2" Class="Header1">
 		Bookmarks:
 	</td>
-	<td Class="Header1">&nbsp;</td>
 </tr>
 
 <tr>

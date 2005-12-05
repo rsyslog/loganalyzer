@@ -66,7 +66,7 @@ See AUTHORS to learn who helped make it become a reality.
 <center>
 <table border="" cellpadding="2" cellspacing="0" width="700" align="center" Class="ConfigTable">
 <tr>
-	<td colspan="3" Class="Header1">
+	<td colspan="2" Class="Header1">
 		<?php echo _MSGFilCon; ?>:
 	</td>
 </tr>
@@ -128,7 +128,7 @@ End this is not implemented yet! */ ?>
 	<td>&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="3" Class="Header1">
+	<td colspan="2" Class="Header1">
 		<?php echo _MSGSltFil; ?>:
 	</td>
 </tr>
@@ -148,7 +148,6 @@ End this is not implemented yet! */ ?>
 	<td colspan="2" Class="Header1">
 		<?php echo _MSGEnbQF; ?>:
 	</td>
-	<td Class="Header1">&nbsp;</td>
 <tr>
 	<td><?php echo _MSGDisIU; ?>:</td>
 	<td>
