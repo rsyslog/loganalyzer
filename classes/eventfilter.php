@@ -517,7 +517,19 @@ See AUTHORS to learn who helped make it become a reality.
       if (isset($_SESSION['searchmsg']))
       {
         if (!empty($_SESSION['searchmsg']))
-          $tmpSQL.=" AND Message like '".db_get_wildcut().$_SESSION['searchmsg'].db_get_wildcut()."'";
+		{		
+			// 2005-12-01 by therget:
+			// expanded search function, allows to search more than one searchstring per query
+			// start ---> 
+					$SearchMsgArray = explode(" ", $_SESSION['searchmsg']);	
+					$SearchMsgCounter = 0;
+					foreach($SearchMsgArray as $SearchMsgValue)
+					{
+						$tmpSQL.=" AND Message LIKE '".db_get_wildcut().$SearchMsgValue.db_get_wildcut()."'";
+						$SearchMsgCounter++;
+					}
+			// <--- end           
+		}
       }
       $this->SQLWhereMsg = $tmpSQL;     
 
