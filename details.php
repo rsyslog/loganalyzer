@@ -42,7 +42,7 @@ See AUTHORS to learn who helped make it become a reality.
 ?>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<br /><a href="<? echo  $_SERVER['HTTP_REFERER']; ?>">&lt;&lt; <?php echo _MSGBck; ?></a><br />
+<br /><a href="<?php echo  $_SERVER['HTTP_REFERER']; ?>">&lt;&lt; <?php echo _MSGBck; ?></a><br />
 
 <?php
 
@@ -102,7 +102,7 @@ if($row['InfoUnitID'] == 3)
 
 	<tr>
 		<td CLASS=TDHEADER><b><?php echo _MSGEvnID; ?></b></td>
-		<td CLASS=TD1><a href="http://www.monitorware.com/en/events/details.asp?L2=<?php echo $row['EventLogType']; ?>&L3=<? echo $row['EventSource']; ?>&event_id=<?php echo $row['EventID']; ?>" target="_blank"><?php echo $row['EventID']; ?></a><?php echo _MSGClickBrw; ?><a href="http://groups.google.com/groups?hl=en&lr=&ie=ISO-8859-1&q=<?php echo $row['EventSource'] . " " . $row['EventID']; ?>" target="_blank">Google-Groups</a>)</td>
+		<td CLASS=TD1><a href="http://www.monitorware.com/en/events/details.asp?L2=<?php echo $row['EventLogType']; ?>&L3=<?php echo $row['EventSource']; ?>&event_id=<?php echo $row['EventID']; ?>" target="_blank"><?php echo $row['EventID']; ?></a><?php echo _MSGClickBrw; ?><a href="http://groups.google.com/groups?hl=en&lr=&ie=ISO-8859-1&q=<?php echo $row['EventSource'] . " " . $row['EventID']; ?>" target="_blank">Google-Groups</a>)</td>
 	</tr>
 
 <?php

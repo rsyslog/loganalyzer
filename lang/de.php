@@ -230,3 +230,9 @@ define('_InsPer11', 'Nach Löschen des Ordners können Sie zum ');
 define('_InsPer12', 'Index wecheln!');
 define('_NoteMsgInFuture1', '<br><br><b>Hinweis:</b> Es sind ');
 define('_NoteMsgInFuture2', ' Events in der Datenbank, die ein Datum haben, das in der Zukunft liegt!');
+
+define('_MSGdatabaseConf', 'Datenbank Konfiguration');
+define('_MSGdatabaseSet', 'Datenbank Einstellungen');
+define('_MSGdatabaseChoose', 'Datenbank auswählen:');
+define('_MSGDbOpt', 'Datenbank Optionen');
+define('_MSGwhichdb', 'Sie arbeiten zur Zeit mit folgender Datenbank:');

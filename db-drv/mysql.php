@@ -63,8 +63,12 @@ See AUTHORS to learn who helped make it become a reality.
 	 */
 	function db_connection()
 	{
+		if (!isset($_SESSION['database']))
+		{
+			$_SESSION['database'] = _DBNAME;
+		}
 		$db = mysql_connect(_DBSERVER, _DBUSERID, _DBPWD) or db_die_with_error(_MSGNoDBCon);
-		mysql_select_db(_DBNAME) or db_die_with_error(_MSGChDB);
+		mysql_select_db($_SESSION['database']) or db_die_with_error(_MSGChDB);
 		return $db;
 	}
 

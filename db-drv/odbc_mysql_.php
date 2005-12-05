@@ -55,7 +55,11 @@ SQL_CURSOR_STATIC (integer)
 	 
 	function db_connection()
 	{
-		return odbc_connect(_DBNAME, _DBUSERID, _DBPWD, SQL_CUR_USE_ODBC);
+		if (!isset($_SESSION['database']))
+		{
+			$_SESSION['database'] = _DBNAME;
+		}
+		return odbc_connect($_SESSION['database'], _DBUSERID, _DBPWD, SQL_CUR_USE_ODBC);
 	}
 
 	function db_exec($db, $cmdSQL)

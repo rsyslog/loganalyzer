@@ -127,7 +127,7 @@ See AUTHORS to learn who helped make it become a reality.
 	// Version Number
   define('_VersionMajor', "1");
   define('_VersionMinor', "2");
-  define('_VersionPatchLevel', "0");
+  define('_VersionPatchLevel', "2");
 
 
 /*

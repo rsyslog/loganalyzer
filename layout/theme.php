@@ -101,9 +101,9 @@ See AUTHORS to learn who helped make it become a reality.
   		<td align="left">
 			<a href="index.php"><?php echo _MSGHom; ?></a> | <a href="events-display.php"><?php echo _MSGShwEvn; ?></a>
 			| <a href="syslog-index.php"><?php echo _MSGShwSlt; ?></a>
-			| <a href="filter-config.php"><?php echo _MSGFOpt; ?></a> | <a href="user-config.php"><?php echo _MSGUOpt; ?></a> | 
+			| <a href="filter-config.php"><?php echo _MSGFOpt; ?></a> | <a href="user-config.php"><?php echo _MSGUOpt; ?></a> | <a href="database-config.php"><?php echo _MSGDbOpt; ?></a> | 
 			<a href="
-			<? echo  $_SERVER['PHP_SELF'];
+			<?php echo  $_SERVER['PHP_SELF'];
 			   $i = strpos($_SERVER['REQUEST_URI'], '?');
 			   if ($i>0)
 				   echo substr($_SERVER['REQUEST_URI'], $i);
@@ -144,10 +144,10 @@ See AUTHORS to learn who helped make it become a reality.
 
 		<html>
 		<head>
-			<title><? echo $strTitle; ?></title>
+			<title><?php echo $strTitle; ?></title>
 			<META NAME="robots" CONTENT="INDEX,FOLLOW">
 			<META NAME="copyright" CONTENT="Copyright (C) 2003 Adiscon GmbH, Erftstadt - www.adiscon.com">
-			<META name="Keywords" content="<? echo $strKeywords ?> sql server win NT windows 7 2000 replication merge nt transactional date time resolver">
+			<META name="Keywords" content="<?php echo $strKeywords ?> sql server win NT windows 7 2000 replication merge nt transactional date time resolver">
 			<META http-equiv="pragma" CONTENT="no-cache">
 
 <?php

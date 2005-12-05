@@ -68,7 +68,7 @@ See AUTHORS to learn who helped make it become a reality.
 ?>
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<br /><a href="<? echo $_SERVER['HTTP_REFERER']; ?>">&lt;&lt; <?php echo _MSGBck; ?></a><br />
+	<br /><a href="<?php echo $_SERVER['HTTP_REFERER']; ?>">&lt;&lt; <?php echo _MSGBck; ?></a><br />
 
 <?php
 

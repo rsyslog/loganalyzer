@@ -230,3 +230,9 @@ define('_InsPer11', 'After deleting the directory, you can go to ');
 define('_InsPer12', 'index');
 define('_NoteMsgInFuture1', '<br><br><b>Note:</b> There are ');
 define('_NoteMsgInFuture2', ' events in the database, which are in the future!');
+
+define('_MSGdatabaseConf', 'Database Configuration');
+define('_MSGdatabaseSet', 'Database Settings');
+define('_MSGdatabaseChoose', 'Choose Database:');
+define('_MSGDbOpt', 'Database Options');
+define('_MSGwhichdb', 'You are currently working with the following database:');

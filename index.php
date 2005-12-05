@@ -115,7 +115,10 @@ See AUTHORS to learn who helped make it become a reality.
 	$num = $myEventsNavigation->GetEventCount();
 
 	if(_ENABLEUI)
+	{
 		echo _MSGWel . ", <font color=\"blue\">" . $_SESSION["usrdis"] . "</font>" . _MSGChoOpt;
+		echo "<br>"._MSGwhichdb." <b>".$_SESSION['database']."</b>";
+	}
 	else
 		echo  _MSGWel . _MSGChoOpt;
 	
