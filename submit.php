@@ -27,7 +27,20 @@ See AUTHORS to learn who helped make it become a reality.
 
 */#### #### #### #### #### #### #### #### #### #### 
 
+// Check for speical ysql characters
+function invalid_chars( $string )
+{
+	$bad_list = array("'",'"',"%");
 
+	foreach( $bad_list as $needle )
+	{
+		if( strpos( $string, $needle ) !== FALSE )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 //	global _DBNAME, _DBUSERID, _DBPWD, _DBSERVER, $session_time;
 	include 'include.php';
@@ -35,8 +48,7 @@ See AUTHORS to learn who helped make it become a reality.
 	if( !isset($_POST['save_cookies']))
 		$_POST['save_cookies'] = 0;
 
-
-	if( stristr($_POST['pass'], "'") || stristr($_POST['pass'], '"') || stristr($_POST['usr'], "'") || stristr($_POST['usr'], '"'))
+    if( invalid_chars( $_POST['usr'] ) || invalid_chars( $_POST['pass'] ) )
 	{
 		WriteHead('phpLogCon :: ' , _MSGAccDen, '', '', _MSGAccDen, 0);
 		print '<br><b>..:: ' . _MSGNamInvChr . ' ::..</b><br>';
