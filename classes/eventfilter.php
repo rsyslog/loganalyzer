@@ -488,7 +488,7 @@ See AUTHORS to learn who helped make it become a reality.
       if (isset($_SESSION['filhost']))
       {
         if (!empty($_SESSION['filhost']))
-          $tmpSQL.=" AND FromHost='".$_SESSION['filhost']."'";
+          $tmpSQL.=" AND FromHost like '".db_get_wildcut().$_SESSION['filhost'].db_get_wildcut()."'";
       }
       $this->SQLWhereHost = $tmpSQL;     
 
