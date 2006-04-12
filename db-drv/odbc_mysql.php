@@ -48,6 +48,10 @@ See AUTHORS to learn who helped make it become a reality.
 	 */
 	function dbc_sql_timeformat($times)
 	{
+		if (defined('_UTCtime') && _UTCtime)
+		{
+			$times = GetUTCtime($times);
+		}
 		return "'".date("Y-m-d H:i:s", $times)."'";
 	}
 

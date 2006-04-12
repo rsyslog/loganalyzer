@@ -260,32 +260,13 @@ See AUTHORS to learn who helped make it become a reality.
 		{
 		}
 
-		/*!
-		 * To calculate the the UTC Timestamp
-		 * \param timestamp of the local system	
-		 * \return timestamp, UTC time
-		 */
-		function GetUTCtime($iTime)
-		{ 
-			if ( $iTime == 0 ) $iTime = time();
-			$ar = localtime ( $iTime );
-
-			$ar[5] += 1900; $ar[4]++;
-			$iTztime = gmmktime ( $ar[2], $ar[1], $ar[0],
-		   $ar[4], $ar[3], $ar[5], $ar[8] );
-			return ( $iTime - ($iTztime - $iTime) );
-		}
-
 		/*! 
 		* Use this to set SQLWhereTime which is part of the sql where clause. 
 		* This is responsilbe for the limitation of the requested data by time.
 		*/
 		function SetSQLWhereTime()
 		{
-			if (_UTCtime)
-				$this->SQLWhereTime = _DATE . ' >= ' . dbc_sql_timeformat($this->GetUTCtime($this->BeginTime)) . ' AND ' . _DATE . ' <= ' . dbc_sql_timeformat($this->GetUTCtime($this->EndTime));
-			else
-				$this->SQLWhereTime = _DATE . ' >= ' . dbc_sql_timeformat($this->BeginTime) . ' AND ' . _DATE . ' <= ' . dbc_sql_timeformat($this->EndTime);        
+			$this->SQLWhereTime = _DATE . ' >= ' . dbc_sql_timeformat($this->BeginTime) . ' AND ' . _DATE . ' <= ' . dbc_sql_timeformat($this->EndTime);        
 		}
 
 		/*! 

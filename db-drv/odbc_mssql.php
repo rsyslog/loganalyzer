@@ -45,6 +45,10 @@ SQL_CURSOR_STATIC (integer)
 	 
 	function dbc_sql_timeformat($timestamp)
 	{
+		if (defined('_UTCtime') && _UTCtime)
+		{
+			$timestamp = GetUTCtime($timestamp);
+		}
 		//use '#' for MS Access
 		//return "#".date("Y-m-d H:i:s", $timestamp)."#";
 		//return "#".date("m/d/Y H:i:s", $timestamp)."#";

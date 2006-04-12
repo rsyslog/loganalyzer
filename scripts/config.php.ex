@@ -112,8 +112,12 @@ See AUTHORS to learn who helped make it become a reality.
 	//This sets the default language that will be used.
   define('_DEFLANG', 'en');
 
-	// Use UTC time
-  define('_UTCtime', 0);
+	// Use UTC time, indicates if the records are stored in utc time
+  define('_UTCtime', 1);
+  	// Show localtime, indicates if the records should be displayed in local time or utc time
+  define('_SHOWLocaltime', 1);
+	// Time format
+  define('_TIMEFormat', 'Y-m-d H:i:s');
   
 	// Get messages date by ReceivedAt or DeviceReportedTime
   define('_DATE', 'ReceivedAt');

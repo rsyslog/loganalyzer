@@ -160,18 +160,17 @@ See AUTHORS to learn who helped make it become a reality.
 				$message = $row['Message'];
 
 			// If date is today, only show the time --->
-			$current_date = $row[_DATE];
+			$current_date = FormatTime($row[_DATE], 'Y-m-d H:i:s');
 			$now = date("Y-m-d 00:00:00");
+			$tmp_format = _TIMEFormat;
 			if ($current_date > $now)
 			{
-				$current_date = substr($current_date, 10, 16);
+				$tmp_format = 'H:i:s';
 			}
 			// <---
-			
-
 
 			echo '<tr>';			
-			echo '<td CLASS=TD' . $tc . '><nobr>'.$current_date.'</nobr></td>'; //date
+			echo '<td CLASS=TD' . $tc . '><nobr>'.FormatTime($row[_DATE], $tmp_format).'</nobr></td>'; //date
 			echo '<td CLASS=TD' . $tc . '>'.$row['Facility'].'</td>'; //facility
 			
 			// get the description of priority (and get the the right color, if enabled)

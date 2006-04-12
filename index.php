@@ -192,7 +192,7 @@ See AUTHORS to learn who helped make it become a reality.
 			}
 			static $tc = 1;
 			echo '<tr>';
-			echo '<td CLASS=TD', $tc, '><nobr>',$row[_DATE],'</nobr></td>'; //date
+			echo '<td CLASS=TD', $tc, '><nobr>',FormatTime($row[_DATE]),'</nobr></td>'; //date
 			echo '<td CLASS=TD', $tc, '>',$row['Facility'],'</td>'; //facility
 			
 			// get the description of priority (and get the the right color, if enabled)
@@ -215,25 +215,33 @@ See AUTHORS to learn who helped make it become a reality.
 		}
 		echo "</table>";
 		echo "<a href=\"events-display.php\"><b>[more...]</b></a>";
-
-		// 2005-08-17 by therget --->
-		// If any date is in the future, show a message on the homepage.		
-
-		/* 2005-09-19 by mm
-		 * $now = date("Y-m-d g:i:s"); // <-- this is a bug use H for 0 - 23 hours.
-		 * Furthermore, use the database driver for date/time stuff!
-		 */		
-		$sqlstatement = "SELECT COUNT(*) AS datecount FROM "._DBTABLENAME ." WHERE "._DATE." > ".dbc_sql_timeformat(time());
-
-		$result = db_exec($global_Con,$sqlstatement);				
-		$db_datecount = db_fetch_array($result, "datecount");		
-
-		if ($db_datecount[0] > 0)
-		{
-			echo _NoteMsgInFuture1, $db_datecount[0], _NoteMsgInFuture2;
-		}
-		// <--- End 2005-08-17 by therget
 	}
+
+	// 2005-08-17 by therget --->
+	// If any date is in the future, show a message on the homepage.		
+
+	/* 2005-09-19 by mm
+	 * $now = date("Y-m-d g:i:s"); // <-- this is a bug use H for 0 - 23 hours.
+	 * Furthermore, use the database driver for date/time stuff!
+	 */
+
+	/* 2006-04-12 by mm
+	 *
+	 * Moved this code out of the above if/else condition, because it is also of interest even
+	 * if no data was found for the current filter conditions.
+	 * 
+	 */
+	
+	$sqlstatement = "SELECT COUNT(*) AS datecount FROM "._DBTABLENAME ." WHERE "._DATE." > ".dbc_sql_timeformat(time());
+
+	$result = db_exec($global_Con,$sqlstatement);				
+	$db_datecount = db_fetch_array($result);	
+	
+	if ($db_datecount['datecount'] > 0)
+	{
+		echo _NoteMsgInFuture1, $db_datecount['datecount'], _NoteMsgInFuture2;
+	}
+	// <--- End 2005-08-17 by therget
 
 	WriteFooter();
 ?>

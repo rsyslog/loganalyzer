@@ -775,4 +775,62 @@ function GetUserConfigArray()
 	return $query;
 }
 
+/*!
+ * To calculate the the UTC Timestamp
+ * \param timestamp of the local system	
+ * \return timestamp, UTC time
+ */
+function GetUTCtime($iTime)
+{ 
+	if ( $iTime == 0 ) $iTime = time();
+	$ar = localtime ( $iTime );
+
+	$ar[5] += 1900; $ar[4]++;
+	$iTztime = gmmktime ( $ar[2], $ar[1], $ar[0],
+   $ar[4], $ar[3], $ar[5], $ar[8] );
+	return ( $iTime - ($iTztime - $iTime) );
+}
+
+// Calculate the differenz between local and UTC time
+function GetTimeDifferenzInHours ( $iTime = 0 )
+{
+   if ( 0 == $iTime ) { $iTime = time(); }
+   $ar = localtime ( $iTime );
+   $ar[5] += 1900; $ar[4]++;
+   $iTztime = gmmktime ( $ar[2], $ar[1], $ar[0],
+       $ar[4], $ar[3], $ar[5], $ar[8] );
+   return ( ($iTztime - $iTime) / 3600 );
+}
+
+// Call this function each time you want to display a date/time.
+// /param $timestamp A date timestamp in ISO format (2006-04-12 12:51:24) containing date + time.
+function FormatTime($datetimestamp, $format = _TIMEFormat)
+{
+	// get the unix timestamp of the given date timestamp
+	$u_ts = strtotime($datetimestamp);
+
+	if (_UTCtime)
+	{
+		// ok, utc is used, now determine if we have to convert to local time
+		if (_SHOWLocaltime)
+		{
+			$u_ts = strtotime(GetTimeDifferenzInHours() . " hours", $u_ts);
+		}
+		// no else needed, because it is already in utc time
+	}
+	else
+	{
+		// ok, local time is used, determine if we have to convert to utc
+		if (!_SHOWLocaltime)
+		{
+			// note you have to add the hours if is -GMT or subtract if +GMT
+			// therefore * -1
+			$u_ts = strtotime((GetTimeDifferenzInHours() * -1) . " hours", $u_ts);
+		}
+		// no else needed, because is already in localtime
+	}
+
+	// format 
+	return date($format, $u_ts);
+}
 ?>
