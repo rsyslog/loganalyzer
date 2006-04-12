@@ -48,15 +48,6 @@ if($_POST['databaseConfig'] == "DatabaseConfiguration")
 		$_SESSION['database'] = $_POST['database'];
 	else
 		$_SESSION['database'] = _DBNAME;
-
-	/*!
-	 * Update language setting 
-	!*/
-	if ((eregi("^[a-z]+$", $_POST['language'])) and (strlen($_POST['language']) == 2))
-		$_SESSION['language'] = $_POST['language'];
-	else
-		$_SESSION['language'] = 'en'; // default
-
 }
 
 $szRedirectLink = "database-config.php";
