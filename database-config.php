@@ -48,17 +48,16 @@ See AUTHORS to learn who helped make it become a reality.
 	<td><?php echo _MSGdatabaseChoose; ?></td>
 	<td align = "center">
 	<?php		
-		$db_list = mysql_list_dbs($global_Con);
+		$db_list = db_exec($global_Con, 'SHOW DATABASES');
 		echo "<Select name=\"database\">";
-		while ($row = mysql_fetch_object($db_list)) 
+		while ($row = db_fetch_array($db_list)) 
 		{
-			$temp = $row->Database;
 			$status_selected = '';
-			if($_SESSION['database'] == $temp)
+			if($_SESSION['database'] == $row['Database'])
 			{
 				$status_selected = ' selected';
 			}
-			echo "<option value=\"".$temp."\"".$status_selected.">".$temp."</Option>";
+			echo "<option value=\"".$row['Database']."\"".$status_selected.">".$row['Database']."</Option>";
 		}
 		echo "</Select>";
 	?> 
