@@ -550,7 +550,7 @@ function WriteStandardHeader($myMsg)
 		echo "<br>";
 
 		// If a user is logged in, display logout text
-		if( isset($_COOKIE["usr"]) && $_COOKIE["usr"] != "|")
+		if( (isset($_COOKIE["usr"]) && $_COOKIE["usr"] != "|") || isset($_SESSION["usr"]))
 		{
 			echo '<table align="right">';
 			echo '<tr>';
