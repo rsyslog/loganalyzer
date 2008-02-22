@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{TITLE}</title>
+	{EXTRA_METATAGS}
+
+	<link rel="stylesheet" href="css/defaults.css" type="text/css">
+	<link rel="stylesheet" href="themes/{user_theme}/main.css" type="text/css">
+	<script type='text/javascript' src='{BASEPATH}js/common.js'></script>
+</head>
+<body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="mainheader">
+<tr> 
+	<td rowspan="4" width="500" align="left" valign="top"><a href="index.php"><img src="{BASEPATH}images/main/Header-Logo.png" width="500" height="79" name="HeaderLogo"></a></td>
+	<td width="100%" align="center" valign="top" height="20">
+
+	<form action="userchange.php" method="get" name="styleidform">
+	<table width="250" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<tr> 
+		<td class="cellmenu1" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
+		<td align="right">
+			<input type="hidden" name="op" value="changestyle">
+			<select name="stylename" size="1" OnChange="document.styleidform.submit();">
+				<!-- BEGIN USERSTYLES -->
+				<option {is_selected} value="{StyleName}">{StyleName}</option>
+				<!-- END USERSTYLES -->
+			</select>
+		</td>
+	</tr>
+	</table>
+	</form>
+
+	</td>
+	<td rowspan="4" width="10" align="center" nowrap>&nbsp;</td>
+</tr>
+<tr> 
+	<td width="100%" align="center" valign="top" height="20">
+
+	<form action="userchange.php" method="get" name="langidform">
+	<table width="250" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<tr> 
+		<td class="cellmenu1" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
+		<td align="right">
+			<input type="hidden" name="op" value="changelang">
+			<select name="langcode" size="1" OnChange="document.langidform.submit();">
+				<!-- BEGIN USERLANG -->
+				<option {is_selected} value="{langcode}">{langcode}</option>
+				<!-- END USERLANG -->
+			</select>
+		</td>
+	</tr>
+	</table>
+	</form>
+
+	</td>
+</tr>
+<tr> 
+	<td width="100%" align="center" valign="top" height="20">
+	&nbsp;
+	</td>
+</tr>
+<tr> 
+	<td width="100%" align="center" valign="top" height="100%">&nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_with_border">
+<tr> 
+	<td><!-- INCLUDE include_menu.html --></td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_with_border">
+<tr> 
+	<td>
+
+	<!-- IF error_installfilereminder="true" -->
+		<center>
+		<h3><br><br><font color="red">{LN_ERROR_INSTALLFILEREMINDER}</font></h3>
+		</center>
+	<!-- ENDIF error_installfilereminder="true" -->

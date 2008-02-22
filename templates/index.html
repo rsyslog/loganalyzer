@@ -1,0 +1,66 @@
+<!-- INCLUDE include_header.html --> 
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr> 
+	<td class="topmenu2" nowrap align="center" width="100"><a class="topmenu1_link" href="#" OnClick="togglevisibility('FilterOptions');">Filter Options</a></td>
+	<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+</tr>
+</table>
+<div id="FilterOptions">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="cellmenu1" nowrap><B>Filter Options</B></td>
+<tr>
+	<td width="10" valign="top" nowrap>&nbsp;</td>
+	<td width="100%" valign="top">
+
+	</td>
+	<td width="10" valign="top" nowrap>&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<br>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>Recent syslog messages</B></td>
+<tr>
+	<td width="100%" valign="top">
+
+	<!-- IF syslogmessagesenabled="true" -->
+	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
+	<tr>
+		<td width="25" class="cellmenu1" align="center" nowrap><B>{LN_TOP_NUM}</B></td>
+		<td width="100" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_DATE}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_SYSLOGTAG}</A></td>
+		<td width="75" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_INFOUNIT}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td>
+		<td width="100%" class="cellmenu1" align="center" nowrap><B>{LN_GRID_MSG}</B></td>
+	</tr>
+
+	<!-- BEGIN syslogmessages -->
+	<tr>
+		<td align="right" class="{cssclass}"><B>{ZAEHLER}</B></td>
+		<td align="center" class="{cssclass}"><B>{timereported}</B></td>
+		<td align="left" class="{cssclass}"><B>{syslogfacility-text}</B></td>
+		<td align="left" class="{cssclass}"><B>{syslogseverity-text}</B></td>
+		<td align="left" class="{cssclass}"><B>{FROMHOST}</B></td>
+		<td align="left" class="{cssclass}"><B>{syslogtag}</B></td>
+		<td align="center" class="{cssclass}"><B>{IUT}</B></td>
+		<td align="left" class="{cssclass}"><B>{msg}</B></td>
+	</tr>
+	<!-- END syslogmessages -->
+
+	</table>
+	<!-- ENDIF syslogmessagesenabled="true" -->
+
+
+	</td>
+</tr>
+</table>
+
+
+<!-- INCLUDE include_footer.html -->
