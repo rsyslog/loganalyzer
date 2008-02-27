@@ -23,7 +23,7 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 // --- Basic Includes
-include($gl_root_path . 'include/functions_constants.php');
+include($gl_root_path . 'include/constants_general.php');
 include($gl_root_path . 'include/functions_themes.php');
 include($gl_root_path . 'include/functions_db.php');
 include($gl_root_path . 'classes/class_template.php');

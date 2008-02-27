@@ -1,4 +1,11 @@
 <?php
+// --- Avoid directly accessing this file! 
+if ( !defined('IN_PHPLOGCON') )
+{
+	die('Hacking attempt');
+	exit;
+}
+// --- 
 
 /**
 * LogStreamDisk provides access to the data on disk. In the most
