@@ -1,4 +1,24 @@
 <?php
+/*
+	*********************************************************************
+	* Copyright by Adiscon GmbH | 2008!									*
+	* -> www.phplogcon.org <-											*
+	*																	*
+	* Use this script at your own risk!									*
+	* -----------------------------------------------------------------	*
+	* Some constants													*
+	*																	*
+	* LogStreamDisk provides access to the data on disk. In the most
+	* cases this will be plain text files. If we need access to e.g.
+	* zipped files, this will be handled by a separate driver.
+	*
+	* \version 1.0.1 2nd Version
+	* \version 1.0.0 Init Version
+	*																	*
+	* All directives are explained within this file						*
+	*********************************************************************
+*/
+
 // --- Avoid directly accessing this file! 
 if ( !defined('IN_PHPLOGCON') )
 {
@@ -7,15 +27,6 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
-/**
-* LogStreamDisk provides access to the data on disk. In the most
-* cases this will be plain text files. If we need access to e.g.
-* zipped files, this will be handled by a separate driver.
-*
-* \version 1.0.1 2nd Version
-* \version 1.0.0 Init Version
-*
-*/
 class LogStreamDisk extends LogStream {
 	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
