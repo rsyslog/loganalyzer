@@ -1,0 +1,42 @@
+<?php
+	/*
+		*********************************************************************
+		* Copyright by Adiscon GmbH | 2008!									*
+		* -> www.phplogcon.org <-											*
+		*																	*
+		* Use this script at your own risk!									*
+		* -----------------------------------------------------------------	*
+		* Main Configuration File											*
+		*																	*
+		* -> Configuration need variables for the Database connection		*
+		*********************************************************************
+	*/
+
+	// --- Avoid directly accessing this file! 
+	if ( !defined('IN_PHPLOGCON') )
+	{
+		die('Hacking attempt');
+		exit;
+	}
+	// --- 
+
+	// --- Database options
+	$CFG['UseDB'] = false;
+	$CFG['DBServer'] = "localhost";
+	$CFG['Port'] = 3306;
+	$CFG['DBName'] = ""; 
+	$CFG['TBPref'] = "logcon_"; 
+	$CFG['User'] = "root";
+	$CFG['Pass'] = "";
+	// --- 
+	
+	// --- Generic Options
+	$CFG['ShowDebugMsg'] = 1;
+	$CFG["ShowPageRenderStats"] = 1;						// If enabled, you will see Pagerender Settings
+	// --- 
+
+	// --- Source Options
+	$CFG['SourceType'] = SOURCE_DISK;
+	$CFG['DiskFile'] = $gl_root_path . "samplelogs/syslog";
+	// --- 
+?>
