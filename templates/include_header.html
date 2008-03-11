@@ -16,7 +16,7 @@
 	<td width="100%" align="center" valign="top" height="20">
 
 	<form action="userchange.php" method="get" name="styleidform">
-	<table width="250" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<table width="300" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
 		<td class="cellmenu1" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
 		<td align="right">
@@ -38,7 +38,7 @@
 	<td width="100%" align="center" valign="top" height="20">
 
 	<form action="userchange.php" method="get" name="langidform">
-	<table width="250" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<table width="300" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
 		<td class="cellmenu1" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
 		<td align="right">
@@ -57,7 +57,25 @@
 </tr>
 <tr> 
 	<td width="100%" align="center" valign="top" height="20">
-	&nbsp;
+
+	<form action="{CURRENTURL}" method="get" name="sourceidform">
+	<table width="300" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<tr> 
+		<td class="cellmenu1" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
+		<td align="right">
+			<!-- BEGIN HIDDENVARS -->
+			<input type="hidden" name="{varname}" value="{varvalue}">
+			<!-- END HIDDENVARS -->
+			<select name="sourceid" size="1" OnChange="document.sourceidform.submit();">
+				<!-- BEGIN Sources -->
+				<option {selected} value="{ID}">{Name}</option>
+				<!-- END Sources -->
+			</select>
+		</td>
+	</tr>
+	</table>
+	</form>
+
 	</td>
 </tr>
 <tr> 

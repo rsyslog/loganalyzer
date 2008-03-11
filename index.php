@@ -33,17 +33,17 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 // --- 
 
 // --- BEGIN Custom Code
-if ( isset($Sources[$currentSourceID]) && $Sources[$currentSourceID]['SourceType'] == SOURCE_DISK )
+if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
-	require_once('classes/enums.class.php');
-	require_once('classes/logstream.class.php');
-	require_once('classes/logstreamdisk.class.php');
-	require_once('include/constants_errors.php');
-	require_once('include/constants_logstream.php');
+	require_once($gl_root_path . 'classes/enums.class.php');
+	require_once($gl_root_path . 'classes/logstream.class.php');
+	require_once($gl_root_path . 'classes/logstreamdisk.class.php');
+	require_once($gl_root_path . 'include/constants_errors.php');
+	require_once($gl_root_path . 'include/constants_logstream.php');
 
 
 	// Obtain Config Object
-	$stream_config = $Sources[$currentSourceID]['ObjRef'];
+	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);

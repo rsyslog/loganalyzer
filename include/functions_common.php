@@ -148,6 +148,10 @@ function InitPhpDebugMode()
 	global $content;
 
 	// --- Set Global DEBUG Level!
+
+// HARDCODED !!!
+	$content['gen_phpdebug'] = "yes";
+	
 	if ( $content['gen_phpdebug'] == "yes" )
 		ini_set( "error_reporting", E_ALL ); // ALL PHP MESSAGES!
 	else

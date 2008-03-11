@@ -174,7 +174,9 @@ function template_parser_sub($template,  $values)
 			} 
 			else 
 			{
-				$template  =  str_replace('{'.$k.'}',  "$v",  $template);
+				// FIXED BY ANDRE | Do not convert OBJECTS into strings!
+				if ( !is_object($k) && !is_object($v) ) 
+					$template  =  str_replace('{'.$k.'}',  "$v",  $template);
 			}
 		}
 	}

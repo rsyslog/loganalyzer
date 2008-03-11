@@ -25,8 +25,8 @@
 
 	function InitSourceConfigs()
 	{
-		global $CFG, $Sources, $currentSourceID;
-		
+		global $CFG, $content, $currentSourceID;
+
 		// Init Source Configs!
 		if ( isset($CFG['Sources']) )
 		{	
@@ -37,17 +37,19 @@
 				{
 					// Set Array Index, TODO: Check for invalid characters!
 					$iSourceID = $CFG['Sources'][$i]['ID'];
-					if ( !isset($Sources[$iSourceID]) ) 
+					if ( !isset($content['Sources'][$iSourceID]) ) 
 					{
 						// Copy general properties
-						$Sources[$iSourceID]['Name'] = $CFG['Sources'][$i]['Name'];
-						$Sources[$iSourceID]['SourceType'] = $CFG['Sources'][$i]['SourceType'];
+						$content['Sources'][$iSourceID]['ID'] = $CFG['Sources'][$i]['ID'];
+						$content['Sources'][$iSourceID]['Name'] = $CFG['Sources'][$i]['Name'];
+						$content['Sources'][$iSourceID]['SourceType'] = $CFG['Sources'][$i]['SourceType'];
+						$content['Sources'][$iSourceID]['selected'] = ""; // Only for the display box
 						
 						// Create Config instance!
 						if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_DISK )
 						{
-							$Sources[$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
-							$Sources[$iSourceID]['ObjRef']->FileName = $CFG['Sources'][$i]['DiskFile'];
+							$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
+							$content['Sources'][$iSourceID]['ObjRef']->FileName = $CFG['Sources'][$i]['DiskFile'];
 						}
 						else if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_MYSQLDB )
 						{	
@@ -57,13 +59,13 @@
 						else
 						{	
 							// UNKNOWN, remove config entry!
-							unset($Sources[$iSourceID]);
+							unset($content['Sources'][$iSourceID]);
 
 							// TODO: Output CONFIG WARNING
 						}
 
 						// Set default SourceID here!
-						if ( isset($Sources[$iSourceID]) && !isset($currentSourceID) ) 
+						if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
 							$currentSourceID = $iSourceID;
 					}
 					else
@@ -74,14 +76,26 @@
 			}
 		}
 
-		// Set Source from session if available!
-		if ( isset($_SESSION['currentSourceID']) && isset($Sources[$_SESSION['currentSourceID']]) )
-			$currentSourceID = $_SESSION['currentSourceID'];
-		else
+		// Read SourceID from GET Querystring
+		if ( isset($_GET['sourceid']) && isset($content['Sources'][$_GET['sourceid']]) )
 		{
-			// No Source stored in session, then to so now!
+			$currentSourceID = $_GET['sourceid'];
 			$_SESSION['currentSourceID'] = $currentSourceID;
 		}
+		else
+		{
+			// Set Source from session if available!
+			if ( isset($_SESSION['currentSourceID']) && isset($content['Sources'][$_SESSION['currentSourceID']]) )
+				$currentSourceID = $_SESSION['currentSourceID'];
+			else
+			{
+				// No Source stored in session, then to so now!
+				$_SESSION['currentSourceID'] = $currentSourceID;
+			}
+		}
+		
+		// Set for the selection box in the header
+		$content['Sources'][$currentSourceID]['selected'] = "selected";
 	}
 
 ?>

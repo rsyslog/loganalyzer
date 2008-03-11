@@ -27,6 +27,10 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
+// --- Required Includes!
+require_once($gl_root_path . 'include/constants_errors.php');
+// --- 
+
 class LogStreamDisk extends LogStream {
 	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
@@ -138,7 +142,7 @@ class LogStreamDisk extends LogStream {
 	}
 
 	private function ReadNextForwards(&$uID, &$arrProperitesOut) {
-		if ($this->bEOF) {
+		if ($this->_bEOF) {
 			// Take a 
 			return ERROR_FILE_EOF;
 		}
