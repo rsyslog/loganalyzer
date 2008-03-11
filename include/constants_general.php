@@ -49,6 +49,7 @@ define('SYSLOG_SEVERITY_TEXT','syslogseverity-text');
 define('SYSLOG_HOST', 'FROMHOST');
 define('SYSLOG_SYSLOGTAG', 'syslogtag');
 define('SYSLOG_MESSAGE', 'msg');
+define('SYSLOG_MESSAGETRUNSCATED', 'msgtrunscated');
 define('SYSLOG_MESSAGETYPE', 'IUT');
 
 // MonitorWare InfoUnit Defines
@@ -78,6 +79,9 @@ define('IUT_AliveMonECHO', '1999998');
 define('IUT_MIAP_Receiver', '1999999');
 // --- 
 
+// --- Source Type defines
+define('SOURCE_DISK', '1');
+define('SOURCE_MYSQLDB', '2');
 // --- 
 
 // --- 

@@ -1,9 +1,26 @@
 <?php
-
-/**
-* LogStream provides access to the log data. Be sure to always
-* use LogStream if you want to access a text file or database.
+/*
+	*********************************************************************
+	* Copyright by Adiscon GmbH | 2008!									*
+	* -> www.phplogcon.org <-											*
+	*																	*
+	* Use this script at your own risk!									*
+	* -----------------------------------------------------------------	*
+	* LogStream provides access to the log data. Be sure to always		*
+	* use LogStream if you want to access a text file or database.		*
+	*																	*
+	* All directives are explained within this file						*
+	*********************************************************************
 */
+
+// --- Avoid directly accessing this file! 
+if ( !defined('IN_PHPLOGCON') )
+{
+	die('Hacking attempt');
+	exit;
+}
+// --- 
+
 abstract class LogStream {
 	protected $_readDirection = EnumReadDirection::Forward;
 	protected $_filter = null;
