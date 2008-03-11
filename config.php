@@ -36,7 +36,13 @@
 	// --- 
 
 	// --- Source Options
+	$CFG['Sources'][0]['ID'] = "Source1";
+	$CFG['Sources'][0]['Name'] = "Syslog Disk File";
 	$CFG['Sources'][0]['SourceType'] = SOURCE_DISK;
 	$CFG['Sources'][0]['DiskFile'] = $gl_root_path . "samplelogs/syslog";
+	$CFG['Sources'][1]['ID'] = "Source2";
+	$CFG['Sources'][1]['Name'] = "Old Syslog Disk File";
+	$CFG['Sources'][1]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][1]['DiskFile'] = $gl_root_path . "samplelogs/syslog.0";
 	// --- 
 ?>
