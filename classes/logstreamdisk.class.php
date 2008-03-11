@@ -18,11 +18,13 @@ if ( !defined('IN_PHPLOGCON') )
 */
 class LogStreamDisk extends LogStream {
 	private $_currentOffset = -1;
+	private $_currentStartPos = -1;
 	private $_fp = null;
 	private $_bEOF = false;
 
 	const _BUFFER_LENGHT = 4096;
 	private $_buffer = false;
+	private $_buffer_lenght = -1;
 	private $_p_buffer = -1;
 
 	// cache for backwards reading
@@ -45,13 +47,17 @@ class LogStreamDisk extends LogStream {
 		if(!file_exists($this->_logStreamConfigObj->FileName)) {
 			return ERROR_FILE_NOT_FOUND;
 		}
-		
+
 		$this->_fp = fopen($this->_logStreamConfigObj->FileName, 'r');	
 		if ($bStartAtEOF) {
 			fseek($this->_fp, 0, SEEK_END);
 		}
 		$this->_currentOffset = ftell($this->_fp);
+		$this->_currentStartPos = $this->_currentOffset;
 		$this->_arrProperties = $arrProperties;
+
+		// init read
+		$this->ReadNextBlock();
 		return SUCCESS;
 	}
 
@@ -69,8 +75,9 @@ class LogStreamDisk extends LogStream {
 	}
 
 	public function ReadNextBlock() {
-		echo 'in ReadNextBlock<br />';
+		//echo 'in ReadNextBlock<br />';
 		$this->_buffer = fread($this->_fp, self::_BUFFER_LENGHT);
+		$this->_buffer_lenght = strlen($this->_buffer);
 		$this->_p_buffer = 0;
 
 		if ($this->_buffer == false)
@@ -124,43 +131,28 @@ class LogStreamDisk extends LogStream {
 
 	private function ReadNextForwards(&$uID, &$logLine) {
 		if ($this->bEOF) {
-			return ERROR_FILE_BOF;
+			return ERROR_FILE_EOF;
 		}
 
-		if (($this->_p_buffer == sizeof($this->_buffer)) && ($this->ReadNextBlock() != SUCCESS)) {
+		if (($this->_p_buffer == $this->_buffer_lenght) && ($this->ReadNextBlock() != SUCCESS)) {
 				return ERROR_UNDEFINED;
 		}
-		
+
 		$line = '';
 		do {
-			$pos = $this->_p_buffer;
-			do {
-				$ch = $this->_buffer[$pos];
-				switch ($ch) {
-					case '\r':
-					case '\n':
-						$startPosOfLine = $this->_currentOffset - sizeof($line);
-						$this->_p_buffer = $pos + 1;
-						$this->_currentOffset++;
-						if ((($ch == '\r') && (($this->_p_buffer < sizeof($this->_buffer)) || ($this->ReadNextBlock() != SUCCESS))) && ($this->_p_buffer[$this->_p_buffer] == '\n'))	{
-								$this->_p_buffer++;
-								$this->_currentOffset++;
-						}
-						// here a new line starts 
-						$uID = $startPosOfLine;
-						$logLine = $line;
-						return SUCCESS;
 
-					case '\0':
-						$this->bEOF = true;
-						$uID = $this->_currentOffset - sizeof($line);
-						$logLine = $line;
-						return SUCCESS;
-				}
-				$line .= $ch;
-				$pos++;
-				$this->_currentOffset++;
-			}	while ($pos < sizeof($this->_buffer));
+			$pos = -1;
+			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
+				$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
+				$this->_currentOffset = $pos - $this->_p_buffer + 1;
+				$this->_p_buffer = $pos + 1;
+				$uID = $this->_currentStartPos;
+				$this->_currentStartPos = $this->_currentOffset;
+				return SUCCESS;
+			}
+			
+			$line .= substr($this->_buffer, $this->_p_buffer, $this->_buffer_lenght - $this->_p_buffer);
+			$this->_currentOffset += $this->_buffer_lenght - $this->_p_buffer;
 		} while ($this->ReadNextBlock() == SUCCESS);
 
 		return ERROR_UNDEFINED;
