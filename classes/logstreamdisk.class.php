@@ -154,6 +154,7 @@ class LogStreamDisk extends LogStream {
 			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
 				$uID = $this->_currentStartPos;
 				$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
+				$arrProperitesOut[SYSLOG_DATE] = '';
 				$arrProperitesOut[SYSLOG_FACILITY] = '';
 				$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
 				$arrProperitesOut[SYSLOG_SEVERITY] = '';

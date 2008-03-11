@@ -18,10 +18,10 @@
 define('IN_PHPLOGCON', true);
 $gl_root_path = './';
 include($gl_root_path . 'include/functions_common.php');
-include($gl_root_path . 'include/functions_parser.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
 
 InitPhpLogCon();
+InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 // ***					*** //
 
@@ -33,27 +33,38 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 // --- 
 
 // --- BEGIN Custom Code
-if ( $CFG['SourceType'] == SOURCE_DISK )
+if ( isset($Sources[$currentSourceID]) && $Sources[$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
 	require_once('classes/enums.class.php');
 	require_once('classes/logstream.class.php');
-	require_once('classes/logstreamconfig.class.php');
-	require_once('classes/logstreamconfigdisk.class.php');
 	require_once('classes/logstreamdisk.class.php');
 	require_once('include/constants_errors.php');
-	$stream_config = new LogStreamConfigDisk();
-	$stream_config->FileName = $CFG['DiskFile'];
+	require_once('include/constants_logstream.php');
+
+
+	// Obtain Config Object
+	$stream_config = $Sources[$currentSourceID]['ObjRef'];
+
+	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
-	$stream->Open(null, true);
+	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
 	$uID = -1;
-	$logLine = '';
 	$counter = 0;
 
-	$stream->SetReadDirection(EnumReadDirection::Backward);
+//	$stream->SetReadDirection(EnumReadDirection::Backward);
 
-	while ($stream->ReadNext($uID, $logLine) == 0 && $counter <= 30)
+	while ($stream->ReadNext($uID, $logArray) == 0 && $counter <= 30)
 	{
-		$content['syslogmessages'][] = ParseSyslogHeader($logLine);
+		// Copy Obtained array 
+		$content['syslogmessages'][] = $logArray;
+		
+		// Set truncasted message for display
+		if ( isset($logArray[SYSLOG_MESSAGE]) )
+			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE];
+		else
+			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
+
+		// Increment Counter
 		$counter++;
 	}
 	
