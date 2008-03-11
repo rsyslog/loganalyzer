@@ -36,7 +36,7 @@
 	// --- 
 
 	// --- Source Options
-	$CFG['SourceType'] = SOURCE_DISK;
-	$CFG['DiskFile'] = $gl_root_path . "samplelogs/syslog";
+	$CFG['Sources'][0]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][0]['DiskFile'] = $gl_root_path . "samplelogs/syslog";
 	// --- 
 ?>

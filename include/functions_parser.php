@@ -34,7 +34,12 @@ function ParseSyslogHeader($szLogLine)
 	$syslogIUT = IUT_Syslog;
 
 	// Parse from logline!
+	//SAMPLE: Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart.
+	//SAMPLE: Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
+	//'<' % text($pri) & '>' & date2text($datereceived, rfc3339) & $hostname & tolower($msg)
 
+SYSLOG_DATE => $syslogDate, 
+					array ( SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE );
 
 	// return results
 	return array ( 
