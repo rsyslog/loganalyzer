@@ -25,13 +25,30 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
 	<td colspan="3" class="title" nowrap><B>Recent syslog messages</B></td>
+</tr>
+<!-- IF main_pagerenabled="true" -->
+<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+<tr>
+	<td nowrap width="100%"class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td>
+	<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+	<td class="line0" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+	<td class="line1" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+<!-- BEGIN syslogpages -->
+	<td class="{cssclass}" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
+<!-- END syslogpages -->
+	<td class="line0" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
+	<td class="line1" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+</tr>
+</table>
+<!-- ENDIF main_pagerenabled="true" -->
+
 <tr>
 	<td width="100%" valign="top">
 
 	<!-- IF syslogmessagesenabled="true" -->
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
-		<td width="25" class="cellmenu1" align="center" nowrap><B>{LN_TOP_NUM}</B></td>
+		<td width="25" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>
 		<td width="100" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_DATE}</A></td>
 		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
 		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
@@ -43,7 +60,7 @@
 
 	<!-- BEGIN syslogmessages -->
 	<tr>
-		<td align="right" class="{cssclass}"><B>{ZAEHLER}</B></td>
+		<td align="right" class="{cssclass}"><B>{UID}</B></td>
 		<td align="center" class="{cssclass}"><B>{timereported}</B></td>
 		<td align="left" class="{cssclass}"><B>{syslogfacility-text}</B></td>
 		<td align="left" class="{cssclass}"><B>{syslogseverity-text}</B></td>

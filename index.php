@@ -48,16 +48,20 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
+	
 	$uID = -1;
 	$counter = 0;
 
 //	$stream->SetReadDirection(EnumReadDirection::Backward);
 
-	while ($stream->ReadNext($uID, $logArray) == 0 && $counter <= 30)
+	while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= 30)
 	{
 		// Copy Obtained array 
 		$content['syslogmessages'][] = $logArray;
 		
+		// Copy UID
+		$content['syslogmessages'][$counter]['UID'] = $uID;
+
 		// Set truncasted message for display
 		if ( isset($logArray[SYSLOG_MESSAGE]) )
 			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE];
@@ -67,6 +71,14 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 		// Increment Counter
 		$counter++;
 	}
+
+	if ( $stream->ReadNext($uID, $logArray) == SUCCESS ) 
+	{
+		// Enable Player Pager
+		$content['main_pagerenabled'] = "true";
+	}
+
+
 	
 	// Close file!
 	$stream->Close();
