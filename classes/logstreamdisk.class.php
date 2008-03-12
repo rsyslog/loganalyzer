@@ -153,20 +153,21 @@ class LogStreamDisk extends LogStream {
 
 		$line = '';
 		do {
+			$arrProperitesOut[SYSLOG_DATE] = '';
+			$arrProperitesOut[SYSLOG_FACILITY] = '';
+			$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
+			$arrProperitesOut[SYSLOG_SEVERITY] = '';
+			$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
+			$arrProperitesOut[SYSLOG_HOST] = '';
+			$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
+			$arrProperitesOut[SYSLOG_MESSAGE] = '';
+			$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
 
 			$pos = -1;
 			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
 				$uID = $this->_currentStartPos;
 				$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
-				$arrProperitesOut[SYSLOG_DATE] = '';
-				$arrProperitesOut[SYSLOG_FACILITY] = '';
-				$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
-				$arrProperitesOut[SYSLOG_SEVERITY] = '';
-				$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
-				$arrProperitesOut[SYSLOG_HOST] = '';
-				$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
 				$arrProperitesOut[SYSLOG_MESSAGE] = $logLine;
-				$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
 
 				$this->_currentOffset = $pos - $this->_p_buffer + 1;
 				$this->_p_buffer = $pos + 1;
@@ -178,15 +179,13 @@ class LogStreamDisk extends LogStream {
 			$this->_currentOffset += $this->_buffer_length - $this->_p_buffer;
 		} while ($this->ReadNextBlock() == SUCCESS);
 
-		/* ToDo: Last enty is not yet handled
-		if ($this->_p_buffer < $this->_buffer_length - 1) {
+		if ($line != '') {
 			$uID = $this->_currentStartPos;
-			$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
+			$arrProperitesOut[SYSLOG_MESSAGE] = $line;
 
-			$this->_currentOffset = $pos - $this->_p_buffer + 1;
-			$this->_p_buffer = $pos + 1;
 			$this->_currentStartPos = $this->_currentOffset;
-		}*/
+			return SUCCESS;
+		}
 		return ERROR_UNDEFINED;
 	}
 
