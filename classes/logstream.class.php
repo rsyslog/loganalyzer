@@ -60,20 +60,20 @@ abstract class LogStream {
 	* changed the original data source.
 	*
 	* @param uID integer out: unique id of the data row 
-	* @param logLine string out: data row
+	* @param arrProperitesOut array out: list with properties
 	* @return integer Error state
 	*/
-	public abstract function ReadNext(&$uID, &$logLine);
+	public abstract function ReadNext(&$uID, &$arrProperitesOut);
 
 	/**
 	* Read the data from a specific uID.
 	* 
 	* @param uID integer in: unique id of the data row 
-	* @param logLine string out: data row
+	* @param arrProperitesOut array out: list with properties
 	* @return integer Error state
 	* @see ReadNext()
 	*/
-	public abstract function Read($uID, &$logLine);
+	public abstract function Read($uID, &$arrProperitesOut);
 
 	/**
 	* Set the filter for the current stream.

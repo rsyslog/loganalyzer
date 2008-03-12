@@ -35,7 +35,7 @@ class LogStreamDisk extends LogStream {
 	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
 	private $_fp = null;
-	private $_bEOF = false;
+	private $_bEOS = false;
 
 	const _BUFFER_length = 8192;
 	private $_buffer = false;
@@ -68,8 +68,6 @@ class LogStreamDisk extends LogStream {
 		$this->_currentStartPos = $this->_currentOffset;
 		$this->_arrProperties = $arrProperties;
 
-		// init read
-		$this->ReadNextBlock();
 		return SUCCESS;
 	}
 
@@ -86,14 +84,43 @@ class LogStreamDisk extends LogStream {
 		return SUCCESS;
 	}
 
-	public function ReadNextBlock() {
-		//echo 'in ReadNextBlock<br />';
+	private function ReadNextBlock() {
+		$this->_bEOS = false;
+		if ($this->_readDirection == EnumReadDirection::Backward) {	
+			// in this case we have to adjust a few settings
+
+			// first of all, check if this is the first read
+			if ($this->_buffer == false) {
+				// this means that we have to read from the end
+				fseek($this->_fp, 0, SEEK_END);
+			}
+			$this->_p_buffer = self::_BUFFER_length - 1;
+
+			$orig_offset = ftell($this->_fp) - $this->_buffer_length;
+
+			if ($orig_offset <= 0) {
+				// apparently we are at BOF so nothing to read
+				return ERROR_EOS;
+			}
+
+			// jumb to the new position
+			$orig_offset -= self::_BUFFER_length;
+			if ($orig_offset <= 0) {
+				// ok, we have to adjust the buffer pointer
+				$this->_p_buffer += $orig_offset; // not orig_offset is negative
+				$orig_offset = 0;
+			}
+			fseek($this->_fp, $orig_offset);
+
+		} else {
+			$this->_p_buffer = 0;
+		}
+
 		$this->_buffer = fread($this->_fp, self::_BUFFER_length);
 		$this->_buffer_length = strlen($this->_buffer);
-		$this->_p_buffer = 0;
-
+		
 		if ($this->_buffer == false)
-			return ERROR_FILE_BOF;
+			return ERROR_FILE_EOF;
 
 		return SUCCESS;
 	}
@@ -129,7 +156,7 @@ class LogStreamDisk extends LogStream {
 	* changed the original data source.
 	*
 	* @param uID integer out: uID is the offset of data row
-	* @param logLine string out: data row
+	* @param arrProperitesOut array out: properties
 	* @return integer Error state
 	* @see ReadNext
 	*/
@@ -142,33 +169,40 @@ class LogStreamDisk extends LogStream {
 	}
 
 	private function ReadNextForwards(&$uID, &$arrProperitesOut) {
-		if ($this->_bEOF) {
-			// Take a 
-			return ERROR_FILE_EOF;
+		if ($this->_bEOS) {
+			return ERROR_EOS;
 		}
 
-		if (($this->_p_buffer == $this->_buffer_length) && ($this->ReadNextBlock() != SUCCESS)) {
-				return ERROR_UNDEFINED;
+		if ($this->_p_buffer == -1) {
+			// init read
+			$this->ReadNextBlock();
+		}
+
+		if (($this->_p_buffer == $this->_buffer_length || $this->_p_buffer == -1) && ($this->ReadNextBlock() != SUCCESS)) {
+			return ERROR_UNDEFINED;
 		}
 
 		$line = '';
+		$arrProperitesOut[SYSLOG_DATE] = '';
+		$arrProperitesOut[SYSLOG_FACILITY] = '';
+		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_HOST] = '';
+		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
+		$arrProperitesOut[SYSLOG_MESSAGE] = '';
+		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
+		
 		do {
-
 			$pos = -1;
 			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
 				$uID = $this->_currentStartPos;
 				$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
-				$arrProperitesOut[SYSLOG_DATE] = '';
-				$arrProperitesOut[SYSLOG_FACILITY] = '';
-				$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
-				$arrProperitesOut[SYSLOG_SEVERITY] = '';
-				$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
-				$arrProperitesOut[SYSLOG_HOST] = '';
-				$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
 				$arrProperitesOut[SYSLOG_MESSAGE] = $logLine;
-				$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
 
-				$this->_currentOffset = $pos - $this->_p_buffer + 1;
+				// the buffer pointer currently points to the linefeed 
+				// so we have to increment the pointer to eat it
+				$this->_currentOffset += $pos - $this->_p_buffer + 1;
 				$this->_p_buffer = $pos + 1;
 				$this->_currentStartPos = $this->_currentOffset;
 				return SUCCESS;
@@ -178,39 +212,66 @@ class LogStreamDisk extends LogStream {
 			$this->_currentOffset += $this->_buffer_length - $this->_p_buffer;
 		} while ($this->ReadNextBlock() == SUCCESS);
 
-		/* ToDo: Last enty is not yet handled
-		if ($this->_p_buffer < $this->_buffer_length - 1) {
+		if ($line != '') {
 			$uID = $this->_currentStartPos;
-			$logLine = $line . substr($this->_buffer, $this->_p_buffer, $pos - $this->_p_buffer);
+			$arrProperitesOut[SYSLOG_MESSAGE] = $line;
 
-			$this->_currentOffset = $pos - $this->_p_buffer + 1;
-			$this->_p_buffer = $pos + 1;
 			$this->_currentStartPos = $this->_currentOffset;
-		}*/
+			return SUCCESS;
+		}
 		return ERROR_UNDEFINED;
 	}
 
-/*
-	private function ReadNextForwards(&$uID, &$logLine) {
-		
-		if (feof($this->_fp)) {
-			return ERROR_FILE_EOF;
+	private function ReadNextBackwards(&$uID, &$arrProperitesOut) {
+		$arrProperitesOut[SYSLOG_DATE] = '';
+		$arrProperitesOut[SYSLOG_FACILITY] = '';
+		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_HOST] = '';
+		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
+		$arrProperitesOut[SYSLOG_MESSAGE] = '';
+		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
+
+		if ($this->_bEOS) {
+			return ERROR_EOS;
 		}
 
-		$uID = ftell($this->_fp);
-
-		$logLine = fgets($this->_fp);
-		if ($logLine === false) {
-			// ToDo: error occurs, or EOF
-			return 1;
+		if (($this->_p_buffer <= 0) && ($this->ReadNextBlock() != SUCCESS)) {
+			return ERROR_UNDEFINED;
 		}
 		
-		$this->_currentOffset = $this->_currentOffset + sizeof($logLine);
-		
-		return SUCCESS;	
+		$line = '';
+		do {
+			$pos = -1;
+
+			$neg_offset = ($this->_buffer_length - $this->_p_buffer) * -1;
+			if (($pos = strrpos($this->_buffer, "\n", $neg_offset)) !== false) {
+				// not that we are at the position of linefeed, so go one char forward:
+				$uID = $this->_currentOffset -= $this->_p_buffer - $pos - 1;
+				$arrProperitesOut[SYSLOG_MESSAGE] = $line . substr($this->_buffer, $pos + 1, $this->_p_buffer - $pos);
+
+				$this->_p_buffer = $pos - 1;
+				return SUCCESS;
+			}
+			
+			$line .= substr($this->_buffer, 0, $this->_p_buffer);
+			$this->_currentOffset -= $this->_p_buffer;
+		} while ($this->ReadNextBlock() == SUCCESS);
+
+		if ($line != '') {
+			// this case should only happend if we are on BOF
+			$this->_bEOS = true;
+
+			$uID = 0;
+			$arrProperitesOut[SYSLOG_MESSAGE] = $line;
+			
+			return SUCCESS;
+		}
+		return ERROR_EOS;
 	}
-*/
 
+/*
 	private function ReadNextBackwards(&$uID, &$arrProperitesOut) {
 		if ($this->_p_cache_lines < 0) {
 			if (($iRet = $this->InitCacheLines()) > 0) { // error or BOF?
@@ -225,7 +286,7 @@ class LogStreamDisk extends LogStream {
 
 		return SUCCESS;
 	}
-
+*/
 	private function ClearCacheLines() {
 			unset($this->_cache_lines);
 			$this->_p_cache_lines = -1;
@@ -297,7 +358,7 @@ class LogStreamDisk extends LogStream {
 		// only if the read direction change we have do do anything
 		if ($this->_readDirection == $enumReadDirection)
 			return SUCCESS;
-
+		
 		$this->_readDirection = $enumReadDirection;
 		return SUCCESS;
 	}
