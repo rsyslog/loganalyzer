@@ -42,10 +42,6 @@ class LogStreamDisk extends LogStream {
 	private $_buffer_length = -1;
 	private $_p_buffer = -1;
 
-	// cache for backwards reading
-	private $_cache_lines = null;
-	private $_p_cache_lines = -1;
-
 	// Constructor
 	public function LogStreamDisk($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
@@ -269,70 +265,6 @@ class LogStreamDisk extends LogStream {
 			return SUCCESS;
 		}
 		return ERROR_EOS;
-	}
-
-/*
-	private function ReadNextBackwards(&$uID, &$arrProperitesOut) {
-		if ($this->_p_cache_lines < 0) {
-			if (($iRet = $this->InitCacheLines()) > 0) { // error or BOF?
-				return $iRet;
-			}
-		}
-
-		// at this stage we can read from cache
-		$uID = $this->_cache_lines[$this->_p_cache_lines][0];
-		$logLine = $this->_cache_lines[$this->_p_cache_lines][1];
-		$this->_p_cache_lines--;
-
-		return SUCCESS;
-	}
-*/
-	private function ClearCacheLines() {
-			unset($this->_cache_lines);
-			$this->_p_cache_lines = -1;
-	}
-
-	private function InitCacheLines() {
-		$orig_offset = ftell($this->_fp);
-		if ($this->_readDirection == EnumReadDirection::Backward) {
-			// if we have already used the cache take the last positon
-			// as offset and then clear the cache
-			if (isset($this->_cache_lines[0][0])) {
-				$orig_offset = $this->_cache_lines[0][0];
-				$this->ClearCacheLines();
-
-				// check if it is the first line so we have BOF
-				if ($orig_offset == 0) {
-					return ERROR_FILE_BOF;
-				}
-			}
-		}
-
-		$offset = $orig_offset - 4096;
-		if ($offset < 0) {
-			$offset = 0;
-		} 
-
-		fseek($this->_fp, $offset);
-		
-		if ($offset != 0) {
-			// we do not know if we are on the beginning of a line
-			// therefore we simply skip the first line
-			fgets($this->_fp);
-		}
-
-		while (($offset = ftell($this->_fp)) < $orig_offset) {
-			$this->_p_cache_lines++;
-			$this->_cache_lines[$this->_p_cache_lines][0] = $offset;
-			$this->_cache_lines[$this->_p_cache_lines][1] = fgets($this->_fp);
-			if ($this->_cache_lines[$this->_p_cache_line][1] === false) {
-				// probably EOF or an error
-				unset($this->_cache_lines[$this->_p_cache_line]);
-				$this->_p_cache_lines--;
-				break;
-			}		
-		}
-		return SUCCESS;
 	}
 
 	/**
