@@ -29,4 +29,5 @@ define('ERROR_FILE_EOF', 3);
 define('ERROR_FILE_BOF', 4);
 define('ERROR_UNDEFINED', 5);
 define('ERROR_EOS', 6);
+define('ERROR_NOMORERECORDS',7);
 ?>

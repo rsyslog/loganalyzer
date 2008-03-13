@@ -29,4 +29,12 @@ abstract class EnumReadDirection {
 	const Backward = 2;
 }
 
+/**
+*	Available modes of seek
+*/
+abstract class EnumSeek {
+	const BOS = 1; // seek from begin stream 
+	const EOS = 2; // seek from end of stream 
+	const UID = 3; // seek from position uid (which MUST be a *valid* uid!)
+}
 ?>
