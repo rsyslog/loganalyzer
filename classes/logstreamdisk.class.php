@@ -89,6 +89,7 @@ class LogStreamDisk extends LogStream {
 			if ($this->_buffer == false) {
 				// this means that we have to read from the end
 				fseek($this->_fp, 0, SEEK_END);
+				$this->_currentOffset = ftell($this->_fp);
 			}
 			$this->_p_buffer = self::_BUFFER_length - 1;
 
@@ -243,7 +244,8 @@ class LogStreamDisk extends LogStream {
 
 			$neg_offset = ($this->_buffer_length - $this->_p_buffer) * -1;
 			if (($pos = strrpos($this->_buffer, "\n", $neg_offset)) !== false) {
-				// not that we are at the position of linefeed, so go one char forward:
+				// note that we are at the position of linefeed, so go one char forward:
+				filesize($this->_logStreamConfigObj->FileName);
 				$uID = $this->_currentOffset -= $this->_p_buffer - $pos - 1;
 				$arrProperitesOut[SYSLOG_MESSAGE] = $line . substr($this->_buffer, $pos + 1, $this->_p_buffer - $pos);
 
@@ -266,6 +268,97 @@ class LogStreamDisk extends LogStream {
 		}
 		return ERROR_EOS;
 	}
+
+	/**
+	* Implementation of Seek
+	*/
+	public function Sseek(&$uID, $mode, $numrecs) {
+		// in any case we reset the buffer
+		$this->ResetBuffer();
+
+		$ret = -1;
+
+		switch ($mode) { 
+			case EnumSeek::BOS:
+				$ret = fseek($this->_fp, 0);
+				$this->_currentOffset = $this->_currentStartPos = 0;
+				break;
+			case EnumSeek::EOS: 
+				// a simple ReadNextBackup will do all the work
+				// for us, because we have reset the buffer
+				// remember the current readDirection
+
+				$tmp = $this->_readDirection;
+				$this->_readDirection = EnumReadDirection::Backward;
+				$ret = $this->ReadNextBackwards($uID, $dummy2);
+				if ($tmp == EnumReadDirection::Forward) {
+					// in this case we have to correct the buffer,
+					// because we have read backwards even the current
+					// readDirection is forwards
+					$this->_p_buffer += 2; 
+					$this->_currentStartPos = $this->_currentOffset;
+				}
+				$this->_readDirection = $tmp;
+				break;
+			case EnumSeek::UID:
+				$ret = fseek($this->_fp, $uID);
+				$this->_currentOffset = $this->_currentStartPos = $uID;
+				break;
+		}
+
+		if ($ret != SUCCESS)
+			return ERROR_UNDEFINED;
+
+		return $this->Skip($uID, $numrecs);
+	}
+
+	/**
+	*	
+	* @param numrecs integer in: If positiv, skip 
+	* @return uid integer Error state
+	*/
+	private function Skip($uID, $numrecs) {
+		if ($numrecs == 0)
+			return SUCCESS;
+	
+		if ($numrecs > 0) {
+			/* due to performance reason we use php's fgets instead of ReadNext method
+			while (!feof($this->_fp)) {
+        fgets($this->_fp);
+        $numrecs--;
+				if ($numrecs == 0) {
+					break;
+				}
+				$this->_currentOffset = ftell($this->_fp);
+			}
+			*/
+			while ($this->ReadNextForwards($dummy1, $dummy2) == SUCCESS) {
+        fgets($this->_fp);
+        $numrecs--;
+				if ($numrecs == 0) {
+					break;
+				}
+				$this->_currentOffset = ftell($this->_fp);
+			}
+		} else {
+			while ($this->ReadNextBackwards($dummy1, $dummy2) == SUCCESS) {
+				$numrecs++;
+				if ($numrecs == 0) {
+					break;
+				}
+			}
+		}
+		
+		// where we are?
+		$uID = $this->_currentOffset;
+		
+		if ($numrecs != 0) {
+			// obviously there were not enough records to skip
+			return ERROR_NOMORERECORDS;
+		}
+		return SUCCESS;
+	}
+
 
 	/**
 	* Set the filter for the current stream.
@@ -293,6 +386,12 @@ class LogStreamDisk extends LogStream {
 		
 		$this->_readDirection = $enumReadDirection;
 		return SUCCESS;
+	}
+
+	private function ResetBuffer() {
+		$this->_buffer = false;
+		$this->_buffer_length = -1;
+		$this->_p_buffer = -1;
 	}
 }
 
