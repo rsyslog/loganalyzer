@@ -45,4 +45,9 @@ define('SOURCE_DISK', '1');
 define('SOURCE_MYSQLDB', '2');
 
 // --- 
+define('UID_UNKNOWN', -1);
+
+
+
+// --- 
 ?>

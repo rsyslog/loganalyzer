@@ -203,6 +203,7 @@ font
 }
 .topmenu1_link, A.topmenu1_link
 {
+	background-color: #38110E;
 	color: #FFDD22;
 }
 .topmenu1_link:hover, A.topmenu1_link:hover 
@@ -213,6 +214,40 @@ font
 .topmenuend
 {
 	height: 16px;
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #290604;
+}
+.topmenu2
+{
+	height: 16px;
+	border:1px ridge;
+	border-color: #D79993 #290604 #290604 #D79993;
+
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #38110E;
+}
+.topmenu2:hover 
+{ 
+	color: #FFFF99;
+	background-color: #492D2B;
+	text-decoration: none;
+}
+.topmenu2_link, A.topmenu2_link
+{
+	color: #FFDD22;
+}
+.topmenu2_link:hover, A.topmenu2_link:hover 
+{
+	color: #FFFF99;
+	text-decoration: none;
+}
+.topmenu2end
+{
+	height: 16px;
+	border:1px inset;
+	border-color: #D79993 #290604 #D79993 #D79993;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #290604;
@@ -338,7 +373,7 @@ A.cellmenu1_link:hover
 }
 
 /* Form elements */
-select, input, textarea
+select, input, button, textarea
 {
 	background-color: #0B253C; 
 	color:#FFFFFF; 
@@ -347,5 +382,13 @@ select, input, textarea
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
 
-
-
+.SearchFormControl
+{
+	height: 20px;
+	margin: 2px;
+	background-color: #0B253C; 
+	color:#FFFFFF; 
+	font:bold 10px Verdana,Arial,Helvetica,sans-serif;
+	border: 1px solid;
+	border-color: #233B51 #124A7C #124A7C #233B51; 
+}

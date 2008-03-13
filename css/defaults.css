@@ -1,8 +1,23 @@
-
 /* Generic Style defintions */
-#FilterOptions
+.ExpansionPlus
+{
+	background-image: url("../images/icons/navigate_plus.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+}
+
+.ExpansionMinus
+{
+	background-image: url("../images/icons/navigate_minus.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+}
+
+.HiddenContent
 {
 	visibility: hidden;
-	position: relative;
+/*		position: relative; */
 	display: none;
 }

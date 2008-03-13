@@ -20,8 +20,10 @@
 	}
 	// --- 
 
-	require_once('classes/logstreamconfig.class.php');
-	require_once('classes/logstreamconfigdisk.class.php');
+	// --- Perform necessary includes
+	require_once($gl_root_path . 'classes/logstreamconfig.class.php');
+	require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
+	// --- 
 
 	function InitSourceConfigs()
 	{

@@ -74,6 +74,10 @@ function CreateCurrentUrl()
 			}
 		}
 	}
+
+	// May can be removed later
+	$content['additional_url'] = ""; // "&serverid=" . $content['serverid'];
+
 }
 
 

@@ -27,5 +27,10 @@ define('DATEMODE_ALL', 1);
 define('DATEMODE_RANGE', 2);
 define('DATEMODE_LASTX', 3);
 
+define('DATE_LASTX_HOUR', 1);
+define('DATE_LASTX_12HOURS', 2);
+define('DATE_LASTX_24HOURS', 3);
+define('DATE_LASTX_7DAYS', 4);
+define('DATE_LASTX_31DAYS', 5);
 // --- 
 ?>

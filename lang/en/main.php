@@ -24,4 +24,20 @@ $content['LN_GRID_INFOUNIT'] = "InfoUnit";
 $content['LN_GRID_HOST'] = "Source";
 $content['LN_GRID_MSG'] = "Message";
 
+// Filter Options
+$content['LN_FILTER_DATE'] = "Datetime Range";
+$content['LN_FILTER_DATEMODE'] = "Select mode";
+$content['LN_DATEMODE_ALL'] = "All time";
+$content['LN_DATEMODE_RANGE'] = "Time range";
+$content['LN_DATEMODE_LASTX'] = "Time x since today";
+$content['LN_FILTER_DATEFROM'] = "Date range from";
+$content['LN_FILTER_DATETO'] = "Date range to";
+$content['LN_FILTER_DATELASTX'] = "Time since";
+$content['LN_FILTER_ADD2SEARCH'] = "Add to search";
+$content['LN_DATE_LASTX_HOUR'] = "Last hour";
+$content['LN_DATE_LASTX_12HOURS'] = "Last 12 hours";
+$content['LN_DATE_LASTX_24HOURS'] = "Last 24 hours";
+$content['LN_DATE_LASTX_7DAYS'] = "Last 7 days";
+$content['LN_DATE_LASTX_31DAYS'] = "Last 31 days";
+
 ?>

@@ -19,13 +19,36 @@ define('IN_PHPLOGCON', true);
 $gl_root_path = './';
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
+include($gl_root_path . 'include/functions_filters.php');
 
 InitPhpLogCon();
 InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
+
+// Init Langauge first!
+IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
+
+// Helpers for frontend filtering!
+InitFilterHelpers();	
 // ***					*** //
 
 // --- CONTENT Vars
+if ( isset($_GET['uid']) ) 
+{
+	$currentUID = intval($_GET['uid']);
+}
+else
+	$currentUID = UID_UNKNOWN;
+
+// Init Pager variables
+$content['uid_previous'] = UID_UNKNOWN;
+$content['uid_next'] = UID_UNKNOWN;
+$content['uid_first'] = UID_UNKNOWN;
+$content['uid_last'] = UID_UNKNOWN;
+
+// Init Sorting variables
+$content['sorting'] = "";
+
 //if ( isset($content['myserver']) ) 
 //	$content['TITLE'] = "PhpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
 //else
@@ -48,11 +71,11 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
+	$stream->SetReadDirection(EnumReadDirection::Backward);
 	
-	$uID = -1;
+	$uID = $currentUID;
 	$counter = 0;
 
-//	$stream->SetReadDirection(EnumReadDirection::Backward);
 
 	while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= 30)
 	{
@@ -74,6 +97,7 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 
 	if ( $stream->ReadNext($uID, $logArray) == SUCCESS ) 
 	{
+		$content['uid_next'] = $uID;
 		// Enable Player Pager
 		$content['main_pagerenabled'] = "true";
 	}
@@ -107,8 +131,6 @@ if ( isset($content['syslogmessages']) && count($content['syslogmessages']) > 0 
 // --- 
 
 // --- Parsen and Output
-IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
-
 InitTemplateParser();
 $page -> parser($content, "index.html");
 $page -> output(); 
