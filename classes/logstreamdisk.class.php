@@ -142,16 +142,22 @@ class LogStreamDisk extends LogStream {
 	* @see ReadNext()
 	*/
 	public function Read($uID, &$arrProperitesOut) {
-		fseek($this->_fp, $uI);
+		$this->Sseek($uID, EnumSeek::UID, 0);
 
-		// with Read we can only read forwards.
-		// so we have to remember the current read
-		// direction
 		$tmp = $this->_readDirection;
-		$iRet = $this->ReadNext($uID, $arrProperitesOut);
-		$this->_readDirection = $tmp;
+		$this->_readDirection = EnumReadDirection::Forward;
+		$ret = $this->ReadNext($uID, $arrProperitesOut);
+		if ($tmp == EnumReadDirection::Backward) {
 
-		return $iRet;
+			$this->_p_buffer -= 2; 
+			$this->_currentStartPos = $this->_currentOffset -= 1;
+
+			$this->_readDirection = $tmp;
+			// we have to skip one line that we are back on the right position
+			$this->ReadNext($dummy1, $dummy2);
+		}
+				
+		return $ret;
 	}
 
 	/**
@@ -419,12 +425,13 @@ class LogStreamDisk extends LogStream {
 		// only if the read direction change we have do do anything
 		if ($this->_readDirection == $enumReadDirection)
 			return SUCCESS;
-		
+
 		$this->_readDirection = $enumReadDirection;
 		return SUCCESS;
 	}
 
 	private function ResetBuffer() {
+		$this->_bEOS = false;
 		$this->_buffer = false;
 		$this->_buffer_length = 0;
 		$this->_p_buffer = -1;
