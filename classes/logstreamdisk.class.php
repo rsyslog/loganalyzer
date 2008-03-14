@@ -82,6 +82,8 @@ class LogStreamDisk extends LogStream {
 
 	private function ReadNextBlock() {
 		$this->_bEOS = false;
+		$bCheckForLastLf = false;
+
 		if ($this->_readDirection == EnumReadDirection::Backward) {	
 			// in this case we have to adjust a few settings
 			$this->_p_buffer = self::_BUFFER_length ; // set the point to the right index
@@ -92,6 +94,7 @@ class LogStreamDisk extends LogStream {
 				fseek($this->_fp, 0, SEEK_END);
 				$this->_currentOffset = ftell($this->_fp);
 				$this->_p_buffer -= 1; // eat EOF
+				$bCheckForLastLf = true;
 			}
 
 			$orig_offset = ftell($this->_fp) - $this->_buffer_length;
@@ -116,6 +119,12 @@ class LogStreamDisk extends LogStream {
 
 		$this->_buffer = fread($this->_fp, self::_BUFFER_length);
 		$this->_buffer_length = strlen($this->_buffer);
+		
+		if ($bCheckForLastLf && $this->_buffer[$this->_p_buffer] == "\n") {
+			// skip it (can only occur if you read backwards)
+			$this->_p_buffer--;
+			$this->_currentOffset--;
+		}
 		
 		if ($this->_buffer == false)
 			return ERROR_FILE_EOF;
