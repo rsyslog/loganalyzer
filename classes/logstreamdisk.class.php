@@ -379,6 +379,17 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* GetMessageCount will always return -1 which means
+	* that the message count is not available. We refuse
+	* the request of the message count due to a count would
+	* require to read the whole file which would be a big 
+	* pain if the file is e.g. 1 gb.
+	*/
+	public function GetMessageCount() {
+		return -1;
+	}
+
+	/**
 	* Set the direction the stream should read data.
 	*
 	* 
