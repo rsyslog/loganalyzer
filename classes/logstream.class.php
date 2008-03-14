@@ -149,6 +149,14 @@ abstract class LogStream {
 	* @return integer Amount of messages within the stream. -1 means that no count is available.
 	*/
 	public abstract function GetMessageCount();
+
+	
+	/**
+	* Provides a list of properties which the stream is able to sort for.
+	*
+	* @return array List of properties. Null if the stream is not sortable.
+	*/
+	public abstract function GetSortOrderProperties();
 }
 
 

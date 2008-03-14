@@ -389,6 +389,14 @@ class LogStreamDisk extends LogStream {
 		return -1;
 	}
 
+	/*
+	* GetSortOrderProperties is not implemented yet. So it always
+	* return null.
+	*/
+	public function GetSortOrderProperties() {
+		return null;
+	}
+
 	/**
 	* Set the direction the stream should read data.
 	*
