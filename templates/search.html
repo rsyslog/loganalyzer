@@ -1,17 +1,16 @@
 <!-- INCLUDE include_header.html --> 
 
-<table border="0" cellspacing="0" cellpadding="2" align="center" class="table_with_border">
+<br>
+<table width="100%" border="0" cellspacing="5" cellpadding="2" align="center" class="with_border">
 <tr> 
-<!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
-	<td nowrap align="center" nowrap valign="middle">
-		<B>&nbsp;{LN_SEARCH_FILTER}</B>
-		<input maxlength="2048" name="filter" size="100" title="Search" value="" class="SearchFormControl" readonly>
-		<br>
+	<td nowrap align="center" nowrap valign="middle" class="line1">
+	<div id="SearchCode">{LN_SEARCH_USETHISBLA}</div>
 	</td>
 </tr>
 </table>
+<br>
 
-<form action="" method="post" name="filterdateform">
+<form action="index.php" method="post" id="filterdateform" OnChange="CalculateSearchPreview('filterdateform', 'SearchCode');" onkeyup="CalculateSearchPreview('filterdateform', 'SearchCode');" >
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
 	<td width="50%" valign="top" class="table_with_border">
@@ -118,7 +117,7 @@
 		<tr>
 			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_FACILITY}</b></td>
 			<td align="right" class="line1" nowrap>
-				<select name="filter_facility" size="8" multiple>
+				<select name="filter_facility[]" size="8" multiple>
 					<!-- BEGIN filter_facility_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
 					<!-- END filter_facility_list -->
@@ -126,7 +125,7 @@
 			</td>
 			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_SEVERITY}</b></td>
 			<td align="right" class="line1" nowrap>
-				<select name="filter_severity" size="8" multiple>
+				<select name="filter_severity[]" size="8" multiple>
 					<!-- BEGIN filter_severity_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
 					<!-- END filter_severity_list -->
@@ -146,7 +145,7 @@
 		</tr>
 		<tr>
 			<td align="center" class="line0" width="100%">
-			<input maxlength="2048" name="filter" size="70" title="Search" value="">
+			<input maxlength="2048" name="filter_message" size="70" title="Search" value="">
 			</td>
 		</tr>
 		</table>
@@ -158,13 +157,13 @@
 		<tr>
 			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SYSLOGTAG}</b></td>
 			<td align="right" class="line1" nowrap>
-				<input maxlength="2048" name="filter" size="50" title="Search" value="">
+				<input maxlength="2048" name="filter_syslogtag" size="50" title="Search" value="">
 			</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SOURCE}</b></td>
 			<td align="right" class="line1" nowrap>
-				<input maxlength="2048" name="filter" size="50" title="Search" value="">
+				<input maxlength="2048" name="filter_source" size="50" title="Search" value="">
 			</td>
 		</tr>
 		</table>
@@ -173,7 +172,7 @@
 <tr>
 	<td colspan="3" valign="top" align="center">
 		<br>
-		<input name="search" type="submit" value="Perform Advanced Search" class="SearchFormControl">
+		<input name="search" type="submit" value="{LN_SEARCH_PERFORMADVANCED}" class="SearchFormControl">
 	</td>
 </tr>
 </table>

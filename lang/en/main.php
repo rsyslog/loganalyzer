@@ -6,7 +6,7 @@ $content['LN_MAINTITLE'] = "Main PhpLogCon";
 $content['LN_MAIN_SELECTSTYLE'] = "Select a Style";
 $content['LN_GEN_LANGUAGE'] = "Select language";
 $content['LN_GEN_SELECTSOURCE'] = "Select Source";
-$content['LN_GEN_MOREPAGES'] = "More then one Page available";
+$content['LN_GEN_MOREPAGES'] = "More than one Page available";
 $content['LN_GEN_FIRSTPAGE'] = "First Page";
 $content['LN_GEN_LASTPAGE'] = "Last Page";
 $content['LN_GEN_NEXTPAGE'] = "Next Page";
@@ -24,11 +24,14 @@ $content['LN_GRID_INFOUNIT'] = "InfoUnit";
 $content['LN_GRID_HOST'] = "Source";
 $content['LN_GRID_MSG'] = "Message";
 
+$content['LN_SEARCH_USETHISBLA'] = "Use the form below and your advanced search will appear here";
 $content['LN_SEARCH_FILTER'] = "Search (filter):";
 $content['LN_SEARCH_ADVANCED'] = "Advanced Search";
 $content['LN_SEARCH_FEELSAD'] = "I'm feeling sad ...";
 $content['LN_SEARCH'] = "Search";
 $content['LN_SEARCH_RESET'] = "Reset search";
+$content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
+
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";

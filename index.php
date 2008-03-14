@@ -48,11 +48,96 @@ $content['uid_last'] = UID_UNKNOWN;
 
 // Init Sorting variables
 $content['sorting'] = "";
+$content['searchstr'] = "";
 
 //if ( isset($content['myserver']) ) 
 //	$content['TITLE'] = "PhpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
 //else
 	$content['TITLE'] = "PhpLogCon :: Home";
+
+// Read and process filters from search dialog!
+if ( isset($_POST['search']) && $_POST['search'] == $content['LN_SEARCH_PERFORMADVANCED']) 
+{
+	if ( isset($_POST['filter_datemode']) )
+	{
+		$filters['filter_datemode'] = intval($_POST['filter_datemode']);
+		if ( $filters['filter_datemode'] == DATEMODE_RANGE )
+		{
+			// Read range values 
+			if ( isset($_POST['filter_daterange_from_year']) ) 
+				$filters['filter_daterange_from_year'] = intval($_POST['filter_daterange_from_year']);
+			if ( isset($_POST['filter_daterange_from_month']) ) 
+				$filters['filter_daterange_from_month'] = intval($_POST['filter_daterange_from_month']);
+			if ( isset($_POST['filter_daterange_from_day']) ) 
+				$filters['filter_daterange_from_day'] = intval($_POST['filter_daterange_from_day']);
+			if ( isset($_POST['filter_daterange_to_year']) ) 
+				$filters['filter_daterange_to_year'] = intval($_POST['filter_daterange_to_year']);
+			if ( isset($_POST['filter_daterange_to_month']) ) 
+				$filters['filter_daterange_to_month'] = intval($_POST['filter_daterange_to_month']);
+			if ( isset($_POST['filter_daterange_to_day']) ) 
+				$filters['filter_daterange_to_day'] = intval($_POST['filter_daterange_to_day']);
+			
+			// Append to searchstring
+			$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" . 
+													$filters['filter_daterange_from_month'] . "-" . 
+													$filters['filter_daterange_from_day'] . "T00:00:00 ";
+			$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
+													$filters['filter_daterange_to_month'] . "-" . 
+													$filters['filter_daterange_to_day'] . "T00:00:00 ";
+
+		}
+		else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
+		{
+			if ( isset($_POST['filter_daterange_last_x']) ) 
+			{
+				$filters['filter_daterange_last_x'] = intval($_POST['filter_daterange_last_x']);
+				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_last_x'] . " ";
+			}
+		}
+	}
+
+	if ( isset($_POST['filter_facility']) && count($_POST['filter_facility']) < 18 ) // If we have more than 18 elements, this means all facilities are enabled
+	{
+		$tmpStr = "";
+		foreach ($_POST['filter_facility'] as $tmpfacility) 
+		{
+			if ( strlen($tmpStr) > 0 )
+				$tmpStr .= ",";
+			$tmpStr .= $tmpfacility;  
+		}
+		$content['searchstr'] .= "facility:" . $tmpStr . " ";
+	}
+
+	if ( isset($_POST['filter_severity']) && count($_POST['filter_facility']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
+	{
+		$tmpStr = "";
+		foreach ($_POST['filter_severity'] as $tmpfacility) 
+		{
+			if ( strlen($tmpStr) > 0 )
+				$tmpStr .= ",";
+			$tmpStr .= $tmpfacility;  
+		}
+		$content['searchstr'] .= "severity:" . $tmpStr . " ";
+	}
+
+	// Spaces need to be converted!
+	if ( isset($_POST['filter_syslogtag']) && strlen($_POST['filter_syslogtag']) > 0 )
+	{
+		$content['searchstr'] .= "syslogtag:" . $_POST['filter_syslogtag'] . " ";
+	}
+	
+	// Spaces need to be converted!
+	if ( isset($_POST['filter_source']) && strlen($_POST['filter_source']) > 0 )
+	{
+		$content['searchstr'] .= "source:" . $_POST['filter_source'] . " ";
+	}
+	
+	// Message is just appended
+	if ( isset($_POST['filter_message']) && strlen($_POST['filter_message']) > 0 )
+		$content['searchstr'] .= $_POST['filter_message'];
+
+}
+
 // --- 
 
 // --- BEGIN Custom Code

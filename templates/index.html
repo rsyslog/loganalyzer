@@ -1,14 +1,14 @@
 <!-- INCLUDE include_header.html --> 
 
 <table border="0" cellspacing="0" cellpadding="2" align="center">
-<form action="" method="post" name="search">
+<form action="" method="post" id="search">
 <tr> 
 <!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
 	<td nowrap align="center" nowrap valign="middle">
 		<B>&nbsp;{LN_SEARCH_FILTER}</B>
 		
 <!--		<img src="{BASEPATH}images/icons/navigate_down.png" class="SelectSavedFilter" align="middle" width="16" height="16">-->
-		<input maxlength="2048" name="filter" size="55" title="Search" value="" class="SearchFormControl">
+		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr}" class="SearchFormTextbox">
 		<br>
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
 		<input name="search" type="submit" value="{LN_SEARCH_FEELSAD}" class="SearchFormControl">

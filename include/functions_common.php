@@ -49,6 +49,7 @@ $content['BUILDNUMBER'] = "0.1.101";
 $content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title of the Page 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
+$content['EXTRA_JAVASCRIPT'] = "";
 // --- 
 
 function InitBasicPhpLogCon()

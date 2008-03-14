@@ -32,6 +32,10 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 InitFilterHelpers();	
 // ***					*** //
 
+// --- Extra Javascript?
+$content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content['BASEPATH'] . "js/searchhelpers.js'></script>";
+// --- 
+
 // --- CONTENT Vars
 // ---
 

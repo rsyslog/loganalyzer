@@ -394,3 +394,14 @@ select, input, button, textarea, .SelectSavedFilter
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
+
+.SearchFormTextbox
+{
+	height: 20px;
+	margin: 2px;
+	background-color: #E8E7E2; 
+	color:#000000; 
+	font:10px Verdana,Arial,Helvetica,sans-serif;
+	border: 1px solid;
+	border-color: #233B51 #124A7C #124A7C #233B51; 
+}

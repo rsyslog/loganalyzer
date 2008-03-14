@@ -1,8 +1,6 @@
 /* 
 Helper Javascript Constants
 */
-const DATEMODE_ALL = 1, DATEMODE_RANGE = 2, DATEMODE_LASTX = 3;
-const DATE_LASTX_HOUR = 1, DATE_LASTX_12HOURS = 2, DATE_LASTX_24HOURS = 3, DATE_LASTX_7DAYS = 4,DATE_LASTX_31DAYS = 5;
 
 /*
 Helper Javascript functions
@@ -91,50 +89,4 @@ function hidevisibility(ElementNameToggle, ElementNameButton)
 
 	toggle.style.visibility = "hidden";
 	toggle.style.display = "none";
-}
-
-/*
-*	Helper function to show and hide areas of the filterview
-*/
-function toggleDatefiltervisibility(FormName)
-{
-	var myform = document.getElementById(FormName);
-	if (myform.elements['filter_datemode'].value == DATEMODE_ALL)
-	{
-		hidevisibility('HiddenDateFromOptions');
-		hidevisibility('HiddenDateLastXOptions');
-	}
-	else if (myform.elements['filter_datemode'].value == DATEMODE_RANGE)
-	{
-		togglevisibility('HiddenDateFromOptions');
-		hidevisibility('HiddenDateLastXOptions');
-	}
-	else if (myform.elements['filter_datemode'].value == DATEMODE_LASTX)
-	{
-		togglevisibility('HiddenDateLastXOptions');
-		hidevisibility('HiddenDateFromOptions');
-	}
-
-}
-
-/*
-*	Helper function to add a date filter into the search field
-*/
-function addDatefilterToSearch(DateName, SearchFormName)
-{
-	var myDateform = document.getElementById(DateName);
-	var mySearchform = document.getElementById(SearchFormName);
-	if (myDateform.elements['filter_datemode'].value == DATEMODE_RANGE)
-	{
-		mySearchform.elements['filter'].value += "date:from:"	+ myDateform.elements['filter_daterange_from_year'].value + "-" 
-																+ myDateform.elements['filter_daterange_from_month'].value + "-"
-																+ myDateform.elements['filter_daterange_from_day'].value + ":to:"
-																+ myDateform.elements['filter_daterange_to_year'].value + "-" 
-																+ myDateform.elements['filter_daterange_to_month'].value + "-"
-																+ myDateform.elements['filter_daterange_to_day'].value + " ";
-	}
-	else if (myDateform.elements['filter_datemode'].value == DATEMODE_LASTX)
-	{
-		mySearchform.elements['filter'].value += "date:lastx:"	+ myDateform.elements['filter_daterange_last_x'].value + " ";
-	}
 }
