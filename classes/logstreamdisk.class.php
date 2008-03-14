@@ -84,7 +84,7 @@ class LogStreamDisk extends LogStream {
 		$this->_bEOS = false;
 		if ($this->_readDirection == EnumReadDirection::Backward) {	
 			// in this case we have to adjust a few settings
-			$this->_p_buffer = self::_BUFFER_length - 1; // set the point to the right index
+			$this->_p_buffer = self::_BUFFER_length ; // set the point to the right index
 
 			// first of all, check if this is the first read
 			if ($this->_buffer == false) {
@@ -92,7 +92,7 @@ class LogStreamDisk extends LogStream {
 				fseek($this->_fp, 0, SEEK_END);
 				$this->_currentOffset = ftell($this->_fp);
 				$this->_p_buffer -= 1; // eat EOF
-			} 		
+			}
 
 			$orig_offset = ftell($this->_fp) - $this->_buffer_length;
 
@@ -235,7 +235,10 @@ class LogStreamDisk extends LogStream {
 			return ERROR_EOS;
 		}
 
-		if ($this->_p_buffer < 0) { 
+		if ($this->_p_buffer < 0) {
+			// a negative buffer means that the we have to adjust
+			// the offset
+			$this->_currentOffset++;
 			if ($this->ReadNextBlock() != SUCCESS) {
 				return ERROR_UNDEFINED;
 			}
@@ -246,18 +249,20 @@ class LogStreamDisk extends LogStream {
 			$pos = -1;
 			$neg_offset = ($this->_buffer_length - $this->_p_buffer) * -1;
 			if (($pos = strrpos($this->_buffer, "\n", $neg_offset)) !== false) {
-				// note that we are at the position of linefeed, so go one char forward:
-				$uID = $this->_currentOffset -= $this->_p_buffer - $pos + 1;
-
+				// note that we are at the position of the linefeed, 
+				// this is recognize in the next few calculation
+				$uID = $this->_currentOffset -= $this->_p_buffer - $pos;
 				$arrProperitesOut[SYSLOG_MESSAGE] = substr($this->_buffer, $pos + 1, $this->_p_buffer - $pos) . $line;
 
+				$this->_currentOffset--; // eat the lf
 				$this->_p_buffer = $pos - 1;
 
 				return SUCCESS;
 			}
-			
+
 			$line = substr($this->_buffer, 0, $this->_p_buffer) . $line;
-			$this->_currentOffset -= $this->_p_buffer + 1; // as above, eat the linefeed
+			$this->_currentOffset -= $this->_p_buffer; 
+
 		} while ($this->ReadNextBlock() == SUCCESS);
 
 		if ($line != '') {
