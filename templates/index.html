@@ -4,17 +4,19 @@
 <form action="" method="post" name="search">
 <tr> 
 <!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
-	<td nowrap align="center" nowrap>
-		<B>&nbsp;Search (filter): </B>
+	<td nowrap align="center" nowrap valign="middle">
+		<B>&nbsp;{LN_SEARCH_FILTER}</B>
+		
+<!--		<img src="{BASEPATH}images/icons/navigate_down.png" class="SelectSavedFilter" align="middle" width="16" height="16">-->
 		<input maxlength="2048" name="filter" size="55" title="Search" value="" class="SearchFormControl">
 		<br>
-		<input name="search" type="submit" value="Search" class="SearchFormControl">
-		<input type="reset" value="Reset search" class="SearchFormControl">
-<!--		<input type="button" value="Advanced Search" class="SearchFormControl" OnClick="togglevisibility('HiddenOptions', null);">-->
+		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
+		<input name="search" type="submit" value="{LN_SEARCH_FEELSAD}" class="SearchFormControl">
+		<input type="reset" value="{LN_SEARCH_RESET}" class="SearchFormControl">
 		<br>
 	</td>
 	<td nowrap align="left" nowrap valign="top">
-		<a href="#" OnClick="togglevisibility('HiddenOptions', null);">Advanced Search</a>
+		<a href="javascript:void(0);" OnClick="togglevisibility('HiddenOptions', null);">{LN_SEARCH_ADVANCED}</a>
 		<br>
 		<i>(sample: faciliy:local0 severity:warn)</i>
 	</td>
@@ -23,18 +25,19 @@
 </table>
 
 <div id="HiddenOptions" class="HiddenContent">
+
+<form action="" method="post" name="filterdateform">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
-	<td width="50%" valign="top" class="with_border">
+	<td width="50%" valign="top" class="table_with_border">
 
-	<form action="" method="post" name="filterdateform">
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
 		<tr>
 			<td colspan="2" align="center" valign="top" class="title">
 			<strong>{LN_FILTER_DATE}</strong></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATEMODE}</b></td>
+			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATEMODE}</b></td>
 			<td align="right" class="line0" width="100%">
 				<select name="filter_datemode" size="1" OnChange="toggleDatefiltervisibility('filterdateform');">
 					<!-- BEGIN datemodes -->
@@ -48,7 +51,7 @@
 		<div id="HiddenDateFromOptions" class="HiddenContent">
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
 		<tr>
-			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATEFROM}</b></td>
+			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATEFROM}</b></td>
 			<td align="right" class="line1" width="100%">
 				<select name="filter_daterange_from_year" size="1">
 					<!-- BEGIN filter_daterange_from_year_list -->
@@ -70,7 +73,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATETO}</b></td>
+			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATETO}</b></td>
 			<td align="right" class="line0" width="100%">
 				<select name="filter_daterange_to_year" size="1">
 					<!-- BEGIN filter_daterange_to_year_list -->
@@ -109,6 +112,7 @@
 		</table>
 		</div>
 
+<!--
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
 		<tr>
 			<td align="center" colspan="2">
@@ -116,21 +120,86 @@
 			</td>
 		</tr>
 		</table>
-	</form>
-
+-->
 	</td>
 	<td width="10" valign="top" nowrap>&nbsp;</td>
-	<td width="50%" valign="top">
+	<td width="50%" valign="top" class="table_with_border">
 
+		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+		<tr>
+			<td colspan="4" align="center" valign="top" class="title">
+			<strong>{LN_FILTER_OTHERS}</strong></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_FACILITY}</b></td>
+			<td align="right" class="line1" nowrap>
+				<select name="filter_facility" size="8" multiple>
+					<!-- BEGIN filter_facility_list -->
+					<option {selected} value="{ID}">{DisplayName}</option>
+					<!-- END filter_facility_list -->
+				</select>
+			</td>
+			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_SEVERITY}</b></td>
+			<td align="right" class="line1" nowrap>
+				<select name="filter_severity" size="8" multiple>
+					<!-- BEGIN filter_severity_list -->
+					<option {selected} value="{ID}">{DisplayName}</option>
+					<!-- END filter_severity_list -->
+				</select>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td width="50%" valign="top" class="table_with_border">
+
+		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+		<tr>
+			<td colspan="2" align="center" valign="top" class="title">
+			<strong>{LN_FILTER_MESSAGE}</strong></td>
+		</tr>
+		<tr>
+			<td align="center" class="line0" width="100%">
+			<input maxlength="2048" name="filter" size="70" title="Search" value="">
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td width="10" valign="top" nowrap>&nbsp;</td>
+		<td width="50%" valign="top" class="table_with_border">
+
+		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+		<tr>
+			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SYSLOGTAG}</b></td>
+			<td align="right" class="line1" nowrap>
+				<input maxlength="2048" name="filter" size="50" title="Search" value="">
+			</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SOURCE}</b></td>
+			<td align="right" class="line1" nowrap>
+				<input maxlength="2048" name="filter" size="50" title="Search" value="">
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td colspan="3" valign="top" align="center">
+		<br>
+		<input name="search" type="submit" value="Perform Advanced Search" class="SearchFormControl">
 	</td>
 </tr>
 </table>
+</form>
+
 <br>
 </div>
 
 <script language="javascript">
 	// Run some needed javascript functions now!
-	togglevisibility('HiddenDateFromOptions', null);
+	toggleDatefiltervisibility('filterdateform');
 </script>
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">

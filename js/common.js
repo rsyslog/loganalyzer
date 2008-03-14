@@ -99,7 +99,12 @@ function hidevisibility(ElementNameToggle, ElementNameButton)
 function toggleDatefiltervisibility(FormName)
 {
 	var myform = document.getElementById(FormName);
-	if (myform.elements['filter_datemode'].value == DATEMODE_RANGE)
+	if (myform.elements['filter_datemode'].value == DATEMODE_ALL)
+	{
+		hidevisibility('HiddenDateFromOptions');
+		hidevisibility('HiddenDateLastXOptions');
+	}
+	else if (myform.elements['filter_datemode'].value == DATEMODE_RANGE)
 	{
 		togglevisibility('HiddenDateFromOptions');
 		hidevisibility('HiddenDateLastXOptions');

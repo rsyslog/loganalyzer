@@ -62,5 +62,4 @@ define('IUT_SMTPLISTENER', '24');
 define('IUT_AliveMonECHO', '1999998');
 define('IUT_MIAP_Receiver', '1999999');
 
-// --- 
 ?>

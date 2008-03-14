@@ -34,15 +34,15 @@ function InitFilterHelpers()
 		$filters['filter_datemode'] = DATEMODE_ALL;
 
 	// Init TimeFilter Helper Array
-//		$content['datemodes'][0]['ID'] = DATEMODE_ALL;
-//		$content['datemodes'][0]['DisplayName'] = $content['LN_DATEMODE_ALL'];
-//		if ( $filters['filter_datemode'] == DATEMODE_ALL ) { $content['datemodes'][0]['selected'] = "selected"; } else { $content['datemodes'][0]['selected'] = ""; }
-	$content['datemodes'][0]['ID'] = DATEMODE_RANGE;
-	$content['datemodes'][0]['DisplayName'] = $content['LN_DATEMODE_RANGE'];
-	if ( $filters['filter_datemode'] == DATEMODE_RANGE ) { $content['datemodes'][0]['selected'] = "selected"; } else { $content['datemodes'][0]['selected'] = ""; }
-	$content['datemodes'][1]['ID'] = DATEMODE_LASTX;
-	$content['datemodes'][1]['DisplayName'] = $content['LN_DATEMODE_LASTX'];
-	if ( $filters['filter_datemode'] == DATEMODE_LASTX ) { $content['datemodes'][1]['selected'] = "selected"; } else { $content['datemodes'][1]['selected'] = ""; }
+	$content['datemodes'][0]['ID'] = DATEMODE_ALL;
+	$content['datemodes'][0]['DisplayName'] = $content['LN_DATEMODE_ALL'];
+	if ( $filters['filter_datemode'] == DATEMODE_ALL ) { $content['datemodes'][0]['selected'] = "selected"; } else { $content['datemodes'][0]['selected'] = ""; }
+	$content['datemodes'][1]['ID'] = DATEMODE_RANGE;
+	$content['datemodes'][1]['DisplayName'] = $content['LN_DATEMODE_RANGE'];
+	if ( $filters['filter_datemode'] == DATEMODE_RANGE ) { $content['datemodes'][1]['selected'] = "selected"; } else { $content['datemodes'][1]['selected'] = ""; }
+	$content['datemodes'][2]['ID'] = DATEMODE_LASTX;
+	$content['datemodes'][2]['DisplayName'] = $content['LN_DATEMODE_LASTX'];
+	if ( $filters['filter_datemode'] == DATEMODE_LASTX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
 	
 	// Init Date Range Parameters
 	$currentTime = time();
@@ -128,6 +128,69 @@ function InitFilterHelpers()
 	$content['filter_daterange_last_x_list'][4]['DisplayName'] = $content['LN_DATE_LASTX_31DAYS'];
 	if ( $filters['filter_lastx_default'] == DATE_LASTX_31DAYS ) { $content['filter_daterange_last_x_list'][4]['selected'] = "selected"; } else { $content['filter_daterange_last_x_list'][4]['selected'] = ""; }
 	// ---
+
+	// Init Default Syslog Facility from SESSION!
+	if ( isset($_SESSION['filter_facility']) ) 
+		$filters['filter_facility'] = intval($_SESSION['filter_facility']);
+	else
+		$filters['filter_facility'] = array ( SYSLOG_KERN, SYSLOG_USER, SYSLOG_MAIL, SYSLOG_DAEMON, SYSLOG_AUTH, SYSLOG_SYSLOG, SYSLOG_LPR, SYSLOG_NEWS, SYSLOG_UUCP, SYSLOG_CRON, SYSLOG_LOCAL0, SYSLOG_LOCAL1, SYSLOG_LOCAL2, SYSLOG_LOCAL3, SYSLOG_LOCAL4, SYSLOG_LOCAL5, SYSLOG_LOCAL6, SYSLOG_LOCAL7 );
+//		$filters['filter_facility'] = SYSLOG_LOCAL0;
+
+
+
+	// Init Facility LIST
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "SYSLOG_KERN", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_USER, "DisplayName" => "SYSLOG_USER", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_MAIL, "DisplayName" => "SYSLOG_MAIL", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_DAEMON, "DisplayName" => "SYSLOG_DAEMON", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_AUTH, "DisplayName" => "SYSLOG_AUTH", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_SYSLOG, "DisplayName" => "SYSLOG_SYSLOG", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" => "SYSLOG_LPR", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "SYSLOG_NEWS", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "SYSLOG_UUCP", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "SYSLOG_CRON", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "SYSLOG_LOCAL0", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "SYSLOG_LOCAL1", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "SYSLOG_LOCAL2", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL3, "DisplayName" => "SYSLOG_LOCAL3", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL4, "DisplayName" => "SYSLOG_LOCAL4", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL5, "DisplayName" => "SYSLOG_LOCAL5", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL6, "DisplayName" => "SYSLOG_LOCAL6", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL7, "DisplayName" => "SYSLOG_LOCAL7", "selected" => "" );
+
+
+	$iCount = count($content['filter_facility_list']);
+	for ( $i = 0; $i < $iCount; $i++ )
+	{
+//		echo $content['filter_facility_list'][$i]["ID"] . "-" . $filters['filter_facility'] . "<br>";
+		if ( in_array($content['filter_facility_list'][$i]["ID"], $filters['filter_facility']) ) 
+			$content['filter_facility_list'][$i]["selected"] = "selected"; 
+	}
+
+	// Init Default Syslog Severity from SESSION!
+	if ( isset($_SESSION['filter_severity']) ) 
+		$filters['filter_severity'] = intval($_SESSION['filter_severity']);
+	else
+		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG );
+//		$filters['filter_severity'] = SYSLOG_NOTICE;
+
+	// Init Severity LIST
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_EMERG, "DisplayName" => "SYSLOG_EMERG", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ALERT, "DisplayName" => "SYSLOG_ALERT", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_CRIT, "DisplayName" => "SYSLOG_CRIT", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ERR, "DisplayName" => "SYSLOG_ERR", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName" => "SYSLOG_WARNING", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "SYSLOG_NOTICE", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "SYSLOG_INFO", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "SYSLOG_DEBUG", "selected" => "" );
+
+	$iCount = count($content['filter_severity_list']);
+	for ( $i = 0; $i < $iCount; $i++ )
+	{
+		if ( in_array( $content['filter_severity_list'][$i]["ID"], $filters['filter_severity']) ) 
+			$content['filter_severity_list'][$i]["selected"] = "selected"; 
+	}
+
 }
 
 function FillDateRangeArray($sourcearray, $szArrayListName, $szFilterName) // $content['years'], "filter_daterange_from_year_list", "filter_daterange_from_year")

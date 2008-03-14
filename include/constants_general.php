@@ -46,8 +46,36 @@ define('SOURCE_MYSQLDB', '2');
 
 // --- 
 define('UID_UNKNOWN', -1);
-
-
-
 // --- 
+
+// --- Syslog specific defines!
+define('SYSLOG_KERN', 0);
+define('SYSLOG_USER', 1);
+define('SYSLOG_MAIL', 2);
+define('SYSLOG_DAEMON', 3);
+define('SYSLOG_AUTH', 4);
+define('SYSLOG_SYSLOG', 5);
+define('SYSLOG_LPR', 6);
+define('SYSLOG_NEWS', 7);
+define('SYSLOG_UUCP', 8);
+define('SYSLOG_CRON', 9);
+define('SYSLOG_LOCAL0', 16);
+define('SYSLOG_LOCAL1', 17);
+define('SYSLOG_LOCAL2', 18);
+define('SYSLOG_LOCAL3', 19);
+define('SYSLOG_LOCAL4', 20);
+define('SYSLOG_LOCAL5', 21);
+define('SYSLOG_LOCAL6', 22);
+define('SYSLOG_LOCAL7', 23);
+
+define('SYSLOG_EMERG', 0);
+define('SYSLOG_ALERT', 1);
+define('SYSLOG_CRIT', 2);
+define('SYSLOG_ERR', 3);
+define('SYSLOG_WARNING', 4);
+define('SYSLOG_NOTICE', 5);
+define('SYSLOG_INFO', 6);
+define('SYSLOG_DEBUG', 7);
+// --- 
+
 ?>

@@ -24,6 +24,12 @@ $content['LN_GRID_INFOUNIT'] = "InfoUnit";
 $content['LN_GRID_HOST'] = "Source";
 $content['LN_GRID_MSG'] = "Message";
 
+$content['LN_SEARCH_FILTER'] = "Search (filter):";
+$content['LN_SEARCH_ADVANCED'] = "Advanced Search";
+$content['LN_SEARCH_FEELSAD'] = "I'm feeling sad ...";
+$content['LN_SEARCH'] = "Search";
+$content['LN_SEARCH_RESET'] = "Reset search";
+
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";
 $content['LN_FILTER_DATEMODE'] = "Select mode";
@@ -39,5 +45,11 @@ $content['LN_DATE_LASTX_12HOURS'] = "Last 12 hours";
 $content['LN_DATE_LASTX_24HOURS'] = "Last 24 hours";
 $content['LN_DATE_LASTX_7DAYS'] = "Last 7 days";
 $content['LN_DATE_LASTX_31DAYS'] = "Last 31 days";
+$content['LN_FILTER_FACILITY'] = "Syslog Facility";
+$content['LN_FILTER_SEVERITY'] = "Syslog Severity";
+$content['LN_FILTER_OTHERS'] = "Other Filters";
+$content['LN_FILTER_MESSAGE'] = "Syslog Message";
+$content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
+$content['LN_FILTER_SOURCE'] = "Source (Hostname)";
 
 ?>

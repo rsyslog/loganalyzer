@@ -64,7 +64,6 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 	require_once($gl_root_path . 'include/constants_errors.php');
 	require_once($gl_root_path . 'include/constants_logstream.php');
 
-
 	// Obtain Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
@@ -102,8 +101,6 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 		$content['main_pagerenabled'] = "true";
 	}
 
-
-	
 	// Close file!
 	$stream->Close();
 }
