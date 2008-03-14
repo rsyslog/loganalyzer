@@ -137,6 +137,26 @@ abstract class LogStream {
 	* @return integer Error state
 	*/
 	public abstract function Sseek(&$uID, $mode, $numrecs);
+
+
+	/**
+	* If you are interested in how many messages are in the stream, call this method.
+	* But be aware of that some stream can not provide a message count. This is probably
+	* because of performance reason or any other. However, if GetMessageCount return -1
+	* this does not mean that there is no message in the stream, it is just not countable.
+	* If there is no message 0 will be returned.
+	*
+	* @return integer Amount of messages within the stream. -1 means that no count is available.
+	*/
+	public abstract function GetMessageCount();
+
+	
+	/**
+	* Provides a list of properties which the stream is able to sort for.
+	*
+	* @return array List of properties. Null if the stream is not sortable.
+	*/
+	public abstract function GetSortOrderProperties();
 }
 
 

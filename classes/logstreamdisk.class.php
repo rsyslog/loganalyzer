@@ -39,7 +39,7 @@ class LogStreamDisk extends LogStream {
 
 	const _BUFFER_length = 8192;
 	private $_buffer = false;
-	private $_buffer_length = -1;
+	private $_buffer_length = 0;
 	private $_p_buffer = -1;
 
 	// Constructor
@@ -84,14 +84,15 @@ class LogStreamDisk extends LogStream {
 		$this->_bEOS = false;
 		if ($this->_readDirection == EnumReadDirection::Backward) {	
 			// in this case we have to adjust a few settings
+			$this->_p_buffer = self::_BUFFER_length ; // set the point to the right index
 
 			// first of all, check if this is the first read
 			if ($this->_buffer == false) {
 				// this means that we have to read from the end
 				fseek($this->_fp, 0, SEEK_END);
 				$this->_currentOffset = ftell($this->_fp);
+				$this->_p_buffer -= 1; // eat EOF
 			}
-			$this->_p_buffer = self::_BUFFER_length - 1;
 
 			$orig_offset = ftell($this->_fp) - $this->_buffer_length;
 
@@ -104,7 +105,7 @@ class LogStreamDisk extends LogStream {
 			$orig_offset -= self::_BUFFER_length;
 			if ($orig_offset <= 0) {
 				// ok, we have to adjust the buffer pointer
-				$this->_p_buffer += $orig_offset; // not orig_offset is negative
+				$this->_p_buffer += $orig_offset; // note orig_offset is negative, see if
 				$orig_offset = 0;
 			}
 			fseek($this->_fp, $orig_offset);
@@ -234,27 +235,34 @@ class LogStreamDisk extends LogStream {
 			return ERROR_EOS;
 		}
 
-		if (($this->_p_buffer <= 0) && ($this->ReadNextBlock() != SUCCESS)) {
-			return ERROR_UNDEFINED;
+		if ($this->_p_buffer < 0) {
+			// a negative buffer means that the we have to adjust
+			// the offset
+			$this->_currentOffset++;
+			if ($this->ReadNextBlock() != SUCCESS) {
+				return ERROR_UNDEFINED;
+			}
 		}
 		
 		$line = '';
 		do {
 			$pos = -1;
-
 			$neg_offset = ($this->_buffer_length - $this->_p_buffer) * -1;
 			if (($pos = strrpos($this->_buffer, "\n", $neg_offset)) !== false) {
-				// note that we are at the position of linefeed, so go one char forward:
-				filesize($this->_logStreamConfigObj->FileName);
-				$uID = $this->_currentOffset -= $this->_p_buffer - $pos - 1;
-				$arrProperitesOut[SYSLOG_MESSAGE] = $line . substr($this->_buffer, $pos + 1, $this->_p_buffer - $pos);
+				// note that we are at the position of the linefeed, 
+				// this is recognize in the next few calculation
+				$uID = $this->_currentOffset -= $this->_p_buffer - $pos;
+				$arrProperitesOut[SYSLOG_MESSAGE] = substr($this->_buffer, $pos + 1, $this->_p_buffer - $pos) . $line;
 
+				$this->_currentOffset--; // eat the lf
 				$this->_p_buffer = $pos - 1;
+
 				return SUCCESS;
 			}
-			
-			$line .= substr($this->_buffer, 0, $this->_p_buffer);
-			$this->_currentOffset -= $this->_p_buffer;
+
+			$line = substr($this->_buffer, 0, $this->_p_buffer) . $line;
+			$this->_currentOffset -= $this->_p_buffer; 
+
 		} while ($this->ReadNextBlock() == SUCCESS);
 
 		if ($line != '') {
@@ -371,6 +379,25 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* GetMessageCount will always return -1 which means
+	* that the message count is not available. We refuse
+	* the request of the message count due to a count would
+	* require to read the whole file which would be a big 
+	* pain if the file is e.g. 1 gb.
+	*/
+	public function GetMessageCount() {
+		return -1;
+	}
+
+	/*
+	* GetSortOrderProperties is not implemented yet. So it always
+	* return null.
+	*/
+	public function GetSortOrderProperties() {
+		return null;
+	}
+
+	/**
 	* Set the direction the stream should read data.
 	*
 	* 
@@ -390,7 +417,7 @@ class LogStreamDisk extends LogStream {
 
 	private function ResetBuffer() {
 		$this->_buffer = false;
-		$this->_buffer_length = -1;
+		$this->_buffer_length = 0;
 		$this->_p_buffer = -1;
 	}
 }

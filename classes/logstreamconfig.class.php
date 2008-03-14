@@ -23,6 +23,10 @@ if ( !defined('IN_PHPLOGCON') )
 
 abstract class LogStreamConfig {
 	protected $_logStreamConfigObj = null;
+	protected $_logStreamId = -1;
+	protected $_logStreamName = '';
+	protected $_defaultFacility = '';
+	protected $_defaultSeverity = '';
 
 	public abstract function LogStreamFactory($o);
 
