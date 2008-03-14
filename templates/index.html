@@ -1,46 +1,159 @@
 <!-- INCLUDE include_header.html --> 
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table border="0" cellspacing="0" cellpadding="2" align="center">
+<form action="" method="post" name="search">
 <tr> 
-	<td class="topmenu2" nowrap align="center" width="100"><a class="topmenu1_link" href="#" OnClick="togglevisibility('FilterOptions');">Filter Options</a></td>
-	<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+<!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
+	<td nowrap align="center" nowrap>
+		<B>&nbsp;Search (filter): </B>
+		<input maxlength="2048" name="filter" size="55" title="Search" value="" class="SearchFormControl">
+		<br>
+		<input name="search" type="submit" value="Search" class="SearchFormControl">
+		<input type="reset" value="Reset search" class="SearchFormControl">
+<!--		<input type="button" value="Advanced Search" class="SearchFormControl" OnClick="togglevisibility('HiddenOptions', null);">-->
+		<br>
+	</td>
+	<td nowrap align="left" nowrap valign="top">
+		<a href="#" OnClick="togglevisibility('HiddenOptions', null);">Advanced Search</a>
+		<br>
+		<i>(sample: faciliy:local0 severity:warn)</i>
+	</td>
 </tr>
+</form>
 </table>
-<div id="FilterOptions">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+
+<div id="HiddenOptions" class="HiddenContent">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
-	<td colspan="3" class="cellmenu1" nowrap><B>Filter Options</B></td>
-<tr>
-	<td width="10" valign="top" nowrap>&nbsp;</td>
-	<td width="100%" valign="top">
+	<td width="50%" valign="top" class="with_border">
+
+	<form action="" method="post" name="filterdateform">
+		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+		<tr>
+			<td colspan="2" align="center" valign="top" class="title">
+			<strong>{LN_FILTER_DATE}</strong></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATEMODE}</b></td>
+			<td align="right" class="line0" width="100%">
+				<select name="filter_datemode" size="1" OnChange="toggleDatefiltervisibility('filterdateform');">
+					<!-- BEGIN datemodes -->
+					<option {selected} value={ID}>{DisplayName}</option>
+					<!-- END datemodes -->
+				</select>
+			</td>
+		</tr>
+		</table>
+
+		<div id="HiddenDateFromOptions" class="HiddenContent">
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
+		<tr>
+			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATEFROM}</b></td>
+			<td align="right" class="line1" width="100%">
+				<select name="filter_daterange_from_year" size="1">
+					<!-- BEGIN filter_daterange_from_year_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_from_year_list -->
+				</select>
+				 - 
+				<select name="filter_daterange_from_month" size="1">
+					<!-- BEGIN filter_daterange_from_month_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_from_month_list -->
+				</select>
+				 - 
+				<select name="filter_daterange_from_day" size="1">
+					<!-- BEGIN filter_daterange_from_day_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_from_day_list -->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATETO}</b></td>
+			<td align="right" class="line0" width="100%">
+				<select name="filter_daterange_to_year" size="1">
+					<!-- BEGIN filter_daterange_to_year_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_to_year_list -->
+				</select>
+				 - 
+				<select name="filter_daterange_to_month" size="1">
+					<!-- BEGIN filter_daterange_to_month_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_to_month_list -->
+				</select>
+				 - 
+				<select name="filter_daterange_to_day" size="1">
+					<!-- BEGIN filter_daterange_to_day_list -->
+					<option {selected} value="{value}">{value}</option>
+					<!-- END filter_daterange_to_day_list -->
+				</select>
+			</td>
+		</tr>
+		</table>
+		</div>
+
+		<div id="HiddenDateLastXOptions" class="HiddenContent">
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
+		<tr>
+			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATELASTX}</b></td>
+			<td align="right" class="line1" width="100%">
+				<select name="filter_daterange_last_x" size="1">
+					<!-- BEGIN filter_daterange_last_x_list -->
+					<option {selected} value="{ID}">{DisplayName}</option>
+					<!-- END filter_daterange_last_x_list -->
+				</select>
+			</td>
+		</tr>
+		</table>
+		</div>
+
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
+		<tr>
+			<td align="center" colspan="2">
+				<input type="button" value="{LN_FILTER_ADD2SEARCH}" OnClick="addDatefilterToSearch('filterdateform', 'search');">
+			</td>
+		</tr>
+		</table>
+	</form>
 
 	</td>
 	<td width="10" valign="top" nowrap>&nbsp;</td>
+	<td width="50%" valign="top">
+
+	</td>
 </tr>
 </table>
+<br>
 </div>
 
-<br>
+<script language="javascript">
+	// Run some needed javascript functions now!
+	togglevisibility('HiddenDateFromOptions', null);
+</script>
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
 	<td colspan="3" class="title" nowrap><B>Recent syslog messages</B></td>
 </tr>
-<!-- IF main_pagerenabled="true" -->
+
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
-	<td nowrap width="100%"class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td>
+	<td nowrap width="100%"class="line2"></td>
+<!-- IF main_pagerenabled="true" -->
+	<td nowrap width="200"class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td>
 	<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
-	<td class="line0" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
-	<td class="line1" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+	<td class="line0" nowrap><a href="?sorting={sorting}&uid={uid_first}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+	<td class="line1" nowrap><a href="?sorting={sorting}&uid={uid_previous}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
 <!-- BEGIN syslogpages -->
-	<td class="{cssclass}" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
+	<td class="{cssclass}" nowrap><a href="?sorting={sorting}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
 <!-- END syslogpages -->
-	<td class="line0" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
-	<td class="line1" nowrap><a href="?sorting={sorting}&start={mypagebegin}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+	<td class="line0" nowrap><a href="?sorting={sorting}&uid={uid_next}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+	<td class="line1" nowrap><a href="?sorting={sorting}&uid={uid_last}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+<!-- ENDIF main_pagerenabled="true" -->
 </tr>
 </table>
-<!-- ENDIF main_pagerenabled="true" -->
 
 <tr>
 	<td width="100%" valign="top">
@@ -48,13 +161,13 @@
 	<!-- IF syslogmessagesenabled="true" -->
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
-		<td width="25" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>
-		<td width="100" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_DATE}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_SYSLOGTAG}</A></td>
-		<td width="75" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_INFOUNIT}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting={additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>
+		<td width="100" class="cellmenu1" align="center" nowrap><A HREF="?sorting=timereported{additional_url}" class="cellmenu1_link" >{LN_GRID_DATE}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogfacility{additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogseverity{additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogtag{additional_url}" class="cellmenu1_link" >{LN_GRID_SYSLOGTAG}</A></td>
+		<td width="75" class="cellmenu1" align="center" nowrap><A HREF="?sorting=IUT{additional_url}" class="cellmenu1_link" >{LN_GRID_INFOUNIT}</A></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=FROMHOST{additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td>
 		<td width="100%" class="cellmenu1" align="center" nowrap><B>{LN_GRID_MSG}</B></td>
 	</tr>
 
