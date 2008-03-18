@@ -388,10 +388,10 @@ class LogStreamDisk extends LogStream {
 	* 
 	* @param filter object in: filter object
 	* @return integer Error state
-	*/
 	public function SetFilter($filter) {
 		return SUCCESS;	
 	}
+	*/
 
 	/**
 	* GetMessageCount will always return -1 which means

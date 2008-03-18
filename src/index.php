@@ -108,7 +108,7 @@ if ( isset($_POST['search']) && $_POST['search'] == $content['LN_SEARCH_PERFORMA
 		$content['searchstr'] .= "facility:" . $tmpStr . " ";
 	}
 
-	if ( isset($_POST['filter_severity']) && count($_POST['filter_facility']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
+	if ( isset($_POST['filter_severity']) && count($_POST['filter_severity']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
 	{
 		$tmpStr = "";
 		foreach ($_POST['filter_severity'] as $tmpfacility) 
@@ -154,12 +154,12 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
+	$stream->SetFilter($content['searchstr']);
 	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
 	$stream->SetReadDirection(EnumReadDirection::Backward);
 	
 	$uID = $currentUID;
 	$counter = 0;
-
 
 	while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= 30)
 	{

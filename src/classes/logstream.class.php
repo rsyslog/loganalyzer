@@ -76,14 +76,6 @@ abstract class LogStream {
 	public abstract function Read($uID, &$arrProperitesOut);
 
 	/**
-	* Set the filter for the current stream.
-	* 
-	* @param filter object in: filter object
-	* @return integer Error state
-	*/
-	public abstract function SetFilter($filter);
-
-	/**
 	* Set the direction the stream should read data.
 	*
 	* @param enumReadDirectionfilter EnumReadDirection in: The new direction.
@@ -157,7 +149,21 @@ abstract class LogStream {
 	* @return array List of properties. Null if the stream is not sortable.
 	*/
 	public abstract function GetSortOrderProperties();
-}
 
+	/**
+	* Set the filter for the current stream.
+	* 
+	* @param filter object in: filter object
+	* @return integer Error state
+	*/
+	public function SetFilter($filter)
+	{
+		// For now copy the filter string as it is
+		$_filter = $filter;
+
+		return SUCCESS;	
+	}
+
+}
 
 ?>
