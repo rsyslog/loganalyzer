@@ -21,9 +21,16 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
+// --- Basic Includes
+require_once($gl_root_path . 'classes/enums.class.php');
+require_once($gl_root_path . 'include/constants_errors.php');
+require_once($gl_root_path . 'include/constants_logstream.php');
+// --- 
+
+
 abstract class LogStream {
 	protected $_readDirection = EnumReadDirection::Forward;
-	protected $_filter = null;
+	protected $_filters = null;
 	protected $_current_uId = -1;
 	protected $_logStreamConfigObj = null;
 	protected $_arrProperties = null;
@@ -156,13 +163,186 @@ abstract class LogStream {
 	* @param filter object in: filter object
 	* @return integer Error state
 	*/
-	public function SetFilter($filter)
+	public function SetFilter($szFilters)
 	{
-		// For now copy the filter string as it is
-		$_filter = $filter;
+		// Parse Filters from string
+		$this->ParseFilters($szFilters);
 
 		return SUCCESS;	
 	}
+
+	/**
+	*	Helper function to parse filters into a useful filter array we can work with.
+	*/
+	private function ParseFilters($szFilters)
+	{
+		if ( isset($szFilters) && strlen($szFilters) > 0 )
+		{
+//			$this->_filters = array();
+
+			$tmpEntries = explode(" ", $szFilters);
+			foreach($tmpEntries as $myEntry) 
+			{
+				// Continue if empty filter!
+				if ( strlen(trim($myEntry)) <= 0 ) 
+					continue;
+
+				if ( strpos($myEntry, ":") !== false )
+				{
+					// Split key and value
+					$tmpArray = explode(":", $myEntry, 2);
+
+					// Continue if empty filter!
+					if ( strlen(trim($tmpArray[FILTER_TMP_VALUE])) == 0 ) 
+						continue;
+
+					// Check for multiple values!
+					if ( strpos($tmpArray[FILTER_TMP_VALUE], ",") )
+						$tmpValues = explode(",", $tmpArray[FILTER_TMP_VALUE]);
+
+					switch( $tmpArray[FILTER_TMP_KEY] )
+					{
+						case "facility": 
+							$tmpKeyName = SYSLOG_FACILITY; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							break;
+						case "severity": 
+							$tmpKeyName = SYSLOG_SEVERITY; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							break;
+						case "syslogtag": 
+							$tmpKeyName = SYSLOG_SYSLOGTAG; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case "source": 
+							$tmpKeyName = SYSLOG_HOST; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case "datefrom": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_RANGE_FROM; 
+							break;
+						case "dateto": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_RANGE_TO; 
+							break;
+						case "datelastx": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_LASTX; 
+							break;
+						default:
+							break;
+							// Unknown filter
+					}
+
+					// --- Set Filter!
+					$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
+					$iNum = count($this->_filters[$tmpKeyName]) - 1;
+
+					if		( isset($tmpTimeMode) )
+					{
+						$this->_filters[$tmpKeyName][$iNum][FILTER_DATEMODE] = $tmpTimeMode;
+						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+					}
+					else if ( isset($tmpValues) ) 
+					{
+						foreach( $tmpValues as $szValue ) 
+						{
+							// Continue if empty!
+							if ( strlen(trim($szValue)) == 0 ) 
+								continue;
+
+							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue;
+						}
+					}
+					else
+						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+					// ---
+
+
+					// Unset unused variables
+					if ( isset($tmpArray) ) 
+						unset($tmpArray);
+					if ( isset($tmpValues) ) 
+						unset($tmpValues);
+					if ( isset($tmpTimeMode) ) 
+						unset($tmpTimeMode);
+				}
+				else
+				{	
+					// No ":", so we treat it as message filter!
+					$this->_filters[SYSLOG_MESSAGE][][FILTER_TYPE] = FILTER_TYPE_STRING;
+					$iNum = count($this->_filters[SYSLOG_MESSAGE]) - 1;
+					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry;
+				}
+			}
+		}
+
+		// Debug print
+//		print_r ($this->_filters);
+	}
+
+	/**
+	*	Helper function to parse filters into a useful filter array we can work with.
+	*/
+	protected function ApplyFilters($myResults, &$arrProperitesOut)
+	{
+		// IF result was unsuccessfull, return success - nothing we can do here.
+		if ( $myResults >= ERROR ) 
+			return SUCCESS;
+
+		if ( $this->_filters != null )
+		{
+			// Evaluation default for now is true
+			$bEval = true;
+			
+			// Loop through set properties
+			foreach( $arrProperitesOut as $propertyname => $propertyvalue )
+			{
+				// TODO: NOT SURE IF THIS WILL WORK ON NUMBERS AND OTHER TYPES RIGHT NOW
+				if (array_key_exists($propertyname, $this->_filters) && strlen($propertyvalue) > 0 )
+				{ 
+					// Found something to filter, so do it!
+					foreach( $this->_filters[$propertyname] as $myfilter ) 
+					{
+						switch( $myfilter[FILTER_TYPE] )
+						{
+							case FILTER_TYPE_STRING:
+								if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+									$bEval = false;
+								break;
+							case FILTER_TYPE_NUMBER:
+								break;
+							case FILTER_TYPE_DATE:
+								break;
+							default:
+								// TODO!
+								break;
+						}
+					}
+
+					if ( !$bEval ) 
+					{
+						// unmatching filter, rest property array
+						foreach ( $this->_arrProperties as $property ) 
+							$arrProperitesOut[$property] = '';
+
+						// return error!
+						return ERROR_FILTER_NOT_MATCH;
+					}
+				}
+			}
+			
+			// Reached this point means filters did match!
+			return SUCCESS;
+		}
+		else // No filters at all means success!
+			return SUCCESS;
+	}
+
 
 }
 

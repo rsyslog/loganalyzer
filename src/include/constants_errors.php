@@ -23,11 +23,13 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 define('SUCCESS', 0);
-define('ERROR_FILE_NOT_FOUND', 1);
-define('ERROR_FILE_CANT_CLOSE', 2);
-define('ERROR_FILE_EOF', 3);
-define('ERROR_FILE_BOF', 4);
-define('ERROR_UNDEFINED', 5);
-define('ERROR_EOS', 6);
-define('ERROR_NOMORERECORDS',7);
+define('ERROR', 1);			// This is a simple helper constant! which we can use to check if there even was an error! Any result code above 0 is an error!
+define('ERROR_FILE_NOT_FOUND', 2);
+define('ERROR_FILE_CANT_CLOSE', 3);
+define('ERROR_FILE_EOF', 4);
+define('ERROR_FILE_BOF', 5);
+define('ERROR_UNDEFINED', 6);
+define('ERROR_EOS', 7);
+define('ERROR_NOMORERECORDS', 8);
+define('ERROR_FILTER_NOT_MATCH', 9);
 ?>

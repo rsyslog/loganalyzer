@@ -173,12 +173,20 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error state
 	* @see ReadNext
 	*/
-	public function ReadNext(&$uID, &$arrProperitesOut) {
-		if ($this->_readDirection == EnumReadDirection::Forward) {
-			return $this->ReadNextForwards($uID, $arrProperitesOut);
-		}
-
-		return $this->ReadNextBackwards($uID, $arrProperitesOut);
+	public function ReadNext(&$uID, &$arrProperitesOut)
+	{
+		do
+		{
+			// Read next entry first!
+			if ($this->_readDirection == EnumReadDirection::Forward)
+				$ret = $this->ReadNextForwards($uID, $arrProperitesOut);
+			else
+				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
+		// Loop until the filter applies, or another error occurs. 
+		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
+		
+		// reached here means return result!
+		return $ret;
 	}
 
 	private function ReadNextForwards(&$uID, &$arrProperitesOut) {
@@ -194,8 +202,12 @@ class LogStreamDisk extends LogStream {
 		if (($this->_p_buffer == $this->_buffer_length || $this->_p_buffer == -1) && ($this->ReadNextBlock() != SUCCESS)) {
 			return ERROR_UNDEFINED;
 		}
-
+		
+		// Init variables dynamically
 		$line = '';
+		foreach ( $this->_arrProperties as $property ) 
+			$arrProperitesOut[$property] = '';
+/*
 		$arrProperitesOut[SYSLOG_DATE] = '';
 		$arrProperitesOut[SYSLOG_FACILITY] = '';
 		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
@@ -205,7 +217,7 @@ class LogStreamDisk extends LogStream {
 		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
 		$arrProperitesOut[SYSLOG_MESSAGE] = '';
 		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
-		
+*/
 		do {
 			$pos = -1;
 			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
@@ -236,16 +248,6 @@ class LogStreamDisk extends LogStream {
 	}
 
 	private function ReadNextBackwards(&$uID, &$arrProperitesOut) {
-		$arrProperitesOut[SYSLOG_DATE] = '';
-		$arrProperitesOut[SYSLOG_FACILITY] = '';
-		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_HOST] = '';
-		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
-		$arrProperitesOut[SYSLOG_MESSAGE] = '';
-		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
-
 		if ($this->_bEOS) {
 			return ERROR_EOS;
 		}
@@ -259,7 +261,22 @@ class LogStreamDisk extends LogStream {
 			}
 		}
 		
+		// Init variables dynamically
 		$line = '';
+		foreach ( $this->_arrProperties as $property ) 
+			$arrProperitesOut[$property] = '';
+/*
+		$arrProperitesOut[SYSLOG_DATE] = '';
+		$arrProperitesOut[SYSLOG_FACILITY] = '';
+		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY] = '';
+		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
+		$arrProperitesOut[SYSLOG_HOST] = '';
+		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
+		$arrProperitesOut[SYSLOG_MESSAGE] = '';
+		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
+*/
+
 		do {
 			$pos = -1;
 			$neg_offset = ($this->_buffer_length - $this->_p_buffer) * -1;

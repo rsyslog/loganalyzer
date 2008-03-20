@@ -27,10 +27,28 @@ define('DATEMODE_ALL', 1);
 define('DATEMODE_RANGE', 2);
 define('DATEMODE_LASTX', 3);
 
+define('DATEMODE_RANGE_FROM', 4);
+define('DATEMODE_RANGE_TO', 5);
+
 define('DATE_LASTX_HOUR', 1);
 define('DATE_LASTX_12HOURS', 2);
 define('DATE_LASTX_24HOURS', 3);
 define('DATE_LASTX_7DAYS', 4);
 define('DATE_LASTX_31DAYS', 5);
 // --- 
+
+
+// Helper constants needed for parsing filters
+define('FILTER_TMP_KEY', 0);
+define('FILTER_TMP_VALUE', 1);
+define('FILTER_DATEMODE', 'datemode');
+define('FILTER_TYPE', 'filtertype');
+define('FILTER_DATEMODENAME', 'datemodename');
+define('FILTER_VALUE', 'value');
+
+// Defines which kind of filters we have
+define('FILTER_TYPE_STRING', 0);
+define('FILTER_TYPE_NUMBER', 1);
+define('FILTER_TYPE_DATE', 2);
+
 ?>

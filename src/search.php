@@ -40,9 +40,9 @@ $content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content
 // ---
 
 //if ( isset($content['myserver']) ) 
-//	$content['TITLE'] = "PhpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
+//	$content['TITLE'] = "phpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
 //else
-	$content['TITLE'] = "PhpLogCon :: Search";
+	$content['TITLE'] = "phpLogCon :: Search";
 // --- 
 
 // --- BEGIN Custom Code

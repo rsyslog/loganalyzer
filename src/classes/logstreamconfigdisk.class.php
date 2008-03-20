@@ -24,7 +24,13 @@ if ( !defined('IN_PHPLOGCON') )
 class LogStreamConfigDisk extends LogStreamConfig {
 	public $FileName = '';
 
-	public function LogStreamFactory($o) {
+	public function LogStreamFactory($o) 
+	{
+		// An instance is created, then include the logstreamdisk class as well!
+		global $gl_root_path;
+		require_once($gl_root_path . 'classes/logstreamdisk.class.php');
+		
+		// return LogStreamDisk instance
 		return new LogStreamDisk($o);
 	}
 

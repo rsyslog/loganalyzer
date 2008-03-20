@@ -49,7 +49,12 @@ function InitFilterHelpers()
 	$currentDay = date("d", $currentTime);
 	$currentMonth = date("m", $currentTime);
 	$currentYear = date("Y", $currentTime);
-	
+
+	$tomorrowTime = time() + 86400; // Add one day!
+	$tomorrowDay = date("d", $tomorrowTime);
+	$tomorrowMonth = date("m", $tomorrowTime);
+	$tomorrowYear = date("Y", $tomorrowTime);
+
 	// Init Year, month and day array!
 	for ( $i = $currentYear-5; $i <= $currentYear+5; $i++ )
 		$content['years'][] = $i;
@@ -83,21 +88,21 @@ function InitFilterHelpers()
 	if ( isset($_SESSION['filter_daterange_to_year']) ) 
 		$filters['filter_daterange_to_year'] = intval($_SESSION['filter_daterange_to_year']);
 	else
-		$filters['filter_daterange_to_year'] = $currentYear;
+		$filters['filter_daterange_to_year'] = $tomorrowYear;
 	FillDateRangeArray($content['years'], "filter_daterange_to_year_list", "filter_daterange_to_year");
 
 	// Init filter_daterange_to_month
 	if ( isset($_SESSION['filter_daterange_to_month']) ) 
 		$filters['filter_daterange_to_month'] = intval($_SESSION['filter_daterange_to_month']);
 	else
-		$filters['filter_daterange_to_month'] = $currentMonth;
+		$filters['filter_daterange_to_month'] = $tomorrowMonth;
 	FillDateRangeArray($content['months'], "filter_daterange_to_month_list", "filter_daterange_to_month");
 
 	// Init filter_daterange_to_day
 	if ( isset($_SESSION['filter_daterange_to_day']) ) 
 		$filters['filter_daterange_to_day'] = intval($_SESSION['filter_daterange_to_day']);
 	else
-		$filters['filter_daterange_to_day'] = $currentDay;
+		$filters['filter_daterange_to_day'] = $tomorrowDay;
 	FillDateRangeArray($content['days'], "filter_daterange_to_day_list", "filter_daterange_to_day");
 
 	// --- Define LASTX Array
