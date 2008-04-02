@@ -1,14 +1,31 @@
 <?php
 	/*
 		*********************************************************************
-		* Copyright by Adiscon GmbH | 2008!									*
-		* -> www.phplogcon.org <-											*
-		*																	*
-		* Use this script at your own risk!									*
-		* -----------------------------------------------------------------	*
-		* Main Configuration File											*
-		*																	*
-		* -> Configuration need variables for the Database connection		*
+		* phpLogCon - http://www.phplogcon.org
+		* -----------------------------------------------------------------
+		* Main Configuration File
+		*
+		* -> Configuration need variables for the Database connection
+		*
+		* Copyright (C) 2008 Adiscon GmbH.
+		*
+		* This file is part of phpLogCon.
+		*
+		* PhpLogCon is free software: you can redistribute it and/or modify
+		* it under the terms of the GNU General Public License as published by
+		* the Free Software Foundation, either version 3 of the License, or
+		* (at your option) any later version.
+		*
+		* PhpLogCon is distributed in the hope that it will be useful,
+		* but WITHOUT ANY WARRANTY; without even the implied warranty of
+		* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		* GNU General Public License for more details.
+		*
+		* You should have received a copy of the GNU General Public License
+		* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+		*
+		* A copy of the GPL can be found in the file "COPYING" in this
+		* distribution.
 		*********************************************************************
 	*/
 
@@ -44,5 +61,9 @@
 	$CFG['Sources'][1]['Name'] = "Old Syslog Disk File";
 	$CFG['Sources'][1]['SourceType'] = SOURCE_DISK;
 	$CFG['Sources'][1]['DiskFile'] = $gl_root_path . "samplelogs/syslog.0";
+	$CFG['Sources'][2]['ID'] = "Source3";
+	$CFG['Sources'][2]['Name'] = "RSyslog Disk File";
+	$CFG['Sources'][2]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][2]['DiskFile'] = $gl_root_path . "samplelogs/rsyslog";
 	// --- 
 ?>

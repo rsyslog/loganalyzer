@@ -23,15 +23,30 @@ if ( !defined('IN_PHPLOGCON') )
 
 class LogStreamConfigDisk extends LogStreamConfig {
 	public $FileName = '';
+	public $_lineParser = null;
 
 	public function LogStreamFactory($o) 
 	{
 		// An instance is created, then include the logstreamdisk class as well!
 		global $gl_root_path;
 		require_once($gl_root_path . 'classes/logstreamdisk.class.php');
+
+		// Create and set LineParser Instance
+		$this->_lineParser = $this->CreateLineParser();
 		
 		// return LogStreamDisk instance
 		return new LogStreamDisk($o);
+	}
+
+	private function CreateLineParser() 
+	{
+		// We need to include Line Parser on demand!
+		global $gl_root_path;
+		require_once($gl_root_path . 'classes/logstreamlineparser.class.php');
+		require_once($gl_root_path . 'classes/logstreamlineparsersyslog.class.php');
+		
+		//return LineParser Instance
+		return new LogStreamLineParserSyslog();
 	}
 
 }
