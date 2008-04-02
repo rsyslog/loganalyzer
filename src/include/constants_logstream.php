@@ -35,6 +35,7 @@ define('SYSLOG_SYSLOGTAG', 'syslogtag');
 define('SYSLOG_MESSAGE', 'msg');
 define('SYSLOG_MESSAGETRUNSCATED', 'msgtrunscated');
 define('SYSLOG_MESSAGETYPE', 'IUT');
+define('SYSLOG_PROCESSID', 'procid');
 
 // MonitorWare InfoUnit Defines
 define('IUT_Unknown', '0');

@@ -383,6 +383,13 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	exit;
 }
 
+function GetStringWithHTMLCodes($myStr)
+{
+	// First of all replace special characters with valid HTML representations!
+	$searchfor = array( "&", "<", ">" );
+	$replacewith = array( "&amp;", "&lt;", "&gt;" );
+	return str_replace ( $searchfor, $replacewith, $myStr);
+}
 
 function InitTemplateParser()
 {

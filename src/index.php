@@ -185,7 +185,7 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 
 		// Set truncasted message for display
 		if ( isset($logArray[SYSLOG_MESSAGE]) )
-			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE];
+			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE]);
 		else
 			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
 

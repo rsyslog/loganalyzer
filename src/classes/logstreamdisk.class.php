@@ -29,6 +29,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Required Includes!
 require_once($gl_root_path . 'include/constants_errors.php');
+require_once($gl_root_path . 'classes/logstreamparser.class.php');
 // --- 
 
 class LogStreamDisk extends LogStream {
@@ -42,9 +43,12 @@ class LogStreamDisk extends LogStream {
 	private $_buffer_length = 0;
 	private $_p_buffer = -1;
 
+	private $_msgParser = null;
+
 	// Constructor
 	public function LogStreamDisk($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
+		$this->_msgParser = new LogStreamParser();
 	}
 
 	/**
@@ -182,6 +186,9 @@ class LogStreamDisk extends LogStream {
 				$ret = $this->ReadNextForwards($uID, $arrProperitesOut);
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
+
+$this->_msgParser->ParseSyslogMessage($arrProperitesOut);
+
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
 		
