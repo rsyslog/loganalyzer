@@ -35,18 +35,30 @@
 	$CFG["ShowPageRenderStats"] = 1;						// If enabled, you will see Pagerender Settings
 	// --- 
 
+	// --- Default Frontend Options 
+
+	// ---
+
 	// --- Source Options
 	$CFG['Sources'][0]['ID'] = "Source1";
 	$CFG['Sources'][0]['Name'] = "Syslog Disk File";
 	$CFG['Sources'][0]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][0]['LogLineType'] = "syslog";
 	$CFG['Sources'][0]['DiskFile'] = $gl_root_path . "samplelogs/syslog";
 	$CFG['Sources'][1]['ID'] = "Source2";
 	$CFG['Sources'][1]['Name'] = "Old Syslog Disk File";
 	$CFG['Sources'][1]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][1]['LogLineType'] = "syslog";
 	$CFG['Sources'][1]['DiskFile'] = $gl_root_path . "samplelogs/syslog.0";
 	$CFG['Sources'][2]['ID'] = "Source3";
 	$CFG['Sources'][2]['Name'] = "RSyslog Disk File";
 	$CFG['Sources'][2]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][2]['LogLineType'] = "syslog";
 	$CFG['Sources'][2]['DiskFile'] = $gl_root_path . "samplelogs/rsyslog";
+	$CFG['Sources'][3]['ID'] = "Source4";
+	$CFG['Sources'][3]['Name'] = "WinSyslog Disk File";
+	$CFG['Sources'][3]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][3]['LogLineType'] = "winsyslog";
+	$CFG['Sources'][3]['DiskFile'] = $gl_root_path . "samplelogs/winsyslog";
 	// --- 
 ?>

@@ -23,6 +23,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 class LogStreamConfigDisk extends LogStreamConfig {
 	public $FileName = '';
+	public $LineParserType = "syslog"; // Default = Syslog!
 	public $_lineParser = null;
 
 	public function LogStreamFactory($o) 
@@ -43,10 +44,22 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		// We need to include Line Parser on demand!
 		global $gl_root_path;
 		require_once($gl_root_path . 'classes/logstreamlineparser.class.php');
-		require_once($gl_root_path . 'classes/logstreamlineparsersyslog.class.php');
 		
-		//return LineParser Instance
-		return new LogStreamLineParserSyslog();
+		// Probe if file exists then include it!
+		$strIncludeFile = 'classes/logstreamlineparser' . $this->LineParserType . '.class.php';
+		$strClassName = "LogStreamLineParser" . $this->LineParserType;
+
+		if ( is_file($strIncludeFile) )
+		{
+			require_once($strIncludeFile);
+
+			// TODO! Create Parser based on Source Config!
+
+			//return LineParser Instance
+			return new $strClassName();
+		}
+		else
+			DieWithErrorMsg("Couldn't locate LineParser include file '" . $strIncludeFile . "'");
 	}
 
 }

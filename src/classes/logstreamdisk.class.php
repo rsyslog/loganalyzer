@@ -183,7 +183,8 @@ class LogStreamDisk extends LogStream {
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
 
-$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut);
+		// Line Parser Hook here
+		$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );

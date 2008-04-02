@@ -77,8 +77,21 @@ function CreateCurrentUrl()
 
 	// May can be removed later
 	$content['additional_url'] = ""; // "&serverid=" . $content['serverid'];
-
 }
 
+function GetFormatedDate($evttimearray)
+{
+	global $content;
+
+	if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
+		$szDateFormatted = "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+	else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
+		$szDateFormatted = "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+	else
+		$szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+
+	// return formated string
+	return $szDateFormatted;
+}
 
 ?>

@@ -26,6 +26,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 // Properties we need from the stream class
 define('SYSLOG_DATE', 'timereported');
+define('SYSLOG_DATE_FORMATED', 'timereported_formatted');
 define('SYSLOG_FACILITY', 'syslogfacility');
 define('SYSLOG_FACILITY_TEXT', 'syslogfacility-text');
 define('SYSLOG_SEVERITY', 'syslogseverity');
@@ -62,5 +63,10 @@ define('IUT_WEVTMONV2', '23');
 define('IUT_SMTPLISTENER', '24');
 define('IUT_AliveMonECHO', '1999998');
 define('IUT_MIAP_Receiver', '1999999');
+
+// EventTime Constants
+define('EVTIME_TIMESTAMP', '0');
+define('EVTIME_TIMEZONE', '1');
+define('EVTIME_MICROSECONDS', '2');
 
 ?>

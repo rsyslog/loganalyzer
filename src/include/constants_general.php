@@ -43,6 +43,7 @@ define('STR_DEBUG_ERROR_WTF', "WTF OMFG");
 // --- Source Type defines
 define('SOURCE_DISK', '1');
 define('SOURCE_MYSQLDB', '2');
+// --- 
 
 // --- 
 define('UID_UNKNOWN', -1);

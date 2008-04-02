@@ -45,13 +45,22 @@
 						$content['Sources'][$iSourceID]['ID'] = $CFG['Sources'][$i]['ID'];
 						$content['Sources'][$iSourceID]['Name'] = $CFG['Sources'][$i]['Name'];
 						$content['Sources'][$iSourceID]['SourceType'] = $CFG['Sources'][$i]['SourceType'];
-						$content['Sources'][$iSourceID]['selected'] = ""; // Only for the display box
+						
+						// Optional parameters
+						if ( isset($CFG['Sources'][$i]['LogLineType']) ) 
+							$content['Sources'][$iSourceID]['LogLineType'] = $CFG['Sources'][$i]['LogLineType'];
+						else	// Default = syslog
+							$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
+
+						// Only for the display box
+						$content['Sources'][$iSourceID]['selected'] = ""; 
 						
 						// Create Config instance!
 						if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_DISK )
 						{
 							$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
 							$content['Sources'][$iSourceID]['ObjRef']->FileName = $CFG['Sources'][$i]['DiskFile'];
+							$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $CFG['Sources'][$i]['LogLineType'];
 						}
 						else if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_MYSQLDB )
 						{	

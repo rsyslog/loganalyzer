@@ -189,6 +189,9 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 		else
 			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
 
+		// Create Displayable DataStamp 
+		$content['syslogmessages'][$counter][SYSLOG_DATE_FORMATED] = GetFormatedDate($content['syslogmessages'][$counter][SYSLOG_DATE]); 
+
 		// Increment Counter
 		$counter++;
 	}
