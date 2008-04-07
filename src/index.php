@@ -105,7 +105,7 @@ if ( isset($_POST['search']) )
 														$filters['filter_daterange_from_day'] . "T00:00:00 ";
 				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
 														$filters['filter_daterange_to_month'] . "-" . 
-														$filters['filter_daterange_to_day'] . "T00:00:00 ";
+														$filters['filter_daterange_to_day'] . "T23:59:59 ";
 
 			}
 			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
@@ -113,7 +113,7 @@ if ( isset($_POST['search']) )
 				if ( isset($_POST['filter_daterange_last_x']) ) 
 				{
 					$filters['filter_daterange_last_x'] = intval($_POST['filter_daterange_last_x']);
-					$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_last_x'] . " ";
+					$content['searchstr'] .= "datelastx:" .	$filters['filter_daterange_last_x'] . " ";
 				}
 			}
 		}

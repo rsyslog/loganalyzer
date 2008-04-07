@@ -178,8 +178,6 @@ abstract class LogStream {
 	{
 		if ( isset($szFilters) && strlen($szFilters) > 0 )
 		{
-//			$this->_filters = array();
-
 			$tmpEntries = explode(" ", $szFilters);
 			foreach($tmpEntries as $myEntry) 
 			{
@@ -234,6 +232,7 @@ abstract class LogStream {
 							$tmpTimeMode = DATEMODE_LASTX; 
 							break;
 						default:
+							echo "WTF - Unknown filter";
 							break;
 							// Unknown filter
 					}
@@ -255,13 +254,29 @@ abstract class LogStream {
 							if ( strlen(trim($szValue)) == 0 ) 
 								continue;
 
+							if ( isset($this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]) )
+							{
+								// Create new Filter!
+								$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
+								$iNum = count($this->_filters[$tmpKeyName]) - 1;
+							}
+
+							// Set Filter Mode
+							$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($szValue);
+
+							// Set Value
 							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue;
 						}
 					}
 					else
+					{
+						// Set Filter Mode
+						$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+						
+						// Set Filter value!
 						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+					}
 					// ---
-
 
 					// Unset unused variables
 					if ( isset($tmpArray) ) 
@@ -276,6 +291,7 @@ abstract class LogStream {
 					// No ":", so we treat it as message filter!
 					$this->_filters[SYSLOG_MESSAGE][][FILTER_TYPE] = FILTER_TYPE_STRING;
 					$iNum = count($this->_filters[SYSLOG_MESSAGE]) - 1;
+					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($myEntry);
 					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry;
 				}
 			}
@@ -298,31 +314,113 @@ abstract class LogStream {
 		{
 			// Evaluation default for now is true
 			$bEval = true;
-			
+
 			// Loop through set properties
 			foreach( $arrProperitesOut as $propertyname => $propertyvalue )
 			{
 				// TODO: NOT SURE IF THIS WILL WORK ON NUMBERS AND OTHER TYPES RIGHT NOW
-				if (array_key_exists($propertyname, $this->_filters) && strlen($propertyvalue) > 0 )
+				if (	
+						array_key_exists($propertyname, $this->_filters) && 
+						isset($propertyvalue) && 
+						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0 ) /* Negative because it only matters if the propvalure is a string*/
+					)
 				{ 
+					// Extra var needed for number checks!
+					$bIsOrFilter = false; // If enabled we need to check for numbereval later
+					$bOrFilter = false;
+
 					// Found something to filter, so do it!
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
 						switch( $myfilter[FILTER_TYPE] )
 						{
 							case FILTER_TYPE_STRING:
-								if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-									$bEval = false;
+								// If Syslog message, we have AND handling!
+								if ( $propertyname == SYSLOG_MESSAGE )
+								{
+									// Include Filter
+									if ( $myfilter[FILTER_MODE] == FILTER_MODE_INCLUDE ) 
+									{
+										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+											$bEval = false;
+									}
+									// Exclude Filter
+									else if ( $myfilter[FILTER_MODE] == FILTER_MODE_EXCLUDE ) 
+									{
+										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+											$bEval = false;
+									}
+								}
+								// Otherwise we use OR Handling!
+								else
+								{
+									$bIsOrFilter = true; // Set isOrFilter to true 
+									if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+										$bOrFilter = true;
+									break;
+								}
 								break;
 							case FILTER_TYPE_NUMBER:
+								$bIsOrFilter = true; // Set to true in any case!
+								if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
+									$bOrFilter = true;
 								break;
 							case FILTER_TYPE_DATE:
+								// Get Log TimeStamp
+								$nLogTimeStamp = $arrProperitesOut[$propertyname][EVTIME_TIMESTAMP];
+
+								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+								{
+									// Get current timestamp
+									$nNowTimeStamp = time();
+
+									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+										$nLastXTime = 60 * 60; // One Hour!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
+										$nLastXTime = 60 * 60 * 12; // 12 Hours!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
+										$nLastXTime = 60 * 60 * 24; // 24 Hours!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
+										$nLastXTime = 60 * 60 * 24 * 7; // 7 days
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
+										$nLastXTime = 60 * 60 * 24 * 31; // 31 days
+									else
+										// WTF default? 
+										$nLastXTime = 86400;
+									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.
+									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )
+										$bEval = false;
+								}
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
+								{
+									// Get filter timestamp!
+ 									$nFromTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
+									
+									// If logtime is smaller then FromTime, then the Event is outside of our scope!
+									if ( $nLogTimeStamp < $nFromTimeStamp )
+										$bEval = false;
+								}
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+								{
+									// Get filter timestamp!
+//									echo $myfilter[FILTER_VALUE];
+									$nToTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
+									
+									// If logtime is smaller then FromTime, then the Event is outside of our scope!
+									if ( $nLogTimeStamp > $nToTimeStamp )
+										$bEval = false;
+								}
+
 								break;
 							default:
 								// TODO!
 								break;
 						}
 					}
+					
+					// If was number filter, we apply it the evaluation.
+					if ( $bIsOrFilter ) 
+						$bEval &= $bOrFilter;
 
 					if ( !$bEval ) 
 					{
@@ -341,6 +439,31 @@ abstract class LogStream {
 		}
 		else // No filters at all means success!
 			return SUCCESS;
+	}
+
+
+	private function SetFilterIncludeMode(&$szValue)
+	{
+
+		// Set Filtermode
+		$pos = strpos($szValue, "+");
+		if ( $pos !== false && $pos == 0 )
+		{
+			//trunscate +
+			$szValue = substr( $szValue, 1);
+			return FILTER_MODE_INCLUDE;
+		}
+
+		$pos = strpos($szValue, "-");
+		if ( $pos !== false && $pos == 0 )
+		{
+			//trunscate -
+			$szValue = substr( $szValue, 1);
+			return FILTER_MODE_EXCLUDE;
+		}
+
+		// Default is include which means +
+		return FILTER_MODE_INCLUDE;
 	}
 
 

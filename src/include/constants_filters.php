@@ -45,6 +45,10 @@ define('FILTER_DATEMODE', 'datemode');
 define('FILTER_TYPE', 'filtertype');
 define('FILTER_DATEMODENAME', 'datemodename');
 define('FILTER_VALUE', 'value');
+define('FILTER_MODE', 'filtermode');
+define('FILTER_MODE_INCLUDE', 0);
+define('FILTER_MODE_EXCLUDE', 1);
+
 
 // Defines which kind of filters we have
 define('FILTER_TYPE_STRING', 0);

@@ -80,10 +80,21 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
 		}
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}\+[0-9]{1,2}:[0-9]{1,2}),(.*?)$/", $szLine, $out ) )
+		{
+			// Some kind of debug message or something ...
+			// Sample: 2008-03-28T15:17:05.480876+01:00,**NO MATCH**
+			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_MESSAGE] = $out[2];
+		}
+
 		else
 		{
-			// TODO: Cannot Parse Syslog message with this pattern!
-			die ("wtf syslog - " . $arrArguments[SYSLOG_MESSAGE] );
+			if ( strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
+			{
+				// TODO: Cannot Parse Syslog message with this pattern!
+				die ("wtf syslog - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
+			}
 		}
 		
 		// Return success!

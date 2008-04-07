@@ -144,24 +144,24 @@ function InitFilterHelpers()
 
 
 	// Init Facility LIST
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "SYSLOG_KERN", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_USER, "DisplayName" => "SYSLOG_USER", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_MAIL, "DisplayName" => "SYSLOG_MAIL", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_DAEMON, "DisplayName" => "SYSLOG_DAEMON", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_AUTH, "DisplayName" => "SYSLOG_AUTH", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_SYSLOG, "DisplayName" => "SYSLOG_SYSLOG", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" => "SYSLOG_LPR", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "SYSLOG_NEWS", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "SYSLOG_UUCP", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "SYSLOG_CRON", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "SYSLOG_LOCAL0", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "SYSLOG_LOCAL1", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "SYSLOG_LOCAL2", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL3, "DisplayName" => "SYSLOG_LOCAL3", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL4, "DisplayName" => "SYSLOG_LOCAL4", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL5, "DisplayName" => "SYSLOG_LOCAL5", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL6, "DisplayName" => "SYSLOG_LOCAL6", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL7, "DisplayName" => "SYSLOG_LOCAL7", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_USER, "DisplayName" => "USER", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_MAIL, "DisplayName" => "MAIL", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_DAEMON, "DisplayName" => "DAEMON", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_AUTH, "DisplayName" => "AUTH", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_SYSLOG, "DisplayName" => "SYSLOG", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" => "LPR", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "NEWS", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "UUCP", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "CRON", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "LOCAL0", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "LOCAL1", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "LOCAL2", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL3, "DisplayName" => "LOCAL3", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL4, "DisplayName" => "LOCAL4", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL5, "DisplayName" => "LOCAL5", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL6, "DisplayName" => "LOCAL6", "selected" => "" );
+	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL7, "DisplayName" => "LOCAL7", "selected" => "" );
 
 
 	$iCount = count($content['filter_facility_list']);
@@ -180,14 +180,14 @@ function InitFilterHelpers()
 //		$filters['filter_severity'] = SYSLOG_NOTICE;
 
 	// Init Severity LIST
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_EMERG, "DisplayName" => "SYSLOG_EMERG", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ALERT, "DisplayName" => "SYSLOG_ALERT", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_CRIT, "DisplayName" => "SYSLOG_CRIT", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ERR, "DisplayName" => "SYSLOG_ERR", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName" => "SYSLOG_WARNING", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "SYSLOG_NOTICE", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "SYSLOG_INFO", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "SYSLOG_DEBUG", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_EMERG, "DisplayName" => "EMERG", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ALERT, "DisplayName" => "ALERT", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_CRIT, "DisplayName" => "CRIT", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ERR, "DisplayName" => "ERR", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName" => "WARNING", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "NOTICE", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "INFO", "selected" => "" );
+	$content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "DEBUG", "selected" => "" );
 
 	$iCount = count($content['filter_severity_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
@@ -210,6 +210,50 @@ function FillDateRangeArray($sourcearray, $szArrayListName, $szFilterName) // $c
 			$content[$szArrayListName][$i]['selected'] = "selected";
 		else
 			$content[$szArrayListName][$i]['selected'] = "";
+	}
+}
+
+function GetFacilityDisplayName( $nFacilityID )
+{
+	global $content;
+
+	foreach( $content['filter_facility_list'] as $myfacility )
+	{
+		if ( $myfacility['ID'] == $nFacilityID )
+			return $myfacility['DisplayName'];
+	}
+
+	// Default 
+	return "Unknown Facility";
+}
+
+function GetSeverityDisplayName( $nSeverityID )
+{
+	global $content;
+
+	foreach( $content['filter_severity_list'] as $myseverity )
+	{
+		if ( $myseverity['ID'] == $nSeverityID )
+			return $myseverity['DisplayName'];
+	}
+
+	// Default 
+	return "Unknown Severity";
+}
+
+function GetTimeStampFromTimeString($szTimeString)
+{
+	//Sample: 2008-4-1T00:00:00
+	if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/", $szTimeString, $out) )
+	{
+		// return new timestamp
+		return mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
+	}
+	else
+	{
+		//WTF?
+		die ("WTF GetTimeStampFromTimeString " . $szTimeString);
+		return 0;
 	}
 }
 

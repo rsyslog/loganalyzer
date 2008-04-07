@@ -46,24 +46,40 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 		global $content; 
 
 		// Sample (WinSyslog/EventReporter): 2008-04-02,15:19:06,2008-04-02,15:19:06,127.0.0.1,16,5,EvntSLog: Performance counters for the RSVP (QoS RSVP) service were loaded successfully. 
-		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
+		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
 			$arrArguments[SYSLOG_HOST] = $out[3];
-//			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
+			$arrArguments[SYSLOG_FACILITY] = $out[4];
+			$arrArguments[SYSLOG_SEVERITY] = $out[5];
+			$arrArguments[SYSLOG_SYSLOGTAG] = $out[6];
+			$arrArguments[SYSLOG_MESSAGE] = $out[7];
+
+			// Expand SYSLOG_FACILITY and SYSLOG_SEVERITY
+			$arrArguments[SYSLOG_FACILITY_TEXT] = GetFacilityDisplayName( $arrArguments[SYSLOG_FACILITY] );
+			$arrArguments[SYSLOG_SEVERITY_TEXT] = GetSeverityDisplayName( $arrArguments[SYSLOG_SEVERITY] );
+		}
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
+		{
+			// Copy parsed properties!
+			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_HOST] = $out[3];
 			$arrArguments[SYSLOG_FACILITY] = $out[4];
 			$arrArguments[SYSLOG_SEVERITY] = $out[5];
 			$arrArguments[SYSLOG_MESSAGE] = $out[6];
 
 			// Expand SYSLOG_FACILITY and SYSLOG_SEVERITY
-			$arrArguments[SYSLOG_FACILITY_TEXT] = $content['filter_facility_list'][$arrArguments[SYSLOG_FACILITY]]['DisplayName'];
-			$arrArguments[SYSLOG_SEVERITY_TEXT] = $content['filter_severity_list'][$arrArguments[SYSLOG_SEVERITY]]['DisplayName'];
+			$arrArguments[SYSLOG_FACILITY_TEXT] = GetFacilityDisplayName( $arrArguments[SYSLOG_FACILITY] );
+			$arrArguments[SYSLOG_SEVERITY_TEXT] = GetSeverityDisplayName( $arrArguments[SYSLOG_SEVERITY] );
 		}
 		else
 		{
-			// TODO: Cannot Parse Syslog message with this pattern!
-			die ("wtf winsyslog - " . $arrArguments[SYSLOG_MESSAGE] );
+			if ( strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
+			{
+				// TODO: Cannot Parse Syslog message with this pattern!
+				die ("wtf winsyslog - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
+			}
 		}
 		
 		// Return success!
