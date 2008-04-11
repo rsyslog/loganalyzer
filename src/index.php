@@ -52,6 +52,10 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 InitFilterHelpers();	
 // ***					*** //
 
+// --- Extra Stylesheet!
+$content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">';
+// --- 
+
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
 {
@@ -69,6 +73,9 @@ $content['uid_last'] = UID_UNKNOWN;
 // Init Sorting variables
 $content['sorting'] = "";
 $content['searchstr'] = "";
+$content['highlightstr'] = "";
+$content['EXPAND_HIGHLIGHT'] = "false";
+
 
 //if ( isset($content['myserver']) ) 
 //	$content['TITLE'] = "phpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
@@ -76,9 +83,27 @@ $content['searchstr'] = "";
 	$content['TITLE'] = "phpLogCon :: Home";
 
 // Read and process filters from search dialog!
-if ( isset($_POST['search']) )
+if ( (isset($_POST['search']) || isset($_GET['search'])) && (isset($_POST['filter']) || isset($_GET['filter'])) )
 {
-	if ( $_POST['search'] == $content['LN_SEARCH_PERFORMADVANCED']) 
+	// Copy search over
+	if ( isset($_POST['search']) )
+		$mysearch = $_POST['search'];
+	else
+		$mysearch = $_GET['search'];
+
+	if ( isset($_POST['search']) )
+		$myfilter = $_POST['filter'];
+	else
+		$myfilter = $_GET['filter'];
+	
+	// Optionally read highlight words
+	if ( isset($_POST['highlight']) )
+		$content['highlightstr'] = $_POST['highlight'];
+	else if ( isset($_GET['highlight']) )
+		$content['highlightstr'] = $_GET['highlight'];
+	
+	// Evaluate search now
+	if ( $mysearch == $content['LN_SEARCH_PERFORMADVANCED']) 
 	{
 		if ( isset($_POST['filter_datemode']) )
 		{
@@ -165,11 +190,41 @@ if ( isset($_POST['search']) )
 			$content['searchstr'] .= $_POST['filter_message'];
 
 	}
-	else if ( $_POST['search'] == $content['LN_SEARCH']) 
+	else if ( $mysearch == $content['LN_SEARCH']) 
 	{
 		// Message is just appended
-		if ( isset($_POST['filter']) && strlen($_POST['filter']) > 0 )
-			$content['searchstr'] = $_POST['filter'];
+		if ( isset($myfilter) && strlen($myfilter) > 0 )
+			$content['searchstr'] = $myfilter;
+	}
+
+	if ( strlen($content['highlightstr']) > 0 ) 
+	{
+		// user also wants to highlight words!
+		if ( strpos($content['highlightstr'], ",") === false)
+		{
+			$content['highlightwords'][0]['highlight'] = $content['highlightstr'];
+			$content['highlightwords'][0]['cssclass'] = "highlight_1";
+			$content['highlightwords'][0]['htmlcode'] = '<span class="' . $content['highlightwords'][0]['cssclass'] . '">' . $content['highlightwords'][0]['highlight']. '</span>';
+		}
+		else
+		{
+			// Split array into words
+			$tmparray = explode( ",", $content['highlightstr'] );
+			foreach( $tmparray as $word ) 
+			{
+				$content['highlightwords'][]['highlight'] = $word;
+			}
+			
+			// Assign CSS Class to highlight words
+			for ($i = 0; $i < count($content['highlightwords']); $i++)
+			{
+				$content['highlightwords'][$i]['cssclass'] = "highlight_" . ($i+1);
+				$content['highlightwords'][$i]['htmlcode'] = '<span class="' . $content['highlightwords'][$i]['cssclass'] . '">' . $content['highlightwords'][$i]['highlight']. '</span>';
+			}
+		}
+		
+		// Default expand Highlight Arrea!
+		$content['EXPAND_HIGHLIGHT'] = "true";
 	}
 }
 
@@ -188,36 +243,102 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 	$stream->SetFilter($content['searchstr']);
 	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
 	$stream->SetReadDirection(EnumReadDirection::Backward);
-	
+
 	$uID = $currentUID;
 	$counter = 0;
-
-	while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= 30)
+	
+	if ($uID != UID_UNKNOWN) 
 	{
-		// Copy Obtained array 
-		$content['syslogmessages'][] = $logArray;
-
-		// Copy UID
-		$content['syslogmessages'][$counter]['UID'] = $uID;
-
-		// Set truncasted message for display
-		if ( isset($logArray[SYSLOG_MESSAGE]) )
-			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE]);
-		else
-			$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
-
-		// Create Displayable DataStamp 
-		$content['syslogmessages'][$counter][SYSLOG_DATE_FORMATED] = GetFormatedDate($content['syslogmessages'][$counter][SYSLOG_DATE]); 
-
-		// Increment Counter
-		$counter++;
+		// First read will also set the start position of the Stream!
+		$ret = $stream->Read($uID, $logArray);
 	}
+	else
+		$ret = $stream->ReadNext($uID, $logArray);
 
-	if ( $stream->ReadNext($uID, $logArray) == SUCCESS ) 
+
+	if ( $ret == SUCCESS )
 	{
-		$content['uid_next'] = $uID;
-		// Enable Player Pager
-		$content['main_pagerenabled'] = "true";
+		//Loop through the messages!
+		do
+		{
+			// Copy Obtained array 
+			$content['syslogmessages'][] = $logArray;
+
+			// Copy UID
+			$content['syslogmessages'][$counter]['UID'] = $uID;
+
+			// Set truncasted message for display
+			if ( isset($logArray[SYSLOG_MESSAGE]) )
+				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE]);
+			else
+				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
+
+			if ( isset($content['highlightwords']) )
+			{	
+				// We need to highlight some words ^^!
+				foreach( $content['highlightwords'] as $highlightword ) 
+					$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = preg_replace( "/(" . $highlightword['highlight'] . ")/i", '<span class="' . $highlightword['cssclass'] . '">\\1</span>', $content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] );
+//					$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = str_ireplace( $highlightword['highlight'], $highlightword['htmlcode'], $content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] );
+			}
+
+			// Create Displayable DataStamp 
+			$content['syslogmessages'][$counter][SYSLOG_DATE_FORMATED] = GetFormatedDate($content['syslogmessages'][$counter][SYSLOG_DATE]); 
+
+			// --- Set CSS Class
+			if ( $counter % 2 == 0 )
+				$content['syslogmessages'][$counter]['cssclass'] = "line1";
+			else
+				$content['syslogmessages'][$counter]['cssclass'] = "line2";
+
+			// Set Syslog severity and facility col colors
+			if ( isset($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) && strlen($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) > 0)
+			{
+				$content['syslogmessages'][$counter]['severity_color'] = $severity_colors[$content['syslogmessages'][$counter][SYSLOG_SEVERITY]];
+				$content['syslogmessages'][$counter]['severity_cssclass'] = "lineColouredWhite";
+			}
+			else
+			{
+				// Use default colour!
+				$content['syslogmessages'][$counter]['severity_color'] = $severity_colors[SYSLOG_INFO];
+				$content['syslogmessages'][$counter]['severity_cssclass'] = $content['syslogmessages'][$counter]['cssclass'];
+			}
+
+			if ( isset($content['syslogmessages'][$counter][SYSLOG_FACILITY]) && strlen($content['syslogmessages'][$counter][SYSLOG_FACILITY]) > 0)
+			{
+				$content['syslogmessages'][$counter]['facility_color'] = $facility_colors[$content['syslogmessages'][$counter][SYSLOG_FACILITY]];
+				$content['syslogmessages'][$counter]['facility_cssclass'] = "lineColouredBlack";
+			}
+			else
+			{
+				// Use default colour!
+				$content['syslogmessages'][$counter]['facility_color'] = $facility_colors[SYSLOG_LOCAL0];
+				$content['syslogmessages'][$counter]['facility_cssclass'] = $content['syslogmessages'][$counter]['cssclass'];
+			}
+			
+			// --- 
+
+			// Increment Counter
+			$counter++;
+		} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= $CFG['ViewEntriesPerPage']);
+
+		if ( $stream->ReadNext($uID, $logArray) == SUCCESS ) 
+		{
+			$content['uid_next'] = $uID;
+			// Enable Pager
+			$content['main_pagerenabled'] = "true";
+		}
+		else if ( $currentUID != UID_UNKNOWN )
+		{
+			// We can still go back, enable Pager
+			$content['main_pagerenabled'] = "true";
+		}
+
+		// This will enable to Main SyslogView
+		$content['syslogmessagesenabled'] = "true";
+	}
+	else
+	{
+		// TODO DISPLAY MISSING LOGDATA!
 	}
 
 	// Close file!
@@ -229,21 +350,6 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 //$content['syslogmessages'][0] = array ( SYSLOG_DATE => "Feb  7 17:56:24", SYSLOG_FACILITY => 0, SYSLOG_FACILITY_TEXT => "kernel", SYSLOG_SEVERITY => 5, SYSLOG_SEVERITY_TEXT => "notice", SYSLOG_HOST => "localhost", SYSLOG_SYSLOGTAG => "RSyslogTest", SYSLOG_MESSAGE => "Kernel log daemon terminating.", SYSLOG_MESSAGETYPE => IUT_Syslog, );
 //$content['syslogmessages'][1] = array ( SYSLOG_DATE => "Feb  6 18:56:24", SYSLOG_FACILITY => 0, SYSLOG_FACILITY_TEXT => "kernel", SYSLOG_SEVERITY => 5, SYSLOG_SEVERITY_TEXT => "notice", SYSLOG_HOST => "localhost", SYSLOG_SYSLOGTAG => "RSyslogTest", SYSLOG_MESSAGE => "Kernel log daemon terminating.", SYSLOG_MESSAGETYPE => IUT_Syslog, );
 
-if ( isset($content['syslogmessages']) && count($content['syslogmessages']) > 0 )
-{
-	// This will enable to Main SyslogView
-	$content['syslogmessagesenabled'] = "true";
-
-	for($i = 0; $i < count($content['syslogmessages']); $i++)
-	{
-		// --- Set CSS Class
-		if ( $i % 2 == 0 )
-			$content['syslogmessages'][$i]['cssclass'] = "line1";
-		else
-			$content['syslogmessages'][$i]['cssclass'] = "line2";
-		// --- 
-	}
-}
 // --- 
 
 // --- Parsen and Output

@@ -183,6 +183,16 @@ font
 	background-color:#F9F9F9; 
 	background-image: url("images/dither.png"); 
 }
+.lineColouredWhite
+{
+	font-size: 8pt;
+	color: #FFFFFF;
+}
+.lineColouredBlack
+{
+	font-size: 8pt;
+	color: #000000;
+}
 
 /* TOP Menu Classes */
 .topmenu1

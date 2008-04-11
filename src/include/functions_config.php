@@ -33,56 +33,47 @@
 		if ( isset($CFG['Sources']) )
 		{	
 			$iCount = count($CFG['Sources']);
-			for ( $i = 0; $i< $iCount; $i++ )
+			foreach( $CFG['Sources'] as &$mysource )
 			{
-				if ( isset($CFG['Sources'][$i]['SourceType']) ) 
+				if ( isset($mysource['SourceType']) ) 
 				{
 					// Set Array Index, TODO: Check for invalid characters!
-					$iSourceID = $CFG['Sources'][$i]['ID'];
-					if ( !isset($content['Sources'][$iSourceID]) ) 
+					$iSourceID = $mysource['ID'];
+					// Copy general properties
+//						$content['Sources'][$iSourceID]['ID'] = $mysource['ID'];
+//						$content['Sources'][$iSourceID]['Name'] = $mysource['Name'];
+//						$content['Sources'][$iSourceID]['SourceType'] = $mysource['SourceType'];
+					
+					// Set default if not set!
+					if ( !isset($mysource['LogLineType']) ) 
+						$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
+
+					// Only for the display box
+					$content['Sources'][$iSourceID]['selected'] = ""; 
+					
+					// Create Config instance!
+					if ( $mysource['SourceType'] == SOURCE_DISK )
 					{
-						// Copy general properties
-						$content['Sources'][$iSourceID]['ID'] = $CFG['Sources'][$i]['ID'];
-						$content['Sources'][$iSourceID]['Name'] = $CFG['Sources'][$i]['Name'];
-						$content['Sources'][$iSourceID]['SourceType'] = $CFG['Sources'][$i]['SourceType'];
-						
-						// Optional parameters
-						if ( isset($CFG['Sources'][$i]['LogLineType']) ) 
-							$content['Sources'][$iSourceID]['LogLineType'] = $CFG['Sources'][$i]['LogLineType'];
-						else	// Default = syslog
-							$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
-
-						// Only for the display box
-						$content['Sources'][$iSourceID]['selected'] = ""; 
-						
-						// Create Config instance!
-						if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_DISK )
-						{
-							$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
-							$content['Sources'][$iSourceID]['ObjRef']->FileName = $CFG['Sources'][$i]['DiskFile'];
-							$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $CFG['Sources'][$i]['LogLineType'];
-						}
-						else if ( $CFG['Sources'][$i]['SourceType'] == SOURCE_MYSQLDB )
-						{	
-							// TODO!
-							die( "Not supported yet!" );
-						}
-						else
-						{	
-							// UNKNOWN, remove config entry!
-							unset($content['Sources'][$iSourceID]);
-
-							// TODO: Output CONFIG WARNING
-						}
-
-						// Set default SourceID here!
-						if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
-							$currentSourceID = $iSourceID;
+						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
+						$content['Sources'][$iSourceID]['ObjRef']->FileName = $mysource['DiskFile'];
+						$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $mysource['LogLineType'];
+					}
+					else if ( $mysource['SourceType'] == SOURCE_MYSQLDB )
+					{	
+						// TODO!
+						die( "Not supported yet!" );
 					}
 					else
-					{
-						// TODO: OUTPUT CONFIG WARNING - duplicated ID!
+					{	
+						// UNKNOWN, remove config entry!
+						unset($content['Sources'][$iSourceID]);
+
+						// TODO: Output CONFIG WARNING
 					}
+
+					// Set default SourceID here!
+					if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
+						$currentSourceID = $iSourceID;
 				}
 			}
 		}

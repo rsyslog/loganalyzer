@@ -50,6 +50,7 @@ $content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title o
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
+$content['EXTRA_STYLESHEET'] = "";
 // --- 
 
 function InitBasicPhpLogCon()
@@ -81,10 +82,14 @@ function InitPhpLogConConfigFile()
 		include_once($gl_root_path . 'config.php');
 		
 		// Easier DB Access
-		define('DB_CONFIG', $CFG['TBPref'] . "config");
+		define('DB_CONFIG', $CFG['UserDBPref'] . "config");
 
-		// For ShowPageRenderStats
-		if ( $CFG['ShowPageRenderStats'] == 1 )
+		// Copy all entries into content variable
+		foreach ($CFG as $key => $value )
+			$content[$key] = $value;
+
+		// For MiscShowPageRenderStats
+		if ( $CFG['MiscShowPageRenderStats'] == 1 )
 		{
 			$content['ShowPageRenderStats'] = "true";
 			InitPageRenderStats();
@@ -127,7 +132,7 @@ function InitPhpLogCon()
 	InitPhpLogConConfigFile();
 
 	// Establish DB Connection
-	if ( $CFG['UseDB'] )
+	if ( $CFG['UserDBEnabled'] )
 		DB_Connect();
 
 	// Now load the Page configuration values
@@ -233,7 +238,7 @@ function InitConfigurationValues()
 	$rows = DB_GetAllRows($result, true, true);
 
 	// If Database is enabled, try to read from database!
-	if ( $CFG['UseDB'] )
+	if ( $CFG['UserDBEnabled'] )
 	{
 		if ( isset($rows ) )
 		{
@@ -527,7 +532,7 @@ function CheckUserLogin( $username, $password )
 	}
 	else
 	{
-		if ( $CFG['ShowDebugMsg'] == 1 )
+		if ( $CFG['MiscShowDebugMsg'] == 1 )
 			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
 		
 		// Default return false

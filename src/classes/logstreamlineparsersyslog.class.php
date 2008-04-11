@@ -93,7 +93,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			if ( strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
 			{
 				// TODO: Cannot Parse Syslog message with this pattern!
-				die ("wtf syslog - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
+				echo ("wtf syslog - '" . $arrArguments[SYSLOG_MESSAGE] . "' <br>");
 			}
 		}
 		

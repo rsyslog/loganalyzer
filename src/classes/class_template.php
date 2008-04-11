@@ -82,8 +82,8 @@ class Template {
 	{
 // BEGIN DELTA MOD
 		global $CFG;
-		// For ShowPageRenderStats
-		if ( $CFG['ShowPageRenderStats'] == 1 )
+		// For MiscShowPageRenderStats
+		if ( $CFG['MiscShowPageRenderStats'] == 1 )
 			FinishPageRenderStats( $vars );
 // END DELTA MOD
 

@@ -68,6 +68,24 @@ define('SYSLOG_LOCAL4', 20);
 define('SYSLOG_LOCAL5', 21);
 define('SYSLOG_LOCAL6', 22);
 define('SYSLOG_LOCAL7', 23);
+$facility_colors[SYSLOG_KERN] = "#F1BEA7";
+$facility_colors[SYSLOG_USER] = "#F1D0A7";
+$facility_colors[SYSLOG_MAIL] = "#F1E3A7";
+$facility_colors[SYSLOG_DAEMON] = "#E5F1A7";
+$facility_colors[SYSLOG_AUTH] = "#D3F1A7";
+$facility_colors[SYSLOG_SYSLOG] = "#C1F1A7";
+$facility_colors[SYSLOG_LPR] = "#A7F1D6";
+$facility_colors[SYSLOG_NEWS] = "#A7F1E8";
+$facility_colors[SYSLOG_UUCP] = "#A7E1F1";
+$facility_colors[SYSLOG_CRON] = "#A7C8F1";
+$facility_colors[SYSLOG_LOCAL0] = "#F2F2F2";
+$facility_colors[SYSLOG_LOCAL1] = "#E4E5E6";
+$facility_colors[SYSLOG_LOCAL2] = "#D6D9DA";
+$facility_colors[SYSLOG_LOCAL3] = "#C9CDCF";
+$facility_colors[SYSLOG_LOCAL4] = "#BEC2C4";
+$facility_colors[SYSLOG_LOCAL5] = "#B1B6B9";
+$facility_colors[SYSLOG_LOCAL6] = "#A3AAAD";
+$facility_colors[SYSLOG_LOCAL7] = "#969DA1";
 
 define('SYSLOG_EMERG', 0);
 define('SYSLOG_ALERT', 1);
@@ -77,6 +95,14 @@ define('SYSLOG_WARNING', 4);
 define('SYSLOG_NOTICE', 5);
 define('SYSLOG_INFO', 6);
 define('SYSLOG_DEBUG', 7);
+$severity_colors[SYSLOG_EMERG] = "#840A15";
+$severity_colors[SYSLOG_ALERT] = "#BA0716";
+$severity_colors[SYSLOG_CRIT] = "#CE0819";
+$severity_colors[SYSLOG_ERR] = "#FF0A1F";
+$severity_colors[SYSLOG_WARNING] = "#EF8200";
+$severity_colors[SYSLOG_NOTICE] = "#14AD42";
+$severity_colors[SYSLOG_INFO] = "#0C9C91";
+$severity_colors[SYSLOG_DEBUG] = "#119BDE";
 // --- 
 
 ?>

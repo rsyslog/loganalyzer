@@ -143,7 +143,6 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function Read($uID, &$arrProperitesOut) {
 		$this->Sseek($uID, EnumSeek::UID, 0);
-
 		$tmp = $this->_readDirection;
 		$this->_readDirection = EnumReadDirection::Forward;
 		$ret = $this->ReadNext($uID, $arrProperitesOut);
@@ -188,7 +187,7 @@ class LogStreamDisk extends LogStream {
 
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
-		
+
 		// reached here means return result!
 		return $ret;
 	}
@@ -211,17 +210,7 @@ class LogStreamDisk extends LogStream {
 		$line = '';
 		foreach ( $this->_arrProperties as $property ) 
 			$arrProperitesOut[$property] = '';
-/*
-		$arrProperitesOut[SYSLOG_DATE] = '';
-		$arrProperitesOut[SYSLOG_FACILITY] = '';
-		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_HOST] = '';
-		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
-		$arrProperitesOut[SYSLOG_MESSAGE] = '';
-		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
-*/
+
 		do {
 			$pos = -1;
 			if (($pos = strpos($this->_buffer, "\n", $this->_p_buffer)) !== false) {
@@ -269,17 +258,6 @@ class LogStreamDisk extends LogStream {
 		$line = '';
 		foreach ( $this->_arrProperties as $property ) 
 			$arrProperitesOut[$property] = '';
-/*
-		$arrProperitesOut[SYSLOG_DATE] = '';
-		$arrProperitesOut[SYSLOG_FACILITY] = '';
-		$arrProperitesOut[SYSLOG_FACILITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY] = '';
-		$arrProperitesOut[SYSLOG_SEVERITY_TEXT] = '';
-		$arrProperitesOut[SYSLOG_HOST] = '';
-		$arrProperitesOut[SYSLOG_SYSLOGTAG] = '';
-		$arrProperitesOut[SYSLOG_MESSAGE] = '';
-		$arrProperitesOut[SYSLOG_MESSAGETYPE] = '';
-*/
 
 		do {
 			$pos = -1;

@@ -90,3 +90,29 @@ function hidevisibility(ElementNameToggle, ElementNameButton)
 	toggle.style.visibility = "hidden";
 	toggle.style.display = "none";
 }
+
+function ResetFormValues(formName)
+{
+	var myform = document.getElementById(formName);
+	var i = 0;
+	var iCount = myform.elements.length;
+
+	// Loop through text fields
+	for(i = 0; i < iCount; i++)
+	{
+		if (myform.elements[i].type == "text" )
+		{
+			// Reset textfield
+			myform.elements[i].value = "";
+		}
+	}
+}
+
+function SubmitForm(formName)
+{
+	var myform = document.getElementById(formName);
+	if (myform != null)
+	{
+		myform.submit();
+	}
+}
