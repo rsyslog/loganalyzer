@@ -81,17 +81,18 @@ function CreateCurrentUrl()
 
 function GetFormatedDate($evttimearray)
 {
-	global $content;
+	global $content, $CFG;
 
-	if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
-		$szDateFormatted = "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
-	else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
-		$szDateFormatted = "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
-	else
-		$szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+	if ( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
+	{
+		if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
+			return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+		else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
+			return "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+	}
 
-	// return formated string
-	return $szDateFormatted;
+	// Reach return normal format!
+	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
 ?>

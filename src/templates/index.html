@@ -42,7 +42,7 @@
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
 		<tr>
 		<!-- BEGIN highlightwords -->
-			<td class="{cssclass}" align="center"><b>{highlight}</b></td>
+			<td class="{cssclass}" align="center"><b>{highlight_raw}</b></td>
 		<!-- END highlightwords -->
 		</tr>
 		</table>
@@ -111,7 +111,28 @@
 		<td align="left" class="{cssclass}" nowrap><B>{syslogtag}</B></td>
 		<td align="center" class="{cssclass}"><B>{IUT}</B></td>
 		<td align="left" class="{cssclass}" nowrap><B>{FROMHOST}</B></td>
-		<td align="left" class="{cssclass}"><B>{msgtrunscated}</B></td>
+		<td align="left" class="{cssclass}">
+			<!-- IF popupdetails="true" -->
+			<a href="?todo" class="syslogdetails">{msgtrunscated}
+			<span>
+				<table cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
+				<tr>
+					<td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td>
+				</tr>
+				<!-- BEGIN messagesdetails -->
+				<tr>
+					<td width="150" nowrap class="cellmenu2">{fieldtitle}</td>
+					<td width="100%" class="{cssclass}" >{fieldvalue}</td>
+				</tr>
+				<!-- END messagesdetails -->
+				</table>
+			</span>
+			</a>
+			<!-- ENDIF popupdetails="true" -->
+			<!-- IF popupdetails="false" -->
+			<B>{msgtrunscated}</B>
+			<!-- ENDIF popupdetails="false" -->
+		</td>
 	</tr>
 	<!-- END syslogmessages -->
 

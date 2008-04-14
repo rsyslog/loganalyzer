@@ -23,6 +23,7 @@ $content['LN_GRID_SYSLOGTAG'] = "SyslogTag";
 $content['LN_GRID_INFOUNIT'] = "InfoUnit";
 $content['LN_GRID_HOST'] = "Source";
 $content['LN_GRID_MSG'] = "Message";
+$content['LN_GRID_POPUPDETAILS'] = "Details for Syslogmessage with ID '%1'";
 
 $content['LN_SEARCH_USETHISBLA'] = "Use the form below and your advanced search will appear here";
 $content['LN_SEARCH_FILTER'] = "Search (filter):";

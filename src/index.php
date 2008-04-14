@@ -199,10 +199,15 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) && (isset($_POST['filte
 
 	if ( strlen($content['highlightstr']) > 0 ) 
 	{
+		$searchArray = array("\\", "/", ".", ">");
+		$replaceArray = array("\\\\", "\/", "\.", ">");
+
 		// user also wants to highlight words!
 		if ( strpos($content['highlightstr'], ",") === false)
 		{
-			$content['highlightwords'][0]['highlight'] = $content['highlightstr'];
+
+			$content['highlightwords'][0]['highlight_raw'] = $content['highlightstr'];
+			$content['highlightwords'][0]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightstr']);
 			$content['highlightwords'][0]['cssclass'] = "highlight_1";
 			$content['highlightwords'][0]['htmlcode'] = '<span class="' . $content['highlightwords'][0]['cssclass'] . '">' . $content['highlightwords'][0]['highlight']. '</span>';
 		}
@@ -211,13 +216,12 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) && (isset($_POST['filte
 			// Split array into words
 			$tmparray = explode( ",", $content['highlightstr'] );
 			foreach( $tmparray as $word ) 
-			{
-				$content['highlightwords'][]['highlight'] = $word;
-			}
+				$content['highlightwords'][]['highlight_raw'] = $word;
 			
-			// Assign CSS Class to highlight words
+			// Assign other variables needed for this array entry
 			for ($i = 0; $i < count($content['highlightwords']); $i++)
 			{
+				$content['highlightwords'][$i]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightwords'][$i]['highlight_raw']);
 				$content['highlightwords'][$i]['cssclass'] = "highlight_" . ($i+1);
 				$content['highlightwords'][$i]['htmlcode'] = '<span class="' . $content['highlightwords'][$i]['cssclass'] . '">' . $content['highlightwords'][$i]['highlight']. '</span>';
 			}
@@ -267,9 +271,37 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 			// Copy UID
 			$content['syslogmessages'][$counter]['UID'] = $uID;
 
+			// --- Popup Details
+			if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
+			{
+				$content['syslogmessages'][$counter]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $content['syslogmessages'][$counter]['UID']);
+				$content['syslogmessages'][$counter]['popupdetails'] = "true";
+				foreach($content['syslogmessages'][$counter] as $mykey => $myfield)
+				{
+					// Set key!
+					$content['syslogmessages'][$counter]['messagesdetails'][]['fieldtitle']= $mykey;
+
+					// Get ArrayIndex
+					$myIndex = count($content['syslogmessages'][$counter]['messagesdetails']) - 1;
+
+					// --- Set CSS Class
+					if ( $myIndex % 2 == 0 )
+						$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['cssclass'] = "line1";
+					else
+						$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['cssclass'] = "line2";
+					// --- 
+
+					// Set field value
+					$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['fieldvalue']= $myfield;
+				}
+			}
+			else
+				$content['syslogmessages'][$counter]['popupdetails'] = "false";
+			// --- 
+
 			// Set truncasted message for display
 			if ( isset($logArray[SYSLOG_MESSAGE]) )
-				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > 100 ? substr($logArray[SYSLOG_MESSAGE], 0, 100 ) . " ..." : $logArray[SYSLOG_MESSAGE]);
+				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
 			else
 				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
 
@@ -278,19 +310,20 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 				// We need to highlight some words ^^!
 				foreach( $content['highlightwords'] as $highlightword ) 
 					$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = preg_replace( "/(" . $highlightword['highlight'] . ")/i", '<span class="' . $highlightword['cssclass'] . '">\\1</span>', $content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] );
-//					$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = str_ireplace( $highlightword['highlight'], $highlightword['htmlcode'], $content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] );
 			}
 
-			// Create Displayable DataStamp 
+			// --- Create Displayable DataStamp 
 			$content['syslogmessages'][$counter][SYSLOG_DATE_FORMATED] = GetFormatedDate($content['syslogmessages'][$counter][SYSLOG_DATE]); 
+			// --- 
 
 			// --- Set CSS Class
 			if ( $counter % 2 == 0 )
 				$content['syslogmessages'][$counter]['cssclass'] = "line1";
 			else
 				$content['syslogmessages'][$counter]['cssclass'] = "line2";
+			// --- 
 
-			// Set Syslog severity and facility col colors
+			// --- Set Syslog severity and facility col colors
 			if ( isset($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) && strlen($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) > 0)
 			{
 				$content['syslogmessages'][$counter]['severity_color'] = $severity_colors[$content['syslogmessages'][$counter][SYSLOG_SEVERITY]];
@@ -314,7 +347,6 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 				$content['syslogmessages'][$counter]['facility_color'] = $facility_colors[SYSLOG_LOCAL0];
 				$content['syslogmessages'][$counter]['facility_cssclass'] = $content['syslogmessages'][$counter]['cssclass'];
 			}
-			
 			// --- 
 
 			// Increment Counter

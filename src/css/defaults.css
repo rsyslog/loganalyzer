@@ -21,3 +21,29 @@
 /*		position: relative; */
 	display: none;
 }
+
+.syslogdetails, a.syslogdetails, a.syslogdetails:link
+{
+	font-weight:normal;
+    text-decoration:none;
+}
+.syslogdetails
+{
+    position:relative; /*this is the key*/
+	z-index:24;
+}
+
+.syslogdetails:hover
+{
+	z-index:25; 
+/*	font-weight:normal;*/
+}
+.syslogdetails span {display: none}
+/*the span will display just on :hover state*/
+.syslogdetails:hover span
+{ 
+    display:block;
+    position:absolute;
+    top:15px; 
+	left:15px;
+}
