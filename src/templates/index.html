@@ -92,47 +92,66 @@
 	<!-- IF syslogmessagesenabled="true" -->
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
-		<td width="50" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>
-		<td width="100" class="cellmenu1" align="center" nowrap><A HREF="?sorting=timereported{additional_url}" class="cellmenu1_link" >{LN_GRID_DATE}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogfacility{additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
+<!--		<td width="50" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>-->
+		<!-- BEGIN fields -->
+		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap>
+			<!-- IF FieldSortable="true" -->
+			<a HREF="?sorting={FieldID}{additional_url}" class="cellmenu1_link" >
+			<!-- ENDIF FieldSortable="true" -->
+			<B>{FieldCaption}</B>
+			<!-- IF FieldSortable="true" -->
+			</a>
+			<!-- ENDIF FieldSortable="true" -->
+		</td>
+		<!-- END fields -->
+<!--		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogfacility{additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
 		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogseverity{additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
 		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogtag{additional_url}" class="cellmenu1_link" >{LN_GRID_SYSLOGTAG}</A></td>
 		<td width="75" class="cellmenu1" align="center" nowrap><A HREF="?sorting=IUT{additional_url}" class="cellmenu1_link" >{LN_GRID_INFOUNIT}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=FROMHOST{additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td>
-		<td width="100%" class="cellmenu1" align="center" nowrap><B>{LN_GRID_MSG}</B></td>
+		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=FROMHOST{additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td> 
+		<td width="100%" class="cellmenu1" align="center" nowrap><B>{LN_FIELDS_MESSAGE}</B></td>
+		-->
+
 	</tr>
 
 	<!-- BEGIN syslogmessages -->
 	<tr>
-		<td align="right" class="{cssclass}"><B>{UID}</B></td>
-		<td align="center" class="{cssclass}" nowrap><B>{timereported_formatted}</B></td>
+<!--		<td align="right" class="{cssclass}"><B>{UID}</B></td>-->
+
+		<!-- BEGIN values -->
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top">
+
+		<!-- IF hasdetails="false" -->
+		<B>{fieldvalue}</B>
+		<!-- ENDIF hasdetails="false" -->
+		<!-- IF hasdetails="true" -->
+		<a href="?" class="syslogdetails">
+		{fieldvalue}
+		<span>
+			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
+			<tr>
+				<td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td>
+			</tr>
+			<!-- BEGIN messagesdetails -->
+			<tr>
+				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
+				<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
+			</tr>
+			<!-- END messagesdetails -->
+			</table>
+		</span>
+		</a>
+		<!-- ENDIF hasdetails="true" -->
+		</td>
+		<!-- END values -->
+<!--		
 		<td align="left" class="{facility_cssclass}" bgcolor="{facility_color}" nowrap><B>{syslogfacility-text}</B></td>
 		<td align="left" class="{severity_cssclass}" bgcolor="{severity_color}" nowrap><B>{syslogseverity-text}</B></td>
 		<td align="left" class="{cssclass}" nowrap><B>{syslogtag}</B></td>
 		<td align="center" class="{cssclass}"><B>{IUT}</B></td>
 		<td align="left" class="{cssclass}" nowrap><B>{FROMHOST}</B></td>
-		<td align="left" class="{cssclass}">
-			<!-- IF popupdetails="true" -->
-			<a href="?todo" class="syslogdetails">{msgtrunscated}
-			<span>
-				<table cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
-				<tr>
-					<td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td>
-				</tr>
-				<!-- BEGIN messagesdetails -->
-				<tr>
-					<td width="150" nowrap class="cellmenu2">{fieldtitle}</td>
-					<td width="100%" class="{cssclass}" >{fieldvalue}</td>
-				</tr>
-				<!-- END messagesdetails -->
-				</table>
-			</span>
-			</a>
-			<!-- ENDIF popupdetails="true" -->
-			<!-- IF popupdetails="false" -->
-			<B>{msgtrunscated}</B>
-			<!-- ENDIF popupdetails="false" -->
-		</td>
+-->
+
 	</tr>
 	<!-- END syslogmessages -->
 

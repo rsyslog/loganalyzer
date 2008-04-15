@@ -24,6 +24,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Basic Includes
 include($gl_root_path . 'include/constants_general.php');
+include($gl_root_path . 'include/constants_logstream.php');
 include($gl_root_path . 'config.php');
 
 include($gl_root_path . 'classes/class_template.php');
@@ -45,7 +46,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.0.105";
+$content['BUILDNUMBER'] = "2.0.107";
 $content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title of the Page 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
@@ -84,7 +85,11 @@ function InitPhpLogConConfigFile()
 		// Easier DB Access
 		define('DB_CONFIG', $CFG['UserDBPref'] . "config");
 
-		// Copy all entries into content variable
+		// If DEBUG Mode is enabled, we prepend the UID field into the col list!
+		if ( $CFG['MiscShowDebugMsg'] == 1 )
+			array_unshift($CFG['Columns'], SYSLOG_UID);
+
+		// Now Copy all entries into content variable
 		foreach ($CFG as $key => $value )
 			$content[$key] = $value;
 

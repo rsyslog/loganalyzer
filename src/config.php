@@ -48,19 +48,29 @@ $CFG['UserDBPass'] = "";
 // --- 
 
 // --- Misc Options
-$CFG['MiscShowDebugMsg'] = 1;
-$CFG["MiscShowPageRenderStats"] = 1;						// If enabled, you will see Pagerender Settings
+$CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
+$CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 // --- 
 
 // --- Default Frontend Options 
 $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yesterday is displayed as "today" and "yesterday"
-$CFG['ViewMessageCharacterLimit'] = 100;	// Default character limit for the message gets trunscated.
+$CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
 $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Details for each syslog message on mouse over. 
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button
+// ---
 
+// --- Define which fields you want to see 
+//$CFG['ShowMessage'] = true;					// If enabled, the Message column will be appended to the columns list.
+$CFG['Columns'][] = SYSLOG_DATE;
+$CFG['Columns'][] = SYSLOG_FACILITY;
+$CFG['Columns'][] = SYSLOG_SEVERITY;
+$CFG['Columns'][] = SYSLOG_HOST;
+$CFG['Columns'][] = SYSLOG_SYSLOGTAG;
+$CFG['Columns'][] = SYSLOG_MESSAGETYPE;
+$CFG['Columns'][] = SYSLOG_MESSAGE;
 // ---
 
 // --- Source Options

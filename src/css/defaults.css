@@ -22,7 +22,7 @@
 	display: none;
 }
 
-.syslogdetails, a.syslogdetails, a.syslogdetails:link
+.syslogdetails, a.syslogdetails, a.syslogdetails:link, a.syslogdetails:active, a.syslogdetails:visited
 {
 	font-weight:normal;
     text-decoration:none;

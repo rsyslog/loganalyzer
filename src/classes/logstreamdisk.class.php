@@ -185,6 +185,9 @@ class LogStreamDisk extends LogStream {
 		// Line Parser Hook here
 		$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
+		// Set uID to the PropertiesOut!
+		$arrProperitesOut[SYSLOG_UID] = $uID;
+
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
 

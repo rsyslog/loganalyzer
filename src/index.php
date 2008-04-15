@@ -34,9 +34,14 @@
 // *** Default includes	and procedures *** //
 define('IN_PHPLOGCON', true);
 $gl_root_path = './';
+
+// Now include necessary include files!
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
 include($gl_root_path . 'include/functions_filters.php');
+
+// Init Langauge first!
+IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 // Include LogStream facility
 include($gl_root_path . 'classes/logstream.class.php');
@@ -44,15 +49,10 @@ include($gl_root_path . 'classes/logstream.class.php');
 InitPhpLogCon();
 InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
+InitFilterHelpers();	// Helpers for frontend filtering!
+// ---
 
-// Init Langauge first!
-IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
-
-// Helpers for frontend filtering!
-InitFilterHelpers();	
-// ***					*** //
-
-// --- Extra Stylesheet!
+// --- Define Extra Stylesheet!
 $content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">';
 // --- 
 
@@ -82,7 +82,23 @@ $content['EXPAND_HIGHLIGHT'] = "false";
 //else
 	$content['TITLE'] = "phpLogCon :: Home";
 
-// Read and process filters from search dialog!
+// --- BEGIN Define Helper functions
+function HighLightString($highlightArray, $strmsg)
+{
+	if ( isset($highlightArray) )
+	{
+		// TODO OPTIMIZE - USING FONT TAG as SPAN is HIDDEN if MESSAGE POPUP is ENABNLED!
+		foreach( $highlightArray as $highlightword ) 
+			$strmsg = preg_replace( "/(" . $highlightword['highlight'] . ")/i", '<font class="' . $highlightword['cssclass'] . '">\\1</font>', $strmsg );
+	}
+
+	// return result
+	return $strmsg;
+}
+
+// ---
+
+// --- Read and process filters from search dialog!
 if ( (isset($_POST['search']) || isset($_GET['search'])) && (isset($_POST['filter']) || isset($_GET['filter'])) )
 {
 	// Copy search over
@@ -231,21 +247,30 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) && (isset($_POST['filte
 		$content['EXPAND_HIGHLIGHT'] = "true";
 	}
 }
-
-
-
 // --- 
 
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
+	// Preprocessing the fields we need
+	foreach($content['Columns'] as $mycolkey)
+	{
+		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
+		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+		$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
+		$content['fields'][$mycolkey]['FieldSortable'] = $fields[$mycolkey]['Sortable'];
+		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
+//		$content['fields'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
+	}
+
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
-	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
+	$stream->Open( $content['Columns'], true );
+//	$stream->Open( array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_FACILITY_TEXT, SYSLOG_SEVERITY, SYSLOG_SEVERITY_TEXT, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGE, SYSLOG_MESSAGETYPE ), true);
 	$stream->SetReadDirection(EnumReadDirection::Backward);
 
 	$uID = $currentUID;
@@ -266,55 +291,7 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 		do
 		{
 			// Copy Obtained array 
-			$content['syslogmessages'][] = $logArray;
-
-			// Copy UID
-			$content['syslogmessages'][$counter]['UID'] = $uID;
-
-			// --- Popup Details
-			if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
-			{
-				$content['syslogmessages'][$counter]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $content['syslogmessages'][$counter]['UID']);
-				$content['syslogmessages'][$counter]['popupdetails'] = "true";
-				foreach($content['syslogmessages'][$counter] as $mykey => $myfield)
-				{
-					// Set key!
-					$content['syslogmessages'][$counter]['messagesdetails'][]['fieldtitle']= $mykey;
-
-					// Get ArrayIndex
-					$myIndex = count($content['syslogmessages'][$counter]['messagesdetails']) - 1;
-
-					// --- Set CSS Class
-					if ( $myIndex % 2 == 0 )
-						$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['cssclass'] = "line1";
-					else
-						$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['cssclass'] = "line2";
-					// --- 
-
-					// Set field value
-					$content['syslogmessages'][$counter]['messagesdetails'][$myIndex]['fieldvalue']= $myfield;
-				}
-			}
-			else
-				$content['syslogmessages'][$counter]['popupdetails'] = "false";
-			// --- 
-
-			// Set truncasted message for display
-			if ( isset($logArray[SYSLOG_MESSAGE]) )
-				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
-			else
-				$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = "";
-
-			if ( isset($content['highlightwords']) )
-			{	
-				// We need to highlight some words ^^!
-				foreach( $content['highlightwords'] as $highlightword ) 
-					$content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] = preg_replace( "/(" . $highlightword['highlight'] . ")/i", '<span class="' . $highlightword['cssclass'] . '">\\1</span>', $content['syslogmessages'][$counter][SYSLOG_MESSAGETRUNSCATED] );
-			}
-
-			// --- Create Displayable DataStamp 
-			$content['syslogmessages'][$counter][SYSLOG_DATE_FORMATED] = GetFormatedDate($content['syslogmessages'][$counter][SYSLOG_DATE]); 
-			// --- 
+//			$content['syslogmessages'][] = $logArray;
 
 			// --- Set CSS Class
 			if ( $counter % 2 == 0 )
@@ -323,32 +300,140 @@ if ( isset($content['Sources'][$currentSourceID]) && $content['Sources'][$curren
 				$content['syslogmessages'][$counter]['cssclass'] = "line2";
 			// --- 
 
-			// --- Set Syslog severity and facility col colors
-			if ( isset($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) && strlen($content['syslogmessages'][$counter][SYSLOG_SEVERITY]) > 0)
+			// --- Now we populate the values array!
+			foreach($content['Columns'] as $mycolkey)
 			{
-				$content['syslogmessages'][$counter]['severity_color'] = $severity_colors[$content['syslogmessages'][$counter][SYSLOG_SEVERITY]];
-				$content['syslogmessages'][$counter]['severity_cssclass'] = "lineColouredWhite";
-			}
-			else
-			{
-				// Use default colour!
-				$content['syslogmessages'][$counter]['severity_color'] = $severity_colors[SYSLOG_INFO];
-				$content['syslogmessages'][$counter]['severity_cssclass'] = $content['syslogmessages'][$counter]['cssclass'];
-			}
+				if ( isset($logArray[$mycolkey]) )
+				{
+					// Set defaults
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = $content['syslogmessages'][$counter]['cssclass'];
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
 
-			if ( isset($content['syslogmessages'][$counter][SYSLOG_FACILITY]) && strlen($content['syslogmessages'][$counter][SYSLOG_FACILITY]) > 0)
-			{
-				$content['syslogmessages'][$counter]['facility_color'] = $facility_colors[$content['syslogmessages'][$counter][SYSLOG_FACILITY]];
-				$content['syslogmessages'][$counter]['facility_cssclass'] = "lineColouredBlack";
+					if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
+					{
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
+					}
+					else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_NUMBER )
+					{
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+
+						// Special style classes and colours for SYSLOG_FACILITY
+						if ( $mycolkey == SYSLOG_FACILITY )
+						{
+							if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+							{
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[ $logArray[SYSLOG_FACILITY] ] . '" ';
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "lineColouredBlack";
+
+								// Set Human readable Facility!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetFacilityDisplayName( $logArray[$mycolkey] );
+							}
+							else
+							{
+								// Use default colour!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
+							}
+						}
+						else if ( $mycolkey == SYSLOG_SEVERITY )
+						{
+							if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+							{
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[ $logArray[SYSLOG_SEVERITY] ] . '" ';
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "lineColouredWhite";
+
+								// Set Human readable Facility!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetSeverityDisplayName( $logArray[$mycolkey] );
+							}
+							else
+							{
+								// Use default colour!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
+							}
+						}
+						else if ( $mycolkey == SYSLOG_MESSAGETYPE )
+						{
+						}
+					}
+					else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
+					{
+						// kindly copy!
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+
+						// Special Handling for the Syslog Message!
+						if ( $mycolkey == SYSLOG_MESSAGE )
+						{
+							// Set truncasted message for display
+							if ( isset($logArray[SYSLOG_MESSAGE]) )
+							{
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
+							}
+							else
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "";
+
+							// If we need to highlight some words ^^!
+							if ( isset($content['highlightwords']) )
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = HighLightString( $content['highlightwords'], $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] );
+
+							if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
+							{
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $logArray[SYSLOG_UID]);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";
+								
+								foreach($content['syslogmessages'][$counter]['values'] as $mykey => $myfield)
+								{
+									// Set Caption!
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][]['detailfieldtitle']= $content['fields'][$mykey]['FieldCaption'];
+
+									// Get ArrayIndex
+									$myIndex = count($content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails']) - 1;
+
+									// --- Set CSS Class
+									if ( $myIndex % 2 == 0 )
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailscssclass'] = "line1";
+									else
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailscssclass'] = "line2";
+									// --- 
+
+									// If message field, we need to handle differently!
+									if ( $mykey == SYSLOG_MESSAGE )
+									{
+										if ( isset($content['highlightwords']) )
+											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = HighLightString( $content['highlightwords'],GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]) );
+										else
+											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]);
+									}
+									else // Just set field value
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
+
+								}
+							}
+
+						}
+					}
+				}
 			}
-			else
+			// ---
+
+			// --- Popup Details
+			if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
 			{
-				// Use default colour!
-				$content['syslogmessages'][$counter]['facility_color'] = $facility_colors[SYSLOG_LOCAL0];
-				$content['syslogmessages'][$counter]['facility_cssclass'] = $content['syslogmessages'][$counter]['cssclass'];
 			}
+//			else
+//				$content['syslogmessages'][$counter]['popupdetails'] = "false";
 			// --- 
 
+/*
+			// --- Prepare message if needed!
+			if ( $CFG['ShowMessage'] == 1 )
+			{
+
+			}
+			else
+				$content['syslogmessages'][$counter]['ShowMessage'] = "false";
+			// ---
+*/
 			// Increment Counter
 			$counter++;
 		} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= $CFG['ViewEntriesPerPage']);

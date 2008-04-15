@@ -66,11 +66,14 @@ function CreateCurrentUrl()
 			if ( strpos($queries[$i], "sourceid") === false ) 
 			{
 				$tmpvars = explode ("=", $queries[$i]);
-				// 4Server Selector
-				$content['HIDDENVARS'][$counter]['varname'] = $tmpvars[0];
-				$content['HIDDENVARS'][$counter]['varvalue'] = $tmpvars[1];
+				if ( isset($tmpvars[1]) ) // Only if value param is set!
+				{
+					// 4Server Selector
+					$content['HIDDENVARS'][$counter]['varname'] = $tmpvars[0];
+					$content['HIDDENVARS'][$counter]['varvalue'] = $tmpvars[1];
 
-				$counter++;
+					$counter++;
+				}
 			}
 		}
 	}

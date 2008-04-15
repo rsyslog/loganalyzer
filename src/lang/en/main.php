@@ -16,13 +16,6 @@ $content['LN_GEN_PREVIOUSPAGE'] = "Previous Page";
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your PhpLogCon main directory!";
 $content['LN_TOP_NUM'] = "No.";
 $content['LN_TOP_UID'] = "uID";
-$content['LN_GRID_DATE'] = "Date";
-$content['LN_GRID_FACILITY'] = "Facility";
-$content['LN_GRID_SEVERITY'] = "Severity";
-$content['LN_GRID_SYSLOGTAG'] = "SyslogTag";
-$content['LN_GRID_INFOUNIT'] = "InfoUnit";
-$content['LN_GRID_HOST'] = "Source";
-$content['LN_GRID_MSG'] = "Message";
 $content['LN_GRID_POPUPDETAILS'] = "Details for Syslogmessage with ID '%1'";
 
 $content['LN_SEARCH_USETHISBLA'] = "Use the form below and your advanced search will appear here";
@@ -36,7 +29,6 @@ $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight words comma separated";
-
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";
@@ -59,5 +51,16 @@ $content['LN_FILTER_OTHERS'] = "Other Filters";
 $content['LN_FILTER_MESSAGE'] = "Syslog Message";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Source (Hostname)";
+
+// Field Captions
+$content['LN_FIELDS_DATE'] = "Date";
+$content['LN_FIELDS_FACILITY'] = "Facility";
+$content['LN_FIELDS_SEVERITY'] = "Severity";
+$content['LN_FIELDS_HOST'] = "Host";
+$content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
+$content['LN_FIELDS_PROCESSID'] = "ProcessID";
+$content['LN_FIELDS_MESSAGETYPE'] = "Messagetype";
+$content['LN_FIELDS_UID'] = "uID";
+$content['LN_FIELDS_MESSAGE'] = "Message";
 
 ?>
