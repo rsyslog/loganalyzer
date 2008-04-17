@@ -59,7 +59,7 @@ define('STR_DEBUG_ERROR_WTF', "WTF OMFG");
 
 // --- Source Type defines
 define('SOURCE_DISK', '1');
-define('SOURCE_MYSQLDB', '2');
+define('SOURCE_DB', '2');
 // --- 
 
 // --- 
@@ -120,6 +120,53 @@ $severity_colors[SYSLOG_WARNING] = "#EF8200";
 $severity_colors[SYSLOG_NOTICE] = "#14AD42";
 $severity_colors[SYSLOG_INFO] = "#0C9C91";
 $severity_colors[SYSLOG_DEBUG] = "#119BDE";
+// --- 
+
+// --- MonitorWare InfoUnit Defines | Messagetypes
+define('IUT_Unknown', '0');
+define('IUT_Syslog', '1');
+define('IUT_Heartbeat', '2');
+define('IUT_NT_EventReport', '3');
+define('IUT_SNMP_Trap', '4');
+define('IUT_File_Monitor', '5');
+define('IUT_PingProbe', '8');
+define('IUT_Port_Probe', '9');
+define('IUT_NTService_Monitor', '10');
+define('IUT_DiskSpace_Monitor', '11');
+define('IUT_DB_Monitor', '12');
+define('IUT_Serial_Monitor', '13');
+define('IUT_CPU_Monitor', '14');
+define('IUT_AliveMonRequest', '16');
+define('IUT_SMTPProbe', '17');
+define('IUT_FTPProbe', '18');
+define('IUT_HTTPProbe', '19');
+define('IUT_POP3Probe', '20');
+define('IUT_IMAPProbe', '21');
+define('IUT_NNTPProbe', '22');
+define('IUT_WEVTMONV2', '23');
+define('IUT_SMTPLISTENER', '24');
+$msgtype_colors[IUT_Unknown] = "#D0FBDC";
+$msgtype_colors[IUT_Syslog] = "#D0FBF1";
+$msgtype_colors[IUT_Heartbeat] = "#D0EEFB";
+$msgtype_colors[IUT_NT_EventReport] = "#D0E5FB";
+$msgtype_colors[IUT_SNMP_Trap] = "#D0DBFB";
+$msgtype_colors[IUT_File_Monitor] = "#DAD0FB";
+$msgtype_colors[IUT_PingProbe] = "#E0D0FB";
+$msgtype_colors[IUT_Port_Probe] = "#F6D0FB";
+$msgtype_colors[IUT_NTService_Monitor] = "#FBD0E7";
+$msgtype_colors[IUT_DiskSpace_Monitor] = "#FBD0D3";
+$msgtype_colors[IUT_DB_Monitor] = "#FBD8D0";
+$msgtype_colors[IUT_Serial_Monitor] = "#FBE0D0";
+$msgtype_colors[IUT_CPU_Monitor] = "#FBEBD0";
+$msgtype_colors[IUT_AliveMonRequest] = "#FBF6D0";
+$msgtype_colors[IUT_SMTPProbe] = "#F5FBD0";
+$msgtype_colors[IUT_FTPProbe] = "#EBFBD0";
+$msgtype_colors[IUT_HTTPProbe] = "#E1FBD0";
+$msgtype_colors[IUT_POP3Probe] = "#D0FBD4";
+$msgtype_colors[IUT_IMAPProbe] = "#D0FBE8";
+$msgtype_colors[IUT_NNTPProbe] = "#D0F7FB";
+$msgtype_colors[IUT_WEVTMONV2] = "#CCE4D2";
+$msgtype_colors[IUT_SMTPLISTENER] = "#CCE4DE";
 // --- 
 
 ?>

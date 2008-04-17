@@ -39,30 +39,42 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
-// --- Some custom defines
-
-// Define properties names of all know fields 
+// --- Define properties names of all know fields 
 define('SYSLOG_UID', 'uID');
 define('SYSLOG_DATE', 'timereported');
-define('SYSLOG_DATE_FORMATED', 'timereported_formatted');
-define('SYSLOG_FACILITY', 'syslogfacility');
-define('SYSLOG_FACILITY_TEXT', 'syslogfacility-text');
-define('SYSLOG_SEVERITY', 'syslogseverity');
-define('SYSLOG_SEVERITY_TEXT','syslogseverity-text');
 define('SYSLOG_HOST', 'FROMHOST');
-define('SYSLOG_SYSLOGTAG', 'syslogtag');
-define('SYSLOG_MESSAGE', 'msg');
-define('SYSLOG_MESSAGETRUNSCATED', 'msgtrunscated');
 define('SYSLOG_MESSAGETYPE', 'IUT');
+define('SYSLOG_MESSAGE', 'msg');
+
+// Syslog specific
+define('SYSLOG_FACILITY', 'syslogfacility');
+define('SYSLOG_SEVERITY', 'syslogseverity');
+define('SYSLOG_SYSLOGTAG', 'syslogtag');
 define('SYSLOG_PROCESSID', 'procid');
+//define('SYSLOG_DATE_FORMATED', 'timereported_formatted');
+//define('SYSLOG_FACILITY_TEXT', 'syslogfacility-text');
+//define('SYSLOG_SEVERITY_TEXT','syslogseverity-text');
+//define('SYSLOG_MESSAGETRUNSCATED', 'msgtrunscated');
+
+// EventLog specific
+define('SYSLOG_EVENT_ID', 'id');
+define('SYSLOG_EVENT_LOGTYPE', 'NTEventLogType');
+define('SYSLOG_EVENT_SOURCE', 'sourceproc');
+define('SYSLOG_EVENT_CATEGORY', 'category');
+define('SYSLOG_EVENT_USER', 'user');
+// ---
 
 // Defines which kind of field types we have
 define('FILTER_TYPE_STRING', 0);
 define('FILTER_TYPE_NUMBER', 1);
 define('FILTER_TYPE_DATE', 2);
 
-// Predefine fields array!
+// Define possible database types
+define('DB_MYSQL', 0);
+define('DB_MSSQL', 1);
+define('DB_ODBC', 2);
 
+// --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;
 $fields[SYSLOG_UID]['FieldCaptionID'] = 'LN_FIELDS_UID';
 $fields[SYSLOG_UID]['FieldType'] = FILTER_TYPE_NUMBER;
@@ -75,6 +87,26 @@ $fields[SYSLOG_DATE]['FieldType'] = FILTER_TYPE_DATE;
 $fields[SYSLOG_DATE]['Sortable'] = true;
 $fields[SYSLOG_DATE]['DefaultWidth'] = "110";
 $fields[SYSLOG_DATE]['FieldAlign'] = "center";
+$fields[SYSLOG_HOST]['FieldID'] = SYSLOG_HOST;
+$fields[SYSLOG_HOST]['FieldCaptionID'] = 'LN_FIELDS_HOST';
+$fields[SYSLOG_HOST]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_HOST]['Sortable'] = true;
+$fields[SYSLOG_HOST]['DefaultWidth'] = "65";
+$fields[SYSLOG_HOST]['FieldAlign'] = "center";
+$fields[SYSLOG_MESSAGETYPE]['FieldID'] = SYSLOG_MESSAGETYPE;
+$fields[SYSLOG_MESSAGETYPE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGETYPE';
+$fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_MESSAGETYPE]['Sortable'] = true;
+$fields[SYSLOG_MESSAGETYPE]['DefaultWidth'] = "90";
+$fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "center";
+$fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
+$fields[SYSLOG_MESSAGE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGE';
+$fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_MESSAGE]['Sortable'] = false;
+$fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
+$fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
+
+// Syslog specific
 $fields[SYSLOG_FACILITY]['FieldID'] = SYSLOG_FACILITY;
 $fields[SYSLOG_FACILITY]['FieldCaptionID'] = 'LN_FIELDS_FACILITY';
 $fields[SYSLOG_FACILITY]['FieldType'] = FILTER_TYPE_NUMBER;
@@ -87,63 +119,46 @@ $fields[SYSLOG_SEVERITY]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_SEVERITY]['Sortable'] = true;
 $fields[SYSLOG_SEVERITY]['DefaultWidth'] = "50";
 $fields[SYSLOG_SEVERITY]['FieldAlign'] = "center";
-$fields[SYSLOG_HOST]['FieldID'] = SYSLOG_HOST;
-$fields[SYSLOG_HOST]['FieldCaptionID'] = 'LN_FIELDS_HOST';
-$fields[SYSLOG_HOST]['FieldType'] = FILTER_TYPE_STRING;
-$fields[SYSLOG_HOST]['Sortable'] = true;
-$fields[SYSLOG_HOST]['DefaultWidth'] = "65";
-$fields[SYSLOG_HOST]['FieldAlign'] = "center";
 $fields[SYSLOG_SYSLOGTAG]['FieldID'] = SYSLOG_SYSLOGTAG;
 $fields[SYSLOG_SYSLOGTAG]['FieldCaptionID'] = 'LN_FIELDS_SYSLOGTAG';
 $fields[SYSLOG_SYSLOGTAG]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_SYSLOGTAG]['Sortable'] = true;
-$fields[SYSLOG_SYSLOGTAG]['DefaultWidth'] = "70";
+$fields[SYSLOG_SYSLOGTAG]['DefaultWidth'] = "85";
 $fields[SYSLOG_SYSLOGTAG]['FieldAlign'] = "center";
-$fields[SYSLOG_MESSAGETYPE]['FieldID'] = SYSLOG_MESSAGETYPE;
-$fields[SYSLOG_MESSAGETYPE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGETYPE';
-$fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
-$fields[SYSLOG_MESSAGETYPE]['Sortable'] = true;
-$fields[SYSLOG_MESSAGETYPE]['DefaultWidth'] = "90";
-$fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "center";
 $fields[SYSLOG_PROCESSID]['FieldID'] = SYSLOG_PROCESSID;
 $fields[SYSLOG_PROCESSID]['FieldCaptionID'] = 'LN_FIELDS_PROCESSID';
 $fields[SYSLOG_PROCESSID]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_PROCESSID]['Sortable'] = true;
 $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
-$fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
-$fields[SYSLOG_MESSAGE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGE';
-$fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
-$fields[SYSLOG_MESSAGE]['Sortable'] = false;
-$fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
-$fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
 
+// TODO! EventLog specific
 
-// MonitorWare InfoUnit Defines
-define('IUT_Unknown', '0');
-define('IUT_Syslog', '1');
-define('IUT_Heartbeat', '2');
-define('IUT_NT_EventReport', '3');
-define('IUT_SNMP_Trap', '4');
-define('IUT_File_Monitor', '5');
-define('IUT_PingProbe', '8');
-define('IUT_Port_Probe', '9');
-define('IUT_NTService_Monitor', '10');
-define('IUT_DiskSpace_Monitor', '11');
-define('IUT_DB_Monitor', '12');
-define('IUT_Serial_Monitor', '13');
-define('IUT_CPU_Monitor', '14');
-define('IUT_AliveMonRequest', '16');
-define('IUT_SMTPProbe', '17');
-define('IUT_FTPProbe', '18');
-define('IUT_HTTPProbe', '19');
-define('IUT_POP3Probe', '20');
-define('IUT_IMAPProbe', '21');
-define('IUT_NNTPProbe', '22');
-define('IUT_WEVTMONV2', '23');
-define('IUT_SMTPLISTENER', '24');
-define('IUT_AliveMonECHO', '1999998');
-define('IUT_MIAP_Receiver', '1999999');
+// --- 
+
+// --- Define default Database field mappings!
+$dbmapping['winsyslog'][SYSLOG_UID] = "ID";
+$dbmapping['winsyslog'][SYSLOG_DATE] = "DeviceReportedTime";
+$dbmapping['winsyslog'][SYSLOG_HOST] = "FromHost";
+$dbmapping['winsyslog'][SYSLOG_MESSAGETYPE] = "InfoUnitID";
+$dbmapping['winsyslog'][SYSLOG_MESSAGE] = "Message";
+$dbmapping['winsyslog'][SYSLOG_FACILITY] = "Facility";
+$dbmapping['winsyslog'][SYSLOG_SEVERITY] = "Priority";
+$dbmapping['winsyslog'][SYSLOG_SYSLOGTAG] = "SysLogTag";
+$dbmapping['winsyslog'][SYSLOG_EVENT_ID] = "EventID";
+$dbmapping['winsyslog'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
+$dbmapping['winsyslog'][SYSLOG_EVENT_SOURCE] = "EventSource";
+$dbmapping['winsyslog'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
+$dbmapping['winsyslog'][SYSLOG_EVENT_USER] = "EventUser";
+
+$dbmapping['syslogng'][SYSLOG_UID] = "seq";
+$dbmapping['syslogng'][SYSLOG_DATE] = "datetime";
+$dbmapping['syslogng'][SYSLOG_HOST] = "host";
+$dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
+//TODO $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
+//TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
+$dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
+// --- 
 
 // EventTime Constants
 define('EVTIME_TIMESTAMP', '0');

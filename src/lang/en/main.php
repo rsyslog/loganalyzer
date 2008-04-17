@@ -56,6 +56,9 @@ $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight words comma separated";
 
+$content['LN_ERROR_NORECORDS'] = "No syslog records found.";
+
+
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";
 $content['LN_FILTER_DATEMODE'] = "Select mode";

@@ -157,29 +157,6 @@ function InitFilterHelpers()
 		$filters['filter_facility'] = array ( SYSLOG_KERN, SYSLOG_USER, SYSLOG_MAIL, SYSLOG_DAEMON, SYSLOG_AUTH, SYSLOG_SYSLOG, SYSLOG_LPR, SYSLOG_NEWS, SYSLOG_UUCP, SYSLOG_CRON, SYSLOG_LOCAL0, SYSLOG_LOCAL1, SYSLOG_LOCAL2, SYSLOG_LOCAL3, SYSLOG_LOCAL4, SYSLOG_LOCAL5, SYSLOG_LOCAL6, SYSLOG_LOCAL7 );
 //		$filters['filter_facility'] = SYSLOG_LOCAL0;
 
-
-
-	// Init Facility LIST
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_USER, "DisplayName" => "USER", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_MAIL, "DisplayName" => "MAIL", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_DAEMON, "DisplayName" => "DAEMON", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_AUTH, "DisplayName" => "AUTH", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_SYSLOG, "DisplayName" => "SYSLOG", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" => "LPR", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "NEWS", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "UUCP", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "CRON", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "LOCAL0", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "LOCAL1", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "LOCAL2", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL3, "DisplayName" => "LOCAL3", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL4, "DisplayName" => "LOCAL4", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL5, "DisplayName" => "LOCAL5", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL6, "DisplayName" => "LOCAL6", "selected" => "" );
-	$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL7, "DisplayName" => "LOCAL7", "selected" => "" );
-
-
 	$iCount = count($content['filter_facility_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
 	{
@@ -194,16 +171,6 @@ function InitFilterHelpers()
 	else
 		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG );
 //		$filters['filter_severity'] = SYSLOG_NOTICE;
-
-	// Init Severity LIST
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_EMERG, "DisplayName" => "EMERG", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ALERT, "DisplayName" => "ALERT", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_CRIT, "DisplayName" => "CRIT", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_ERR, "DisplayName" => "ERR", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName" => "WARNING", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "NOTICE", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "INFO", "selected" => "" );
-	$content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "DEBUG", "selected" => "" );
 
 	$iCount = count($content['filter_severity_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
@@ -256,6 +223,21 @@ function GetSeverityDisplayName( $nSeverityID )
 	// Default 
 	return "Unknown Severity";
 }
+
+function GetMessageTypeDisplayName( $nMsgTypeID )
+{
+	global $content;
+
+	foreach( $content['filter_messagetype_list'] as $mymsgtype )
+	{
+		if ( $mymsgtype['ID'] == $nMsgTypeID )
+			return $mymsgtype['DisplayName'];
+	}
+
+	// Default 
+	return "Unknown";
+}
+
 
 function GetTimeStampFromTimeString($szTimeString)
 {

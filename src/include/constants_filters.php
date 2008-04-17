@@ -66,4 +66,41 @@ define('FILTER_MODE', 'filtermode');
 define('FILTER_MODE_INCLUDE', 0);
 define('FILTER_MODE_EXCLUDE', 1);
 
+// --- Init Facility LIST
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_USER, "DisplayName" => "USER", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_MAIL, "DisplayName" => "MAIL", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_DAEMON, "DisplayName" => "DAEMON", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_AUTH, "DisplayName" => "AUTH", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_SYSLOG, "DisplayName" => "SYSLOG", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" => "LPR", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "NEWS", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "UUCP", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "CRON", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "LOCAL0", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "LOCAL1", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "LOCAL2", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL3, "DisplayName" => "LOCAL3", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL4, "DisplayName" => "LOCAL4", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL5, "DisplayName" => "LOCAL5", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL6, "DisplayName" => "LOCAL6", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL7, "DisplayName" => "LOCAL7", "selected" => "" );
+// --- 
+
+// Init Severity LIST
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_EMERG, "DisplayName" => "EMERG", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_ALERT, "DisplayName" => "ALERT", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_CRIT, "DisplayName" => "CRIT", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_ERR, "DisplayName" => "ERR", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName" => "WARNING", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "NOTICE", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "INFO", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "DEBUG", "selected" => "" );
+// --- 
+
+// Init MessageType LIST
+$content['filter_messagetype_list'][] = array( "ID" => IUT_Unknown, "DisplayName" => "Unknown", "selected" => "" );
+$content['filter_messagetype_list'][] = array( "ID" => IUT_Syslog, "DisplayName" => "Syslog", "selected" => "" );
+$content['filter_messagetype_list'][] = array( "ID" => IUT_NT_EventReport, "DisplayName" => "EventReporter", "selected" => "" );
+
 ?>

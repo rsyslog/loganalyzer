@@ -48,7 +48,7 @@ $CFG['UserDBPass'] = "";
 // --- 
 
 // --- Misc Options
-$CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
+$CFG['MiscShowDebugMsg'] = 1;				// if enabled, you will get additional output on certain places
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 // --- 
 
@@ -97,5 +97,16 @@ $CFG['Sources'][Source4]['Name'] = "WinSyslog Disk File";
 $CFG['Sources'][Source4]['SourceType'] = SOURCE_DISK;
 $CFG['Sources'][Source4]['LogLineType'] = "winsyslog";
 $CFG['Sources'][Source4]['DiskFile'] = $gl_root_path . "samplelogs/winsyslog";
+
+$CFG['Sources'][Source5]['ID'] = "Source5";
+$CFG['Sources'][Source5]['Name'] = "WinSyslog DB";
+$CFG['Sources'][Source5]['SourceType'] = SOURCE_DB;
+$CFG['Sources'][Source5]['DBTableType'] = "winsyslog";
+$CFG['Sources'][Source5]['DBType'] = DB_MYSQL;
+$CFG['Sources'][Source5]['DBServer'] = "127.0.0.1";
+$CFG['Sources'][Source5]['DBName'] = "phplogcon";
+$CFG['Sources'][Source5]['DBUser'] = "root";
+$CFG['Sources'][Source5]['DBPassword'] = "";
+$CFG['Sources'][Source5]['DBTableName'] = "systemevents";
 // --- 
 ?>

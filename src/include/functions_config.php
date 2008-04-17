@@ -39,12 +39,11 @@
 
 	// --- Perform necessary includes
 	require_once($gl_root_path . 'classes/logstreamconfig.class.php');
-	require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
 	// --- 
 
 	function InitSourceConfigs()
 	{
-		global $CFG, $content, $currentSourceID;
+		global $CFG, $content, $currentSourceID, $gl_root_path;
 
 		// Init Source Configs!
 		if ( isset($CFG['Sources']) )
@@ -71,14 +70,29 @@
 					// Create Config instance!
 					if ( $mysource['SourceType'] == SOURCE_DISK )
 					{
+						// Perform necessary include
+						require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
+
 						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
 						$content['Sources'][$iSourceID]['ObjRef']->FileName = $mysource['DiskFile'];
 						$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $mysource['LogLineType'];
 					}
-					else if ( $mysource['SourceType'] == SOURCE_MYSQLDB )
-					{	
-						// TODO!
-						die( "Not supported yet!" );
+					else if ( $mysource['SourceType'] == SOURCE_DB )
+					{
+						// Perform necessary include
+						require_once($gl_root_path . 'classes/logstreamconfigdb.class.php');
+
+						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDB();
+						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = $mysource['DBTableType'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
+						
+						// Optional parameters!
+						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
+						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
+						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
 					}
 					else
 					{	
@@ -86,6 +100,7 @@
 						unset($content['Sources'][$iSourceID]);
 
 						// TODO: Output CONFIG WARNING
+						die( "Not supported yet!" );
 					}
 
 					// Set default SourceID here!

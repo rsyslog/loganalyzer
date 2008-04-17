@@ -60,11 +60,14 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 	*/
 	public function ParseLine($szLine, &$arrArguments)
 	{
+		// Set IUT Property first!
+		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
+
 		// Sample (Syslog): Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
 		if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)\[(.*?)\]:(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_HOST] = $out[2];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_PROCESSID] = $out[4];
@@ -74,7 +77,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		else if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_HOST] = $out[2];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
@@ -83,7 +86,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\+[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_HOST] = $out[2];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
@@ -92,7 +95,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}\+[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_HOST] = $out[2];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
@@ -101,7 +104,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		{
 			// Some kind of debug message or something ...
 			// Sample: 2008-03-28T15:17:05.480876+01:00,**NO MATCH**
-			$arrArguments[SYSLOG_DATE] = $this->GetEventTime($out[1]);
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_MESSAGE] = $out[2];
 		}
 
@@ -112,6 +115,13 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 				// TODO: Cannot Parse Syslog message with this pattern!
 				echo ("wtf syslog - '" . $arrArguments[SYSLOG_MESSAGE] . "' <br>");
 			}
+		}
+
+		// If SyslogTag is set, we check for MessageType!
+		if ( isset($arrArguments[SYSLOG_SYSLOGTAG]) )
+		{
+			if ( strpos($arrArguments[SYSLOG_SYSLOGTAG], "EvntSLog" ) !== false ) 
+				$arrArguments[SYSLOG_MESSAGETYPE] = IUT_NT_EventReport;
 		}
 		
 		// Return success!

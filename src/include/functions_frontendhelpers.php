@@ -103,6 +103,9 @@ function GetFormatedDate($evttimearray)
 {
 	global $content, $CFG;
 
+	if ( !is_array($evttimearray) )
+		return $evttimearray;
+
 	if ( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
 	{
 		if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
