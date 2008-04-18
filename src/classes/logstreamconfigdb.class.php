@@ -65,7 +65,10 @@ class LogStreamConfigDB extends LogStreamConfig {
 
 //		// Create and set LineParser Instance
 //		$this->_lineParser = $this->CreateLineParser();
-		
+
+//$RecordsPerQuery
+//$_pageCount
+
 		// return LogStreamDisk instance
 		return new LogStreamDB($o);
 	}

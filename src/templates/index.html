@@ -1,7 +1,7 @@
 <!-- INCLUDE include_header.html --> 
 
 <table border="0" cellspacing="0" cellpadding="2" align="center">
-<form action="" method="post" id="searchform" name="searchform">
+<form action="" method="get" id="searchform" name="searchform">
 <tr> 
 <!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
 	<td nowrap align="center" nowrap valign="middle">
@@ -19,7 +19,7 @@
 	<td nowrap align="left" nowrap valign="top">
 		<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
 		<br>
-		<i>(sample: faciliy:local0 severity:warn)</i>
+		<i>(sample: faciliy:local0 severity:warning)</i>
 	</td>
 </tr>
 <tr>
@@ -71,18 +71,37 @@
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
-	<td nowrap width="100%"class="line2"></td>
+	<td nowrap width="100%"class="line2" align="left">
+<!-- IF main_currentpagenumber_found="true" -->
+	{LN_GEN_PAGE} {main_currentpagenumber}
+<!-- ENDIF main_currentpagenumber_found="true" -->
+	</td>
+
+<!-- IF main_recordcount_found="true" -->
+	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
+	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>
+<!-- ENDIF main_recordcount_found="true" -->
 <!-- IF main_pagerenabled="true" -->
-	<td nowrap width="200"class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td>
-	<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
-	<td class="line0" nowrap><a href="?sorting={sorting}&uid={uid_first}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
-	<td class="line1" nowrap><a href="?sorting={sorting}&uid={uid_previous}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
-<!-- BEGIN syslogpages -->
-	<td class="{cssclass}" nowrap><a href="?sorting={sorting}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
-<!-- END syslogpages -->
-	<td class="line0" nowrap><a href="?sorting={sorting}&uid={uid_next}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
-	<td class="line1" nowrap><a href="?sorting={sorting}&uid={uid_last}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+		<td nowrap width="115" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
+		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
+
+		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+	<!-- IF main_pager_previous_found="true" -->
+		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_previous}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
+	<!-- ENDIF main_pager_previous_found="true" -->
+	<!-- BEGIN syslogpages -->
+		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
+	<!-- END syslogpages -->
+	<!-- IF main_pager_next_found="true" -->
+		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+	<!-- ENDIF main_pager_next_found="true" -->
+	<!-- IF main_pager_last_found="true" -->
+		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+	<!-- ENDIF main_pager_last_found="true" -->
+<!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
 <!-- ENDIF main_pagerenabled="true" -->
+
 </tr>
 </table>
 
@@ -98,11 +117,14 @@
 	<!-- IF syslogmessagesenabled="true" -->
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
-<!--		<td width="50" class="cellmenu1" align="center" nowrap><B>{LN_TOP_UID}</B></td>-->
+		<!-- IF MiscShowDebugGridCounter="1" -->
+		<td class="cellmenu1"><B>Debug</B></td>
+		<!-- ENDIF MiscShowDebugGridCounter="1" -->
+
 		<!-- BEGIN fields -->
 		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap>
 			<!-- IF FieldSortable="true" -->
-			<a HREF="?sorting={FieldID}{additional_url}" class="cellmenu1_link" >
+			<a HREF="?sorting={FieldID}{additional_url_uidonly}{additional_url}" class="cellmenu1_link" >
 			<!-- ENDIF FieldSortable="true" -->
 			<B>{FieldCaption}</B>
 			<!-- IF FieldSortable="true" -->
@@ -110,34 +132,24 @@
 			<!-- ENDIF FieldSortable="true" -->
 		</td>
 		<!-- END fields -->
-<!--		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogfacility{additional_url}" class="cellmenu1_link" >{LN_GRID_FACILITY}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogseverity{additional_url}" class="cellmenu1_link" >{LN_GRID_SEVERITY}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=syslogtag{additional_url}" class="cellmenu1_link" >{LN_GRID_SYSLOGTAG}</A></td>
-		<td width="75" class="cellmenu1" align="center" nowrap><A HREF="?sorting=IUT{additional_url}" class="cellmenu1_link" >{LN_GRID_INFOUNIT}</A></td>
-		<td width="50" class="cellmenu1" align="center" nowrap><A HREF="?sorting=FROMHOST{additional_url}" class="cellmenu1_link" >{LN_GRID_HOST}</A></td> 
-		<td width="100%" class="cellmenu1" align="center" nowrap><B>{LN_FIELDS_MESSAGE}</B></td>
-		-->
-
 	</tr>
 
 	<!-- BEGIN syslogmessages -->
 	<tr>
-<!--		<td align="right" class="{cssclass}"><B>{UID}</B></td>-->
+		<!-- IF MiscShowDebugGridCounter="1" -->
+		<td class="{cssclass}" >{ZAEHLER}</td>
+		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN values -->
 		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top">
-
 		<!-- IF hasdetails="false" -->
 		<B>{fieldvalue}</B>
 		<!-- ENDIF hasdetails="false" -->
 		<!-- IF hasdetails="true" -->
-		<a href="?" class="syslogdetails">
-		{fieldvalue}
+		<a href="?" class="syslogdetails">{fieldvalue}
 		<span>
 			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
-			<tr>
-				<td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td>
-			</tr>
+			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
 			<!-- BEGIN messagesdetails -->
 			<tr>
 				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
@@ -150,20 +162,11 @@
 		<!-- ENDIF hasdetails="true" -->
 		</td>
 		<!-- END values -->
-<!--		
-		<td align="left" class="{facility_cssclass}" bgcolor="{facility_color}" nowrap><B>{syslogfacility-text}</B></td>
-		<td align="left" class="{severity_cssclass}" bgcolor="{severity_color}" nowrap><B>{syslogseverity-text}</B></td>
-		<td align="left" class="{cssclass}" nowrap><B>{syslogtag}</B></td>
-		<td align="center" class="{cssclass}"><B>{IUT}</B></td>
-		<td align="left" class="{cssclass}" nowrap><B>{FROMHOST}</B></td>
--->
-
 	</tr>
 	<!-- END syslogmessages -->
 
 	</table>
 	<!-- ENDIF syslogmessagesenabled="true" -->
-
 
 	</td>
 </tr>

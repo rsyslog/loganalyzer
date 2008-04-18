@@ -39,6 +39,10 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 abstract class LogStreamConfig {
+	// Public needed properties
+	public $_pageCount = 50;	// Paging Count number!
+
+	// protected properties
 	protected $_logStreamConfigObj = null;
 	protected $_logStreamId = -1;
 	protected $_logStreamName = '';

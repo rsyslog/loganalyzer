@@ -102,6 +102,9 @@
 						// TODO: Output CONFIG WARNING
 						die( "Not supported yet!" );
 					}
+					
+					// Set generic configuration options
+					$content['Sources'][$iSourceID]['ObjRef']->_pageCount = $CFG['ViewEntriesPerPage'];
 
 					// Set default SourceID here!
 					if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 

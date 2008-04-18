@@ -118,95 +118,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 	else if ( isset($_GET['highlight']) )
 		$content['highlightstr'] = $_GET['highlight'];
 	
-	// Evaluate search now
-	if ( $mysearch == $content['LN_SEARCH_PERFORMADVANCED']) 
-	{
-		if ( isset($_POST['filter_datemode']) )
-		{
-			$filters['filter_datemode'] = intval($_POST['filter_datemode']);
-			if ( $filters['filter_datemode'] == DATEMODE_RANGE )
-			{
-				// Read range values 
-				if ( isset($_POST['filter_daterange_from_year']) ) 
-					$filters['filter_daterange_from_year'] = intval($_POST['filter_daterange_from_year']);
-				if ( isset($_POST['filter_daterange_from_month']) ) 
-					$filters['filter_daterange_from_month'] = intval($_POST['filter_daterange_from_month']);
-				if ( isset($_POST['filter_daterange_from_day']) ) 
-					$filters['filter_daterange_from_day'] = intval($_POST['filter_daterange_from_day']);
-				if ( isset($_POST['filter_daterange_to_year']) ) 
-					$filters['filter_daterange_to_year'] = intval($_POST['filter_daterange_to_year']);
-				if ( isset($_POST['filter_daterange_to_month']) ) 
-					$filters['filter_daterange_to_month'] = intval($_POST['filter_daterange_to_month']);
-				if ( isset($_POST['filter_daterange_to_day']) ) 
-					$filters['filter_daterange_to_day'] = intval($_POST['filter_daterange_to_day']);
-				
-				// Append to searchstring
-				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" . 
-														$filters['filter_daterange_from_month'] . "-" . 
-														$filters['filter_daterange_from_day'] . "T00:00:00 ";
-				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
-														$filters['filter_daterange_to_month'] . "-" . 
-														$filters['filter_daterange_to_day'] . "T23:59:59 ";
-
-			}
-			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
-			{
-				if ( isset($_POST['filter_daterange_last_x']) ) 
-				{
-					$filters['filter_daterange_last_x'] = intval($_POST['filter_daterange_last_x']);
-					$content['searchstr'] .= "datelastx:" .	$filters['filter_daterange_last_x'] . " ";
-				}
-			}
-		}
-
-		if ( isset($_POST['filter_facility']) && count($_POST['filter_facility']) < 18 ) // If we have more than 18 elements, this means all facilities are enabled
-		{
-			$tmpStr = "";
-			foreach ($_POST['filter_facility'] as $tmpfacility) 
-			{
-				if ( strlen($tmpStr) > 0 )
-					$tmpStr .= ",";
-				$tmpStr .= $tmpfacility;  
-			}
-			$content['searchstr'] .= "facility:" . $tmpStr . " ";
-		}
-
-		if ( isset($_POST['filter_severity']) && count($_POST['filter_severity']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
-		{
-			$tmpStr = "";
-			foreach ($_POST['filter_severity'] as $tmpfacility) 
-			{
-				if ( strlen($tmpStr) > 0 )
-					$tmpStr .= ",";
-				$tmpStr .= $tmpfacility;  
-			}
-			$content['searchstr'] .= "severity:" . $tmpStr . " ";
-		}
-
-		// Spaces need to be converted!
-		if ( isset($_POST['filter_syslogtag']) && strlen($_POST['filter_syslogtag']) > 0 )
-		{
-			if ( strpos($_POST['filter_syslogtag'], " ") === false)
-				$content['searchstr'] .= "syslogtag:" . $_POST['filter_syslogtag'] . " ";
-			else
-				$content['searchstr'] .= "syslogtag:" . str_replace(" ", ",", $_POST['filter_syslogtag']) . " ";
-		}
-		
-		// Spaces need to be converted!
-		if ( isset($_POST['filter_source']) && strlen($_POST['filter_source']) > 0 )
-		{
-			if ( strpos($_POST['filter_source'], " ") === false)
-				$content['searchstr'] .= "source:" . $_POST['filter_source'] . " ";
-			else
-				$content['searchstr'] .= "source:" . str_replace(" ", ",", $_POST['filter_source']) . " ";
-		}
-		
-		// Message is just appended
-		if ( isset($_POST['filter_message']) && strlen($_POST['filter_message']) > 0 )
-			$content['searchstr'] .= $_POST['filter_message'];
-
-	}
-	else if ( $mysearch == $content['LN_SEARCH']) 
+//	else if ( $mysearch == $content['LN_SEARCH']) 
 	{
 		// Message is just appended
 		if ( isset($myfilter) && strlen($myfilter) > 0 )
@@ -272,36 +184,67 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	$res = $stream->Open( $content['Columns'], true );
 	if ( $res == SUCCESS ) 
 	{
+		// TODO Implement ORDER
 		$stream->SetReadDirection(EnumReadDirection::Backward);
-
+		
+		// Set current ID and init Counter
 		$uID = $currentUID;
 		$counter = 0;
 		
+		// If uID is known, we need to init READ first - this will also seek for available records first!
 		if ($uID != UID_UNKNOWN) 
 		{
-	//		echo "!1!";
 			// First read will also set the start position of the Stream!
 			$ret = $stream->Read($uID, $logArray);
 		}
 		else
-		{
-	//		echo "!2!";
 			$ret = $stream->ReadNext($uID, $logArray);
-		}
-
+		
+		// We found matching records, so continue
 		if ( $ret == SUCCESS )
 		{
+			// --- PreChecks to be done
+			// Set Record Count
+			$content['main_recordcount'] = $stream->GetMessageCount();
+			if ( $content['main_recordcount'] != -1 )
+				$content['main_recordcount_found'] = true;
+			else
+				$content['main_recordcount_found'] = false;
+
+			$content['uid_previous'] = $stream->GetPreviousPageUID();
+			if ( $content['uid_previous'] != -1 )
+				$content['main_pager_previous_found'] = true;
+			else
+				$content['main_pager_previous_found'] = false;
+//echo $content['uid_previous'];
+
+			$content['uid_last'] = $stream->GetLastPageUID();
+			if ( $content['uid_last'] != -1 )
+				$content['main_pager_last_found'] = true;
+			else
+				$content['main_pager_last_found'] = false;
+//echo $content['uid_last'];
+
+			$content['main_currentpagenumber'] = $stream->GetCurrentPageNumber();
+			if ( $content['main_currentpagenumber'] >= 0 )
+				$content['main_currentpagenumber_found'] = true;
+			else
+				$content['main_currentpagenumber_found'] = false;
+//echo $content['main_currentpagenumber'];
+			// ---			
+
 			//Loop through the messages!
 			do
 			{
-				// Copy Obtained array 
-	//			$content['syslogmessages'][] = $logArray;
-
 				// --- Set CSS Class
 				if ( $counter % 2 == 0 )
 					$content['syslogmessages'][$counter]['cssclass'] = "line1";
 				else
 					$content['syslogmessages'][$counter]['cssclass'] = "line2";
+				// --- 
+
+				// --- Copy other needed properties
+				$content['syslogmessages'][$counter]['MiscShowDebugGridCounter'] = $content['MiscShowDebugGridCounter'];
 				// --- 
 
 				// --- Now we populate the values array!
@@ -434,39 +377,28 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				}
 				// ---
 
-				// --- Popup Details
-				if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
-				{
-				}
-	//			else
-	//				$content['syslogmessages'][$counter]['popupdetails'] = "false";
-				// --- 
-
-	/*
-				// --- Prepare message if needed!
-				if ( $CFG['ShowMessage'] == 1 )
-				{
-
-				}
-				else
-					$content['syslogmessages'][$counter]['ShowMessage'] = "false";
-				// ---
-	*/
 				// Increment Counter
 				$counter++;
-			} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter <= $CFG['ViewEntriesPerPage']);
+			} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter < $CFG['ViewEntriesPerPage']);
+			
+			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $CFG['ViewEntriesPerPage'] )
+			{
+				// Enable Pager in any case here!
+				$content['main_pagerenabled'] = true;
 
-			if ( $stream->ReadNext($uID, $logArray) == SUCCESS ) 
-			{
-				$content['uid_next'] = $uID;
-				// Enable Pager
-				$content['main_pagerenabled'] = "true";
+				if ( $stream->ReadNext($uID, $logArray) == SUCCESS && isset($uID) ) 
+				{
+					$content['uid_next'] = $uID;
+					$content['main_pager_next_found'] = true;
+				}
+				else if ( $currentUID != UID_UNKNOWN )
+				{
+					$content['main_pager_next_found'] = false;
+				}
 			}
-			else if ( $currentUID != UID_UNKNOWN )
-			{
-				// We can still go back, enable Pager
-				$content['main_pagerenabled'] = "true";
-			}
+			else	// Disable pager in this case!
+				$content['main_pagerenabled'] = false;
+
 
 			// This will enable to Main SyslogView
 			$content['syslogmessagesenabled'] = "true";
@@ -481,12 +413,6 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	// Close file!
 	$stream->Close();
 }
-
-
-// DEBUG, create TESTING DATA!
-//$content['syslogmessages'][0] = array ( SYSLOG_DATE => "Feb  7 17:56:24", SYSLOG_FACILITY => 0, SYSLOG_FACILITY_TEXT => "kernel", SYSLOG_SEVERITY => 5, SYSLOG_SEVERITY_TEXT => "notice", SYSLOG_HOST => "localhost", SYSLOG_SYSLOGTAG => "RSyslogTest", SYSLOG_MESSAGE => "Kernel log daemon terminating.", SYSLOG_MESSAGETYPE => IUT_Syslog, );
-//$content['syslogmessages'][1] = array ( SYSLOG_DATE => "Feb  6 18:56:24", SYSLOG_FACILITY => 0, SYSLOG_FACILITY_TEXT => "kernel", SYSLOG_SEVERITY => 5, SYSLOG_SEVERITY_TEXT => "notice", SYSLOG_HOST => "localhost", SYSLOG_SYSLOGTAG => "RSyslogTest", SYSLOG_MESSAGE => "Kernel log daemon terminating.", SYSLOG_MESSAGETYPE => IUT_Syslog, );
-
 // --- 
 
 // --- Parsen and Output

@@ -68,6 +68,7 @@ define('SYSLOG_EVENT_USER', 'user');
 define('FILTER_TYPE_STRING', 0);
 define('FILTER_TYPE_NUMBER', 1);
 define('FILTER_TYPE_DATE', 2);
+define('FILTER_TYPE_UNKNOWN', 99);
 
 // Define possible database types
 define('DB_MYSQL', 0);

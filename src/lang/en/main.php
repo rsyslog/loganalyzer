@@ -37,6 +37,9 @@ $content['LN_GEN_FIRSTPAGE'] = "First Page";
 $content['LN_GEN_LASTPAGE'] = "Last Page";
 $content['LN_GEN_NEXTPAGE'] = "Next Page";
 $content['LN_GEN_PREVIOUSPAGE'] = "Previous Page";
+$content['LN_GEN_RECORDCOUNT'] = "Total records found";
+$content['LN_GEN_PAGERSIZE'] = "Records per page";
+$content['LN_GEN_PAGE'] = "Page";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";

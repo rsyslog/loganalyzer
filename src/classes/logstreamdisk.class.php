@@ -59,6 +59,8 @@ class LogStreamDisk extends LogStream {
 	private $_buffer_length = 0;
 	private $_p_buffer = -1;
 
+	private $_previousPageUID = -1;
+
 	// Constructor
 	public function LogStreamDisk($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
@@ -374,17 +376,33 @@ class LogStreamDisk extends LogStream {
 				$this->_currentOffset = ftell($this->_fp);
 			}
 			*/
-			while ($this->ReadNextForwards($dummy1, $dummy2) == SUCCESS) {
-        fgets($this->_fp);
-        $numrecs--;
+			while ($this->ReadNextForwards($dummy1, $dummy2) == SUCCESS)
+			{
+				fgets($this->_fp);
+				$numrecs--;
+
+//---  Extra check to set the correct $_previousPageUID!
+if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
+	$this->_previousPageUID = $this->_currentOffset;
+//--- 
+
 				if ($numrecs == 0) {
 					break;
 				}
 				$this->_currentOffset = ftell($this->_fp);
 			}
-		} else {
-			while ($this->ReadNextBackwards($dummy1, $dummy2) == SUCCESS) {
+		} 
+		else 
+		{
+			while ($this->ReadNextBackwards($dummy1, $dummy2) == SUCCESS)
+			{
 				$numrecs++;
+
+//---  Extra check to set the correct $_previousPageUID!
+if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
+	$this->_previousPageUID = $this->_currentOffset;
+//--- 
+				
 				if ($numrecs == 0) {
 					break;
 				}
@@ -420,6 +438,33 @@ class LogStreamDisk extends LogStream {
 	* pain if the file is e.g. 1 gb.
 	*/
 	public function GetMessageCount() {
+		return -1;
+	}
+
+	/**
+	* This function returns the first UID for previous PAGE, if availbale! 
+	* Otherwise will return -1!
+	*/
+	public function GetPreviousPageUID()
+	{
+		return $this->_previousPageUID;
+	}
+
+	/**
+	* This function returns the first UID for the last PAGE! 
+	* This is not possible in this logstream, so it always returns -1!
+	*/
+	public function GetLastPageUID()
+	{
+		return -1;
+	}
+
+	/**
+	* This function returns the current Page number, if availbale! 
+	* Otherwise will return -1!
+	*/
+	public function GetCurrentPageNumber()
+	{
 		return -1;
 	}
 

@@ -55,6 +55,9 @@ class LogStreamDB extends LogStream {
 	private $_currentRecordStart = 0;
 	private $_currentRecordNum = 0;
 	private $_totalRecordCount = -1;
+	private $_previousPageUID = -1;
+	private $_lastPageUID = -1;
+	private $_currentPageNumber = 0;
 
 	private $_SQLwhereClause = "";
 
@@ -114,6 +117,9 @@ class LogStreamDB extends LogStream {
 
 		if ( $this->_totalRecordCount <= 0 )
 			return ERROR_NOMORERECORDS;
+
+		// Success, this means we init the Pagenumber to ONE!
+		$this->_currentPageNumber = 1;
 		
 		// reached this point means success!
 		return SUCCESS;
@@ -277,7 +283,19 @@ class LogStreamDB extends LogStream {
 								// Only Increment $_currentRecordNum
 								$this->_currentRecordNum++;
 							}
+							
+							// Increment our Pagenumber if needed!
+							if ( $this->_currentRecordNum % $this->_logStreamConfigObj->_pageCount == 0 ) 
+								$this->_currentPageNumber++;
 						}
+
+						//---  Extra check to set the correct $_previousPageUID!
+						if ( $this->_currentRecordNum > $this->_logStreamConfigObj->_pageCount && isset($this->bufferedRecords[$this->_currentRecordNum - 50][$uidfieldname]) ) 
+						{
+							$this->_previousPageUID = $this->bufferedRecords[$this->_currentRecordNum - $this->_logStreamConfigObj->_pageCount - 1][$uidfieldname];
+						}
+						// TODO! Handle the case where previous ID is not set in the bufferedrecords!
+						//--- 
 
 						// We need to load new records, so clear the old ones first!
 						$this->ResetBufferedRecords();
@@ -304,6 +322,63 @@ class LogStreamDB extends LogStream {
 	public function GetMessageCount()
 	{
 		return $this->_totalRecordCount;
+	}
+
+	/**
+	* This function returns the first UID for previous PAGE, if availbale! 
+	* Otherwise will return -1!
+	*/
+	public function GetPreviousPageUID()
+	{
+		return $this->_previousPageUID;
+	}
+
+	/**
+	* This function returns the first UID for the last PAGE! 
+	* Will be done by a seperated SQL Statement.
+	*/
+	public function GetLastPageUID()
+	{
+		global $querycount;
+
+		// Obtain last UID of renough records are available!
+		if ( $this->_totalRecordCount > $this->_logStreamConfigObj->_pageCount ) 
+		{
+			// Get SQL Statement without properties
+			$szSql = $this->CreateSQLStatement(-1, false);
+			
+			$limitbegin = $this->_totalRecordCount - $this->_logStreamConfigObj->_pageCount;
+
+			// Append LIMIT clause
+			$szSql .= " LIMIT " . $limitbegin . ", 1";
+
+			// Perform Database Query
+			if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
+			{
+				// obtain first and only row
+				$myRow = mysql_fetch_row($myQuery);
+				$this->_lastPageUID = $myRow[0];
+
+				// Free query now
+				mysql_free_result ($myQuery); 
+			}
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+		
+		// finally return result!
+		return $this->_lastPageUID;
+	}
+
+	/**
+	* This function returns the current Page number, if availbale! 
+	* Otherwise will return 0! We also assume that this function is 
+	* only called once DB is open!
+	*/
+	public function GetCurrentPageNumber()
+	{
+		return $this->_currentPageNumber;
 	}
 
 	/*
@@ -435,7 +510,7 @@ class LogStreamDB extends LogStream {
 	{
 		global $querycount;
 
-		// Get SQL Statement
+		// Get SQL Statement without properties
 		$szSql = $this->CreateSQLStatement(-1, false);
 
 		// Append LIMIT clause
@@ -620,8 +695,8 @@ class LogStreamDB extends LogStream {
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 		
 		// Create Statement and perform query!
-		$szQuery = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
-		if ($myQuery = mysql_query($szQuery)) 
+		$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
 		{
 			// obtain first and only row
 			$myRow = mysql_fetch_row($myQuery);
@@ -630,6 +705,8 @@ class LogStreamDB extends LogStream {
 			// Free query now
 			mysql_free_result ($myQuery); 
 		}
+		else
+			$numRows = -1;
 
 		// return result!
 		return $numRows;

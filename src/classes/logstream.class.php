@@ -159,6 +159,27 @@ abstract class LogStream {
 	*/
 	public abstract function GetMessageCount();
 
+
+	/**
+	* This function returns the first UID for previous PAGE, if availbale! Otherwise will 
+	* return -1!
+	*/
+	public abstract function GetPreviousPageUID();
+
+
+	/**
+	* This function returns the first UID for the last PAGE, if availbale! Otherwise will 
+	* return -1!
+	*/
+	public abstract function GetLastPageUID();
+
+
+	/**
+	* This function returns the current Page number, if availbale! Otherwise will 
+	* return -1!
+	*/
+	public abstract function GetCurrentPageNumber();
+
 	
 	/**
 	* Provides a list of properties which the stream is able to sort for.
@@ -227,10 +248,56 @@ abstract class LogStream {
 						case "facility": 
 							$tmpKeyName = SYSLOG_FACILITY; 
 							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra Check to convert string representations into numbers!
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( !is_numeric($szValue) )
+									{
+										$tmpFacilityCode = $this->ConvertFacilityString($szValue);
+										if ( $tmpFacilityCode != -1 ) 
+											$tmpValues[$mykey] = $tmpFacilityCode;
+									}
+								}
+							}
+							else
+							{
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+								{
+									$tmpFacilityCode = $this->ConvertFacilityString($tmpArray[FILTER_TMP_VALUE]);
+									if ( $tmpFacilityCode != -1 ) 
+										$tmpArray[FILTER_TMP_VALUE] = $tmpFacilityCode;
+								}
+							}
+							// --- 
 							break;
 						case "severity": 
 							$tmpKeyName = SYSLOG_SEVERITY; 
 							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra Check to convert string representations into numbers!
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( !is_numeric($szValue) )
+									{
+										$tmpFacilityCode = $this->ConvertSeverityString($szValue);
+										if ( $tmpFacilityCode != -1 ) 
+											$tmpValues[$mykey] = $tmpFacilityCode;
+									}
+								}
+							}
+							else
+							{
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+								{
+									$tmpFacilityCode = $this->ConvertSeverityString($tmpArray[FILTER_TMP_VALUE]);
+									if ( $tmpFacilityCode != -1 ) 
+										$tmpArray[FILTER_TMP_VALUE] = $tmpFacilityCode;
+								}
+							}
+							// --- 
 							break;
 						case "syslogtag": 
 							$tmpKeyName = SYSLOG_SYSLOGTAG; 
@@ -256,51 +323,55 @@ abstract class LogStream {
 							$tmpTimeMode = DATEMODE_LASTX; 
 							break;
 						default:
-							echo "WTF - Unknown filter";
+							$tmpFilterType = FILTER_TYPE_UNKNOWN;
 							break;
 							// Unknown filter
 					}
 
-					// --- Set Filter!
-					$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
-					$iNum = count($this->_filters[$tmpKeyName]) - 1;
+					// Ignore if unknown filter!
+					if ( $tmpFilterType != FILTER_TYPE_UNKNOWN ) 
+					{
+						// --- Set Filter!
+						$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
+						$iNum = count($this->_filters[$tmpKeyName]) - 1;
 
-					if		( isset($tmpTimeMode) )
-					{
-						$this->_filters[$tmpKeyName][$iNum][FILTER_DATEMODE] = $tmpTimeMode;
-						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
-					}
-					else if ( isset($tmpValues) ) 
-					{
-						foreach( $tmpValues as $szValue ) 
+						if		( isset($tmpTimeMode) )
 						{
-							// Continue if empty!
-							if ( strlen(trim($szValue)) == 0 ) 
-								continue;
-
-							if ( isset($this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]) )
-							{
-								// Create new Filter!
-								$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
-								$iNum = count($this->_filters[$tmpKeyName]) - 1;
-							}
-
-							// Set Filter Mode
-							$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($szValue);
-
-							// Set Value
-							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue;
+							$this->_filters[$tmpKeyName][$iNum][FILTER_DATEMODE] = $tmpTimeMode;
+							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
 						}
+						else if ( isset($tmpValues) ) 
+						{
+							foreach( $tmpValues as $szValue ) 
+							{
+								// Continue if empty!
+								if ( strlen(trim($szValue)) == 0 ) 
+									continue;
+
+								if ( isset($this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]) )
+								{
+									// Create new Filter!
+									$this->_filters[$tmpKeyName][][FILTER_TYPE] = $tmpFilterType;
+									$iNum = count($this->_filters[$tmpKeyName]) - 1;
+								}
+
+								// Set Filter Mode
+								$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($szValue);
+
+								// Set Value
+								$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue;
+							}
+						}
+						else
+						{
+							// Set Filter Mode
+							$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+							
+							// Set Filter value!
+							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+						}
+						// ---
 					}
-					else
-					{
-						// Set Filter Mode
-						$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
-						
-						// Set Filter value!
-						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
-					}
-					// ---
 
 					// Unset unused variables
 					if ( isset($tmpArray) ) 
@@ -330,7 +401,6 @@ abstract class LogStream {
 	*/
 	private function SetFilterIncludeMode(&$szValue)
 	{
-
 		// Set Filtermode
 		$pos = strpos($szValue, "+");
 		if ( $pos !== false && $pos == 0 )
@@ -352,6 +422,39 @@ abstract class LogStream {
 		return FILTER_MODE_INCLUDE;
 	}
 
+	/*
+	*	Helper function to convert a facility string into a facility number
+	*/
+	private function ConvertFacilityString($szValue)
+	{
+		global $content;
+
+		foreach ( $content['filter_facility_list'] as $myfacility )
+		{
+			if ( stripos( $myfacility['DisplayName'], $szValue) !== false ) 
+				return $myfacility['ID'];
+		}
+		
+		// reached here means we failed to convert the facility!
+		return -1;
+	}
+
+	/*
+	*	Helper function to convert a severity string into a severity number
+	*/
+	private function ConvertSeverityString($szValue)
+	{
+		global $content;
+
+		foreach ( $content['filter_severity_list'] as $myfacility )
+		{
+			if ( stripos( $myfacility['DisplayName'], $szValue) !== false ) 
+				return $myfacility['ID'];
+		}
+		
+		// reached here means we failed to convert the facility!
+		return -1;
+	}
 
 }
 

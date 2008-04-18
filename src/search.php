@@ -54,6 +54,10 @@ $content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content
 // --- 
 
 // --- CONTENT Vars
+
+// Init Sorting variables
+$content['searchstr'] = "";
+
 // ---
 
 //if ( isset($content['myserver']) ) 
@@ -63,6 +67,106 @@ $content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content
 // --- 
 
 // --- BEGIN Custom Code
+
+if ( (isset($_POST['search']) || isset($_GET['search'])) )
+{
+	// Copy search over
+	if		( isset($_POST['search']) )
+		$mysearch = $_POST['search'];
+	else if ( isset($_GET['search']) )
+		$mysearch = $_GET['search'];
+
+	// Evaluate search now
+	if ( $mysearch == $content['LN_SEARCH_PERFORMADVANCED']) 
+	{
+		if ( isset($_GET['filter_datemode']) )
+		{
+			$filters['filter_datemode'] = intval($_GET['filter_datemode']);
+			if ( $filters['filter_datemode'] == DATEMODE_RANGE )
+			{
+				// Read range values 
+				if ( isset($_GET['filter_daterange_from_year']) ) 
+					$filters['filter_daterange_from_year'] = intval($_GET['filter_daterange_from_year']);
+				if ( isset($_GET['filter_daterange_from_month']) ) 
+					$filters['filter_daterange_from_month'] = intval($_GET['filter_daterange_from_month']);
+				if ( isset($_GET['filter_daterange_from_day']) ) 
+					$filters['filter_daterange_from_day'] = intval($_GET['filter_daterange_from_day']);
+				if ( isset($_GET['filter_daterange_to_year']) ) 
+					$filters['filter_daterange_to_year'] = intval($_GET['filter_daterange_to_year']);
+				if ( isset($_GET['filter_daterange_to_month']) ) 
+					$filters['filter_daterange_to_month'] = intval($_GET['filter_daterange_to_month']);
+				if ( isset($_GET['filter_daterange_to_day']) ) 
+					$filters['filter_daterange_to_day'] = intval($_GET['filter_daterange_to_day']);
+				
+				// Append to searchstring
+				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" . 
+														$filters['filter_daterange_from_month'] . "-" . 
+														$filters['filter_daterange_from_day'] . "T00:00:00 ";
+				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
+														$filters['filter_daterange_to_month'] . "-" . 
+														$filters['filter_daterange_to_day'] . "T23:59:59 ";
+
+			}
+			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
+			{
+				if ( isset($_GET['filter_daterange_last_x']) ) 
+				{
+					$filters['filter_daterange_last_x'] = intval($_GET['filter_daterange_last_x']);
+					$content['searchstr'] .= "datelastx:" .	$filters['filter_daterange_last_x'] . " ";
+				}
+			}
+		}
+
+		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < 18 ) // If we have more than 18 elements, this means all facilities are enabled
+		{
+			$tmpStr = "";
+			foreach ($_GET['filter_facility'] as $tmpfacility) 
+			{
+				if ( strlen($tmpStr) > 0 )
+					$tmpStr .= ",";
+				$tmpStr .= $tmpfacility;  
+			}
+			$content['searchstr'] .= "facility:" . $tmpStr . " ";
+		}
+
+		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
+		{
+			$tmpStr = "";
+			foreach ($_GET['filter_severity'] as $tmpfacility) 
+			{
+				if ( strlen($tmpStr) > 0 )
+					$tmpStr .= ",";
+				$tmpStr .= $tmpfacility;  
+			}
+			$content['searchstr'] .= "severity:" . $tmpStr . " ";
+		}
+
+		// Spaces need to be converted!
+		if ( isset($_GET['filter_syslogtag']) && strlen($_GET['filter_syslogtag']) > 0 )
+		{
+			if ( strpos($_GET['filter_syslogtag'], " ") === false)
+				$content['searchstr'] .= "syslogtag:" . $_GET['filter_syslogtag'] . " ";
+			else
+				$content['searchstr'] .= "syslogtag:" . str_replace(" ", ",", $_GET['filter_syslogtag']) . " ";
+		}
+		
+		// Spaces need to be converted!
+		if ( isset($_GET['filter_source']) && strlen($_GET['filter_source']) > 0 )
+		{
+			if ( strpos($_GET['filter_source'], " ") === false)
+				$content['searchstr'] .= "source:" . $_GET['filter_source'] . " ";
+			else
+				$content['searchstr'] .= "source:" . str_replace(" ", ",", $_GET['filter_source']) . " ";
+		}
+		
+		// Message is just appended
+		if ( isset($_GET['filter_message']) && strlen($_GET['filter_message']) > 0 )
+			$content['searchstr'] .= $_GET['filter_message'];
+	}
+
+	// Redirect to the index page now!
+	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search");
+}
 
 // --- 
 

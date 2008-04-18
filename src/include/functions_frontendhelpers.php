@@ -69,6 +69,11 @@ function CreateCurrentUrl()
 {
 	global $content;
 	$content['CURRENTURL'] = $_SERVER['PHP_SELF']; // . "?" . $_SERVER['QUERY_STRING']
+	
+	// Init additional_url helper variable
+	$content['additional_url'] = ""; 
+	$content['additional_url_uidonly'] = ""; 
+	$content['additional_url_sortingonly'] = ""; 
 
 	// Now the query string:
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
@@ -85,9 +90,28 @@ function CreateCurrentUrl()
 				$tmpvars = explode ("=", $queries[$i]);
 				if ( isset($tmpvars[1]) ) // Only if value param is set!
 				{
-					// 4Server Selector
+					// For forms!
 					$content['HIDDENVARS'][$counter]['varname'] = $tmpvars[0];
 					$content['HIDDENVARS'][$counter]['varvalue'] = $tmpvars[1];
+					
+					if ( strlen($tmpvars[1]) > 0 )
+					{
+						// Append For URL's
+						if ( $tmpvars[0] == "uid" )
+						{
+							// only add once
+							if ( strlen($content['additional_url_uidonly']) <= 0 )
+								$content['additional_url_uidonly'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+						}
+						else if ( $tmpvars[0] == "sorting" )
+						{
+							// only add once
+							if ( strlen($content['additional_url_sortingonly']) <= 0 )
+								$content['additional_url_sortingonly'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+						}
+						else
+							$content['additional_url'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+					}
 
 					$counter++;
 				}
@@ -95,8 +119,7 @@ function CreateCurrentUrl()
 		}
 	}
 
-	// May can be removed later
-	$content['additional_url'] = ""; // "&serverid=" . $content['serverid'];
+	// done
 }
 
 function GetFormatedDate($evttimearray)

@@ -18,19 +18,63 @@ function toggleDatefiltervisibility(FormName)
 	{
 		hidevisibility('HiddenDateFromOptions');
 		hidevisibility('HiddenDateLastXOptions');
+
+		toggleformelement('filter_daterange_from_year', false);
+		toggleformelement('filter_daterange_from_month', false);
+		toggleformelement('filter_daterange_from_day', false);
+		toggleformelement('filter_daterange_to_year', false);
+		toggleformelement('filter_daterange_to_month', false);
+		toggleformelement('filter_daterange_to_day', false);
+
+		toggleformelement('filter_daterange_last_x', false);
 	}
 	else if (myform.elements['filter_datemode'].value == DATEMODE_RANGE)
 	{
 		togglevisibility('HiddenDateFromOptions');
 		hidevisibility('HiddenDateLastXOptions');
+
+		toggleformelement('filter_daterange_from_year', true);
+		toggleformelement('filter_daterange_from_month', true);
+		toggleformelement('filter_daterange_from_day', true);
+		toggleformelement('filter_daterange_to_year', true);
+		toggleformelement('filter_daterange_to_month', true);
+		toggleformelement('filter_daterange_to_day', true);
+
+		toggleformelement('filter_daterange_last_x', false);
 	}
 	else if (myform.elements['filter_datemode'].value == DATEMODE_LASTX)
 	{
 		togglevisibility('HiddenDateLastXOptions');
 		hidevisibility('HiddenDateFromOptions');
-	}
 
+		toggleformelement('filter_daterange_from_year', false);
+		toggleformelement('filter_daterange_from_month', false);
+		toggleformelement('filter_daterange_from_day', false);
+		toggleformelement('filter_daterange_to_year', false);
+		toggleformelement('filter_daterange_to_month', false);
+		toggleformelement('filter_daterange_to_day', false);
+
+		toggleformelement('filter_daterange_last_x', true);
+	}
+	
 }
+
+/*
+*	Helper function
+*/
+function toggleformelement(ElementNameToggle, isDisabled)
+{
+	var myFormElement = document.getElementById(ElementNameToggle);
+	if ( isDisabled )
+	{
+		myFormElement.disabled = true;
+	}
+	else
+	{
+		myFormElement.disabled = false;
+	}
+}
+
 
 /*
 *	Helper function to add a date filter into the search field
