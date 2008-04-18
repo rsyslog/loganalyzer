@@ -49,7 +49,7 @@ $CFG['UserDBPass'] = "";
 
 // --- Misc Options
 $CFG['MiscShowDebugMsg'] = 1;				// if enabled, you will get additional output on certain places
-$CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add a counter column into the grid!
+$CFG['MiscShowDebugGridCounter'] = 1;		// Only for debugging purposes, will add a counter column into the grid!
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 // --- 
 
@@ -105,7 +105,7 @@ $CFG['Sources'][Source5]['SourceType'] = SOURCE_DB;
 $CFG['Sources'][Source5]['DBTableType'] = "winsyslog";
 $CFG['Sources'][Source5]['DBType'] = DB_MYSQL;
 $CFG['Sources'][Source5]['DBServer'] = "127.0.0.1";
-$CFG['Sources'][Source5]['DBName'] = "phplogcon";
+$CFG['Sources'][Source5]['DBName'] = "phplogcon_test";
 $CFG['Sources'][Source5]['DBUser'] = "root";
 $CFG['Sources'][Source5]['DBPassword'] = "";
 $CFG['Sources'][Source5]['DBTableName'] = "systemevents";

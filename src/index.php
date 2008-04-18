@@ -380,7 +380,9 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// Increment Counter
 				$counter++;
 			} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter < $CFG['ViewEntriesPerPage']);
-			
+
+//print_r ( $content['syslogmessages'] );
+
 			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $CFG['ViewEntriesPerPage'] )
 			{
 				// Enable Pager in any case here!

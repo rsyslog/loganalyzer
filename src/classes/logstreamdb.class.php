@@ -185,6 +185,23 @@ class LogStreamDB extends LogStream {
 		// No buffer? then read from DB!
 		if ( $this->bufferedRecords == null )
 			$ret = $this->ReadNextRecordsFromDB($uID);
+		else
+		{
+			if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
+			{
+				// We need to load new records, so clear the old ones first!
+				$this->ResetBufferedRecords();
+
+				// Set new Record start, will be used in the SQL Statement!
+				$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
+				
+				// Now read new ones
+				$ret = $this->ReadNextRecordsFromDB($uID);
+
+				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
+					$ret = ERROR_NOMORERECORDS;
+			}
+		}
 
 		if ( $ret == SUCCESS )
 		{
@@ -215,21 +232,6 @@ class LogStreamDB extends LogStream {
 			
 			// Increment $_currentRecordNum
 			$this->_currentRecordNum++;
-
-			if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
-			{
-				// We need to load new records, so clear the old ones first!
-				$this->ResetBufferedRecords();
-
-				// Set new Record start, will be used in the SQL Statement!
-				$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
-				
-				// Now read new ones
-				$ret = $this->ReadNextRecordsFromDB($uID);
-
-				// TODO Check and READ next record! 
-//				die ("omfg wtf ReadNext " . $this->_currentRecordNum);
-			}
 		}
 
 		// reached here means return result!
