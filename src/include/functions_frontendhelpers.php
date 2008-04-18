@@ -129,7 +129,11 @@ function GetFormatedDate($evttimearray)
 	if ( !is_array($evttimearray) )
 		return $evttimearray;
 
-	if ( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
+	if ( 
+			( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
+			&&
+			( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
+		)
 	{
 		if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
 			return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );

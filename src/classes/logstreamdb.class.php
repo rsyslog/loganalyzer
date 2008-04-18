@@ -191,14 +191,20 @@ class LogStreamDB extends LogStream {
 			// Init and set variables
 			foreach ( $this->_arrProperties as $property ) 
 			{
-				// Copy property if available!
-				$dbfieldname = $dbmapping[$szTableType][$property];
-				if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
+				// Check if mapping exists
+				if ( isset($dbmapping[$szTableType][$property]) )
 				{
-					if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
-						$arrProperitesOut[$property] = GetEventTime( $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname] );
+					// Copy property if available!
+					$dbfieldname = $dbmapping[$szTableType][$property];
+					if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
+					{
+						if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
+							$arrProperitesOut[$property] = GetEventTime( $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname] );
+						else
+							$arrProperitesOut[$property] = $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname];
+					}
 					else
-						$arrProperitesOut[$property] = $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname];
+						$arrProperitesOut[$property] = '';
 				}
 				else
 					$arrProperitesOut[$property] = '';
@@ -433,9 +439,8 @@ class LogStreamDB extends LogStream {
 									$addor = " AND ";
 								else
 									$addor = " OR ";
-
-
-
+								
+								// Not create LIKE Filters
 								if ( isset($tmpfilters[$propertyname]) ) 
 									$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . " LIKE '%" . $myfilter[FILTER_VALUE] . "%'";
 								else
@@ -454,6 +459,52 @@ class LogStreamDB extends LogStream {
 								}
 								break;
 							case FILTER_TYPE_DATE:
+								if ( isset($tmpfilters[$propertyname]) ) 
+									$tmpfilters[$propertyname][FILTER_VALUE] .= " AND ";
+								else
+								{
+									$tmpfilters[$propertyname][FILTER_VALUE] = "";
+									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
+								}
+								
+								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+								{
+									// Get current timestamp
+									$nNowTimeStamp = time();
+
+									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+										$nNowTimeStamp -= 60 * 60; // One Hour!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
+										$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
+										$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
+										$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
+									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
+										$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
+									else 
+									{
+										// Set filter to unknown and Abort in this case!
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
+										break;
+									}
+									
+									// Append filter
+									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+								}
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
+								{
+									// Obtain Event struct for the time!
+									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+								}
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+								{
+									// Obtain Event struct for the time!
+									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+								}
+
 								break;
 							default:
 								// Nothing to do!
@@ -484,9 +535,12 @@ class LogStreamDB extends LogStream {
 							$this->_SQLwhereClause .= $tmpfilter[FILTER_VALUE] . ") ";
 							break;
 						case FILTER_TYPE_DATE:
+							$this->_SQLwhereClause .= $tmpfilter[FILTER_VALUE];
 							break;
 						default:
-							// Nothing to do!
+							// Should not happen, wrong filters! 
+							// We add a dummy into the where clause, just as a place holder 
+							$this->_SQLwhereClause .= " 1=1 ";
 							break;
 					}
 				}

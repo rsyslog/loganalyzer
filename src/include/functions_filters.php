@@ -66,7 +66,7 @@ function InitFilterHelpers()
 	$currentMonth = date("m", $currentTime);
 	$currentYear = date("Y", $currentTime);
 
-	$tomorrowTime = time() + 86400; // Add one day!
+	$tomorrowTime = time(); // + 86400; // Add one day!
 	$tomorrowDay = date("d", $tomorrowTime);
 	$tomorrowMonth = date("m", $tomorrowTime);
 	$tomorrowYear = date("Y", $tomorrowTime);

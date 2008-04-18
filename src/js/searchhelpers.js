@@ -56,22 +56,21 @@ function toggleDatefiltervisibility(FormName)
 
 		toggleformelement('filter_daterange_last_x', true);
 	}
-	
 }
 
 /*
 *	Helper function
 */
-function toggleformelement(ElementNameToggle, isDisabled)
+function toggleformelement(ElementNameToggle, isEnabled)
 {
 	var myFormElement = document.getElementById(ElementNameToggle);
-	if ( isDisabled )
+	if ( isEnabled )
 	{
-		myFormElement.disabled = true;
+		myFormElement.disabled = false;
 	}
 	else
 	{
-		myFormElement.disabled = false;
+		myFormElement.disabled = true;
 	}
 }
 

@@ -516,6 +516,14 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
+	// Sample: 2007-4-18T00:00:00
+	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
+	{
+		// RFC 3164 typical timestamp
+		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
 	else
 	{
 		die ("wtf GetEventTime unparsable time - " . $szTimStr );
