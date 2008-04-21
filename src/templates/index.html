@@ -3,11 +3,26 @@
 <table border="0" cellspacing="0" cellpadding="2" align="center">
 <form action="" method="get" id="searchform" name="searchform">
 <tr> 
-<!--	<td class="topmenu2 ExpansionPlus" nowrap align="center" width="105" id="advancedsearch"><a class="topmenu1_link" href="#" OnClick="togglevisibility('HiddenOptions', 'advancedsearch');">Advanced Search</a></td>-->
 	<td nowrap align="center" nowrap valign="middle">
 		<B>&nbsp;{LN_SEARCH_FILTER}</B>
-		
-<!--		<img src="{BASEPATH}images/icons/navigate_down.png" class="SelectSavedFilter" align="middle" width="16" height="16">-->
+	</td>
+<!-- IF EnablePredefinedSearches="true" -->
+	<td nowrap align="left" nowrap valign="top">
+		<div id="menu">
+		<ul>
+		  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}" class="SelectSavedFilter">
+			<ul class="with_border">
+			  <li><h2 class="cellmenu1">{LN_GEN_PREDEFINEDSEARCHES}</h2>
+			<!-- BEGIN Search -->
+			  <li class="{cssclass}"><a href="?{SearchQuery}" target="_top">{DisplayName}</a></li>
+			<!-- END Search -->
+			</ul>
+		  </li>
+		</ul>
+		</div>
+	</td>
+<!-- ENDIF EnablePredefinedSearches="true" -->
+	<td nowrap align="center" nowrap valign="top">
 		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr}" class="SearchFormTextbox">
 		<br>
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
@@ -17,40 +32,43 @@
 		<br>
 	</td>
 	<td nowrap align="left" nowrap valign="top">
+
 		<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
 		<br>
 		<i>(sample: faciliy:local0 severity:warning)</i>
 	</td>
 </tr>
 <tr>
-	<td colspan="2">
-<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
-<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
-<tr>
-	<td colspan="2" align="center" valign="top" class="cellmenu2">
-	<strong>{LN_HIGHLIGHT_WORDS}</strong></td>
-</tr>
-<tr>
-	<td align="left" class="line1" nowrap>
-		<input maxlength="2048" name="highlight" size="75" title="Search" value="{highlightstr}">
-		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
-	</td>
-</tr>
-<!-- IF EXPAND_HIGHLIGHT="true" -->
-<tr>
-	<td align="center" class="line0" nowrap>
-		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
-		<tr>
-		<!-- BEGIN highlightwords -->
-			<td class="{cssclass}" align="center"><b>{highlight_raw}</b></td>
-		<!-- END highlightwords -->
-		</tr>
-		</table>
-	</td>
-</tr>
-<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
-</table>
-</span>
+	<td colspan="5">
+
+	<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
+	<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
+	<tr>
+		<td colspan="2" align="center" valign="top" class="cellmenu2">
+		<strong>{LN_HIGHLIGHT_WORDS}</strong></td>
+	</tr>
+	<tr>
+		<td align="left" class="line1" nowrap>
+			<input maxlength="2048" name="highlight" size="75" title="Search" value="{highlightstr}">
+			<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
+		</td>
+	</tr>
+	<!-- IF EXPAND_HIGHLIGHT="true" -->
+	<tr>
+		<td align="center" class="line0" nowrap>
+			<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+			<tr>
+			<!-- BEGIN highlightwords -->
+				<td class="{cssclass}" align="center"><b>{highlight_raw}</b></td>
+			<!-- END highlightwords -->
+			</tr>
+			</table>
+		</td>
+	</tr>
+	<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
+	</table>
+	</span>
+
 	</td>
 </tr>
 </form>
@@ -86,18 +104,18 @@
 		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
-		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_beginning.png" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
 	<!-- IF main_pager_previous_found="true" -->
-		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_previous}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_rewind.png" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
+		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_previous}{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
 	<!-- ENDIF main_pager_previous_found="true" -->
 	<!-- BEGIN syslogpages -->
 		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
 	<!-- END syslogpages -->
 	<!-- IF main_pager_next_found="true" -->
-		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_fast_forward.png" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
 	<!-- ENDIF main_pager_next_found="true" -->
 	<!-- IF main_pager_last_found="true" -->
-		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{BASEPATH}images/icons/media_end.png" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
 	<!-- ENDIF main_pager_last_found="true" -->
 <!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
 <!-- ENDIF main_pagerenabled="true" -->

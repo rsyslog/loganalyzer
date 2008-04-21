@@ -82,6 +82,14 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
 		}
+		// Sample (Syslog): Mar 7 17:18:35 debandre exiting on signal 15
+		else if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)$/", $szLine, $out ) )
+		{
+			// Copy parsed properties!
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
+			$arrArguments[SYSLOG_HOST] = $out[2];
+			$arrArguments[SYSLOG_MESSAGE] = $out[3];
+		}
 		// Sample (RSyslog): 2008-03-28T11:07:40+01:00 localhost rger: test 1
 		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\+[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
@@ -107,14 +115,10 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
 			$arrArguments[SYSLOG_MESSAGE] = $out[2];
 		}
-
 		else
 		{
-			if ( strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
-			{
-				// TODO: Cannot Parse Syslog message with this pattern!
-				echo ("wtf syslog - '" . $arrArguments[SYSLOG_MESSAGE] . "' <br>");
-			}
+			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
+				OutputDebugMessage("Unparseable syslog msg - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
 		}
 
 		// If SyslogTag is set, we check for MessageType!

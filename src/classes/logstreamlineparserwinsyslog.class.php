@@ -75,10 +75,6 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_SEVERITY] = $out[5];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[7];
-
-//			// Expand SYSLOG_FACILITY and SYSLOG_SEVERITY
-//			$arrArguments[SYSLOG_FACILITY_TEXT] = GetFacilityDisplayName( $arrArguments[SYSLOG_FACILITY] );
-//			$arrArguments[SYSLOG_SEVERITY_TEXT] = GetSeverityDisplayName( $arrArguments[SYSLOG_SEVERITY] );
 		}
 		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
 		{
@@ -88,18 +84,11 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_FACILITY] = $out[4];
 			$arrArguments[SYSLOG_SEVERITY] = $out[5];
 			$arrArguments[SYSLOG_MESSAGE] = $out[6];
-
-//			// Expand SYSLOG_FACILITY and SYSLOG_SEVERITY
-//			$arrArguments[SYSLOG_FACILITY_TEXT] = GetFacilityDisplayName( $arrArguments[SYSLOG_FACILITY] );
-//			$arrArguments[SYSLOG_SEVERITY_TEXT] = GetSeverityDisplayName( $arrArguments[SYSLOG_SEVERITY] );
 		}
 		else
 		{
-			if ( strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
-			{
-				// TODO: Cannot Parse Syslog message with this pattern!
-				die ("wtf winsyslog - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
-			}
+			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
+				OutputDebugMessage("Unparseable Winsyslog message - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
 		}
 		
 		// If SyslogTag is set, we check for MessageType!

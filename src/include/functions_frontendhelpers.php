@@ -145,4 +145,17 @@ function GetFormatedDate($evttimearray)
 	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
+function OutputDebugMessage($szDbg)
+{
+	global $CFG;
+
+	if ( $CFG['MiscShowDebugMsg'] == 1 )
+	{
+		print("<table width=\"600\" align=\"center\" class=\"with_border\">");
+		print("<tr><td valign='top'><B>Debugmessage:</B> </td>");
+		print("<td>" . $szDbg . "</td></tr>");
+		print("</table><br>");
+	}
+}
+
 ?>

@@ -385,7 +385,7 @@ A.cellmenu1_link:hover
 }
 
 /* Form elements */
-select, input, button, textarea, .SelectSavedFilter
+select, input, button, textarea
 {
 	background-color: #E8E7E2; 
 	color:#000000; 

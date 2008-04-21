@@ -63,7 +63,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.0.107";
+$content['BUILDNUMBER'] = "2.01.1";
 $content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title of the Page 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
@@ -166,9 +166,40 @@ function InitPhpLogCon()
 	// Create Language List
 	CreateLanguageList();
 
+	// Init Predefined Searches List
+	CreatePredefinedSearches();
+
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
+}
+
+function CreatePredefinedSearches()
+{
+	global $CFG, $content;
+	if ( isset($CFG['Search']) )
+	{
+		// Enable predefined searches 
+		$content['EnablePredefinedSearches'] = true;
+		
+		// Loop through all predefined searches!
+		foreach ($CFG['Search'] as $mykey => $mySearch)
+		{
+			// Copy configured searches into content array!
+			$content['Search'][$mykey]["ID"] = $mykey;
+			$content['Search'][$mykey]["Selected"] = false;
+
+			// --- Set CSS Class
+			if ( $mykey % 2 == 0 )
+				$content['Search'][$mykey]['cssclass'] = "line1";
+			else
+				$content['Search'][$mykey]['cssclass'] = "line2";
+			// --- 
+
+		}
+	}
+	else	// Disable predefined searches 
+		$content['EnablePredefinedSearches'] = false;
 }
 
 function InitPhpDebugMode()
@@ -233,6 +264,15 @@ function InitFrontEndVariables()
 	$content['MENU_SEARCH'] = "image=" . $content['BASEPATH'] . "images/icons/view.png";
 	$content['MENU_SELECTION_DISABLED'] = "image=" . $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = "image=" . $content['BASEPATH'] . "images/icons/selection_delete.png";
+
+	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
+	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
+	$content['MENU_PAGER_NEXT'] = $content['BASEPATH'] . "images/icons/media_fast_forward.png";
+	$content['MENU_PAGER_END'] = $content['BASEPATH'] . "images/icons/media_end.png";
+	$content['MENU_NAV_LEFT'] = $content['BASEPATH'] . "images/icons/navigate_left.png";
+	$content['MENU_NAV_RIGHT'] = $content['BASEPATH'] . "images/icons/navigate_right.png";
+	$content['MENU_NAV_CLOSE'] = $content['BASEPATH'] . "images/icons/navigate_close.png";
+	$content['MENU_NAV_OPEN'] = $content['BASEPATH'] . "images/icons/navigate_open.png";
 }
 
 // Lang Helper for Strings with ONE variable

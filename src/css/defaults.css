@@ -22,6 +22,13 @@
 	display: none;
 }
 
+.SelectSavedFilter
+{
+	margin-top: 3px;
+	border: 1px solid;
+	border-color: #233B51 #124A7C #124A7C #233B51; 
+}
+
 .syslogdetails, a.syslogdetails, a.syslogdetails:link, a.syslogdetails:active, a.syslogdetails:visited
 {
 	font-weight:normal;
@@ -30,13 +37,12 @@
 .syslogdetails
 {
     position:relative; /*this is the key*/
-	z-index:24;
+	z-index:4;
 }
 
 .syslogdetails:hover
 {
-	z-index:25; 
-/*	font-weight:normal;*/
+	z-index:5; 
 }
 .syslogdetails span {display: none}
 /*the span will display just on :hover state*/

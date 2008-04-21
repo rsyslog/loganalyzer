@@ -74,6 +74,17 @@ $CFG['Columns'][] = SYSLOG_MESSAGETYPE;
 $CFG['Columns'][] = SYSLOG_MESSAGE;
 // ---
 
+// --- Predefined Searches! 
+$CFG['Search'][] = array ( "DisplayName" => "Syslog Warnings and Errors", "SearchQuery" => "filter=severity%3A0%2C1%2C2%2C3%2C4&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "Syslog Errors", "SearchQuery" => "filter=severity%3A0%2C1%2C2%2C3&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from the last hour", "SearchQuery" => "filter=datelastx%3A1&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 12 hours", "SearchQuery" => "filter=datelastx%3A2&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 24 hours", "SearchQuery" => "filter=datelastx%3A3&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 7 days", "SearchQuery" => "filter=datelastx%3A4&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "SearchQuery" => "filter=datelastx%3A5&search=Search" );
+// $CFG['Search'][] = array ( "DisplayName" => "", "SearchQuery" => "" );
+// ---
+
 // --- Source Options
 $CFG['Sources'][Source1]['ID'] = "Source1";
 $CFG['Sources'][Source1]['Name'] = "Syslog Disk File";
@@ -120,6 +131,6 @@ $CFG['Sources'][Source6]['DBName'] = "syslogng";
 $CFG['Sources'][Source6]['DBUser'] = "root";
 $CFG['Sources'][Source6]['DBPassword'] = "";
 $CFG['Sources'][Source6]['DBTableName'] = "logs";
-
 // --- 
+
 ?>
