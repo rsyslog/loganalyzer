@@ -157,7 +157,14 @@ font
 { 
 	background-color:#F9F9F9; 
 }
+.tableBackground
+{
+	font-size: 8pt;
+	color: #000000;
+	background-color: #F5F5F5;
+}
 
+/*
 .line_alt0
 {
 	font-size: 8pt;
@@ -183,6 +190,8 @@ font
 	background-color:#F9F9F9; 
 	background-image: url("images/dither.png"); 
 }
+*/
+
 .lineColouredWhite
 {
 	font-size: 8pt;

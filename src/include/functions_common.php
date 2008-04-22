@@ -42,7 +42,15 @@ if ( !defined('IN_PHPLOGCON') )
 // --- Basic Includes
 include($gl_root_path . 'include/constants_general.php');
 include($gl_root_path . 'include/constants_logstream.php');
-include($gl_root_path . 'config.php');
+
+if ( is_file($gl_root_path . 'config.php') )
+	include($gl_root_path . 'config.php');
+else
+{
+	// Check for installscript!
+	if ( !defined('IN_PHPLOGCON_INSTALL') )
+		CheckForInstallPhp();
+}
 
 include($gl_root_path . 'classes/class_template.php');
 include($gl_root_path . 'include/functions_themes.php');
@@ -120,18 +128,24 @@ function InitPhpLogConConfigFile()
 	else
 	{
 		// Check for installscript!
-		if ( file_exists($content['BASEPATH'] . "install.php") ) 
-			$strinstallmsg = '<br><br>' 
-							. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install PhpLogCon!</b><br><br>'
-							. 'See the Installation Guides for more Details!<br>'
-							. '<a href="docs/installation.htm" target="_blank">English Installation Guide</a>&nbsp;|&nbsp;'
-							. '<a href="docs/installation_de.htm" target="_blank">German Installation Guide</a><br><br>' 
-							. 'Also take a look to the <a href="docs/readme.htm" target="_blank">Readme</a> for some basics around PhpLogCon!<br>'
-							. '</center>';
-		else
-			$strinstallmsg = "";
-		DieWithErrorMsg( 'Error, main configuration file is missing!' . $strinstallmsg );
+		CheckForInstallPhp();
 	}
+}
+
+function CheckForInstallPhp()
+{
+	// Check for installscript!
+	if ( file_exists($content['BASEPATH'] . "install.php") ) 
+		$strinstallmsg = '<br><br>' 
+						. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install PhpLogCon!</b><br><br>'
+//							. 'See the Installation Guides for more Details!<br>'
+//							. '<a href="docs/installation.htm" target="_blank">English Installation Guide</a>&nbsp;|&nbsp;'
+//							. '<a href="docs/installation_de.htm" target="_blank">German Installation Guide</a><br><br>' 
+//							. 'Also take a look to the <a href="docs/readme.htm" target="_blank">Readme</a> for some basics around PhpLogCon!<br>'
+						. '</center>';
+	else
+		$strinstallmsg = "";
+	DieWithErrorMsg( 'Error, main configuration file is missing!' . $strinstallmsg );
 }
 
 function GetFileLength($szFileName)
@@ -172,6 +186,59 @@ function InitPhpLogCon()
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
+}
+
+function CreateLogLineTypesList( $selectedType )
+{
+	global $content;
+
+	// syslog
+	$content['LOGLINETYPES']["syslog"]['type'] = "syslog";
+	$content['LOGLINETYPES']["syslog"]['DisplayName'] = "Syslog / RSyslog";
+	if ( $selectedType == $content['LOGLINETYPES']["syslog"]['type'] ) { $content['LOGLINETYPES']["syslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["syslog"]['selected'] = ""; }
+
+	// Adiscon Winsyslog
+	$content['LOGLINETYPES']["winsyslog"]['type'] = "winsyslog";
+	$content['LOGLINETYPES']["winsyslog"]['DisplayName'] = "Adiscon WinSyslog";
+	if ( $selectedType == $content['LOGLINETYPES']["winsyslog"]['type'] ) { $content['LOGLINETYPES']["winsyslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["winsyslog"]['selected'] = ""; }
+}
+
+function CreateSourceTypesList( $selectedSource )
+{
+	global $content;
+
+	// SOURCE_DISK
+	$content['SOURCETYPES'][SOURCE_DISK]['type'] = SOURCE_DISK;
+	$content['SOURCETYPES'][SOURCE_DISK]['DisplayName'] = $content['LN_GEN_SOURCE_DISK'];
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DISK]['type'] ) { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = ""; }
+
+	// SOURCE_DB
+	$content['SOURCETYPES'][SOURCE_DB]['type'] = SOURCE_DB;
+	$content['SOURCETYPES'][SOURCE_DB]['DisplayName'] = $content['LN_GEN_SOURCE_DB'];
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DB]['type'] ) { $content['SOURCETYPES'][SOURCE_DB]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = ""; }
+}
+
+function CreateDBTypesList( $selectedDBType )
+{
+	global $content;
+
+	// DB_MYSQL
+	$content['DBTYPES'][DB_MYSQL]['type'] = DB_MYSQL;
+	$content['DBTYPES'][DB_MYSQL]['DisplayName'] = "Mysql";
+	if ( $selectedDBType == $content['DBTYPES'][DB_MYSQL]['type'] ) { $content['DBTYPES'][DB_MYSQL]['selected'] = "selected"; } else { $content['DBTYPES'][DB_MYSQL]['selected'] = ""; }
+
+/* LATER ...
+	// DB_MSSQL
+	$content['DBTYPES'][DB_MSSQL]['type'] = DB_MSSQL;
+	$content['DBTYPES'][DB_MSSQL]['DisplayName'] = "Microsoft SQL Server";
+	if ( $selectedDBType == $content['DBTYPES'][DB_MSSQL]['type'] ) { $content['DBTYPES'][DB_MSSQL]['selected'] = "selected"; } else { $content['DBTYPES'][DB_MSSQL]['selected'] = ""; }
+
+	// DB_ODBC
+	$content['DBTYPES'][DB_ODBC]['type'] = DB_MSSQL;
+	$content['DBTYPES'][DB_ODBC]['DisplayName'] = "ODBC Database Source";
+	if ( $selectedDBType == $content['DBTYPES'][DB_ODBC]['type'] ) { $content['DBTYPES'][DB_ODBC]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_MSSQL]['selected'] = ""; }
+*/
+
 }
 
 function CreatePredefinedSearches()
@@ -424,20 +491,12 @@ function CheckUrlOrIP($ip)
 
 function DieWithErrorMsg( $szerrmsg )
 {
-	global $RUNMODE, $content;
-	if		( $RUNMODE == RUNMODE_COMMANDLINE )
-	{
-		print("\n\n\t\tCritical Error occured\n");
-		print("\t\tErrordetails:\t" . $szerrmsg . "\n");
-		print("\t\tTerminating now!\n");
-	}
-	else if	( $RUNMODE == RUNMODE_WEBSERVER )
-	{
-		print("<html><head><link rel=\"stylesheet\" href=\"" . $content['BASEPATH'] . "admin/css/admin.css\" type=\"text/css\"></head><body>");
-		print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
-		print("<B>Errordetails:</B><BR>" .  $szerrmsg);
-		print("</td></tr></table>");
-	}
+	global $content;
+	print("<html><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
+	print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
+	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
+	print("</td></tr></table>");
+
 	exit;
 }
 

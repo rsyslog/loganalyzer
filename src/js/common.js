@@ -116,3 +116,21 @@ function SubmitForm(formName)
 		myform.submit();
 	}
 }
+
+/*
+*	Helper function to show and hide areas of the filterview
+*/
+function toggleFormareaVisibility(FormFieldName, FirstHiddenArea, SecondHiddenArea )
+{
+	var myfield = document.getElementById(FormFieldName);
+	if (myfield.value == 1)
+	{
+		togglevisibility(FirstHiddenArea);
+		hidevisibility(SecondHiddenArea);
+	}
+	else if (myfield.value == 2)
+	{
+		hidevisibility(FirstHiddenArea);
+		togglevisibility(SecondHiddenArea);
+	}
+}

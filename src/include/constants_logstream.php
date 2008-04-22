@@ -51,10 +51,6 @@ define('SYSLOG_FACILITY', 'syslogfacility');
 define('SYSLOG_SEVERITY', 'syslogseverity');
 define('SYSLOG_SYSLOGTAG', 'syslogtag');
 define('SYSLOG_PROCESSID', 'procid');
-//define('SYSLOG_DATE_FORMATED', 'timereported_formatted');
-//define('SYSLOG_FACILITY_TEXT', 'syslogfacility-text');
-//define('SYSLOG_SEVERITY_TEXT','syslogseverity-text');
-//define('SYSLOG_MESSAGETRUNSCATED', 'msgtrunscated');
 
 // EventLog specific
 define('SYSLOG_EVENT_ID', 'id');

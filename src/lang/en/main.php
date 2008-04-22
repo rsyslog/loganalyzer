@@ -41,6 +41,9 @@ $content['LN_GEN_RECORDCOUNT'] = "Total records found";
 $content['LN_GEN_PAGERSIZE'] = "Records per page";
 $content['LN_GEN_PAGE'] = "Page";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
+$content['LN_GEN_SOURCE_DISK'] = "Diskfile";
+$content['LN_GEN_SOURCE_DB'] = "Database";
+
 
 
 // Main Index Site
@@ -62,7 +65,6 @@ $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight words comma separated";
 
 $content['LN_ERROR_NORECORDS'] = "No syslog records found.";
-
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";
@@ -96,5 +98,24 @@ $content['LN_FIELDS_PROCESSID'] = "ProcessID";
 $content['LN_FIELDS_MESSAGETYPE'] = "Messagetype";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Message";
+
+// Install Page
+$content['LN_CFG_DBSERVER'] = "Database Host";
+$content['LN_CFG_DBPORT'] = "Database Port";
+$content['LN_CFG_DBNAME'] = "Database Name";
+$content['LN_CFG_DBPREF'] = "Table prefix";
+$content['LN_CFG_DBUSER'] = "Database User";
+$content['LN_CFG_DBPASSWORD'] = "Database Password";
+$content['LN_CFG_PARAMMISSING'] = "The following parameter were missing: ";
+$content['LN_CFG_SOURCETYPE'] = "Source Type";
+$content['LN_CFG_DISKTYPEOPTIONS'] = "Disk Type Options";
+$content['LN_CFG_LOGLINETYPE'] = "Logline type";
+$content['LN_CFG_SYSLOGFILE'] = "Syslog file";
+$content['LN_CFG_DATABASETYPEOPTIONS'] = "Database Type Options";
+$content['LN_CFG_DBTABLETYPE'] = "Table type";
+$content['LN_CFG_DBSTORAGEENGINE'] = "Database Storage Engine";
+$content['LN_CFG_DBTABLENAME'] = "Database Tablename";
+$content['LN_CFG_NAMEOFTHESOURCE'] = "Name of the Source";
+$content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
 
 ?>

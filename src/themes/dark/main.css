@@ -158,31 +158,13 @@ font
 	background-color:#3D4751; 
 }
 
-.line_alt0
+.tableBackground
 {
 	font-size: 8pt;
-	color: #000000;
-	background-color: #AAAAAA;
-	background-image: url("images/dither.png"); 
-}
-.line_alt0:hover 
-{ 
-	background-color:#F9F9F9; 
-	background-image: url("images/dither.png"); 
+	color: #B9B597;
+	background-color: #1D3043;
 }
 
-.line_alt1
-{
-	font-size: 8pt;
-	color: #000000;
-	background-color: #DDDDDD;	
-	background-image: url("images/dither.png"); 
-}
-.line_alt1:hover 
-{ 
-	background-color:#F9F9F9; 
-	background-image: url("images/dither.png"); 
-}
 .lineColouredWhite
 {
 	font-size: 8pt;

@@ -39,11 +39,11 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Database options
 $CFG['UserDBEnabled'] = false;
-$CFG['UserDBServer'] = "localhost";
+$CFG['UserDBServer'] = "";
 $CFG['UserDBPort'] = 3306;
 $CFG['UserDBName'] = ""; 
-$CFG['UserDBPref'] = "logcon_"; 
-$CFG['UserDBUser'] = "root";
+$CFG['UserDBPref'] = ""; 
+$CFG['UserDBUser'] = "";
 $CFG['UserDBPass'] = "";
 // --- 
 
@@ -86,51 +86,31 @@ $CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "S
 // ---
 
 // --- Source Options
-$CFG['Sources'][Source1]['ID'] = "Source1";
-$CFG['Sources'][Source1]['Name'] = "Syslog Disk File";
-$CFG['Sources'][Source1]['SourceType'] = SOURCE_DISK;
-$CFG['Sources'][Source1]['LogLineType'] = "syslog";
-$CFG['Sources'][Source1]['DiskFile'] = $gl_root_path . "samplelogs/syslog";
+/* Example for DiskType Source:
+	$CFG['Sources'][Source1]['ID'] = "Source1";
+	$CFG['Sources'][Source1]['Name'] = "Syslog Disk File";
+	$CFG['Sources'][Source1]['SourceType'] = SOURCE_DISK;
+	$CFG['Sources'][Source1]['LogLineType'] = "syslog";
+	$CFG['Sources'][Source1]['DiskFile'] = "/var/log/syslog";
 
-$CFG['Sources'][Source2]['ID'] = "Source2";
-$CFG['Sources'][Source2]['Name'] = "Old Syslog Disk File";
-$CFG['Sources'][Source2]['SourceType'] = SOURCE_DISK;
-$CFG['Sources'][Source2]['LogLineType'] = "syslog";
-$CFG['Sources'][Source2]['DiskFile'] = $gl_root_path . "samplelogs/syslog.0";
+	$CFG['Sources'][Source2]['ID'] = "Source5";
+	$CFG['Sources'][Source2]['Name'] = "WinSyslog DB";
+	$CFG['Sources'][Source2]['SourceType'] = SOURCE_DB;
+	$CFG['Sources'][Source2]['DBTableType'] = "winsyslog";
+	$CFG['Sources'][Source2]['DBType'] = DB_MYSQL;
+	$CFG['Sources'][Source2]['DBServer'] = "localhost";
+	$CFG['Sources'][Source2]['DBName'] = "phplogcon";
+	$CFG['Sources'][Source2]['DBUser'] = "root";
+	$CFG['Sources'][Source2]['DBPassword'] = "";
+	$CFG['Sources'][Source2]['DBTableName'] = "systemevents";
+*/
 
-$CFG['Sources'][Source3]['ID'] = "Source3";
-$CFG['Sources'][Source3]['Name'] = "RSyslog Disk File";
-$CFG['Sources'][Source3]['SourceType'] = SOURCE_DISK;
-$CFG['Sources'][Source3]['LogLineType'] = "syslog";
-$CFG['Sources'][Source3]['DiskFile'] = $gl_root_path . "samplelogs/rsyslog";
+$CFG['Sources'][Source1]['ID'] = 'Source1';
+$CFG['Sources'][Source1]['Name'] = 'My Syslog Source';
+$CFG['Sources'][Source1]['SourceType'] = 1;
+$CFG['Sources'][Source1]['LogLineType'] = 'syslog';
+$CFG['Sources'][Source1]['DiskFile'] = 'D:\!cvsroot\phplogcon\code\src\samplelogs\rsyslog';
 
-$CFG['Sources'][Source4]['ID'] = "Source4";
-$CFG['Sources'][Source4]['Name'] = "WinSyslog Disk File";
-$CFG['Sources'][Source4]['SourceType'] = SOURCE_DISK;
-$CFG['Sources'][Source4]['LogLineType'] = "winsyslog";
-$CFG['Sources'][Source4]['DiskFile'] = $gl_root_path . "samplelogs/winsyslog";
-
-$CFG['Sources'][Source5]['ID'] = "Source5";
-$CFG['Sources'][Source5]['Name'] = "WinSyslog DB";
-$CFG['Sources'][Source5]['SourceType'] = SOURCE_DB;
-$CFG['Sources'][Source5]['DBTableType'] = "winsyslog";
-$CFG['Sources'][Source5]['DBType'] = DB_MYSQL;
-$CFG['Sources'][Source5]['DBServer'] = "127.0.0.1";
-$CFG['Sources'][Source5]['DBName'] = "phplogcon_test";
-$CFG['Sources'][Source5]['DBUser'] = "root";
-$CFG['Sources'][Source5]['DBPassword'] = "";
-$CFG['Sources'][Source5]['DBTableName'] = "systemevents";
-
-$CFG['Sources'][Source6]['ID'] = "Source6";
-$CFG['Sources'][Source6]['Name'] = "SyslogNG DB";
-$CFG['Sources'][Source6]['SourceType'] = SOURCE_DB;
-$CFG['Sources'][Source6]['DBTableType'] = "syslogng";
-$CFG['Sources'][Source6]['DBType'] = DB_MYSQL;
-$CFG['Sources'][Source6]['DBServer'] = "127.0.0.1";
-$CFG['Sources'][Source6]['DBName'] = "syslogng";
-$CFG['Sources'][Source6]['DBUser'] = "root";
-$CFG['Sources'][Source6]['DBPassword'] = "";
-$CFG['Sources'][Source6]['DBTableName'] = "logs";
 // --- 
 
 ?>
