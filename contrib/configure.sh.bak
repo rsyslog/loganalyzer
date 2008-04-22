@@ -1,2 +1,0 @@
-#!/bin/sh
-chmod 666 ../src/config.php
