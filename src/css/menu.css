@@ -28,7 +28,6 @@
 }
 
 #menu a:hover {
-	border-style: invert;
 	text-decoration: none;
 	border-color: #44617D #203040 #203040 #44617D; 
 }
