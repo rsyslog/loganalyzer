@@ -60,6 +60,7 @@ class LogStreamDisk extends LogStream {
 	private $_p_buffer = -1;
 
 	private $_previousPageUID = -1;
+	private $_lastPageUID = -1;
 
 	// Constructor
 	public function LogStreamDisk($streamConfigObj) {
@@ -191,7 +192,7 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error state
 	* @see ReadNext
 	*/
-	public function ReadNext(&$uID, &$arrProperitesOut)
+	public function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true)
 	{
 		do
 		{
@@ -200,12 +201,16 @@ class LogStreamDisk extends LogStream {
 				$ret = $this->ReadNextForwards($uID, $arrProperitesOut);
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
+		
+		// Only PARSE on success!
+		if ( $ret == SUCCESS && $bParseMessage) 
+		{
+			// Line Parser Hook here
+			$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
-		// Line Parser Hook here
-		$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
-
-		// Set uID to the PropertiesOut!
-		$arrProperitesOut[SYSLOG_UID] = $uID;
+			// Set uID to the PropertiesOut!
+			$arrProperitesOut[SYSLOG_UID] = $uID;
+		}
 
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
@@ -219,7 +224,7 @@ class LogStreamDisk extends LogStream {
 			return ERROR_EOS;
 		}
 
-		if ($this->_p_buffer == -1) {
+		if ($this->_p_buffer < 0) {
 			// init read
 			$this->ReadNextBlock();
 		}
@@ -252,7 +257,7 @@ class LogStreamDisk extends LogStream {
 			$this->_currentOffset += $this->_buffer_length - $this->_p_buffer;
 		} while ($this->ReadNextBlock() == SUCCESS);
 
-		if ($line != '') {
+		if ( strlen($line) > 0 ) {
 			$uID = $this->_currentStartPos;
 			$arrProperitesOut[SYSLOG_MESSAGE] = $line;
 
@@ -301,7 +306,7 @@ class LogStreamDisk extends LogStream {
 
 		} while ($this->ReadNextBlock() == SUCCESS);
 
-		if ($line != '') {
+		if ( strlen($line) > 0 ) {
 			// this case should only happend if we are on BOF
 			$this->_bEOS = true;
 
@@ -381,10 +386,10 @@ class LogStreamDisk extends LogStream {
 				fgets($this->_fp);
 				$numrecs--;
 
-//---  Extra check to set the correct $_previousPageUID!
-if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
-	$this->_previousPageUID = $this->_currentOffset;
-//--- 
+				//---  Extra check to set the correct $_previousPageUID!
+				if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
+					$this->_previousPageUID = $this->_currentOffset;
+				//--- 
 
 				if ($numrecs == 0) {
 					break;
@@ -398,10 +403,10 @@ if ( $numrecs == $this->_logStreamConfigObj->_pageCount )
 			{
 				$numrecs++;
 
-//---  Extra check to set the correct $_previousPageUID!
-if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
-	$this->_previousPageUID = $this->_currentOffset;
-//--- 
+				//---  Extra check to set the correct $_previousPageUID!
+				if ( $numrecs == $this->_logStreamConfigObj->_pageCount ) 
+					$this->_previousPageUID = $this->_currentOffset;
+				//--- 
 				
 				if ($numrecs == 0) {
 					break;
@@ -456,7 +461,47 @@ if ( $numrecs == $this->_logStreamConfigObj->_pageCount )
 	*/
 	public function GetLastPageUID()
 	{
-		return -1;
+		// Obtain last UID if enough records are available!
+		
+		// Helper variables
+		$myuid = -1;
+		$counter = 0;
+		
+//		if ( $this->_readDirection == EnumReadDirection::Forward ) 
+		if ( $this->_sortOrder == EnumSortingOrder::Ascending ) 
+		{
+			// Move to the beginning of END file!
+			$this->Sseek($myuid, EnumSeek::EOS, 0);
+
+			// Switch reading direction!
+			$this->_readDirection = EnumReadDirection::Backward;
+		}
+//		else if ( $this->_readDirection == EnumReadDirection::Backward ) 
+		else if ( $this->_sortOrder == EnumSortingOrder::Descending ) 
+		{
+			// Move to the beginning of the file!
+			$this->Sseek($myuid, EnumSeek::BOS, 0);
+
+			// Switch reading direction!
+			$this->_readDirection = EnumReadDirection::Forward;
+		}
+
+		// Now we move for one page, we do not need to process the syslog messages!
+		$ret = $this->ReadNext($myuid, $tmpArray, false);
+		if ( $ret == SUCCESS )
+		{
+			do
+			{
+				// Increment Counter
+				$counter++;
+			} while ( $counter < $this->_logStreamConfigObj->_pageCount && ($ret = $this->ReadNext($myuid, $tmpArray, false)) == SUCCESS );
+		}
+
+		// Save the current UID as LastPage UID!
+		$this->_lastPageUID = $myuid;
+	
+		// Return result!
+		return $this->_lastPageUID;
 	}
 
 	/**
@@ -469,11 +514,21 @@ if ( $numrecs == $this->_logStreamConfigObj->_pageCount )
 	}
 
 	/*
-	* GetSortOrderProperties is not implemented yet. So it always
-	* return null.
+	* Implementation of IsPropertySortable
+	*
+	* For now, sorting is only possible for the UID Property!
 	*/
-	public function GetSortOrderProperties() {
-		return null;
+	public function IsPropertySortable($myProperty)
+	{
+		global $fields;
+
+		// TODO: HARDCODED | FOR NOW only FALSE!
+		return false;
+
+		if ( isset($fields[$myProperty]) && $myProperty == SYSLOG_UID )
+			return true;
+		else
+			return false;
 	}
 
 	/**

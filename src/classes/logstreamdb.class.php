@@ -173,7 +173,7 @@ class LogStreamDB extends LogStream {
 	* @return integer Error state
 	* @see ReadNext
 	*/
-	public function ReadNext(&$uID, &$arrProperitesOut)
+	public function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true)
 	{
 		// Helpers needed for DB Mapping
 		global $dbmapping, $fields;
@@ -275,6 +275,7 @@ class LogStreamDB extends LogStream {
 					$bFound = false;
 					$tmpuID = $uID;
 					$ret = ERROR_NOMORERECORDS; // Set Default error code!
+					$totalpages = intval($this->_totalRecordCount / $this->_logStreamConfigObj->_pageCount);
 					while( $bFound == false && $this->ReadNextIDsFromDB() == SUCCESS )
 					{
 						foreach ( $this->bufferedRecords as $myRecord )
@@ -296,6 +297,9 @@ class LogStreamDB extends LogStream {
 							if ( $this->_currentRecordNum % $this->_logStreamConfigObj->_pageCount == 0 ) 
 								$this->_currentPageNumber++;
 						}
+						
+						if ( $this->_currentPageNumber > 1 && $this->_readDirection == EnumReadDirection::Forward) 
+							$this->_currentPageNumber = $totalpages - $this->_currentPageNumber + 1;
 
 						//---  Extra check to set the correct $_previousPageUID!
 						if ( $this->_currentRecordNum > $this->_logStreamConfigObj->_pageCount && isset($this->bufferedRecords[$this->_currentRecordNum - 50][$uidfieldname]) ) 
@@ -390,14 +394,21 @@ class LogStreamDB extends LogStream {
 	}
 
 	/*
-	* GetSortOrderProperties is not implemented yet. So it always
-	* return null.
+	* Implementation of IsPropertySortable
+	*
+	* For now, sorting is only possible for the UID Property!
 	*/
-	public function GetSortOrderProperties()
+	public function IsPropertySortable($myProperty)
 	{
-/*
-		return null;
-*/
+		global $fields;
+
+		// TODO: HARDCODED | FOR NOW only FALSE!
+		return false;
+
+		if ( isset($fields[$myProperty]) && $myProperty == SYSLOG_UID )
+			return true;
+		else
+			return false;
 	}
 
 	/*

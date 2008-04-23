@@ -48,8 +48,8 @@ $CFG['UserDBPass'] = "";
 // --- 
 
 // --- Misc Options
-$CFG['MiscShowDebugMsg'] = 1;				// if enabled, you will get additional output on certain places
-$CFG['MiscShowDebugGridCounter'] = 1;		// Only for debugging purposes, will add a counter column into the grid!
+$CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
+$CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add a counter column into the grid!
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 // --- 
 

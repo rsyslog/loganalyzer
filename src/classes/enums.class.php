@@ -47,6 +47,14 @@ abstract class EnumReadDirection {
 }
 
 /**
+* ENUM of available Sorting Orders.
+*/
+abstract class EnumSortingOrder {
+	const Ascending = 1;
+	const Descending = 2;
+}
+
+/**
 *	Available modes of seek
 */
 abstract class EnumSeek {

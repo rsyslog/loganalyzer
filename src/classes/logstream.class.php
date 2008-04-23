@@ -47,6 +47,7 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 
 abstract class LogStream {
 	protected $_readDirection = EnumReadDirection::Forward;
+	protected $_sortOrder = EnumSortingOrder::Descending;
 	protected $_filters = null;
 	protected $_current_uId = -1;
 	protected $_logStreamConfigObj = null;
@@ -87,7 +88,7 @@ abstract class LogStream {
 	* @param arrProperitesOut array out: list with properties
 	* @return integer Error state
 	*/
-	public abstract function ReadNext(&$uID, &$arrProperitesOut);
+	public abstract function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true);
 
 	/**
 	* Read the data from a specific uID.
@@ -182,11 +183,13 @@ abstract class LogStream {
 
 	
 	/**
-	* Provides a list of properties which the stream is able to sort for.
+	* Gets a property and checks if the class is able to sort the records
+	* by this property. 
 	*
-	* @return array List of properties. Null if the stream is not sortable.
+	* @ Returns either true or false.
+	*
 	*/
-	public abstract function GetSortOrderProperties();
+	public abstract function IsPropertySortable($myProperty);
 
 	/**
 	* Set the filter for the current stream.
@@ -204,8 +207,6 @@ abstract class LogStream {
 	/**
 	* Set the direction the stream should read data.
 	*
-	* 
-	*
 	* @param enumReadDirectionfilter EnumReadDirection in: The new direction.
 	* @return integer Error state
 	*/
@@ -216,6 +217,19 @@ abstract class LogStream {
 		return SUCCESS;
 	}
 
+	/**
+	* Set the sorting order for the stream 
+	*
+	* @param newSortOrder EnumSortingOrder in: The new sort order.
+	* @return integer Error state
+	*/
+	public function SetSortOrder($newSortOrder) 
+	{
+		// Set the new read direction!
+		$this->_sortOrder = $newSortOrder;
+		return SUCCESS;
+	}
+	
 	/**
 	*	Helper function to parse filters into a useful filter array we can work with.
 	*/

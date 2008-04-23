@@ -104,9 +104,11 @@
 		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+	<!-- IF main_pager_first_found="true" -->
 		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+	<!-- ENDIF main_pager_first_found="true" -->
 	<!-- IF main_pager_previous_found="true" -->
-		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_previous}{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
+		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
 	<!-- ENDIF main_pager_previous_found="true" -->
 	<!-- BEGIN syslogpages -->
 		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>

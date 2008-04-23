@@ -59,17 +59,20 @@ $content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type
 
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
-{
-	$currentUID = intval($_GET['uid']);
-}
+	$content['uid_current'] = intval($_GET['uid']);
 else
-	$currentUID = UID_UNKNOWN;
+	$content['uid_current'] = UID_UNKNOWN;
 
 // Init Pager variables
-$content['uid_previous'] = UID_UNKNOWN;
+// $content['uid_previous'] = UID_UNKNOWN;
 $content['uid_next'] = UID_UNKNOWN;
 $content['uid_first'] = UID_UNKNOWN;
 $content['uid_last'] = UID_UNKNOWN;
+
+if ( isset($_GET['direction']) && $_GET['direction'] == "desc" ) 
+	$content['read_direction'] = EnumReadDirection::Forward;
+else
+	$content['read_direction'] = EnumReadDirection::Backward;
 
 // Init Sorting variables
 $content['sorting'] = "";
@@ -165,16 +168,6 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
-	// Preprocessing the fields we need
-	foreach($content['Columns'] as $mycolkey)
-	{
-		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
-		$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
-		$content['fields'][$mycolkey]['FieldSortable'] = $fields[$mycolkey]['Sortable'];
-		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
-	}
-
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
@@ -182,14 +175,26 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
 
+	// --- Init the fields we need
+	foreach($content['Columns'] as $mycolkey)
+	{
+		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
+		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+		$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
+		$content['fields'][$mycolkey]['FieldSortable'] = $stream->IsPropertySortable($mycolkey); // $fields[$mycolkey]['Sortable'];
+		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
+	}
+	// --- 
+
 	$res = $stream->Open( $content['Columns'], true );
 	if ( $res == SUCCESS ) 
 	{
 		// TODO Implement ORDER
-		$stream->SetReadDirection(EnumReadDirection::Backward);
+
+		$stream->SetReadDirection($content['read_direction']);
 		
 		// Set current ID and init Counter
-		$uID = $currentUID;
+		$uID = $content['uid_current'];
 		$counter = 0;
 		
 		// If uID is known, we need to init READ first - this will also seek for available records first!
@@ -201,6 +206,17 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		else
 			$ret = $stream->ReadNext($uID, $logArray);
 		
+		// --- If Forward direction is used, we need to SKIP one entry!
+		if ( $ret == SUCCESS && $content['read_direction'] == EnumReadDirection::Forward )
+		{
+			// Ok the current ID is our NEXT ID in this reading direction, so we save it!
+			$content['uid_next'] = $uID;
+
+			// Skip this entry and move to the next
+			$stream->ReadNext($uID, $logArray);
+		}
+		// ---
+
 		// We found matching records, so continue
 		if ( $ret == SUCCESS )
 		{
@@ -211,28 +227,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				$content['main_recordcount_found'] = true;
 			else
 				$content['main_recordcount_found'] = false;
-
-			$content['uid_previous'] = $stream->GetPreviousPageUID();
-			if ( $content['uid_previous'] != -1 )
-				$content['main_pager_previous_found'] = true;
-			else
-				$content['main_pager_previous_found'] = false;
-//echo $content['uid_previous'];
-
-			$content['uid_last'] = $stream->GetLastPageUID();
-			if ( $content['uid_last'] != -1 )
-				$content['main_pager_last_found'] = true;
-			else
-				$content['main_pager_last_found'] = false;
-//echo $content['uid_last'];
-
+			
 			$content['main_currentpagenumber'] = $stream->GetCurrentPageNumber();
 			if ( $content['main_currentpagenumber'] >= 0 )
 				$content['main_currentpagenumber_found'] = true;
 			else
 				$content['main_currentpagenumber_found'] = false;
 //echo $content['main_currentpagenumber'];
-			// ---			
+			// ---
 
 			//Loop through the messages!
 			do
@@ -368,10 +370,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 										}
 										else // Just set field value
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
-
 									}
 								}
-
 							}
 						}
 					}
@@ -380,7 +380,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 
 				// Increment Counter
 				$counter++;
-			} while ($stream->ReadNext($uID, $logArray) == SUCCESS && $counter < $CFG['ViewEntriesPerPage']);
+			} while ($counter < $CFG['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 
 //print_r ( $content['syslogmessages'] );
 
@@ -388,19 +388,82 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
-
-				if ( $stream->ReadNext($uID, $logArray) == SUCCESS && isset($uID) ) 
+				
+				// --- Handle uid_next page button 
+				if ( $content['read_direction'] == EnumReadDirection::Backward )
 				{
-					$content['uid_next'] = $uID;
+					if ( $stream->ReadNext($uID, $logArray) == SUCCESS && isset($uID) ) 
+					{
+						$content['uid_next'] = $uID;
+						$content['main_pager_next_found'] = true;
+					}
+					else if ( $content['uid_current'] != UID_UNKNOWN )
+						$content['main_pager_next_found'] = false;
+				}
+				else if ( $content['read_direction'] == EnumReadDirection::Forward )
+				{
+					// User clicked back, so there is a next page for sure
 					$content['main_pager_next_found'] = true;
+
+					// As we went back, we need to change the currend uid to the latest read one
+					$content['uid_current'] = $uID;
 				}
-				else if ( $currentUID != UID_UNKNOWN )
+				// --- 
+			
+				// --- Handle uid_previous page button 
+				if ( $content['uid_current'] != UID_UNKNOWN )
 				{
-					$content['main_pager_next_found'] = false;
+					if ( $content['read_direction'] == EnumReadDirection::Forward )
+					{
+						if ( $ret == SUCCESS ) 
+						{
+							// Try to read the next one!
+							$ret = $stream->ReadNext($uID, $tmp);
+							if ( $ret == SUCCESS ) 
+								$content['main_pager_previous_found'] = true;
+							else
+								$content['main_pager_previous_found'] = false;
+						}
+						else
+							$content['main_pager_previous_found'] = false;
+					}
+					else if ( $content['read_direction'] == EnumReadDirection::Backward )
+						$content['main_pager_previous_found'] = true;
 				}
+				else
+					$content['main_pager_previous_found'] = false;
+				//echo $content['uid_previous'];
+				// --- 
+				
+				// --- Handle uid_last page button 
+				// Option the last UID from the stream!
+				$content['uid_last'] = $stream->GetLastPageUID();
+				
+				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
+				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
+					$content['main_pager_last_found'] = true;
+				else
+					$content['main_pager_last_found'] = false;
+				//echo $content['uid_last'];
+				// --- 
+				
+				// --- Handle uid_first page button 
+				if ( $content['uid_current'] == $content['uid_first'] ) 
+					$content['main_pager_first_found'] = false;
+				else
+					$content['main_pager_first_found'] = true;
+				// --- 
 			}
 			else	// Disable pager in this case!
 				$content['main_pagerenabled'] = false;
+
+			if ( $content['read_direction'] == EnumReadDirection::Forward )
+			{
+				// Back Button was clicked, so we need to flip the array 
+//				print_r( $content['syslogmessages'] );
+				$content['syslogmessages'] = array_reverse ( $content['syslogmessages'] );
+//				print_r( $content['syslogmessages'] );
+			}
 
 
 			// This will enable to Main SyslogView

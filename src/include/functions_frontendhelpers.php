@@ -85,7 +85,8 @@ function CreateCurrentUrl()
 		$counter = 0;
 		for ( $i = 0; $i < count($queries); $i++ )
 		{
-			if ( strpos($queries[$i], "sourceid") === false ) 
+			// Some properties need to be filtered out. 
+			if ( strpos($queries[$i], "direction") === false ) 
 			{
 				$tmpvars = explode ("=", $queries[$i]);
 				if ( isset($tmpvars[1]) ) // Only if value param is set!
