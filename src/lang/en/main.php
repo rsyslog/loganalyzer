@@ -30,7 +30,7 @@ global $content;
 // Global Stuff
 $content['LN_MAINTITLE'] = "Main PhpLogCon";
 $content['LN_MAIN_SELECTSTYLE'] = "Select a Style";
-$content['LN_GEN_LANGUAGE'] = "Select language";
+$content['LN_GEN_LANGUAGE'] = "Select Language";
 $content['LN_GEN_SELECTSOURCE'] = "Select Source";
 $content['LN_GEN_MOREPAGES'] = "More than one Page available";
 $content['LN_GEN_FIRSTPAGE'] = "First Page";

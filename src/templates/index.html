@@ -35,7 +35,7 @@
 
 		<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
 		<br>
-		<i>(sample: faciliy:local0 severity:warning)</i>
+		<i>(sample: facility:local0 severity:warning)</i>
 	</td>
 </tr>
 <tr>
@@ -104,21 +104,45 @@
 		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+		<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_first_found="true" -->
-		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" title="{LN_GEN_FIRSTPAGE}"></a>&nbsp;</td>
+		<a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
 	<!-- ENDIF main_pager_first_found="true" -->
+	<!-- IF main_pager_first_found!="true" -->
+		<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_first_found!="true" -->
+		</td>
+
+		<td class="line1" width="20" nowrap>
 	<!-- IF main_pager_previous_found="true" -->
-		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>&nbsp;</td>
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
 	<!-- ENDIF main_pager_previous_found="true" -->
+	<!-- IF main_pager_previous_found!="true" -->
+		<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_previous_found!="true" -->
+		</td>
+
 	<!-- BEGIN syslogpages -->
 		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
 	<!-- END syslogpages -->
+
+		<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_next_found="true" -->
-		<td class="line0" nowrap><a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>&nbsp;</td>
+		<a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
 	<!-- ENDIF main_pager_next_found="true" -->
+	<!-- IF main_pager_next_found!="true" -->
+		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_next_found!="true" -->
+		</td>
+	
+		<td class="line1" width="20" nowrap>
 	<!-- IF main_pager_last_found="true" -->
-		<td class="line1" nowrap><a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>&nbsp;</td>
+		<a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
 	<!-- ENDIF main_pager_last_found="true" -->
+	<!-- IF main_pager_last_found!="true" -->
+		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_last_found!="true" -->
+		</td>
 <!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
 <!-- ENDIF main_pagerenabled="true" -->
 

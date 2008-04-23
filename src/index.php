@@ -68,6 +68,12 @@ else
 $content['uid_next'] = UID_UNKNOWN;
 $content['uid_first'] = UID_UNKNOWN;
 $content['uid_last'] = UID_UNKNOWN;
+$content['main_pagerenabled'] = false;
+$content['main_pager_first_found'] = false;
+$content['main_pager_previous_found'] = false;
+$content['main_pager_next_found'] = false;
+$content['main_pager_last_found'] = false;
+
 
 if ( isset($_GET['direction']) && $_GET['direction'] == "desc" ) 
 	$content['read_direction'] = EnumReadDirection::Forward;
