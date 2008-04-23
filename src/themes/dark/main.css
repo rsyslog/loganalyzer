@@ -17,10 +17,6 @@ BODY
 
 TD { font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #F3F3F1 }
 
-/* Link Classes */
-.playerlink { color:#006699;  cursor:hand; }
-.playerlink:hover { color:#FF0A0C; text-decoration: none; cursor:hand; }
-
 /* Default Link Classes */
 a:link,a:active,a:visited,a.postlink
 {
@@ -179,7 +175,7 @@ font
 /* TOP Menu Classes */
 .topmenu1
 {
-	height: 16px;
+	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
 
@@ -195,7 +191,6 @@ font
 }
 .topmenu1_link, A.topmenu1_link
 {
-	background-color: #38110E;
 	color: #FFDD22;
 }
 .topmenu1_link:hover, A.topmenu1_link:hover 

@@ -71,7 +71,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.01.2";
+$content['BUILDNUMBER'] = "2.1.0";
 $content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title of the Page 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
@@ -361,7 +361,7 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 
 function InitConfigurationValues()
 {
-	global $content, $LANG;
+	global $content, $CFG, $LANG, $gl_root_path;
 
 	$result = DB_Query("SELECT * FROM " . STATS_CONFIG);
 	$rows = DB_GetAllRows($result, true, true);
@@ -376,15 +376,7 @@ function InitConfigurationValues()
 		}
 		// General defaults 
 		// --- Language Handling
-		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = "en"; }
-		if ( VerifyLanguage($content['gen_lang']) )
-			$LANG = $content['gen_lang'];
-		else
-		{
-			// Fallback!
-			$LANG = "en";
-			$content['gen_lang'] = "en";
-		}
+		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
 		
 		// --- PHP Debug Mode
 		if ( !isset($content['gen_phpdebug']) ) { $content['gen_phpdebug'] = "no"; }
@@ -397,26 +389,41 @@ function InitConfigurationValues()
 			$content['database_forcedatabaseupdate'] = "yes"; 
 		}
 	}
-
-	// --- Set Defaults...
-	// Language Handling
-	if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
+	else
 	{
-		$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
-		$LANG = $content['user_lang'];
+		// --- Set Defaults...
+		// Language Handling
+		if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
+		{
+			$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
+			$LANG = $content['user_lang'];
+		}
+		else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
+		{
+			$content['user_lang'] = $content['gen_lang'];
+			$LANG = $content['user_lang'];
+		}
+		else	// Failsave!
+		{
+			$content['user_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/;
+			$LANG = $content['user_lang'];
+			$content['gen_lang'] = $content['user_lang'];
+		}
 	}
-	else if ( isset($content['gen_lang']) )
-		$content['user_lang'] = $content['gen_lang'];
-	else	// Failsave!
-		$content['user_lang'] = "en";
 
 	// Theme Handling
-	if ( !isset($content['web_theme']) ) { $content['web_theme'] = "default"; }
+	if ( !isset($content['web_theme']) ) { $content['web_theme'] = $CFG['ViewDefaultTheme'] /*"default"*/; }
 	if ( isset($_SESSION['CUSTOM_THEME']) && VerifyTheme($_SESSION['CUSTOM_THEME']) )
 		$content['user_theme'] = $_SESSION['CUSTOM_THEME'];
 	else
 		$content['user_theme'] = $content['web_theme'];
+
+	//Init Theme About Info ^^
+	InitThemeAbout($content['user_theme']);
 	// ---
+
+	// Init main langauge file now!
+	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 	// Init other things which are needed
 	InitFrontEndVariables();

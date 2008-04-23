@@ -58,6 +58,9 @@ $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yest
 $CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
 $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Details for each syslog message on mouse over. 
+$CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens phplogcon the first time. 
+											// Currently only "default" and "dark" are available. 
+$CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button

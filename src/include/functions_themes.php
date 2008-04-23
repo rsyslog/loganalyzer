@@ -62,6 +62,8 @@ function CreateLanguageList()
 			$content['USERLANG'][$i]['is_selected'] = "";
 		// ---
 
+		// Init Language DisplayName
+		$content['USERLANG'][$i]['DisplayName'] = GetLanguageDisplayName( $alldirectories[$i] );
 	}
 }
 
@@ -120,5 +122,58 @@ function VerifyTheme( $newtheme )
 	else
 		return false;
 }
+
+function InitThemeAbout( $themename ) 
+{
+	global $content, $gl_root_path;
+	$szAboutFile = $gl_root_path . "themes/" . $themename . "/about.txt";
+	if ( is_file( $szAboutFile ) )
+	{	//Read About Info!
+		$aboutfile  = fopen($szAboutFile, 'r');
+		if (!feof ($aboutfile)) 
+		{
+			while (!feof ($aboutfile))
+			{
+				$tmpline = fgets($aboutfile, 1024);
+				if (!isset($content["theme_madeby"]) )
+					$content["theme_madeby"] = substr( trim($tmpline), 0, 25);
+				else if (!isset($content["theme_madebylink"]) )
+					$content["theme_madebylink"] = substr( trim($tmpline), 0, 256);
+				else
+				{
+					$content["theme_madebyenable"] = "true";
+					break;
+				}
+			}
+		}
+		fclose($aboutfile);
+	}
+	else
+		$content["theme_madebyenable"] = "false";
+}
+
+function GetLanguageDisplayName( $szLangID ) 
+{
+	global $content, $gl_root_path;
+	$szInfoFile = $gl_root_path . "lang/" . $szLangID . "/info.txt";
+	if ( is_file( $szInfoFile ) )
+	{	
+		//Read InfoFile!
+		$infofile  = fopen($szInfoFile, 'r');
+		if (!feof ($infofile)) 
+		{
+			while (!feof ($infofile))
+			{
+				// Return max 32 characters
+				$tmpline = fgets($infofile, 1024);
+				return substr( trim($tmpline), 0, 32);
+			}
+		}
+		fclose($infofile);
+	}
+	else // No Info, return ID as DisplayName
+		return $szLangID;
+}
+
 
 ?>

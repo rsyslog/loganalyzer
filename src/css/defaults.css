@@ -42,6 +42,7 @@
 
 .syslogdetails:hover
 {
+	font-weight:normal;
 	z-index:5; 
 }
 .syslogdetails span {display: none}

@@ -43,7 +43,7 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 
 // Init Langauge first!
-IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
+// IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 // Helpers for frontend filtering!
 InitFilterHelpers();	

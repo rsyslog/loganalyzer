@@ -41,7 +41,7 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 include($gl_root_path . 'include/functions_filters.php');
 
 // Init Langauge first!
-IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
+// IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 // Include LogStream facility
 include($gl_root_path . 'classes/logstream.class.php');

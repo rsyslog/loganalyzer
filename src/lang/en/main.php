@@ -55,7 +55,6 @@ $content['LN_GRID_POPUPDETAILS'] = "Details for Syslogmessage with ID '%1'";
 $content['LN_SEARCH_USETHISBLA'] = "Use the form below and your advanced search will appear here";
 $content['LN_SEARCH_FILTER'] = "Search (filter):";
 $content['LN_SEARCH_ADVANCED'] = "Advanced Search";
-//$content['LN_SEARCH_FEELSAD'] = "I'm feeling sad ...";
 $content['LN_SEARCH'] = "Search";
 $content['LN_SEARCH_RESET'] = "Reset search";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
