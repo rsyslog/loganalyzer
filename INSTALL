@@ -11,6 +11,17 @@
 
  * MySQL Database
 
+ For obvious reasons, you also need some syslog data. Any standard
+ syslogd will do. From a feature and stability point of view, we
+ recommend either one of these (which we also wrote ;)):
+
+ - WinSyslog (for Windows Environments - http://www.winsyslog.com)
+ - rsyslog (for Linux/Unix Environments - http://www.rsyslog.com)
+
+ Both of them are also capable to writing to a database. Rsyslog is
+ a drop-in replacement for stock syslogd and also *is* the stock
+ syslogd on some platforms (e.g. Fedora 8 and above).
+
  Installation in Detail
  ----------------------
 
@@ -43,5 +54,9 @@
  --------------------------------
  
  phpLogCon does support using a MySQL database as syslog source. 
- Currently we support the Adiscon WinSyslog database schema, and
- partionally the SyslogNG database schema. 
+ PhpLogCon supports Adiscon's MonitorWare database schema. The schema
+ used by php-syslog-ng is also partly supported. That schema, however, is
+ somewhat inefficient in that it stores facility and severity codes as
+ textual values. We do not currently convert these values back to their
+ native format and consequently facility and severity can not be taken
+ from a php-syslog-ng database.
