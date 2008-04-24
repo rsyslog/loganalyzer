@@ -74,10 +74,16 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error stat
 	*/
 	public function Open($arrProperties) {
+		// Check if file exists!
 		if(!file_exists($this->_logStreamConfigObj->FileName)) {
 			return ERROR_FILE_NOT_FOUND;
 		}
 
+		// Check if file is readable!
+		if(!is_readable($this->_logStreamConfigObj->FileName)) {
+			return ERROR_FILE_NOT_READABLE;
+		}
+		
 		$this->_fp = fopen($this->_logStreamConfigObj->FileName, 'r');	
 
 		$this->_currentOffset = ftell($this->_fp);
@@ -94,9 +100,14 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function Close() {
 		
-		if (!fclose($this->_fp)) {
-			return ERROR_FILE_CANT_CLOSE;
+		if ( isset($this->_fp) )
+		{
+			if (!fclose($this->_fp)) {
+				return ERROR_FILE_CANT_CLOSE;
+			}
 		}
+
+		// return result
 		return SUCCESS;
 	}
 

@@ -1,0 +1,47 @@
+
+ phpLogCon Installation help
+ ----------------------------------
+
+ To install phpLogCon, you will need:
+
+ * Apache or IIS Webserver
+ * PHP5 
+
+ Optionally, you may need:
+
+ * MySQL Database
+
+ Installation in Detail
+ ----------------------
+
+  1. Upload all files from the phplogcon/src/ folder to you webserver. 
+     The other files are not needed on the webserver. 
+
+  2. If you webserver has write access to the phplogcon folder, 
+     you can skip the following step: 
+     
+         Upload the scripts configure.sh and secure.sh from the 
+         contrib folder to your webserver, and set the execution 
+         flag to them (chmod +x configure.sh secure.sh). 
+         
+         Now run ./configure.sh, this will create a blank config.php, 
+         and will also set write access to everyone to it.
+         
+         You can of course do this manually if you want. 
+
+  3. Now open your phplogcon installation in your favourite webbrowser,
+     you will see an error, and you will be pointed to the installation 
+     script. The install script will guide you through the phplogcon 
+     installation, just follow the instructions.
+ 
+  4. If everything went right, you should see syslog messages already 
+     in your phplogcon installation. You can now remove the install.php 
+     script now. 
+
+
+ Note on MySQL Databases
+ --------------------------------
+ 
+ phpLogCon does support using a MySQL database as syslog source. 
+ Currently we support the Adiscon WinSyslog database schema, and
+ partionally the SyslogNG database schema. 

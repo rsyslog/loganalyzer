@@ -480,6 +480,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	{
 		// This will disable to Main SyslogView and show an error message
 		$content['syslogmessagesenabled'] = "false";
+
+		if ( $res == ERROR_FILE_NOT_FOUND ) 
+			$content['detailederror'] = "Syslog file could not be found.";
+		else if ( $res == ERROR_FILE_NOT_READABLE ) 
+			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
+		else 
+			$content['detailederror'] = "Unknown or unhandeled error occured.";
+			
 	}
 
 	// Close file!

@@ -51,7 +51,7 @@ InitBasicPhpLogCon();
 define('MAX_STEPS', 8);
 $content['web_theme'] = "default";
 $content['user_theme'] = "default";
-$configsamplefile = $content['BASEPATH'] . "../contrib/config.sample.php"; 
+$configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
 
 //ini_set('error_reporting', E_ERROR); // NO PHP ERROR'S!
 // ***					*** //
@@ -139,29 +139,36 @@ if ( $content['INSTALL_STEP'] == 2 )
 				$content['fileperm'][$i]['BGCOLOR'] = "#770000";
 				$content['fileperm'][$i]['ISSUCCESS'] = "NOT Writeable"; 
 				$bSuccess = false;
-				echo  "mowl1";
 			}
 		}
 		else
 		{
-			if ( !is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
+			if ( is_file($content['fileperm'][$i]['FILE_NAME']) ) 
 			{
-				// Try to create an empty file
-				$handle = fopen( $content['fileperm'][$i]['FILE_NAME'] , "x");
-				fclose($handle);
-			}
+				if ( !is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
+				{
+					// Try to create an empty file
+					$handle = fopen( $content['fileperm'][$i]['FILE_NAME'], "x");
+					fclose($handle);
+				}
 
-			if ( is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
-			{
-				$content['fileperm'][$i]['BGCOLOR'] = "#007700";
-				$content['fileperm'][$i]['ISSUCCESS'] = "Writeable"; 
+				if ( is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
+				{
+					$content['fileperm'][$i]['BGCOLOR'] = "#007700";
+					$content['fileperm'][$i]['ISSUCCESS'] = "Writeable"; 
+				}
+				else
+				{
+					$content['fileperm'][$i]['BGCOLOR'] = "#770000";
+					$content['fileperm'][$i]['ISSUCCESS'] = "NOT Writeable"; 
+					$bSuccess = false;
+				}
 			}
 			else
 			{
 				$content['fileperm'][$i]['BGCOLOR'] = "#770000";
-				$content['fileperm'][$i]['ISSUCCESS'] = "NOT Writeable"; 
+				$content['fileperm'][$i]['ISSUCCESS'] = "File does NOT exist!"; 
 				$bSuccess = false;
-				echo  "mowl2";
 			}
 		}
 	}
