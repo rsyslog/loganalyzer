@@ -1,2 +1,2 @@
 #!/bin/sh
-chmod 644 ../src/config.php
+chmod 644 config.php

@@ -143,15 +143,14 @@ if ( $content['INSTALL_STEP'] == 2 )
 		}
 		else
 		{
+			if ( !is_file($content['fileperm'][$i]['FILE_NAME']) ) 
+			{
+				// Try to create an empty file
+				touch($content['fileperm'][$i]['FILE_NAME']);
+			}
+
 			if ( is_file($content['fileperm'][$i]['FILE_NAME']) ) 
 			{
-				if ( !is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
-				{
-					// Try to create an empty file
-					$handle = fopen( $content['fileperm'][$i]['FILE_NAME'], "x");
-					fclose($handle);
-				}
-
 				if ( is_writable($content['fileperm'][$i]['FILE_NAME']) ) 
 				{
 					$content['fileperm'][$i]['BGCOLOR'] = "#007700";
