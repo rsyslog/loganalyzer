@@ -43,6 +43,8 @@
 		</tr>
 		</table>
 		<!-- ENDIF iserror="true" -->
+		
+		<form action="?step={INSTALL_NEXT_STEP}" method="post" id="sourcesform">
 
 		<!-- IF INSTALL_STEP="1" -->
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
@@ -52,7 +54,7 @@
 			<h1>Step 1 - Prerequisites</h1>
 			<p>Bevor you start installing phpLogCon, the Installer setup has to check a few things first.<br>
 			You may have to correct some file permissions first. <br><br>
-			Click on <a href="?step={INSTALL_NEXT_STEP}">NEXT</a> to start the Test!</p>
+			Click on <input type="submit" value="Next"> to start the Test!</p>
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 
@@ -101,7 +103,6 @@
 			</p>
 			<p>&nbsp;</p>
 
-			<form action="?step={INSTALL_NEXT_STEP}" method="post">
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
 
 				<!-- IF USERDBFEATURE_ENABLED="true" -->
@@ -153,13 +154,7 @@
 					<input type="radio" name="ViewEnableDetailPopups" value="1" {ViewEnableDetailPopups_true}> Yes <input type="radio" name="ViewEnableDetailPopups" value="0" {ViewEnableDetailPopups_false}> No
 					</td>
 				</tr>
-				<tr>
-					<td align="center" class="line2" colspan="2">
-						<input type="submit" value="Next">
-					</td>
-				</tr>
 				</table>
-			</form>
 
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
@@ -232,7 +227,6 @@
 			<p>You are now about to create the initial phpLogCon User Account. <br>
 			This useraccount is important, as it will allow you to login into the Admin center!
 
-			<form action="?step={INSTALL_NEXT_STEP}" method="post">
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
 				<tr>
 					<td align="left" class="cellmenu1" width="150" nowrap><b>Username</b></td>
@@ -246,13 +240,7 @@
 					<td align="left" class="cellmenu1" width="150" nowrap><b>Repeat Password</b></td>
 					<td align="right" class="line0" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
 				</tr>
-				<tr>
-					<td align="center" class="line2" colspan="2">
-						<input type="submit" value="Next">
-					</td>
-				</tr>
 				</table>
-			</form>
 
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
@@ -268,7 +256,6 @@
 			<h1>Step 7 - Create the first source for syslog messages</h1>
 			<p>&nbsp;</p>
 
-			<form action="?step={INSTALL_NEXT_STEP}" method="post" id="sourcesform">
 				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_FIRSTSYSLOGSOURCE}</b></td></tr>
 				<tr>
@@ -347,15 +334,6 @@
 				</table>
 				</div>
 
-				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
-				<tr>
-					<td align="center" class="line2" colspan="2">
-						<input type="submit" value="Next">
-					</td>
-				</tr>
-				</table>
-			</form>
-
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 			</td>
@@ -399,7 +377,7 @@
 			</td>
 			<td class="line1" width="50" nowrap align="center">
 				<!-- IF NEXT_ENABLED="true" -->
-				<a href="?step={INSTALL_NEXT_STEP}">Next</a>
+				<input type="submit" value="Next">
 				<!-- ENDIF NEXT_ENABLED="true" -->
 				<!-- IF RECHECK_ENABLED="true" -->
 				<a href="?step={INSTALL_STEP}">ReCheck</a>
@@ -413,6 +391,7 @@
 		</tr>
 		</table>
 
+		</form>
 
 		</td>
 	</tr>

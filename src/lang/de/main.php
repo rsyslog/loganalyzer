@@ -82,7 +82,7 @@ $content['LN_FILTER_FACILITY'] = "Syslog Kategorie/Facility";
 $content['LN_FILTER_SEVERITY'] = "Syslog Dringlichkeit/Severity";
 $content['LN_FILTER_OTHERS'] = "Andere Filter";
 $content['LN_FILTER_MESSAGE'] = "Syslog Meldungen";
-$content['LN_FILTER_SYSLOGTAG'] = "Syslog Kennzeichen";
+$content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Quelle (Hostname)";
 
 // Field Captions
@@ -90,10 +90,10 @@ $content['LN_FIELDS_DATE'] = "Datum";
 $content['LN_FIELDS_FACILITY'] = "Kategorie/Facility";
 $content['LN_FIELDS_SEVERITY'] = "Dringlichkeit/Severity";
 $content['LN_FIELDS_HOST'] = "Host";
-$content['LN_FIELDS_SYSLOGTAG'] = "Syslog Kennzeichen";
+$content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FIELDS_PROCESSID'] = "Prozess ID";
 $content['LN_FIELDS_MESSAGETYPE'] = "Meldungstyp";
-$content['LN_FIELDS_UID'] = "Benutzer ID";
+$content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Meldung";
 
 // Install Page

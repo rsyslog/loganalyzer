@@ -1,3 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.1.1 (devel), 2008-04-25
+- added detailpage into phpLogCon. The detail page shows all possible
+  details of a syslog message. It also possible to page in the 
+  detail view.
+- fixed minor notices bugs in the functions_db.php, which is really used 
+  right now. But it will become important once the user-ui will be added.
+- fixed "NEXT" button bug in the install script. Infact only ONE next 
+  button is available now in the install script. This removes the 
+  duplicated ones from before. 
+- added full german translation
+
+
 Version 2.1.0 (devel), 2008-04-24
 - initial release of the rewritten phpLogCon v2

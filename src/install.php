@@ -227,6 +227,9 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['ViewEnableDetailPopups_false'] = "checked";
 	}
 	// ---
+	
+	// Disable the bottom next button, as the Form in this step has its own button!
+//	$content['NEXT_ENABLED'] = "false";
 
 	// Check for Error Msg
 	if ( isset($_GET['errormsg']) )
