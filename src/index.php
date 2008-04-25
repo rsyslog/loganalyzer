@@ -396,11 +396,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 
 				// Increment Counter
 				$counter++;
-			} while ($counter < $CFG['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+			} while ($counter < $content['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 
 //print_r ( $content['syslogmessages'] );
 
-			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $CFG['ViewEntriesPerPage'] )
+			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['ViewEntriesPerPage'] )
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;

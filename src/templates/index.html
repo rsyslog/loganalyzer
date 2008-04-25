@@ -101,7 +101,24 @@
 <!-- ENDIF main_recordcount_found="true" -->
 <!-- IF main_pagerenabled="true" -->
 		<td nowrap width="115" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
-		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
+		<td nowrap width="50" class="line2">
+		
+		<form action="userchange.php" method="get" name="pageingsize">
+		<input type="hidden" name="op" value="changepagesize">
+		<table border="0" cellspacing="0" cellpadding="0" align="right">
+		<tr> 
+			<td>
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
+					<!-- BEGIN pagesizes -->
+					<option {Selected} value="{ID}">{DisplayName}</option>
+					<!-- END pagesizes -->
+				</select>
+			</td>
+		</tr>
+		</table>
+		</form>
+
+		</td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
 		<td class="line0" width="20" nowrap>

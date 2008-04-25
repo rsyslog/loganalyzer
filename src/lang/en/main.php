@@ -118,5 +118,6 @@ $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
+$content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 
 ?>

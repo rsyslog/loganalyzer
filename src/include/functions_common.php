@@ -183,6 +183,9 @@ function InitPhpLogCon()
 	// Init Predefined Searches List
 	CreatePredefinedSearches();
 
+	// Init predefined paging sizes
+	CreatePagesizesList();
+
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
@@ -239,6 +242,23 @@ function CreateDBTypesList( $selectedDBType )
 	if ( $selectedDBType == $content['DBTYPES'][DB_ODBC]['type'] ) { $content['DBTYPES'][DB_ODBC]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_MSSQL]['selected'] = ""; }
 */
 
+}
+
+function CreatePagesizesList()
+{
+	global $CFG, $content;
+
+	$content['pagesizes'][0] = array( "ID" => 0, "Selected" => "", "DisplayName" => "Preconfigured (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] );
+	$content['pagesizes'][1] = array( "ID" => 1, "Selected" => "", "DisplayName" => " 25 records per page", "Value" => 25 );
+	$content['pagesizes'][2] = array( "ID" => 2, "Selected" => "", "DisplayName" => " 50 records per page", "Value" => 50 );
+	$content['pagesizes'][3] = array( "ID" => 3, "Selected" => "", "DisplayName" => " 75 records per page", "Value" => 75 );
+	$content['pagesizes'][4] = array( "ID" => 4, "Selected" => "", "DisplayName" => " 100 records per page", "Value" => 100 );
+	
+	// Set default selected pagesize
+	$content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Selected"] = "selected";
+
+	// The content variable will now contain the user selected oaging size
+	$content["ViewEntriesPerPage"] = $content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Value"];
 }
 
 function CreatePredefinedSearches()
@@ -316,17 +336,17 @@ function InitFrontEndVariables()
 {
 	global $content;
 
-	$content['MENU_FOLDER_OPEN'] = "image=" . $content['BASEPATH'] . "images/icons/folder_closed.png";
-	$content['MENU_FOLDER_CLOSED'] = "overimage=" . $content['BASEPATH'] . "images/icons/folder.png";
-	$content['MENU_HOMEPAGE'] = "image=" . $content['BASEPATH'] . "images/icons/home.png";
-	$content['MENU_LINK'] = "image=" . $content['BASEPATH'] . "images/icons/link.png";
-	$content['MENU_PREFERENCES'] = "image=" . $content['BASEPATH'] . "images/icons/preferences.png";
-	$content['MENU_ADMINENTRY'] = "image=" . $content['BASEPATH'] . "images/icons/star_blue.png";
-	$content['MENU_ADMINLOGOFF'] = "image=" . $content['BASEPATH'] . "images/icons/exit.png";
-	$content['MENU_ADMINUSERS'] = "image=" . $content['BASEPATH'] . "images/icons/businessmen.png";
-	$content['MENU_SEARCH'] = "image=" . $content['BASEPATH'] . "images/icons/view.png";
-	$content['MENU_SELECTION_DISABLED'] = "image=" . $content['BASEPATH'] . "images/icons/selection.png";
-	$content['MENU_SELECTION_ENABLED'] = "image=" . $content['BASEPATH'] . "images/icons/selection_delete.png";
+	$content['MENU_FOLDER_OPEN'] = $content['BASEPATH'] . "images/icons/folder_closed.png";
+	$content['MENU_FOLDER_CLOSED'] = $content['BASEPATH'] . "images/icons/folder.png";
+	$content['MENU_HOMEPAGE'] = $content['BASEPATH'] . "images/icons/home.png";
+	$content['MENU_LINK'] = $content['BASEPATH'] . "images/icons/link.png";
+	$content['MENU_PREFERENCES'] = $content['BASEPATH'] . "images/icons/preferences.png";
+	$content['MENU_ADMINENTRY'] = $content['BASEPATH'] . "images/icons/star_blue.png";
+	$content['MENU_ADMINLOGOFF'] = $content['BASEPATH'] . "images/icons/exit.png";
+	$content['MENU_ADMINUSERS'] = $content['BASEPATH'] . "images/icons/businessmen.png";
+	$content['MENU_SEARCH'] = $content['BASEPATH'] . "images/icons/view.png";
+	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
+	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -410,6 +430,13 @@ function InitConfigurationValues()
 			$LANG = $content['user_lang'];
 			$content['gen_lang'] = $content['user_lang'];
 		}
+	}
+
+	// Paging Size handling!
+	if ( !isset($_SESSION['PAGESIZE_ID']) )
+	{
+		// Default is 0! 
+		$_SESSION['PAGESIZE_ID'] = 0;
 	}
 
 	// Theme Handling
