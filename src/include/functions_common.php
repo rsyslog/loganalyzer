@@ -271,17 +271,13 @@ function CreatePredefinedSearches()
 
 function InitPhpDebugMode()
 {
-	global $content;
+	global $content, $CFG;
 
 	// --- Set Global DEBUG Level!
-
-// HARDCODED !!!
-	$content['gen_phpdebug'] = "yes";
-	
-	if ( $content['gen_phpdebug'] == "yes" )
+	if ( $CFG['MiscShowDebugMsg'] == 1 )
 		ini_set( "error_reporting", E_ALL ); // ALL PHP MESSAGES!
-	else
-		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
+//	else
+//		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
 	// --- 
 }
 
@@ -368,12 +364,12 @@ function InitConfigurationValues()
 {
 	global $content, $CFG, $LANG, $gl_root_path;
 
-	$result = DB_Query("SELECT * FROM " . STATS_CONFIG);
-	$rows = DB_GetAllRows($result, true, true);
-
 	// If Database is enabled, try to read from database!
 	if ( $CFG['UserDBEnabled'] )
 	{
+		$result = DB_Query("SELECT * FROM " . DB_CONFIG);
+		$rows = DB_GetAllRows($result, true, true);
+
 		if ( isset($rows ) )
 		{
 			for($i = 0; $i < count($rows); $i++)

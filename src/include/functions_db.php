@@ -93,7 +93,8 @@ function DB_Disconnect()
 function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -111,7 +112,8 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 function DB_FreeQuery($query_id)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -122,7 +124,8 @@ function DB_FreeQuery($query_id)
 function DB_GetRow($query_id) 
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -134,7 +137,8 @@ function DB_GetRow($query_id)
 function DB_GetSingleRow($query_id, $bClose) 
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -158,7 +162,8 @@ function DB_GetSingleRow($query_id, $bClose)
 function DB_GetAllRows($query_id, $bClose)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -183,7 +188,8 @@ function DB_GetAllRows($query_id, $bClose)
 function DB_GetMysqlStats()
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -235,7 +241,8 @@ function DB_RemoveBadChars($myString)
 function DB_GetRowCount($query)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -250,7 +257,8 @@ function DB_GetRowCount($query)
 function DB_GetRowCountByResult($myresult)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -261,7 +269,8 @@ function DB_GetRowCountByResult($myresult)
 function DB_Exec($query)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -274,7 +283,8 @@ function DB_Exec($query)
 function WriteConfigValue($szValue)
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -299,7 +309,8 @@ function WriteConfigValue($szValue)
 function GetSingleDBEntryOnly( $myqry )
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 
@@ -316,7 +327,8 @@ function GetSingleDBEntryOnly( $myqry )
 function GetRowsAffected()
 {
 	// --- Abort in this case!
-	if ( $CFG['UseDB'] == false ) 
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
 

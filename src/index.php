@@ -267,6 +267,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
 
+						// Set default link 
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
+						
+						// Now handle fields types differently
 						if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
 						{
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
@@ -338,9 +342,15 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 								if ( isset($logArray[SYSLOG_MESSAGE]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
+
+									// Enable LINK property! for this field
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['haslink'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "details.php?uid=" . $uID;
 								}
 								else
+								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "";
+								}
 
 								// If we need to highlight some words ^^!
 								if ( isset($content['highlightwords']) )
