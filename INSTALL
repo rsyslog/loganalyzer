@@ -50,13 +50,25 @@
      script now. 
 
 
- Note on MySQL Databases
- --------------------------------
+Note on Accesing Files
+--------------------------------
+In most environments the webserver has only access to the web directory.
+If you want to read files e.g. from /var/log/ you have to grant
+the necessary permisson to your webserver.
+
+Of course, you always need to make sure that the user the web server
+runs under also has the correct file permissions. Be careful when doing
+this, you may create a security vulnerability by granting too much
+to too many users.
  
- phpLogCon does support using a MySQL database as syslog source. 
- PhpLogCon supports Adiscon's MonitorWare database schema. The schema
- used by php-syslog-ng is also partly supported. That schema, however, is
- somewhat inefficient in that it stores facility and severity codes as
- textual values. We do not currently convert these values back to their
- native format and consequently facility and severity can not be taken
- from a php-syslog-ng database.
+ 
+Note on MySQL Databases
+--------------------------------
+ 
+phpLogCon does support using a MySQL database as syslog source. 
+PhpLogCon supports Adiscon's MonitorWare database schema. The schema
+used by php-syslog-ng is also partly supported. That schema, however, is
+somewhat inefficient in that it stores facility and severity codes as
+textual values. We do not currently convert these values back to their
+native format and consequently facility and severity can not be taken
+from a php-syslog-ng database.
