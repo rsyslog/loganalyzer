@@ -44,8 +44,6 @@ $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "Database";
 
-
-
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";
 $content['LN_TOP_NUM'] = "No.";
@@ -116,5 +114,9 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Database Storage Engine";
 $content['LN_CFG_DBTABLENAME'] = "Database Tablename";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name of the Source";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
+
+// Details page
+$content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
+$content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
 
 ?>

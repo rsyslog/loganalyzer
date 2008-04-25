@@ -96,12 +96,6 @@ $fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_MESSAGETYPE]['Sortable'] = true;
 $fields[SYSLOG_MESSAGETYPE]['DefaultWidth'] = "90";
 $fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "center";
-$fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
-$fields[SYSLOG_MESSAGE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGE';
-$fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
-$fields[SYSLOG_MESSAGE]['Sortable'] = false;
-$fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
-$fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
 
 // Syslog specific
 $fields[SYSLOG_FACILITY]['FieldID'] = SYSLOG_FACILITY;
@@ -130,6 +124,14 @@ $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
 
 // TODO! EventLog specific
+
+// Message is the last element, this order is important for the Detail page for now!
+$fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
+$fields[SYSLOG_MESSAGE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGE';
+$fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_MESSAGE]['Sortable'] = false;
+$fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
+$fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
 
 // --- 
 

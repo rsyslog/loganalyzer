@@ -1,0 +1,103 @@
+<!-- INCLUDE include_header.html --> 
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_DETAILS_FORSYSLOGMSG} '{uid_current}'</B></td>
+</tr>
+
+<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+<tr>
+	<td nowrap width="100%"class="line2" align="left">
+<!-- IF main_currentpagenumber_found="true" -->
+	{LN_GEN_PAGE} {main_currentpagenumber}
+<!-- ENDIF main_currentpagenumber_found="true" -->
+	</td>
+
+<!-- IF main_recordcount_found="true" -->
+	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
+	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>
+<!-- ENDIF main_recordcount_found="true" -->
+<!-- IF main_pagerenabled="true" -->
+		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+		<td class="line0" width="20" nowrap>
+	<!-- IF main_pager_first_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_first}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
+	<!-- ENDIF main_pager_first_found="true" -->
+	<!-- IF main_pager_first_found!="true" -->
+		<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_first_found!="true" -->
+		</td>
+
+		<td class="line1" width="20" nowrap>
+	<!-- IF main_pager_previous_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=previous" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
+	<!-- ENDIF main_pager_previous_found="true" -->
+	<!-- IF main_pager_previous_found!="true" -->
+		<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_previous_found!="true" -->
+		</td>
+
+	<!-- BEGIN syslogpages -->
+		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
+	<!-- END syslogpages -->
+
+		<td class="line0" width="20" nowrap>
+	<!-- IF main_pager_next_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=next" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
+	<!-- ENDIF main_pager_next_found="true" -->
+	<!-- IF main_pager_next_found!="true" -->
+		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_next_found!="true" -->
+		</td>
+	
+		<td class="line1" width="20" nowrap>
+	<!-- IF main_pager_last_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_last}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
+	<!-- ENDIF main_pager_last_found="true" -->
+	<!-- IF main_pager_last_found!="true" -->
+		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_last_found!="true" -->
+		</td>
+<!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
+<!-- ENDIF main_pagerenabled="true" -->
+</tr>
+</table>
+
+<tr>
+	<td width="100%" valign="top">
+
+	<!-- IF messageenabled="true" -->
+	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
+	<!-- BEGIN fields -->
+	<tr>
+		<td width="200" class="cellmenu1" align="left" nowrap>
+			<B>{FieldCaption}</B>
+		</td>
+		<td width="100%" align="{FieldAlign}" class="{cssclass}" {fieldbgcolor} valign="top">
+		<B>
+		</B>
+		{fieldvalue}
+		</td>
+	</tr>
+	<!-- END fields -->
+	</table>
+	<!-- ENDIF messageenabled="true" -->
+
+	<!-- IF messageenabled="false" -->
+		<center>
+		<font color="red">
+		<br>
+		<h3>{LN_ERROR_NORECORDS} (code {error_code} ) - Error Details: </h3>
+		{detailederror}
+		<br>
+		<br>
+		</font>
+		</center>
+	<!-- ENDIF messageenabled="false" -->
+
+	</td>
+</tr>
+</table>
+
+
+<!-- INCLUDE include_footer.html -->
