@@ -1,9 +1,3 @@
-2008-04-27T04:02:27-04:00 cmpsvr kernel: imklog 3.14.2, log source = /proc/kmsg started.
-2008-04-27T04:02:27-04:00 cmpsvr kernel: Inspecting /boot/System.map-2.6.9-55.0.2.EL
-2008-04-27T04:02:28-04:00 cmpsvr kernel: Loaded 24080 symbols from /boot/System.map-2.6.9-55.0.2.EL.
-2008-04-27T04:02:28-04:00 cmpsvr kernel: Symbols match kernel version 2.6.9.
-2008-04-27T04:02:42-04:00 cmpsvr kernel: Loaded 9698 symbols from 28 modules.
-2008-04-27T04:02:42.992883-04:00 cmpsvr rsyslogd: [origin software="rsyslogd" swVersion="3.14.2" x-pid="1554" x-info="http://www.rsyslog.com"] restart
 Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart.
 Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
 Mar 10 14:45:45 debandre anacron[3226]: Normal exit (1 job run)
