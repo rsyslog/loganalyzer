@@ -207,7 +207,7 @@ function GetFacilityDisplayName( $nFacilityID )
 	}
 
 	// Default 
-	return "Unknown Facility";
+	return "Unknown Facility($nFacilityID)";
 }
 
 function GetSeverityDisplayName( $nSeverityID )
@@ -221,7 +221,7 @@ function GetSeverityDisplayName( $nSeverityID )
 	}
 
 	// Default 
-	return "Unknown Severity";
+	return "Unknown Severity($nSeverityID)";
 }
 
 function GetMessageTypeDisplayName( $nMsgTypeID )
@@ -235,7 +235,7 @@ function GetMessageTypeDisplayName( $nMsgTypeID )
 	}
 
 	// Default 
-	return "Unknown";
+	return "Unknown MessageType($nMsgTypeID)";
 }
 
 
@@ -249,9 +249,8 @@ function GetTimeStampFromTimeString($szTimeString)
 	}
 	else
 	{
-		//WTF?
-		die ("WTF GetTimeStampFromTimeString " . $szTimeString);
-		return 0;
+		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'");
+		return $szTimeString;
 	}
 }
 
