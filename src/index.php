@@ -388,6 +388,12 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
 									}
 								}
+
+								if ( strlen($content['searchstr']) > 0 )
+								{
+									// Prepend button 
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "" . $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'];
+								}
 							}
 						}
 					}

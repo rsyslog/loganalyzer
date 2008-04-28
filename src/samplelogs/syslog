@@ -1,3 +1,19 @@
+2008-04-27T04:02:27-04:00 cmpsvr kernel: imklog 3.14.2, log source = /proc/kmsg started.
+2008-04-27T04:02:27-04:00 cmpsvr kernel: Inspecting /boot/System.map-2.6.9-55.0.2.EL
+2008-04-27T04:02:28-04:00 cmpsvr kernel: Loaded 24080 symbols from /boot/System.map-2.6.9-55.0.2.EL.
+2008-04-27T04:02:28-04:00 cmpsvr kernel: Symbols match kernel version 2.6.9.
+2008-04-27T04:02:42-04:00 cmpsvr kernel: Loaded 9698 symbols from 28 modules.
+2008-04-27T04:02:42.992883-04:00 cmpsvr rsyslogd: [origin software="rsyslogd" swVersion="3.14.2" x-pid="1554" x-info="http://www.rsyslog.com"] restart
+2008-04-27T04:04:13-04:00 uzdomfw pf: 1055. 619145 rule 268/0(match): block in on ng0: (tos 0x0, ttl  50, id 35580, offset 0, flags [none], proto: UDP (17), length: 485) 202.97.238.230.40659 > 76.10.159.40.1026: UDP, length 457
+2008-04-27T04:04:13-04:00 uzdomfw pf: 001346 rule 268/0(match): block in on ng0: (tos 0x0, ttl  50, id 10488, offset 0, flags [none], proto: UDP (17), length: 485) 202.97.238.230.40659 > 76.10.159.40.1027: UDP, length 457
+2008-04-27T04:04:24-04:00 uzdomfw pf: 10. 532742 rule 268/0(match): block in on ng0: (tos 0x0, ttl  50, id 9191, offset 0, flags [none], proto: UDP (17), length: 485) 202.97.238.230.40735 > 76.10.159.40.1026: UDP, length 457
+2008-04-27T04:04:24-04:00 uzdomfw pf: 001096 rule 268/0(match): block in on ng0: (tos 0x0, ttl  50, id 23751, offset 0, flags [none], proto: UDP (17), length: 485) 202.97.238.230.40735 > 76.10.159.40.1027: UDP, length 457
+2008-04-27T04:04:50.780189-04:00 cmpsvr ntpdate[9441]: adjust time server 192.168.0.55 offset 0.148018 sec
+2008-04-27T04:05:51-04:00 uzdomfw pf: 87. 171897 rule 268/0(match): block in on ng0: (tos 0x0, ttl 109, id 61513, offset 0, flags [none], proto: TCP (6), length: 48) 76.10.62.133.2548 > 76.10.159.40.1433: S, cksum 0xd9ad (correct), 762117069:762117069(0) win 64240 <mss 1452,nop,nop,sackOK>
+2008-04-27T04:16:23-04:00 uzdomfw pf: 631. 992233 rule 268/0(match): block in on ng0: (tos 0x0, ttl  49, id 51694, offset 0, flags [none], proto: UDP (17), length: 486) 221.208.208.97.46577 > 76.10.159.40.1026: UDP, length 458
+2008-04-27T04:16:23-04:00 uzdomfw pf: 049128 rule 268/0(match): block in on ng0: (tos 0x0, ttl  49, id 9090, offset 0, flags [none], proto: UDP (17), length: 486) 221.208.208.97.46577 > 76.10.159.40.1026: UDP, length 458
+2008-04-27T04:16:23-04:00 uzdomfw pf: 001210 rule 268/0(match): block in on ng0: (tos 0x0, ttl  49, id 52628, offset 0, flags [none], proto: UDP (17), length: 486) 221.208.208.97.46577 > 76.10.159.40.1027: UDP, length 458
+2008-04-27T04:18:21-04:00 uzdomfw pf: 117. 412299 rule 268/0(match): block in on ng0: (tos 0x0, ttl 112, id 30035, offset 0, flags [none], proto: TCP (6), length: 48) 76.8.177.186.3645 > 76.10.159.40.1433: S, cksum 0x74bd (correct), 4216527706:4216527706(0) win 64240 <mss 1452,nop,nop,sackOK>
 Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart.
 Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
 Mar 10 14:45:45 debandre anacron[3226]: Normal exit (1 job run)
