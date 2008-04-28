@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 2.1.2 (devel), 2008-04-28
+- Removed syslog sample logfile from samplelogs, fixed minor issue in the installer
+- Fixed bug in logstreamlineparsersyslog.class which failed to parse some rsyslog loglines.
+- Special characters like german "umlaute" are now proberly replaced
+- Added link to help page, pointing to rsyslog wiki
+- Changed database layout from winsyslog to monitorware. Added more debug handling
+
+
 Version 2.1.1 (devel), 2008-04-25
 - added detailpage into phpLogCon. The detail page shows all possible
   details of a syslog message. It also possible to page in the 
