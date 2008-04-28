@@ -342,6 +342,8 @@ function InitFrontEndVariables()
 	$content['MENU_FOLDER_CLOSED'] = $content['BASEPATH'] . "images/icons/folder.png";
 	$content['MENU_HOMEPAGE'] = $content['BASEPATH'] . "images/icons/home.png";
 	$content['MENU_LINK'] = $content['BASEPATH'] . "images/icons/link.png";
+	$content['MENU_LINK_VIEW'] = $content['BASEPATH'] . "images/icons/link_view.png";
+	$content['MENU_VIEW'] = $content['BASEPATH'] . "images/icons/view.png";
 	$content['MENU_PREFERENCES'] = $content['BASEPATH'] . "images/icons/preferences.png";
 	$content['MENU_ADMINENTRY'] = $content['BASEPATH'] . "images/icons/star_blue.png";
 	$content['MENU_ADMINLOGOFF'] = $content['BASEPATH'] . "images/icons/exit.png";

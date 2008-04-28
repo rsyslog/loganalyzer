@@ -177,7 +177,7 @@
 		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN fields -->
-		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap>
+		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap {colspan}>
 			<!-- IF FieldSortable="true" -->
 			<a HREF="?sorting={FieldID}{additional_url_uidonly}{additional_url}" class="cellmenu1_link" >
 			<!-- ENDIF FieldSortable="true" -->
@@ -196,8 +196,8 @@
 		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN values -->
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top">
 		<!-- IF hasdetails="false" -->
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" nowrap>
 			<!-- IF haslink="true" -->
 			<a href="{detaillink}" class="syslogdetails" target="_top">
 			<!-- ENDIF haslink="true" -->
@@ -209,6 +209,7 @@
 			<!-- ENDIF haslink="true" -->
 		<!-- ENDIF hasdetails="false" -->
 		<!-- IF hasdetails="true" -->
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" width="100%">
 		<a href="{detaillink}" class="syslogdetails">{fieldvalue}
 		<span>
 			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
@@ -225,6 +226,16 @@
 		<!-- ENDIF hasdetails="true" -->
 		</td>
 		<!-- END values -->
+
+		<!-- IF buttons_enabled="true" -->
+		<td align="center" class="{cssclass}" valign="middle">
+			<!-- BEGIN buttons -->
+			{htmlcode}
+			<!-- END buttons -->
+		</td>
+		<!-- ENDIF buttons_enabled="true" -->
+
+
 	</tr>
 	<!-- END syslogmessages -->
 

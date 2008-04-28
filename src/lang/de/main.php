@@ -56,6 +56,9 @@ $content['LN_SEARCH_ADVANCED'] = "Erweiterte Suche";
 $content['LN_SEARCH'] = "Suche";
 $content['LN_SEARCH_RESET'] = "Suche zur&uuml;cksetzen";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
+$content['LN_VIEW_MESSAGECENTERED'] = "View syslog message centered in logstream";
+$content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
+$content['LN_VIEW_FILTERFOR'] = "Filter message for ";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
