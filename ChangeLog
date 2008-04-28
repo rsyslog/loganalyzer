@@ -9,7 +9,6 @@ Version 2.1.1 (devel), 2008-04-25
   button is available now in the install script. This removes the 
   duplicated ones from before. 
 - added full german translation (thanks to Tom Bergfeld for providing it)
-
-
+---------------------------------------------------------------------------
 Version 2.1.0 (devel), 2008-04-24
 - initial release of the rewritten phpLogCon v2
