@@ -91,7 +91,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_MESSAGE] = $out[3];
 		}
 		// Sample (RSyslog): 2008-03-28T11:07:40+01:00 localhost rger: test 1
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\+[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
@@ -100,7 +100,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
 		}
 		// Sample (RSyslog): 2008-03-28T11:07:40.591633+01:00 localhost rger: test 1
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}\+[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}.[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
@@ -109,7 +109,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_MESSAGE] = $out[4];
 		}
 		// Sample: 2008-03-28T15:17:05.480876+01:00,**NO MATCH**
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}\+[0-9]{1,2}:[0-9]{1,2}),(.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}.[0-9]{1,2}:[0-9]{1,2}),(.*?)$/", $szLine, $out ) )
 		{
 			// Some kind of debug message or something ...
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
