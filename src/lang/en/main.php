@@ -43,6 +43,9 @@ $content['LN_GEN_PAGE'] = "Page";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "Database";
+$content['LN_GEN_RECORDSPERPAGE'] = "records per page";
+$content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
+
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";

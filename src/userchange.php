@@ -64,7 +64,7 @@ if ( isset($_GET['op']) )
 
 	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
 	{
-		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < 5 ) 
+		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < 7 ) 
 			$_SESSION['PAGESIZE_ID'] = intval($_GET['pagesizeid']);
 	}
 	

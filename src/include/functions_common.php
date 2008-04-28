@@ -248,11 +248,13 @@ function CreatePagesizesList()
 {
 	global $CFG, $content;
 
-	$content['pagesizes'][0] = array( "ID" => 0, "Selected" => "", "DisplayName" => "Preconfigured (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] );
-	$content['pagesizes'][1] = array( "ID" => 1, "Selected" => "", "DisplayName" => " 25 records per page", "Value" => 25 );
-	$content['pagesizes'][2] = array( "ID" => 2, "Selected" => "", "DisplayName" => " 50 records per page", "Value" => 50 );
-	$content['pagesizes'][3] = array( "ID" => 3, "Selected" => "", "DisplayName" => " 75 records per page", "Value" => 75 );
-	$content['pagesizes'][4] = array( "ID" => 4, "Selected" => "", "DisplayName" => " 100 records per page", "Value" => 100 );
+	$content['pagesizes'][0] = array( "ID" => 0, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] );
+	$content['pagesizes'][1] = array( "ID" => 1, "Selected" => "", "DisplayName" => " 25 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 25 );
+	$content['pagesizes'][2] = array( "ID" => 2, "Selected" => "", "DisplayName" => " 50 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 50 );
+	$content['pagesizes'][3] = array( "ID" => 3, "Selected" => "", "DisplayName" => " 75 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 75 );
+	$content['pagesizes'][4] = array( "ID" => 4, "Selected" => "", "DisplayName" => " 100 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 100 );
+	$content['pagesizes'][5] = array( "ID" => 5, "Selected" => "", "DisplayName" => " 250 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 250 );
+	$content['pagesizes'][6] = array( "ID" => 6, "Selected" => "", "DisplayName" => " 500 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 500 );
 	
 	// Set default selected pagesize
 	$content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Selected"] = "selected";
