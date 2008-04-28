@@ -574,24 +574,24 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	}
 
 	//Add the first source! 
-	$firstsource =	"\$CFG['Sources'][Source1]['ID'] = 'Source1';\r\n" . 
-					"\$CFG['Sources'][Source1]['Name'] = '" . $_SESSION['SourceName'] . "';\r\n" . 
-					"\$CFG['Sources'][Source1]['SourceType'] = " . $_SESSION['SourceType'] . ";\r\n";
+	$firstsource =	"\$CFG['Sources']['Source1']['ID'] = 'Source1';\r\n" . 
+					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\r\n" . 
+					"\$CFG['Sources']['Source1']['SourceType'] = " . $_SESSION['SourceType'] . ";\r\n";
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 
 	{
-		$firstsource .=	"\$CFG['Sources'][Source1]['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\r\n" . 
+		$firstsource .=	"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\r\n" . 
 						"";
 	}
 	else if ( $_SESSION['SourceType'] == SOURCE_DB ) 
 	{
-		$firstsource .=	"\$CFG['Sources'][Source1]['DBTableType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBType'] = '" . $_SESSION['SourceDBType'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBName'] = '" . $_SESSION['SourceDBName'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\r\n" . 
-						"\$CFG['Sources'][Source1]['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\r\n" . 
+		$firstsource .=	"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = '" . $_SESSION['SourceDBType'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\r\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";
