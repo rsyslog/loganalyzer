@@ -247,8 +247,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 				}
 				else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 				{
-					// kindly copy!
-					$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+					if ( $mycolkey == SYSLOG_MESSAGE )
+						$content['fields'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[$mycolkey]);
+					else	// kindly copy!
+						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
 				}
 
 				// Increment helpcounter

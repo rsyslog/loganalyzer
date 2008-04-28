@@ -548,10 +548,8 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 
 function GetStringWithHTMLCodes($myStr)
 {
-	// First of all replace special characters with valid HTML representations!
-	$searchfor = array( "&", "<", ">" );
-	$replacewith = array( "&amp;", "&lt;", "&gt;" );
-	return str_replace ( $searchfor, $replacewith, $myStr);
+	// Replace all special characters with valid html representations
+	return htmlentities($myStr);
 }
 
 function InitTemplateParser()
