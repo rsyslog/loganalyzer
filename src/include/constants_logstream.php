@@ -136,19 +136,19 @@ $fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
 // --- 
 
 // --- Define default Database field mappings!
-$dbmapping['winsyslog'][SYSLOG_UID] = "ID";
-$dbmapping['winsyslog'][SYSLOG_DATE] = "DeviceReportedTime";
-$dbmapping['winsyslog'][SYSLOG_HOST] = "FromHost";
-$dbmapping['winsyslog'][SYSLOG_MESSAGETYPE] = "InfoUnitID";
-$dbmapping['winsyslog'][SYSLOG_MESSAGE] = "Message";
-$dbmapping['winsyslog'][SYSLOG_FACILITY] = "Facility";
-$dbmapping['winsyslog'][SYSLOG_SEVERITY] = "Priority";
-$dbmapping['winsyslog'][SYSLOG_SYSLOGTAG] = "SysLogTag";
-$dbmapping['winsyslog'][SYSLOG_EVENT_ID] = "EventID";
-$dbmapping['winsyslog'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
-$dbmapping['winsyslog'][SYSLOG_EVENT_SOURCE] = "EventSource";
-$dbmapping['winsyslog'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
-$dbmapping['winsyslog'][SYSLOG_EVENT_USER] = "EventUser";
+$dbmapping['monitorware'][SYSLOG_UID] = "ID";
+$dbmapping['monitorware'][SYSLOG_DATE] = "DeviceReportedTime";
+$dbmapping['monitorware'][SYSLOG_HOST] = "FromHost";
+$dbmapping['monitorware'][SYSLOG_MESSAGETYPE] = "InfoUnitID";
+$dbmapping['monitorware'][SYSLOG_MESSAGE] = "Message";
+$dbmapping['monitorware'][SYSLOG_FACILITY] = "Facility";
+$dbmapping['monitorware'][SYSLOG_SEVERITY] = "Priority";
+$dbmapping['monitorware'][SYSLOG_SYSLOGTAG] = "SysLogTag";
+$dbmapping['monitorware'][SYSLOG_EVENT_ID] = "EventID";
+$dbmapping['monitorware'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
+$dbmapping['monitorware'][SYSLOG_EVENT_SOURCE] = "EventSource";
+$dbmapping['monitorware'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
+$dbmapping['monitorware'][SYSLOG_EVENT_USER] = "EventUser";
 
 $dbmapping['syslogng'][SYSLOG_UID] = "seq";
 $dbmapping['syslogng'][SYSLOG_DATE] = "datetime";

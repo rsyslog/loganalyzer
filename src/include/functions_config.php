@@ -86,9 +86,14 @@
 						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
 						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
 						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = $mysource['DBTableType'];
 						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
 						
+						// Legacy handling for tabletype!
+						if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
+							$content['Sources'][$iSourceID]['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
+						else
+							$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
 						// Optional parameters!
 						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
 						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
