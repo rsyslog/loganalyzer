@@ -45,6 +45,7 @@ $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "Database";
 $content['LN_GEN_RECORDSPERPAGE'] = "records per page";
 $content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
+$content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";
 
 
 // Main Index Site

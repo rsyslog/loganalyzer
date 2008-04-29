@@ -272,12 +272,12 @@ font
 /* Cell Columns */
 .cellmenu1
 {
-	height: 16px;
+/*	height: 16px; */
 	border:1px ridge;
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:5px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #6C8E9C;
 }

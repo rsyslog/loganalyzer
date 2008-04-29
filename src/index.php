@@ -267,6 +267,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 					if ( isset($logArray[$mycolkey]) )
 					{
 						// Set defaults
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldColumn'] = $mycolkey;
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['uid'] = $uID;
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = $content['syslogmessages'][$counter]['cssclass'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
@@ -408,15 +410,22 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 							{
 								// Append Syslogtag Search Button
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '<a href="?filter=syslogtag%3A' . $logArray[$mycolkey] . 
-									'&search=Search" target="_top"><img src="' . $content['MENU_VIEW'] . 
-									'" width="16" align="right" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">' . '</a>' . $logArray[$mycolkey];
+									'&search=Search" target="_top">' . $logArray[$mycolkey]. '</a>';
+// <img src="' . $content['MENU_VIEW'] . '" width="16" align="left" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">'
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=source%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'"
+									);
+
 								// Append Syslogtag Search Button
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '<a href="?filter=source%3A' . $logArray[$mycolkey] . 
-									'&search=Search" target="_top"><img src="' . $content['MENU_VIEW'] . 
-									'" width="16" align="right" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">' . '</a>' . $logArray[$mycolkey];
+//								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '<a href="?filter=source%3A' . $logArray[$mycolkey] . 
+//									'&search=Search" target="_top"><img src="' . $content['MENU_VIEW'] . 
+//'" width="16" align="right" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">' . '</a>' . $logArray[$mycolkey];
+
 /* TODO ...
 $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '
 								<div id="menu">

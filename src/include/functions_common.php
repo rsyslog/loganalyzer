@@ -360,11 +360,16 @@ function InitFrontEndVariables()
 	$content['MENU_NAV_RIGHT'] = $content['BASEPATH'] . "images/icons/navigate_right.png";
 	$content['MENU_NAV_CLOSE'] = $content['BASEPATH'] . "images/icons/navigate_close.png";
 	$content['MENU_NAV_OPEN'] = $content['BASEPATH'] . "images/icons/navigate_open.png";
-
 	$content['MENU_PAGER_BEGIN_GREY'] = $content['BASEPATH'] . "images/icons/grey/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS_GREY'] = $content['BASEPATH'] . "images/icons/grey/media_rewind.png";
 	$content['MENU_PAGER_NEXT_GREY'] = $content['BASEPATH'] . "images/icons/grey/media_fast_forward.png";
 	$content['MENU_PAGER_END_GREY'] = $content['BASEPATH'] . "images/icons/grey/media_end.png";
+
+	$content['MENU_BULLET_BLUE'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_blue.png";
+	$content['MENU_BULLET_GREEN'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_green.png";
+	$content['MENU_BULLET_RED'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_red.png";
+	$content['MENU_BULLET_YELLOW'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_yellow.png";
+	$content['MENU_BULLET_GREY'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_grey.png";
 }
 
 // Lang Helper for Strings with ONE variable

@@ -95,7 +95,7 @@ $fields[SYSLOG_MESSAGETYPE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGETYPE';
 $fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_MESSAGETYPE]['Sortable'] = true;
 $fields[SYSLOG_MESSAGETYPE]['DefaultWidth'] = "90";
-$fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "left";
+$fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "center";
 
 // Syslog specific
 $fields[SYSLOG_FACILITY]['FieldID'] = SYSLOG_FACILITY;
