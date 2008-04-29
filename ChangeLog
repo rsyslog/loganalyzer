@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------
+Version 2.1.3 (devel), 2008-04-29
+- Fixed a bug in the installer, the table type was not written into the configuration.
+
+
 Version 2.1.2 (devel), 2008-04-28
 - Removed syslog sample logfile from samplelogs, fixed minor issue in the installer
 - Fixed bug in logstreamlineparsersyslog.class which failed to parse some rsyslog loglines.

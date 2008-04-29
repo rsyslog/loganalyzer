@@ -758,7 +758,7 @@ class LogStreamDB extends LogStream {
 	*/
 	private function GetRowCountFromTable()
 	{
-		global $dbmapping;
+		global $dbmapping,$querycount;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 		
 		// Create Statement and perform query!
@@ -768,6 +768,9 @@ class LogStreamDB extends LogStream {
 			// obtain first and only row
 			$myRow = mysql_fetch_row($myQuery);
 			$numRows = $myRow[0];
+
+			// Increment for the Footer Stats 
+			$querycount++;
 
 			// Free query now
 			mysql_free_result ($myQuery); 
