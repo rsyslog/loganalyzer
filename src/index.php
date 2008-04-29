@@ -272,6 +272,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = $content['syslogmessages'][$counter]['cssclass'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
 
 						// Set default link 
@@ -302,6 +303,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_FACILITY
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=facility%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetFacilityDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -318,6 +327,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_FACILITY
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=severity%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetSeverityDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -345,13 +362,16 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 							// Special Handling for the Syslog Message!
 							if ( $mycolkey == SYSLOG_MESSAGE )
 							{
+								// No NOWRAP for Syslog Message!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "";
+
 								// Set truncasted message for display
 								if ( isset($logArray[SYSLOG_MESSAGE]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
 
 									// Enable LINK property! for this field
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['haslink'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['ismessagefield'] = true;
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "details.php?uid=" . $uID;
 								}
 								else
@@ -398,50 +418,35 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 
 								if ( strlen($content['searchstr']) > 0 )
 								{
-									// Enable buttons
-									$content['syslogmessages'][$counter]['buttons_enabled'] = true;
-
-									// Prepend Msg centered button
-									$content['syslogmessages'][$counter]['buttons'][]['htmlcode'] =	'<a href="?uid=' . $uID . '" target="_top"><img src="' . $content['MENU_LINK_VIEW'] . 
-																									'" width="16" align="left" title="' . $content['LN_VIEW_MESSAGECENTERED'] . '"></a>';
+									// Set OnClick Menu for SYSLOG_MESSAGE
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdropdownbutton'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+										'ButtonUrl' => '?uid=' . $uID, 
+										'DisplayName' => $content['LN_VIEW_MESSAGECENTERED'], 
+										'IconSource' => $content['MENU_BULLET_GREEN']
+										);
 								}
 							}
 							else if ( $mycolkey == SYSLOG_SYSLOGTAG ) 
 							{
-								// Append Syslogtag Search Button
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '<a href="?filter=syslogtag%3A' . $logArray[$mycolkey] . 
-									'&search=Search" target="_top">' . $logArray[$mycolkey]. '</a>';
-// <img src="' . $content['MENU_VIEW'] . '" width="16" align="left" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">'
+								// Set OnClick Menu for SYSLOG_SYSLOGTAG
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=syslogtag%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
+								// Set OnClick Menu for SYSLOG_HOST
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
 									'ButtonUrl' => '?filter=source%3A' . $logArray[$mycolkey] . '&search=Search', 
-									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'"
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
-
-								// Append Syslogtag Search Button
-//								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '<a href="?filter=source%3A' . $logArray[$mycolkey] . 
-//									'&search=Search" target="_top"><img src="' . $content['MENU_VIEW'] . 
-//'" width="16" align="right" title="' . $content['LN_VIEW_FILTERFOR'] . $logArray[$mycolkey] . '">' . '</a>' . $logArray[$mycolkey];
-
-/* TODO ...
-$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '
-								<div id="menu">
-								<ul>
-								  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter">
-									<ul class="with_border">
-									  <li><h2 class="cellmenu1">{LN_GEN_PREDEFINEDSEARCHES}</h2>
-									<!-- BEGIN Search -->
-									  <li class="{cssclass}"><a href="?{SearchQuery}" target="_top">{DisplayName}</a></li>
-									<!-- END Search -->
-									</ul>
-								  </li>
-								</ul>
-								</div>
-' . $logArray[$mycolkey];
-*/
 							}
 
 						}

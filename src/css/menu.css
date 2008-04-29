@@ -43,7 +43,7 @@
 	position: absolute;
 	top: 12px;
 	left: 4px; /* to position them to the right of their containing block */
-	width: 300; /* width is based on the containing block */
+	width: 350; /* width is based on the containing block */
 }
 
 div#menu ul ul,

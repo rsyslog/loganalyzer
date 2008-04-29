@@ -198,74 +198,71 @@
 		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN values -->
-		<!-- IF hasdetails="false" -->
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" nowrap>
 
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
 			<!-- IF hasbuttons="true" -->
+				<!-- IF hasdropdownbutton="true" -->
+				<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+				<!-- ENDIF hasdropdownbutton="true" -->
 			<div id="menu">
 			<ul>
 			  <li>
-<!--			  <img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}">-->
 				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
 				  <li OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
 				  <h2 class="cellmenu1">{LN_GEN_AVAILABLESEARCHES}
 				  </h2>
 				<!-- BEGIN buttons -->
 				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <img align="left" src="{MENU_BULLET_BLUE}" width="16" height="16"><a href="{ButtonUrl}" target="_top">{DisplayName}</a>
+				  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}" target="_top">{DisplayName}</a>
 				  </li>
 				<!-- END buttons -->
 				</ul>
 			  </li>
 			</ul>
 			</div>
-			<span OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
 			<!-- ENDIF hasbuttons="true" -->
 
-				<!-- IF haslink="true" -->
-				<a href="{detaillink}" class="syslogdetails" target="_top">
-				<!-- ENDIF haslink="true" -->
+			<!-- IF hasdetails="false" -->
 
-					<!-- IF haslink!="true" --><B><!-- ENDIF haslink!="true" -->
+				<!-- IF ismessagefield!="true" -->
+
+					<!-- IF hasbuttons="true" -->
+					<a href="#" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">
 					{fieldvalue}
-					<!-- IF haslink!="true" --></B><!-- ENDIF haslink!="true" -->
+					</a>
+					<!-- ENDIF hasbuttons="true" -->
 
-				<!-- IF haslink="true" -->
+				<!-- IF hasbuttons!="true" -->
+				<b>{fieldvalue}</b>
+				<!-- ENDIF hasbuttons!="true" -->
+
+				<!-- ENDIF ismessagefield!="true" -->
+
+				<!-- IF ismessagefield="true" -->
+				<a href="{detaillink}" class="syslogdetails" target="_top">
+					{fieldvalue}
 				</a>
-				<!-- ENDIF haslink="true" -->
+				<!-- ENDIF ismessagefield="true" -->
 
-			<!-- IF hasbuttons="true" -->
+			<!-- ENDIF hasdetails="false" -->
+			<!-- IF hasdetails="true" -->
+
+			<a href="{detaillink}" class="syslogdetails">{fieldvalue}
+			<span>
+				<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
+				<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
+				<!-- BEGIN messagesdetails -->
+				<tr>
+					<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
+					<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
+				</tr>
+				<!-- END messagesdetails -->
+				</table>
 			</span>
-			<!-- ENDIF hasbuttons="true" -->
-
-		<!-- ENDIF hasdetails="false" -->
-		<!-- IF hasdetails="true" -->
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" width="100%">
-		<a href="{detaillink}" class="syslogdetails">{fieldvalue}
-		<span>
-			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
-			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
-			<!-- BEGIN messagesdetails -->
-			<tr>
-				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
-				<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
-			</tr>
-			<!-- END messagesdetails -->
-			</table>
-		</span>
-		</a>
-		<!-- ENDIF hasdetails="true" -->
+			</a>
+			<!-- ENDIF hasdetails="true" -->
 		</td>
 		<!-- END values -->
-
-		<!-- IF buttons_enabled="true" -->
-		<td align="center" class="{cssclass}" valign="middle">
-			<!-- BEGIN buttons -->
-			{htmlcode}
-			<!-- END buttons -->
-		</td>
-		<!-- ENDIF buttons_enabled="true" -->
-
 
 	</tr>
 	<!-- END syslogmessages -->

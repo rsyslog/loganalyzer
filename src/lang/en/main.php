@@ -60,7 +60,7 @@ $content['LN_SEARCH_ADVANCED'] = "Advanced Search";
 $content['LN_SEARCH'] = "Search";
 $content['LN_SEARCH_RESET'] = "Reset search";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
-$content['LN_VIEW_MESSAGECENTERED'] = "View syslog message centered in logstream";
+$content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
 $content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
 $content['LN_VIEW_FILTERFOR'] = "Filter message for ";
 
