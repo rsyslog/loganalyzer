@@ -1,33 +1,33 @@
 ---------------------------------------------------------------------------
 Version 2.3.0 (devel), 2008-04-30
-- Added "Back to Listview" butotn in the detailview. 
-- Added filter for message type. 
+- Added "Back to Listview" button in the detailview. 
+- Added filter for message type 
 - Added inline button menus into the listview. Most values can be clicked now, 
   which opens a menu with additional useful links. 
-- Added Pagesite Selectetion into listview, so you can change the amount of
+- Added Pagesite Selection into listview, so you can change the amount of
   records you want to see on one page at any time you want. 
-- greatly improved database performance, runs much better now, but still a
-  things to optimice. 
-
-
+- greatly improved database performance, runs much better now, but there
+  is still room for further optimization
+---------------------------------------------------------------------------
 Version 2.1.4 (devel), 2008-04-29
 - Added missing facility 10 to 15 from RFC3164 into phhlogcon
-
-
+---------------------------------------------------------------------------
 Version 2.1.3 (devel), 2008-04-28
-- Fixed a bug in the installer, the table type was not written into the configuration.
-
-
+- Fixed a bug in the installer, the table type was not written into the
+  configuration.
 Version 2.1.2 (devel), 2008-04-28
-- Removed syslog sample logfile from samplelogs, fixed minor issue in the installer
-- Fixed bug in logstreamlineparsersyslog.class which failed to parse some rsyslog loglines.
+---------------------------------------------------------------------------
+- Removed syslog sample logfile from samplelogs, fixed minor issue in the
+  installer
+- Fixed bug in logstreamlineparsersyslog.class which failed to parse
+  some rsyslog loglines.
 - Special characters like german "umlaute" are now proberly replaced
 - Added link to help page, pointing to rsyslog wiki
-- Changed database layout from winsyslog to monitorware. Added more debug handling
-
-
+- Changed database layout from winsyslog to monitorware.
+  Added more debug handling
+---------------------------------------------------------------------------
 Version 2.1.1 (devel), 2008-04-25
-- added detailpage into phpLogCon. The detail page shows all possible
+- added detail page into phpLogCon. The detail page shows all possible
   details of a syslog message. It also possible to page in the 
   detail view.
 - fixed minor notices bugs in the functions_db.php, which is really used 
