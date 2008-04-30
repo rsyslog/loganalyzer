@@ -476,6 +476,17 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_SESSION['SourceDBTableName']) ) { $content['SourceDBTableName'] = $_SESSION['SourceDBTableName']; } else { $content['SourceDBTableName'] = "systemevents"; }
 	if ( isset($_SESSION['SourceDBUser']) ) { $content['SourceDBUser'] = $_SESSION['SourceDBUser']; } else { $content['SourceDBUser'] = "user"; }
 	if ( isset($_SESSION['SourceDBPassword']) ) { $content['SourceDBPassword'] = $_SESSION['SourceDBPassword']; } else { $content['SourceDBPassword'] = ""; }
+	if ( isset($_SESSION['SourceDBEnableRowCounting']) ) { $content['SourceDBEnableRowCounting'] = $_SESSION['SourceDBEnableRowCounting']; } else { $content['SourceDBEnableRowCounting'] = "false"; }
+	if ( $content['SourceDBEnableRowCounting'] == "true" )
+	{
+		$content['SourceDBEnableRowCounting_true'] = "checked";
+		$content['SourceDBEnableRowCounting_false'] = "";
+	}
+	else
+	{
+		$content['SourceDBEnableRowCounting_true'] = "";
+		$content['SourceDBEnableRowCounting_false'] = "checked";
+	}
 
 	// Check for Error Msg
 	if ( isset($_GET['errormsg']) )
@@ -550,7 +561,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 			$_SESSION['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']);
 		else
 			$_SESSION['SourceDBPassword'] = "";
-		
+
+		if ( isset($_POST['SourceDBEnableRowCounting']) )
+		{
+			$_SESSION['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']);
+			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
+				$_SESSION['SourceDBEnableRowCounting'] = "false";
+		}
+
 		// TODO: Check database connectivity!
 	}
 
@@ -592,6 +610,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\r\n" . 
 						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\r\n" . 
 						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\r\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\r\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";

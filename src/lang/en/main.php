@@ -123,6 +123,7 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Database Storage Engine";
 $content['LN_CFG_DBTABLENAME'] = "Database Tablename";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name of the Source";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
+$content['LN_CFG_DBROWCOUNTING'] = "Enable Row Counting";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
