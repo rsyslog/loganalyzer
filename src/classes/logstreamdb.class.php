@@ -113,10 +113,10 @@ class LogStreamDB extends LogStream {
 		$this->CreateSQLWhereClause();
 
 		// Obtain count of records
-		$this->_totalRecordCount = $this->GetRowCountFromTable();
-
-		if ( $this->_totalRecordCount <= 0 )
-			return ERROR_NOMORERECORDS;
+//		$this->_totalRecordCount = $this->GetRowCountFromTable();
+//
+//		if ( $this->_totalRecordCount <= 0 )
+//			return ERROR_NOMORERECORDS;
 
 		// Success, this means we init the Pagenumber to ONE!
 		$this->_currentPageNumber = 1;
@@ -602,6 +602,15 @@ class LogStreamDB extends LogStream {
 		// Free Query ressources
 		mysql_free_result ($myquery); 
 
+		// Obtain count of records if needed!
+		if ( $this->_totalRecordCount == -1 ) 
+		{
+			$this->_totalRecordCount = $this->GetRowCountFromTable();
+
+			if ( $this->_totalRecordCount <= 0 )
+				return ERROR_NOMORERECORDS;
+		}
+
 		// Increment for the Footer Stats 
 		$querycount++;
 		
@@ -641,6 +650,15 @@ class LogStreamDB extends LogStream {
 		// Free Query ressources
 		mysql_free_result ($myquery); 
 
+		// Obtain count of records if needed!
+		if ( $this->_totalRecordCount == -1 ) 
+		{
+			$this->_totalRecordCount = $this->GetRowCountFromTable();
+
+			if ( $this->_totalRecordCount <= 0 )
+				return ERROR_NOMORERECORDS;
+		}
+
 		// Increment for the Footer Stats 
 		$querycount++;
 		
@@ -660,7 +678,7 @@ class LogStreamDB extends LogStream {
 		$szSortColumn = $this->_logStreamConfigObj->SortColumn;
 		
 		// Create SQL String
-		$sqlString = "SELECT " . $dbmapping[$szTableType][SYSLOG_UID];
+		$sqlString = "SELECT SQL_CALC_FOUND_ROWS " . $dbmapping[$szTableType][SYSLOG_UID];
 		if ( $includeFields && $this->_arrProperties != null ) 
 		{
 			// Loop through all requested fields
@@ -758,9 +776,25 @@ class LogStreamDB extends LogStream {
 	*/
 	private function GetRowCountFromTable()
 	{
+		global $querycount;
+		if ( $myquery = mysql_query("Select FOUND_ROWS();", $this->_dbhandle) ) 
+		{
+			// Get first and only row!
+			$myRow = mysql_fetch_array($myquery);
+			
+			// copy row count
+			$numRows = $myRow[0];
+		}
+		else
+			$numRows = -1;
+
+		// return result!
+		return $numRows;
+
+		/* OLD slow code!
 		global $dbmapping,$querycount;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		
+
 		// Create Statement and perform query!
 		$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
@@ -777,9 +811,7 @@ class LogStreamDB extends LogStream {
 		}
 		else
 			$numRows = -1;
-
-		// return result!
-		return $numRows;
+		*/
 	}
 
 

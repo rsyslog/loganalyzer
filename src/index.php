@@ -191,7 +191,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
 
 		if ( $mycolkey == SYSLOG_MESSAGE )
-			$content['fields'][$mycolkey]['colspan'] = ' colspan="2" ';
+			$content['fields'][$mycolkey]['colspan'] = ''; //' colspan="2" ';
 		else
 			$content['fields'][$mycolkey]['colspan'] = '';
 	}
@@ -217,14 +217,24 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		else
 			$ret = $stream->ReadNext($uID, $logArray);
 		
-		// --- If Forward direction is used, we need to SKIP one entry!
-		if ( $ret == SUCCESS && $content['read_direction'] == EnumReadDirection::Forward )
+		// --- Check if Read was successfull!
+		if ( $ret == SUCCESS )
 		{
-			// Ok the current ID is our NEXT ID in this reading direction, so we save it!
-			$content['uid_next'] = $uID;
+			// If Forward direction is used, we need to SKIP one entry!
+			if ( $content['read_direction'] == EnumReadDirection::Forward )
+			{
+				// Ok the current ID is our NEXT ID in this reading direction, so we save it!
+				$content['uid_next'] = $uID;
 
-			// Skip this entry and move to the next
-			$stream->ReadNext($uID, $logArray);
+				// Skip this entry and move to the next
+				$stream->ReadNext($uID, $logArray);
+			}
+		}
+		else
+		{
+			// This will disable to Main SyslogView and show an error message
+			$content['syslogmessagesenabled'] = "false";
+			$content['detailederror'] = "No syslog messages found.";
 		}
 		// ---
 
