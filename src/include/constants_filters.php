@@ -77,6 +77,12 @@ $content['filter_facility_list'][] = array( "ID" => SYSLOG_LPR, "DisplayName" =>
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_NEWS, "DisplayName" => "NEWS", "selected" => "" );
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_UUCP, "DisplayName" => "UUCP", "selected" => "" );
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_CRON, "DisplayName" => "CRON", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_SECURITY, "DisplayName" => "SECURITY", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_FTP, "DisplayName" => "FTP", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_NTP, "DisplayName" => "NTP", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOGAUDIT, "DisplayName" => "LOGAUDIT", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_LOGALERT, "DisplayName" => "LOGALERT", "selected" => "" );
+$content['filter_facility_list'][] = array( "ID" => SYSLOG_CLOCK, "DisplayName" => "CLOCK", "selected" => "" );
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL0, "DisplayName" => "LOCAL0", "selected" => "" );
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL1, "DisplayName" => "LOCAL1", "selected" => "" );
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_LOCAL2, "DisplayName" => "LOCAL2", "selected" => "" );
