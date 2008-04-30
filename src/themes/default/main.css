@@ -123,6 +123,7 @@ font
 /* Cells for listening */
 .line0
 {
+	height: 16px;
 	font-size: 8pt;
 	color: #000000;
 	background-color: #DDDDDD;
@@ -134,6 +135,7 @@ font
 
 .line1
 {
+	height: 16px;
 	font-size: 8pt;
 	color: #000000;
 	background-color: #EEEEEE;
@@ -145,6 +147,7 @@ font
 
 .line2
 {
+	height: 16px;
 	font-size: 8pt;
 	color: #000000;
 	background-color: #F5F5F5;
@@ -188,12 +191,12 @@ font
 }
 */
 
-.lineColouredWhite
+.lineColouredWhite, .lineColouredWhite:hover, A.lineColouredWhite
 {
 	font-size: 8pt;
 	color: #FFFFFF;
 }
-.lineColouredBlack
+.lineColouredBlack, .lineColouredBlack:hover, A.lineColouredBlack
 {
 	font-size: 8pt;
 	color: #000000;
@@ -272,12 +275,12 @@ font
 /* Cell Columns */
 .cellmenu1
 {
-	height: 16px;
+/*	height: 16px; */
 	border:1px ridge;
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:5px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #6C8E9C;
 }

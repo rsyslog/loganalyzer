@@ -43,6 +43,9 @@ $content['LN_GEN_PAGE'] = "Seite";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Vordefinierte Suchkriterien";
 $content['LN_GEN_SOURCE_DISK'] = "Datei";
 $content['LN_GEN_SOURCE_DB'] = "Datenbank";
+	$content['LN_GEN_RECORDSPERPAGE'] = "records per page";
+	$content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
+	$content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";
 
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";
@@ -56,6 +59,9 @@ $content['LN_SEARCH_ADVANCED'] = "Erweiterte Suche";
 $content['LN_SEARCH'] = "Suche";
 $content['LN_SEARCH_RESET'] = "Suche zur&uuml;cksetzen";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
+$content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
+$content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
+$content['LN_VIEW_FILTERFOR'] = "Filter message for ";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
@@ -84,6 +90,7 @@ $content['LN_FILTER_OTHERS'] = "Andere Filter";
 $content['LN_FILTER_MESSAGE'] = "Syslog Meldungen";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Quelle (Hostname)";
+	$content['LN_FILTER_MESSAGETYPE'] = "Message Type";
 
 // Field Captions
 $content['LN_FIELDS_DATE'] = "Datum";
@@ -118,5 +125,6 @@ $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
+$content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 
 ?>

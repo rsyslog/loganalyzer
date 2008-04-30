@@ -43,6 +43,10 @@ $content['LN_GEN_PAGE'] = "Page";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "Database";
+$content['LN_GEN_RECORDSPERPAGE'] = "records per page";
+$content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
+$content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";
+
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";
@@ -56,6 +60,10 @@ $content['LN_SEARCH_ADVANCED'] = "Advanced Search";
 $content['LN_SEARCH'] = "Search";
 $content['LN_SEARCH_RESET'] = "Reset search";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
+$content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
+$content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
+$content['LN_VIEW_FILTERFOR'] = "Filter message for ";
+
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
@@ -84,6 +92,7 @@ $content['LN_FILTER_OTHERS'] = "Other Filters";
 $content['LN_FILTER_MESSAGE'] = "Syslog Message";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Source (Hostname)";
+$content['LN_FILTER_MESSAGETYPE'] = "Message Type";
 
 // Field Captions
 $content['LN_FIELDS_DATE'] = "Date";
@@ -114,9 +123,11 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Database Storage Engine";
 $content['LN_CFG_DBTABLENAME'] = "Database Tablename";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name of the Source";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
+$content['LN_CFG_DBROWCOUNTING'] = "Enable Row Counting";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
+$content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 
 ?>

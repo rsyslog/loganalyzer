@@ -189,6 +189,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
 		$content['fields'][$mycolkey]['FieldSortable'] = $stream->IsPropertySortable($mycolkey); // $fields[$mycolkey]['Sortable'];
 		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
+
+		if ( $mycolkey == SYSLOG_MESSAGE )
+			$content['fields'][$mycolkey]['colspan'] = ''; //' colspan="2" ';
+		else
+			$content['fields'][$mycolkey]['colspan'] = '';
 	}
 	// --- 
 
@@ -212,14 +217,24 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		else
 			$ret = $stream->ReadNext($uID, $logArray);
 		
-		// --- If Forward direction is used, we need to SKIP one entry!
-		if ( $ret == SUCCESS && $content['read_direction'] == EnumReadDirection::Forward )
+		// --- Check if Read was successfull!
+		if ( $ret == SUCCESS )
 		{
-			// Ok the current ID is our NEXT ID in this reading direction, so we save it!
-			$content['uid_next'] = $uID;
+			// If Forward direction is used, we need to SKIP one entry!
+			if ( $content['read_direction'] == EnumReadDirection::Forward )
+			{
+				// Ok the current ID is our NEXT ID in this reading direction, so we save it!
+				$content['uid_next'] = $uID;
 
-			// Skip this entry and move to the next
-			$stream->ReadNext($uID, $logArray);
+				// Skip this entry and move to the next
+				$stream->ReadNext($uID, $logArray);
+			}
+		}
+		else
+		{
+			// This will disable to Main SyslogView and show an error message
+			$content['syslogmessagesenabled'] = "false";
+			$content['detailederror'] = "No syslog messages found.";
 		}
 		// ---
 
@@ -262,9 +277,12 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 					if ( isset($logArray[$mycolkey]) )
 					{
 						// Set defaults
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldColumn'] = $mycolkey;
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['uid'] = $uID;
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = $content['syslogmessages'][$counter]['cssclass'];
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
 
 						// Set default link 
@@ -295,6 +313,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_FACILITY
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=facility%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetFacilityDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -311,6 +337,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_FACILITY
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=severity%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetSeverityDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -327,6 +361,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[IUT_Unknown] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_MESSAGETYPE
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=messagetype%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetMessageTypeDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 								
 							}
 						}
@@ -338,13 +380,16 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 							// Special Handling for the Syslog Message!
 							if ( $mycolkey == SYSLOG_MESSAGE )
 							{
+								// No NOWRAP for Syslog Message!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "";
+
 								// Set truncasted message for display
 								if ( isset($logArray[SYSLOG_MESSAGE]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
 
 									// Enable LINK property! for this field
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['haslink'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['ismessagefield'] = true;
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "details.php?uid=" . $uID;
 								}
 								else
@@ -388,7 +433,40 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
 									}
 								}
+
+								if ( strlen($content['searchstr']) > 0 )
+								{
+									// Set OnClick Menu for SYSLOG_MESSAGE
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdropdownbutton'] = true;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+										'ButtonUrl' => '?uid=' . $uID, 
+										'DisplayName' => $content['LN_VIEW_MESSAGECENTERED'], 
+										'IconSource' => $content['MENU_BULLET_GREEN']
+										);
+								}
 							}
+							else if ( $mycolkey == SYSLOG_SYSLOGTAG ) 
+							{
+								// Set OnClick Menu for SYSLOG_SYSLOGTAG
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=syslogtag%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
+							else if ( $mycolkey == SYSLOG_HOST ) 
+							{
+								// Set OnClick Menu for SYSLOG_HOST
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=source%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
+
 						}
 					}
 				}
@@ -396,11 +474,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 
 				// Increment Counter
 				$counter++;
-			} while ($counter < $CFG['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+			} while ($counter < $content['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 
 //print_r ( $content['syslogmessages'] );
 
-			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $CFG['ViewEntriesPerPage'] )
+			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['ViewEntriesPerPage'] )
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;

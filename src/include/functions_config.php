@@ -98,6 +98,7 @@
 						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
 						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
 						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
+						if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
 					}
 					else
 					{	

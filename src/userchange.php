@@ -50,17 +50,24 @@ else
 
 if ( isset($_GET['op']) )
 {
-	if ( $_GET['op'] == "changestyle" ) 
+	if ( $_GET['op'] == "changestyle" && isset($_GET['stylename']) ) 
 	{
 		if ( VerifyTheme($_GET['stylename']) ) 
 			$_SESSION['CUSTOM_THEME'] = $_GET['stylename'];
 	}
 
-	if ( $_GET['op'] == "changelang" ) 
+	if ( $_GET['op'] == "changelang" && isset($_GET['langcode']) ) 
 	{
 		if ( VerifyLanguage($_GET['langcode']) ) 
 			$_SESSION['CUSTOM_LANG'] = $_GET['langcode'];
 	}
+
+	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
+	{
+		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < 7 ) 
+			$_SESSION['PAGESIZE_ID'] = intval($_GET['pagesizeid']);
+	}
+	
 }
 
 // Final redirect

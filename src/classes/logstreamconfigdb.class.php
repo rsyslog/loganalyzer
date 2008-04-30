@@ -47,6 +47,7 @@ class LogStreamConfigDB extends LogStreamConfig {
 	public $DBType = DB_MYSQL;				// Default = MYSQL!
 	public $DBTableType = 'winsyslog';		// Default = WINSYSLOG DB Layout!
 	public $DBTableName = 'systemevents';	// Default Tabelname from WINSYSLOG
+	public $DBEnableRowCounting = true;		// Default RowCounting is enabled!
 	
 	// Runtime configuration variables
 	public $RecordsPerQuery = 100;			// This will determine how to limit sql statements

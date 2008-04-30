@@ -10,11 +10,13 @@
 	<td nowrap align="left" nowrap valign="top">
 		<div id="menu">
 		<ul>
-		  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter">
-			<ul class="with_border">
+		  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter" OnClick="ToggleDisplayTypeById('menu_presearches');">
+			<ul class="with_border" id="menu_presearches">
 			  <li><h2 class="cellmenu1">{LN_GEN_PREDEFINEDSEARCHES}</h2>
 			<!-- BEGIN Search -->
-			  <li class="{cssclass}"><a href="?{SearchQuery}" target="_top">{DisplayName}</a></li>
+			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_presearches');">
+			  <a href="?{SearchQuery}" target="_top">{DisplayName}</a>
+			  </li>
 			<!-- END Search -->
 			</ul>
 		  </li>
@@ -101,7 +103,24 @@
 <!-- ENDIF main_recordcount_found="true" -->
 <!-- IF main_pagerenabled="true" -->
 		<td nowrap width="115" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
-		<td nowrap width="50" class="line2"><B>{ViewEntriesPerPage}</B></td>
+		<td nowrap width="50" class="line2">
+		
+		<form action="userchange.php" method="get" name="pageingsize">
+		<input type="hidden" name="op" value="changepagesize">
+		<table border="0" cellspacing="0" cellpadding="0" align="right">
+		<tr> 
+			<td>
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
+					<!-- BEGIN pagesizes -->
+					<option {Selected} value="{ID}">{DisplayName}</option>
+					<!-- END pagesizes -->
+				</select>
+			</td>
+		</tr>
+		</table>
+		</form>
+
+		</td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
 		<td class="line0" width="20" nowrap>
@@ -160,7 +179,7 @@
 		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN fields -->
-		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap>
+		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap {colspan}>
 			<!-- IF FieldSortable="true" -->
 			<a HREF="?sorting={FieldID}{additional_url_uidonly}{additional_url}" class="cellmenu1_link" >
 			<!-- ENDIF FieldSortable="true" -->
@@ -179,35 +198,72 @@
 		<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 		<!-- BEGIN values -->
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top">
-		<!-- IF hasdetails="false" -->
-			<!-- IF haslink="true" -->
-			<a href="{detaillink}" class="syslogdetails" target="_top">
-			<!-- ENDIF haslink="true" -->
-				<!-- IF haslink!="true" --><B><!-- ENDIF haslink!="true" -->
-				{fieldvalue}
-				<!-- IF haslink!="true" --></B><!-- ENDIF haslink!="true" -->
-			<!-- IF haslink="true" -->
+
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
+			<!-- IF hasbuttons="true" -->
+				<!-- IF hasdropdownbutton="true" -->
+				<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+				<!-- ENDIF hasdropdownbutton="true" -->
+			<div id="menu">
+			<ul>
+			  <li>
+				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
+				  <li OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <h2 class="cellmenu1">{LN_GEN_AVAILABLESEARCHES}
+				  </h2>
+				<!-- BEGIN buttons -->
+				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}" target="_top">{DisplayName}</a>
+				  </li>
+				<!-- END buttons -->
+				</ul>
+			  </li>
+			</ul>
+			</div>
+			<!-- ENDIF hasbuttons="true" -->
+
+			<!-- IF hasdetails="false" -->
+
+				<!-- IF ismessagefield!="true" -->
+
+					<!-- IF hasbuttons="true" -->
+					<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">
+					{fieldvalue}
+					</a>
+					<!-- ENDIF hasbuttons="true" -->
+
+				<!-- IF hasbuttons!="true" -->
+				<b>{fieldvalue}</b>
+				<!-- ENDIF hasbuttons!="true" -->
+
+				<!-- ENDIF ismessagefield!="true" -->
+
+				<!-- IF ismessagefield="true" -->
+				<a href="{detaillink}" class="syslogdetails" target="_top">
+					{fieldvalue}
+				</a>
+				<!-- ENDIF ismessagefield="true" -->
+
+			<!-- ENDIF hasdetails="false" -->
+			<!-- IF hasdetails="true" -->
+
+			<a href="{detaillink}" class="syslogdetails">{fieldvalue}
+			<span>
+				<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
+				<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
+				<!-- BEGIN messagesdetails -->
+				<tr>
+					<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
+					<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
+				</tr>
+				<!-- END messagesdetails -->
+				</table>
+			</span>
 			</a>
-			<!-- ENDIF haslink="true" -->
-		<!-- ENDIF hasdetails="false" -->
-		<!-- IF hasdetails="true" -->
-		<a href="{detaillink}" class="syslogdetails">{fieldvalue}
-		<span>
-			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
-			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
-			<!-- BEGIN messagesdetails -->
-			<tr>
-				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
-				<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
-			</tr>
-			<!-- END messagesdetails -->
-			</table>
-		</span>
-		</a>
-		<!-- ENDIF hasdetails="true" -->
+			<!-- ENDIF hasdetails="true" -->
 		</td>
 		<!-- END values -->
+
 	</tr>
 	<!-- END syslogmessages -->
 

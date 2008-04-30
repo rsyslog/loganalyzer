@@ -117,7 +117,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			}
 		}
 
-		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < 18 ) // If we have more than 18 elements, this means all facilities are enabled
+		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < count($content['filter_facility_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
 			foreach ($_GET['filter_facility'] as $tmpfacility) 
@@ -129,7 +129,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			$content['searchstr'] .= "facility:" . $tmpStr . " ";
 		}
 
-		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
+		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < count($content['filter_severity_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
 			foreach ($_GET['filter_severity'] as $tmpfacility) 
@@ -140,6 +140,19 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			}
 			$content['searchstr'] .= "severity:" . $tmpStr . " ";
 		}
+
+		if ( isset($_GET['filter_messagetype']) && count($_GET['filter_messagetype']) < count($content['filter_messagetype_list']) ) // If we have more elements as in the filter list array, this means all are enabled
+		{
+			$tmpStr = "";
+			foreach ($_GET['filter_messagetype'] as $tmpmsgtype) 
+			{
+				if ( strlen($tmpStr) > 0 )
+					$tmpStr .= ",";
+				$tmpStr .= $tmpmsgtype;  
+			}
+			$content['searchstr'] .= "messagetype:" . $tmpStr . " ";
+		}
+		
 
 		// Spaces need to be converted!
 		if ( isset($_GET['filter_syslogtag']) && strlen($_GET['filter_syslogtag']) > 0 )
