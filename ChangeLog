@@ -1,9 +1,20 @@
 ---------------------------------------------------------------------------
-Version 2.1.4 (devel), 2008-04-30
+Version 2.3.0 (devel), 2008-04-30
+- Added "Back to Listview" butotn in the detailview. 
+- Added filter for message type. 
+- Added inline button menus into the listview. Most values can be clicked now, 
+  which opens a menu with additional useful links. 
+- Added Pagesite Selectetion into listview, so you can change the amount of
+  records you want to see on one page at any time you want. 
+- greatly improved database performance, runs much better now, but still a
+  things to optimice. 
+
+
+Version 2.1.4 (devel), 2008-04-29
 - Added missing facility 10 to 15 from RFC3164 into phhlogcon
 
 
-Version 2.1.3 (devel), 2008-04-29
+Version 2.1.3 (devel), 2008-04-28
 - Fixed a bug in the installer, the table type was not written into the configuration.
 
 
