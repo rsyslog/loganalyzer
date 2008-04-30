@@ -105,8 +105,9 @@ $content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" 
 // --- 
 
 // Init MessageType LIST
-$content['filter_messagetype_list'][] = array( "ID" => IUT_Unknown, "DisplayName" => "Unknown", "selected" => "" );
+//$content['filter_messagetype_list'][] = array( "ID" => IUT_Unknown, "DisplayName" => "Unknown", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_Syslog, "DisplayName" => "Syslog", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_NT_EventReport, "DisplayName" => "EventReporter", "selected" => "" );
+$content['filter_messagetype_list'][] = array( "ID" => IUT_File_Monitor, "DisplayName" => "File Monitor", "selected" => "" );
 
 ?>

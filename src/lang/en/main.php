@@ -92,6 +92,7 @@ $content['LN_FILTER_OTHERS'] = "Other Filters";
 $content['LN_FILTER_MESSAGE'] = "Syslog Message";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Source (Hostname)";
+$content['LN_FILTER_MESSAGETYPE'] = "Message Type";
 
 // Field Captions
 $content['LN_FIELDS_DATE'] = "Date";

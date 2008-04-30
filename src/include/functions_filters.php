@@ -150,27 +150,25 @@ function InitFilterHelpers()
 	if ( $filters['filter_lastx_default'] == DATE_LASTX_31DAYS ) { $content['filter_daterange_last_x_list'][4]['selected'] = "selected"; } else { $content['filter_daterange_last_x_list'][4]['selected'] = ""; }
 	// ---
 
-	// Init Default Syslog Facility from SESSION!
+	// --- Init Default Syslog Facility from SESSION!
 	if ( isset($_SESSION['filter_facility']) ) 
 		$filters['filter_facility'] = intval($_SESSION['filter_facility']);
 	else
-		$filters['filter_facility'] = array ( SYSLOG_KERN, SYSLOG_USER, SYSLOG_MAIL, SYSLOG_DAEMON, SYSLOG_AUTH, SYSLOG_SYSLOG, SYSLOG_LPR, SYSLOG_NEWS, SYSLOG_UUCP, SYSLOG_CRON, SYSLOG_LOCAL0, SYSLOG_LOCAL1, SYSLOG_LOCAL2, SYSLOG_LOCAL3, SYSLOG_LOCAL4, SYSLOG_LOCAL5, SYSLOG_LOCAL6, SYSLOG_LOCAL7 );
-//		$filters['filter_facility'] = SYSLOG_LOCAL0;
+		$filters['filter_facility'] = array ( SYSLOG_KERN, SYSLOG_USER, SYSLOG_MAIL, SYSLOG_DAEMON, SYSLOG_AUTH, SYSLOG_SYSLOG, SYSLOG_LPR, SYSLOG_NEWS, SYSLOG_UUCP, SYSLOG_CRON, SYSLOG_SECURITY, SYSLOG_FTP, SYSLOG_NTP, SYSLOG_LOGAUDIT, SYSLOG_LOGALERT, SYSLOG_CLOCK, SYSLOG_LOCAL0, SYSLOG_LOCAL1, SYSLOG_LOCAL2, SYSLOG_LOCAL3, SYSLOG_LOCAL4, SYSLOG_LOCAL5, SYSLOG_LOCAL6, SYSLOG_LOCAL7 );
 
 	$iCount = count($content['filter_facility_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
 	{
-//		echo $content['filter_facility_list'][$i]["ID"] . "-" . $filters['filter_facility'] . "<br>";
 		if ( in_array($content['filter_facility_list'][$i]["ID"], $filters['filter_facility']) ) 
 			$content['filter_facility_list'][$i]["selected"] = "selected"; 
 	}
+	// --- 
 
-	// Init Default Syslog Severity from SESSION!
+	// --- Init Default Syslog Severity from SESSION!
 	if ( isset($_SESSION['filter_severity']) ) 
 		$filters['filter_severity'] = intval($_SESSION['filter_severity']);
 	else
 		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG );
-//		$filters['filter_severity'] = SYSLOG_NOTICE;
 
 	$iCount = count($content['filter_severity_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
@@ -178,6 +176,21 @@ function InitFilterHelpers()
 		if ( in_array( $content['filter_severity_list'][$i]["ID"], $filters['filter_severity']) ) 
 			$content['filter_severity_list'][$i]["selected"] = "selected"; 
 	}
+	// --- 
+
+	// --- Init Default Message Type from SESSION!
+	if ( isset($_SESSION['filter_messagetype']) ) 
+		$filters['filter_messagetype'] = intval($_SESSION['filter_messagetype']);
+	else
+		$filters['filter_messagetype'] = array ( IUT_Syslog, IUT_NT_EventReport, IUT_File_Monitor );
+
+	$iCount = count($content['filter_messagetype_list']);
+	for ( $i = 0; $i < $iCount; $i++ )
+	{
+		if ( in_array( $content['filter_messagetype_list'][$i]["ID"], $filters['filter_messagetype']) ) 
+			$content['filter_messagetype_list'][$i]["selected"] = "selected"; 
+	}
+	// --- 
 
 }
 

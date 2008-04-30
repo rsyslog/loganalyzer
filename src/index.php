@@ -361,6 +361,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									// Use default colour!
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[IUT_Unknown] . '" ';
 								}
+
+								// Set OnClick Menu for SYSLOG_MESSAGETYPE
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=messagetype%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetMessageTypeDisplayName( $logArray[$mycolkey] ). "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
 								
 							}
 						}
