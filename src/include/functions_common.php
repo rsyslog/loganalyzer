@@ -313,9 +313,19 @@ function CheckAndSetRunMode()
 
 function InitRuntimeInformations()
 {
-	global $content;
+	global $content, $CFG;
 
 	// TODO| maybe not needed!
+	
+	// Enable GZIP Compression if enabled!
+	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && (isset($CFG['MiscEnableGzipCompression']) && $CFG['MiscEnableGzipCompression'] == 1) ) 
+	{
+		// This starts gzip compression!
+		ob_start("ob_gzhandler");
+		$content['GzipCompressionEnmabled'] = "yes";
+	}
+	else
+		$content['GzipCompressionEnmabled'] = "no";
 }
 
 function CreateDebugModes()
