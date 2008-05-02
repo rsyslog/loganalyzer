@@ -57,6 +57,12 @@ $content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css"
 $content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
 // --- 
 
+// --- Set Autoreload as meta refresh
+if ( $content['ViewEnableAutoReloadSeconds'] > 0 )
+	$content['EXTRA_METATAGS'] = '<META HTTP-EQUIV=REFRESH CONTENT=' . $content['ViewEnableAutoReloadSeconds'] . '>' . "\r\n";
+// ---
+
+
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
 	$content['uid_current'] = intval($_GET['uid']);
@@ -562,7 +568,6 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				$content['syslogmessages'] = array_reverse ( $content['syslogmessages'] );
 //				print_r( $content['syslogmessages'] );
 			}
-
 
 			// This will enable to Main SyslogView
 			$content['syslogmessagesenabled'] = "true";

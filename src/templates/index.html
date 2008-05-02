@@ -97,6 +97,25 @@
 <!-- ENDIF main_currentpagenumber_found="true" -->
 	</td>
 
+	<td nowrap width="105" class="cellmenu2">{LN_AUTORELOAD}:</td>
+	<td nowrap width="50" class="line2">
+		<form action="userchange.php" method="get" name="autoreload">
+		<input type="hidden" name="op" value="autoreload">
+		<table border="0" cellspacing="0" cellpadding="0" align="right">
+		<tr> 
+			<td>
+<!--			<input type="checkbox" {autoreload_checked} name="autoreload">-->
+			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
+				<!-- BEGIN reloadtimes -->
+				<option {Selected} value="{ID}">{DisplayName}</option>
+				<!-- END reloadtimes -->
+			</select>
+			</td>
+		</tr>
+		</table>
+		</form>
+	</td>
+
 <!-- IF main_recordcount_found="true" -->
 	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
 	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>

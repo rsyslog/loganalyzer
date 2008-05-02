@@ -64,6 +64,7 @@ $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Det
 $CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens phplogcon the first time. 
 											// Currently only "default" and "dark" are available. 
 $CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
+$CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is set to anything higher the 0 (which means disabled), this means auto reload is enabled by default. 
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button

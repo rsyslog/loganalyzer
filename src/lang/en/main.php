@@ -64,10 +64,15 @@ $content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message
 $content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
 $content['LN_VIEW_FILTERFOR'] = "Filter message for ";
 
-
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight words comma separated";
+
+$content['LN_AUTORELOAD'] = "Set auto reload";
+$content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
+$content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
+$content['LN_AUTORELOAD_SECONDS'] = "seconds";
+$content['LN_AUTORELOAD_MINUTES'] = "minutes";
 
 $content['LN_ERROR_NORECORDS'] = "No syslog records found.";
 

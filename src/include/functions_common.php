@@ -186,6 +186,9 @@ function InitPhpLogCon()
 	// Init predefined paging sizes
 	CreatePagesizesList();
 
+	// Init predefined reload times
+	CreateReloadTimesList();
+
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
@@ -248,19 +251,49 @@ function CreatePagesizesList()
 {
 	global $CFG, $content;
 
-	$content['pagesizes'][0] = array( "ID" => 0, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] );
-	$content['pagesizes'][1] = array( "ID" => 1, "Selected" => "", "DisplayName" => " 25 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 25 );
-	$content['pagesizes'][2] = array( "ID" => 2, "Selected" => "", "DisplayName" => " 50 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 50 );
-	$content['pagesizes'][3] = array( "ID" => 3, "Selected" => "", "DisplayName" => " 75 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 75 );
-	$content['pagesizes'][4] = array( "ID" => 4, "Selected" => "", "DisplayName" => " 100 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 100 );
-	$content['pagesizes'][5] = array( "ID" => 5, "Selected" => "", "DisplayName" => " 250 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 250 );
-	$content['pagesizes'][6] = array( "ID" => 6, "Selected" => "", "DisplayName" => " 500 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 500 );
+	$iCounter = 0;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 25 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 25 ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 50 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 50 ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 75 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 75 ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 100 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 100 ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 250 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 250 ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 500 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 500 ); $iCounter++;
 	
 	// Set default selected pagesize
 	$content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Selected"] = "selected";
 
 	// The content variable will now contain the user selected oaging size
 	$content["ViewEntriesPerPage"] = $content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Value"];
+}
+
+function CreateReloadTimesList()
+{
+	global $CFG, $content;
+
+// $CFG['ViewEnableAutoReloadSeconds']
+	$iCounter = 0;	
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_DISABLED'], "Value" => 0 ); $iCounter++;
+	if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+	{
+		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $CFG['ViewEnableAutoReloadSeconds'] . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $CFG['ViewEnableAutoReloadSeconds'] ); $iCounter++;
+	}
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 5 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 10 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 10 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 15 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 15 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 30 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 30 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 60 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 60 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_MINUTES'], "Value" => 300 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 10 " . $content['LN_AUTORELOAD_MINUTES'], "Value" => 600 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 15 " . $content['LN_AUTORELOAD_MINUTES'], "Value" => 900 ); $iCounter++;
+	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 30 " . $content['LN_AUTORELOAD_MINUTES'], "Value" => 1800 ); $iCounter++;
+
+	// Set default selected autoreloadid
+	$content['reloadtimes'][ $_SESSION['AUTORELOAD_ID'] ]["Selected"] = "selected";
+
+	// The content variable will now contain the user selected oaging size
+	$content["ViewEnableAutoReloadSeconds"] = $content['reloadtimes'][ $_SESSION['AUTORELOAD_ID'] ]["Value"];
+
 }
 
 function CreatePredefinedSearches()
@@ -457,6 +490,15 @@ function InitConfigurationValues()
 	{
 		// Default is 0! 
 		$_SESSION['PAGESIZE_ID'] = 0;
+	}
+
+	// Auto reload handling!
+	if ( !isset($_SESSION['AUTORELOAD_ID']) )
+	{
+		if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+			$_SESSION['AUTORELOAD_ID'] = 1; // Autoreload ID will be the first item!
+		else	// Default is 0, which means auto reload disabled
+			$_SESSION['AUTORELOAD_ID'] = 0;
 	}
 
 	// Theme Handling

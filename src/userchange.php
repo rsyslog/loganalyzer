@@ -64,8 +64,14 @@ if ( isset($_GET['op']) )
 
 	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
 	{
-		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < 7 ) 
+		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < count($content['pagesizes']) ) 
 			$_SESSION['PAGESIZE_ID'] = intval($_GET['pagesizeid']);
+	}
+
+	if ( $_GET['op'] == "autoreload" && isset($_GET['autoreloadtime']) ) 
+	{
+		if ( intval($_GET['autoreloadtime']) >= 0 && intval($_GET['autoreloadtime']) < count($content['reloadtimes']) ) 
+			$_SESSION['AUTORELOAD_ID'] = intval($_GET['autoreloadtime']);
 	}
 	
 }

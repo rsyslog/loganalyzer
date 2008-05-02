@@ -67,6 +67,12 @@ $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight-W&ouml;rter durch ein  Komma voneinander trennen";
 
+$content['LN_AUTORELOAD'] = "Set auto reload";
+$content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
+$content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
+$content['LN_AUTORELOAD_SECONDS'] = "seconds";
+$content['LN_AUTORELOAD_MINUTES'] = "minutes";
+
 $content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.";
 
 // Filter Options
