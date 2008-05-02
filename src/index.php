@@ -57,17 +57,24 @@ $content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css"
 $content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
 // --- 
 
-// --- Set Autoreload as meta refresh
-if ( $content['ViewEnableAutoReloadSeconds'] > 0 )
-	$content['EXTRA_METATAGS'] = '<META HTTP-EQUIV=REFRESH CONTENT=' . $content['ViewEnableAutoReloadSeconds'] . '>' . "\r\n";
-// ---
-
-
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
 	$content['uid_current'] = intval($_GET['uid']);
 else
 	$content['uid_current'] = UID_UNKNOWN;
+
+// --- Set Autoreload as meta refresh
+if ( $content['uid_current'] == UID_UNKNOWN )
+{
+	$content['ViewEnableAutoReloadSeconds_visible'] = true;
+	if ( $content['ViewEnableAutoReloadSeconds'] > 0 )
+		$content['EXTRA_METATAGS'] = '<META HTTP-EQUIV=REFRESH CONTENT=' . $content['ViewEnableAutoReloadSeconds'] . '>' . "\r\n";
+}
+else
+	$content['ViewEnableAutoReloadSeconds_visible'] = false;
+
+// ---
+
 
 // Init Pager variables
 // $content['uid_previous'] = UID_UNKNOWN;

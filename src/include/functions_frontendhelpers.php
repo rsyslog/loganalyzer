@@ -86,7 +86,7 @@ function CreateCurrentUrl()
 		// If the DefaultSourceID differes from the SourceID in our Session, we will append the sourceid within all URL's!
 		if ( $CFG['DefaultSourceID'] != $_SESSION['currentSourceID'] )
 		{
-			$content['additional_url'] .= "&sourceid=" . $_SESSION['currentSourceID'];
+//			$content['additional_url'] .= "&sourceid=" . $_SESSION['currentSourceID'];
 			$content['additional_url_uidonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
 			$content['additional_url_sortingonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
 			$content['additional_url_sourceonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
@@ -131,6 +131,11 @@ function CreateCurrentUrl()
 							// only add once
 							if ( strlen($content['additional_url_sortingonly']) <= 0 )
 								$content['additional_url_sortingonly'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+						}
+						else if ( $tmpvars[0] == "sourceid" )
+						{	
+							// Skip this entry
+							continue;
 						}
 						else
 							$content['additional_url'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];

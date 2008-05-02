@@ -100,6 +100,7 @@
 <!-- ENDIF main_currentpagenumber_found="true" -->
 	</td>
 
+<!-- IF ViewEnableAutoReloadSeconds_visible="true" -->
 	<td nowrap width="105" class="cellmenu2">{LN_AUTORELOAD}:</td>
 	<td nowrap width="50" class="line2">
 		<form action="userchange.php" method="get" name="autoreload">
@@ -118,6 +119,7 @@
 		</table>
 		</form>
 	</td>
+<!-- ENDIF ViewEnableAutoReloadSeconds_visible="true" -->
 
 <!-- IF main_recordcount_found="true" -->
 	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>

@@ -618,11 +618,11 @@ function InitPageTitle()
 	else
 		$szReturn = "";
 
+	if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
+		$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
+
 	// Append phpLogCon
 	$szReturn .= "phpLogCon";
-
-	if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
-		$szReturn .= " :: Source '" . $content['Sources'][$currentSourceID]['Name'] . "'";
 
 	// return result
 	return $szReturn;

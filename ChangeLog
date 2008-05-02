@@ -1,9 +1,21 @@
 ---------------------------------------------------------------------------
+Version 2.3.1 (devel), 2008-05-02
+- The page title is now created with Source, and other useful informations. 
+  It is also possible to configure a custom title string with the 
+  configuration, which will be prepended into each phpLogcon page.
+- Added support for gzip compression (configurable), this will reduce
+  bandwidth and page load time.
+- Added Auto reload function into main list view, can be enabled by default
+  in the configuration as well. Done using a META REFRESH.
+- Added new configuration variable to set the default SourceID. The source
+  parameter will be appened to all necessary links and forms within 
+  phplogcon, if the session sources differs from the default one. 
+---------------------------------------------------------------------------
 Version 2.3.0 (devel), 2008-04-30
 - Added "Back to Listview" button in the detailview. 
 - Added filter for message type 
-- Added inline button menus into the listview. Most values can be clicked now, 
-  which opens a menu with additional useful links. 
+- Added inline button menus into the listview. Most values can be clicked 
+  now, which opens a menu with additional useful links. 
 - Added Pagesite Selection into listview, so you can change the amount of
   records you want to see on one page at any time you want. 
 - greatly improved database performance, runs much better now, but there
