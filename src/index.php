@@ -86,12 +86,6 @@ $content['searchstr'] = "";
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
-
-//if ( isset($content['myserver']) ) 
-//	$content['TITLE'] = "phpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
-//else
-	$content['TITLE'] = "phpLogCon :: Home";
-
 // --- BEGIN Define Helper functions
 function HighLightString($highlightArray, $strmsg)
 {
@@ -170,6 +164,16 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 	}
 }
 // --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+// Append custom title part!
+if ( isset($content['searchstr']) && strlen($content['searchstr']) > 0 ) 
+	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr'] . "'";	// Append search
+else
+	$content['TITLE'] .= " :: All Syslogmessages";
+// --- END CREATE TITLE
 
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )

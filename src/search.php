@@ -60,14 +60,7 @@ $content['searchstr'] = "";
 
 // ---
 
-//if ( isset($content['myserver']) ) 
-//	$content['TITLE'] = "phpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
-//else
-	$content['TITLE'] = "phpLogCon :: Search";
-// --- 
-
 // --- BEGIN Custom Code
-
 if ( (isset($_POST['search']) || isset($_GET['search'])) )
 {
 	// Copy search over
@@ -180,8 +173,14 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 	// Redirect to the index page now!
 	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search");
 }
-
 // --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+// Append custom title part!
+$content['TITLE'] .= " :: Search";
+// --- END CREATE TITLE
 
 // --- Parsen and Output
 InitTemplateParser();

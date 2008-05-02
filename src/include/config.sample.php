@@ -54,6 +54,7 @@ $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Set
 // --- 
 
 // --- Default Frontend Options 
+$CFG['PrependTitle'] = "";					// If set, this	text will be prepended withint the title tag
 $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yesterday is displayed as "today" and "yesterday"
 $CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page

@@ -96,9 +96,6 @@ $content['searchstr'] = "";
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
-// Set Page title
-$content['TITLE'] = "phpLogCon :: Details";
-
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
@@ -350,6 +347,22 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 	$stream->Close();
 }
 // --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+if ( $content['messageenabled'] == "true" ) 
+{
+	// Append custom title part!
+	$content['TITLE'] .= " :: Details for '" . $content['uid_current'] . "'";
+}
+else
+{
+	// APpend to title Page title
+	$content['TITLE'] .= " :: Unknown uid";
+}
+// --- END CREATE TITLE
+
 
 // --- Parsen and Output
 InitTemplateParser();

@@ -71,8 +71,8 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.3.0";
-$content['TITLE'] = "PhpLogCon - Release " . $content['BUILDNUMBER'];	// Title of the Page 
+$content['BUILDNUMBER'] = "2.3.1";
+$content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
@@ -553,6 +553,29 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
 	exit;
 }
+
+/*
+*	Helper function to initialize the page title!
+*/
+function InitPageTitle()
+{
+	global $content, $CFG, $currentSourceID;
+
+	if ( isset($CFG['PrependTitle']) && strlen($CFG['PrependTitle']) > 0 )
+		$szReturn = $CFG['PrependTitle'] . " :: ";
+	else
+		$szReturn = "";
+
+	// Append phpLogCon
+	$szReturn .= "phpLogCon";
+
+	if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
+		$szReturn .= " :: Source '" . $content['Sources'][$currentSourceID]['Name'] . "'";
+
+	// return result
+	return $szReturn;
+}
+
 
 function GetStringWithHTMLCodes($myStr)
 {
