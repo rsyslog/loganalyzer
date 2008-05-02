@@ -169,9 +169,15 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		if ( isset($_GET['filter_message']) && strlen($_GET['filter_message']) > 0 )
 			$content['searchstr'] .= $_GET['filter_message'];
 	}
+	
+	// Append sourceid if needed
+	if ( isset($_GET['sourceid']) && isset($content['Sources'][ $_GET['sourceid'] ]) )
+		$sourceidstr = "&sourceid=" . $_GET['sourceid'];
+	else
+		$sourceidstr = "";
 
 	// Redirect to the index page now!
-	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search");
+	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search" . $sourceidstr);
 }
 // --- 
 

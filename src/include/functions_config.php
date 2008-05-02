@@ -132,8 +132,12 @@
 				$currentSourceID = $_SESSION['currentSourceID'];
 			else
 			{
-				// No Source stored in session, then to so now!
-				$_SESSION['currentSourceID'] = $currentSourceID;
+				if ( isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ]) ) 
+					// Set Source to preconfigured sourceID!
+					$_SESSION['currentSourceID'] = $CFG['DefaultSourceID'];
+				else
+					// No Source stored in session, then to so now!
+					$_SESSION['currentSourceID'] = $currentSourceID;
 			}
 		}
 		

@@ -592,7 +592,8 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	}
 
 	//Add the first source! 
-	$firstsource =	"\$CFG['Sources']['Source1']['ID'] = 'Source1';\r\n" . 
+	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\r\n\r\n" . 
+					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\r\n" . 
 					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\r\n" . 
 					"\$CFG['Sources']['Source1']['SourceType'] = " . $_SESSION['SourceType'] . ";\r\n";
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 

@@ -67,13 +67,36 @@ function InstallFileReminder()
 
 function CreateCurrentUrl()
 {
-	global $content;
+	global $content, $CFG;
 	$content['CURRENTURL'] = $_SERVER['PHP_SELF']; // . "?" . $_SERVER['QUERY_STRING']
 	
 	// Init additional_url helper variable
 	$content['additional_url'] = ""; 
 	$content['additional_url_uidonly'] = ""; 
 	$content['additional_url_sortingonly'] = ""; 
+	$content['additional_url_sourceonly'] = ""; 
+	
+	// Hidden Vars Counter
+	$hvCounter = 0;
+
+	// Append SourceID into everything!
+	if ( (isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ])) && isset($_SESSION['currentSourceID']) ) 
+	{
+
+		// If the DefaultSourceID differes from the SourceID in our Session, we will append the sourceid within all URL's!
+		if ( $CFG['DefaultSourceID'] != $_SESSION['currentSourceID'] )
+		{
+			$content['additional_url'] .= "&sourceid=" . $_SESSION['currentSourceID'];
+			$content['additional_url_uidonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
+			$content['additional_url_sortingonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
+			$content['additional_url_sourceonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
+
+			// For forms!
+			$content['HIDDENVARS_SOURCE'][$hvCounter]['varname'] = "sourceid";
+			$content['HIDDENVARS_SOURCE'][$hvCounter]['varvalue'] = $_SESSION['currentSourceID'];
+			$hvCounter++;
+		}
+	}
 
 	// Now the query string:
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
@@ -82,7 +105,6 @@ function CreateCurrentUrl()
 		$content['CURRENTURL'] .= "?";
 
 		$queries = explode ("&", $_SERVER['QUERY_STRING']);
-		$counter = 0;
 		for ( $i = 0; $i < count($queries); $i++ )
 		{
 			// Some properties need to be filtered out. 
@@ -92,8 +114,8 @@ function CreateCurrentUrl()
 				if ( isset($tmpvars[1]) ) // Only if value param is set!
 				{
 					// For forms!
-					$content['HIDDENVARS'][$counter]['varname'] = $tmpvars[0];
-					$content['HIDDENVARS'][$counter]['varvalue'] = $tmpvars[1];
+					$content['HIDDENVARS'][$hvCounter]['varname'] = $tmpvars[0];
+					$content['HIDDENVARS'][$hvCounter]['varvalue'] = $tmpvars[1];
 					
 					if ( strlen($tmpvars[1]) > 0 )
 					{
@@ -114,7 +136,7 @@ function CreateCurrentUrl()
 							$content['additional_url'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
 					}
 
-					$counter++;
+					$hvCounter++;
 				}
 			}
 		}

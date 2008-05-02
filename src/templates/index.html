@@ -2,6 +2,9 @@
 
 <table border="0" cellspacing="0" cellpadding="2" align="center">
 <form action="" method="get" id="searchform" name="searchform">
+<!-- BEGIN HIDDENVARS_SOURCE -->
+<input type="hidden" name="{varname}" value="{varvalue}">
+<!-- END HIDDENVARS_SOURCE -->
 <tr> 
 	<td nowrap align="center" nowrap valign="middle">
 		<B>&nbsp;{LN_SEARCH_FILTER}</B>
@@ -15,7 +18,7 @@
 			  <li><h2 class="cellmenu1">{LN_GEN_PREDEFINEDSEARCHES}</h2>
 			<!-- BEGIN Search -->
 			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_presearches');">
-			  <a href="?{SearchQuery}" target="_top">{DisplayName}</a>
+			  <a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
 			  </li>
 			<!-- END Search -->
 			</ul>
@@ -28,7 +31,7 @@
 		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr}" class="SearchFormTextbox">
 		<br>
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
-		<a href="?search={LN_SEARCH}&filter={SearchCustomButtonSearch}" target="_top"><input name="lucky" type="button" value="{SearchCustomButtonCaption}" class="SearchFormControl"></a>
+		<a href="?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}" target="_top"><input name="lucky" type="button" value="{SearchCustomButtonCaption}" class="SearchFormControl"></a>
 		<input type="button" value="{LN_SEARCH_RESET}" class="SearchFormControl" OnClick="ResetFormValues('searchform');">
 		<input type="button" value="{LN_HIGHLIGHT}" class="SearchFormControl" OnClick="togglevisibility('HightLightArea');">
 		<br>
@@ -232,7 +235,7 @@
 				  </h2>
 				<!-- BEGIN buttons -->
 				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}" target="_top">{DisplayName}</a>
+				  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
 				  </li>
 				<!-- END buttons -->
 				</ul>
@@ -258,7 +261,7 @@
 				<!-- ENDIF ismessagefield!="true" -->
 
 				<!-- IF ismessagefield="true" -->
-				<a href="{detaillink}" class="syslogdetails" target="_top">
+				<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">
 					{fieldvalue}
 				</a>
 				<!-- ENDIF ismessagefield="true" -->
@@ -266,7 +269,7 @@
 			<!-- ENDIF hasdetails="false" -->
 			<!-- IF hasdetails="true" -->
 
-			<a href="{detaillink}" class="syslogdetails">{fieldvalue}
+			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails">{fieldvalue}
 			<span>
 				<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
 				<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
