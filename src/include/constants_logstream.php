@@ -124,6 +124,36 @@ $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
 
 // TODO! EventLog specific
+$fields[SYSLOG_EVENT_ID]['FieldID'] = SYSLOG_EVENT_ID;
+$fields[SYSLOG_EVENT_ID]['FieldCaptionID'] = 'LN_FIELDS_EVENTID';
+$fields[SYSLOG_EVENT_ID]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_EVENT_ID]['Sortable'] = true;
+$fields[SYSLOG_EVENT_ID]['DefaultWidth'] = "65";
+$fields[SYSLOG_EVENT_ID]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldID'] = SYSLOG_EVENT_LOGTYPE;
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldCaptionID'] = 'LN_FIELDS_EVENTLOGTYPE';
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_LOGTYPE]['Sortable'] = true;
+$fields[SYSLOG_EVENT_LOGTYPE]['DefaultWidth'] = "100";
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_SOURCE]['FieldID'] = SYSLOG_EVENT_SOURCE;
+$fields[SYSLOG_EVENT_SOURCE]['FieldCaptionID'] = 'LN_FIELDS_EVENTSOURCE';
+$fields[SYSLOG_EVENT_SOURCE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_SOURCE]['Sortable'] = true;
+$fields[SYSLOG_EVENT_SOURCE]['DefaultWidth'] = "100";
+$fields[SYSLOG_EVENT_SOURCE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_CATEGORY]['FieldID'] = SYSLOG_EVENT_CATEGORY;
+$fields[SYSLOG_EVENT_CATEGORY]['FieldCaptionID'] = 'LN_FIELDS_EVENTCATEGORY';
+$fields[SYSLOG_EVENT_CATEGORY]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_EVENT_CATEGORY]['Sortable'] = true;
+$fields[SYSLOG_EVENT_CATEGORY]['DefaultWidth'] = "50";
+$fields[SYSLOG_EVENT_CATEGORY]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_USER]['FieldID'] = SYSLOG_EVENT_USER;
+$fields[SYSLOG_EVENT_USER]['FieldCaptionID'] = 'LN_FIELDS_EVENTUSER';
+$fields[SYSLOG_EVENT_USER]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_USER]['Sortable'] = true;
+$fields[SYSLOG_EVENT_USER]['DefaultWidth'] = "85";
+$fields[SYSLOG_EVENT_USER]['FieldAlign'] = "left";
 
 // Message is the last element, this order is important for the Detail page for now!
 $fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
@@ -149,6 +179,7 @@ $dbmapping['monitorware'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
 $dbmapping['monitorware'][SYSLOG_EVENT_SOURCE] = "EventSource";
 $dbmapping['monitorware'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
 $dbmapping['monitorware'][SYSLOG_EVENT_USER] = "EventUser";
+
 
 $dbmapping['syslogng'][SYSLOG_UID] = "seq";
 $dbmapping['syslogng'][SYSLOG_DATE] = "datetime";

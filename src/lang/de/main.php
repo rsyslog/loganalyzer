@@ -108,6 +108,11 @@ $content['LN_FIELDS_PROCESSID'] = "Prozess ID";
 $content['LN_FIELDS_MESSAGETYPE'] = "Meldungstyp";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Meldung";
+	$content['LN_FIELDS_EVENTID'] = "Event ID";
+	$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlogtype";
+	$content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
+	$content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
+	$content['LN_FIELDS_EVENTUSER'] = "Event User";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Datenbank Host";
