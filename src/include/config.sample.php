@@ -72,13 +72,8 @@ $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the
 
 // --- Define which fields you want to see 
 //$CFG['ShowMessage'] = true;					// If enabled, the Message column will be appended to the columns list.
-$CFG['Columns'][] = SYSLOG_DATE;
-$CFG['Columns'][] = SYSLOG_FACILITY;
-$CFG['Columns'][] = SYSLOG_SEVERITY;
-$CFG['Columns'][] = SYSLOG_HOST;
-$CFG['Columns'][] = SYSLOG_SYSLOGTAG;
-$CFG['Columns'][] = SYSLOG_MESSAGETYPE;
-$CFG['Columns'][] = SYSLOG_MESSAGE;
+//Eventlog based fields: $CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, /*SYSLOG_EVENT_CATEGORY, */SYSLOG_EVENT_ID, SYSLOG_MESSAGE );
+$CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE );
 // ---
 
 // --- Predefined Searches! 
