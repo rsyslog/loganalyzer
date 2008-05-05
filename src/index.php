@@ -386,8 +386,19 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetMessageTypeDisplayName( $logArray[$mycolkey] ). "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
-								
 							}
+							/* Eventlog based fields */
+							else if ( $mycolkey == SYSLOG_EVENT_ID )
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_ID
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=eventid%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
+
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
@@ -483,7 +494,27 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
-
+							/* Eventlog based fields */
+							else if ( $mycolkey == SYSLOG_EVENT_LOGTYPE ) 
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_LOGTYPE
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=eventlogtype%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
+							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_SOURCE
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=eventlogsource%3A' . $logArray[$mycolkey] . '&search=Search', 
+									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
 						}
 					}
 				}
