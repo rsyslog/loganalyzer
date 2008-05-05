@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 2.1.5 (beta), 2008-05-05
+- Converted all files into UNIX format (^M has been removed)
+---------------------------------------------------------------------------
 Version 2.3.1 (devel), 2008-05-02
 - The page title is now created with Source, and other useful informations. 
   It is also possible to configure a custom title string with the 
@@ -21,13 +24,13 @@ Version 2.3.0 (devel), 2008-04-30
 - greatly improved database performance, runs much better now, but there
   is still room for further optimization
 ---------------------------------------------------------------------------
-Version 2.1.4 (devel), 2008-04-29
+Version 2.1.4 (beta), 2008-04-29
 - Added missing facility 10 to 15 from RFC3164 into phhlogcon
 ---------------------------------------------------------------------------
-Version 2.1.3 (devel), 2008-04-28
+Version 2.1.3 (beta), 2008-04-28
 - Fixed a bug in the installer, the table type was not written into the
   configuration.
-Version 2.1.2 (devel), 2008-04-28
+Version 2.1.2 (beta), 2008-04-28
 ---------------------------------------------------------------------------
 - Removed syslog sample logfile from samplelogs, fixed minor issue in the
   installer
@@ -38,7 +41,7 @@ Version 2.1.2 (devel), 2008-04-28
 - Changed database layout from winsyslog to monitorware.
   Added more debug handling
 ---------------------------------------------------------------------------
-Version 2.1.1 (devel), 2008-04-25
+Version 2.1.1 (beta), 2008-04-25
 - added detail page into phpLogCon. The detail page shows all possible
   details of a syslog message. It also possible to page in the 
   detail view.
@@ -49,5 +52,5 @@ Version 2.1.1 (devel), 2008-04-25
   duplicated ones from before. 
 - added full german translation (thanks to Tom Bergfeld for providing it)
 ---------------------------------------------------------------------------
-Version 2.1.0 (devel), 2008-04-24
+Version 2.1.0 (beta), 2008-04-24
 - initial release of the rewritten phpLogCon v2
