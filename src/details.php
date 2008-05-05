@@ -370,4 +370,5 @@ $page -> parser($content, "details.html");
 $page -> output(); 
 // --- 
 
+
 ?>
