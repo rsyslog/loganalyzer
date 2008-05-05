@@ -210,4 +210,3 @@ function DebugShowElementsById(ObjName)
 		document.write(obj[key]);
 	}
 }
-
