@@ -63,6 +63,7 @@ $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
 $content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
 $content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
 $content['LN_VIEW_FILTERFOR'] = "Filter message for ";
+$content['LN_VIEW_SEARCHFOR'] = "Search online for ";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
@@ -110,7 +111,7 @@ $content['LN_FIELDS_MESSAGETYPE'] = "Messagetype";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Message";
 $content['LN_FIELDS_EVENTID'] = "Event ID";
-$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlogtype";
+$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlog Type";
 $content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
 $content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
 $content['LN_FIELDS_EVENTUSER'] = "Event User";

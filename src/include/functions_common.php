@@ -395,6 +395,8 @@ function InitFrontEndVariables()
 	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
 	$content['MENU_TEXT_FIND'] = $content['BASEPATH'] . "images/icons/text_find.png";
+	$content['MENU_NETWORK'] = $content['BASEPATH'] . "images/icons/earth_network.png";
+	
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

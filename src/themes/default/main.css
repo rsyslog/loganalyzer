@@ -123,7 +123,7 @@ font
 /* Cells for listening */
 .line0
 {
-	height: 16px;
+/*	height: 16px;*/
 	font-size: 8pt;
 	color: #000000;
 	background-color: #DDDDDD;
@@ -135,7 +135,7 @@ font
 
 .line1
 {
-	height: 16px;
+/*	height: 16px;*/
 	font-size: 8pt;
 	color: #000000;
 	background-color: #EEEEEE;
@@ -147,7 +147,7 @@ font
 
 .line2
 {
-	height: 16px;
+/*	height: 16px;*/
 	font-size: 8pt;
 	color: #000000;
 	background-color: #F5F5F5;
@@ -162,34 +162,6 @@ font
 	color: #000000;
 	background-color: #F5F5F5;
 }
-
-/*
-.line_alt0
-{
-	font-size: 8pt;
-	color: #000000;
-	background-color: #AAAAAA;
-	background-image: url("images/dither.png"); 
-}
-.line_alt0:hover 
-{ 
-	background-color:#F9F9F9; 
-	background-image: url("images/dither.png"); 
-}
-
-.line_alt1
-{
-	font-size: 8pt;
-	color: #000000;
-	background-color: #DDDDDD;	
-	background-image: url("images/dither.png"); 
-}
-.line_alt1:hover 
-{ 
-	background-color:#F9F9F9; 
-	background-image: url("images/dither.png"); 
-}
-*/
 
 .lineColouredWhite, .lineColouredWhite:hover, A.lineColouredWhite
 {
@@ -302,7 +274,7 @@ A.cellmenu1_link:hover
 
 .cellmenu2
 {
-	height: 15px;
+/*	height: 15px; */
 	border:1px inset;
 	border-color: #79AABE #09506C #09506C #79AABE;
 

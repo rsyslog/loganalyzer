@@ -15,7 +15,8 @@
 		<ul>
 		  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter" OnClick="ToggleDisplayTypeById('menu_presearches');">
 			<ul class="with_border" id="menu_presearches">
-			  <li><h2 class="cellmenu1">{LN_GEN_PREDEFINEDSEARCHES}</h2>
+			  <li class="cellmenu1">
+			  <h2>{LN_GEN_PREDEFINEDSEARCHES}</h2>
 			<!-- BEGIN Search -->
 			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_presearches');">
 			  <a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
@@ -223,7 +224,7 @@
 
 		<!-- BEGIN values -->
 
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
+		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap} height="16">
 			<!-- IF hasbuttons="true" -->
 				<!-- IF hasdropdownbutton="true" -->
 				<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
@@ -232,13 +233,11 @@
 			<ul>
 			  <li>
 				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
-				  <li OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <h2 class="cellmenu1">{LN_GEN_AVAILABLESEARCHES}
-				  </h2>
+				  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
 				<!-- BEGIN buttons -->
 				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
-				  </li>
+				  <a href="{ButtonUrl}" target="_top"><img align="left" src="{IconSource}" width="16" height="16">{DisplayName}</a></li>
 				<!-- END buttons -->
 				</ul>
 			  </li>

@@ -12,25 +12,22 @@
 /* style, color and size links and headings to suit */
 #menu a, #menu h2 {
 	display: block;
-	border-width: 1px;
-	border-style: solid;
-	margin: 0;
-	padding: 1px 1px;
+	margin: 2px;
+	padding: 1px 1px; 
 }
 
 #menu h2 {
+	font-size: 12px;
 	font: bold;
 	text-align: center;
 }
 
 #menu a {
 	text-decoration: none;
-	border-color: #44617D #203040 #203040 #44617D; 
 }
 
 #menu a:hover {
 	text-decoration: none;
-	border-color: #44617D #203040 #203040 #44617D; 
 }
 
 #menu li {
@@ -38,8 +35,16 @@
 	position: relative;
 } 
 
+#menu ul li ul li {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #44617D #203040 #203040 #44617D;
+} 
+
 #menu ul ul {
 	z-index:10;
+
+/*	border-color: #44617D #203040 #203040 #44617D; */
 
 	position: absolute;
 	top: 12px;
