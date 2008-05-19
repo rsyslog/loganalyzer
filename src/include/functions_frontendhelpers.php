@@ -51,7 +51,7 @@ function InitFrontEndDefaults()
 	// --- END Main Info Area
 	
 	// Check if install file still exists
-	InstallFileReminder();
+	// NOT NEEDED ANYMORE InstallFileReminder();
 }
 
 function InstallFileReminder()

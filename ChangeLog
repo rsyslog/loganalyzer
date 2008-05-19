@@ -10,6 +10,8 @@ Version 2.3.1 (devel), 2008-05-02
 - Added new configuration variable to set the default SourceID. The source
   parameter will be appened to all necessary links and forms within 
   phplogcon, if the session sources differs from the default one. 
+Version 2.1.5 (beta), 2008-05-05
+- Converted all files into UNIX format (^M has been removed)
 ---------------------------------------------------------------------------
 Version 2.3.0 (devel), 2008-04-30
 - Added "Back to Listview" button in the detailview. 
@@ -21,13 +23,13 @@ Version 2.3.0 (devel), 2008-04-30
 - greatly improved database performance, runs much better now, but there
   is still room for further optimization
 ---------------------------------------------------------------------------
-Version 2.1.4 (devel), 2008-04-29
+Version 2.1.4 (beta), 2008-04-29
 - Added missing facility 10 to 15 from RFC3164 into phhlogcon
 ---------------------------------------------------------------------------
-Version 2.1.3 (devel), 2008-04-28
+Version 2.1.3 (beta), 2008-04-28
 - Fixed a bug in the installer, the table type was not written into the
   configuration.
-Version 2.1.2 (devel), 2008-04-28
+Version 2.1.2 (beta), 2008-04-28
 ---------------------------------------------------------------------------
 - Removed syslog sample logfile from samplelogs, fixed minor issue in the
   installer
