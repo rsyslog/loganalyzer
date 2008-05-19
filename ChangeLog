@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 2.1.6 (beta), 2008-05-19
+- Fixed filter bug, if you want to filter with ":", you can do this by 
+  using "\:" now.
+- Added donate button ;)
+- Changed install.php handling, so it is not necessary to remove the 
+  script after installation anymore. It is only possible to use 
+  install.php if the config.php is empty or does not exist. 
+- Added check for installed PHP Version. phpLogCon will refuse to run 
+  on PHP4 or lower from now on!
+---------------------------------------------------------------------------
 Version 2.3.1 (devel), 2008-05-02
 - The page title is now created with Source, and other useful informations. 
   It is also possible to configure a custom title string with the 
