@@ -43,6 +43,7 @@ if ( !defined('IN_PHPLOGCON') )
 include($gl_root_path . 'include/constants_general.php');
 include($gl_root_path . 'include/constants_logstream.php');
 
+/*
 if ( is_file($gl_root_path . 'config.php') )
 	include($gl_root_path . 'config.php');
 else
@@ -51,6 +52,7 @@ else
 	if ( !defined('IN_PHPLOGCON_INSTALL') )
 		CheckForInstallPhp();
 }
+*/
 
 include($gl_root_path . 'classes/class_template.php');
 include($gl_root_path . 'include/functions_themes.php');
@@ -104,7 +106,7 @@ function InitBasicPhpLogCon()
 	StartPHPSession();
 }
 
-function InitPhpLogConConfigFile()
+function InitPhpLogConConfigFile($bHandleMissing = true)
 {
 	// Needed to make global
 	global $CFG, $gl_root_path, $content;
@@ -131,11 +133,20 @@ function InitPhpLogConConfigFile()
 			$content['ShowPageRenderStats'] = "true";
 			InitPageRenderStats();
 		}
+		
+		// return result
+		return true;
 	}
 	else
 	{
-		// Check for installscript!
-		CheckForInstallPhp();
+		// if handled ourselfe, we die in CheckForInstallPhp.
+		if ( $bHandleMissing == true )
+		{
+			// Check for installscript!
+			CheckForInstallPhp();
+		}
+		else
+			return false;
 	}
 }
 
