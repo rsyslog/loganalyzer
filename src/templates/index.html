@@ -87,11 +87,11 @@
 </script>
 <!-- ENDIF EXPAND_HIGHLIGHT="true" -->
 
-
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td colspan="3" class="title" nowrap><B>Recent syslog messages</B></td>
+	<td class="title" nowrap><B>Recent syslog messages</B></td>
 </tr>
+</table>
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
@@ -189,125 +189,168 @@
 		</td>
 <!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
 <!-- ENDIF main_pagerenabled="true" -->
-
 </tr>
 </table>
 
+<!-- IF syslogmessagesenabled="true" -->
+<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 <tr>
-	<td width="100%" valign="top">
+	<!-- IF MiscShowDebugGridCounter="1" -->
+	<td class="cellmenu1"><B>Debug</B></td>
+	<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
-	<!-- IF syslogmessagesenabled="true" -->
-	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
-	<tr>
-		<!-- IF MiscShowDebugGridCounter="1" -->
-		<td class="cellmenu1"><B>Debug</B></td>
-		<!-- ENDIF MiscShowDebugGridCounter="1" -->
+	<!-- BEGIN fields -->
+	<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap {colspan}>
+		<!-- IF FieldSortable="true" -->
+		<a HREF="?sorting={FieldID}{additional_url_uidonly}{additional_url}" class="cellmenu1_link" >
+		<!-- ENDIF FieldSortable="true" -->
+		<B>{FieldCaption}</B>
+		<!-- IF FieldSortable="true" -->
+		</a>
+		<!-- ENDIF FieldSortable="true" -->
+	</td>
+	<!-- END fields -->
+</tr>
 
-		<!-- BEGIN fields -->
-		<td width="{DefaultWidth}" class="cellmenu1" align="center" nowrap {colspan}>
-			<!-- IF FieldSortable="true" -->
-			<a HREF="?sorting={FieldID}{additional_url_uidonly}{additional_url}" class="cellmenu1_link" >
-			<!-- ENDIF FieldSortable="true" -->
-			<B>{FieldCaption}</B>
-			<!-- IF FieldSortable="true" -->
-			</a>
-			<!-- ENDIF FieldSortable="true" -->
-		</td>
-		<!-- END fields -->
-	</tr>
+<!-- BEGIN syslogmessages -->
+<tr>
+	<!-- IF MiscShowDebugGridCounter="1" -->
+	<td class="{cssclass}" >{ZAEHLER}</td>
+	<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
-	<!-- BEGIN syslogmessages -->
-	<tr>
-		<!-- IF MiscShowDebugGridCounter="1" -->
-		<td class="{cssclass}" >{ZAEHLER}</td>
-		<!-- ENDIF MiscShowDebugGridCounter="1" -->
-
-		<!-- BEGIN values -->
-
-		<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap} height="16">
-			<!-- IF hasbuttons="true" -->
-				<!-- IF hasdropdownbutton="true" -->
-				<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
-				<!-- ENDIF hasdropdownbutton="true" -->
-			<div id="menu">
-			<ul>
-			  <li>
-				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
-				  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
-				<!-- BEGIN buttons -->
-				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <a href="{ButtonUrl}" target="_top"><img align="left" src="{IconSource}" width="16" height="16">{DisplayName}</a></li>
-				<!-- END buttons -->
-				</ul>
+	<!-- BEGIN values -->
+	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
+		<!-- IF hasbuttons="true" -->
+			<!-- IF hasdropdownbutton="true" -->
+			<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+			<!-- ENDIF hasdropdownbutton="true" -->
+		<div id="menu">
+		<ul>
+		  <li>
+			<ul class="with_border" id="menu_{FieldColumn}_{uid}">
+			  <li OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+			  <h2 class="cellmenu1">{LN_GEN_AVAILABLESEARCHES}
+			  </h2>
+			<!-- BEGIN buttons -->
+			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+			  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
 			  </li>
+			<!-- END buttons -->
 			</ul>
-			</div>
-			<!-- ENDIF hasbuttons="true" -->
+		  </li>
+		</ul>
+		</div>
+		<!-- ENDIF hasbuttons="true" -->
 
-			<!-- IF hasdetails="false" -->
+		<!-- IF hasdetails="false" -->
 
-				<!-- IF ismessagefield!="true" -->
+			<!-- IF ismessagefield!="true" -->
 
-					<!-- IF hasbuttons="true" -->
-					<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">
-					{fieldvalue}
-					</a>
-					<!-- ENDIF hasbuttons="true" -->
-
-				<!-- IF hasbuttons!="true" -->
-				<b>{fieldvalue}</b>
-				<!-- ENDIF hasbuttons!="true" -->
-
-				<!-- ENDIF ismessagefield!="true" -->
-
-				<!-- IF ismessagefield="true" -->
-				<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">
-					{fieldvalue}
+				<!-- IF hasbuttons="true" -->
+				<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">
+				{fieldvalue}
 				</a>
-				<!-- ENDIF ismessagefield="true" -->
+				<!-- ENDIF hasbuttons="true" -->
 
-			<!-- ENDIF hasdetails="false" -->
-			<!-- IF hasdetails="true" -->
+			<!-- IF hasbuttons!="true" -->
+			<b>{fieldvalue}</b>
+			<!-- ENDIF hasbuttons!="true" -->
 
-			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails">{fieldvalue}
-			<span>
-				<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
-				<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
-				<!-- BEGIN messagesdetails -->
-				<tr>
-					<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
-					<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
-				</tr>
-				<!-- END messagesdetails -->
-				</table>
-			</span>
+			<!-- ENDIF ismessagefield!="true" -->
+
+			<!-- IF ismessagefield="true" -->
+			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">
+				{fieldvalue}
 			</a>
-			<!-- ENDIF hasdetails="true" -->
-		</td>
-		<!-- END values -->
+			<!-- ENDIF ismessagefield="true" -->
 
-	</tr>
-	<!-- END syslogmessages -->
+		<!-- ENDIF hasdetails="false" -->
+		<!-- IF hasdetails="true" -->
 
-	</table>
-	<!-- ENDIF syslogmessagesenabled="true" -->
+		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails">{fieldvalue}
+		<span>
+			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
+			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
+			<!-- BEGIN messagesdetails -->
+			<tr>
+				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
+				<td width="100%" class="{detailscssclass}" >{detailfieldvalue}</td>
+			</tr>
+			<!-- END messagesdetails -->
+			</table>
+		</span>
+		</a>
+		<!-- ENDIF hasdetails="true" -->
+	</td>
+	<!-- END values -->
 
-	<!-- IF syslogmessagesenabled="false" -->
-		<center>
-		<font color="red">
-		<br>
-		<h3>{LN_ERROR_NORECORDS} - Error Details: </h3>
-		{detailederror}
-		<br>
-		<br>
-		</font>
-		</center>
-	<!-- ENDIF syslogmessagesenabled="false" -->
+</tr>
+<!-- END syslogmessages -->
 
+</table>
+<!-- ENDIF syslogmessagesenabled="true" -->
+
+<!-- IF main_pagerenabled="true" -->
+<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+<tr>
+	<td nowrap width="100%"class="line2" align="left">&nbsp;</td>
+
+	<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+	<td class="line0" width="20" nowrap>
+	<!-- IF main_pager_first_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_first}{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
+	<!-- ENDIF main_pager_first_found="true" -->
+	<!-- IF main_pager_first_found!="true" -->
+		<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_first_found!="true" -->
+	</td>
+
+	<td class="line1" width="20" nowrap>
+	<!-- IF main_pager_previous_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
+	<!-- ENDIF main_pager_previous_found="true" -->
+	<!-- IF main_pager_previous_found!="true" -->
+		<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_previous_found!="true" -->
+	</td>
+
+	<!-- BEGIN syslogpages -->
+	<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
+	<!-- END syslogpages -->
+
+	<td class="line0" width="20" nowrap>
+	<!-- IF main_pager_next_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
+	<!-- ENDIF main_pager_next_found="true" -->
+	<!-- IF main_pager_next_found!="true" -->
+		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_next_found!="true" -->
+	</td>
+	
+	<td class="line1" width="20" nowrap>
+	<!-- IF main_pager_last_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_last}{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
+	<!-- ENDIF main_pager_last_found="true" -->
+	<!-- IF main_pager_last_found!="true" -->
+		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
+	<!-- ENDIF main_pager_last_found!="true" -->
 	</td>
 </tr>
 </table>
+<!-- ENDIF main_pagerenabled="true" -->
+
+
+<!-- IF syslogmessagesenabled="false" -->
+	<center>
+	<font color="red">
+	<br>
+	<h3>{LN_ERROR_NORECORDS} - Error Details: </h3>
+	{detailederror}
+	<br>
+	<br>
+	</font>
+	</center>
+<!-- ENDIF syslogmessagesenabled="false" -->
 
 
 <!-- INCLUDE include_footer.html -->
