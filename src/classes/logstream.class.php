@@ -244,7 +244,11 @@ abstract class LogStream {
 				if ( strlen(trim($myEntry)) <= 0 ) 
 					continue;
 
-				if ( strpos($myEntry, ":") !== false )
+				if ( 
+						($pos = strpos($myEntry, ":")) !== false 
+							&&
+						($pos > 0 && substr($myEntry, $pos-1,1) != '\\') /* Only if character before is no backslash! */
+					)
 				{
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
@@ -401,7 +405,12 @@ abstract class LogStream {
 					$this->_filters[SYSLOG_MESSAGE][][FILTER_TYPE] = FILTER_TYPE_STRING;
 					$iNum = count($this->_filters[SYSLOG_MESSAGE]) - 1;
 					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($myEntry);
-					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry;
+					
+					// Replace "\:" with ":", so we can filter with it ^^
+					if ( strpos($myEntry, ":") !== false ) 
+						$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = str_replace("\\:", ":", $myEntry);
+					else
+						$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry;
 				}
 			}
 		}
