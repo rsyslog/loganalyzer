@@ -1,7 +1,4 @@
 ---------------------------------------------------------------------------
-Version 2.1.5 (beta), 2008-05-05
-- Converted all files into UNIX format (^M has been removed)
----------------------------------------------------------------------------
 Version 2.3.1 (devel), 2008-05-02
 - The page title is now created with Source, and other useful informations. 
   It is also possible to configure a custom title string with the 
@@ -13,6 +10,8 @@ Version 2.3.1 (devel), 2008-05-02
 - Added new configuration variable to set the default SourceID. The source
   parameter will be appened to all necessary links and forms within 
   phplogcon, if the session sources differs from the default one. 
+Version 2.1.5 (beta), 2008-05-05
+- Converted all files into UNIX format (^M has been removed)
 ---------------------------------------------------------------------------
 Version 2.3.0 (devel), 2008-04-30
 - Added "Back to Listview" button in the detailview. 

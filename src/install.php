@@ -45,6 +45,8 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 InitBasicPhpLogCon();
+if ( InitPhpLogConConfigFile(false) ) 
+	DieWithErrorMsg( 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.');
 //InitPhpLogCon();
 
 // Set some static values
