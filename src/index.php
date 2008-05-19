@@ -184,11 +184,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	// --- Init the fields we need
 	foreach($content['Columns'] as $mycolkey)
 	{
-		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
-		$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
-		$content['fields'][$mycolkey]['FieldSortable'] = $stream->IsPropertySortable($mycolkey); // $fields[$mycolkey]['Sortable'];
-		$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
+		if ( isset($fields[$mycolkey]) )
+		{
+			$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
+			$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+			$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
+			$content['fields'][$mycolkey]['FieldSortable'] = $stream->IsPropertySortable($mycolkey); // $fields[$mycolkey]['Sortable'];
+			$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
+		}
 	}
 	// --- 
 
@@ -259,7 +262,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// --- Now we populate the values array!
 				foreach($content['Columns'] as $mycolkey)
 				{
-					if ( isset($logArray[$mycolkey]) )
+					if ( isset($fields[$mycolkey]) && isset($logArray[$mycolkey]) )
 					{
 						// Set defaults
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];

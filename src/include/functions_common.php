@@ -79,6 +79,13 @@ $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
 // --- 
 
+// --- Check PHP Version! If lower the 5, phplogcon will not work proberly!
+$myPhpVer = phpversion();
+$myPhpVerArray = explode('.', $myPhpVer);
+if ( $myPhpVerArray[0] < 5 )
+	DieWithErrorMsg( 'Error, the PHP Version on this Server does not meet the installation requirements.<br> <A HREF="http://www.php.net"><B>PHP5</B></A> or higher is needed. Current installed Version is: <B>' . $myPhpVer . '</B>');
+// ---
+
 function InitBasicPhpLogCon()
 {
 	// Needed to make global
