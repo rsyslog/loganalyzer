@@ -215,7 +215,7 @@
 <!-- BEGIN syslogmessages -->
 <tr>
 	<!-- IF MiscShowDebugGridCounter="1" -->
-	<td class="{cssclass}" >{ZAEHLER}</td>
+	<td class="{cssclass} gridline">{ZAEHLER}</td>
 	<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 	<!-- BEGIN values -->
@@ -228,12 +228,11 @@
 		<ul>
 		  <li>
 			<ul class="with_border" id="menu_{FieldColumn}_{uid}">
-			  <li OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-			  <h2 class="cellmenu1">{LN_GEN_AVAILABLESEARCHES}
-			  </h2>
+			  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+			  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
 			<!-- BEGIN buttons -->
 			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-			  <img align="left" src="{IconSource}" width="16" height="16"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
+			  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
 			  </li>
 			<!-- END buttons -->
 			</ul>
