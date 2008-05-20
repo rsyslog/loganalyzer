@@ -350,6 +350,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_FACILITY'] . " '" . GetFacilityDisplayName($logArray[$mycolkey]) . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_FACILITY']) . '+' . GetFacilityDisplayName($logArray[$mycolkey]), 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_FACILITY'] . " '" . GetFacilityDisplayName($logArray[$mycolkey]) . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -379,7 +384,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SEVERITY'] . " '" . GetSeverityDisplayName($logArray[$mycolkey]) . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
-
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_SEVERITY']) . '+' . GetSeverityDisplayName($logArray[$mycolkey]), 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_SEVERITY'] . " '" . GetSeverityDisplayName($logArray[$mycolkey]) . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -419,6 +428,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
+									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
 									);
 							}
 						}
@@ -510,6 +524,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SYSLOGTAG'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_SYSLOGTAG']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_SYSLOGTAG'] . " '" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
@@ -536,6 +555,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTLOGTYPE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_EVENTLOGTYPE']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_EVENTLOGTYPE'] . " '" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
 							{
@@ -550,6 +574,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTSOURCE']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
+									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/googlesearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_EVENTSOURCE']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFORGOOGLE'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_ICON_GOOGLE']
 									);
 							}
 						}

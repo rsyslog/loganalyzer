@@ -434,6 +434,8 @@ function InitFrontEndVariables()
 	$content['MENU_BULLET_RED'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_red.png";
 	$content['MENU_BULLET_YELLOW'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_yellow.png";
 	$content['MENU_BULLET_GREY'] = $content['BASEPATH'] . "images/icons/bullet_ball_glass_grey.png";
+
+	$content['MENU_ICON_GOOGLE'] = $content['BASEPATH'] . "images/icons/googleicon.png";
 }
 
 // Lang Helper for Strings with ONE variable
