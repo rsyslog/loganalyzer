@@ -104,9 +104,9 @@ $content['LN_CFG_DBPREF'] = "Tabellen Pr&auml;fix";
 $content['LN_CFG_DBUSER'] = "Datenbank Benutzer";
 $content['LN_CFG_DBPASSWORD'] = "Datenbank Passwort";
 $content['LN_CFG_PARAMMISSING'] = "Die folgenden Parameter k&ouml;nnen nicht gefunden werden: ";
-$content['LN_CFG_SOURCETYPE'] = "Source Type";
-$content['LN_CFG_DISKTYPEOPTIONS'] = "Disk Type Options";
-$content['LN_CFG_LOGLINETYPE'] = "Logline type";
+$content['LN_CFG_SOURCETYPE'] = "Quell-Typ";
+$content['LN_CFG_DISKTYPEOPTIONS'] = "Disk-Typ Optionen";
+$content['LN_CFG_LOGLINETYPE'] = "Logzeilentyp";
 $content['LN_CFG_SYSLOGFILE'] = "Syslog Datei";
 $content['LN_CFG_DATABASETYPEOPTIONS'] = "Datenbank Typ Optionen";
 $content['LN_CFG_DBTABLETYPE'] = "Tabellen Typ";
@@ -116,7 +116,7 @@ $content['LN_CFG_NAMEOFTHESOURCE'] = "Name der Quelle";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
 
 // Details page
-$content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
-$content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
+$content['LN_DETAILS_FORSYSLOGMSG'] = "Details für syslog-Nachrichten mit der ID";
+$content['LN_DETAILS_DETAILSFORMSG'] = "Details für Nachrichten-ID";
 
 ?>
