@@ -415,7 +415,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
+									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&q=' . PrepareStringForSearch($content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);

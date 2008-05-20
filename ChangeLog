@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.3.2 (devel), 2008-05-20
+- Implemented Online Search button into the field submenus. The search 
+  uses our new repository at kb.monitorware.com. 
+- Added pager to the bottom of the index page as well (bugtracker id 76)
+- Added filtering support for the new Eventlog fields 
+- Adding field mapping definitions for Windows Eventlog which are: 
+  SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_CATEGORY, 
+  SYSLOG_EVENT_ID and SYSLOG_EVENT_USER
+- Simplified columns configuration definition in config.sample.php
+- Fixed minor css issues.
+---------------------------------------------------------------------------
 Version 2.1.6 (beta), 2008-05-19
 - Fixed filter bug, if you want to filter with ":", you can do this by 
   using "\:" now.
