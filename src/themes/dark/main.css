@@ -161,12 +161,12 @@ font
 	background-color: #1D3043;
 }
 
-.lineColouredWhite
+.lineColouredWhite, .lineColouredWhite:hover, a.lineColouredWhite
 {
 	font-size: 8pt;
 	color: #FFFFFF;
 }
-.lineColouredBlack
+.lineColouredBlack, .lineColouredBlack:hover, a.lineColouredBlack
 {
 	font-size: 8pt;
 	color: #000000;

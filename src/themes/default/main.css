@@ -163,12 +163,12 @@ font
 	background-color: #F5F5F5;
 }
 
-.lineColouredWhite, .lineColouredWhite:hover, A.lineColouredWhite
+.lineColouredWhite, .lineColouredWhite:hover, a.lineColouredWhite
 {
 	font-size: 8pt;
 	color: #FFFFFF;
 }
-.lineColouredBlack, .lineColouredBlack:hover, A.lineColouredBlack
+.lineColouredBlack, .lineColouredBlack:hover, a.lineColouredBlack
 {
 	font-size: 8pt;
 	color: #000000;
