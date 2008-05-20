@@ -113,6 +113,10 @@ function HighLightString($highlightArray, $strmsg)
 	return $strmsg;
 }
 
+function PrepareStringForSearch($myString)
+{
+	return str_replace(" ", "+", $myString);
+}
 // ---
 
 // --- Read and process filters from search dialog!
@@ -341,6 +345,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetFacilityDisplayName( $logArray[$mycolkey] ). "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_FACILITY']) . '+' . GetFacilityDisplayName($logArray[$mycolkey]), 
+									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_FACILITY'] . " '" . GetFacilityDisplayName($logArray[$mycolkey]) . "'", 
+									'IconSource' => $content['MENU_NETWORK']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -358,13 +367,19 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
 								}
 
-								// Set OnClick Menu for SYSLOG_FACILITY
+								// Set OnClick Menu for SYSLOG_SEVERITY
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
 									'ButtonUrl' => '?filter=severity%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . GetSeverityDisplayName( $logArray[$mycolkey] ). "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_SEVERITY']) . '+' . GetSeverityDisplayName($logArray[$mycolkey]), 
+									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SEVERITY'] . " '" . GetSeverityDisplayName($logArray[$mycolkey]) . "'", 
+									'IconSource' => $content['MENU_NETWORK']
+									);
+
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -401,12 +416,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
 							}
-
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
@@ -491,6 +505,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_SYSLOGTAG']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SYSLOGTAG'] . " '" . $logArray[$mycolkey] . "'", 
+									'IconSource' => $content['MENU_NETWORK']
+									);
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
@@ -513,7 +532,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTLOGTYPE']) . '+' . $logArray[$mycolkey], 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTLOGTYPE']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTLOGTYPE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
@@ -528,7 +547,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTSOURCE']) . '+' . $logArray[$mycolkey], 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . PrepareStringForSearch($content['LN_FIELDS_EVENTSOURCE']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
