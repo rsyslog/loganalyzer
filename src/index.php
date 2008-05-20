@@ -401,7 +401,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://global.phplogcon.org/?' . $logArray[$mycolkey] . '+' . str_replace(" ", "+", $content['LN_FIELDS_EVENTID']), 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTID']) . '+' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
@@ -513,11 +513,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://global.phplogcon.org/?' . $logArray[$mycolkey] . '+' . str_replace(" ", "+", $content['LN_FIELDS_EVENTLOGTYPE']), 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTLOGTYPE']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTLOGTYPE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
-
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
 							{
@@ -529,8 +528,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://global.phplogcon.org/?' . $logArray[$mycolkey] . '+' . str_replace(" ", "+", $content['LN_FIELDS_EVENTSOURCE']), 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . "'" . $logArray[$mycolkey] . "'", 
+									'ButtonUrl' => 'http://kb.monitorware.com/search.php?keywords=' . str_replace(" ", "+", $content['LN_FIELDS_EVENTSOURCE']) . '+' . $logArray[$mycolkey], 
+									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
 							}

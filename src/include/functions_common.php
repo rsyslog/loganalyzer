@@ -96,9 +96,6 @@ function InitBasicPhpLogCon()
 	// Check RunMode first!
 	CheckAndSetRunMode();
 
-	// Get and Set RunTime Informations
-	InitRuntimeInformations();
-
 	// Set the default line sep
 	SetLineBreakVar();
 
@@ -184,6 +181,9 @@ function InitPhpLogCon()
 	
 	// Will init the config file!
 	InitPhpLogConConfigFile();
+
+	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
+	InitRuntimeInformations();
 
 	// Establish DB Connection
 	if ( $CFG['UserDBEnabled'] )
