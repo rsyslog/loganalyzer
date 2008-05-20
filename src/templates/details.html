@@ -7,8 +7,8 @@
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
-	<td nowrap width="100%"class="line2" align="left" valign="top">
-	<a href="index.php?uid={uid_current}{additional_url_sourceonly}" target="_top"><img src="{MENU_HOMEPAGE}" width="16" align="left" title="{LN_DETAIL_BACKTOLIST}">{LN_DETAIL_BACKTOLIST}</a>
+	<td width="100%" class="line2" align="left">
+	<a href="index.php?uid={uid_current}{additional_url_sourceonly}" target="_top"><img src="{MENU_HOMEPAGE}" align="middle" width="16" height="16" alt="{LN_DETAIL_BACKTOLIST}" title="{LN_DETAIL_BACKTOLIST}">&nbsp;{LN_DETAIL_BACKTOLIST}</a>
 <!-- IF main_currentpagenumber_found="true" -->
 	{LN_GEN_PAGE} {main_currentpagenumber}
 <!-- ENDIF main_currentpagenumber_found="true" -->
@@ -22,7 +22,7 @@
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
 		<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_first_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_first}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
+		<a href="?{additional_url_sortingonly}&uid={uid_first}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" alt="{LN_GEN_FIRSTPAGE}" title="{LN_GEN_FIRSTPAGE}"></a>
 	<!-- ENDIF main_pager_first_found="true" -->
 	<!-- IF main_pager_first_found!="true" -->
 		<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
@@ -31,7 +31,7 @@
 
 		<td class="line1" width="20" nowrap>
 	<!-- IF main_pager_previous_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=previous" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=previous" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" alt="{LN_GEN_PREVIOUSPAGE}" title="{LN_GEN_PREVIOUSPAGE}"></a>
 	<!-- ENDIF main_pager_previous_found="true" -->
 	<!-- IF main_pager_previous_found!="true" -->
 		<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
@@ -44,7 +44,7 @@
 
 		<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_next_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=next" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
+		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=next" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" alt="{LN_GEN_NEXTPAGE}" title="{LN_GEN_NEXTPAGE}"></a>
 	<!-- ENDIF main_pager_next_found="true" -->
 	<!-- IF main_pager_next_found!="true" -->
 		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
@@ -53,7 +53,7 @@
 	
 		<td class="line1" width="20" nowrap>
 	<!-- IF main_pager_last_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_last}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
+		<a href="?{additional_url_sortingonly}&uid={uid_last}" target="_top"><img src="{MENU_PAGER_END}" width="16" alt="{LN_GEN_LASTPAGE}" title="{LN_GEN_LASTPAGE}"></a>
 	<!-- ENDIF main_pager_last_found="true" -->
 	<!-- IF main_pager_last_found!="true" -->
 		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
