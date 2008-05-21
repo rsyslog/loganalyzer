@@ -499,6 +499,8 @@ class LogStreamDisk extends LogStream {
 
 		// Now we move for one page, we do not need to process the syslog messages!
 		$ret = $this->ReadNext($myuid, $tmpArray, false);
+
+/*		OLD CODE
 		if ( $ret == SUCCESS )
 		{
 			do
@@ -507,7 +509,7 @@ class LogStreamDisk extends LogStream {
 				$counter++;
 			} while ( $counter < $this->_logStreamConfigObj->_pageCount && ($ret = $this->ReadNext($myuid, $tmpArray, false)) == SUCCESS );
 		}
-
+*/
 		// Save the current UID as LastPage UID!
 		$this->_lastPageUID = $myuid;
 	

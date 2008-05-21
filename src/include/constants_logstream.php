@@ -70,6 +70,11 @@ define('FILTER_TYPE_UNKNOWN', 99);
 define('DB_MYSQL', 0);
 define('DB_MSSQL', 1);
 define('DB_ODBC', 2);
+define('DB_PGSQL', 3);
+define('DB_OCI', 4);
+define('DB_DB2', 5);
+define('DB_FIREBIRD', 6);
+define('DB_INFORMIX', 7);
 
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;

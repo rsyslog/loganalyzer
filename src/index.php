@@ -231,7 +231,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		// Set current ID and init Counter
 		$uID = $content['uid_current'];
 		$counter = 0;
-		
+
 		// If uID is known, we need to init READ first - this will also seek for available records first!
 		if ($uID != UID_UNKNOWN) 
 		{
@@ -244,6 +244,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		// --- Check if Read was successfull!
 		if ( $ret == SUCCESS )
 		{
+/* OLD CODE
 			// If Forward direction is used, we need to SKIP one entry!
 			if ( $content['read_direction'] == EnumReadDirection::Forward )
 			{
@@ -253,6 +254,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// Skip this entry and move to the next
 				$stream->ReadNext($uID, $logArray);
 			}
+*/
 		}
 		else
 		{
@@ -578,16 +580,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 					else if ( $content['uid_current'] != UID_UNKNOWN )
 						$content['main_pager_next_found'] = false;
 				}
-				else if ( $content['read_direction'] == EnumReadDirection::Forward )
-				{
-					// User clicked back, so there is a next page for sure
-					$content['main_pager_next_found'] = true;
-
-					// As we went back, we need to change the currend uid to the latest read one
-					$content['uid_current'] = $uID;
-				}
 				// --- 
-			
+
 				// --- Handle uid_previous page button 
 				if ( $content['uid_current'] != UID_UNKNOWN )
 				{
@@ -616,13 +610,27 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// --- Handle uid_last page button 
 				// Option the last UID from the stream!
 				$content['uid_last'] = $stream->GetLastPageUID();
-				
+
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
 					$content['main_pager_last_found'] = true;
 				else
 					$content['main_pager_last_found'] = false;
 				//echo $content['uid_last'];
+				
+				// Handle next button only if Forward is used now!
+				if ( $content['read_direction'] == EnumReadDirection::Forward )
+				{
+					if ( $content['uid_current'] == $content['uid_last'] ) 
+						// Last page already !
+						$content['main_pager_next_found'] = false;
+					else	
+						// User clicked back, so there is a next page for sure
+						$content['main_pager_next_found'] = true;
+
+					// As we went back, we need to change the currend uid to the latest read one
+					$content['uid_current'] = $uID;
+				}
 				// --- 
 				
 				// --- Handle uid_first page button 
@@ -657,7 +665,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		else if ( $res == ERROR_FILE_NOT_READABLE ) 
 			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
 		else 
-			$content['detailederror'] = "Unknown or unhandeled error occured.";
+			$content['detailederror'] = "Unknown or unhandeled error occured (Error Code " . $res . ") ";
 			
 	}
 

@@ -100,6 +100,24 @@
 						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
 						if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
 					}
+					else if ( $mysource['SourceType'] == SOURCE_PDO )
+					{
+						// Perform necessary include
+						require_once($gl_root_path . 'classes/logstreamconfigpdo.class.php');
+
+						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigPDO();
+						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
+						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+						// Optional parameters!
+						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
+						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
+						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
+						if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+					}
 					else
 					{	
 						// UNKNOWN, remove config entry!
