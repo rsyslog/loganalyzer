@@ -57,6 +57,7 @@ class LogStreamPDO extends LogStream {
 	private $_currentPageNumber = -1;
 
 	private $_SQLwhereClause = "";
+	private $_myDBQuery = null;
 
 	// Constructor
 	public function LogStreamPDO($streamConfigObj) {
@@ -128,6 +129,10 @@ class LogStreamPDO extends LogStream {
 		// Create SQL Where Clause first!
 		$this->CreateSQLWhereClause();
 
+		// Only obtain rowcount if enabled and not done before
+		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
+			$this->_totalRecordCount = $this->GetRowCountFromTable();
+
 // Success, this means we init the Pagenumber to ONE!
 //$this->_currentPageNumber = 1;
 
@@ -142,9 +147,12 @@ class LogStreamPDO extends LogStream {
 	*/
 	public function Close()
 	{
-		if ( $this->_dbhandle != null ) 
-			unset($this->_dbhandle);
-		return SUCCESS;
+		// trigger closing database query!
+		$this->DestroyMainSQLQuery();
+		
+// TODO CLOSE DB CONN?!
+
+		return true;
 	}
 
 	/**
@@ -208,7 +216,7 @@ class LogStreamPDO extends LogStream {
 				
 				// Now read new ones
 				$ret = $this->ReadNextRecordsFromDB($uID);
-echo "mowl2";
+//echo "1mowl " . $this->_currentRecordStart . "=" . $this->_currentRecordNum;
 
 				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 					$ret = ERROR_NOMORERECORDS;
@@ -607,74 +615,95 @@ echo "mowl2";
 			return SUCCESS;
 	}
 
+	/*
+	*	Create the SQL QUery!
+	*/
+	private function CreateMainSQLQuery($uID)
+	{
+		global $querycount;
+
+		// create query if necessary!
+		if ( $this->_myDBQuery == null )
+		{
+			// Get SQL Statement
+			$szSql = $this->CreateSQLStatement($uID);
+			
+			// Perform Database Query
+			$this->_myDBQuery = $this->_dbhandle->query($szSql);
+			if ( !$this->_myDBQuery ) 
+			{
+				$this->PrintDebugError("Invalid SQL: ".$szSql);
+				return ERROR_DB_QUERYFAILED;
+			}
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// return success state if reached this point!
+		return SUCCESS;
+	}
+
+	/*
+	*	Destroy the SQL QUery!
+	*/
+	private function DestroyMainSQLQuery()
+	{
+		// create query if necessary!
+		if ( $this->_myDBQuery != null )
+		{
+			// Free Query ressources
+	//		$this->_myDBQuery->closeCursor();
+			$this->_myDBQuery = null;
+		}
+
+		// return success state if reached this point!
+		return SUCCESS;
+	}
 
 	/*
 	*	This helper function will read the next records into the buffer. 
 	*/
 	private function ReadNextRecordsFromDB($uID)
 	{
-		global $querycount;
-
-		// Get SQL Statement
-		$szSql = $this->CreateSQLStatement($uID);
-		
-		// Append LIMIT clause
-//$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
-
-		// Perform Database Query
-		$myquery = $this->_dbhandle->query($szSql);
-		if ( !$myquery ) 
+		// Create query if necessary
+		if ( $this->_myDBQuery == null )
 		{
-			$this->PrintDebugError("Invalid SQL: ".$szSql);
-			return ERROR_DB_QUERYFAILED;
+			// return error if there was one!
+			if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
+				return $res;
 		}
-		
+
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
 
-//		$result = $myquery->setFetchMode(PDO::FETCH_ASSOC);
-		
 		$iCount = 0;
 		while( $this->_logStreamConfigObj->RecordsPerQuery > $iCount )
 		{
 			//Obtain next record 
-			$myRow = $myquery->fetch(PDO::FETCH_ASSOC);
-//			if ( $iCount >= $this->_currentRecordStart )
-//			{
-//	print_r( $iCount );
-//	exit;
-				$this->bufferedRecords[$iBegin] = $myRow;
-				$iBegin++;
-//			}
+			$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
+			
+			// Check if result was successfull!
+			if ( $myRow === FALSE )
+				break;
+
+			$this->bufferedRecords[$iBegin] = $myRow;
+			$iBegin++;
 
 			// Increment counter
 			$iCount++;
 		}
+
 /*
-		foreach ($myquery as $myRow) 
-		{
-			$this->bufferedRecords[$iBegin] = $myRow;
-			$iBegin++;
-		}
-*/
-
-		// Free Query ressources
-//		$myquery->closeCursor();
-		$myquery = null;
-
-
 		// Only obtain count if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
 		{
 			$this->_totalRecordCount = $this->GetRowCountFromTable();
 
-			if ( $this->_totalRecordCount <= 0 )
-				return ERROR_NOMORERECORDS;
+//			if ( $this->_totalRecordCount <= 0 )
+//				return ERROR_NOMORERECORDS;
 		}
-
-		// Increment for the Footer Stats 
-		$querycount++;
-		
+*/		
 		// return success state if reached this point!
 		return SUCCESS;
 	}
@@ -822,7 +851,10 @@ echo "mowl2";
 			$myQuery->closeCursor();
 		}
 		else
+		{
+			$this->PrintDebugError("RowCount query failed: " . $szSql);
 			$numRows = -1;
+		}
 
 		// return result!
 		return $numRows;

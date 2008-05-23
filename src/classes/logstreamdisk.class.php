@@ -486,8 +486,8 @@ class LogStreamDisk extends LogStream {
 		// Helper variables
 		$myuid = -1;
 		$counter = 0;
+		$tmpOldDirection = $this->_readDirection;
 		
-//		if ( $this->_readDirection == EnumReadDirection::Forward ) 
 		if ( $this->_sortOrder == EnumSortingOrder::Ascending ) 
 		{
 			// Move to the beginning of END file!
@@ -496,7 +496,6 @@ class LogStreamDisk extends LogStream {
 			// Switch reading direction!
 			$this->_readDirection = EnumReadDirection::Backward;
 		}
-//		else if ( $this->_readDirection == EnumReadDirection::Backward ) 
 		else if ( $this->_sortOrder == EnumSortingOrder::Descending ) 
 		{
 			// Move to the beginning of the file!
@@ -511,6 +510,14 @@ class LogStreamDisk extends LogStream {
 
 		// Save the current UID as LastPage UID!
 		$this->_lastPageUID = $myuid;
+		
+		// --- Restore reading direction and file position!
+		$this->_readDirection = $tmpOldDirection;
+		if ( $this->_readDirection == EnumReadDirection::Forward )
+			$this->Sseek($myuid, EnumSeek::BOS, 0);
+		else
+			$this->Sseek($myuid, EnumSeek::EOS, 0);
+		// --- 
 	
 		// Return result!
 		return $this->_lastPageUID;

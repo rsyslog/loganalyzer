@@ -230,9 +230,12 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	if ( $res == SUCCESS ) 
 	{
 		// TODO Implement ORDER
-
 		$stream->SetReadDirection($content['read_direction']);
-		
+
+		// Read First and LAST UID's before start reading the stream!
+ 		$content['uid_last'] = $stream->GetLastPageUID();
+ 		$content['uid_first'] = $stream->GetFirstPageUID();
+
 		// Set current ID and init Counter
 		$uID = $content['uid_current'];
 		$counter = 0;
@@ -245,7 +248,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		}
 		else
 			$ret = $stream->ReadNext($uID, $logArray);
-		
+
 		// --- Check if Read was successfull!
 		if ( $ret == SUCCESS )
 		{
@@ -617,10 +620,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// --- 
 				
 				// --- Handle uid_last page button 
-				// Option the last UID from the stream!
-				$content['uid_last'] = $stream->GetLastPageUID();
-				$content['uid_first'] = $stream->GetFirstPageUID();
-
+//!!!!!!!!
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
 					$content['main_pager_last_found'] = true;
