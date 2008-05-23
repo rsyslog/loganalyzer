@@ -70,6 +70,30 @@ function togglevisibility(ElementNameToggle, ElementNameButton)
 /*
 *	Helper function to hide a div area
 */
+function showvisibility(ElementNameToggle, ElementNameButton)
+{
+	var toggle = document.getElementById(ElementNameToggle);
+
+	// Button is optional
+	if (ElementNameButton != null)
+	{
+		var button = document.getElementById(ElementNameButton);
+	}
+	else
+		var button = null;
+
+	if (button != null)
+	{
+		button.className = "topmenu2 ExpansionMinus";
+	}
+
+	toggle.style.visibility = "visible";
+	toggle.style.display = "inline";
+}
+
+/*
+*	Helper function to hide a div area
+*/
 function hidevisibility(ElementNameToggle, ElementNameButton)
 {
 	var toggle = document.getElementById(ElementNameToggle);

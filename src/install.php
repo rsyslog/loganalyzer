@@ -347,7 +347,7 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		$totaldbdefs = str_replace( "`logcon_", "`" . $_SESSION["UserDBPref"], $totaldbdefs );
 		
 		// Now split by sql command
-		$mycommands = split( ";\r\n", $totaldbdefs );
+		$mycommands = split( ";\n", $totaldbdefs );
 		
 		// check for different linefeed
 		if ( count($mycommands) <= 1 )
@@ -527,7 +527,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		if ( !is_file($_SESSION['SourceDiskFile']) )
 			RevertOneStep( $content['INSTALL_STEP']-1, "Failed to open the syslog file " .$_SESSION['SourceDiskFile'] . "! Check if the file exists and phplogcon has sufficient rights to it<br>" );
 	}
-	else if ( $_SESSION['SourceType'] == SOURCE_DB)
+	else if (	$_SESSION['SourceType'] == SOURCE_DB || $_SESSION['SourceType'] == SOURCE_PDO )
 	{
 		if ( isset($_POST['SourceDBType']) )
 			$_SESSION['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']);
@@ -594,26 +594,42 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	}
 
 	//Add the first source! 
-	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\r\n\r\n" . 
-					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\r\n" . 
-					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\r\n" . 
-					"\$CFG['Sources']['Source1']['SourceType'] = " . $_SESSION['SourceType'] . ";\r\n";
+	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\n\n" . 
+					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\n" . 
+					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\n";
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 
 	{
-		$firstsource .=	"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\r\n" . 
+		$firstsource .= "\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;\n" . 
+						"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\n" . 
 						"";
 	}
-	else if ( $_SESSION['SourceType'] == SOURCE_DB ) 
+	else if ( $_SESSION['SourceType'] == SOURCE_DB )
 	{
-		$firstsource .=	"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBType'] = '" . $_SESSION['SourceDBType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\r\n" . 
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DB;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
+						"";
+	}
+	else if ( $_SESSION['SourceType'] == SOURCE_PDO )
+	{
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_PDO;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";

@@ -75,6 +75,8 @@ define('DB_OCI', 4);
 define('DB_DB2', 5);
 define('DB_FIREBIRD', 6);
 define('DB_INFORMIX', 7);
+define('DB_SQLITE', 8);
+
 
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;

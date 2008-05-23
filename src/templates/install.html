@@ -8,6 +8,35 @@
 </head>
 <body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
 
+<script language="javascript">
+	/*
+	*	Helper function to show and hide areas of the filterview
+	*/
+	function toggleSourceTypeVisibility(FormFieldName)
+	{
+		var myfield = document.getElementById(FormFieldName);
+		if (myfield.value == 1)
+		{
+			showvisibility("HiddenDiskTypeOptions");
+			hidevisibility("HiddenDatabaseTypeOptions");
+		}
+		else if (myfield.value == 2)
+		{
+			showvisibility("HiddenDatabaseTypeOptions");
+			hidevisibility("HiddenDiskTypeOptions");
+
+			hidevisibility("HiddenDBTYpesOptions");
+		}
+		else if (myfield.value == 3)
+		{
+			showvisibility("HiddenDatabaseTypeOptions");
+			hidevisibility("HiddenDiskTypeOptions");
+
+			showvisibility("HiddenDBTYpesOptions");
+		}
+	}
+</script>
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mainheader">
 <tr> 
 	<td rowspan="4" width="500" align="left" valign="top"><a href="index.php"><img src="{BASEPATH}images/main/Header-Logo.png" width="500" height="79" name="HeaderLogo"></a></td>
@@ -265,7 +294,7 @@
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SOURCETYPE}</b></td>
 					<td align="right" class="line1" width="100%">
-						<select id="SourceType" name="SourceType" size="1" OnChange="toggleFormareaVisibility('SourceType', 'HiddenDiskTypeOptions', 'HiddenDatabaseTypeOptions');">
+						<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
 							<!-- BEGIN SOURCETYPES -->
 							<option {selected} value="{type}">{DisplayName}</option>
 							<!-- END SOURCETYPES -->
@@ -278,7 +307,7 @@
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" align="center" class="with_border">
 				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DISKTYPEOPTIONS}</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
 					<td align="right" class="line0" width="100%">
 						<select name="SourceLogLineType" size="1">
 							<!-- BEGIN LOGLINETYPES -->
@@ -297,12 +326,12 @@
 				<div id="HiddenDatabaseTypeOptions" class="HiddenContent">
 				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
+				</table>
+
+				<div id="HiddenDBTYpesOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
 					<td align="right" class="line1" width="100%">
 						<select name="SourceDBType" size="1">
 							<!-- BEGIN DBTYPES -->
@@ -310,6 +339,14 @@
 							<!-- END DBTYPES -->
 						</select>
 					</td>
+				</tr>
+				</table>
+				</div>
+
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
+					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
 				</tr>
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
@@ -332,7 +369,7 @@
 					<td align="right" class="line0" width="100%"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
 					<td align="right" class="line1" width="100%">
 						<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
 					</td>
@@ -348,7 +385,7 @@
 
 		<script language="javascript">
 			// Manually perform initial Javascript Calls
-			toggleFormareaVisibility('SourceType', 'HiddenDiskTypeOptions', 'HiddenDatabaseTypeOptions');
+			toggleSourceTypeVisibility('SourceType');
 		</script>
 		<!-- ENDIF INSTALL_STEP="7" -->
 

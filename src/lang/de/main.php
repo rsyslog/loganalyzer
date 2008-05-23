@@ -46,6 +46,15 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_RECORDSPERPAGE'] = "records per page";
 	$content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
 	$content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";
+	$content['LN_GEN_DB_MYSQL'] = "Mysql Server";
+	$content['LN_GEN_DB_MSSQL'] = "Microsoft SQL Server";
+	$content['LN_GEN_DB_ODBC'] = "ODBC Database Source";
+	$content['LN_GEN_DB_PGSQL'] = "PostgreSQL";
+	$content['LN_GEN_DB_OCI'] = "Oracle Call Interface";
+	$content['LN_GEN_DB_DB2'] = "	IBM DB2";
+	$content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
+	$content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
+	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";

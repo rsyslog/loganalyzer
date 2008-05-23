@@ -236,10 +236,15 @@ function CreateSourceTypesList( $selectedSource )
 	$content['SOURCETYPES'][SOURCE_DISK]['DisplayName'] = $content['LN_GEN_SOURCE_DISK'];
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DISK]['type'] ) { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = ""; }
 
-	// SOURCE_DB
+	// SOURCE_DB ( MYSQL NATIVE )
 	$content['SOURCETYPES'][SOURCE_DB]['type'] = SOURCE_DB;
 	$content['SOURCETYPES'][SOURCE_DB]['DisplayName'] = $content['LN_GEN_SOURCE_DB'];
-	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DB]['type'] ) { $content['SOURCETYPES'][SOURCE_DB]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DISK]['selected'] = ""; }
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DB]['type'] ) { $content['SOURCETYPES'][SOURCE_DB]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DB]['selected'] = ""; }
+
+	// SOURCE_PDO ( PDO DB Wrapper)
+	$content['SOURCETYPES'][SOURCE_PDO]['type'] = SOURCE_PDO;
+	$content['SOURCETYPES'][SOURCE_PDO]['DisplayName'] = $content['LN_GEN_SOURCE_PDO'];
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
 }
 
 function CreateDBTypesList( $selectedDBType )
@@ -248,21 +253,57 @@ function CreateDBTypesList( $selectedDBType )
 
 	// DB_MYSQL
 	$content['DBTYPES'][DB_MYSQL]['type'] = DB_MYSQL;
-	$content['DBTYPES'][DB_MYSQL]['DisplayName'] = "Mysql";
+	$content['DBTYPES'][DB_MYSQL]['typeastext'] = "DB_MYSQL";
+	$content['DBTYPES'][DB_MYSQL]['DisplayName'] = $content['LN_GEN_DB_MYSQL'];
 	if ( $selectedDBType == $content['DBTYPES'][DB_MYSQL]['type'] ) { $content['DBTYPES'][DB_MYSQL]['selected'] = "selected"; } else { $content['DBTYPES'][DB_MYSQL]['selected'] = ""; }
 
-/* LATER ...
 	// DB_MSSQL
 	$content['DBTYPES'][DB_MSSQL]['type'] = DB_MSSQL;
-	$content['DBTYPES'][DB_MSSQL]['DisplayName'] = "Microsoft SQL Server";
+	$content['DBTYPES'][DB_MSSQL]['typeastext'] = "DB_MSSQL";
+	$content['DBTYPES'][DB_MSSQL]['DisplayName'] = $content['LN_GEN_DB_MSSQL'];
 	if ( $selectedDBType == $content['DBTYPES'][DB_MSSQL]['type'] ) { $content['DBTYPES'][DB_MSSQL]['selected'] = "selected"; } else { $content['DBTYPES'][DB_MSSQL]['selected'] = ""; }
 
 	// DB_ODBC
-	$content['DBTYPES'][DB_ODBC]['type'] = DB_MSSQL;
-	$content['DBTYPES'][DB_ODBC]['DisplayName'] = "ODBC Database Source";
-	if ( $selectedDBType == $content['DBTYPES'][DB_ODBC]['type'] ) { $content['DBTYPES'][DB_ODBC]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_MSSQL]['selected'] = ""; }
-*/
+	$content['DBTYPES'][DB_ODBC]['type'] = DB_ODBC;
+	$content['DBTYPES'][DB_ODBC]['typeastext'] = "DB_ODBC";
+	$content['DBTYPES'][DB_ODBC]['DisplayName'] = $content['LN_GEN_DB_ODBC'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_ODBC]['type'] ) { $content['DBTYPES'][DB_ODBC]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_ODBC]['selected'] = ""; }
 
+	// DB_PGSQL
+	$content['DBTYPES'][DB_PGSQL]['type'] = DB_PGSQL;
+	$content['DBTYPES'][DB_PGSQL]['typeastext'] = "DB_PGSQL";
+	$content['DBTYPES'][DB_PGSQL]['DisplayName'] = $content['LN_GEN_DB_PGSQL'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_PGSQL]['type'] ) { $content['DBTYPES'][DB_PGSQL]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_PGSQL]['selected'] = ""; }
+
+	// DB_OCI
+	$content['DBTYPES'][DB_OCI]['type'] = DB_OCI;
+	$content['DBTYPES'][DB_OCI]['typeastext'] = "DB_OCI";
+	$content['DBTYPES'][DB_OCI]['DisplayName'] = $content['LN_GEN_DB_OCI'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_OCI]['type'] ) { $content['DBTYPES'][DB_OCI]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_OCI]['selected'] = ""; }
+
+	// DB_DB2
+	$content['DBTYPES'][DB_DB2]['type'] = DB_DB2;
+	$content['DBTYPES'][DB_DB2]['typeastext'] = "DB_DB2";
+	$content['DBTYPES'][DB_DB2]['DisplayName'] = $content['LN_GEN_DB_DB2'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_DB2]['type'] ) { $content['DBTYPES'][DB_DB2]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_DB2]['selected'] = ""; }
+
+	// DB_FIREBIRD
+	$content['DBTYPES'][DB_FIREBIRD]['type'] = DB_FIREBIRD;
+	$content['DBTYPES'][DB_FIREBIRD]['typeastext'] = "DB_FIREBIRD";
+	$content['DBTYPES'][DB_FIREBIRD]['DisplayName'] = $content['LN_GEN_DB_FIREBIRD'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_FIREBIRD]['type'] ) { $content['DBTYPES'][DB_FIREBIRD]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_FIREBIRD]['selected'] = ""; }
+
+	// DB_INFORMIX
+	$content['DBTYPES'][DB_INFORMIX]['type'] = DB_INFORMIX;
+	$content['DBTYPES'][DB_INFORMIX]['typeastext'] = "DB_INFORMIX";
+	$content['DBTYPES'][DB_INFORMIX]['DisplayName'] = $content['LN_GEN_DB_INFORMIX'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_INFORMIX]['type'] ) { $content['DBTYPES'][DB_INFORMIX]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_INFORMIX]['selected'] = ""; }
+
+	// DB_SQLITE
+	$content['DBTYPES'][DB_SQLITE]['type'] = DB_SQLITE;
+	$content['DBTYPES'][DB_SQLITE]['typeastext'] = "DB_SQLITE";
+	$content['DBTYPES'][DB_SQLITE]['DisplayName'] = $content['LN_GEN_DB_SQLITE'];
+	if ( $selectedDBType == $content['DBTYPES'][DB_SQLITE]['type'] ) { $content['DBTYPES'][DB_SQLITE]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_SQLITE]['selected'] = ""; }
 }
 
 function CreatePagesizesList()
