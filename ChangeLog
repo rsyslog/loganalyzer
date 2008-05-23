@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------
+Version 2.3.3 (devel), 2008-05-23
+- Initial Added the new DB Driver (Logstream) which uses PHP PDO. 
+  PDO is the latest generic database interface for PHP5 and recommended 
+  for best performance. It is possible to use other database engines with 
+  this new logstream class like mssql, postgres sql, odbc, oracle 
+  or even ibm db2.
+- Optimized the logic of the pager and increased performance 
+  related to it. 
+- Added support for the new Database driver into the installation script. 
+  The old driver has been renamed to MYSQL Native and is also 
+  recommended if you use MYSQL as database server. 
+---------------------------------------------------------------------------
 Version 2.3.2 (devel), 2008-05-20
 - Implemented Online Search button into the field submenus. The search 
   uses our new repository at kb.monitorware.com. 
