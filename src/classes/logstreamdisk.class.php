@@ -467,6 +467,15 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* This function returns the FIRST UID for the FIRST PAGE! 
+	* NOT IMPLEMENTED RIGHT NOW!
+	*/
+	public function GetFirstPageUID()
+	{
+		return -1;
+	}
+
+	/**
 	* This function returns the first UID for the last PAGE! 
 	* This is not possible in this logstream, so it always returns -1!
 	*/
@@ -500,16 +509,6 @@ class LogStreamDisk extends LogStream {
 		// Now we move for one page, we do not need to process the syslog messages!
 		$ret = $this->ReadNext($myuid, $tmpArray, false);
 
-/*		OLD CODE
-		if ( $ret == SUCCESS )
-		{
-			do
-			{
-				// Increment Counter
-				$counter++;
-			} while ( $counter < $this->_logStreamConfigObj->_pageCount && ($ret = $this->ReadNext($myuid, $tmpArray, false)) == SUCCESS );
-		}
-*/
 		// Save the current UID as LastPage UID!
 		$this->_lastPageUID = $myuid;
 	

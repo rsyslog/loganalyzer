@@ -108,7 +108,11 @@ function CreateCurrentUrl()
 		for ( $i = 0; $i < count($queries); $i++ )
 		{
 			// Some properties need to be filtered out. 
-			if ( strpos($queries[$i], "direction") === false ) 
+			if (
+					strpos($queries[$i], "direction") === false 
+						&&
+					strpos($queries[$i], "skipone") === false
+				) 
 			{
 				$tmpvars = explode ("=", $queries[$i]);
 				if ( isset($tmpvars[1]) ) // Only if value param is set!

@@ -262,7 +262,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
-
+/*
 				// --- Handle uid_first page button 
 				if ( $content['uid_fromgetrequest'] == $content['uid_first'] ) 
 					$content['main_pager_first_found'] = false;
@@ -276,10 +276,19 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						$content['main_pager_first_found'] = false;
 				}
 				// --- 
-
+*/
 				// --- Handle uid_last page button 
 				// Option the last UID from the stream!
 				$content['uid_last'] = $stream->GetLastPageUID();
+				$content['uid_first'] = $stream->GetFirstPageUID();
+
+				// --- Handle uid_first page button 
+				if ( $content['uid_current'] == $content['uid_first'] ) 
+					$content['main_pager_first_found'] = false;
+				else
+					$content['main_pager_first_found'] = true;
+				// ---
+
 
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])

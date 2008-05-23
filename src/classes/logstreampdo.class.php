@@ -53,6 +53,7 @@ class LogStreamPDO extends LogStream {
 	private $_totalRecordCount = -1;
 	private $_previousPageUID = -1;
 	private $_lastPageUID = -1;
+	private $_firstPageUID = -1;
 	private $_currentPageNumber = -1;
 
 	private $_SQLwhereClause = "";
@@ -361,6 +362,36 @@ echo "mowl2";
 	public function GetPreviousPageUID()
 	{
 		return $this->_previousPageUID;
+	}
+
+	/**
+	* This function returns the FIRST UID for the FIRST PAGE! 
+	* Will be done by a seperated SQL Statement.
+	*/
+	public function GetFirstPageUID()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ( $myQuery ) 
+		{
+			$myRow = $myQuery->fetchColumn();
+			$this->_firstPageUID = $myRow; // $myRow[0];
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Increment for the Footer Stats 
+			$querycount++;
+
+		}
+//echo $szSql . "<br>" . $this->_firstPageUID;
+//exit;
+
+		// finally return result!
+		return $this->_firstPageUID;
 	}
 
 	/**

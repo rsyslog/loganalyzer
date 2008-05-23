@@ -73,6 +73,17 @@ if ( $content['uid_current'] == UID_UNKNOWN )
 else
 	$content['ViewEnableAutoReloadSeconds_visible'] = false;
 
+// Read direction parameter
+if ( isset($_GET['direction']) && $_GET['direction'] == "desc" ) 
+	$content['read_direction'] = EnumReadDirection::Forward;
+else
+	$content['read_direction'] = EnumReadDirection::Backward;
+
+// If direction is DESC, should we SKIP one? 
+if ( isset($_GET['skipone']) && $_GET['skipone'] == "true" ) 
+	$content['skipone'] = true;
+else
+	$content['skipone'] = false;
 // ---
 
 
@@ -86,12 +97,6 @@ $content['main_pager_first_found'] = false;
 $content['main_pager_previous_found'] = false;
 $content['main_pager_next_found'] = false;
 $content['main_pager_last_found'] = false;
-
-
-if ( isset($_GET['direction']) && $_GET['direction'] == "desc" ) 
-	$content['read_direction'] = EnumReadDirection::Forward;
-else
-	$content['read_direction'] = EnumReadDirection::Backward;
 
 // Init Sorting variables
 $content['sorting'] = "";
@@ -244,17 +249,18 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		// --- Check if Read was successfull!
 		if ( $ret == SUCCESS )
 		{
-/* OLD CODE
 			// If Forward direction is used, we need to SKIP one entry!
 			if ( $content['read_direction'] == EnumReadDirection::Forward )
 			{
 				// Ok the current ID is our NEXT ID in this reading direction, so we save it!
 				$content['uid_next'] = $uID;
 
-				// Skip this entry and move to the next
-				$stream->ReadNext($uID, $logArray);
+				if ( $content['skipone'] ) 
+				{
+					// Skip this entry and move to the next
+					$stream->ReadNext($uID, $logArray);
+				}
 			}
-*/
 		}
 		else
 		{
@@ -569,6 +575,9 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
 				
+				// temporary store the current last $uID
+				$lastUid = $uID;
+
 				// --- Handle uid_next page button 
 				if ( $content['read_direction'] == EnumReadDirection::Backward )
 				{
@@ -610,6 +619,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 				// --- Handle uid_last page button 
 				// Option the last UID from the stream!
 				$content['uid_last'] = $stream->GetLastPageUID();
+				$content['uid_first'] = $stream->GetFirstPageUID();
 
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
@@ -629,13 +639,18 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 						$content['main_pager_next_found'] = true;
 
 					// As we went back, we need to change the currend uid to the latest read one
-					$content['uid_current'] = $uID;
+					$content['uid_current'] = $lastUid;
 				}
 				// --- 
 				
 				// --- Handle uid_first page button 
-				if ( $content['uid_current'] == $content['uid_first'] ) 
+				if (	$content['main_pager_previous_found'] == false || 
+						$content['uid_current'] == UID_UNKNOWN || 
+						$content['uid_current'] == $content['uid_first'] ) 
+				{
 					$content['main_pager_first_found'] = false;
+					$content['main_pager_previous_found'] = false; // If there is no FIRST, there is no going back!
+				}
 				else
 					$content['main_pager_first_found'] = true;
 				// --- 

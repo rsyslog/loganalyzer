@@ -176,6 +176,12 @@ abstract class LogStream {
 
 
 	/**
+	* This function returns the FIRST UID for the FIRST PAGE, if availbale! Otherwise will 
+	* return -1!
+	*/
+	public abstract function GetFirstPageUID();
+
+	/**
 	* This function returns the current Page number, if availbale! Otherwise will 
 	* return -1!
 	*/

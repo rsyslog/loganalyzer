@@ -57,6 +57,7 @@ class LogStreamDB extends LogStream {
 	private $_totalRecordCount = -1;
 	private $_previousPageUID = -1;
 	private $_lastPageUID = -1;
+	private $_firstPageUID = -1;
 	private $_currentPageNumber = 0;
 
 	private $_SQLwhereClause = "";
@@ -336,6 +337,34 @@ class LogStreamDB extends LogStream {
 	}
 
 	/**
+	* This function returns the FIRST UID for the FIRST PAGE! 
+	* Will be done by a seperated SQL Statement.
+	*/
+	public function GetFirstPageUID()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if ($myQuery)
+		{
+			// obtain first and only row
+			$myRow = mysql_fetch_row($myQuery);
+			$this->_firstPageUID = $myRow[0];
+
+			// Free query now
+			mysql_free_result ($myQuery); 
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// Return result!
+		return $this->_firstPageUID;
+	}
+
+	/**
 	* This function returns the first UID for the last PAGE! 
 	* Will be done by a seperated SQL Statement.
 	*/
@@ -389,7 +418,7 @@ class LogStreamDB extends LogStream {
 		}
 */
 		
-		// finally return result!
+		// Return result!
 		return $this->_lastPageUID;
 	}
 
