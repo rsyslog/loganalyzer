@@ -457,6 +457,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "";
 								}
 
+								// --- HOOK here to add context links!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
+								// --- 
+
 								// If we need to highlight some words ^^!
 								if ( isset($content['highlightwords']) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = HighLightString( $content['highlightwords'], $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] );

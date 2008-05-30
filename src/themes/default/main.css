@@ -32,6 +32,25 @@ a:hover
 	font-weight:bold;
 	color:#FF0000;
 }
+/*---*/
+
+/* Context Link Classes */
+a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	background-color: transparent;
+	color:#3814BB;
+	text-decoration:underline;
+}
+a.contextlink:hover
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#3844FF;
+	text-decoration:none;
+}
+/*---*/
 
 img
 {

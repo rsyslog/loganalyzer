@@ -241,8 +241,11 @@
 		</div>
 		<!-- ENDIF hasbuttons="true" -->
 
-		<!-- IF hasdetails="false" -->
+		<!-- IF ismessagefield="true" -->
+		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails"><img align="left" src="{MENU_LINK_VIEW}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}"></a>
+		<!-- ENDIF ismessagefield="true" -->
 
+		<!-- IF hasdetails="false" -->
 			<!-- IF ismessagefield!="true" -->
 
 				<!-- IF hasbuttons="true" -->
@@ -265,8 +268,7 @@
 
 		<!-- ENDIF hasdetails="false" -->
 		<!-- IF hasdetails="true" -->
-
-		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails">{fieldvalue}
+		<div OnClick="document.location='{detaillink}{additional_url_sourceonly}';" style="cursor:pointer" class="syslogdetails" OnMouseOver="this.className='syslogdetails_popup';"  OnMouseOut="this.className='syslogdetails';">{fieldvalue}<br />
 		<span>
 			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate">
 			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
@@ -278,7 +280,7 @@
 			<!-- END messagesdetails -->
 			</table>
 		</span>
-		</a>
+		</div>
 		<!-- ENDIF hasdetails="true" -->
 	</td>
 	<!-- END values -->

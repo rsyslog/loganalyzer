@@ -849,6 +849,32 @@ function GetMonthFromString($szMonth)
 	}
 }
 
+/*
+*	AddContextLinks
+*/
+function AddContextLinks($sourceTxt)
+{
+	// Create Search Array
+	$search = array 
+				(
+					'|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|',
+//					'/([\w\d\_\/]+)\.(de|com)/x',
+				);
+
+	// Create Replace Array
+	$replace = array 
+				(
+					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&q=$1" target="_top" class="contextlink">$1</a>',
+//					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&q=$1.$2" target="_top" class="contextlink">$1.$2</a>',
+				);
+	
+	// Replace and return!
+	$outTxt = preg_replace( $search, $replace, $sourceTxt );
+
+//echo $outTxt . " <br>" ;
+
+	return $outTxt;
+}
 
 // --- BEGIN Usermanagement Function --- 
 function StartPHPSession()
