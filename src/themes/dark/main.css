@@ -63,6 +63,24 @@ A.title:hover
 	TEXT-DECORATION: none;
 }
 
+/* Context Link Classes */
+a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	background-color: transparent;
+	color:#FF9900;
+	text-decoration:underline;
+}
+a.contextlink:hover
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#FF9900;
+	text-decoration:none;
+}
+/*---*/
+
 /* Default Font Classes */
 font
 {
