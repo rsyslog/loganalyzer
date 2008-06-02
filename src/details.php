@@ -248,6 +248,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						$content['fields'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[$mycolkey]);
 					else	// kindly copy!
 						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+
+					// --- HOOK here to add context links!
+					AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
+					// --- 
 				}
 
 				// Increment helpcounter

@@ -457,13 +457,13 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "";
 								}
 
-								// --- HOOK here to add context links!
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
-								// --- 
-
 								// If we need to highlight some words ^^!
 								if ( isset($content['highlightwords']) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = HighLightString( $content['highlightwords'], $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] );
+
+								// --- HOOK here to add context links!
+								AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
+								// --- 
 
 								if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
 								{
@@ -492,6 +492,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = HighLightString( $content['highlightwords'],GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]) );
 											else
 												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]);
+
+											// --- HOOK here to add context links!
+											AddContextLinks( $content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] );
+											// ---
 										}
 										else // Just set field value
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
