@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 2.3.4 (devel), 2008-06-02
+- Added new feature to automatically link IP and domain names with our
+  whois search engine. So you can research these informations with one 
+  click.
+- Changed Online Search Parameters. For Eventlog related search links, 
+  you will now directly directed to entries in our knowledge base, if
+  found.
+---------------------------------------------------------------------------
 Version 2.3.3 (devel), 2008-05-23
 - Initial Added the new DB Driver (Logstream) which uses PHP PDO. 
   PDO is the latest generic database interface for PHP5 and recommended 
