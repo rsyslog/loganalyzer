@@ -870,8 +870,8 @@ function AddContextLinks(&$sourceTxt)
 	// Create Replace Array
 	$replace = array 
 				(
-					'.<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&q=$1.$2" target="_top" class="contextlink">$1.$2</a>$3',
-					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&q=$1" target="_top" class="contextlink">$1</a>',
+					'.<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=$1.$2" target="_top" class="contextlink">$1.$2</a>$3',
+					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=$1" target="_top" class="contextlink">$1</a>',
 				);
 	
 	// Replace and return!
