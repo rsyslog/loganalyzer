@@ -499,7 +499,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 		else if ( $res == ERROR_FILE_NOT_READABLE ) 
 			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
 		else 
-			$content['detailederror'] = "Unknown or unhandeled error occured.";
+			$content['detailederror'] = "Unknown or unhandled error occured.";
 			
 	}
 
