@@ -397,10 +397,13 @@ function InitPhpDebugMode()
 
 function CheckAndSetRunMode()
 {
-	global $RUNMODE;
+	global $RUNMODE, $MaxExecutionTime;
 	// Set to command line mode if argv is set! 
 	if ( !isset($_SERVER["GATEWAY_INTERFACE"]) )
 		$RUNMODE = RUNMODE_COMMANDLINE;
+	
+	// Obtain max_execution_time
+	$MaxExecutionTime = ini_get("max_execution_time");
 }
 
 function InitRuntimeInformations()
@@ -854,8 +857,15 @@ function GetMonthFromString($szMonth)
 */
 function AddContextLinks(&$sourceTxt)
 {
-	global $szTLDDomains;
+	global $szTLDDomains, $CFG;
 	
+	// Return if not enabled!
+	if ( !isset($CFG['EnableIPAddressResolve']) || $CFG['EnableIPAddressResolve'] == 1 )
+	{
+		// Search for IP's and Add Reverse Lookup first!
+		$sourceTxt = preg_replace( '/\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/e', "'\\1.\\2.\\3.\\4' . ReverseResolveIP('\\1.\\2.\\3.\\4', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+	}
+
 	// Create if not set!
 	if ( !isset($szTLDDomains) )
 		CreateTopLevelDomainSearch();
@@ -864,14 +874,15 @@ function AddContextLinks(&$sourceTxt)
 	$search = array 
 				(
 					'/\.([\w\d\_]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9])/x',
-					'|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|',
+//					'|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|',
+					'/\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/x',
 				);
 
 	// Create Replace Array
 	$replace = array 
 				(
 					'.<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=$1.$2" target="_top" class="contextlink">$1.$2</a>$3',
-					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=$1" target="_top" class="contextlink">$1</a>',
+					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=$1.$2.$3.$4" target="_top" class="contextlink">$1.$2.$3.$4</a>',
 				);
 	
 	// Replace and return!
@@ -879,6 +890,44 @@ function AddContextLinks(&$sourceTxt)
 
 //echo $outTxt . " <br>" ;
 //return $outTxt;
+}
+
+/*
+*	Reserve Resolve IP Address!
+*/
+function ReverseResolveIP( $szIP, $prepend, $append )
+{
+	global $gl_starttime, $MaxExecutionTime;
+
+	// Substract 5 savety seconds!
+	$scriptruntime = intval(microtime_float() - $gl_starttime);
+	if ( $scriptruntime > ($MaxExecutionTime-5) )
+	{
+echo "WTF $scriptruntime - $MaxExecutionTime";
+		return "";
+	}
+
+	// Abort if these IP's are postet
+	if ( strpos("0.0.0.0", $szIP) !== false | strpos("127.", $szIP) !== false | strpos("255.255.255.255", $szIP) !== false ) 
+		return "";
+	else
+	{
+		// Resolve name if needed
+		if ( !isset($_SESSION['dns_cache'][$szIP]) ) 
+			$_SESSION['dns_cache'][$szIP] = gethostbyaddr($szIP);
+		
+		// Abort if IP and RESOLVED name are the same ^^!
+		if ( $_SESSION['dns_cache'][$szIP] == $szIP )
+			return;
+
+		// Create string
+		$szReturn  = $prepend;
+		$szReturn .= $_SESSION['dns_cache'][$szIP];
+		$szReturn .= $append;
+
+		// return result
+		return $szReturn;
+	}
 }
 
 /*

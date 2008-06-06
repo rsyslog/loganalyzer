@@ -408,3 +408,9 @@ select, input, button, textarea
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
+
+.highlighted 
+{ 
+	font: bold 8pt Arial,Helvetica,sans-serif;
+	color: #CC6600 
+}

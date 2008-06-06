@@ -221,52 +221,49 @@
 	<!-- BEGIN values -->
 	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
 		<!-- IF hasbuttons="true" -->
-			<!-- IF hasdropdownbutton="true" -->
-			<img align="left" src="{MENU_NAV_CLOSE}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
-			<!-- ENDIF hasdropdownbutton="true" -->
-		<div id="menu">
-		<ul>
-		  <li>
-			<ul class="with_border" id="menu_{FieldColumn}_{uid}">
-			  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-			  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
-			<!-- BEGIN buttons -->
-			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-			  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
+			<div id="menu">
+			<ul>
+			  <li>
+				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
+				  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
+				<!-- BEGIN buttons -->
+				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
+				  </li>
+				<!-- END buttons -->
+				</ul>
 			  </li>
-			<!-- END buttons -->
 			</ul>
-		  </li>
-		</ul>
-		</div>
+			</div>
+
+			<!-- IF hasdropdownbutton="true" -->
+			<img align="top" src="{MENU_NAV_CLOSE}" width="16" height="16" border="0" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+			<!-- ENDIF hasdropdownbutton="true" -->
+
 		<!-- ENDIF hasbuttons="true" -->
 
 		<!-- IF ismessagefield="true" -->
-		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails"><img align="left" src="{MENU_LINK_VIEW}" width="16" height="16" border="1" title="{LN_GEN_AVAILABLESEARCHES}"></a>
+		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails"><img align="top" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
 		<!-- ENDIF ismessagefield="true" -->
 
 		<!-- IF hasdetails="false" -->
 			<!-- IF ismessagefield!="true" -->
-
 				<!-- IF hasbuttons="true" -->
-				<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">
-				{fieldvalue}
-				</a>
+				<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">{fieldvalue}</a>
 				<!-- ENDIF hasbuttons="true" -->
 
-			<!-- IF hasbuttons!="true" -->
-			<b>{fieldvalue}</b>
-			<!-- ENDIF hasbuttons!="true" -->
-
+				<!-- IF hasbuttons!="true" -->
+				<b>{fieldvalue}</b>
+				<!-- ENDIF hasbuttons!="true" -->
 			<!-- ENDIF ismessagefield!="true" -->
 
 			<!-- IF ismessagefield="true" -->
-			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">
-				{fieldvalue}
-			</a>
+			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">{fieldvalue}</a>
 			<!-- ENDIF ismessagefield="true" -->
 
 		<!-- ENDIF hasdetails="false" -->
+
 		<!-- IF hasdetails="true" -->
 		<div OnClick="document.location='{detaillink}{additional_url_sourceonly}';" style="cursor:pointer" class="syslogdetails" OnMouseOver="this.className='syslogdetails_popup';"  OnMouseOut="this.className='syslogdetails';">{fieldvalue}<br />
 		<span>
@@ -282,6 +279,7 @@
 		</span>
 		</div>
 		<!-- ENDIF hasdetails="true" -->
+
 	</td>
 	<!-- END values -->
 

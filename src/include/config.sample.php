@@ -68,6 +68,8 @@ $CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is 
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button
+
+$CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline messages are automatically resolved and the result is added in brackets {} behind the IP Address
 // ---
 
 // --- Define which fields you want to see 
