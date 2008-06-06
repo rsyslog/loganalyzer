@@ -73,7 +73,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.3.4";
+$content['BUILDNUMBER'] = "2.3.5";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['EXTRA_METATAGS'] = "";
