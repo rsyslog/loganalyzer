@@ -220,6 +220,7 @@
 
 	<!-- BEGIN values -->
 	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
+		
 		<!-- IF hasbuttons="true" -->
 			<div id="menu">
 			<ul>
@@ -238,13 +239,12 @@
 			</div>
 
 			<!-- IF hasdropdownbutton="true" -->
-			<img align="top" src="{MENU_NAV_CLOSE}" width="16" height="16" border="0" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+			<img align="left" vspace="0" hspace="2" src="{MENU_NAV_CLOSE}" width="16" height="16" border="0" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
 			<!-- ENDIF hasdropdownbutton="true" -->
-
 		<!-- ENDIF hasbuttons="true" -->
 
 		<!-- IF ismessagefield="true" -->
-		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails"><img align="top" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
+		<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails"><img align="left" vspace="0" hspace="2" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
 		<!-- ENDIF ismessagefield="true" -->
 
 		<!-- IF hasdetails="false" -->
