@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.3.5 (devel), 2008-06-06
+- Enhanced the detected of IP Addresses and domain names, so the automatic
+  generated context links match better now.
+- Added new option (enabled by default) to resolve IP Addresses into
+  hostnames. Note that this will only be done if the IP Address is NOT in
+  square brackets. The resolved names will be cached in the users session, 
+  to speed up the resolving process. The resolved IP Addresses will be 
+  injected behind the IP Address in curly brackets, and a diffirent colour. 
+---------------------------------------------------------------------------
 Version 2.3.4 (devel), 2008-06-02
 - Added new feature to automatically link IP and domain names with our
   whois search engine. So you can research these informations with one 
