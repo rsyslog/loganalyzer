@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 2.3.6 (devel), 2008-06-09
+- Added new feature, multiple configureable views which can be configured 
+  and selected for each source seperately. Old configurations can still
+  be used with the new Views feature. The installer also supports 
+  selecting the default View for the first added source. 
+---------------------------------------------------------------------------
 Version 2.3.5 (devel), 2008-06-06
 - Enhanced the detected of IP Addresses and domain names, so the automatic
   generated context links match better now.
