@@ -55,6 +55,7 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
 	$content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
+	$content['LN_GEN_SELECTVIEW'] = "Select View";
 
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";

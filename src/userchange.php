@@ -62,6 +62,26 @@ if ( isset($_GET['op']) )
 			$_SESSION['CUSTOM_LANG'] = $_GET['langcode'];
 	}
 
+	if ( $_GET['op'] == "changeview" && isset($_GET['viewid']) ) 
+	{
+		// Obtain VIEW ID!
+		$newViewID = $_GET['viewid'];
+
+		if ( isset($content['Views'][$newViewID]) && isset($_SESSION['currentSourceID']))
+		{
+
+			// Save new View into session!
+			$_SESSION[$_SESSION['currentSourceID'] . "-View"] = $newViewID;
+		}
+		else
+		{
+			// DEBUG
+			echo "DEBUG: " . $_SESSION['currentSourceID'] . " - $newViewID";
+			exit;
+		}
+	}
+	
+
 	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
 	{
 		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < count($content['pagesizes']) ) 

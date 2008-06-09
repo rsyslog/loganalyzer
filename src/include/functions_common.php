@@ -43,17 +43,6 @@ if ( !defined('IN_PHPLOGCON') )
 include($gl_root_path . 'include/constants_general.php');
 include($gl_root_path . 'include/constants_logstream.php');
 
-/*
-if ( is_file($gl_root_path . 'config.php') )
-	include($gl_root_path . 'config.php');
-else
-{
-	// Check for installscript!
-	if ( !defined('IN_PHPLOGCON_INSTALL') )
-		CheckForInstallPhp();
-}
-*/
-
 include($gl_root_path . 'classes/class_template.php');
 include($gl_root_path . 'include/functions_themes.php');
 include($gl_root_path . 'include/functions_db.php');
@@ -101,6 +90,9 @@ function InitBasicPhpLogCon()
 
 	// Start the PHP Session
 	StartPHPSession();
+	
+	// Init View Configs prior loading config.php!
+	InitViewConfigs();
 }
 
 function InitPhpLogConConfigFile($bHandleMissing = true)
@@ -116,13 +108,14 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		// Easier DB Access
 		define('DB_CONFIG', $CFG['UserDBPref'] . "config");
 
-		// If DEBUG Mode is enabled, we prepend the UID field into the col list!
-		if ( $CFG['MiscShowDebugMsg'] == 1 )
-			array_unshift($CFG['Columns'], SYSLOG_UID);
+		// Legacy support for old columns definition format!
+		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
+			AppendLegacyColumns();
 
-		// Now Copy all entries into content variable
+		// --- Now Copy all entries into content variable
 		foreach ($CFG as $key => $value )
 			$content[$key] = $value;
+		// --- 
 
 		// For MiscShowPageRenderStats
 		if ( $CFG['MiscShowPageRenderStats'] == 1 )

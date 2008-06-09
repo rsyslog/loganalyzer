@@ -56,6 +56,8 @@ $content['LN_GEN_DB_DB2'] = "	IBM DB2";
 $content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
 $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
+	$content['LN_GEN_SELECTVIEW'] = "Select View";
+
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";

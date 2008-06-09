@@ -29,7 +29,7 @@
 		<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
 		<td align="right">
 			<input type="hidden" name="op" value="changestyle">
-			<select name="stylename" size="1" OnChange="document.styleidform.submit();">
+			<select name="stylename" size="1" OnChange="document.styleidform.submit();" STYLE="width: 190px">
 				<!-- BEGIN USERSTYLES -->
 				<option {is_selected} value="{StyleName}">{StyleName}</option>
 				<!-- END USERSTYLES -->
@@ -51,7 +51,7 @@
 		<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
 		<td align="right">
 			<input type="hidden" name="op" value="changelang">
-			<select name="langcode" size="1" OnChange="document.langidform.submit();">
+			<select name="langcode" size="1" OnChange="document.langidform.submit();" STYLE="width: 190px">
 				<!-- BEGIN USERLANG -->
 				<option {is_selected} value="{langcode}">{DisplayName}</option>
 				<!-- END USERLANG -->
@@ -71,7 +71,7 @@
 	<tr> 
 		<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
 		<td align="right">
-			<select name="sourceid" size="1" OnChange="document.sourceidform.submit();">
+			<select name="sourceid" size="1" OnChange="document.sourceidform.submit();" STYLE="width: 190px">
 				<!-- BEGIN Sources -->
 				<option {selected} value="{ID}">{Name}</option>
 				<!-- END Sources -->
@@ -84,7 +84,25 @@
 	</td>
 </tr>
 <tr> 
-	<td width="100%" align="center" valign="top" height="100%">&nbsp;</td>
+	<td width="100%" align="center" valign="top" height="100%">
+
+	<form action="userchange.php" method="get" name="viewidform">
+	<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+	<tr> 
+		<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTVIEW}&nbsp;</B></td>
+		<td align="right">
+			<input type="hidden" name="op" value="changeview">
+			<select name="viewid" size="1" OnChange="document.viewidform.submit();" STYLE="width: 190px">
+				<!-- BEGIN Views -->
+				<option {selected} value="{ID}">{DisplayName}</option>
+				<!-- END Views -->
+			</select>
+		</td>
+	</tr>
+	</table>
+	</form>
+	
+	</td>
 </tr>
 </table>
 

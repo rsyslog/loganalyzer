@@ -64,6 +64,22 @@
 					if ( !isset($mysource['LogLineType']) ) 
 						$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
 
+					// Set different view if necessary
+					if ( isset($_SESSION[$iSourceID . "-View"]) ) 
+					{
+						// Overwrite configured view!
+						$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
+					}
+					else
+					{
+						if ( isset($mysource['ViewID']) )
+							// Set to configured Source ViewID
+							$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
+						else
+							// Not configured, maybe old legacy cfg. Set default view.
+							$content['Sources'][$iSourceID]['ViewID'] = strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
+					}
+
 					// Only for the display box
 					$content['Sources'][$iSourceID]['selected'] = ""; 
 					
@@ -161,6 +177,77 @@
 		
 		// Set for the selection box in the header
 		$content['Sources'][$currentSourceID]['selected'] = "selected";
+
+		// --- Additional handling needed for the current view!
+		global $currentViewID;
+		$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
+
+		// Set selected state for correct View, for selection box ^^
+		$content['Views'][ $currentViewID ]['selected'] = "selected";
+
+		// If DEBUG Mode is enabled, we prepend the UID field into the col list!
+		if ( $CFG['MiscShowDebugMsg'] == 1 && isset($content['Views'][$currentViewID]) )
+			array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
+		// ---
+	}
+
+	/*
+	*	This function Inits preconfigured Views. 
+	*/
+	function InitViewConfigs()
+	{
+		global $CFG, $content, $currentViewID;
+		
+		// Predefined phpLogCon Views 
+		$CFG['Views']['SYSLOG']= array( 
+										'ID' =>			"SYSLOG", 
+										'DisplayName' =>"Syslog Fields", 
+										'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
+									   );
+		$CFG['Views']['EVTRPT']= array( 
+										'ID' =>			"EVTRPT", 
+										'DisplayName' =>"EventLog Fields", 
+										'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ), 
+									   );
+		
+		// Set default of 'DefaultViewsID'
+		$CFG['DefaultViewsID'] = "SYSLOG";
+
+		// Loop through views now and copy into content array!
+		foreach ( $CFG['Views'] as $key => $view )
+		{
+			$content['Views'][$key] = $view;
+
+			/*
+			// Set View from session if available!
+			if ( isset($_SESSION['currentSourceID']) )
+			{
+				$currentSourceID = $_SESSION['currentSourceID'];
+
+				if ( isset($_SESSION[$currentSourceID . "-View"]) && )
+					$content['Views'][$key]['selected'] = "selected";
+			}
+			*/
+		}
+	}
+
+	/*
+	*	This function Inits preconfigured Views. 
+	*/
+	function AppendLegacyColumns()
+	{
+		global $CFG, $content;
+
+		// Init View from legacy Columns 
+		$CFG['Views']['LEGACY']= array( 
+										'ID' =>			"LEGACY", 
+										'DisplayName' =>"Legacy Columns Configuration", 
+										'Columns' =>	$CFG['Columns'], 
+									   );
+		
+		// set default to legacy of no default view is specified!
+		if ( !isset($CFG['DefaultViewsID']) || strlen($CFG['DefaultViewsID']) <= 0 )
+			$CFG['DefaultViewsID'] = "LEGACY";
 	}
 
 ?>

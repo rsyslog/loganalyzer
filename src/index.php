@@ -206,6 +206,9 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
+	
+	// Copy current used columns here!
+	$content['Columns'] = $content['Views'][$currentViewID]['Columns'];
 
 	// --- Init the fields we need
 	foreach($content['Columns'] as $mycolkey)
