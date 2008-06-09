@@ -228,6 +228,17 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['ViewEnableDetailPopups_true'] = "";
 		$content['ViewEnableDetailPopups_false'] = "checked";
 	}
+	if ( isset($_SESSION['EnableIPAddressResolve']) ) { $content['EnableIPAddressResolve'] = $_SESSION['EnableIPAddressResolve']; } else { $content['EnableIPAddressResolve'] = 1; }
+	if ( $content['EnableIPAddressResolve'] == 1 )
+	{
+		$content['EnableIPAddressResolve_true'] = "checked";
+		$content['EnableIPAddressResolve_false'] = "";
+	}
+	else
+	{
+		$content['EnableIPAddressResolve_true'] = "";
+		$content['EnableIPAddressResolve_false'] = "checked";
+	}
 	// ---
 	
 	// Disable the bottom next button, as the Form in this step has its own button!
@@ -315,6 +326,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 		$_SESSION['ViewEnableDetailPopups'] = intval( DB_RemoveBadChars($_POST['ViewEnableDetailPopups']) );
 	else
 		$_SESSION['ViewEnableDetailPopups'] = 1; // Fallback default!
+
+	if ( isset($_POST['EnableIPAddressResolve']) )
+		$_SESSION['EnableIPAddressResolve'] = intval( DB_RemoveBadChars($_POST['EnableIPAddressResolve']) );
+	else
+		$_SESSION['EnableIPAddressResolve'] = 1; // Fallback default!
+
 	// ---
 
 	// If UserDB is disabled, skip next step!
@@ -463,6 +480,17 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_SESSION['SourceType']) ) { $content['SourceType'] = $_SESSION['SourceType']; } else { $content['SourceType'] = SOURCE_DISK; }
 	CreateSourceTypesList($content['SourceType']);
 	if ( isset($_SESSION['SourceName']) ) { $content['SourceName'] = $_SESSION['SourceName']; } else { $content['SourceName'] = "My Syslog Source"; }
+	
+	// Init default View
+	if ( isset($_SESSION['SourceViewID']) ) { $content['SourceViewID'] = $_SESSION['SourceViewID']; } else { $content['SourceViewID'] = 'SYSLOG'; }
+	foreach ( $content['Views'] as $myView )
+	{
+		if ( $myView['ID'] == $content['SourceViewID'] )
+			$content['Views'][ $myView['ID'] ]['selected'] = "selected";
+		else
+			$content['Views'][ $myView['ID'] ]['selected'] = "";
+	}
+
 
 	// SOURCE_DISK specific
 	if ( isset($_SESSION['SourceLogLineType']) ) { $content['SourceLogLineType'] = $_SESSION['SourceLogLineType']; } else { $content['SourceLogLineType'] = ""; }
@@ -509,6 +537,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		$_SESSION['SourceName'] = DB_RemoveBadChars($_POST['SourceName']);
 	else
 		RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_NAMEOFTHESOURCE'] );
+
+	if ( isset($_POST['SourceViewID']) )
+		$_SESSION['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']);
+	else
+		RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_VIEW'] );
+
 
 	// Check DISK Parameters!
 	if ( $_SESSION['SourceType'] == SOURCE_DISK) 
@@ -581,10 +615,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEntriesPerPage'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEnableDetailPopups'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['EnableIPAddressResolve'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = [0-9]{1,2};/";
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
+	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
 	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled'] . ";";
 	
 	//User Database	Options
@@ -596,7 +632,9 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	//Add the first source! 
 	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\n\n" . 
 					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\n" . 
-					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\n";
+					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\n" . 
+					"\$CFG['Sources']['Source1']['ViewID'] = '" . $_SESSION['SourceViewID'] . "';\n";
+	
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 
 	{
 		$firstsource .= "\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;\n" . 

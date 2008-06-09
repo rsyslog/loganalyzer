@@ -145,6 +145,7 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Datenbank Typ";
 $content['LN_CFG_DBTABLENAME'] = "Datenbank Tabellenname";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name der Quelle";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
+	$content['LN_CFG_VIEW'] = "Select View";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details für syslog-Nachrichten mit der ID";

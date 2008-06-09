@@ -75,7 +75,8 @@ $CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline message
 // --- Define which fields you want to see 
 //$CFG['ShowMessage'] = true;					// If enabled, the Message column will be appended to the columns list.
 //Eventlog based fields: $CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, /*SYSLOG_EVENT_CATEGORY, */SYSLOG_EVENT_ID, SYSLOG_MESSAGE );
-$CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE );
+//$CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE );
+$CFG['DefaultViewsID'] = "";
 // ---
 
 // --- Predefined Searches! 
@@ -91,22 +92,24 @@ $CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "S
 
 // --- Source Options
 /* Example for DiskType Source:
-	$CFG['Sources'][Source1]['ID'] = "Source1";
-	$CFG['Sources'][Source1]['Name'] = "Syslog Disk File";
-	$CFG['Sources'][Source1]['SourceType'] = SOURCE_DISK;
-	$CFG['Sources'][Source1]['LogLineType'] = "syslog";
-	$CFG['Sources'][Source1]['DiskFile'] = "/var/log/syslog";
+	$CFG['Sources']['Source1']['ID'] = "Source1";
+	$CFG['Sources']['Source1']['Name'] = "Syslog Disk File";
+	$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
+	$CFG['Sources']['Source1']['LogLineType'] = "syslog";
+	$CFG['Sources']['Source1']['DiskFile'] = "/var/log/syslog";
+	$CFG['Sources']['Source1']['ViewID'] = "SYSLOG";
 
-	$CFG['Sources'][Source2]['ID'] = "Source5";
-	$CFG['Sources'][Source2]['Name'] = "WinSyslog DB";
-	$CFG['Sources'][Source2]['SourceType'] = SOURCE_DB;
-	$CFG['Sources'][Source2]['DBTableType'] = "winsyslog";
-	$CFG['Sources'][Source2]['DBType'] = DB_MYSQL;
-	$CFG['Sources'][Source2]['DBServer'] = "localhost";
-	$CFG['Sources'][Source2]['DBName'] = "phplogcon";
-	$CFG['Sources'][Source2]['DBUser'] = "root";
-	$CFG['Sources'][Source2]['DBPassword'] = "";
-	$CFG['Sources'][Source2]['DBTableName'] = "systemevents";
+	$CFG['Sources']['Source2']['ID'] = "Source5";
+	$CFG['Sources']['Source2']['Name'] = "WinSyslog DB";
+	$CFG['Sources']['Source2']['SourceType'] = SOURCE_DB;
+	$CFG['Sources']['Source2']['DBTableType'] = "winsyslog";
+	$CFG['Sources']['Source2']['DBType'] = DB_MYSQL;
+	$CFG['Sources']['Source2']['DBServer'] = "localhost";
+	$CFG['Sources']['Source2']['DBName'] = "phplogcon";
+	$CFG['Sources']['Source2']['DBUser'] = "root";
+	$CFG['Sources']['Source2']['DBPassword'] = "";
+	$CFG['Sources']['Source2']['DBTableName'] = "systemevents";
+	$CFG['Sources']['Source2']['ViewID'] = "SYSLOG";
 */
 
 // --- %Insert Source Here%

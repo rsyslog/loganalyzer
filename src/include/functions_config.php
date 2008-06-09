@@ -78,6 +78,7 @@
 						else
 							// Not configured, maybe old legacy cfg. Set default view.
 							$content['Sources'][$iSourceID]['ViewID'] = strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
+
 					}
 
 					// Only for the display box

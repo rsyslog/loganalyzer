@@ -183,6 +183,12 @@
 					<input type="radio" name="ViewEnableDetailPopups" value="1" {ViewEnableDetailPopups_true}> Yes <input type="radio" name="ViewEnableDetailPopups" value="0" {ViewEnableDetailPopups_false}> No
 					</td>
 				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>Automatically resolved IP Addresses (inline)</b></td>
+					<td align="right" class="line1" width="100%">
+					<input type="radio" name="EnableIPAddressResolve" value="1" {EnableIPAddressResolve_true}> Yes <input type="radio" name="EnableIPAddressResolve" value="0" {EnableIPAddressResolve_false}> No
+					</td>
+				</tr>
 				</table>
 
 			<p>&nbsp;</p>
@@ -298,6 +304,16 @@
 							<!-- BEGIN SOURCETYPES -->
 							<option {selected} value="{type}">{DisplayName}</option>
 							<!-- END SOURCETYPES -->
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
+					<td align="right" class="line1" width="100%">
+						<select id="SourceViewID" name="SourceViewID" size="1">
+							<!-- BEGIN Views -->
+							<option {selected} value="{ID}">{DisplayName}</option>
+							<!-- END Views -->
 						</select>
 					</td>
 				</tr>
