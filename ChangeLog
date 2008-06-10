@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 2.2.0 (v2-stable), 2008-06-10
+- Moved beta branch to v2-stable branch.
+---------------------------------------------------------------------------
 Version 2.1.6 (beta), 2008-05-19
 - Fixed filter bug, if you want to filter with ":", you can do this by 
   using "\:" now.
