@@ -46,20 +46,20 @@ $content['LN_GEN_PAGE'] = "P&aacute;gina";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Buscas pr&eacute;-definidas";
 $content['LN_GEN_SOURCE_DISK'] = "Arquivo em disco";
 $content['LN_GEN_SOURCE_DB'] = "Base de dados";
-	$content['LN_GEN_SOURCE_PDO'] = "Database (PDO)";
+$content['LN_GEN_SOURCE_PDO'] = "Base de dados (PDO)";
 $content['LN_GEN_RECORDSPERPAGE'] = "registros por p&aacute;gina";
 $content['LN_GEN_PRECONFIGURED'] = "Pr&eacute;-configurado";
 $content['LN_GEN_AVAILABLESEARCHES'] = "Buscas dispon&iacute;veis";
-	$content['LN_GEN_DB_MYSQL'] = "Mysql Server";
-	$content['LN_GEN_DB_MSSQL'] = "Microsoft SQL Server";
-	$content['LN_GEN_DB_ODBC'] = "ODBC Database Source";
-	$content['LN_GEN_DB_PGSQL'] = "PostgreSQL";
-	$content['LN_GEN_DB_OCI'] = "Oracle Call Interface";
-	$content['LN_GEN_DB_DB2'] = "	IBM DB2";
-	$content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
-	$content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
-	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
-	$content['LN_GEN_SELECTVIEW'] = "Select View";
+$content['LN_GEN_DB_MYSQL'] = "Servidor MySQL";
+$content['LN_GEN_DB_MSSQL'] = "Microsoft SQL Server";
+$content['LN_GEN_DB_ODBC'] = "Conex&atilde;o via ODBC";
+$content['LN_GEN_DB_PGSQL'] = "PostgreSQL";
+$content['LN_GEN_DB_OCI'] = "Oracle Call Interface";
+$content['LN_GEN_DB_DB2'] = "	IBM DB2";
+$content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
+$content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
+$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
+$content['LN_GEN_SELECTVIEW'] = "Selecionar Vis&atilde;o";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Aten&ccedil;&atilde;o! Voc&ecirc; ainda N&Atilde;O removeu o arquivo 'install.php' do diret&oacute;rio de seu phpLogCon!";
@@ -76,19 +76,19 @@ $content['LN_SEARCH_PERFORMADVANCED'] = "Realizar Busca Avan&ccedil;ada";
 $content['LN_VIEW_MESSAGECENTERED'] = "Eliminar filtros e visualizar esta mensagem no topo";
 $content['LN_VIEW_RELATEDMSG'] = "Ver mensagens relacionadas";
 $content['LN_VIEW_FILTERFOR'] = "Filtrar mensagens por ";
-	$content['LN_VIEW_SEARCHFOR'] = "Search online for ";
-	$content['LN_VIEW_SEARCHFORGOOGLE'] = "Search Google for ";
-	$content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
+$content['LN_VIEW_SEARCHFOR'] = "Busca online por ";
+$content['LN_VIEW_SEARCHFORGOOGLE'] = "Busca no Google por ";
+$content['LN_GEN_MESSAGEDETAILS'] = "Detalhes da Mensagem";
 
 $content['LN_HIGHLIGHT'] = "Destacar >>";
 $content['LN_HIGHLIGHT_OFF'] = "Destacar <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Utilize uma lista de palavras separadas por v&iacute;rgula";
 
-	$content['LN_AUTORELOAD'] = "Set auto reload";
-	$content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
-	$content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
-	$content['LN_AUTORELOAD_SECONDS'] = "seconds";
-	$content['LN_AUTORELOAD_MINUTES'] = "minutes";
+$content['LN_AUTORELOAD'] = "Define auto recarregamento";
+$content['LN_AUTORELOAD_DISABLED'] = "Auto recarregamento desabilitado";
+$content['LN_AUTORELOAD_PRECONFIGURED'] = "Auto recarregamento pr&eacute;-configurado ";
+$content['LN_AUTORELOAD_SECONDS'] = "segundos";
+$content['LN_AUTORELOAD_MINUTES'] = "minutos";
 
 $content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 
@@ -125,11 +125,11 @@ $content['LN_FIELDS_PROCESSID'] = "ID do processo";
 $content['LN_FIELDS_MESSAGETYPE'] = "Tipo da Mensagem";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Mensagem";
-	$content['LN_FIELDS_EVENTID'] = "Event ID";
-	$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlog Type";
-	$content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
-	$content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
-	$content['LN_FIELDS_EVENTUSER'] = "Event User";
+$content['LN_FIELDS_EVENTID'] = "ID do Evento";
+$content['LN_FIELDS_EVENTLOGTYPE'] = "Tipo do Evento";
+$content['LN_FIELDS_EVENTSOURCE'] = "Origem do Evento";
+$content['LN_FIELDS_EVENTCATEGORY'] = "Categoria do Evento";
+$content['LN_FIELDS_EVENTUSER'] = "Evento de Usu&acute;rio";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Servidor BD";
@@ -150,7 +150,7 @@ $content['LN_CFG_DBTABLENAME'] = "Nome tabela";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Nome da origem";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Fonte prim&aacute;ria Syslog";
 $content['LN_CFG_DBROWCOUNTING'] = "Habilitar contagem de registro";
-	$content['LN_CFG_VIEW'] = "Select View";
+$content['LN_CFG_VIEW'] = "Selecione vis&atilde;o";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Detalhes para a mensagem com id";
