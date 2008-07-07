@@ -195,6 +195,7 @@ $dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
 //TODO $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
 //TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
 $dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
+$dbmapping['syslogng'][SYSLOG_PROCESSID] = "program";
 // --- 
 
 // EventTime Constants
