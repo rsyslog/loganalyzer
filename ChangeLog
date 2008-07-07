@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------
+Version 2.3.7 (beta), 2008-07-07
+- Added missing db mapping for program field of syslogng - thanks to 
+  Micha "Wolvverine" Panasiewicz
+- Added translation for Brazilian Portuguese, thanks to Ricardo Maraschini
+---------------------------------------------------------------------------
 Version 2.3.6 (devel), 2008-06-09
 - Added new feature, multiple configureable views which can be configured 
   and selected for each source seperately. Old configurations can still
