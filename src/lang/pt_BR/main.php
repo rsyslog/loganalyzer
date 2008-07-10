@@ -32,9 +32,9 @@ global $content;
 
 // Global Stuff
 $content['LN_MAINTITLE'] = "Controle de Logs";
-$content['LN_MAIN_SELECTSTYLE'] = "Selecione um estilo";
-$content['LN_GEN_LANGUAGE'] = "Selecione uma linguagem";
-$content['LN_GEN_SELECTSOURCE'] = "Selecione Origem";
+$content['LN_MAIN_SELECTSTYLE'] = "Estilo";
+$content['LN_GEN_LANGUAGE'] = "Linguagem";
+$content['LN_GEN_SELECTSOURCE'] = "Origem";
 $content['LN_GEN_MOREPAGES'] = "Mais que uma p&aacute;gina dispon&iacute;vel";
 $content['LN_GEN_FIRSTPAGE'] = "Primeira P&aacute;gina";
 $content['LN_GEN_LASTPAGE'] = "&Uacute;ltima P&aacute;gina";
@@ -59,7 +59,7 @@ $content['LN_GEN_DB_DB2'] = "	IBM DB2";
 $content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
 $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
-$content['LN_GEN_SELECTVIEW'] = "Selecionar Vis&atilde;o";
+$content['LN_GEN_SELECTVIEW'] = "Vis&atilde;o";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Aten&ccedil;&atilde;o! Voc&ecirc; ainda N&Atilde;O removeu o arquivo 'install.php' do diret&oacute;rio de seu phpLogCon!";
@@ -84,7 +84,7 @@ $content['LN_HIGHLIGHT'] = "Destacar >>";
 $content['LN_HIGHLIGHT_OFF'] = "Destacar <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Utilize uma lista de palavras separadas por v&iacute;rgula";
 
-$content['LN_AUTORELOAD'] = "Define auto recarregamento";
+$content['LN_AUTORELOAD'] = "Recarregamento";
 $content['LN_AUTORELOAD_DISABLED'] = "Auto recarregamento desabilitado";
 $content['LN_AUTORELOAD_PRECONFIGURED'] = "Auto recarregamento pr&eacute;-configurado ";
 $content['LN_AUTORELOAD_SECONDS'] = "segundos";
@@ -121,8 +121,8 @@ $content['LN_FIELDS_FACILITY'] = "Facility";
 $content['LN_FIELDS_SEVERITY'] = "Severidade";
 $content['LN_FIELDS_HOST'] = "Host";
 $content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
-$content['LN_FIELDS_PROCESSID'] = "ID do processo";
-$content['LN_FIELDS_MESSAGETYPE'] = "Tipo da Mensagem";
+$content['LN_FIELDS_PROCESSID'] = "PID";
+$content['LN_FIELDS_MESSAGETYPE'] = "Tipo";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Mensagem";
 $content['LN_FIELDS_EVENTID'] = "ID do Evento";
