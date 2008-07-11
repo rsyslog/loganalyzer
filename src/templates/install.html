@@ -133,49 +133,14 @@
 			<p>&nbsp;</p>
 
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
-
-				<!-- IF USERDBFEATURE_ENABLED="true" -->
-				<tr><td align="center" class="cellmenu1" colspan="2"><b>User Database Options</b></td></tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>Enable User Database</b></td>
-					<td align="right" class="line0" width="100%">
-						<input type="radio" name="UserDBEnabled" value="1" {UserDBEnabled_true}> Yes <input type="radio" name="UserDBEnabled" value="0" {UserDBEnabled_false}> No
-					</td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBSERVER}</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="UserDBServer" size="40" maxlength="255" value="{UserDBServer}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBPORT}</b></td>
-					<td align="right" class="line1" width="100%"><input type="text" name="UserDBPort" size="40" maxlength="255" value="{UserDBPort}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBNAME}</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="UserDBName" size="40" maxlength="255" value="{UserDBName}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBPREF}</b></td>
-					<td align="right" class="line1" width="100%"><input type="text" name="UserDBPref" size="40" maxlength="255" value="{UserDBPref}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBUSER}</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="UserDBUser" size="40" maxlength="255" value="{UserDBUser}"></td>
-				</tr>
-				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
-					<td align="right" class="line1" width="100%"><input type="password" name="UserDBPass" size="40" maxlength="255" value="{UserDBPass}"></td>
-				</tr>
-				<!-- ENDIF USERDBFEATURE_ENABLED="true" -->
-
 				<tr><td align="center" class="cellmenu1" colspan="2"><b>Frontend Options</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu2" width="250" nowrap><b>Number of syslog messages per page</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="ViewEntriesPerPage" size="40" maxlength="8" value="{ViewEntriesPerPage}"></td>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>Number of syslog messages per page</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="ViewEntriesPerPage" size="40" maxlength="8" value="{ViewEntriesPerPage}"></td>
 				</tr>
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>Message character limit for the main view</b></td>
-					<td align="right" class="line1" width="100%"><input type="text" name="ViewMessageCharacterLimit" size="40" maxlength="8" value="{ViewMessageCharacterLimit}"></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="ViewMessageCharacterLimit" size="40" maxlength="8" value="{ViewMessageCharacterLimit}"></td>
 				</tr>
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>Show message details popup</b></td>
@@ -185,17 +150,74 @@
 				</tr>
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>Automatically resolved IP Addresses (inline)</b></td>
-					<td align="right" class="line1" width="100%">
+					<td align="right" class="line2" width="100%">
 					<input type="radio" name="EnableIPAddressResolve" value="1" {EnableIPAddressResolve_true}> Yes <input type="radio" name="EnableIPAddressResolve" value="0" {EnableIPAddressResolve_false}> No
 					</td>
 				</tr>
+
+				<tr><td align="center" class="line2" colspan="2">&nbsp;</td></tr>
+
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>User Database Options</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>Enable User Database</b></td>
+					<td align="right" class="line1" width="100%">
+						<input type="radio" name="UserDBEnabled" value="1" {UserDBEnabled_true} OnChange="showvisibility('HiddenUserDBOptions');"> Yes 
+						<input type="radio" name="UserDBEnabled" value="0" {UserDBEnabled_false} OnChange="hidevisibility('HiddenUserDBOptions');"> No
+					</td>
+				</tr>
 				</table>
+
+				<div id="HiddenUserDBOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_DBSERVER}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="UserDBServer" size="40" maxlength="255" value="{UserDBServer}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPORT}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="UserDBPort" size="40" maxlength="255" value="{UserDBPort}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="UserDBName" size="40" maxlength="255" value="{UserDBName}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPREF}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="UserDBPref" size="40" maxlength="255" value="{UserDBPref}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="UserDBUser" size="40" maxlength="255" value="{UserDBUser}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
+					<td align="right" class="line1" width="100%"><input type="password" name="UserDBPass" size="40" maxlength="255" value="{UserDBPass}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSERLOGINREQUIRED}</b></td>
+					<td align="right" class="line2" width="100%">
+						<input type="radio" name="UserDBLoginRequired" value="1" {UserDBLoginRequired_true}> Yes 
+						<input type="radio" name="UserDBLoginRequired" value="0" {UserDBLoginRequired_false}> No
+					</td>
+				</tr>
+				</table>
+				</div>
 
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 			</td>
 		</tr>
 		</table>
+
+		<script language="javascript">
+			// Manually perform initial Javascript Calls
+			<!-- IF UserDBEnabled_true="checked" -->
+			showvisibility('HiddenUserDBOptions');
+			<!-- ENDIF UserDBEnabled_true="checked" -->
+			<!-- IF UserDBEnabled_false="checked" -->
+			hidevisibility('HiddenUserDBOptions');
+			<!-- ENDIF UserDBEnabled_false="checked" -->
+		</script>
 		<!-- ENDIF INSTALL_STEP="3" -->
 
 		<!-- IF INSTALL_STEP="4" -->
@@ -203,11 +225,12 @@
 		<tr>
 			<td class="tableBackground">
 			<h1>Step 4 - Create Tables</h1>
-			<p>If you reached this step, the database configuration file has been successfully written! <br>
-			The next step will start creating the database tables. <br>
-			This might take a while, so be <B>patient</B>!<br><br>
+			<p>If you reached this step, the database connection has been successfully verified! <br><br>
+			The next step will be to create the necessary database tables used by the phpLogCon User System. This might take a while! <br>
+			<b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>! Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database. 
+			<br><br>
+			<b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>
 
-			Go ahead when you feel ready ;)
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 			</td>
@@ -260,20 +283,22 @@
 			<td class="tableBackground">
 			<h1>Step 6 - Creating the Main Useraccount</h1>
 			<p>You are now about to create the initial phpLogCon User Account. <br>
-			This useraccount is important, as it will allow you to login into the Admin center!
+			This will be the first administrative user, which will be needed to login into phpLogCon and access the Admin Center!
+			<br><br>
 
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>Create User Account</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu1" width="150" nowrap><b>Username</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="username" size="40" maxlength="255" value="{MAIN_Username}"></td>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>Username</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="username" size="40" maxlength="255" value="{MAIN_Username}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu1" width="150" nowrap><b>Password</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>Password</b></td>
 					<td align="right" class="line1" width="100%"><input type="password" name="password1" size="40" maxlength="255" value="{MAIN_Password1}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu1" width="150" nowrap><b>Repeat Password</b></td>
-					<td align="right" class="line0" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
+					<td align="left" class="cellmenu2" nowrap><b>Repeat Password</b></td>
+					<td align="right" class="line2" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
 				</tr>
 				</table>
 
@@ -285,6 +310,19 @@
 		<!-- ENDIF INSTALL_STEP="6" -->
 
 		<!-- IF INSTALL_STEP="7" -->
+
+		<!-- IF createduser="true" -->
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line2" align="center">
+				<br>
+				<h3><font color="red">Successfully created User '{MAIN_Username}'.</font></h3>
+				<br>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF createduser="true" -->
+
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">

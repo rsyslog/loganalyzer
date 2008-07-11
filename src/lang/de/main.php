@@ -146,10 +146,20 @@ $content['LN_CFG_DBTABLENAME'] = "Datenbank Tabellenname";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name der Quelle";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
 	$content['LN_CFG_VIEW'] = "Select View";
+	$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Require user to be logged in";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details für syslog-Nachrichten mit der ID";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details für Nachrichten-ID";
 $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
+
+	// Login Site
+	$content['LN_LOGIN_DESCRIPTION'] = "Use this form to login into phpLogCon. ";
+	$content['LN_LOGIN_TITLE'] = "Login";
+	$content['LN_LOGIN_USERNAME'] = "Username";
+	$content['LN_LOGIN_PASSWORD'] = "Password";
+	$content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
+	$content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
+	$content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
 
 ?>

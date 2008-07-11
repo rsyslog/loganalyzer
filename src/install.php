@@ -212,6 +212,18 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['UserDBEnabled_true'] = "";
 		$content['UserDBEnabled_false'] = "checked";
 	}
+	if ( $content['UserDBLoginRequired'] == 1 )
+	{
+		$content['UserDBLoginRequired_true'] = "checked";
+		$content['UserDBLoginRequired_false'] = "";
+	}
+	else
+	{
+		$content['UserDBLoginRequired_true'] = "";
+		$content['UserDBLoginRequired_false'] = "checked";
+	}
+
+	
 	// ---
 
 	// --- Read and predefine Frontend options
@@ -290,6 +302,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 			else
 				$_SESSION['UserDBPass'] = "";
 
+			if ( isset($_POST['UserDBLoginRequired']) )
+				$_SESSION['UserDBLoginRequired'] = intval(DB_RemoveBadChars($_POST['UserDBLoginRequired']));
+			else
+				$_SESSION['UserDBLoginRequired'] = false;
+			
+
 			// Now Check database connect
 			$link_id = mysql_connect( $_SESSION['UserDBServer'], $_SESSION['UserDBUser'], $_SESSION['UserDBPass']);
 			if (!$link_id) 
@@ -350,12 +368,12 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		$totaldbdefs = "";
 
 		// Read the table GLOBAL definitions 
-		ImportDataFile( $content['BASEPATH'] . "contrib/db_template.txt" );
+		ImportDataFile( $content['BASEPATH'] . "include/db_template.txt" );
 
 		// Process definitions ^^
 		if ( strlen($totaldbdefs) <= 0 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (to short!), file '" . $content['BASEPATH'] . "contrib/db_template.txt" . "'! <br>Maybe the file was not correctly uploaded?";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (to short!), file '" . $content['BASEPATH'] . "include/db_template.txt" . "'! <br>Maybe the file was not correctly uploaded?";
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
@@ -366,24 +384,24 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		// Now split by sql command
 		$mycommands = split( ";\n", $totaldbdefs );
 		
-		// check for different linefeed
-		if ( count($mycommands) <= 1 )
-			$mycommands = split( ";\n", $totaldbdefs );
+//		// check for different linefeed
+//		if ( count($mycommands) <= 1 )
+//			$mycommands = split( ";\n", $totaldbdefs );
 
 		//Still only one? Abort
 		if ( count($mycommands) <= 1 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (no statements found!) in '" . $content['BASEPATH'] . "contrib/db_template.txt" . "'!<br> Maybe the file was not correctly uploaded, or a strange bug with your system? Contact phpLogCon forums for assistance!";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (no statements found!) in '" . $content['BASEPATH'] . "include/db_template.txt" . "'!<br> Maybe the file was not correctly uploaded, or a strange bug with your system? Contact phpLogCon forums for assistance!";
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
 
 		// Append INSERT Statement for Config Table to set the GameVersion and Database Version ^^!
-		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`name`, `value`) VALUES ('database_installedversion', '1')";
+		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '1', 1)";
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
-		InitPhpLogConConfigFile();
+		InitUserDbSettings();
 
 		// Establish DB Connection
 		DB_Connect();
@@ -460,20 +478,25 @@ else if ( $content['INSTALL_STEP'] == 7 )
 			$_SESSION['MAIN_Password2'] = "";
 
 		if (	
-				strlen($_SESSION['MAIN_Password1']) <= 4 ||
+				strlen($_SESSION['MAIN_Password1']) < 4 ||
 				$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
 			)
 			RevertOneStep( $content['INSTALL_STEP']-1, "Either the password does not match or is to short!" );
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
-		InitPhpLogConConfigFile();
+		InitUserDbSettings();		// We need some DB Settings
+		InitUserSystemPhpLogCon();	// We need the user system now!
 
 		// Establish DB Connection
 		DB_Connect();
 
 		// Everything is fine, lets go create the User!
-		CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 0 );
+		CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 1 );
+		
+		// Show User success!
+		$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
+		$content['createduser'] = true;
 	}
 
 	// Init Source Options
@@ -490,7 +513,6 @@ else if ( $content['INSTALL_STEP'] == 7 )
 		else
 			$content['Views'][ $myView['ID'] ]['selected'] = "";
 	}
-
 
 	// SOURCE_DISK specific
 	if ( isset($_SESSION['SourceLogLineType']) ) { $content['SourceLogLineType'] = $_SESSION['SourceLogLineType']; } else { $content['SourceLogLineType'] = ""; }
@@ -611,17 +633,35 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// If we reached this point, we have gathered all necessary information to create our configuration file ;)!
 	$filebuffer = LoadDataFile($configsamplefile);
 	
+	// helper variables
+	if ( $_SESSION['UserDBEnabled'] ) { $_SESSION['UserDBEnabled_value'] = "true"; } else { $_SESSION['UserDBEnabled_value'] = "false"; }
+	if ( $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
+
 	// Start replacing existing sample configurations
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEntriesPerPage'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEnableDetailPopups'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['EnableIPAddressResolve'\] = [0-9]{1,2};/";
-	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBServer'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPort'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBName'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPref'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBUser'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPass'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBLoginRequired'\] = (.*?);/";
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
 	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
-	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled'] . ";";
+	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled_value'] . ";";
+	$replacements[] = "\$CFG['UserDBServer'] = '" . $_SESSION['UserDBServer'] . "';";
+	$replacements[] = "\$CFG['UserDBPort'] = " . $_SESSION['UserDBPort'] . ";";
+	$replacements[] = "\$CFG['UserDBName'] = '" . $_SESSION['UserDBName'] . "';";
+	$replacements[] = "\$CFG['UserDBPref'] = '" . $_SESSION['UserDBPref'] . "';";
+	$replacements[] = "\$CFG['UserDBUser'] = '" . $_SESSION['UserDBUser'] . "';";
+	$replacements[] = "\$CFG['UserDBPass'] = '" . $_SESSION['UserDBPass'] . "';";
+	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . $_SESSION['UserDBLoginRequired_value'] . ";";
 	
 	//User Database	Options
 	if ( $_SESSION['UserDBEnabled'] == 1 )
@@ -757,6 +797,28 @@ function ImportDataFile($szFileName)
 		}
 	   fclose($handle);
 	}
+}
+
+function InitUserDbSettings()
+{
+	global $CFG;
+
+	// Init DB Configs 
+	$CFG['UserDBEnabled'] = true;
+	$CFG['UserDBServer'] = $_SESSION['UserDBServer'];
+	$CFG['UserDBPort'] = $_SESSION['UserDBPort'];
+	$CFG['UserDBName'] = $_SESSION['UserDBName'];
+	$CFG['UserDBPref'] = $_SESSION['UserDBPref'];
+	$CFG['UserDBUser'] = $_SESSION['UserDBUser'];
+	$CFG['UserDBPass'] = $_SESSION['UserDBPass'];
+	$CFG['UserDBLoginRequired'] = $_SESSION['UserDBLoginRequired'];
+	
+	// Needed table defs
+	define('DB_CONFIG',			$CFG['UserDBPref'] . "config");
+	define('DB_USERS',			$CFG['UserDBPref'] . "users");
+	define('DB_SEARCHES',		$CFG['UserDBPref'] . "searches");
+	define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
+	define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
 }
 
 // ---

@@ -148,7 +148,8 @@ $content['LN_CFG_DBTABLENAME'] = "Database Tablename";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name of the Source";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "First Syslog Source";
 $content['LN_CFG_DBROWCOUNTING'] = "Enable Row Counting";
-	$content['LN_CFG_VIEW'] = "Select View";
+$content['LN_CFG_VIEW'] = "Select View";
+$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Require user to be logged in";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
@@ -161,7 +162,6 @@ $content['LN_LOGIN_TITLE'] = "Login";
 $content['LN_LOGIN_USERNAME'] = "Username";
 $content['LN_LOGIN_PASSWORD'] = "Password";
 $content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
-
 $content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
 $content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
 

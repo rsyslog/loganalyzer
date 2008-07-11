@@ -42,6 +42,7 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 
 // To avoid infinite redirects!
 define('IS_LOGINPAGE', true);
+$content['IS_LOGINPAGE'] = true;
 InitPhpLogCon();
 // --- //
 

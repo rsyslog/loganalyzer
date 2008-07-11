@@ -23,6 +23,7 @@
 
 	<td width="350" align="center" valign="top" height="20">
 
+	<!-- IF IS_LOGINPAGE!="true" -->
 	<form action="userchange.php" method="get" name="styleidform">
 	<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
@@ -38,6 +39,7 @@
 	</tr>
 	</table>
 	</form>
+	<!-- ENDIF IS_LOGINPAGE!="true" -->
 
 	</td>
 	<td rowspan="4" width="10" align="center" nowrap>&nbsp;</td>
@@ -45,6 +47,7 @@
 <tr> 
 	<td width="100%" align="center" valign="top" height="20">
 
+	<!-- IF IS_LOGINPAGE!="true" -->
 	<form action="userchange.php" method="get" name="langidform">
 	<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
@@ -60,12 +63,14 @@
 	</tr>
 	</table>
 	</form>
+	<!-- ENDIF IS_LOGINPAGE!="true" -->
 
 	</td>
 </tr>
 <tr> 
 	<td width="100%" align="center" valign="top" height="20">
 
+	<!-- IF IS_LOGINPAGE!="true" -->
 	<form action="{CURRENTURL}" method="get" name="sourceidform">
 	<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
@@ -80,12 +85,14 @@
 	</tr>
 	</table>
 	</form>
+	<!-- ENDIF IS_LOGINPAGE!="true" -->
 
 	</td>
 </tr>
 <tr> 
 	<td width="100%" align="center" valign="top" height="100%">
 
+	<!-- IF IS_LOGINPAGE!="true" -->
 	<form action="userchange.php" method="get" name="viewidform">
 	<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 	<tr> 
@@ -101,6 +108,7 @@
 	</tr>
 	</table>
 	</form>
+	<!-- ENDIF IS_LOGINPAGE!="true" -->
 	
 	</td>
 </tr>

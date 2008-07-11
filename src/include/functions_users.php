@@ -89,6 +89,7 @@ function CreateUserName( $username, $password, $is_admin )
 	$md5pass = md5($password);
 	$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE username = '" . $username . "'");
 	$rows = DB_GetAllRows($result, true);
+
 	if ( isset($rows) )
 	{
 		DieWithFriendlyErrorMsg( "User $username already exists!" );
