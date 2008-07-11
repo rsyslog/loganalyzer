@@ -45,7 +45,7 @@ $errdesc = "";
 $errno = 0;
 
 // --- Current Database Version, this is important for automated database Updates!
-$content['database_internalversion'] = "1";	// Whenever incremented, a database upgrade is needed
+$content['database_internalversion'] = "0";	// Whenever incremented, a database upgrade is needed
 $content['database_installedversion'] = "0";	// 0 is default which means Prior Versioning Database
 // --- 
 
@@ -54,9 +54,9 @@ function DB_Connect()
 	global $link_id, $CFG;
 
 	//TODO: Check variables first
-	$link_id = mysql_connect($CFG['DBServer'],$CFG['User'],$CFG['Pass']);
+	$link_id = mysql_connect($CFG['UserDBServer'],$CFG['UserDBUser'],$CFG['UserDBPass']);
 	if (!$link_id) 
-		DB_PrintError("Link-ID == false, connect to ".$CFG['DBServer']." failed", true);
+		DB_PrintError("Link-ID == false, connect to ".$CFG['UserDBServer']." failed", true);
 	
 	// --- Now, check Mysql DB Version!
 	$strmysqlver = mysql_get_server_info();
@@ -78,10 +78,12 @@ function DB_Connect()
 	}
 	// ---
 
-	$db_selected = mysql_select_db($CFG['DBName'], $link_id);
+	$db_selected = mysql_select_db($CFG['UserDBName'], $link_id);
 	if(!$db_selected) 
-		DB_PrintError("Cannot use database '" . $CFG['DBName'] . "'", true);
+		DB_PrintError("Cannot use database '" . $CFG['UserDBName'] . "'", true);
 	// :D Success connecting to db
+
+	// TODO Do some more validating on the database
 }
 
 function DB_Disconnect()
@@ -283,25 +285,23 @@ function DB_Exec($query)
 function WriteConfigValue($szValue)
 {
 	// --- Abort in this case!
-	global $CFG;
+	global $CFG, $content;
 	if ( $CFG['UserDBEnabled'] == false ) 
 		return;
 	// ---
-
-	global $content;
 
 	$result = DB_Query("SELECT name FROM " . STATS_CONFIG . " WHERE name = '" . $szValue . "'");
 	$rows = DB_GetAllRows($result, true);
 	if ( !isset($rows) )
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value) VALUES ( '" . $szValue . "', '" . $content[$szValue] . "')");
+		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "')");
 		DB_FreeQuery($result);
 	}
 	else
 	{
 		// Update Entry
-		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $content[$szValue] . "' WHERE name = '" . $szValue . "'");
+		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $CFG[$szValue] . "' WHERE name = '" . $szValue . "'");
 		DB_FreeQuery($result);
 	}
 } 

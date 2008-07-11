@@ -37,7 +37,11 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
-// --- Database options
+// --- UserDB options
+/*	If UserDB is enabled, all options will and have to be configured in the database. 
+*	All Options below the UserDB options here will not be used, unless a setting
+*	is missing in the database. 
+*/
 $CFG['UserDBEnabled'] = false;
 $CFG['UserDBServer'] = "";
 $CFG['UserDBPort'] = 3306;
@@ -45,6 +49,7 @@ $CFG['UserDBName'] = "";
 $CFG['UserDBPref'] = ""; 
 $CFG['UserDBUser'] = "";
 $CFG['UserDBPass'] = "";
+$CFG['UserDBLoginRequired'] = false;
 // --- 
 
 // --- Misc Options

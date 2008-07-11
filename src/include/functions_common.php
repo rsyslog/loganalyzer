@@ -90,9 +90,21 @@ function InitBasicPhpLogCon()
 
 	// Start the PHP Session
 	StartPHPSession();
-	
+
 	// Init View Configs prior loading config.php!
 	InitViewConfigs();
+}
+
+function InitUserSystemPhpLogCon()
+{
+	// global vars needed
+	global $CFG, $gl_root_path, $content;
+
+	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
+	{
+		// Include User Functions
+		include($gl_root_path . 'include/functions_users.php');
+	}
 }
 
 function InitPhpLogConConfigFile($bHandleMissing = true)
@@ -106,7 +118,13 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		include_once($gl_root_path . 'config.php');
 		
 		// Easier DB Access
-		define('DB_CONFIG', $CFG['UserDBPref'] . "config");
+		define('DB_CONFIG',			$CFG['UserDBPref'] . "config");
+		define('DB_GROUPS',			$CFG['UserDBPref'] . "groups");
+		define('DB_GROUPMEMBERS',	$CFG['UserDBPref'] . "groupmembers");
+		define('DB_SEARCHES',		$CFG['UserDBPref'] . "searches");
+		define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
+		define('DB_USERS',			$CFG['UserDBPref'] . "users");
+		define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
 
 		// Legacy support for old columns definition format!
 		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
@@ -174,6 +192,9 @@ function InitPhpLogCon()
 	
 	// Will init the config file!
 	InitPhpLogConConfigFile();
+
+	// Init UserDB related stuff!
+	InitUserSystemPhpLogCon();
 
 	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
 	InitRuntimeInformations();
@@ -502,11 +523,13 @@ function InitConfigurationValues()
 		$result = DB_Query("SELECT * FROM " . DB_CONFIG);
 		$rows = DB_GetAllRows($result, true, true);
 
+		// Read results from DB and overwrite in $CFG Array!
 		if ( isset($rows ) )
 		{
 			for($i = 0; $i < count($rows); $i++)
-				$content[ $rows[$i]['name'] ] = $rows[$i]['value'];
+				$CFG[ $rows[$i]['name'] ] = $rows[$i]['value'];
 		}
+
 		// General defaults 
 		// --- Language Handling
 		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
@@ -931,7 +954,9 @@ function CreateTopLevelDomainSearch()
 	$szTLDDomains .= "aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|cTLD|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw";
 }
 
-// --- BEGIN Usermanagement Function --- 
+/*
+*	This Functions starts the main PHP Session if necessary
+*/
 function StartPHPSession()
 {
 	global $RUNMODE;
@@ -945,117 +970,5 @@ function StartPHPSession()
 			$_SESSION['SESSION_STARTED'] = "true";
 	}
 }
-
-function CheckForUserLogin( $isloginpage, $isUpgradePage = false )
-{
-	global $content; 
-
-	if ( isset($_SESSION['SESSION_LOGGEDIN']) )
-	{
-		if ( !$_SESSION['SESSION_LOGGEDIN'] ) 
-			RedirectToUserLogin();
-		else
-		{
-			$content['SESSION_LOGGEDIN'] = "true";
-			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
-		}
-
-		// New, Check for database Version and may redirect to updatepage!
-		if (	isset($content['database_forcedatabaseupdate']) && 
-				$content['database_forcedatabaseupdate'] == "yes" && 
-				$isUpgradePage == false 
-			)
-				RedirectToDatabaseUpgrade();
-	}
-	else
-	{
-		if ( $isloginpage == false )
-			RedirectToUserLogin();
-	}
-
-}
-
-function CreateUserName( $username, $password, $access_level )
-{
-	$md5pass = md5($password);
-	$result = DB_Query("SELECT username FROM " . STATS_USERS . " WHERE username = '" . $username . "'");
-	$rows = DB_GetAllRows($result, true);
-	if ( isset($rows) )
-	{
-		DieWithFriendlyErrorMsg( "User $username already exists!" );
-
-		// User not created!
-		return false;
-	}
-	else
-	{
-		// Create User
-		$result = DB_Query("INSERT INTO " . STATS_USERS . " (username, password, access_level) VALUES ('$username', '$md5pass', $access_level)");
-		DB_FreeQuery($result);
-
-		// Success
-		return true;
-	}
-}
-
-function CheckUserLogin( $username, $password )
-{
-	global $content, $CFG;
-
-	// TODO: SessionTime and AccessLevel check
-
-	$md5pass = md5($password);
-	$sqlselect = "SELECT access_level FROM " . STATS_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
-	$result = DB_Query($sqlselect);
-	$rows = DB_GetAllRows($result, true);
-	if ( isset($rows) )
-	{
-		$_SESSION['SESSION_LOGGEDIN'] = true;
-		$_SESSION['SESSION_USERNAME'] = $username;
-		$_SESSION['SESSION_ACCESSLEVEL'] = $rows[0]['access_level'];
-		
-		$content['SESSION_LOGGEDIN'] = "true";
-		$content['SESSION_USERNAME'] = $username;
-
-		// Success !
-		return true;
-	}
-	else
-	{
-		if ( $CFG['MiscShowDebugMsg'] == 1 )
-			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
-		
-		// Default return false
-		return false;
-	}
-}
-
-function DoLogOff()
-{
-	global $content;
-
-	unset( $_SESSION['SESSION_LOGGEDIN'] );
-	unset( $_SESSION['SESSION_USERNAME'] );
-	unset( $_SESSION['SESSION_ACCESSLEVEL'] );
-
-	// Redir to Index Page
-	RedirectPage( "index.php");
-}
-
-function RedirectToUserLogin()
-{
-	// TODO Referer
-	header("Location: login.php?referer=" . $_SERVER['PHP_SELF']);
-	exit;
-}
-
-function RedirectToDatabaseUpgrade()
-{
-	// TODO Referer
-	header("Location: upgrade.php"); // ?referer=" . $_SERVER['PHP_SELF']);
-	exit;
-}
-// --- END Usermanagement Function --- 
-
 
 ?>

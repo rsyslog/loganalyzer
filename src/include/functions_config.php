@@ -216,20 +216,7 @@
 
 		// Loop through views now and copy into content array!
 		foreach ( $CFG['Views'] as $key => $view )
-		{
 			$content['Views'][$key] = $view;
-
-			/*
-			// Set View from session if available!
-			if ( isset($_SESSION['currentSourceID']) )
-			{
-				$currentSourceID = $_SESSION['currentSourceID'];
-
-				if ( isset($_SESSION[$currentSourceID . "-View"]) && )
-					$content['Views'][$key]['selected'] = "selected";
-			}
-			*/
-		}
 	}
 
 	/*
