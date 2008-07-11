@@ -404,8 +404,8 @@ function InitPhpDebugMode()
 	// --- Set Global DEBUG Level!
 	if ( $CFG['MiscShowDebugMsg'] == 1 )
 		ini_set( "error_reporting", E_ALL ); // ALL PHP MESSAGES!
-//	else
-//		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
+	else
+		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
 	// --- 
 }
 
@@ -520,24 +520,34 @@ function InitConfigurationValues()
 	// If Database is enabled, try to read from database!
 	if ( $CFG['UserDBEnabled'] )
 	{
-		$result = DB_Query("SELECT * FROM " . DB_CONFIG);
+		// Get configuration variables 
+		$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
 		$rows = DB_GetAllRows($result, true, true);
 
 		// Read results from DB and overwrite in $CFG Array!
 		if ( isset($rows ) )
 		{
 			for($i = 0; $i < count($rows); $i++)
-				$CFG[ $rows[$i]['name'] ] = $rows[$i]['value'];
+			{
+				$CFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+				$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+			}
+		}
+
+		// Now we init the user session stuff
+		InitUserSession();
+
+		if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true && !$content['SESSION_LOGGEDIN'] )
+		{
+			// User needs to be logged in, redirect to login page
+			if ( !defined("IS_LOGINPAGE") )
+				RedirectToUserLogin();
 		}
 
 		// General defaults 
-		// --- Language Handling
-		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
+//		// --- Language Handling
+//		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
 		
-		// --- PHP Debug Mode
-		if ( !isset($content['gen_phpdebug']) ) { $content['gen_phpdebug'] = "no"; }
-		// --- 
-
 		// Database Version Checker! 
 		if ( $content['database_internalversion'] > $content['database_installedversion'] )
 		{	
@@ -545,27 +555,25 @@ function InitConfigurationValues()
 			$content['database_forcedatabaseupdate'] = "yes"; 
 		}
 	}
-	else
+
+	// --- Language Handling
+	if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
 	{
-		// --- Set Defaults...
-		// Language Handling
-		if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
-		{
-			$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
-			$LANG = $content['user_lang'];
-		}
-		else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
-		{
-			$content['user_lang'] = $content['gen_lang'];
-			$LANG = $content['user_lang'];
-		}
-		else	// Failsave!
-		{
-			$content['user_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/;
-			$LANG = $content['user_lang'];
-			$content['gen_lang'] = $content['user_lang'];
-		}
+		$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
+		$LANG = $content['user_lang'];
 	}
+	else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
+	{
+		$content['user_lang'] = $content['gen_lang'];
+		$LANG = $content['user_lang'];
+	}
+	else	// Failsave!
+	{
+		$content['user_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/;
+		$LANG = $content['user_lang'];
+		$content['gen_lang'] = $content['user_lang'];
+	}
+	// --- 
 
 	// Paging Size handling!
 	if ( !isset($_SESSION['PAGESIZE_ID']) )
@@ -590,9 +598,8 @@ function InitConfigurationValues()
 	else
 		$content['user_theme'] = $content['web_theme'];
 
-	//Init Theme About Info ^^
+	// Init Theme About Info ^^
 	InitThemeAbout($content['user_theme']);
-	// ---
 
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );

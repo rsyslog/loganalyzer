@@ -155,4 +155,15 @@ $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
 $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 
+// Login Site
+$content['LN_LOGIN_DESCRIPTION'] = "Use this form to login into phpLogCon. ";
+$content['LN_LOGIN_TITLE'] = "Login";
+$content['LN_LOGIN_USERNAME'] = "Username";
+$content['LN_LOGIN_PASSWORD'] = "Password";
+$content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
+
+$content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
+$content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
+
+
 ?>

@@ -58,6 +58,7 @@ $CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add 
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 $CFG['MiscEnableGzipCompression'] = 1;		// If enabled, phplogcon will use gzip compression for output, we recommend
 											// to have this option enabled, it will highly reduce bandwith usage. 
+$CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informations on failed logins
 // --- 
 
 // --- Default Frontend Options 

@@ -40,7 +40,7 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 
-$link_id  = 0;
+$userdbconn  = 0;
 $errdesc = "";
 $errno = 0;
 
@@ -51,11 +51,11 @@ $content['database_installedversion'] = "0";	// 0 is default which means Prior V
 
 function DB_Connect() 
 {
-	global $link_id, $CFG;
+	global $userdbconn, $CFG;
 
 	//TODO: Check variables first
-	$link_id = mysql_connect($CFG['UserDBServer'],$CFG['UserDBUser'],$CFG['UserDBPass']);
-	if (!$link_id) 
+	$userdbconn = mysql_connect($CFG['UserDBServer'],$CFG['UserDBUser'],$CFG['UserDBPass']);
+	if (!$userdbconn) 
 		DB_PrintError("Link-ID == false, connect to ".$CFG['UserDBServer']." failed", true);
 	
 	// --- Now, check Mysql DB Version!
@@ -78,7 +78,7 @@ function DB_Connect()
 	}
 	// ---
 
-	$db_selected = mysql_select_db($CFG['UserDBName'], $link_id);
+	$db_selected = mysql_select_db($CFG['UserDBName'], $userdbconn);
 	if(!$db_selected) 
 		DB_PrintError("Cannot use database '" . $CFG['UserDBName'] . "'", true);
 	// :D Success connecting to db
@@ -88,8 +88,8 @@ function DB_Connect()
 
 function DB_Disconnect()
 {
-	global $link_id;
-	mysql_close($link_id);
+	global $userdbconn;
+	mysql_close($userdbconn);
 }
 
 function DB_Query($query_string, $bProcessError = true, $bCritical = false)
@@ -100,8 +100,8 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 		return;
 	// ---
 
-	global $link_id, $querycount;
-	$query_id = mysql_query($query_string,$link_id);
+	global $userdbconn, $querycount;
+	$query_id = mysql_query($query_string,$userdbconn);
 	if (!$query_id && $bProcessError) 
 		DB_PrintError("Invalid SQL: ".$query_string, $bCritical);
 
@@ -147,15 +147,12 @@ function DB_GetSingleRow($query_id, $bClose)
 	if ($query_id != false && $query_id != 1 )
 	{
 		$row = mysql_fetch_array($query_id,  MYSQL_ASSOC);
-		
+
 		if ( $bClose )
 			DB_FreeQuery ($query_id); 
 
-		if ( isset($row) )
-		{
-			// Return array
+		if ( isset($row) ) // Return array
 			return $row;
-		}
 		else
 			return;
 	}
@@ -195,8 +192,8 @@ function DB_GetMysqlStats()
 		return;
 	// ---
 
-	global $link_id;
-	$status = explode('  ', mysql_stat($link_id));
+	global $userdbconn;
+	$status = explode('  ', mysql_stat($userdbconn));
 	return $status;
 }
 
@@ -282,7 +279,7 @@ function DB_Exec($query)
 		return false; 
 } 
 
-function WriteConfigValue($szValue)
+function WriteConfigValue($szValue, $is_global = true)
 {
 	// --- Abort in this case!
 	global $CFG, $content;
@@ -290,18 +287,18 @@ function WriteConfigValue($szValue)
 		return;
 	// ---
 
-	$result = DB_Query("SELECT name FROM " . STATS_CONFIG . " WHERE name = '" . $szValue . "'");
+	$result = DB_Query("SELECT name FROM " . STATS_CONFIG . " WHERE name = '" . $szValue . "' AND is_global = " . $is_global);
 	$rows = DB_GetAllRows($result, true);
 	if ( !isset($rows) )
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "')");
+		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value, is_global) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "', " . $is_global . ")");
 		DB_FreeQuery($result);
 	}
 	else
 	{
 		// Update Entry
-		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $CFG[$szValue] . "' WHERE name = '" . $szValue . "'");
+		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $CFG[$szValue] . "' WHERE name = '" . $szValue . "' AND is_global = " . $is_global);
 		DB_FreeQuery($result);
 	}
 } 
