@@ -466,7 +466,8 @@ function InitFrontEndVariables()
 	$content['MENU_PREFERENCES'] = $content['BASEPATH'] . "images/icons/preferences.png";
 	$content['MENU_ADMINENTRY'] = $content['BASEPATH'] . "images/icons/star_blue.png";
 	$content['MENU_ADMINLOGOFF'] = $content['BASEPATH'] . "images/icons/exit.png";
-	$content['MENU_ADMINUSERS'] = $content['BASEPATH'] . "images/icons/businessmen.png";
+	$content['MENU_ADMINUSERS'] = $content['BASEPATH'] . "images/icons/businessman.png";
+	$content['MENU_ADMINGROUPS'] = $content['BASEPATH'] . "images/icons/businessmen.png";
 	$content['MENU_SEARCH'] = $content['BASEPATH'] . "images/icons/view.png";
 	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
@@ -474,6 +475,8 @@ function InitFrontEndVariables()
 	$content['MENU_NETWORK'] = $content['BASEPATH'] . "images/icons/earth_network.png";
 	$content['MENU_HELP'] = $content['BASEPATH'] . "images/icons/help.png";
 	$content['MENU_KB'] = $content['BASEPATH'] . "images/icons/books.png";
+	$content['MENU_DOCUMENTVIEW'] = $content['BASEPATH'] . "images/icons/document_view.png";
+	$content['MENU_DATAEDIT'] = $content['BASEPATH'] . "images/icons/data_edit.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

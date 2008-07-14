@@ -62,6 +62,7 @@ function InitUserSession()
 		{
 			$content['SESSION_LOGGEDIN'] = true;
 			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
+			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
 			
 			// Successfully logged in
 			return true;
