@@ -196,6 +196,8 @@ font
 	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
 
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;

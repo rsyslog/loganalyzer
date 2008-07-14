@@ -58,6 +58,15 @@ $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_SELECTVIEW'] = "Select View";
 
+// Topmenu Entries
+	$content['LN_MENU_SEARCH'] = "Search";
+	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
+	$content['LN_MENU_HELP'] = "Help";
+	$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
+	$content['LN_MENU_LOGIN'] = "Login";
+	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
+	$content['LN_MENU_LOGOFF'] = "Logoff";
+	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";

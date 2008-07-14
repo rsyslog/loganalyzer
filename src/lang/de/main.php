@@ -57,6 +57,16 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_SELECTVIEW'] = "Select View";
 
+// Topmenu Entries
+$content['LN_MENU_SEARCH'] = "Suchen";
+	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
+$content['LN_MENU_HELP'] = "Hilfe";
+	$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
+$content['LN_MENU_LOGIN'] = "Login";
+	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
+$content['LN_MENU_LOGOFF'] = "Logoff";
+	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
+
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";
 $content['LN_TOP_NUM'] = "No.";

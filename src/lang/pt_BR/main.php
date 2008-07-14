@@ -61,6 +61,16 @@ $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 $content['LN_GEN_SELECTVIEW'] = "Vis&atilde;o";
 
+// Topmenu Entries
+	$content['LN_MENU_SEARCH'] = "Search";
+	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
+	$content['LN_MENU_HELP'] = "Help";
+	$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
+	$content['LN_MENU_LOGIN'] = "Login";
+	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
+	$content['LN_MENU_LOGOFF'] = "Logoff";
+	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
+
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Aten&ccedil;&atilde;o! Voc&ecirc; ainda N&Atilde;O removeu o arquivo 'install.php' do diret&oacute;rio de seu phpLogCon!";
 $content['LN_TOP_NUM'] = "N&atilde;o.";
@@ -156,5 +166,14 @@ $content['LN_CFG_VIEW'] = "Selecione vis&atilde;o";
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Detalhes para a mensagem com id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Detalhes para a mensagem com id";
 $content['LN_DETAIL_BACKTOLIST'] = "Voltar para a lista";
+
+	// Login Site
+	$content['LN_LOGIN_DESCRIPTION'] = "Use this form to login into phpLogCon. ";
+	$content['LN_LOGIN_TITLE'] = "Login";
+	$content['LN_LOGIN_USERNAME'] = "Username";
+	$content['LN_LOGIN_PASSWORD'] = "Password";
+	$content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
+	$content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
+	$content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
 
 ?>
