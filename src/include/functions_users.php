@@ -160,12 +160,14 @@ function DoLogOff()
 
 function RedirectToUserLogin()
 {
+	global $content;
+
 	// build referer
 	$referer = $_SERVER['PHP_SELF'];
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
 		$referer .= "?" . $_SERVER['QUERY_STRING'];
 
-	header("Location: login.php?referer=" . urlencode($referer) );
+	header("Location: " . $content['BASEPATH'] . "login.php?referer=" . urlencode($referer) );
 	exit;
 }
 

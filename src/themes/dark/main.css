@@ -191,6 +191,15 @@ font
 }
 
 /* TOP Menu Classes */
+.topmenu1begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #38110E;
+}
 .topmenu1
 {
 	height: 20px;
@@ -206,6 +215,8 @@ font
 .topmenu1:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #D79993 #290604 #290604 #D79993;
 	background-color: #492D2B;
 	text-decoration: none;
 }
@@ -225,19 +236,32 @@ font
 	color: #FFFFFF;
 	background-color: #290604;
 }
+.topmenu2begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #49221F;
+}
 .topmenu2
 {
-	height: 16px;
+	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
 
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #38110E;
+	background-color: #49221F;
 }
 .topmenu2:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #D79993 #290604 #290604 #D79993;
 	background-color: #492D2B;
 	text-decoration: none;
 }
@@ -252,12 +276,11 @@ font
 }
 .topmenu2end
 {
-	height: 16px;
-	border:1px inset;
-	border-color: #D79993 #290604 #D79993 #D79993;
+	height: 20px;
+	border:0px;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #290604;
+	background-color: #49221F;
 }
 
 /* Cell Columns */

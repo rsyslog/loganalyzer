@@ -54,7 +54,9 @@ $content['pass'] = "";
 
 // Set Referer
 if ( isset($_GET['referer']) )
-	$szRedir = urldecode($_GET['referer']);
+	$szRedir = $_GET['referer'];
+else if ( isset($_POST['referer']) )
+	$szRedir = $_POST['referer'];
 else
 	$szRedir = "index.php"; // Default
 
@@ -79,7 +81,7 @@ if ( isset($_POST['op']) && $_POST['op'] == "login" )
 				$content['ERROR_MSG'] = $content['LN_LOGIN_ERRWRONGPASSWORD'];
 			}
 			else
-				RedirectPage( $szRedir );
+				RedirectPage( urldecode($szRedir) );
 		}
 		else
 		{

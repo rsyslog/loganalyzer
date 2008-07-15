@@ -194,6 +194,15 @@ font
 }
 
 /* TOP Menu Classes */
+.topmenu1begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #597196;
+}
 .topmenu1
 {
 	height: 20px;
@@ -209,6 +218,8 @@ font
 .topmenu1:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #79AABE #09506C #79AABE #79AABE;
 	background-color: #6A88B8;
 	text-decoration: none;
 }
@@ -228,19 +239,32 @@ font
 	color: #FFFFFF;
 	background-color: #597196;
 }
+.topmenu2begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #7A92A6;
+}
 .topmenu2
 {
 	height: 20px;
 	border:1px ridge;
-	border-color: #79AABE #79AABE #09506C #79AABE;
+	border-color: #BDEEFF #79AABE #09506C #09506C;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
 
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #597196;
+	background-color: #7A92A6;
 }
 .topmenu2:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #BDEEFF #79AABE #09506C #09506C;
 	background-color: #6A88B8;
 	text-decoration: none;
 }
@@ -257,10 +281,10 @@ font
 {
 	height: 20px;
 	border:1px inset;
-	border-color: #09506C #79AABE #09506C #09506C;
+	border-color: #BDEEFF #79AABE #09506C #09506C;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #6A8296;
+	background-color: #7A92A6;
 }
 
 
