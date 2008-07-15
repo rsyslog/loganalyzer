@@ -40,12 +40,12 @@ $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
 $content['LN_DELETEYES'] = "Yes";
 $content['LN_DELETENO'] = "No";
+$content['LN_GEN_ACTIONS'] = "Available Actions";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
 $content['LN_USER_ID'] = "ID";
 $content['LN_USER_NAME'] = "Username";
-$content['LN_USER_ACTIONS'] = "Available Actions";
 $content['LN_USER_ADD'] = "Add User";
 $content['LN_USER_EDIT'] = "Edit User";
 $content['LN_USER_DELETE'] = "Delete User";
@@ -54,9 +54,9 @@ $content['LN_USER_PASSWORD2'] = "Confirm Password";
 $content['LN_USER_ERROR_IDNOTFOUND'] = "Error, User with ID '%1' , was not found";
 $content['LN_USER_ERROR_WTFOMFGGG'] = "Error, erm wtf you don't have a username omfg pls mowl?";
 $content['LN_USER_ERROR_DONOTDELURSLF'] = "Error, you can not DELETE YOURSELF!";
-$content['LN_USER_ERROR_DELUSER'] = "Error deleting the User!";
+$content['LN_USER_ERROR_DELUSER'] = "Deleting of the user with id '%1' failed!";
 $content['LN_USER_ERROR_INVALIDID'] = "Error, invalid ID, User not found";
-$content['LN_USER_ERROR_HASBEENDEL'] = "User '%1' has been successfully DELETED!";
+$content['LN_USER_ERROR_HASBEENDEL'] = "The User '%1' has been successfully DELETED!";
 $content['LN_USER_ERROR_USEREMPTY'] = "Error, Username was empty";
 $content['LN_USER_ERROR_USERNAMETAKEN'] = "Error, this Username is already taken!";
 $content['LN_USER_ERROR_PASSSHORT'] = "Error, Password was to short, or did not match";
@@ -67,10 +67,28 @@ $content['LN_USER_ADDEDIT'] = "Add/Edit User";
 $content['LN_USER_WARNREMOVEADMIN'] = "You are about to revoke your own administrative priviledges. Are you sure to remove your admin status?";
 $content['LN_USER_WARNDELETEUSER'] = "Are you sure that you want to delete the User '%1'? All his personal settings will be deleted as well.";
 $content['LN_USER_'] = "";
-$content['LN_USER_'] = "";
-$content['LN_USER_'] = "";
-$content['LN_USER_'] = "";
 
-
+// Group center
+$content['LN_GROUP_ID'] = "ID";
+$content['LN_GROUP_NAME'] = "Groupname";
+$content['LN_GROUP_DESCRIPTION'] = "Groupdescription";
+$content['LN_GROUP_TYPE'] = "Grouptype";
+$content['LN_GROUP_ADD'] = "Add Group";
+$content['LN_GROUP_EDIT'] = "Edit Group";
+$content['LN_GROUP_DELETE'] = "Delete Group";
+$content['LN_GROUP_NOGROUPS'] = "No groups have been added yet";
+$content['LN_GROUP_ADDEDIT'] = "Add/Edit Group";
+$content['LN_GROUP_ERROR_GROUPEMPTY'] = "The groupname cannot be empty.";
+$content['LN_GROUP_ERROR_GROUPNAMETAKEN'] = "The groupname has already been taken.";
+$content['LN_GROUP_HASBEENADDED'] = "The group '%1' has been successfully added.";
+$content['LN_GROUP_ERROR_IDNOTFOUND'] = "The group with ID '%1' could not be found.";
+$content['LN_GROUP_ERROR_HASBEENEDIT'] = "The group '%1' has been successfully edited.";
+$content['LN_GROUP_ERROR_INVALIDGROUP'] = "Error, invalid ID, Group not found";
+$content['LN_GROUP_WARNDELETEGROUP'] = "Are you sure that you want to delete the Group '%1'? All Groupsettings will be deleted as well.";
+$content['LN_GROUP_ERROR_DELGROUP'] = "Deleting of the group with id '%1' failed!";
+$content['LN_GROUP_ERROR_HASBEENDEL'] = "The Group '%1' has been successfully DELETED!";
+$content['LN_GROUP_'] = "";
+$content['LN_GROUP_'] = "";
+$content['LN_GROUP_'] = "";
 
 ?>

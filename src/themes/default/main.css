@@ -446,8 +446,3 @@ select, input, button, textarea
 	color: #BB0000 
 }
 
-.borderless
-{ 
-	border:0px solid;
-	background-color: transparent; 
-}

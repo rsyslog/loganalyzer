@@ -3,9 +3,9 @@
 	*********************************************************************
 	* phpLogCon - http://www.phplogcon.org
 	* -----------------------------------------------------------------
-	* Admin Index File											
+	* User Admin File											
 	*																	
-	* -> Shows ...
+	* -> Helps administrating users
 	*																	
 	* All directives are explained within this file
 	*
@@ -39,9 +39,6 @@ $gl_root_path = './../';
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
 include($gl_root_path . 'include/functions_filters.php');
-
-// Include LogStream facility
-// include($gl_root_path . 'classes/logstream.class.php');
 
 // Set PAGE to be ADMINPAGE!
 define('IS_ADMINPAGE', true);
@@ -158,7 +155,7 @@ if ( isset($_GET['op']) )
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = "*Error, invalid ID, User not found";
+			$content['ERROR_MSG'] =  $content['LN_USER_ERROR_INVALIDID'];
 		}
 	}
 	else if ($_GET['op'] == "delete") 

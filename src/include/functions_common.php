@@ -477,6 +477,10 @@ function InitFrontEndVariables()
 	$content['MENU_KB'] = $content['BASEPATH'] . "images/icons/books.png";
 	$content['MENU_DOCUMENTVIEW'] = $content['BASEPATH'] . "images/icons/document_view.png";
 	$content['MENU_DATAEDIT'] = $content['BASEPATH'] . "images/icons/data_edit.png";
+	$content['MENU_ADDUSER'] = $content['BASEPATH'] . "images/icons/businessman_add.png";
+	$content['MENU_ADD'] = $content['BASEPATH'] . "images/icons/add.png";
+	$content['MENU_EDIT'] = $content['BASEPATH'] . "images/icons/edit.png";
+	$content['MENU_DELETE'] = $content['BASEPATH'] . "images/icons/delete.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

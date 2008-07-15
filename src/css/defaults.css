@@ -69,3 +69,9 @@
 {
 	height: 16px;
 }
+
+.borderless
+{ 
+	border:0px solid;
+	background-color: transparent; 
+}

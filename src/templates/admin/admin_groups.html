@@ -1,0 +1,78 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<center>
+<h3><font color="red">{ERROR_MSG}</font></h3>
+</center>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_USER_CENTER}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTGROUPS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<tr>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_GROUP_ID}</b></td>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_GROUP_NAME}</b></td>
+			<td align="center" width="300" class="cellmenu1"><b>{LN_GROUP_DESCRIPTION}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+<!-- IF EMPTYGROUPS="true" -->
+		<tr>
+			<td align="center" class="line1" colspan="4"><b>{LN_GROUP_NOGROUPS}</b></td>
+		</tr>
+<!-- ENDIF EMPTYGROUPS="true" -->
+		<!-- BEGIN GROUPS -->
+		<tr>
+			<td align="center" class="{cssclass}"><b>{ID}</b></td>
+			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/groups.php?op=edit&id={ID}">{groupname}</a></td>
+			<td align="center" class="{cssclass}">{groupdescription}</td>
+			<td align="center" class="{cssclass}">
+				&nbsp;<a href="{BASEPATH}admin/groups.php?op=adduser&id={ID}"><img src="{MENU_ADDUSER}" width="16" title="{LN_USER_ADD}"></a>
+				&nbsp;<a href="{BASEPATH}admin/groups.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_GROUP_EDIT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/groups.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_GROUP_DELETE}"></a>
+			</td>
+		</tr>
+		<!-- END GROUPS -->
+		<tr>
+			<td align="center" colspan="4" class="line0"><b><a href="{BASEPATH}admin/groups.php?op=add"><img src="{MENU_ADD}" title="{LN_GROUP_ADD}">&nbsp;{LN_GROUP_ADD}</a></b></td>
+		</tr>
+		</table>
+<!-- ENDIF LISTGROUPS="true" -->
+
+<!-- IF ISEDITORNEWGROUP="true" -->
+		<form action="" method="post">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_ADDEDIT}</b></td>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_GROUP_NAME}</b></td>
+				<td align="right" class="line0" width="100%"><input type="text" name="groupname" size="40" maxlength="64" value="{groupname}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_GROUP_DESCRIPTION}</b></td>
+				<td align="right" class="line1"><input type="text" name="groupdescription" size="40" maxlength="255" value="{groupdescription}"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{GROUP_SENDBUTTON}">
+					<input type="hidden" name="op" value="{GROUP_FORMACTION}">
+					<input type="hidden" name="id" value="{GROUPID}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISEDITORNEWGROUP="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->
