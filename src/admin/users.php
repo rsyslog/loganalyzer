@@ -1,0 +1,361 @@
+<?php
+/*
+	*********************************************************************
+	* phpLogCon - http://www.phplogcon.org
+	* -----------------------------------------------------------------
+	* Admin Index File											
+	*																	
+	* -> Shows ...
+	*																	
+	* All directives are explained within this file
+	*
+	* Copyright (C) 2008 Adiscon GmbH.
+	*
+	* This file is part of phpLogCon.
+	*
+	* PhpLogCon is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
+	*
+	* PhpLogCon is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
+	*
+	* You should have received a copy of the GNU General Public License
+	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	*
+	* A copy of the GPL can be found in the file "COPYING" in this
+	* distribution				
+	*********************************************************************
+*/
+
+// *** Default includes	and procedures *** //
+define('IN_PHPLOGCON', true);
+$gl_root_path = './../';
+
+// Now include necessary include files!
+include($gl_root_path . 'include/functions_common.php');
+include($gl_root_path . 'include/functions_frontendhelpers.php');
+include($gl_root_path . 'include/functions_filters.php');
+
+// Include LogStream facility
+// include($gl_root_path . 'classes/logstream.class.php');
+
+// Set PAGE to be ADMINPAGE!
+define('IS_ADMINPAGE', true);
+$content['IS_ADMINPAGE'] = true;
+InitPhpLogCon();
+InitSourceConfigs();
+InitFrontEndDefaults();	// Only in WebFrontEnd
+InitFilterHelpers();	// Helpers for frontend filtering!
+
+// Init admin langauge file now!
+IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
+
+// --- CONTENT Vars
+$content['TITLE'] = "Ultrastats - Admin Center - Users";	// Title of the Page 
+// --- 
+
+// --- BEGIN Custom Code
+if ($_GET['miniop'] == "setisadmin") 
+{
+	if ( isset($_GET['id']) && isset($_GET['newval']) )
+	{
+		//PreInit these values 
+		$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
+
+		$sqlquery = "SELECT * " . 
+					" FROM " . DB_USERS . 
+					" WHERE ID = " . $content['USERID'];
+		$result = DB_Query($sqlquery);
+		$myuser = DB_GetSingleRow($result, true);
+		if ( isset($myuser['username']) )
+		{
+			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+
+			// Update is_admin setting!
+			$result = DB_Query("UPDATE " . DB_USERS . " SET 
+				is_admin = $iNewVal 
+				WHERE ID = " . $content['USERID']);
+			DB_FreeQuery($result);
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+		}
+	}
+	else
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = "Error setting is_admin flat, invalid ID, User not found";
+	}
+}
+
+
+if ( isset($_GET['op']) )
+{
+	if ($_GET['op'] == "add") 
+	{
+		// Set Mode to add
+		$content['ISEDITORNEWUSER'] = "true";
+		$content['USER_FORMACTION'] = "addnewuser";
+		$content['USER_SENDBUTTON'] = $content['LN_USER_ADD'];
+
+		//PreInit these values 
+		$content['USERNAME'] = "";
+		$content['PASSWORD1'] = "";
+		$content['PASSWORD2'] = "";
+	}
+	else if ($_GET['op'] == "edit") 
+	{
+		// Set Mode to edit
+		$content['ISEDITORNEWUSER'] = "true";
+		$content['USER_FORMACTION'] = "edituser";
+		$content['USER_SENDBUTTON'] = $content['LN_USER_EDIT'];
+
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+
+			$sqlquery = "SELECT * " . 
+						" FROM " . DB_USERS . 
+						" WHERE ID = " . $content['USERID'];
+
+			$result = DB_Query($sqlquery);
+			$myuser = DB_GetSingleRow($result, true);
+			if ( isset($myuser['username']) )
+			{
+				$content['USERID'] = $myuser['ID'];
+				$content['USERNAME'] = $myuser['username'];
+				
+				// Set is_admin flag
+				if ( $myuser['is_admin'] == 1 ) 
+					$content['CHECKED_ISADMIN'] = "checked";
+				else
+					$content['CHECKED_ISADMIN'] = "";
+
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+			}
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = "*Error, invalid ID, User not found";
+		}
+	}
+	else if ($_GET['op'] == "delete") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+
+			if ( !isset($_SESSION['SESSION_USERNAME']) )
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_USER_ERROR_WTFOMFGGG'];
+			}
+			else
+			{
+				// Get UserInfo
+				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE ID = " . $content['USERID'] ); 
+				$myrow = DB_GetSingleRow($result, true);
+				if ( !isset($myrow['username']) )
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] ); 
+				}
+
+				if ( $_SESSION['SESSION_USERNAME'] == $myrow['username'] ) 
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_DONOTDELURSLF'], $content['USERID'] ); 
+				}
+				else
+				{
+					// do the delete!
+					$result = DB_Query( "DELETE FROM " . DB_USERS . " WHERE ID = " . $content['USERID'] );
+					if ($result == FALSE)
+					{
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_DELUSER'], $content['USERID'] ); 
+					}
+					else
+						DB_FreeQuery($result);
+
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENDEL'], $myrow['username'] ) , "users.php" );
+				}
+			}
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = $content['LN_USER_ERROR_INVALIDID'];
+		}
+	}
+
+	if ( isset($_POST['op']) )
+	{
+		if ( isset ($_POST['id']) ) { $content['USERID'] = DB_RemoveBadChars($_POST['id']); } else {$content['USERID'] = ""; }
+		if ( isset ($_POST['username']) ) { $content['USERNAME'] = DB_RemoveBadChars($_POST['username']); } else {$content['USERNAME'] = ""; }
+		if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
+		if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }
+		if ( isset ($_POST['isadmin']) ) { $content['ISADMIN'] = 1; } else {$content['ISADMIN'] = 0; }
+
+
+		// Check mandotary values
+		if ( $content['USERNAME'] == "" )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = $content['LN_USER_ERROR_USEREMPTY'];
+		}
+
+		if ( !isset($content['ISERROR']) ) 
+		{	
+			// Everything was alright, so we go to the next step!
+			if ( $_POST['op'] == "addnewuser" )
+			{
+				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE username = '" . $content['USERNAME'] . "'"); 
+				$myrow = DB_GetSingleRow($result, true);
+				if ( isset($myrow['username']) )
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = $content['LN_USER_ERROR_USERNAMETAKEN'];
+				}
+				else
+				{
+					// Check if Password is set!
+					if (	strlen($content['PASSWORD1']) <= 0 ||
+							$content['PASSWORD1'] != $content['PASSWORD2'] )
+					{
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = $content['LN_USER_ERROR_PASSSHORT'];
+					}
+
+					if ( !isset($content['ISERROR']) ) 
+					{	
+						// Create passwordhash now :)!
+						$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
+
+						// Add new User now!
+						$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin) 
+						VALUES ('" . $content['USERNAME'] . "', 
+								'" . $content['PASSWORDHASH'] . "',
+								" . $content['ISADMIN'] . ")");
+						DB_FreeQuery($result);
+						
+						// Do the final redirect
+						RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENADDED'], $content['USERNAME'] ) , "users.php" );
+					}
+				}
+			}
+			else if ( $_POST['op'] == "edituser" )
+			{
+				$result = DB_Query("SELECT ID FROM " . DB_USERS . " WHERE ID = " . $content['USERID']);
+				$myrow = DB_GetSingleRow($result, true);
+				if ( !isset($myrow['ID']) )
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] ); 
+				}
+				else
+				{
+
+					// Check if Password is enabled
+					if ( isset($content['PASSWORD1']) && strlen($content['PASSWORD1']) > 0 )
+					{
+						if ( $content['PASSWORD1'] != $content['PASSWORD2'] )
+						{
+							$content['ISERROR'] = true;
+							$content['ERROR_MSG'] = $content['LN_USER_ERROR_PASSSHORT'];
+						}
+
+						if ( !isset($content['ISERROR']) ) 
+						{
+							// Create passwordhash now :)!
+							$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
+
+							// Edit the User now!
+							$result = DB_Query("UPDATE " . DB_USERS . " SET 
+								username = '" . $content['USERNAME'] . "', 
+								password = '" . $content['PASSWORDHASH'] . "', 
+								is_admin = " . $content['ISADMIN'] . "
+								WHERE ID = " . $content['USERID']);
+							DB_FreeQuery($result);
+						}
+					}
+					else
+					{
+						// Edit the User now!
+						$result = DB_Query("UPDATE " . DB_USERS . " SET 
+							username = '" . $content['USERNAME'] . "', 
+							is_admin = " . $content['ISADMIN'] . "
+							WHERE ID = " . $content['USERID']);
+						DB_FreeQuery($result);
+					}
+
+					// Done redirect!
+					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENEDIT'], $content['USERNAME']) , "users.php" );
+				}
+			}
+		}
+	}
+}
+else
+{
+	// Default Mode = List Users
+	$content['LISTUSERS'] = "true";
+
+	// Read all Serverentries
+	$sqlquery = "SELECT ID, " . 
+				" username, " . 
+				" is_admin " . 
+				" FROM " . DB_USERS . 
+				" ORDER BY ID ";
+	$result = DB_Query($sqlquery);
+	$content['USERS'] = DB_GetAllRows($result, true);
+
+	// --- Process Users
+	for($i = 0; $i < count($content['USERS']); $i++)
+	{
+		// --- Set Image for IsClanMember
+		if ( $content['USERS'][$i]['is_admin'] == 1 ) 
+		{
+			$content['USERS'][$i]['is_isadmin_string'] = $content['MENU_SELECTION_ENABLED'];
+			$content['USERS'][$i]['set_isadmin'] = 0;
+		}
+		else
+		{
+			$content['USERS'][$i]['is_isadmin_string'] = $content['MENU_SELECTION_DISABLED'];
+			$content['USERS'][$i]['set_isadmin'] = 1;
+		}
+		// ---
+
+		// --- Set CSS Class
+		if ( $i % 2 == 0 )
+			$content['USERS'][$i]['cssclass'] = "line1";
+		else
+			$content['USERS'][$i]['cssclass'] = "line2";
+		// --- 
+	}
+	// --- 
+}
+
+// --- END Custom Code
+
+// --- Parsen and Output
+InitTemplateParser();
+$page -> parser($content, "admin/admin_users.html");
+$page -> output(); 
+// --- 
+
+?>
