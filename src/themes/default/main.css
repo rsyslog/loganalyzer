@@ -445,3 +445,9 @@ select, input, button, textarea
 	font: bold 8pt Arial,Helvetica,sans-serif;
 	color: #BB0000 
 }
+
+.borderless
+{ 
+	border:0px solid;
+	background-color: transparent; 
+}

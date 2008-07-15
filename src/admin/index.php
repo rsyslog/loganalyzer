@@ -115,6 +115,11 @@ else
 // --- END CREATE TITLE
 */
 
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+$content['TITLE'] .= " :: General Options";
+// --- END CREATE TITLE
+
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "admin/admin_index.html");

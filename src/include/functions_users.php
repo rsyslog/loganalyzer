@@ -44,6 +44,11 @@ if ( !defined('IN_PHPLOGCON') )
 ///include($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
+// --- Define User System initialized!
+define('IS_USERSYSTEMENABLED', true);
+$content['IS_USERSYSTEMENABLED'] = true;
+// --- 
+
 // --- BEGIN Usermanagement Function --- 
 function InitUserSession()
 {
@@ -62,8 +67,9 @@ function InitUserSession()
 		{
 			$content['SESSION_LOGGEDIN'] = true;
 			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
+			$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
-			
+
 			// Successfully logged in
 			return true;
 		}
@@ -125,10 +131,12 @@ function CheckUserLogin( $username, $password )
 	{
 		$_SESSION['SESSION_LOGGEDIN'] = true;
 		$_SESSION['SESSION_USERNAME'] = $username;
+		$_SESSION['SESSION_USERID'] = $myrow['ID'];
 		$_SESSION['SESSION_ISADMIN'] = $myrow['is_admin'];
 
 		$content['SESSION_LOGGEDIN'] = $_SESSION['SESSION_LOGGEDIN'];
 		$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
+		$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 		$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
 
 		// TODO SET LAST LOGIN TIME!
@@ -152,6 +160,7 @@ function DoLogOff()
 
 	unset( $_SESSION['SESSION_LOGGEDIN'] );
 	unset( $_SESSION['SESSION_USERNAME'] );
+	unset( $_SESSION['SESSION_USERID'] );
 	unset( $_SESSION['SESSION_ACCESSLEVEL'] );
 
 	// Redir to Index Page

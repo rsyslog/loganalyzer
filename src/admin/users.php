@@ -53,19 +53,31 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 
 // Init admin langauge file now!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
-
-// --- CONTENT Vars
-$content['TITLE'] = "Ultrastats - Admin Center - Users";	// Title of the Page 
 // --- 
 
 // --- BEGIN Custom Code
+
+// Only if the user is an admin!
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+
 if ($_GET['miniop'] == "setisadmin") 
 {
 	if ( isset($_GET['id']) && isset($_GET['newval']) )
 	{
 		//PreInit these values 
 		$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
+		$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
 
+		// --- handle special case
+		if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 0)
+		{
+			// This will print an additional secure check which the user needs to confirm and exit the script execution.
+			PrintSecureUserCheck( $content['LN_USER_WARNREMOVEADMIN'], $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+		}
+		// ---
+		
+		// Perform SQL Query!
 		$sqlquery = "SELECT * " . 
 					" FROM " . DB_USERS . 
 					" WHERE ID = " . $content['USERID'];
@@ -73,8 +85,6 @@ if ($_GET['miniop'] == "setisadmin")
 		$myuser = DB_GetSingleRow($result, true);
 		if ( isset($myuser['username']) )
 		{
-			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
-
 			// Update is_admin setting!
 			$result = DB_Query("UPDATE " . DB_USERS . " SET 
 				is_admin = $iNewVal 
@@ -181,6 +191,14 @@ if ( isset($_GET['op']) )
 				}
 				else
 				{
+					// --- Ask for deletion first!
+					if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+					{
+						// This will print an additional secure check which the user needs to confirm and exit the script execution.
+						PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_USER_WARNDELETEUSER'], $myrow['username'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+					}
+					// ---
+
 					// do the delete!
 					$result = DB_Query( "DELETE FROM " . DB_USERS . " WHERE ID = " . $content['USERID'] );
 					if ($result == FALSE)
@@ -190,6 +208,8 @@ if ( isset($_GET['op']) )
 					}
 					else
 						DB_FreeQuery($result);
+
+					// TODO: DELETE PERSONAL SETTINGS, GROUP MEMBERSHIP ...
 
 					// Do the final redirect
 					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENDEL'], $myrow['username'] ) , "users.php" );
@@ -349,8 +369,12 @@ else
 	}
 	// --- 
 }
-
 // --- END Custom Code
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+$content['TITLE'] .= " :: User Options";
+// --- END CREATE TITLE
 
 // --- Parsen and Output
 InitTemplateParser();

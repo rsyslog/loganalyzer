@@ -37,6 +37,9 @@ $content['LN_ADMINMENU_USEROPT'] = "User Options";
 $content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
+$content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
+$content['LN_DELETEYES'] = "Yes";
+$content['LN_DELETENO'] = "No";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
@@ -61,6 +64,11 @@ $content['LN_USER_ERROR_HASBEENADDED'] = "User '%1' has been successfully added"
 $content['LN_USER_ERROR_HASBEENEDIT'] = "User '%1' has been successfully edited";
 $content['LN_USER_ISADMIN'] = "Is Admin?";
 $content['LN_USER_ADDEDIT'] = "Add/Edit User";
+$content['LN_USER_WARNREMOVEADMIN'] = "You are about to revoke your own administrative priviledges. Are you sure to remove your admin status?";
+$content['LN_USER_WARNDELETEUSER'] = "Are you sure that you want to delete the User '%1'? All his personal settings will be deleted as well.";
+$content['LN_USER_'] = "";
+$content['LN_USER_'] = "";
+$content['LN_USER_'] = "";
 $content['LN_USER_'] = "";
 
 

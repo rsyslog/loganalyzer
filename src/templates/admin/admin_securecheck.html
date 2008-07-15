@@ -1,0 +1,32 @@
+<!-- INCLUDE include_header.html --> 
+
+<br><br>
+<table width="600" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border">
+<tr>
+	<td align="center" valign="top" class="line0 ErrorMsg" colspan="2">{warningtext}</td>
+</tr>
+<tr>
+	<td align="center" class="line1" width="50%">
+		<br>
+		<form action="{form_url}" method="post" name="confirmform">
+			<!-- BEGIN POST_VARIABLES -->
+			<input type="hidden" name="{varname}" value="{varvalue}">
+			<!-- END POST_VARIABLES -->
+			<input type="image" src="{BASEPATH}images/icons/check.png" alt="{yesmsg}" class="borderless" width="16">
+			<br>
+			<input type="submit" value="{yesmsg}" class="borderless">
+		</form>
+
+	</td>
+	<td align="center" class="line2" width="50%">
+		<br>
+		<a HREF="javascript:history.back();">
+		<img src="{BASEPATH}images/icons/redo.png" class="borderless" width="16">
+		<br>{nomsg}
+		</a>
+	</td>
+</tr>
+</table>
+<br>
+
+<!-- INCLUDE include_footer.html -->

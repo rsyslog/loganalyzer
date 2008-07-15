@@ -541,12 +541,17 @@ function InitConfigurationValues()
 		// Now we init the user session stuff
 		InitUserSession();
 
-		if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true && !$content['SESSION_LOGGEDIN'] )
-		{
-			// User needs to be logged in, redirect to login page
-			if ( !defined("IS_LOGINPAGE") )
-				RedirectToUserLogin();
-		}
+			if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+			{
+				if ( !$content['SESSION_LOGGEDIN'] ) 
+				{
+					// User needs to be logged in, redirect to login page
+					if ( !defined("IS_LOGINPAGE") )
+						RedirectToUserLogin();
+				}
+			}
+			else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
+				DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
 
 		// General defaults 
 //		// --- Language Handling
@@ -558,6 +563,11 @@ function InitConfigurationValues()
 			// Database is out of date, we need to upgrade
 			$content['database_forcedatabaseupdate'] = "yes"; 
 		}
+	}
+	else
+	{
+		if ( defined('IS_ADMINPAGE') || defined("IS_LOGINPAGE") )	// Language System not initialized yet
+			DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
 	}
 
 	// --- Language Handling
@@ -711,16 +721,21 @@ function InitPageTitle()
 	else
 		$szReturn = "";
 
-	if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
-		$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
+	if ( !defined('IS_ADMINPAGE') )
+	{
+		if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
+			$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
+	}
 
 	// Append phpLogCon
 	$szReturn .= "phpLogCon";
 
+	if ( defined('IS_ADMINPAGE') )
+		$szReturn .= " :: " . $content['LN_ADMIN_CENTER'] . " :: ";
+
 	// return result
 	return $szReturn;
 }
-
 
 function GetStringWithHTMLCodes($myStr)
 {
@@ -981,5 +996,39 @@ function StartPHPSession()
 			$_SESSION['SESSION_STARTED'] = "true";
 	}
 }
+
+function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
+{
+	global $content, $page;
+
+	// Copy properties
+	$content['warningtext'] = $warningtext;
+	$content['yesmsg'] = $yesmsg;
+	$content['nomsg'] = $nomsg;
+
+	// Handle GET and POST input!
+	$content['form_url'] = $_SERVER['SCRIPT_NAME'] . "?";
+	foreach ($_GET as $varname => $varvalue)
+		$content['form_url'] .= $varname . "=" . $varvalue . "&";
+	$content['form_url'] .= "verify=yes"; // Append verify!
+
+	foreach ($_POST as $varname => $varvalue)
+		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+
+	// --- BEGIN CREATE TITLE
+	$content['TITLE'] = InitPageTitle();
+	$content['TITLE'] .= " :: Confirm Action";
+	// --- END CREATE TITLE
+
+	// --- Parsen and Output
+	InitTemplateParser();
+	$page -> parser($content, "admin/admin_securecheck.html");
+	$page -> output(); 
+	// --- 
+	
+	// Exit script execution
+	exit;
+}
+
 
 ?>
