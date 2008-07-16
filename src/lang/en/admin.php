@@ -41,6 +41,29 @@ $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page
 $content['LN_DELETEYES'] = "Yes";
 $content['LN_DELETENO'] = "No";
 $content['LN_GEN_ACTIONS'] = "Available Actions";
+$content['LN_ADMIN_SEND'] = "Send changes";
+
+// General Options
+$content['LN_ADMIN_MISC'] = "Miscellaneous Options";
+$content['LN_GEN_SHOWDEBUGMSG'] = "Show Debug messages";
+$content['LN_GEN_DEBUGGRIDCOUNTER'] = "Show Debug Gridcounter";
+$content['LN_GEN_SHOWPAGERENDERSTATS'] = "Show Pagerenderstats";
+$content['LN_GEN_ENABLEGZIP'] = "Enable GZIP Compressed Output";
+$content['LN_GEN_DEBUGUSERLOGIN'] = "Debug Userlogin";
+$content['LN_ADMIN_FRONTEND'] = "Frontend Options";
+$content['LN_GEN_WEBSTYLE'] = "Default selected style";
+$content['LN_GEN_SELLANGUAGE'] = "Default selected language";
+$content['LN_GEN_PREPENDTITLE'] = "Prepend this string in title";
+$content['LN_GEN_USETODAY'] = "Use Today and Yesterday in timefields";
+$content['LN_GEN_DETAILPOPUPS'] = "Use Popup to display the full messagedetails";
+$content['LN_GEN_MSGCHARLIMIT'] = "Character limit of the message in main view";
+$content['LN_GEN_ENTRIESPERPAGE'] = "Number of entries per page";
+$content['LN_GEN_AUTORELOADSECONDS'] = "Enable autoreload after seconds";
+$content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";
+$content['LN_GEN_CUSTBTNCAPT'] = "Custom search caption";
+$content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
+$content['LN_GEN_'] = "";
+$content['LN_GEN_'] = "";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

@@ -2,10 +2,110 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td colspan="3" class="title" nowrap><B>{LN_DETAILS_FORSYSLOGMSG}</B></td>
+	<td colspan="3" class="title" nowrap><B>{LN_ADMINMENU_GENOPT}</B></td>
 </tr>
-
-
 </table>
+
+<br><br>
+
+<form action="" method="post">
+	<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" align="center">
+	<tr>
+		<td colspan="2" align="center" valign="top" class="title">
+		<strong>{LN_ADMIN_FRONTEND}</strong></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" width="250" nowrap><b>{LN_GEN_WEBSTYLE}</b></td>
+		<td align="right" class="line1" width="100%">
+			<select name="ViewDefaultTheme" size="1">
+				<!-- BEGIN STYLES -->
+				<option {selected}>{StyleName}</option>
+				<!-- END STYLES -->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" width="250" nowrap><b>{LN_GEN_SELLANGUAGE}</b></td>
+		<td align="right" class="line2" width="100%">
+			<select name="ViewDefaultLanguage" size="1">
+				<!-- BEGIN LANGUAGES -->
+				<option {selected} value="{langcode}">{DisplayName}</option>
+				<!-- END LANGUAGES -->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_PREPENDTITLE}</b></td>
+		<td align="right" class="line1" ><input type="text" name="PrependTitle" size="40" maxlength="255" value="{PrependTitle}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_MSGCHARLIMIT}</b></td>
+		<td align="right" class="line1" ><input type="text" name="ViewMessageCharacterLimit" size="40" maxlength="255" value="{ViewMessageCharacterLimit}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_ENTRIESPERPAGE}</b></td>
+		<td align="right" class="line1" ><input type="text" name="ViewEntriesPerPage" size="40" maxlength="255" value="{ViewEntriesPerPage}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_AUTORELOADSECONDS}</b></td>
+		<td align="right" class="line1" ><input type="text" name="ViewEnableAutoReloadSeconds" size="40" maxlength="255" value="{ViewEnableAutoReloadSeconds}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_CUSTBTNCAPT}</b></td>
+		<td align="right" class="line1" ><input type="text" name="SearchCustomButtonCaption" size="40" maxlength="255" value="{SearchCustomButtonCaption}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_CUSTBTNSRCH}</b></td>
+		<td align="right" class="line1" ><input type="text" name="SearchCustomButtonSearch" size="40" maxlength="255" value="{SearchCustomButtonSearch}"></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_USETODAY}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="ViewUseTodayYesterday" value="yes" {ViewUseTodayYesterday_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DETAILPOPUPS}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="ViewEnableDetailPopups" value="yes" {ViewEnableDetailPopups_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_IPADRRESOLVE}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="EnableIPAddressResolve" value="yes" {EnableIPAddressResolve_checked}></td>
+	</tr>
+
+	<tr>
+		<td colspan="2" align="center" valign="top" class="title">
+		<strong>{LN_ADMIN_MISC}</strong></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_SHOWDEBUGMSG}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="MiscShowDebugMsg" value="yes" {MiscShowDebugMsg_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DEBUGGRIDCOUNTER}</b></td>
+		<td align="right" class="line2" ><input type="checkbox" name="MiscShowDebugGridCounter" value="yes" {MiscShowDebugGridCounter_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_SHOWPAGERENDERSTATS}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="MiscShowPageRenderStats" value="yes" {MiscShowPageRenderStats_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_ENABLEGZIP}</b></td>
+		<td align="right" class="line2" ><input type="checkbox" name="MiscEnableGzipCompression" value="yes" {MiscEnableGzipCompression_checked}></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DEBUGUSERLOGIN}</b></td>
+		<td align="right" class="line1" ><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked}></td>
+	</tr>
+
+	<tr>
+		<td align="center" colspan="2">
+			<input type="submit" value="{LN_ADMIN_SEND}">
+			<input type="hidden" name="op" value="edit">
+		</td>
+	</tr>
+	</table>
+
+</form>
+
+<br><br>
 
 <!-- INCLUDE include_footer.html -->
