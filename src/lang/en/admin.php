@@ -52,7 +52,6 @@ $content['LN_USER_DELETE'] = "Delete User";
 $content['LN_USER_PASSWORD1'] = "Password";
 $content['LN_USER_PASSWORD2'] = "Confirm Password";
 $content['LN_USER_ERROR_IDNOTFOUND'] = "Error, User with ID '%1' , was not found";
-$content['LN_USER_ERROR_WTFOMFGGG'] = "Error, erm wtf you don't have a username omfg pls mowl?";
 $content['LN_USER_ERROR_DONOTDELURSLF'] = "Error, you can not DELETE YOURSELF!";
 $content['LN_USER_ERROR_DELUSER'] = "Deleting of the user with id '%1' failed!";
 $content['LN_USER_ERROR_INVALIDID'] = "Error, invalid ID, User not found";
@@ -66,9 +65,11 @@ $content['LN_USER_ISADMIN'] = "Is Admin?";
 $content['LN_USER_ADDEDIT'] = "Add/Edit User";
 $content['LN_USER_WARNREMOVEADMIN'] = "You are about to revoke your own administrative priviledges. Are you sure to remove your admin status?";
 $content['LN_USER_WARNDELETEUSER'] = "Are you sure that you want to delete the User '%1'? All his personal settings will be deleted as well.";
+$content['LN_USER_ERROR_INVALIDSESSIONS'] = "Invalid User Session.";
 $content['LN_USER_'] = "";
 
 // Group center
+$content['LN_GROUP_CENTER'] = "Group Center";
 $content['LN_GROUP_ID'] = "ID";
 $content['LN_GROUP_NAME'] = "Groupname";
 $content['LN_GROUP_DESCRIPTION'] = "Groupdescription";
@@ -87,8 +88,16 @@ $content['LN_GROUP_ERROR_INVALIDGROUP'] = "Error, invalid ID, Group not found";
 $content['LN_GROUP_WARNDELETEGROUP'] = "Are you sure that you want to delete the Group '%1'? All Groupsettings will be deleted as well.";
 $content['LN_GROUP_ERROR_DELGROUP'] = "Deleting of the group with id '%1' failed!";
 $content['LN_GROUP_ERROR_HASBEENDEL'] = "The Group '%1' has been successfully DELETED!";
-$content['LN_GROUP_'] = "";
-$content['LN_GROUP_'] = "";
+$content['LN_GROUP_MEMBERS'] = "Groupmembers: ";
+$content['LN_GROUP_ADDUSER'] = "Add User to Group";
+$content['LN_GROUP_ERROR_USERIDMISSING'] = "The userid is missing.";
+$content['LN_GROUP_USERHASBEENADDEDGROUP'] = "The User '%1' has been successfully added to group '%2'";
+$content['LN_GROUP_ERRORNOMOREUSERS'] = "There are no more available users who can be added to the group '%1'";
+$content['LN_GROUP_USER_ADD'] = "Add User to the group";
+$content['LN_GROUP_USERDELETE'] = "Remove a User from the group";
+$content['LN_GROUP_ERRORNOUSERSINGROUP'] = "There are no users to remove in this the group '%1'";
+$content['LN_GROUP_ERROR_REMUSERFROMGROUP'] = "The user '%1' could not be removed from the group '%2'";
+$content['LN_GROUP_USERHASBEENREMOVED'] = "The user '%1' has been successfully removed from the group '%2'";
 $content['LN_GROUP_'] = "";
 
 ?>

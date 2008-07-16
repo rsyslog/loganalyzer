@@ -1,17 +1,19 @@
 <!-- INCLUDE include_header.html --> 
 
-<!-- IF ISERROR="true" -->
-<center>
-<h3><font color="red">{ERROR_MSG}</font></h3>
-</center>
-<!-- ENDIF ISERROR="true" -->
-
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td colspan="3" class="title" nowrap><B>{LN_USER_CENTER}</B></td>
+	<td colspan="3" class="title" nowrap><B>{LN_GROUP_CENTER}</B></td>
 </tr>
 	<tr>
 		<td align="center" class="line2">
+
+<!-- IF ISERROR="true" -->
+		<br><br>
+		<center>
+		<h3><font color="red">{ERROR_MSG}</font></h3>
+		</center>
+<!-- ENDIF ISERROR="true" -->
+
 		<br><br>
 
 <!-- IF LISTGROUPS="true" -->
@@ -33,11 +35,25 @@
 			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/groups.php?op=edit&id={ID}">{groupname}</a></td>
 			<td align="center" class="{cssclass}">{groupdescription}</td>
 			<td align="center" class="{cssclass}">
-				&nbsp;<a href="{BASEPATH}admin/groups.php?op=adduser&id={ID}"><img src="{MENU_ADDUSER}" width="16" title="{LN_USER_ADD}"></a>
+				&nbsp;<a href="{BASEPATH}admin/groups.php?op=adduser&id={ID}"><img src="{MENU_ADDUSER}" width="16" title="{LN_GROUP_USER_ADD}"></a>
+				&nbsp;<a href="{BASEPATH}admin/groups.php?op=removeuser&id={ID}"><img src="{MENU_DELUSER}" width="16" title="{LN_GROUP_USERDELETE}"></a>
+				
 				&nbsp;<a href="{BASEPATH}admin/groups.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_GROUP_EDIT}"></a>
 				&nbsp;<a href="{BASEPATH}admin/groups.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_GROUP_DELETE}"></a>
 			</td>
 		</tr>
+		<!-- IF GROUPMEMBERS="true" -->
+		<tr>
+			<td align="center" colspan="2" class="cellmenu2">{LN_GROUP_MEMBERS}</td>
+			<td align="left" colspan="2" class="line0">
+		<!-- BEGIN USERS -->
+			<img src="{MENU_ADMINUSERS}" width="16">
+			<a href="{BASEPATH}admin/users.php?op=edit&id={userid}">{username}</a><b>{seperator}</b>
+		<!-- END USERS -->
+			</td>
+		</tr>
+		<!-- ENDIF GROUPMEMBERS="true" -->
+
 		<!-- END GROUPS -->
 		<tr>
 			<td align="center" colspan="4" class="line0"><b><a href="{BASEPATH}admin/groups.php?op=add"><img src="{MENU_ADD}" title="{LN_GROUP_ADD}">&nbsp;{LN_GROUP_ADD}</a></b></td>
@@ -46,7 +62,7 @@
 <!-- ENDIF LISTGROUPS="true" -->
 
 <!-- IF ISEDITORNEWGROUP="true" -->
-		<form action="" method="post">
+		<form action="{BASEPATH}admin/groups.php" method="post">
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_ADDEDIT}</b></td>
@@ -68,6 +84,64 @@
 			</table>
 		</form>
 <!-- ENDIF ISEDITORNEWGROUP="true" -->
+
+<!-- IF ISADDUSER="true" -->
+		<form action="{BASEPATH}admin/groups.php" method="post">
+			<input type="hidden" name="id" value="{GROUPID}">
+			<input type="hidden" name="groupname" value="{GROUPNAME}">
+			<input type="hidden" name="op" value="adduser">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_ADDUSER}: '{GROUPNAME}'</b></td>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_USER_NAME}</b></td>
+				<td align="right" class="line0" width="100%">
+					<select name="userid" size="1" STYLE="width: 190px">
+						<!-- BEGIN SUBUSERS -->
+						<option value="{userid}">{username}</option>
+						<!-- END SUBUSERS -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{GROUP_SENDBUTTON}">
+					<input type="hidden" name="op" value="{GROUP_FORMACTION}">
+					<input type="hidden" name="id" value="{GROUPID}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISADDUSER="true" -->
+
+<!-- IF ISREMOVEUSER="true" -->
+		<form action="{BASEPATH}admin/groups.php" method="post">
+			<input type="hidden" name="id" value="{GROUPID}">
+			<input type="hidden" name="groupname" value="{GROUPNAME}">
+			<input type="hidden" name="op" value="removeuser">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_USERDELETE}: '{GROUPNAME}'</b></td>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_USER_NAME}</b></td>
+				<td align="right" class="line0" width="100%">
+					<select name="userid" size="1" STYLE="width: 190px">
+						<!-- BEGIN SUBRMUSERS -->
+						<option value="{userid}">{username}</option>
+						<!-- END SUBRMUSERS -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{GROUP_SENDBUTTON}">
+					<input type="hidden" name="op" value="{GROUP_FORMACTION}">
+					<input type="hidden" name="id" value="{GROUPID}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISREMOVEUSER="true" -->
 
 		<br><br>
 

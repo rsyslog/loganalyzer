@@ -71,11 +71,143 @@ if ( isset($_GET['op']) )
 		$content['groupname'] = "";
 		$content['groupdescription'] = "";
 	}
+	else if ($_GET['op'] == "adduser" && isset($_GET['id']) ) 
+	{
+		//PreInit these values 
+		$content['GROUPID'] = intval( DB_RemoveBadChars($_GET['id']) );
+
+		// Set Mode to add
+		$content['ISADDUSER'] = "true";
+		$content['GROUP_FORMACTION'] = "adduser";
+		$content['GROUP_SENDBUTTON'] = $content['LN_GROUP_ADDUSER'];
+		
+		// --- Get Groupname
+		$sqlquery = "SELECT " . 
+					DB_GROUPS . ".groupname " . 
+					" FROM " . DB_GROUPS .
+					" WHERE " . DB_GROUPS . ".id = " . $content['GROUPID'];
+		$result = DB_Query($sqlquery);
+		$tmparray = DB_GetSingleRow($result, true);
+		
+		if ( isset($tmparray) )
+		{
+			// Copy Groupname
+			$content['GROUPNAME'] = $tmparray['groupname'];
+
+			// --- Get Group Members
+			$sqlquery = "SELECT " . 
+						DB_GROUPMEMBERS. ".userid " . 
+						" FROM " . DB_GROUPMEMBERS .
+						" WHERE " . DB_GROUPMEMBERS . ".groupid = " . $content['GROUPID'];
+			$result = DB_Query($sqlquery);
+			$tmparray = DB_GetAllRows($result, true);
+			if ( count($tmparray) > 0 )
+			{
+				// Add UserID's to where clause!
+				foreach ($tmparray as $datarow)
+				{
+					if ( isset($whereclause) )
+						$whereclause .= ", " . $datarow['userid'];
+					else
+						$whereclause = " WHERE " . DB_USERS . ".id NOT IN (" . $datarow['userid'];
+				}
+				// Finish whereclause
+				$whereclause .= ") ";
+			}
+			else
+				$whereclause = "";
+			// --- 
+
+			// --- Create LIST of Users which are available for selection
+			$sqlquery = "SELECT " . 
+						DB_USERS. ".ID as userid, " . 
+						DB_USERS. ".username " . 
+						" FROM " . DB_USERS . 
+						" LEFT OUTER JOIN (" . DB_GROUPMEMBERS . 
+						") ON (" . 
+						DB_GROUPMEMBERS . ".userid=" . DB_USERS . ".ID) " . 
+						$whereclause . 
+						" ORDER BY " . DB_USERS . ".username";
+			$result = DB_Query($sqlquery);
+			$content['SUBUSERS'] = DB_GetAllRows($result, true);
+
+			if ( count($content['SUBUSERS']) <= 0 )
+			{
+				// Disable FORM: 
+				$content['ISADDUSER'] = false;
+
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERRORNOMOREUSERS'], $content['GROUPNAME'] );
+			}
+		}
+		else
+		{
+			// Disable FORM: 
+			$content['ISADDUSER'] = false;
+
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_IDNOTFOUND'], $content['GROUPID'] );
+		}
+		// ---
+	}
+	else if ($_GET['op'] == "removeuser" && isset($_GET['id']) ) 
+	{
+		//PreInit these values 
+		$content['GROUPID'] = intval( DB_RemoveBadChars($_GET['id']) );
+
+		// Set Mode to add
+		$content['ISREMOVEUSER'] = "true";
+		$content['GROUP_FORMACTION'] = "removeuser";
+		$content['GROUP_SENDBUTTON'] = $content['LN_GROUP_USERDELETE'];
+
+		// --- Get Groupname
+		$sqlquery = "SELECT " . 
+					DB_GROUPS . ".groupname " . 
+					" FROM " . DB_GROUPS .
+					" WHERE " . DB_GROUPS . ".id = " . $content['GROUPID'];
+		$result = DB_Query($sqlquery);
+		$tmparray = DB_GetSingleRow($result, true);
+		
+		if ( isset($tmparray) )
+		{
+			// Copy Groupname
+			$content['GROUPNAME'] = $tmparray['groupname'];
+
+			// --- Get Group Members
+			$sqlquery = "SELECT " . 
+						DB_GROUPMEMBERS. ".userid, " . 
+						DB_USERS. ".username " . 
+						" FROM " . DB_GROUPMEMBERS .
+						" INNER JOIN (" . DB_USERS . 
+						") ON (" . 
+						DB_GROUPMEMBERS . ".userid=" . DB_USERS . ".ID) " . 
+						" WHERE " . DB_GROUPMEMBERS . ".groupid = " . $content['GROUPID'];
+			$result = DB_Query($sqlquery);
+			$content['SUBRMUSERS'] = DB_GetAllRows($result, true);
+			if ( count($content['SUBRMUSERS']) <= 0 )
+			{
+				// Disable FORM: 
+				$content['ISREMOVEUSER'] = false;
+
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERRORNOUSERSINGROUP'], $content['GROUPNAME'] );
+			}
+		}
+		else
+		{
+			// Disable FORM: 
+			$content['ISREMOVEUSER'] = false;
+
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_IDNOTFOUND'], $content['GROUPID'] );
+		}
+
+	}
 	else if ($_GET['op'] == "edit") 
 	{
 		// Set Mode to edit
 		$content['ISEDITORNEWGROUP'] = "true";
-		$content['GROUP_FORMACTION'] = "edituser";
+		$content['GROUP_FORMACTION'] = "editgroup";
 		$content['GROUP_SENDBUTTON'] = $content['LN_GROUP_EDIT'];
 
 		if ( isset($_GET['id']) )
@@ -154,76 +286,145 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_INVALIDGROUP'];
 		}
 	}
+}
 
-	if ( isset($_POST['op']) )
+if ( isset($_POST['op']) )
+{
+	if ( isset ($_POST['id']) ) { $content['GROUPID'] = intval( DB_RemoveBadChars($_POST['id']) ); } else {$content['GROUPID'] = ""; }
+	if ( isset ($_POST['groupname']) ) { $content['groupname'] = DB_RemoveBadChars($_POST['groupname']); } else {$content['groupname'] = ""; }
+	if ( isset ($_POST['groupdescription']) ) { $content['groupdescription'] = DB_RemoveBadChars($_POST['groupdescription']); } else {$content['groupdescription'] = ""; }
+
+	// Check mandotary values
+	if ( $content['groupname'] == "" )
 	{
-		if ( isset ($_POST['id']) ) { $content['GROUPID'] = DB_RemoveBadChars($_POST['id']); } else {$content['GROUPID'] = ""; }
-		if ( isset ($_POST['groupname']) ) { $content['groupname'] = DB_RemoveBadChars($_POST['groupname']); } else {$content['groupname'] = ""; }
-		if ( isset ($_POST['groupdescription']) ) { $content['groupdescription'] = DB_RemoveBadChars($_POST['groupdescription']); } else {$content['groupdescription'] = ""; }
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_GROUPEMPTY'];
+	}
 
-
-		// Check mandotary values
-		if ( $content['groupname'] == "" )
+	if ( !isset($content['ISERROR']) ) 
+	{	
+		// Everything was alright, so we go to the next step!
+		if ( $_POST['op'] == "addnewgroup" )
 		{
-			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_GROUPEMPTY'];
-		}
-
-		if ( !isset($content['ISERROR']) ) 
-		{	
-			// Everything was alright, so we go to the next step!
-			if ( $_POST['op'] == "addnewgroup" )
+			$result = DB_Query("SELECT groupname FROM " . DB_GROUPS . " WHERE groupname = '" . $content['groupname'] . "'"); 
+			$myrow = DB_GetSingleRow($result, true);
+			if ( isset($myrow['groupname']) )
 			{
-				$result = DB_Query("SELECT groupname FROM " . DB_GROUPS . " WHERE groupname = '" . $content['groupname'] . "'"); 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_GROUPNAMETAKEN'];
+			}
+			else
+			{
+				// Add new Group now!
+				$result = DB_Query("INSERT INTO " . DB_GROUPS . " (groupname, groupdescription) 
+				VALUES ( '" . $content['groupname'] . "', 
+						 '" . $content['groupdescription'] . "' )");
+				DB_FreeQuery($result);
+				
+				// Do the final redirect
+				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_HASBEENADDED'], $content['groupname'] ) , "groups.php" );
+			}
+		}
+		else if ( $_POST['op'] == "editgroup" )
+		{
+			$result = DB_Query("SELECT ID FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID']);
+			$myrow = DB_GetSingleRow($result, true);
+			if ( !isset($myrow['ID']) )
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_IDNOTFOUND'], $content['GROUPID'] ); 
+			}
+			else
+			{
+				// Edit the User now!
+				$result = DB_Query("UPDATE " . DB_GROUPS . " SET 
+					groupname = '" . $content['groupname'] . "', 
+					groupdescription = '" . $content['groupdescription'] . "'
+					WHERE ID = " . $content['GROUPID']);
+				DB_FreeQuery($result);
+
+				// Done redirect!
+				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_ERROR_HASBEENEDIT'], $content['groupname']) , "groups.php" );
+			}
+		}
+		else if ( $_POST['op'] == "adduser" )
+		{
+			if ( isset($_POST['userid']) ) 
+			{ 
+				// Copy UserID
+				$content['USERID'] = intval( DB_RemoveBadChars($_POST['userid']) ); 
+
+				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE id = " . $content['USERID']); 
 				$myrow = DB_GetSingleRow($result, true);
-				if ( isset($myrow['groupname']) )
+				if ( isset($myrow['username']) )
 				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_GROUPNAMETAKEN'];
-				}
-				else
-				{
-					// Add new Group now!
-					$result = DB_Query("INSERT INTO " . DB_GROUPS . " (groupname, groupdescription) 
-					VALUES ( '" . $content['groupname'] . "', 
-							 '" . $content['groupdescription'] . "' )");
+					// Add Groupmembership now!
+					$result = DB_Query("INSERT INTO " . DB_GROUPMEMBERS . " (groupid, userid, is_member) 
+					VALUES ( " . $content['GROUPID'] . ", 
+							 " . $content['USERID'] . ", 
+							 1 )");
 					DB_FreeQuery($result);
 					
 					// Do the final redirect
-					RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_HASBEENADDED'], $content['groupname'] ) , "groups.php" );
-				}
-			}
-			else if ( $_POST['op'] == "edituser" )
-			{
-				$result = DB_Query("SELECT ID FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID']);
-				$myrow = DB_GetSingleRow($result, true);
-				if ( !isset($myrow['ID']) )
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_IDNOTFOUND'], $content['GROUPID'] ); 
+					RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_USERHASBEENADDEDGROUP'], $myrow['username'], $content['groupname'] ) , "groups.php" );
 				}
 				else
 				{
-					// Edit the User now!
-					$result = DB_Query("UPDATE " . DB_GROUPS . " SET 
-						groupname = '" . $content['groupname'] . "', 
-						groupdescription = '" . $content['groupdescription'] . "'
-						WHERE ID = " . $content['GROUPID']);
-					DB_FreeQuery($result);
-
-					// Done redirect!
-					RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_ERROR_HASBEENEDIT'], $content['groupname']) , "groups.php" );
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
 				}
+			} 
+			else 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_USERIDMISSING']; 
+			}
+		}
+		else if ( $_POST['op'] == "removeuser" )
+		{
+			if ( isset($_POST['userid']) ) 
+			{ 
+				// Copy UserID
+				$content['USERID'] = intval( DB_RemoveBadChars($_POST['userid']) ); 
+
+				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE id = " . $content['USERID']); 
+				$myrow = DB_GetSingleRow($result, true);
+				if ( isset($myrow['username']) )
+				{
+					// remove user from group
+					$result = DB_Query( "DELETE FROM " . DB_GROUPMEMBERS . " WHERE userid = " . $content['USERID'] . " AND groupid = " . $content['GROUPID']);
+					if ($result == FALSE)
+					{
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_REMUSERFROMGROUP'], $myrow['username'], $content['groupname'] ); 
+					}
+					else
+						DB_FreeQuery($result);
+
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_USERHASBEENREMOVED'], $myrow['username'], $content['groupname'] ) , "groups.php" );
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+				}
+			}
+			else 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_GROUP_ERROR_USERIDMISSING']; 
 			}
 		}
 	}
 }
-else
+
+if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
 	// Default Mode = List Groups
 	$content['LISTGROUPS'] = "true";
 
-	// Read all Serverentries
+	// Read all Groupentries
 	$sqlquery = "SELECT ID, " . 
 				" groupname, " . 
 				" groupdescription " . 
@@ -242,6 +443,34 @@ else
 				$content['GROUPS'][$i]['cssclass'] = "line1";
 			else
 				$content['GROUPS'][$i]['cssclass'] = "line2";
+			// --- 
+
+			// --- Read all Memberentries for this group
+			$sqlquery = "SELECT " . 
+						DB_USERS. ".username, " . 
+						DB_GROUPMEMBERS . ".userid, " . 
+						DB_GROUPMEMBERS . ".groupid, " . 
+						DB_GROUPMEMBERS . ".is_member " . 
+						" FROM " . DB_GROUPMEMBERS . 
+						" INNER JOIN (" . DB_USERS . 
+						") ON (" . 
+						DB_GROUPMEMBERS . ".userid=" . DB_USERS . ".ID) " . 
+						" WHERE " . DB_GROUPMEMBERS . ".groupid = " . $content['GROUPS'][$i]['ID'] . 
+						" ORDER BY " . DB_USERS . ".username";
+			$result = DB_Query($sqlquery);
+			$content['GROUPS'][$i]['USERS'] = DB_GetAllRows($result, true);
+
+			if ( count($content['GROUPS'][$i]['USERS']) > 0 ) 
+			{
+				// Enable Groupmembers
+				$content['GROUPS'][$i]['GROUPMEMBERS'] = true;
+
+				// Process Groups
+				$subUserCount = count($content['GROUPS'][$i]['USERS']);
+				for($j = 0; $j < $subUserCount; $j++)
+					$content['GROUPS'][$i]['USERS'][$j]['seperator'] = ", ";
+				$content['GROUPS'][$i]['USERS'][$subUserCount-1]['seperator'] = ""; // last one is empty
+			}
 			// --- 
 		}
 		// --- 

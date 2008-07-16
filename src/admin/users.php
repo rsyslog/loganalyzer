@@ -168,7 +168,7 @@ if ( isset($_GET['op']) )
 			if ( !isset($_SESSION['SESSION_USERNAME']) )
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = $content['LN_USER_ERROR_WTFOMFGGG'];
+				$content['ERROR_MSG'] = $content['LN_USER_ERROR_INVALIDSESSIONS'];
 			}
 			else
 			{
@@ -219,115 +219,116 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_USER_ERROR_INVALIDID'];
 		}
 	}
+}
 
-	if ( isset($_POST['op']) )
+if ( isset($_POST['op']) )
+{
+	if ( isset ($_POST['id']) ) { $content['USERID'] = DB_RemoveBadChars($_POST['id']); } else {$content['USERID'] = ""; }
+	if ( isset ($_POST['username']) ) { $content['USERNAME'] = DB_RemoveBadChars($_POST['username']); } else {$content['USERNAME'] = ""; }
+	if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
+	if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }
+	if ( isset ($_POST['isadmin']) ) { $content['ISADMIN'] = 1; } else {$content['ISADMIN'] = 0; }
+
+
+	// Check mandotary values
+	if ( $content['USERNAME'] == "" )
 	{
-		if ( isset ($_POST['id']) ) { $content['USERID'] = DB_RemoveBadChars($_POST['id']); } else {$content['USERID'] = ""; }
-		if ( isset ($_POST['username']) ) { $content['USERNAME'] = DB_RemoveBadChars($_POST['username']); } else {$content['USERNAME'] = ""; }
-		if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
-		if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }
-		if ( isset ($_POST['isadmin']) ) { $content['ISADMIN'] = 1; } else {$content['ISADMIN'] = 0; }
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = $content['LN_USER_ERROR_USEREMPTY'];
+	}
 
-
-		// Check mandotary values
-		if ( $content['USERNAME'] == "" )
+	if ( !isset($content['ISERROR']) ) 
+	{	
+		// Everything was alright, so we go to the next step!
+		if ( $_POST['op'] == "addnewuser" )
 		{
-			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_USER_ERROR_USEREMPTY'];
-		}
-
-		if ( !isset($content['ISERROR']) ) 
-		{	
-			// Everything was alright, so we go to the next step!
-			if ( $_POST['op'] == "addnewuser" )
+			$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE username = '" . $content['USERNAME'] . "'"); 
+			$myrow = DB_GetSingleRow($result, true);
+			if ( isset($myrow['username']) )
 			{
-				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE username = '" . $content['USERNAME'] . "'"); 
-				$myrow = DB_GetSingleRow($result, true);
-				if ( isset($myrow['username']) )
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_USER_ERROR_USERNAMETAKEN'];
+			}
+			else
+			{
+				// Check if Password is set!
+				if (	strlen($content['PASSWORD1']) <= 0 ||
+						$content['PASSWORD1'] != $content['PASSWORD2'] )
 				{
 					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = $content['LN_USER_ERROR_USERNAMETAKEN'];
+					$content['ERROR_MSG'] = $content['LN_USER_ERROR_PASSSHORT'];
 				}
-				else
+
+				if ( !isset($content['ISERROR']) ) 
+				{	
+					// Create passwordhash now :)!
+					$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
+
+					// Add new User now!
+					$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin) 
+					VALUES ('" . $content['USERNAME'] . "', 
+							'" . $content['PASSWORDHASH'] . "',
+							" . $content['ISADMIN'] . ")");
+					DB_FreeQuery($result);
+					
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENADDED'], $content['USERNAME'] ) , "users.php" );
+				}
+			}
+		}
+		else if ( $_POST['op'] == "edituser" )
+		{
+			$result = DB_Query("SELECT ID FROM " . DB_USERS . " WHERE ID = " . $content['USERID']);
+			$myrow = DB_GetSingleRow($result, true);
+			if ( !isset($myrow['ID']) )
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] ); 
+			}
+			else
+			{
+
+				// Check if Password is enabled
+				if ( isset($content['PASSWORD1']) && strlen($content['PASSWORD1']) > 0 )
 				{
-					// Check if Password is set!
-					if (	strlen($content['PASSWORD1']) <= 0 ||
-							$content['PASSWORD1'] != $content['PASSWORD2'] )
+					if ( $content['PASSWORD1'] != $content['PASSWORD2'] )
 					{
 						$content['ISERROR'] = true;
 						$content['ERROR_MSG'] = $content['LN_USER_ERROR_PASSSHORT'];
 					}
 
 					if ( !isset($content['ISERROR']) ) 
-					{	
+					{
 						// Create passwordhash now :)!
 						$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
 
-						// Add new User now!
-						$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin) 
-						VALUES ('" . $content['USERNAME'] . "', 
-								'" . $content['PASSWORDHASH'] . "',
-								" . $content['ISADMIN'] . ")");
-						DB_FreeQuery($result);
-						
-						// Do the final redirect
-						RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENADDED'], $content['USERNAME'] ) , "users.php" );
-					}
-				}
-			}
-			else if ( $_POST['op'] == "edituser" )
-			{
-				$result = DB_Query("SELECT ID FROM " . DB_USERS . " WHERE ID = " . $content['USERID']);
-				$myrow = DB_GetSingleRow($result, true);
-				if ( !isset($myrow['ID']) )
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] ); 
-				}
-				else
-				{
-
-					// Check if Password is enabled
-					if ( isset($content['PASSWORD1']) && strlen($content['PASSWORD1']) > 0 )
-					{
-						if ( $content['PASSWORD1'] != $content['PASSWORD2'] )
-						{
-							$content['ISERROR'] = true;
-							$content['ERROR_MSG'] = $content['LN_USER_ERROR_PASSSHORT'];
-						}
-
-						if ( !isset($content['ISERROR']) ) 
-						{
-							// Create passwordhash now :)!
-							$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
-
-							// Edit the User now!
-							$result = DB_Query("UPDATE " . DB_USERS . " SET 
-								username = '" . $content['USERNAME'] . "', 
-								password = '" . $content['PASSWORDHASH'] . "', 
-								is_admin = " . $content['ISADMIN'] . "
-								WHERE ID = " . $content['USERID']);
-							DB_FreeQuery($result);
-						}
-					}
-					else
-					{
 						// Edit the User now!
 						$result = DB_Query("UPDATE " . DB_USERS . " SET 
 							username = '" . $content['USERNAME'] . "', 
+							password = '" . $content['PASSWORDHASH'] . "', 
 							is_admin = " . $content['ISADMIN'] . "
 							WHERE ID = " . $content['USERID']);
 						DB_FreeQuery($result);
 					}
-
-					// Done redirect!
-					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENEDIT'], $content['USERNAME']) , "users.php" );
 				}
+				else
+				{
+					// Edit the User now!
+					$result = DB_Query("UPDATE " . DB_USERS . " SET 
+						username = '" . $content['USERNAME'] . "', 
+						is_admin = " . $content['ISADMIN'] . "
+						WHERE ID = " . $content['USERID']);
+					DB_FreeQuery($result);
+				}
+
+				// Done redirect!
+				RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENEDIT'], $content['USERNAME']) , "users.php" );
 			}
 		}
 	}
 }
-else
+
+if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
 	// Default Mode = List Users
 	$content['LISTUSERS'] = "true";

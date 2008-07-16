@@ -478,6 +478,7 @@ function InitFrontEndVariables()
 	$content['MENU_DOCUMENTVIEW'] = $content['BASEPATH'] . "images/icons/document_view.png";
 	$content['MENU_DATAEDIT'] = $content['BASEPATH'] . "images/icons/data_edit.png";
 	$content['MENU_ADDUSER'] = $content['BASEPATH'] . "images/icons/businessman_add.png";
+	$content['MENU_DELUSER'] = $content['BASEPATH'] . "images/icons/businessman_delete.png";
 	$content['MENU_ADD'] = $content['BASEPATH'] . "images/icons/add.png";
 	$content['MENU_EDIT'] = $content['BASEPATH'] . "images/icons/edit.png";
 	$content['MENU_DELETE'] = $content['BASEPATH'] . "images/icons/delete.png";
@@ -509,13 +510,13 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 {
 	$strfinal = str_replace ( "%1", $param1, $strlang );
 	if ( strlen($param2) > 0 )
-		$strfinal = str_replace ( "%1", $param2, $strfinal );
+		$strfinal = str_replace ( "%2", $param2, $strfinal );
 	if ( strlen($param3) > 0 )
-		$strfinal = str_replace ( "%1", $param3, $strfinal );
+		$strfinal = str_replace ( "%3", $param3, $strfinal );
 	if ( strlen($param4) > 0 )
-		$strfinal = str_replace ( "%1", $param4, $strfinal );
+		$strfinal = str_replace ( "%4", $param4, $strfinal );
 	if ( strlen($param5) > 0 )
-		$strfinal = str_replace ( "%1", $param5, $strfinal );
+		$strfinal = str_replace ( "%5", $param5, $strfinal );
 	
 	// And return
 	return $strfinal;
