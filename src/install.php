@@ -644,8 +644,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	}
 	else if ( $_SESSION['SourceType'] == SOURCE_DB )
 	{
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
 		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DB;\n" . 
 						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
 						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
 						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
 						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
