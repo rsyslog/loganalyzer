@@ -107,57 +107,6 @@ function InitUserSystemPhpLogCon()
 	}
 }
 
-function InitPhpLogConConfigFile($bHandleMissing = true)
-{
-	// Needed to make global
-	global $CFG, $gl_root_path, $content;
-
-	if ( file_exists($gl_root_path . 'config.php') && GetFileLength($gl_root_path . 'config.php') > 0 )
-	{
-		// Include the main config
-		include_once($gl_root_path . 'config.php');
-		
-		// Easier DB Access
-		define('DB_CONFIG',			$CFG['UserDBPref'] . "config");
-		define('DB_GROUPS',			$CFG['UserDBPref'] . "groups");
-		define('DB_GROUPMEMBERS',	$CFG['UserDBPref'] . "groupmembers");
-		define('DB_SEARCHES',		$CFG['UserDBPref'] . "searches");
-		define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
-		define('DB_USERS',			$CFG['UserDBPref'] . "users");
-		define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
-
-		// Legacy support for old columns definition format!
-		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
-			AppendLegacyColumns();
-
-		// --- Now Copy all entries into content variable
-		foreach ($CFG as $key => $value )
-			$content[$key] = $value;
-		// --- 
-
-		// For MiscShowPageRenderStats
-		if ( $CFG['MiscShowPageRenderStats'] == 1 )
-		{
-			$content['ShowPageRenderStats'] = "true";
-			InitPageRenderStats();
-		}
-		
-		// return result
-		return true;
-	}
-	else
-	{
-		// if handled ourselfe, we die in CheckForInstallPhp.
-		if ( $bHandleMissing == true )
-		{
-			// Check for installscript!
-			CheckForInstallPhp();
-		}
-		else
-			return false;
-	}
-}
-
 function CheckForInstallPhp()
 {
 	// Check for installscript!
@@ -545,22 +494,29 @@ function InitConfigurationValues()
 
 		// Now we init the user session stuff
 		InitUserSession();
-
-			if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+		
+		// Check if user needs to be logged in
+		if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+		{
+			if ( !$content['SESSION_LOGGEDIN'] ) 
 			{
-				if ( !$content['SESSION_LOGGEDIN'] ) 
-				{
-					// User needs to be logged in, redirect to login page
-					if ( !defined("IS_LOGINPAGE") )
-						RedirectToUserLogin();
-				}
+				// User needs to be logged in, redirect to login page
+				if ( !defined("IS_LOGINPAGE") )
+					RedirectToUserLogin();
 			}
-			else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
-				DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
+		}
+		else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
+			DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
 
-		// General defaults 
-//		// --- Language Handling
-//		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
+		// Load Configured Searches 
+		LoadSearchesFromDatabase();
+
+		// Load Configured Views
+//		LoadViewsFromDatabase();
+
+		// Load Configured Sources
+//		LoadSourcesFromDatabase();
+
 		
 		// Database Version Checker! 
 		if ( $content['database_internalversion'] > $content['database_installedversion'] )

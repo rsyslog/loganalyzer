@@ -65,10 +65,13 @@ function InitUserSession()
 		}
 		else
 		{
+			// Copy variables from session!
 			$content['SESSION_LOGGEDIN'] = true;
 			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
 			$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
+			if ( isset($_SESSION['SESSION_GROUPIDS']) )
+				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
 
 			// Successfully logged in
 			return true;
@@ -122,11 +125,11 @@ function CheckUserLogin( $username, $password )
 	// TODO: SessionTime and AccessLevel check
 
 	$md5pass = md5($password);
-	$sqlselect = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
-	$result = DB_Query($sqlselect);
+	$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
+	$result = DB_Query($sqlquery);
 	$myrow = DB_GetSingleRow($result, true);
 
-
+	// The admin field must be set!
 	if ( isset($myrow['is_admin']) )
 	{
 		$_SESSION['SESSION_LOGGEDIN'] = true;
@@ -139,7 +142,33 @@ function CheckUserLogin( $username, $password )
 		$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 		$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
 
-		// TODO SET LAST LOGIN TIME!
+		// --- Read Groupmember ship for the user!
+		$sqlquery = "SELECT " . 
+					DB_GROUPMEMBERS . ".groupid, " . 
+					DB_GROUPMEMBERS . ".is_member " . 
+					"FROM " . DB_GROUPMEMBERS . " WHERE userid = " . $content['SESSION_USERID'] . " AND " . DB_GROUPMEMBERS . ".is_member = 1";
+		$result = DB_Query($sqlquery);
+		$myrows = DB_GetAllRows($result, true);
+		if ( isset($myrows ) && count($myrows) > 0 )
+		{
+			for($i = 0; $i < count($myrows); $i++)
+			{
+				if ( isset($content['SESSION_GROUPIDS']) ) 
+					$content['SESSION_GROUPIDS'] .= ", " . $myrows[$i]['groupid'];
+				else
+					$content['SESSION_GROUPIDS'] .= $myrows[$i]['groupid'];
+			}
+		}
+
+		// Copy into session as well
+		$_SESSION['SESSION_GROUPIDS'] = $content['SESSION_GROUPIDS'];
+		// ---
+
+
+		// ---Set LASTLOGIN Time!
+		$result = DB_Query("UPDATE " . DB_USERS . " SET last_login = " . time() . " WHERE ID = " . $content['SESSION_USERID']);
+		DB_FreeQuery($result);
+		// ---
 
 		// Success !
 		return true;

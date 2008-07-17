@@ -58,7 +58,7 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
 	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
 
-if ($_GET['miniop'] == "setisadmin") 
+if ( isset($_GET['miniop']) && $_GET['miniop'] == "setisadmin" ) 
 {
 	if ( isset($_GET['id']) && isset($_GET['newval']) )
 	{
