@@ -279,7 +279,7 @@ function DB_Exec($query)
 		return false; 
 } 
 
-function WriteConfigValue($szValue, $is_global = true)
+function WriteConfigValue($szValue, $is_global = true, $userid = false, $groupid = false)
 {
 	// --- Abort in this case!
 	global $CFG, $content;
@@ -287,18 +287,23 @@ function WriteConfigValue($szValue, $is_global = true)
 		return;
 	// ---
 
-	$result = DB_Query("SELECT name FROM " . STATS_CONFIG . " WHERE name = '" . $szValue . "' AND is_global = " . $is_global);
+	// TODO HANDLE USER AND GROUP FIELDS!
+
+	// Also copy to $CFG array
+	$CFG[$szValue] = $content[$szValue];
+
+	$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szValue . "' AND is_global = " . $is_global);
 	$rows = DB_GetAllRows($result, true);
 	if ( !isset($rows) )
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value, is_global) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "', " . $is_global . ")");
+		$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "', " . $is_global . ")");
 		DB_FreeQuery($result);
 	}
 	else
 	{
 		// Update Entry
-		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $CFG[$szValue] . "' WHERE name = '" . $szValue . "' AND is_global = " . $is_global);
+		$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $CFG[$szValue] . "' WHERE propname = '" . $szValue . "' AND is_global = " . $is_global);
 		DB_FreeQuery($result);
 	}
 } 

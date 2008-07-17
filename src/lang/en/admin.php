@@ -62,7 +62,7 @@ $content['LN_GEN_AUTORELOADSECONDS'] = "Enable autoreload after seconds";
 $content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";
 $content['LN_GEN_CUSTBTNCAPT'] = "Custom search caption";
 $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
-$content['LN_GEN_'] = "";
+$content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been successfully saved";
 $content['LN_GEN_'] = "";
 
 // User Center

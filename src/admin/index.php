@@ -60,60 +60,84 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 //$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
 // --- 
 
-// --- CONTENT Vars
-/* 
-if ( isset($_GET['uid']) ) 
-	$content['uid_current'] = intval($_GET['uid']);
-else
-	$content['uid_current'] = UID_UNKNOWN;
+// --- BEGIN Custom Code
 
-// Copy UID for later use ...
-$content['uid_fromgetrequest'] = $content['uid_current'];
-
-// Init Pager variables
-$content['uid_first'] = UID_UNKNOWN;
-$content['uid_last'] = UID_UNKNOWN;
-$content['main_pagerenabled'] = false;
-$content['main_pager_first_found'] = false;
-$content['main_pager_previous_found'] = false;
-$content['main_pager_next_found'] = false;
-$content['main_pager_last_found'] = false;
-
-// Set Default reading direction 
-$content['read_direction'] = EnumReadDirection::Backward;
-
-// If set read direction property!
-if ( isset($_GET['direction']) )
+// Check for changes first
+if ( isset($_POST['op']) )
 {
-	if ( $_GET['direction'] == "next" ) 
+	if ( $_POST['op'] == "edit" )
 	{
-		$content['skiprecords'] = 1;
-		$content['read_direction'] = EnumReadDirection::Backward;
-	}
-	else if ( $_GET['direction'] == "previous" ) 
-	{
-		$content['skiprecords'] = 1;
-		$content['read_direction'] = EnumReadDirection::Forward;
-	}
-}
-*/
+		// Language needs special treatment
+		if ( isset ($_POST['ViewDefaultLanguage']) )
+		{ 
+			$tmpvar = DB_RemoveBadChars($_POST['ViewDefaultLanguage']); 
+			if ( VerifyLanguage($tmpvar) )
+				$content['ViewDefaultLanguage'] = $tmpvar;
+		}
 
-/*
-// --- BEGIN CREATE TITLE
-$content['TITLE'] = InitPageTitle();
+		// Read default theme
+		if ( isset ($_POST['ViewDefaultTheme']) ) { $content['ViewDefaultTheme'] = DB_RemoveBadChars($_POST['ViewDefaultTheme']); }
 
-if ( $content['messageenabled'] == "true" ) 
-{
-	// Append custom title part!
-	$content['TITLE'] .= " :: Details for '" . $content['uid_current'] . "'";
+		// Read checkboxes
+		if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
+		if ( isset ($_POST['ViewEnableDetailPopups']) ) { $content['ViewEnableDetailPopups'] = 1; } else { $content['ViewEnableDetailPopups'] = 0; } 
+		if ( isset ($_POST['EnableIPAddressResolve']) ) { $content['EnableIPAddressResolve'] = 1; } else { $content['EnableIPAddressResolve'] = 0; } 
+		if ( isset ($_POST['MiscShowDebugMsg']) ) { $content['MiscShowDebugMsg'] = 1; } else { $content['MiscShowDebugMsg'] = 0; } 
+		if ( isset ($_POST['MiscShowDebugGridCounter']) ) { $content['MiscShowDebugGridCounter'] = 1; } else { $content['MiscShowDebugGridCounter'] = 0; } 
+		if ( isset ($_POST['MiscShowPageRenderStats']) ) { $content['MiscShowPageRenderStats'] = 1; } else { $content['MiscShowPageRenderStats'] = 0; } 
+		if ( isset ($_POST['MiscEnableGzipCompression']) ) { $content['MiscEnableGzipCompression'] = 1; } else { $content['MiscEnableGzipCompression'] = 0; } 
+		if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
+
+		// Read Text number fields
+		if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = DB_RemoveBadChars($_POST['ViewMessageCharacterLimit']); }
+		if ( isset ($_POST['ViewEntriesPerPage']) && is_numeric($_POST['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = DB_RemoveBadChars($_POST['ViewEntriesPerPage']); }
+		if ( isset ($_POST['ViewEnableAutoReloadSeconds']) && is_numeric($_POST['ViewEnableAutoReloadSeconds']) ) { $content['ViewEnableAutoReloadSeconds'] = DB_RemoveBadChars($_POST['ViewEnableAutoReloadSeconds']); }
+
+		// Read Text fields
+		if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = DB_RemoveBadChars($_POST['PrependTitle']); }
+		if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = DB_RemoveBadChars($_POST['SearchCustomButtonCaption']); }
+		if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = DB_RemoveBadChars($_POST['SearchCustomButtonSearch']); }
+
+		// Save configuration variables now
+		WriteConfigValue( "ViewDefaultLanguage", true );
+		WriteConfigValue( "ViewDefaultTheme", true );
+
+		WriteConfigValue( "ViewUseTodayYesterday", true );
+		WriteConfigValue( "ViewEnableDetailPopups", true );
+		WriteConfigValue( "EnableIPAddressResolve", true );
+		WriteConfigValue( "MiscShowDebugMsg", true );
+		WriteConfigValue( "MiscShowDebugGridCounter", true );
+		WriteConfigValue( "MiscShowPageRenderStats", true );
+		WriteConfigValue( "MiscEnableGzipCompression", true );
+		WriteConfigValue( "DebugUserLogin", true );
+
+		WriteConfigValue( "ViewMessageCharacterLimit", true );
+		WriteConfigValue( "ViewEntriesPerPage", true );
+		WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
+
+		WriteConfigValue( "PrependTitle", true );
+		WriteConfigValue( "SearchCustomButtonCaption", true );
+		WriteConfigValue( "SearchCustomButtonSearch", true );
+
+		// Do a redirect
+		RedirectResult( $content['LN_GEN_SUCCESSFULLYSAVED'], "index.php" );
+	}
 }
-else
-{
-	// APpend to title Page title
-	$content['TITLE'] .= " :: Unknown uid";
-}
-// --- END CREATE TITLE
-*/
+
+
+// Set checkbox States
+if ($content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
+if ($content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
+if ($content['EnableIPAddressResolve'] == 1) { $content['EnableIPAddressResolve_checked'] = "checked"; } else { $content['EnableIPAddressResolve_checked'] = ""; }
+
+if ($content['MiscShowDebugMsg'] == 1) { $content['MiscShowDebugMsg_checked'] = "checked"; } else { $content['MiscShowDebugMsg_checked'] = ""; }
+if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCounter_checked'] = "checked"; } else { $content['MiscShowDebugGridCounter_checked'] = ""; }
+if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
+if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
+if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
+
+
+// --- 
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
