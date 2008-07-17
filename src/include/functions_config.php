@@ -102,7 +102,12 @@
 						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDB();
 						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
 						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
+						// Workaround a little bug from the installer script
+						if ( isset($mysource['DBType']) )
+							$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
+						else
+							$content['Sources'][$iSourceID]['ObjRef']->DBType = DB_MYSQL;
+
 						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
 						
 						// Legacy handling for tabletype!
