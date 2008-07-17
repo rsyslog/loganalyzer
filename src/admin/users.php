@@ -371,7 +371,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
-$content['TITLE'] .= " :: User Options";
+$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_USEROPT'];
 // --- END CREATE TITLE
 
 // --- Parsen and Output

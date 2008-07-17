@@ -141,7 +141,7 @@ if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "che
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
-$content['TITLE'] .= " :: General Options";
+$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_GENOPT'];
 // --- END CREATE TITLE
 
 // --- Parsen and Output

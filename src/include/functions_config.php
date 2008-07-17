@@ -306,26 +306,30 @@ function LoadSearchesFromDatabase()
 	
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR " . DB_SEARCHES . ".userid = " . $content['SESSION_USERID'];
+		$szWhereUser = " OR " . DB_SEARCHES . ".userid = " . $content['SESSION_USERID'] . " ";
 	else
 		$szWhereUser = "";
 
 	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ") ";
+		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
 
 	$sqlquery = " SELECT * " . 
 				" FROM " . DB_SEARCHES . 
-				" WHERE userid = NULL " . 
+				" WHERE (" . DB_SEARCHES . ".userid IS NULL AND " . DB_SEARCHES . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_SEARCHES . ".DisplayName";
-
+				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
+//				" ORDER BY " . DB_SEARCHES . ".DisplayName";
 	$result = DB_Query($sqlquery);
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
 	{
+		// Overwrite Search Array with Database one
+		$CFG['Search'] = $myrows;
+		$content['Search'] = $myrows;
+
 		// Cleanup searches and fill / load from database
 
 

@@ -482,7 +482,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
-$content['TITLE'] .= " :: Group Options";
+$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_GROUPOPT'];
 // --- END CREATE TITLE
 
 // --- Parsen and Output

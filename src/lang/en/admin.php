@@ -42,6 +42,9 @@ $content['LN_DELETEYES'] = "Yes";
 $content['LN_DELETENO'] = "No";
 $content['LN_GEN_ACTIONS'] = "Available Actions";
 $content['LN_ADMIN_SEND'] = "Send changes";
+$content['LN_GEN_USERONLY'] = "User only";
+$content['LN_GEN_GROUPONLY'] = "Group only";
+$content['LN_GEN_GLOBAL'] = "Global";
 
 // General Options
 $content['LN_ADMIN_MISC'] = "Miscellaneous Options";
@@ -78,7 +81,7 @@ $content['LN_USER_ERROR_IDNOTFOUND'] = "Error, User with ID '%1' , was not found
 $content['LN_USER_ERROR_DONOTDELURSLF'] = "Error, you can not DELETE YOURSELF!";
 $content['LN_USER_ERROR_DELUSER'] = "Deleting of the user with id '%1' failed!";
 $content['LN_USER_ERROR_INVALIDID'] = "Error, invalid ID, User not found";
-$content['LN_USER_ERROR_HASBEENDEL'] = "The User '%1' has been successfully DELETED!";
+$content['LN_USER_ERROR_HASBEENDEL'] = "The User '%1' has been successfully deleted!";
 $content['LN_USER_ERROR_USEREMPTY'] = "Error, Username was empty";
 $content['LN_USER_ERROR_USERNAMETAKEN'] = "Error, this Username is already taken!";
 $content['LN_USER_ERROR_PASSSHORT'] = "Error, Password was to short, or did not match";
@@ -110,7 +113,7 @@ $content['LN_GROUP_ERROR_HASBEENEDIT'] = "The group '%1' has been successfully e
 $content['LN_GROUP_ERROR_INVALIDGROUP'] = "Error, invalid ID, Group not found";
 $content['LN_GROUP_WARNDELETEGROUP'] = "Are you sure that you want to delete the Group '%1'? All Groupsettings will be deleted as well.";
 $content['LN_GROUP_ERROR_DELGROUP'] = "Deleting of the group with id '%1' failed!";
-$content['LN_GROUP_ERROR_HASBEENDEL'] = "The Group '%1' has been successfully DELETED!";
+$content['LN_GROUP_ERROR_HASBEENDEL'] = "The Group '%1' has been successfully deleted!";
 $content['LN_GROUP_MEMBERS'] = "Groupmembers: ";
 $content['LN_GROUP_ADDUSER'] = "Add User to Group";
 $content['LN_GROUP_ERROR_USERIDMISSING'] = "The userid is missing.";
@@ -122,5 +125,31 @@ $content['LN_GROUP_ERRORNOUSERSINGROUP'] = "There are no users to remove in this
 $content['LN_GROUP_ERROR_REMUSERFROMGROUP'] = "The user '%1' could not be removed from the group '%2'";
 $content['LN_GROUP_USERHASBEENREMOVED'] = "The user '%1' has been successfully removed from the group '%2'";
 $content['LN_GROUP_'] = "";
+
+// Custom Searches center
+$content['LN_SEARCH_CENTER'] = "Custom Searches";
+$content['LN_SEARCH_ADD'] = "Add Custom Search";
+$content['LN_SEARCH_ID'] = "ID";
+$content['LN_SEARCH_NAME'] = "Search Name";
+$content['LN_SEARCH_QUERY'] = "Search Query";
+$content['LN_SEARCH_TYPE'] = "Type of Search";
+$content['LN_SEARCH_EDIT'] = "Edit Custom Search";
+$content['LN_SEARCH_DELETE'] = "Delete Custom Search";
+$content['LN_SEARCH_ADDEDIT'] = "Add / Edit a Custom Search";
+$content['LN_SEARCH_USERONLY'] = "For me only <br>(Only available to your user)";
+$content['LN_SEARCH_GROUPONLY'] = "For this group <br>(Only available to the selected group)";
+$content['LN_SEARCH_SELGROUPENABLE'] = ">> Select Group to enable <<";
+$content['LN_SEARCH_ERROR_DISPLAYNAMEEMPTY'] = "The DisplayName cannot be empty.";
+$content['LN_SEARCH_ERROR_SEARCHQUERYEMPTY'] = "The SearchQuery cannot be empty.";
+$content['LN_SEARCH_HASBEENADDED'] = "The Custom Search '%1' has been successfully added.";
+$content['LN_SEARCH_ERROR_IDNOTFOUND'] = "Could not find a search with ID '%1'.";
+$content['LN_SEARCH_ERROR_INVALIDID'] = "Invalid search ID.";
+$content['LN_SEARCH_HASBEENEDIT'] = "The Custom Search '%1' has been successfully edited.";
+$content['LN_SEARCH_WARNDELETESEARCH'] = "Are you sure that you want to delete the Custom Search '%1'? This cannot be undone!";
+$content['LN_SEARCH_ERROR_DELSEARCH'] = "Deleting of the Custom Search with id '%1' failed!";
+$content['LN_SEARCH_ERROR_HASBEENDEL'] = "The Custom Search '%1' has been successfully deleted!";
+$content['LN_SEARCH_'] = "";
+$content['LN_SEARCH_'] = "";
+
 
 ?>
