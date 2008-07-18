@@ -66,6 +66,10 @@ $content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";
 $content['LN_GEN_CUSTBTNCAPT'] = "Custom search caption";
 $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
 $content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been successfully saved";
+$content['LN_GEN_INTERNAL'] = "Internal";
+$content['LN_GEN_DISABLED'] = "Function disabled";
+$content['LN_GEN_USERONLY'] = "For me only <br>(Only available to your user)";
+$content['LN_GEN_GROUPONLY'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_'] = "";
 
 // User Center
@@ -128,16 +132,14 @@ $content['LN_GROUP_'] = "";
 
 // Custom Searches center
 $content['LN_SEARCH_CENTER'] = "Custom Searches";
-$content['LN_SEARCH_ADD'] = "Add Custom Search";
+$content['LN_SEARCH_ADD'] = "Add new Custom Search";
 $content['LN_SEARCH_ID'] = "ID";
 $content['LN_SEARCH_NAME'] = "Search Name";
 $content['LN_SEARCH_QUERY'] = "Search Query";
-$content['LN_SEARCH_TYPE'] = "Type of Search";
+$content['LN_SEARCH_TYPE'] = "Assigned to";
 $content['LN_SEARCH_EDIT'] = "Edit Custom Search";
 $content['LN_SEARCH_DELETE'] = "Delete Custom Search";
 $content['LN_SEARCH_ADDEDIT'] = "Add / Edit a Custom Search";
-$content['LN_SEARCH_USERONLY'] = "For me only <br>(Only available to your user)";
-$content['LN_SEARCH_GROUPONLY'] = "For this group <br>(Only available to the selected group)";
 $content['LN_SEARCH_SELGROUPENABLE'] = ">> Select Group to enable <<";
 $content['LN_SEARCH_ERROR_DISPLAYNAMEEMPTY'] = "The DisplayName cannot be empty.";
 $content['LN_SEARCH_ERROR_SEARCHQUERYEMPTY'] = "The SearchQuery cannot be empty.";
@@ -150,6 +152,31 @@ $content['LN_SEARCH_ERROR_DELSEARCH'] = "Deleting of the Custom Search with id '
 $content['LN_SEARCH_ERROR_HASBEENDEL'] = "The Custom Search '%1' has been successfully deleted!";
 $content['LN_SEARCH_'] = "";
 $content['LN_SEARCH_'] = "";
+
+// Custom Searches center
+$content['LN_VIEWS_CENTER'] = "Views Options";
+$content['LN_VIEWS_ID'] = "ID";
+$content['LN_VIEWS_NAME'] = "View Name";
+$content['LN_VIEWS_COLUMNS'] = "View Columns";
+$content['LN_VIEWS_TYPE'] = "Assigned to";
+$content['LN_VIEWS_ADD'] = "Add new View";
+$content['LN_VIEWS_EDIT'] = "Edit View";
+$content['LN_VIEWS_ERROR_IDNOTFOUND'] = "A View with ID '%1' could not be found.";
+$content['LN_VIEWS_ERROR_INVALIDID'] = "The View with ID '%1' is not a valid View.";
+$content['LN_VIEWS_WARNDELETEVIEW'] = "Are you sure that you want to delete the View '%1'? This cannot be undone!";
+$content['LN_VIEWS_ERROR_DELSEARCH'] = "Deleting of the View with id '%1' failed!";
+$content['LN_VIEWS_ERROR_HASBEENDEL'] = "The View '%1' has been successfully deleted!";
+$content['LN_VIEWS_ADDEDIT'] = "Add / Edit a View";
+$content['LN_VIEWS_COLUMNLIST'] = "Configured Columns";
+$content['LN_VIEWS_ADDCOLUMN'] = "Add Column into list";
+$content['LN_VIEWS_ERROR_DISPLAYNAMEEMPTY'] = "The DisplayName cannot be empty.";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_'] = "";
 
 
 ?>

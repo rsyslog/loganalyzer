@@ -432,6 +432,9 @@ function InitFrontEndVariables()
 	$content['MENU_EDIT'] = $content['BASEPATH'] . "images/icons/edit.png";
 	$content['MENU_DELETE'] = $content['BASEPATH'] . "images/icons/delete.png";
 	$content['MENU_GLOBAL'] = $content['BASEPATH'] . "images/icons/earth.png";
+	$content['MENU_INTERNAL'] = $content['BASEPATH'] . "images/icons/gear.png";
+	$content['MENU_EDIT_DISABLED'] = $content['BASEPATH'] . "images/icons/edit_disabled.png";
+	$content['MENU_DELETE_DISABLED'] = $content['BASEPATH'] . "images/icons/delete_disabled.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -513,7 +516,7 @@ function InitConfigurationValues()
 		LoadSearchesFromDatabase();
 
 		// Load Configured Views
-//		LoadViewsFromDatabase();
+		LoadViewsFromDatabase();
 
 		// Load Configured Sources
 //		LoadSourcesFromDatabase();

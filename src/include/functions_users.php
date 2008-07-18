@@ -222,4 +222,37 @@ function RedirectToDatabaseUpgrade()
 // --- END Usermanagement Function --- 
 
 
+/*
+* Helper function to obtain a list of groups for display 
+*/
+function GetGroupsForSelectfield()
+{
+	global $content;
+
+	$sqlquery = "SELECT " . 
+				DB_GROUPS . ".ID as mygroupid, " . 
+				DB_GROUPS . ".groupname " . 
+				"FROM " . DB_GROUPS . 
+				" ORDER BY " . DB_GROUPS . ".groupname";
+	$result = DB_Query($sqlquery);
+	$mygroups = DB_GetAllRows($result, true);
+	if ( isset($mygroups) && count($mygroups) > 0 )
+	{
+		// Process All Groups
+		for($i = 0; $i < count($mygroups); $i++)
+			$mygroups[$i]['group_selected'] = "";
+
+		// Enable Group Selection
+		array_unshift( $mygroups, array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
+		
+		// return result
+		return $mygroups;
+	}
+	else
+		return false;
+	// ---
+}
+
+
+
 ?>

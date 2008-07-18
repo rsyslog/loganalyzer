@@ -73,8 +73,15 @@ if ( isset($_GET['op']) )
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
 		$content['SEARCHID'] = "";
-
+		
 		// --- Check if groups are available
+		$content['SUBGROUPS'] = GetGroupsForSelectfield();
+		if ( is_array($content['SUBGROUPS']) )
+			$content['ISGROUPSAVAILABLE'] = true;
+		else
+			$content['ISGROUPSAVAILABLE'] = false;
+		
+		/*
 		$sqlquery = "SELECT " . 
 					DB_GROUPS . ".ID as mygroupid, " . 
 					DB_GROUPS . ".groupname " . 
@@ -93,7 +100,7 @@ if ( isset($_GET['op']) )
 			array_unshift( $content['SUBGROUPS'], array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
 		}
 		else
-			$content['ISGROUPSAVAILABLE'] = false;
+			$content['ISGROUPSAVAILABLE'] = false;*/
 		// ---
 	}
 	else if ($_GET['op'] == "edit") 
@@ -125,6 +132,26 @@ if ( isset($_GET['op']) )
 					$content['CHECKED_ISUSERONLY'] = "";
 				
 				// --- Check if groups are available
+				$content['SUBGROUPS'] = GetGroupsForSelectfield();
+				if ( is_array($content['SUBGROUPS']) )
+				{
+					// Process All Groups
+					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
+					{
+						if ( $mysearch['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysearch['groupid'] )
+							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
+						else
+							$content['SUBGROUPS'][$i]['group_selected'] = "";
+					}
+
+					// Enable Group Selection
+					$content['ISGROUPSAVAILABLE'] = true;
+				}
+				else
+					$content['ISGROUPSAVAILABLE'] = false;
+				// ---
+/*
+				// --- Check if groups are available
 				$sqlquery = "SELECT " . 
 							DB_GROUPS . ".ID as mygroupid, " . 
 							DB_GROUPS . ".groupname " . 
@@ -150,6 +177,7 @@ if ( isset($_GET['op']) )
 				else
 					$content['ISGROUPSAVAILABLE'] = false;
 				// ---
+*/
 			}
 			else
 			{

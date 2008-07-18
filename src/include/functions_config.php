@@ -209,11 +209,15 @@ function InitViewConfigs()
 									'ID' =>			"SYSLOG", 
 									'DisplayName' =>"Syslog Fields", 
 									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
 								   );
 	$CFG['Views']['EVTRPT']= array( 
 									'ID' =>			"EVTRPT", 
 									'DisplayName' =>"EventLog Fields", 
 									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
 								   );
 	
 	// Set default of 'DefaultViewsID'
@@ -303,7 +307,6 @@ function LoadSearchesFromDatabase()
 	global $CFG, $content;
 
 	// --- Create SQL Query
-	
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
 		$szWhereUser = " OR " . DB_SEARCHES . ".userid = " . $content['SESSION_USERID'] . " ";
@@ -314,14 +317,15 @@ function LoadSearchesFromDatabase()
 		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-
 	$sqlquery = " SELECT * " . 
 				" FROM " . DB_SEARCHES . 
 				" WHERE (" . DB_SEARCHES . ".userid IS NULL AND " . DB_SEARCHES . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
 				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
-//				" ORDER BY " . DB_SEARCHES . ".DisplayName";
+	// ---
+
+	// Get Searches from DB now!
 	$result = DB_Query($sqlquery);
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
@@ -329,11 +333,51 @@ function LoadSearchesFromDatabase()
 		// Overwrite Search Array with Database one
 		$CFG['Search'] = $myrows;
 		$content['Search'] = $myrows;
-
-		// Cleanup searches and fill / load from database
-
-
 	}
+}
+
+function LoadViewsFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_VIEWS . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_VIEWS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT * " . 
+				" FROM " . DB_VIEWS . 
+				" WHERE (" . DB_VIEWS . ".userid IS NULL AND " . DB_VIEWS . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_VIEWS . ".userid, " . DB_VIEWS . ".groupid, " . DB_VIEWS . ".DisplayName";
+	// ---
+
+	// Get Views from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+		// Overwrite existing Views array
+		unset($CFG['Views']);
+		print_r ( $CFG['Views'] );
+		exit;
+
+		// ReINIT Views Array
+		InitViewConfigs();
+
+		// Merge into existing Views Array!
+		$CFG['Views'] = array_merge ( $CFG['Views'], $myrows );
+		$content['Views'] = $CFG['Views'];
+	}
+
 }
 
 ?>
