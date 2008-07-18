@@ -75,3 +75,11 @@
 	border:0px solid;
 	background-color: transparent; 
 }
+
+.borderlessbuttons
+{ 
+	border:0px solid;
+	background-color: transparent; 
+	width:20px; 
+	padding: 0px;
+}

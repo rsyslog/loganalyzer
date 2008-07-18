@@ -435,6 +435,8 @@ function InitFrontEndVariables()
 	$content['MENU_INTERNAL'] = $content['BASEPATH'] . "images/icons/gear.png";
 	$content['MENU_EDIT_DISABLED'] = $content['BASEPATH'] . "images/icons/edit_disabled.png";
 	$content['MENU_DELETE_DISABLED'] = $content['BASEPATH'] . "images/icons/delete_disabled.png";
+	$content['MENU_MOVE_UP'] = $content['BASEPATH'] . "images/icons/nav_up_blue.png";
+	$content['MENU_MOVE_DOWN'] = $content['BASEPATH'] . "images/icons/nav_down_blue.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

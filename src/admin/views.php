@@ -201,14 +201,17 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 		// --- Read Columns from Formdata
 		if ( is_array($_POST['Columns']) )
 		{
+			// Copy columns ID's
+			foreach ($_POST['Columns'] as $myColKey)
+				$content['SUBCOLUMNS'][$myColKey]['ColFieldID'] = $myColKey;
 		}
 		else	// One element only
-			$content['COLUMNS'][$_POST['Columns']]['ColFieldID'] = $_POST['Columns'];
+			$content['SUBCOLUMNS'][$_POST['Columns']]['ColFieldID'] = $_POST['Columns'];
 		// --- 
 
 		// --- Process Columns for display 
 		$i = 0; // Help counter!
-		foreach ($content['COLUMNS'] as $key => &$myColumn )
+		foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
 		{
 			// Set Fieldcaption
 			if ( isset($content[ $fields[$key]['FieldCaptionID'] ]) )
@@ -225,12 +228,21 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 			// --- 
 		}
 		// --- 
+
+//		print_r ( $content['COLUMNS'] );
 	}
 
 	// --- Copy fields data array
 	$content['FIELDS'] = $fields; 
+	
+	// removed already added fields 
+	foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
+	{
+		if ( isset($content['FIELDS'][$key]) ) 
+			unset($content['FIELDS'][$key]);
+	}
 
-	// removed already added fields and set fieldcaption
+	// set fieldcaption
 	foreach ($content['FIELDS'] as $key => &$myField )
 	{
 		// Set Fieldcaption
@@ -273,6 +285,7 @@ if ( isset($_POST['op']) )
 		$content['ERROR_MSG'] = $content['LN_VIEWS_ERROR_DISPLAYNAMEEMPTY'];
 	}
 	// --- 
+print_r ( $_POST );
 
 	if ( !isset($content['ISERROR']) ) 
 	{	
@@ -280,25 +293,62 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['subop']) )
 		{
 			// Get NewColID
-			$szNewColID = DB_RemoveBadChars($_POST['newcolumn']);
+			$szColId = DB_RemoveBadChars($_POST['newcolumn']);
 			
 			// Add a new Column into our list!
 			if ( $_POST['subop'] == $content['LN_VIEWS_ADDCOLUMN'] && isset($_POST['newcolumn']) )
 			{
 				// Add New entry into columnlist
-				$content['COLUMNS'][$szNewColID]['ColFieldID'] = $szNewColID;
+				$content['SUBCOLUMNS'][$szColId]['ColFieldID'] = $szColId;
+
 				// Set Fieldcaption
-				if ( isset($content[ $fields[$szNewColID]['FieldCaptionID'] ]) )
-					$content['COLUMNS'][$szNewColID]['ColCaption'] = $content[ $fields[$szNewColID]['FieldCaptionID'] ];
+				if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
+					$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
 				else
-					$content['COLUMNS'][$szNewColID]['ColCaption'] = $szNewColID;
+					$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $szColId;
 
 				// Set CSSClass
-				$content['COLUMNS'][$szNewColID]['colcssclass'] = count($content['COLUMNS']) % 2 == 0 ? "line1" : "line2";
+				$content['SUBCOLUMNS'][$szColId]['colcssclass'] = count($content['SUBCOLUMNS']) % 2 == 0 ? "line1" : "line2";
+				
+				// Remove from fields list as well
+				if ( isset($content['FIELDS'][$szColId]) ) 
+					unset($content['FIELDS'][$szColId]);
+
 			}
-//			else if ()
-//			{
-//			}
+		}
+		else if ( isset($_POST['subop_delete']) )
+		{
+			// Get Column ID
+			$szColId = DB_RemoveBadChars($_POST['subop_delete']);
+
+			// Remove Entry from Columnslist
+			if ( isset($content['SUBCOLUMNS'][$szColId]) )
+				unset($content['SUBCOLUMNS'][$szColId]);
+
+			// Add removed entry to field list
+			$content['FIELDS'][$szColId] = $fields[$szColId];
+
+			// Set Fieldcaption
+			if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
+				$content['FIELDS'][$szColId]['FieldCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
+			else
+				$content['FIELDS'][$szColId]['FieldCaption'] = $szColId;
+		}
+		else if ( isset($_POST['subop_moveup']) )
+		{
+			// Get Column ID
+			$szColId = DB_RemoveBadChars($_POST['subop_moveup']);
+
+			// Move Entry one UP in Columnslist
+
+		}
+		else if ( isset($_POST['subop_movedown']) )
+		{
+			// Get Column ID
+			$szColId = DB_RemoveBadChars($_POST['subop_movedown']);
+
+			// Move Entry one DOWN in Columnslist
+
 		}
 		else // Now SUBOP means normal processing!
 		{

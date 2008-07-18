@@ -79,21 +79,29 @@
 			<br>
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
-				<td align="center" class="cellmenu1" colspan="2"><b>{LN_VIEWS_COLUMNLIST}</b></td>
+				<td align="center" class="cellmenu1" colspan="3"><b>{LN_VIEWS_COLUMNLIST}</b></td>
 			</tr>
-			<!-- BEGIN COLUMNS -->
+			<!-- BEGIN SUBCOLUMNS -->
 			<tr>
-				<td align="left" class="{colcssclass}">
-					<input type="hidden" name="Columns" value="{ColFieldID}">
-					<b>{ColFieldID} {ColCaption}</b>
+				<td align="left" class="cellmenu2" width="150"><b>{LN_VIEWS_COLUMN} {ZAEHLER}: </b></td>
+			
+				<td align="left" class="{colcssclass}" width="300">
+					<input type="hidden" name="Columns[]" value="{ColFieldID}">
+					<b>{ColCaption}</b>
 				</td>
-				<td align="right" class="{cssclass}">
-					&nbsp;<a href="{BASEPATH}admin/views.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_SEARCH_DELETE}"></a>
+				<td align="center" class="{colcssclass}" width="150">
+					<button name="subop_moveup" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
+					<button name="subop_movedown" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
+					<button name="subop_delete" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
+					
+<!--					&nbsp;<input type="submit" style="background-image:url({MENU_DELETE}); background-repeat:no-repeat; background-position:center;" class="borderless" name="subop_delete" value="{ColFieldID}">
+					&nbsp;<input type="image" src="{MENU_DELETE}" alt="{LN_VIEWS_COLUMN_REMOVE}" class="borderless" width="16" name="subop_delete_{ColFieldID}">
+-->
 				</td>
 			</tr>
-			<!-- END COLUMNS -->
+			<!-- END SUBCOLUMNS -->
 			<tr>
-				<td align="center" class="line2" colspan="2">
+				<td align="center" class="line2" colspan="3">
 
 					<select name="newcolumn" size="1" STYLE="width: 200px">
 						<!-- BEGIN FIELDS -->
