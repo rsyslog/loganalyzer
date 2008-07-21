@@ -70,6 +70,7 @@ $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
 $content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been successfully saved";
 $content['LN_GEN_INTERNAL'] = "Internal";
 $content['LN_GEN_DISABLED'] = "Function disabled";
+$content['LN_GEN_CONFIGFILE'] = "Configuration File";
 $content['LN_GEN_'] = "";
 
 // User Center
@@ -177,6 +178,22 @@ $content['LN_VIEWS_ERROR_NOCOLUMNS'] = "You need to add at least one column in o
 $content['LN_VIEWS_HASBEENEDIT'] = "The Custom Search '%1' has been successfully edited.";
 $content['LN_VIEWS_'] = "";
 $content['LN_VIEWS_'] = "";
+
+$content['LN_SOURCES_CENTER'] = "Sources Options";
+$content['LN_SOURCES_EDIT'] = "Edit Source";
+$content['LN_SOURCES_DELETE'] = "Delete Source";
+$content['LN_SOURCES_ID'] = "ID";
+$content['LN_SOURCES_NAME'] = "Source Name";
+$content['LN_SOURCES_TYPE'] = "Source Type";
+$content['LN_SOURCES_ASSIGNTO'] = "Assigned To";
+$content['LN_SOURCES_DISK'] = "Diskfile";
+$content['LN_SOURCES_DB'] = "MySQL Database";
+$content['LN_SOURCES_PDO'] = "PDO Datasource";
+$content['LN_SOURCES_ADD'] = "Add new Source";
+$content['LN_SOURCES_'] = "";
+$content['LN_SOURCES_'] = "";
+$content['LN_SOURCES_'] = "";
+$content['LN_SOURCES_'] = "";
 
 
 ?>

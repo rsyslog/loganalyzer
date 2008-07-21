@@ -3,9 +3,9 @@
 	*********************************************************************
 	* phpLogCon - http://www.phplogcon.org
 	* -----------------------------------------------------------------
-	* Search Admin File											
+	* Sources Admin File											
 	*																	
-	* -> Helps administrating custom searches
+	* -> Helps administrating phplogcon datasources
 	*																	
 	* All directives are explained within this file
 	*
@@ -320,70 +320,82 @@ if ( isset($_POST['op']) )
 if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
 	// Default Mode = List Searches
-	$content['LISTSEARCHES'] = "true";
+	$content['LISTSOURCES'] = "true";
 
-	// Read all Serverentries
-	$sqlquery = "SELECT " . 
-				DB_SEARCHES . ".ID, " . 
-				DB_SEARCHES . ".DisplayName, " . 
-				DB_SEARCHES . ".SearchQuery, " . 
-				DB_SEARCHES . ".userid, " .
-				DB_SEARCHES . ".groupid, " .
-				DB_USERS . ".username, " .
-				DB_GROUPS . ".groupname " .
-				" FROM " . DB_SEARCHES . 
-				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
-				") ON (" . 
-				DB_SEARCHES . ".userid=" . DB_USERS . ".ID AND " . 
-				DB_SEARCHES . ".groupid=" . DB_GROUPS . ".ID " . 
-				") " .
-				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
-//echo $sqlquery;
-	$result = DB_Query($sqlquery);
-	$content['SEARCHES'] = DB_GetAllRows($result, true);
+	// Copy Views array for further modifications
+	$content['SOURCES'] = $content['Sources'];
 
-	// --- Process Users
-	for($i = 0; $i < count($content['SEARCHES']); $i++)
+	// --- Process Sources
+	$i = 0; // Help counter!
+	foreach ($content['SOURCES'] as &$mySource )
 	{
-		$content['SEARCHES'][$i]['SearchQuery_Display'] = strlen($content['SEARCHES'][$i]['SearchQuery']) > 25 ? substr($content['SEARCHES'][$i]['SearchQuery'], 0, 25) . " ..." : $content['SEARCHES'][$i]['SearchQuery'];
-
 		// --- Set Image for Type
-		if ( $content['SEARCHES'][$i]['userid'] != null )
+		// NonNUMERIC are config files Sources, can not be editied
+		if ( is_numeric($mySource['ID']) )
 		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_ADMINUSERS"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_USERONLY"];
-		}
-		else if ( $content['SEARCHES'][$i]['groupid'] != null )
-		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_ADMINGROUPS"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_GROUPONLY"];
+			if ( $mySource['userid'] != null )
+			{
+				$mySource['SourcesAssignedToImage']	= $content["MENU_ADMINUSERS"];
+				$mySource['SourcesAssignedToText']	= $content["LN_GEN_USERONLY"];
+			}
+			else if ( $mySource['groupid'] != null )
+			{
+				$mySource['SourcesAssignedToImage']	= $content["MENU_ADMINGROUPS"];
+				$mySource['SourcesAssignedToText']	= $content["LN_GEN_GROUPONLY"];
+			}
+			else
+			{
+				$mySource['SourcesAssignedToImage']	= $content["MENU_GLOBAL"];
+				$mySource['SourcesAssignedToText']	= $content["LN_GEN_GLOBAL"];
+			}
 		}
 		else
 		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_GLOBAL"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_GLOBAL"];
+			$mySource['SourcesAssignedToImage'] = $content["MENU_INTERNAL"];
+			$mySource['SourcesAssignedToText'] = $content["LN_GEN_CONFIGFILE"];
+		}
+		// ---
+
+		// --- Set SourceType
+		if ( $mySource['SourceType'] == SOURCE_DISK )
+		{
+			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_DISK"];
+			$mySource['SourcesTypeText'] = $content["LN_SOURCES_DISK"];
+		}
+		else if ( $mySource['SourceType'] == SOURCE_DB )
+		{
+			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_DB"];
+			$mySource['SourcesTypeText'] = $content["LN_SOURCES_DB"];
+		}
+		else if ( $mySource['SourceType'] == SOURCE_PDO )
+		{
+			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_PDO"];
+			$mySource['SourcesTypeText'] = $content["LN_SOURCES_PDO"];
 		}
 		// ---
 
 		// --- Set CSS Class
 		if ( $i % 2 == 0 )
-			$content['SEARCHES'][$i]['cssclass'] = "line1";
+			$mySource['cssclass'] = "line1";
 		else
-			$content['SEARCHES'][$i]['cssclass'] = "line2";
+			$mySource['cssclass'] = "line2";
+		$i++;
 		// --- 
 	}
 	// --- 
+//	print_r ( $content['SOURCES'] );
+
 }
 // --- END Custom Code
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
-$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_SEARCHOPT'];
+$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_SOURCEOPT'];
 // --- END CREATE TITLE
 
 // --- Parsen and Output
 InitTemplateParser();
-$page -> parser($content, "admin/admin_searches.html");
+$page -> parser($content, "admin/admin_sources.html");
 $page -> output(); 
 // --- 
 

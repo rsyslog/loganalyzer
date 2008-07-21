@@ -437,6 +437,9 @@ function InitFrontEndVariables()
 	$content['MENU_DELETE_DISABLED'] = $content['BASEPATH'] . "images/icons/delete_disabled.png";
 	$content['MENU_MOVE_UP'] = $content['BASEPATH'] . "images/icons/nav_up_blue.png";
 	$content['MENU_MOVE_DOWN'] = $content['BASEPATH'] . "images/icons/nav_down_blue.png";
+	$content['MENU_SOURCE_DISK'] = $content['BASEPATH'] . "images/icons/document_text.png";
+	$content['MENU_SOURCE_DB'] = $content['BASEPATH'] . "images/icons/data_table.png";
+	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -521,7 +524,7 @@ function InitConfigurationValues()
 		LoadViewsFromDatabase();
 
 		// Load Configured Sources
-//		LoadSourcesFromDatabase();
+		LoadSourcesFromDatabase();
 
 		
 		// Database Version Checker! 

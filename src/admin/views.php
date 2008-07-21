@@ -3,7 +3,7 @@
 	*********************************************************************
 	* phpLogCon - http://www.phplogcon.org
 	* -----------------------------------------------------------------
-	* User Admin File											
+	* Views Admin File											
 	*																	
 	* -> Helps administrating custom user views
 	*																	
@@ -543,7 +543,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// Copy Views array for further modifications
 	$content['VIEWS'] = $content['Views'];
 
-	// --- Process Users
+	// --- Process Views
 	$i = 0; // Help counter!
 	foreach ($content['VIEWS'] as &$myView )
 	{

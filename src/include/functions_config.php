@@ -55,14 +55,25 @@ function InitSourceConfigs()
 			{
 				// Set Array Index, TODO: Check for invalid characters!
 				$iSourceID = $mysource['ID'];
-				// Copy general properties
-//						$content['Sources'][$iSourceID]['ID'] = $mysource['ID'];
-//						$content['Sources'][$iSourceID]['Name'] = $mysource['Name'];
-//						$content['Sources'][$iSourceID]['SourceType'] = $mysource['SourceType'];
 				
-				// Set default if not set!
+				// --- Set defaults if not set!
 				if ( !isset($mysource['LogLineType']) ) 
+				{
+					$CFG['Sources'][$iSourceID]['LogLineType'] = "syslog";
 					$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
+				}
+
+				if ( !isset($mysource['userid']) )
+				{
+					$CFG['Sources'][$iSourceID]['userid'] = null;
+					$content['Sources'][$iSourceID]['userid'] = null;
+				}
+				if ( !isset($mysource['groupid']) )
+				{
+					$CFG['Sources'][$iSourceID]['groupid'] = null;
+					$content['Sources'][$iSourceID]['groupid'] = null;
+				}
+				// ---
 
 				// Set different view if necessary
 				if ( isset($_SESSION[$iSourceID . "-View"]) ) 
@@ -403,6 +414,58 @@ function LoadViewsFromDatabase()
 		// Merge into existing Views Array!
 //		$CFG['Views'] = array_merge ( $CFG['Views'], $myrows );
 		$content['Views'] = $CFG['Views'];
+	}
+}
+
+function LoadSourcesFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_SOURCES . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_SOURCES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_SOURCES . ".*, " . 
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_SOURCES . 
+				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
+				") ON (" . 
+				DB_SOURCES . ".userid=" . DB_USERS . ".ID AND " . 
+				DB_SOURCES . ".groupid=" . DB_GROUPS . ".ID " . 
+				") " .
+				" WHERE (" . DB_SOURCES . ".userid IS NULL AND " . DB_SOURCES . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_SOURCES . ".userid, " . DB_SOURCES . ".groupid, " . DB_SOURCES . ".DisplayName";
+	// ---
+
+	// Get Sources from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows) && count($myrows) > 0 )
+	{
+		// Overwrite existing Views array
+		unset($CFG['Sources']);
+
+		// Unpack the Columns and append to Views Array
+		foreach ($myrows as &$mySource )
+		{
+			// Append to Views Array
+			$CFG['Sources'][ $mySource['ID'] ] = $mySource['ID'];
+		}
+		
+		// Copy to content array!
+		$content['Sources'] = $CFG['Sources'];
 	}
 
 }
