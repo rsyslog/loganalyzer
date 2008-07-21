@@ -87,13 +87,18 @@ if ( isset($_GET['op']) )
 		$content['ISEDITORNEWVIEW'] = "true";
 		$content['VIEW_FORMACTION'] = "editview";
 		$content['VIEW_SENDBUTTON'] = $content['LN_VIEWS_EDIT'];
-		
+
+
+		// Copy Views array for further modifications
+		$content['VIEWS'] = $content['Views'];
+//print_r ( $content['VIEWS'] );	
 		// View must be loaded as well already!
-		if ( isset($_GET['id']) && $content['VIEWS'][$_GET['id']] )
+		if ( isset($_GET['id']) && isset($content['VIEWS'][$_GET['id']]) )
 		{
 			//PreInit these values 
 			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
 
+/*
 			$sqlquery = "SELECT ID, DisplayName " . 
 						" FROM " . DB_VIEWS . 
 						" WHERE ID = " . $content['VIEWID'];
@@ -101,16 +106,41 @@ if ( isset($_GET['op']) )
 			$result = DB_Query($sqlquery);
 			$myview = DB_GetSingleRow($result, true);
 			if ( isset($myview['DisplayName']) )
+*/
+			
+			if ( isset($content['VIEWS'][ $content['VIEWID'] ]) )
 			{
-				$content['VIEWID'] = $myview['ID'];
+				$myview = $content['VIEWS'][ $content['VIEWID'] ];
 
-/*
-				$content['DisplayName'] = $mysearch['DisplayName'];
-				$content['SearchQuery'] = $mysearch['SearchQuery'];
-				if ( $mysearch['userid'] != null )
+				$content['DisplayName'] = $myview['DisplayName'] ;
+				$content['userid'] = $myview['userid'];
+				$content['Columns'] = $myview['Columns'];
+				if ( $content['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
+
+/*
+				// --- Add DisplayNames to columns
+				$iBegin = true;
+				foreach ($myview['Columns'] as $myCol )
+				{
+					// Get Fieldcaption
+					if ( isset($content[ $fields[$myCol]['FieldCaptionID'] ]) )
+						$myview['COLUMNS'][$myCol]['FieldCaption'] = $content[ $fields[$myCol]['FieldCaptionID'] ];
+					else
+						$myview['COLUMNS'][$myCol]['FieldCaption'] = $myCol;
+				
+					if ( $iBegin )
+					{
+						$myview['COLUMNS'][$myCol]['FieldCaptionSeperator'] = "";
+						$iBegin = false;
+					}
+					else
+						$myview['COLUMNS'][$myCol]['FieldCaptionSeperator'] = ", ";
+
+				}
+				// ---
 */
 
 				// --- Check if groups are available
@@ -144,7 +174,7 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISEDITORNEWVIEW'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] =  $content['LN_VIEWS_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_VIEWS_ERROR_INVALIDID'], isset($_GET['id']) ? $_GET['id'] : "<unknown>" );
 		}
 	}
 	else if ($_GET['op'] == "delete") 
@@ -195,18 +225,25 @@ if ( isset($_GET['op']) )
 // --- Additional work todo for the edit view
 if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 {
-	// Read Columns from FORM data!
+	// If Columns are send using POST we use them, otherwise we try to use from the view itself, if available
 	if ( isset($_POST['Columns']) )
+		$AllColumns = $_POST['Columns'];
+	else if ( isset($content['Columns']) )
+		$AllColumns = $content['Columns'];
+
+
+	// Read Columns from FORM data!
+	if ( isset($AllColumns) )
 	{
 		// --- Read Columns from Formdata
-		if ( is_array($_POST['Columns']) )
+		if ( is_array($AllColumns) )
 		{
 			// Copy columns ID's
-			foreach ($_POST['Columns'] as $myColKey)
+			foreach ($AllColumns as $myColKey)
 				$content['SUBCOLUMNS'][$myColKey]['ColFieldID'] = $myColKey;
 		}
 		else	// One element only
-			$content['SUBCOLUMNS'][$_POST['Columns']]['ColFieldID'] = $_POST['Columns'];
+			$content['SUBCOLUMNS'][$AllColumns]['ColFieldID'] = $AllColumns;
 		// --- 
 
 		// --- Process Columns for display 
@@ -214,7 +251,7 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 		foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
 		{
 			// Set Fieldcaption
-			if ( isset($content[ $fields[$key]['FieldCaptionID'] ]) )
+			if ( isset($fields[$key]) && isset($content[ $fields[$key]['FieldCaptionID'] ]) )
 				$myColumn['ColCaption'] = $content[ $fields[$key]['FieldCaptionID'] ];
 			else
 				$myColumn['ColCaption'] = $key;
@@ -228,18 +265,19 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 			// --- 
 		}
 		// --- 
-
-//		print_r ( $content['COLUMNS'] );
 	}
 
 	// --- Copy fields data array
 	$content['FIELDS'] = $fields; 
 	
 	// removed already added fields 
-	foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
+	if ( isset($content['SUBCOLUMNS']) )
 	{
-		if ( isset($content['FIELDS'][$key]) ) 
-			unset($content['FIELDS'][$key]);
+		foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
+		{
+			if ( isset($content['FIELDS'][$key]) ) 
+				unset($content['FIELDS'][$key]);
+		}
 	}
 
 	// set fieldcaption
@@ -252,7 +290,6 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 			$myField['FieldCaption'] = $key;
 	}
 	// ---
-
 }
 // --- 
 
@@ -261,7 +298,6 @@ if ( isset($_POST['op']) )
 {
 	if ( isset ($_POST['id']) ) { $content['VIEWID'] = DB_RemoveBadChars($_POST['id']); } else {$content['VIEWID'] = ""; }
 	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
-//	if ( isset ($_POST['SearchQuery']) ) { $content['SearchQuery'] = DB_RemoveBadChars($_POST['SearchQuery']); } else {$content['SearchQuery'] = ""; }
 
 	// User & Group handeled specially
 	if ( isset ($_POST['isuseronly']) ) 
@@ -285,7 +321,7 @@ if ( isset($_POST['op']) )
 		$content['ERROR_MSG'] = $content['LN_VIEWS_ERROR_DISPLAYNAMEEMPTY'];
 	}
 	// --- 
-print_r ( $_POST );
+//print_r ( $_POST );
 
 	if ( !isset($content['ISERROR']) ) 
 	{	
@@ -326,10 +362,10 @@ print_r ( $_POST );
 				unset($content['SUBCOLUMNS'][$szColId]);
 
 			// Add removed entry to field list
-			$content['FIELDS'][$szColId] = $fields[$szColId];
+			$content['FIELDS'][$szColId] = $szColId;
 
 			// Set Fieldcaption
-			if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
+			if ( isset($fields[$szColId]) && isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
 				$content['FIELDS'][$szColId]['FieldCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
 			else
 				$content['FIELDS'][$szColId]['FieldCaption'] = $szColId;
@@ -339,57 +375,139 @@ print_r ( $_POST );
 			// Get Column ID
 			$szColId = DB_RemoveBadChars($_POST['subop_moveup']);
 
-			// Move Entry one UP in Columnslist
+			// --- Move Entry one UP in Columnslist
+			// Find the entry in the array
+			$iArrayNum = 0;
+			foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
+			{
+				if ( $key == $szColId ) 
+					break;
 
+				$iArrayNum++;
+			}
+			
+			// If found move up
+			if ( $iArrayNum > 0 )
+			{
+				// Extract Entry from the array
+				$EntryTwoMove = array_slice($content['SUBCOLUMNS'], $iArrayNum, 1);
+
+				// Unset Entry from the array
+				unset( $content['SUBCOLUMNS'][$szColId] );
+
+				// Splice the array order!
+				array_splice($content['SUBCOLUMNS'], $iArrayNum-1, 0, $EntryTwoMove);
+			}
+			// --- 
 		}
 		else if ( isset($_POST['subop_movedown']) )
 		{
 			// Get Column ID
 			$szColId = DB_RemoveBadChars($_POST['subop_movedown']);
 
-			// Move Entry one DOWN in Columnslist
+			// --- Move Entry one DOWN in Columnslist
+			// Find the entry in the array
+			$iArrayNum = 0;
+			foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
+			{
+				if ( $key == $szColId ) 
+					break;
 
+				$iArrayNum++;
+			}
+			
+			// If found move down
+			if ( $iArrayNum < count($content['SUBCOLUMNS']) )
+			{
+				// Extract Entry from the array
+				$EntryTwoMove = array_slice($content['SUBCOLUMNS'], $iArrayNum, 1);
+
+				// Unset Entry from the array
+				unset( $content['SUBCOLUMNS'][$szColId] );
+
+				// Splice the array order!
+				array_splice($content['SUBCOLUMNS'], $iArrayNum+1, 0, $EntryTwoMove);
+			}
+			// --- 
 		}
 		else // Now SUBOP means normal processing!
 		{
 			// Everything was alright, so we go to the next step!
-			if ( $_POST['op'] == "addnewsearch" )
+			if ( $_POST['op'] == "addnewview" )
 			{
-				// Add custom search now!
-				$sqlquery = "INSERT INTO " . DB_SEARCHES . " (DisplayName, SearchQuery, userid, groupid) 
-				VALUES ('" . $content['DisplayName'] . "', 
-						'" . $content['SearchQuery'] . "',
-						" . $content['userid'] . ", 
-						" . $content['groupid'] . " 
-						)";
-				$result = DB_Query($sqlquery);
-				DB_FreeQuery($result);
-				
-				// Do the final redirect
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENADDED'], $content['DisplayName'] ) , "searches.php" );
+				// Create Columnlist comma seperated!
+				if ( isset($_POST['Columns']) && is_array($_POST['Columns']) )
+				{
+					// Copy columns ID's
+					foreach ($_POST['Columns'] as $myColKey)
+					{
+						if ( isset($content['Columns']) ) 
+							$content['Columns'] .= ", " . $myColKey;
+						else
+							$content['Columns'] = $myColKey;
+					}
+
+					// Add custom search now!
+					$sqlquery = "INSERT INTO " . DB_VIEWS. " (DisplayName, Columns, userid, groupid) 
+					VALUES ('" . $content['DisplayName'] . "', 
+							'" . $content['Columns'] . "',
+							" . $content['userid'] . ", 
+							" . $content['groupid'] . " 
+							)";
+					$result = DB_Query($sqlquery);
+					DB_FreeQuery($result);
+					
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENADDED'], $content['DisplayName'] ) , "views.php" );
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = $content['LN_VIEWS_ERROR_NOCOLUMNS']; 
+				}
 			}
-			else if ( $_POST['op'] == "editsearch" )
+			else if ( $_POST['op'] == "editview" )
 			{
-				$result = DB_Query("SELECT ID FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID']);
+				$result = DB_Query("SELECT ID FROM " . DB_VIEWS . " WHERE ID = " . $content['VIEWID']);
 				$myrow = DB_GetSingleRow($result, true);
 				if ( !isset($myrow['ID']) )
 				{
 					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] ); 
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_VIEWS_ERROR_IDNOTFOUND'], $content['VIEWID'] ); 
 				}
 				else
 				{
-					// Edit the Search Entry now!
-					$result = DB_Query("UPDATE " . DB_SEARCHES . " SET 
-						DisplayName = '" . $content['DisplayName'] . "', 
-						SearchQuery = '" . $content['SearchQuery'] . "', 
-						userid = " . $content['userid'] . ", 
-						groupid = " . $content['groupid'] . "
-						WHERE ID = " . $content['SEARCHID']);
-					DB_FreeQuery($result);
+					// Create Columnlist comma seperated!
+					if ( isset($_POST['Columns']) && is_array($_POST['Columns']) )
+					{
+						// Copy columns ID's
+						unset($content['Columns']);
+						foreach ($_POST['Columns'] as $myColKey)
+						{
+							if ( isset($content['Columns']) ) 
+								$content['Columns'] .= ", " . $myColKey;
+							else
+								$content['Columns'] = $myColKey;
+						}
 
-					// Done redirect!
-					RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENEDIT'], $content['DisplayName']) , "searches.php" );
+
+						// Edit the Search Entry now!
+						$result = DB_Query("UPDATE " . DB_VIEWS . " SET 
+							DisplayName = '" . $content['DisplayName'] . "', 
+							Columns = '" . $content['Columns'] . "', 
+							userid = " . $content['userid'] . ", 
+							groupid = " . $content['groupid'] . "
+							WHERE ID = " . $content['VIEWID']);
+						DB_FreeQuery($result);
+
+						// Done redirect!
+						RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENEDIT'], $content['DisplayName']) , "views.php" );
+					}
+					else
+					{
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = $content['LN_VIEWS_ERROR_NOCOLUMNS']; 
+					}
 				}
 			}
 		}
@@ -465,7 +583,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		foreach ($myView['Columns'] as $myCol )
 		{
 			// Get Fieldcaption
-			if ( isset($content[ $fields[$myCol]['FieldCaptionID'] ]) )
+			if ( isset($fields[$myCol]) && isset($content[ $fields[$myCol]['FieldCaptionID'] ]) )
 				$myView['COLUMNS'][$myCol]['FieldCaption'] = $content[ $fields[$myCol]['FieldCaptionID'] ];
 			else
 				$myView['COLUMNS'][$myCol]['FieldCaption'] = $myCol;

@@ -352,8 +352,20 @@ function LoadViewsFromDatabase()
 		$szGroupWhere = " OR " . DB_VIEWS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT * " . 
+	$sqlquery = " SELECT " . 
+				DB_VIEWS . ".ID, " . 
+				DB_VIEWS . ".DisplayName, " . 
+				DB_VIEWS . ".Columns, " . 
+				DB_VIEWS . ".userid, " .
+				DB_VIEWS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
 				" FROM " . DB_VIEWS . 
+				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
+				") ON (" . 
+				DB_VIEWS . ".userid=" . DB_USERS . ".ID AND " . 
+				DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID " . 
+				") " .
 				" WHERE (" . DB_VIEWS . ".userid IS NULL AND " . DB_VIEWS . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -363,18 +375,33 @@ function LoadViewsFromDatabase()
 	// Get Views from DB now!
 	$result = DB_Query($sqlquery);
 	$myrows = DB_GetAllRows($result, true);
-	if ( isset($myrows ) && count($myrows) > 0 )
+	if ( isset($myrows) && count($myrows) > 0 )
 	{
 		// Overwrite existing Views array
 		unset($CFG['Views']);
-		print_r ( $CFG['Views'] );
-		exit;
+//		print_r ( $myrows );
+//		exit;
+
 
 		// ReINIT Views Array
 		InitViewConfigs();
+		
+		// Unpack the Columns and append to Views Array
+		foreach ($myrows as &$myView )
+		{
+			// Split into array
+			$myView['Columns'] = explode( ",", $myView['Columns'] );
+			
+			// remove spaces
+			foreach ($myView['Columns'] as &$myCol )
+				$myCol = trim($myCol);
+			
+			// Append to Views Array
+			$CFG['Views'][ $myView['ID'] ] = $myView;
+		}
 
 		// Merge into existing Views Array!
-		$CFG['Views'] = array_merge ( $CFG['Views'], $myrows );
+//		$CFG['Views'] = array_merge ( $CFG['Views'], $myrows );
 		$content['Views'] = $CFG['Views'];
 	}
 

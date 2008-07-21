@@ -45,6 +45,8 @@ $content['LN_ADMIN_SEND'] = "Send changes";
 $content['LN_GEN_USERONLY'] = "User only";
 $content['LN_GEN_GROUPONLY'] = "Group only";
 $content['LN_GEN_GLOBAL'] = "Global";
+$content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
+$content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
 
 // General Options
 $content['LN_ADMIN_MISC'] = "Miscellaneous Options";
@@ -68,8 +70,6 @@ $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
 $content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been successfully saved";
 $content['LN_GEN_INTERNAL'] = "Internal";
 $content['LN_GEN_DISABLED'] = "Function disabled";
-$content['LN_GEN_USERONLY'] = "For me only <br>(Only available to your user)";
-$content['LN_GEN_GROUPONLY'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_'] = "";
 
 // User Center
@@ -172,9 +172,9 @@ $content['LN_VIEWS_ADDCOLUMN'] = "Add Column into list";
 $content['LN_VIEWS_ERROR_DISPLAYNAMEEMPTY'] = "The DisplayName cannot be empty.";
 $content['LN_VIEWS_COLUMN'] = "Column";
 $content['LN_VIEWS_COLUMN_REMOVE'] = "Remove Column";
-$content['LN_VIEWS_'] = "";
-$content['LN_VIEWS_'] = "";
-$content['LN_VIEWS_'] = "";
+$content['LN_VIEWS_HASBEENADDED'] = "The Custom View '%1' has been successfully added.";
+$content['LN_VIEWS_ERROR_NOCOLUMNS'] = "You need to add at least one column in order to add a new Custom View.";
+$content['LN_VIEWS_HASBEENEDIT'] = "The Custom Search '%1' has been successfully edited.";
 $content['LN_VIEWS_'] = "";
 $content['LN_VIEWS_'] = "";
 
