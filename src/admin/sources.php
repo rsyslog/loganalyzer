@@ -54,25 +54,53 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 
 // --- BEGIN Custom Code
 
-// Only if the user is an admin!
-//if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
-//	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
-
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "add") 
 	{
 		// Set Mode to add
-		$content['ISEDITORNEWSEARCH'] = "true";
-		$content['SEARCH_FORMACTION'] = "addnewsearch";
-		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_ADD'];
+		$content['ISEDITORNEWSOURCE'] = "true";
+		$content['SOURCE_FORMACTION'] = "addnewsource";
+		$content['SOURCE_SENDBUTTON'] = $content['LN_SOURCES_ADD'];
 		
 		//PreInit these values 
-		$content['DisplayName'] = "";
-		$content['SearchQuery'] = "";
+		$content['Name'] = "";
+		$content['SourceType'] = SOURCE_DISK;
+		CreateSourceTypesList($content['SourceType']);
+
+		// Init View List!
+		$content['SourceViewID'] = 'SYSLOG';
+		$content['VIEWS'] = $content['Views'];
+		foreach ( $content['VIEWS'] as $myView )
+		{
+			if ( $myView['ID'] == $content['SourceViewID'] )
+				$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
+			else
+				$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
+		}
+
+		// SOURCE_DISK specific
+		$content['SourceLogLineType'] = ""; 
+		CreateLogLineTypesList($content['SourceLogLineType']);
+		$content['SourceDiskFile'] = "/var/log/syslog";
+
+		// SOURCE_DB specific
+		$content['SourceDBType'] = DB_MYSQL;
+		CreateDBTypesList($content['SourceDBType']);
+		$content['SourceDBName'] = "phplogcon";
+		$content['SourceDBTableType'] = "monitorware";
+		$content['SourceDBServer'] = "localhost";
+		$content['SourceDBTableName'] = "systemevents";
+		$content['SourceDBUser'] = "user";
+		$content['SourceDBPassword'] = "";
+		$content['SourceDBEnableRowCounting'] = "false";
+		$content['SourceDBEnableRowCounting_true'] = "";
+		$content['SourceDBEnableRowCounting_false'] = "checked";
+
+		// General stuff
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
-		$content['SEARCHID'] = "";
+		$content['SOURCEID'] = "";
 		
 		// --- Check if groups are available
 		$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -80,28 +108,6 @@ if ( isset($_GET['op']) )
 			$content['ISGROUPSAVAILABLE'] = true;
 		else
 			$content['ISGROUPSAVAILABLE'] = false;
-		
-		/*
-		$sqlquery = "SELECT " . 
-					DB_GROUPS . ".ID as mygroupid, " . 
-					DB_GROUPS . ".groupname " . 
-					"FROM " . DB_GROUPS . 
-					" ORDER BY " . DB_GROUPS . ".groupname";
-		$result = DB_Query($sqlquery);
-		$content['SUBGROUPS'] = DB_GetAllRows($result, true);
-		if ( isset($content['SUBGROUPS']) && count($content['SUBGROUPS']) > 0 )
-		{
-			// Process All Groups
-			for($i = 0; $i < count($content['SUBGROUPS']); $i++)
-				$content['SUBGROUPS'][$i]['group_selected'] = "";
-
-			// Enable Group Selection
-			$content['ISGROUPSAVAILABLE'] = true;
-			array_unshift( $content['SUBGROUPS'], array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
-		}
-		else
-			$content['ISGROUPSAVAILABLE'] = false;*/
-		// ---
 	}
 	else if ($_GET['op'] == "edit") 
 	{
@@ -240,9 +246,38 @@ if ( isset($_GET['op']) )
 
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['SEARCHID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SEARCHID'] = -1; }
-	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
-	if ( isset ($_POST['SearchQuery']) ) { $content['SearchQuery'] = DB_RemoveBadChars($_POST['SearchQuery']); } else {$content['SearchQuery'] = ""; }
+	// Read parameters first!
+	if ( isset($_POST['id']) ) { $content['SOURCEID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SOURCEID'] = -1; }
+	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
+	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
+	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
+
+	if ( isset($content['SourceType']) )
+	{
+		// Disk Params
+		if ( $content['SourceType'] == SOURCE_DISK ) 
+		{
+			if ( isset($_POST['SourceLogLineType']) ) { $content['SourceLogLineType'] = DB_RemoveBadChars($_POST['SourceLogLineType']); }
+			if ( isset($_POST['SourceDiskFile']) ) { $content['SourceDiskFile'] = DB_RemoveBadChars($_POST['SourceDiskFile']); }
+		}
+		// DB Params
+		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+		{
+			if ( isset($_POST['SourceDBType']) ) { $content['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']); }
+			if ( isset($_POST['SourceDBName']) ) { $content['SourceDBName'] = DB_RemoveBadChars($_POST['SourceDBName']); }
+			if ( isset($_POST['SourceDBTableType']) ) { $content['SourceDBTableType'] = DB_RemoveBadChars($_POST['SourceDBTableType']); }
+			if ( isset($_POST['SourceDBServer']) ) { $content['SourceDBServer'] = DB_RemoveBadChars($_POST['SourceDBServer']); }
+			if ( isset($_POST['SourceDBTableName']) ) { $content['SourceDBTableName'] = DB_RemoveBadChars($_POST['SourceDBTableName']); }
+			if ( isset($_POST['SourceDBUser']) ) { $content['SourceDBUser'] = DB_RemoveBadChars($_POST['SourceDBUser']); }
+			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
+			if ( isset($_POST['SourceDBEnableRowCounting']) ) 
+			{	// Extra Check for this propberty
+				$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceViewID']); 
+				if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
+					$_SESSION['SourceDBEnableRowCounting'] = "false";
+			}
+		}
+	}
 
 	// User & Group handeled specially
 	if ( isset ($_POST['isuseronly']) ) 
@@ -260,35 +295,127 @@ if ( isset($_POST['op']) )
 	}
 
 	// --- Check mandotary values
-	if ( $content['DisplayName'] == "" )
+	if ( $content['Name'] == "" )
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_DISPLAYNAMEEMPTY'];
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_NAMEOFTHESOURCE'] );
 	}
-	else if ( $content['SearchQuery'] == "" )
+	else if ( !isset($content['SourceType']) ) 
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_SEARCHQUERYEMPTY'];
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_SOURCETYPE'] );
 	}
-	// --- 
+	else if ( !isset($content['SourceViewID']) ) 
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_VIEW'] );
+	}
+	else
+	{
+		// Disk Params
+		if ( $content['SourceType'] == SOURCE_DISK ) 
+		{
+			if ( !isset($content['SourceLogLineType']) ) 
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_LOGLINETYPE'] );
+			}
+			else if ( !isset($content['SourceDiskFile']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_SYSLOGFILE'] );
+			}
+			// Check if file is accessable!
+			else if ( !is_file($content['SourceDiskFile']) )
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $content['SourceDiskFile'] );
+			}
+		}
+		// DB Params
+		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+		{
+			if ( !isset($content['SourceDBType']) ) 
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DATABASETYPEOPTIONS'] );
+			}
+			else if ( !isset($content['SourceDBName']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBNAME'] );
+			}
+			else if ( !isset($content['SourceDBTableType']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBTABLETYPE'] );
+			}
+			else if ( !isset($content['SourceDBServer']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBSERVER'] );
+			}
+			else if ( !isset($content['SourceDBTableName']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBTABLENAME'] );
+			}
+			else if ( !isset($content['SourceDBUser']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBUSER'] );
+			}
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'], $content['SourceDBType'] );
+		}
+	}
 
+	// --- Now ADD/EDIT do the processing!
 	if ( !isset($content['ISERROR']) ) 
 	{	
 		// Everything was alright, so we go to the next step!
-		if ( $_POST['op'] == "addnewsearch" )
+		if ( $_POST['op'] == "addnewsource" )
 		{
 			// Add custom search now!
-			$sqlquery = "INSERT INTO " . DB_SEARCHES . " (DisplayName, SearchQuery, userid, groupid) 
-			VALUES ('" . $content['DisplayName'] . "', 
-					'" . $content['SearchQuery'] . "',
-					" . $content['userid'] . ", 
-					" . $content['groupid'] . " 
-					)";
+			if ( $content['SourceType'] == SOURCE_DISK ) 
+			{
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, ViewID, LogLineType, DiskFile, userid, groupid) 
+				VALUES ('" . $content['Name'] . "', 
+						" . $content['SourceType'] . ", 
+						'" . $content['SourceViewID'] . "',
+						'" . $content['SourceLogLineType'] . "',
+						'" . $content['SourceDiskFile'] . "',
+						" . $content['userid'] . ", 
+						" . $content['groupid'] . " 
+						)";
+			}
+			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+			{
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				VALUES ('" . $content['Name'] . "', 
+						" . $content['SourceType'] . ", 
+						'" . $content['SourceViewID'] . "',
+						'" . $content['SourceDBTableType'] . "',
+						" . $content['SourceDBType'] . ",
+						'" . $content['SourceDBServer'] . "',
+						'" . $content['SourceDBName'] . "',
+						'" . $content['SourceDBUser'] . "',
+						'" . $content['SourceDBPassword'] . "',
+						'" . $content['SourceDBTableName'] . "',
+						" . $content['SourceDBEnableRowCounting'] . ",
+						" . $content['userid'] . ", 
+						" . $content['groupid'] . " 
+						)";
+			}
+
 			$result = DB_Query($sqlquery);
 			DB_FreeQuery($result);
 			
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENADDED'], $content['DisplayName'] ) , "searches.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], $content['Name'] ) , "sources.php" );
 		}
 		else if ( $_POST['op'] == "editsearch" )
 		{
@@ -384,7 +511,6 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	// --- 
 //	print_r ( $content['SOURCES'] );
-
 }
 // --- END Custom Code
 

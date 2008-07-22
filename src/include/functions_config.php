@@ -100,7 +100,6 @@ function InitSourceConfigs()
 				{
 					// Perform necessary include
 					require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
-
 					$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
 					$content['Sources'][$iSourceID]['ObjRef']->FileName = $mysource['DiskFile'];
 					$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $mysource['LogLineType'];
@@ -156,8 +155,8 @@ function InitSourceConfigs()
 					// UNKNOWN, remove config entry!
 					unset($content['Sources'][$iSourceID]);
 
-					// TODO: Output CONFIG WARNING
-					die( "Not supported yet!" );
+					// Output CRITICAL WARNING
+					DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
 				}
 				
 				// Set generic configuration options
@@ -446,9 +445,8 @@ function LoadSourcesFromDatabase()
 				" WHERE (" . DB_SOURCES . ".userid IS NULL AND " . DB_SOURCES . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_SOURCES . ".userid, " . DB_SOURCES . ".groupid, " . DB_SOURCES . ".DisplayName";
+				" ORDER BY " . DB_SOURCES . ".userid, " . DB_SOURCES . ".groupid, " . DB_SOURCES . ".Name";
 	// ---
-
 	// Get Sources from DB now!
 	$result = DB_Query($sqlquery);
 	$myrows = DB_GetAllRows($result, true);
@@ -456,12 +454,12 @@ function LoadSourcesFromDatabase()
 	{
 		// Overwrite existing Views array
 		unset($CFG['Sources']);
-
-		// Unpack the Columns and append to Views Array
+		
+		// Append to Source Array
 		foreach ($myrows as &$mySource )
 		{
-			// Append to Views Array
-			$CFG['Sources'][ $mySource['ID'] ] = $mySource['ID'];
+			// Append to Source Array
+			$CFG['Sources'][ $mySource['ID'] ] = $mySource; //['ID'];
 		}
 		
 		// Copy to content array!

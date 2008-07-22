@@ -57,6 +57,8 @@ $content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
 $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_SELECTVIEW'] = "Select View";
+	$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
+	
 
 // Topmenu Entries
 	$content['LN_MENU_SEARCH'] = "Search";

@@ -1,5 +1,34 @@
 <!-- INCLUDE include_header.html --> 
 
+<script language="javascript">
+	/*
+	*	Helper function to show and hide areas of the filterview
+	*/
+	function toggleSourceTypeVisibility(FormFieldName)
+	{
+		var myfield = document.getElementById(FormFieldName);
+		if (myfield.value == 1)
+		{
+			showvisibility("HiddenDiskTypeOptions");
+			hidevisibility("HiddenDatabaseTypeOptions");
+		}
+		else if (myfield.value == 2)
+		{
+			showvisibility("HiddenDatabaseTypeOptions");
+			hidevisibility("HiddenDiskTypeOptions");
+
+			hidevisibility("HiddenDBTYpesOptions");
+		}
+		else if (myfield.value == 3)
+		{
+			showvisibility("HiddenDatabaseTypeOptions");
+			hidevisibility("HiddenDiskTypeOptions");
+
+			showvisibility("HiddenDBTYpesOptions");
+		}
+	}
+</script>
+
 <!-- IF ISERROR="true" -->
 <center>
 <h3><font color="red">{ERROR_MSG}</font></h3>
@@ -47,19 +76,36 @@
 		</table>
 <!-- ENDIF LISTSOURCES="true" -->
 
-<!-- IF ISEDITORNEWSEARCH="true" -->
-		<form action="{BASEPATH}admin/searches.php" method="post">
+<!-- IF ISEDITORNEWSOURCE="true" -->
+		<form action="{BASEPATH}admin/sources.php" method="post">
+			
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
-				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SEARCH_ADDEDIT}</b></td>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_SEARCH_NAME}</b></td>
-				<td align="right" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_SOURCES_NAME}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
-				<td align="right" class="line2"><input type="text" name="SearchQuery" size="55" maxlength="1024" value="{SearchQuery}"></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_SOURCES_TYPE}</b></td>
+				<td align="right" class="line1">
+					<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
+						<!-- BEGIN SOURCETYPES -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END SOURCETYPES -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
+				<td align="right" class="line1">
+					<select id="SourceViewID" name="SourceViewID" size="1">
+						<!-- BEGIN VIEWS -->
+						<option {selected} value="{ID}">{DisplayName}</option>
+						<!-- END VIEWS -->
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
@@ -67,7 +113,7 @@
 			</tr>
 			<!-- IF ISGROUPSAVAILABLE="true" -->
 			<tr>
-				<td align="left" class="cellmenu2"><b>{LN_SEARCH_GROUPONLY}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
 				<td align="right" class="line2">
 					<select name="groupid" size="1" STYLE="width: 300px">
 						<!-- BEGIN SUBGROUPS -->
@@ -76,17 +122,100 @@
 					</select>
 				</td>
 			</tr>
+			</table>
+			<br>
+
+			<div id="HiddenDiskTypeOptions" class="HiddenContent">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DISKTYPEOPTIONS}</b></td></tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
+				<td align="right" class="line0" width="350">
+					<select name="SourceLogLineType" size="1">
+						<!-- BEGIN LOGLINETYPES -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END LOGLINETYPES -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SYSLOGFILE}</b></td>
+				<td align="right" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
+			</tr>
+			</table>
+			</div>
+
+			<div id="HiddenDatabaseTypeOptions" class="HiddenContent">
+			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
+			</table>
+
+			<div id="HiddenDBTYpesOptions" class="HiddenContent">
+			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<tr>
+				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
+				<td align="right" class="line1" width="350">
+					<select name="SourceDBType" size="1">
+						<!-- BEGIN DBTYPES -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END DBTYPES -->
+					</select>
+				</td>
+			</tr>
+			</table>
+			</div>
+
+			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<tr>
+				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
+				<td align="right" class="line0" width="350"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
+				<td align="right" class="line0"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
+				<td align="right" class="line1"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLENAME}</b></td>
+				<td align="right" class="line0"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
+				<td align="right" class="line1"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
+				<td align="right" class="line0"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
+				<td align="right" class="line1" width="100%">
+					<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
+				</td>
+			</tr>
+			</table>
+			</div>
+
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<!-- ENDIF ISGROUPSAVAILABLE="true" -->
 			<tr>
 				<td align="center" colspan="2">
-					<input type="submit" value="{SEARCH_SENDBUTTON}">
-					<input type="hidden" name="op" value="{SEARCH_FORMACTION}">
-					<input type="hidden" name="id" value="{SEARCHID}">
+					<input type="submit" value="{SOURCE_SENDBUTTON}">
+					<input type="hidden" name="op" value="{SOURCE_FORMACTION}">
+					<input type="hidden" name="id" value="{SOURCEID}">
 				</td>
 			</tr>
 			</table>
 		</form>
-<!-- ENDIF ISEDITORNEWSEARCH="true" -->
+
+		<script language="javascript">
+			// Manually perform initial Javascript Calls
+			toggleSourceTypeVisibility('SourceType');
+		</script>
+<!-- ENDIF ISEDITORNEWSOURCE="true" -->
 
 		<br><br>
 
