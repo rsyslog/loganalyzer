@@ -20,20 +20,32 @@
 			<td align="center" width="50" class="cellmenu1"><b>{LN_SEARCH_ID}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_SEARCH_NAME}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_SEARCH_QUERY}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_SEARCH_TYPE}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_SEARCH_TYPE}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN SEARCHES -->
 		<tr>
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
-			<td align="left" class="{cssclass}"><a href="{BASEPATH}admin/searches.php?op=edit&id={ID}">{DisplayName}</a></td>
+			<td align="left" class="{cssclass}">
+			<!-- IF ActionsAllowed="true" -->
+			<a href="{BASEPATH}admin/searches.php?op=edit&id={ID}">{DisplayName}</a>
+			<!-- ENDIF ActionsAllowed="true" -->
+			<!-- IF ActionsAllowed!="true" -->
+			<b>{DisplayName}</b>
+			<!-- ENDIF ActionsAllowed!="true" -->
+			</td>
 			<td align="left" class="{cssclass}"><a href="{BASEPATH}index.php?{SearchQuery}">{SearchQuery_Display}</a></td>
 			<td align="left" class="{cssclass}"><img src="{SearchTypeImage}" width="16" align="left"> <b>{SearchTypeText}</b></td>
 
-<!--			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?miniop=setisadmin&id={ID}&newval={set_isadmin}"><img src="{is_isadmin_string}" width="16"></a></td>-->
 			<td align="center" class="{cssclass}">
+				<!-- IF ActionsAllowed="true" -->
 				&nbsp;<a href="{BASEPATH}admin/searches.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_SEARCH_EDIT}"></a>
 				&nbsp;<a href="{BASEPATH}admin/searches.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_SEARCH_DELETE}"></a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				<!-- ENDIF ActionsAllowed!="true" -->
 			</td>
 		</tr>
 		<!-- END SEARCHES -->

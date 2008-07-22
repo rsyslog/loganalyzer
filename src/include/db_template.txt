@@ -1,12 +1,13 @@
--- MYSQL Table Template
--- for phpLogCon Version 0
--- http://www.phplogcon.org
+-- phpMyAdmin SQL Dump
+-- version 2.10.1
+-- http://www.phpmyadmin.net
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- 
 -- Table structure for table `logcon_config`
 -- 
+
 DROP TABLE IF EXISTS `logcon_config`;
 CREATE TABLE IF NOT EXISTS `logcon_config` (
   `propname` varchar(32) NOT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `logcon_config` (
 -- 
 -- Table structure for table `logcon_groupmembers`
 -- 
+
 DROP TABLE IF EXISTS `logcon_groupmembers`;
 CREATE TABLE IF NOT EXISTS `logcon_groupmembers` (
   `userid` int(11) NOT NULL,
@@ -29,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `logcon_groupmembers` (
 -- 
 -- Table structure for table `logcon_groups`
 -- 
+
 DROP TABLE IF EXISTS `logcon_groups`;
 CREATE TABLE IF NOT EXISTS `logcon_groups` (
   `ID` int(11) NOT NULL auto_increment,
@@ -36,28 +39,30 @@ CREATE TABLE IF NOT EXISTS `logcon_groups` (
   `groupdescription` varchar(255) NOT NULL,
   `grouptype` int(11) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table for phplogcon groups' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table for phplogcon groups' AUTO_INCREMENT=1 ;
 
 -- 
 -- Table structure for table `logcon_searches`
 -- 
+
 DROP TABLE IF EXISTS `logcon_searches`;
 CREATE TABLE IF NOT EXISTS `logcon_searches` (
   `ID` int(11) NOT NULL auto_increment,
   `DisplayName` varchar(255) NOT NULL,
   `SearchQuery` varchar(1024) NOT NULL,
   `userid` int(11) default NULL,
-  `groupidd` int(11) default NULL,
+  `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Stores custom user searches' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Stores custom user searches' AUTO_INCREMENT=1 ;
 
 -- 
 -- Table structure for table `logcon_sources`
 -- 
+
 DROP TABLE IF EXISTS `logcon_sources`;
 CREATE TABLE IF NOT EXISTS `logcon_sources` (
-  `ID` varchar(64) NOT NULL,
-  `DisplayName` varchar(255) NOT NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  `Name` varchar(255) NOT NULL,
   `SourceType` tinyint(4) NOT NULL,
   `ViewID` varchar(64) NOT NULL,
   `LogLineType` varchar(64) default NULL,
@@ -73,30 +78,32 @@ CREATE TABLE IF NOT EXISTS `logcon_sources` (
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table to store datasources in phplogcon';
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table to store datasources in phplogcon' AUTO_INCREMENT=1 ;
 
 -- 
 -- Table structure for table `logcon_users`
 -- 
+
 DROP TABLE IF EXISTS `logcon_users`;
 CREATE TABLE IF NOT EXISTS `logcon_users` (
   `ID` int(11) NOT NULL auto_increment,
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `is_admin` tinyint(1) NOT NULL default '0',
-  `last_login` tinyint(4) NOT NULL,
+  `last_login` int(4) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table for the phplogcon users' AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table for the phplogcon users' AUTO_INCREMENT=1 ;
 
 -- 
 -- Table structure for table `logcon_views`
 -- 
+
 DROP TABLE IF EXISTS `logcon_views`;
 CREATE TABLE IF NOT EXISTS `logcon_views` (
-  `ID` varchar(64) NOT NULL,
+  `ID` int(11) NOT NULL auto_increment,
   `DisplayName` varchar(255) NOT NULL,
   `Columns` text NOT NULL,
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Stores custom defined user views.';
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Stores custom defined user views.' AUTO_INCREMENT=1 ;

@@ -327,8 +327,17 @@ function LoadSearchesFromDatabase()
 		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT * " . 
+	$sqlquery = " SELECT " . 
+				DB_SEARCHES . ".ID, " . 
+				DB_SEARCHES . ".DisplayName, " . 
+				DB_SEARCHES . ".SearchQuery, " . 
+				DB_SEARCHES . ".userid, " .
+				DB_SEARCHES . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
 				" FROM " . DB_SEARCHES . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SEARCHES . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SEARCHES . ".groupid=" . DB_GROUPS . ".ID ) " . 
 				" WHERE (" . DB_SEARCHES . ".userid IS NULL AND " . DB_SEARCHES . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -371,11 +380,8 @@ function LoadViewsFromDatabase()
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM " . DB_VIEWS . 
-				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
-				") ON (" . 
-				DB_VIEWS . ".userid=" . DB_USERS . ".ID AND " . 
-				DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID " . 
-				") " .
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_VIEWS . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID ) " . 
 				" WHERE (" . DB_VIEWS . ".userid IS NULL AND " . DB_VIEWS . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -437,11 +443,8 @@ function LoadSourcesFromDatabase()
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM " . DB_SOURCES . 
-				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
-				") ON (" . 
-				DB_SOURCES . ".userid=" . DB_USERS . ".ID AND " . 
-				DB_SOURCES . ".groupid=" . DB_GROUPS . ".ID " . 
-				") " .
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SOURCES . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SOURCES . ".groupid=" . DB_GROUPS . ".ID ) " . 
 				" WHERE (" . DB_SOURCES . ".userid IS NULL AND " . DB_SOURCES . ".groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 

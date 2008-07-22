@@ -483,7 +483,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// Default Mode = List Searches
 	$content['LISTSOURCES'] = "true";
 
-	// Copy Views array for further modifications
+	// Copy Sources array for further modifications
 	$content['SOURCES'] = $content['Sources'];
 
 	// --- Process Sources
@@ -505,12 +505,20 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			else if ( $mySource['groupid'] != null )
 			{
 				$mySource['SourcesAssignedToImage']	= $content["MENU_ADMINGROUPS"];
-				$mySource['SourcesAssignedToText']	= $content["LN_GEN_GROUPONLY"];
+				$mySource['SourcesAssignedToText']	= GetAndReplaceLangStr( $content["LN_GEN_GROUPONLYNAME"], $mySource['groupname'] );
+
+				// Check if is ADMIN User, deny if normal user!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+					$mySource['ActionsAllowed'] = false;
 			}
 			else
 			{
 				$mySource['SourcesAssignedToImage']	= $content["MENU_GLOBAL"];
 				$mySource['SourcesAssignedToText']	= $content["LN_GEN_GLOBAL"];
+
+				// Check if is ADMIN User, deny if normal user!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+					$mySource['ActionsAllowed'] = false;
 			}
 		}
 		else

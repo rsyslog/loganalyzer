@@ -47,6 +47,8 @@ $content['LN_GEN_GROUPONLY'] = "Group only";
 $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
 $content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
+$content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
+
 
 // General Options
 $content['LN_ADMIN_MISC'] = "Miscellaneous Options";

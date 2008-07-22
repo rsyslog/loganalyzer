@@ -91,23 +91,12 @@ if ( isset($_GET['op']) )
 
 		// Copy Views array for further modifications
 		$content['VIEWS'] = $content['Views'];
-//print_r ( $content['VIEWS'] );	
+
 		// View must be loaded as well already!
 		if ( isset($_GET['id']) && isset($content['VIEWS'][$_GET['id']]) )
 		{
 			//PreInit these values 
 			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
-
-/*
-			$sqlquery = "SELECT ID, DisplayName " . 
-						" FROM " . DB_VIEWS . 
-						" WHERE ID = " . $content['VIEWID'];
-
-			$result = DB_Query($sqlquery);
-			$myview = DB_GetSingleRow($result, true);
-			if ( isset($myview['DisplayName']) )
-*/
-			
 			if ( isset($content['VIEWS'][ $content['VIEWID'] ]) )
 			{
 				$myview = $content['VIEWS'][ $content['VIEWID'] ];
@@ -119,29 +108,6 @@ if ( isset($_GET['op']) )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
-
-/*
-				// --- Add DisplayNames to columns
-				$iBegin = true;
-				foreach ($myview['Columns'] as $myCol )
-				{
-					// Get Fieldcaption
-					if ( isset($content[ $fields[$myCol]['FieldCaptionID'] ]) )
-						$myview['COLUMNS'][$myCol]['FieldCaption'] = $content[ $fields[$myCol]['FieldCaptionID'] ];
-					else
-						$myview['COLUMNS'][$myCol]['FieldCaption'] = $myCol;
-				
-					if ( $iBegin )
-					{
-						$myview['COLUMNS'][$myCol]['FieldCaptionSeperator'] = "";
-						$iBegin = false;
-					}
-					else
-						$myview['COLUMNS'][$myCol]['FieldCaptionSeperator'] = ", ";
-
-				}
-				// ---
-*/
 
 				// --- Check if groups are available
 				$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -321,7 +287,6 @@ if ( isset($_POST['op']) )
 		$content['ERROR_MSG'] = $content['LN_VIEWS_ERROR_DISPLAYNAMEEMPTY'];
 	}
 	// --- 
-//print_r ( $_POST );
 
 	if ( !isset($content['ISERROR']) ) 
 	{	
@@ -518,27 +483,6 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
 	// Default Mode = List Searches
 	$content['LISTVIEWS'] = "true";
-/*
-	// Read all Serverentries
-	$sqlquery = "SELECT " . 
-				DB_VIEWS . ".ID, " . 
-				DB_VIEWS . ".DisplayName, " . 
-				DB_VIEWS . ".Columns, " . 
-				DB_VIEWS . ".userid, " .
-				DB_VIEWS . ".groupid, " .
-				DB_USERS . ".username, " .
-				DB_GROUPS . ".groupname " .
-				" FROM " . DB_VIEWS . 
-				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
-				") ON (" . 
-				DB_VIEWS . ".userid=" . DB_USERS . ".ID AND " . 
-				DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID " . 
-				") " .
-				" ORDER BY " . DB_VIEWS . ".userid, " . DB_VIEWS . ".groupid, " . DB_VIEWS . ".DisplayName";
-//echo $sqlquery;
-	$result = DB_Query($sqlquery);
-	$content['VIEWS'] = DB_GetAllRows($result, true);
-*/
 
 	// Copy Views array for further modifications
 	$content['VIEWS'] = $content['Views'];
@@ -555,18 +499,26 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			// --- Set Image for Type
 			if ( $myView['userid'] != null )
 			{
-				$myView['SearchTypeImage'] = $content["MENU_ADMINUSERS"];
-				$myView['SearchTypeText'] = $content["LN_GEN_USERONLY"];
+				$myView['ViewTypeImage'] = $content["MENU_ADMINUSERS"];
+				$myView['ViewTypeText'] = $content["LN_GEN_USERONLY"];
 			}
 			else if ( $myView['groupid'] != null )
 			{
-				$myView['SearchTypeImage'] = $content["MENU_ADMINGROUPS"];
-				$myView['SearchTypeText'] = $content["LN_GEN_GROUPONLY"];
+				$myView['ViewTypeImage'] = $content["MENU_ADMINGROUPS"];
+				$myView['ViewTypeText'] = GetAndReplaceLangStr( $content["LN_GEN_GROUPONLYNAME"], $myView['groupname'] );
+
+				// Check if is ADMIN User, deny if normal user!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+					$myView['ActionsAllowed'] = false;
 			}
 			else
 			{
-				$myView['SearchTypeImage'] = $content["MENU_GLOBAL"];
-				$myView['SearchTypeText'] = $content["LN_GEN_GLOBAL"];
+				$myView['ViewTypeImage'] = $content["MENU_GLOBAL"];
+				$myView['ViewTypeText'] = $content["LN_GEN_GLOBAL"];
+
+				// Check if is ADMIN User, deny if normal user!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+					$myView['ActionsAllowed'] = false;
 			}
 			// ---
 		}
@@ -574,8 +526,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		{
 			$myView['ActionsAllowed'] = false;
 
-			$myView['SearchTypeImage'] = $content["MENU_INTERNAL"];
-			$myView['SearchTypeText'] = $content["LN_GEN_INTERNAL"];
+			$myView['ViewTypeImage'] = $content["MENU_INTERNAL"];
+			$myView['ViewTypeText'] = $content["LN_GEN_INTERNAL"];
 		}
 
 		// --- Add DisplayNames to columns

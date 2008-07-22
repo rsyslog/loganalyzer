@@ -53,11 +53,6 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
 // --- BEGIN Custom Code
-
-// Only if the user is an admin!
-//if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
-//	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
-
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "add") 
@@ -272,54 +267,49 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// Default Mode = List Searches
 	$content['LISTSEARCHES'] = "true";
 
-	// Read all Serverentries
-	$sqlquery = "SELECT " . 
-				DB_SEARCHES . ".ID, " . 
-				DB_SEARCHES . ".DisplayName, " . 
-				DB_SEARCHES . ".SearchQuery, " . 
-				DB_SEARCHES . ".userid, " .
-				DB_SEARCHES . ".groupid, " .
-				DB_USERS . ".username, " .
-				DB_GROUPS . ".groupname " .
-				" FROM " . DB_SEARCHES . 
-				" LEFT OUTER JOIN (" . DB_USERS . ", " . DB_GROUPS . 
-				") ON (" . 
-				DB_SEARCHES . ".userid=" . DB_USERS . ".ID AND " . 
-				DB_SEARCHES . ".groupid=" . DB_GROUPS . ".ID " . 
-				") " .
-				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
-//echo $sqlquery;
-	$result = DB_Query($sqlquery);
-	$content['SEARCHES'] = DB_GetAllRows($result, true);
+	// Copy Search array for further modifications
+	$content['SEARCHES'] = $content['Search'];
 
-	// --- Process Users
-	for($i = 0; $i < count($content['SEARCHES']); $i++)
+	$i = 0; // Help counter!
+	foreach ($content['SEARCHES'] as &$mySearch )
 	{
-		$content['SEARCHES'][$i]['SearchQuery_Display'] = strlen($content['SEARCHES'][$i]['SearchQuery']) > 25 ? substr($content['SEARCHES'][$i]['SearchQuery'], 0, 25) . " ..." : $content['SEARCHES'][$i]['SearchQuery'];
+		$mySearch['SearchQuery_Display'] = strlen($mySearch['SearchQuery']) > 25 ? substr($mySearch['SearchQuery'], 0, 25) . " ..." : $mySearch['SearchQuery'];
+
+		// Allow EDIT
+		$mySearch['ActionsAllowed'] = true;
 
 		// --- Set Image for Type
-		if ( $content['SEARCHES'][$i]['userid'] != null )
+		if ( $mySearch['userid'] != null )
 		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_ADMINUSERS"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_USERONLY"];
+			$mySearch['SearchTypeImage'] = $content["MENU_ADMINUSERS"];
+			$mySearch['SearchTypeText'] = $content["LN_GEN_USERONLY"];
 		}
-		else if ( $content['SEARCHES'][$i]['groupid'] != null )
+		else if ( $mySearch['groupid'] != null )
 		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_ADMINGROUPS"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_GROUPONLY"];
+			$mySearch['SearchTypeImage'] = $content["MENU_ADMINGROUPS"];
+			$mySearch['SearchTypeText'] = GetAndReplaceLangStr( $content["LN_GEN_GROUPONLYNAME"], $mySearch['groupname'] );
+
+			// Check if is ADMIN User, deny if normal user!
+			if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+				$mySearch['ActionsAllowed'] = false;
 		}
 		else
 		{
-			$content['SEARCHES'][$i]['SearchTypeImage'] = $content["MENU_GLOBAL"];
-			$content['SEARCHES'][$i]['SearchTypeText'] = $content["LN_GEN_GLOBAL"];
+			$mySearch['SearchTypeImage'] = $content["MENU_GLOBAL"];
+			$mySearch['SearchTypeText'] = $content["LN_GEN_GLOBAL"];
+
+			// Check if is ADMIN User, deny if normal user!
+			if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+				$mySearch['ActionsAllowed'] = false;
 		}
 		// ---
 
 		// --- Set CSS Class
 		if ( $i % 2 == 0 )
-			$content['SEARCHES'][$i]['cssclass'] = "line1";
+			$mySearch['cssclass'] = "line1";
 		else
-			$content['SEARCHES'][$i]['cssclass'] = "line2";
+			$mySearch['cssclass'] = "line2";
+		$i++;
 		// --- 
 	}
 	// --- 
