@@ -197,7 +197,13 @@ $content['LN_SOURCES_ERROR_MISSINGPARAM'] = "The paramater '%1' is missing.";
 $content['LN_SOURCES_ERROR_NOTAVALIDFILE'] = "Failed to open the syslog file '%1'! Check if the file exists and phplogcon has sufficient rights to it";
 $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'] = "Unknown Source '%1' detected";
 $content['LN_SOURCE_HASBEENADDED'] = "The new Source '%1' has been successfully added.";
-$content['LN_SOURCES_'] = "";
+$content['LN_SOURCES_EDIT'] = "Edit Source";
+$content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'] = "The Source-ID is invalid or could not be found.";
+$content['LN_SOURCES_ERROR_IDNOTFOUND'] = "The Source-ID could not be found in the database.";
+$content['LN_SOURCES_HASBEENEDIT'] = "The Source '%1' has been successfully edited.";
+$content['LN_SOURCES_WARNDELETESEARCH'] = "Are you sure that you want to delete the Source '%1'? This cannot be undone!";
+$content['LN_SOURCES_ERROR_DELSOURCE'] = "Deleting of the Source with id '%1' failed!";
+$content['LN_SOURCES_ERROR_HASBEENDEL'] = "The Source '%1' has been successfully deleted!";
 $content['LN_SOURCES_'] = "";
 $content['LN_SOURCES_'] = "";
 

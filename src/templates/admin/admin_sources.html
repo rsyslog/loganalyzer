@@ -55,7 +55,15 @@
 		<!-- BEGIN SOURCES -->
 		<tr>
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
-			<td align="left" class="{cssclass}"><a href="{BASEPATH}admin/sources.php?op=edit&id={ID}">{Name}</a></td>
+			<td align="left" class="{cssclass}">
+			<!-- IF ActionsAllowed="true" -->
+			<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}">{Name}</a>
+			<!-- ENDIF ActionsAllowed="true" -->
+			<!-- IF ActionsAllowed!="true" -->
+			<b>{Name}</b>
+			<!-- ENDIF ActionsAllowed!="true" -->
+			
+			</td>
 			<td align="left" class="{cssclass}"><img src="{SourcesTypeImage}" width="16" align="left"> <b>{SourcesTypeText}</b></td>
 			<td align="left" class="{cssclass}"><img src="{SourcesAssignedToImage}" width="16" align="left"> <b>{SourcesAssignedToText}</b></td>
 			<td align="center" class="{cssclass}">

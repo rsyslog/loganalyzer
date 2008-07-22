@@ -112,27 +112,64 @@ if ( isset($_GET['op']) )
 	else if ($_GET['op'] == "edit") 
 	{
 		// Set Mode to edit
-		$content['ISEDITORNEWSEARCH'] = "true";
-		$content['SEARCH_FORMACTION'] = "editsearch";
-		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_EDIT'];
+		$content['ISEDITORNEWSOURCE'] = "true";
+		$content['SOURCE_FORMACTION'] = "editsource";
+		$content['SOURCE_SENDBUTTON'] = $content['LN_SOURCES_EDIT'];
 
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
 
-			$sqlquery = "SELECT * " . 
-						" FROM " . DB_SEARCHES . 
-						" WHERE ID = " . $content['SEARCHID'];
-
-			$result = DB_Query($sqlquery);
-			$mysearch = DB_GetSingleRow($result, true);
-			if ( isset($mysearch['DisplayName']) )
+			// Check if exists
+			if ( is_numeric($content['SOURCEID']) && isset($content['Sources'][ $content['SOURCEID'] ]) )
 			{
-				$content['SEARCHID'] = $mysearch['ID'];
-				$content['DisplayName'] = $mysearch['DisplayName'];
-				$content['SearchQuery'] = $mysearch['SearchQuery'];
-				if ( $mysearch['userid'] != null )
+				// Get Source reference
+				$mysource = $content['Sources'][ $content['SOURCEID'] ];
+
+				// Copy basic properties
+				$content['Name'] = $mysource['Name'];
+				$content['SourceType'] = $mysource['SourceType'];
+				CreateSourceTypesList($content['SourceType']);
+
+				// Init View List!
+				$content['SourceViewID'] = $mysource['ViewID'];
+				$content['VIEWS'] = $content['Views'];
+				foreach ( $content['VIEWS'] as $myView )
+				{
+					if ( $myView['ID'] == $content['SourceViewID'] )
+						$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
+					else
+						$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
+				}
+
+				// SOURCE_DISK specific
+				$content['SourceLogLineType'] = $mysource['LogLineType']; 
+				CreateLogLineTypesList($content['SourceLogLineType']);
+				$content['SourceDiskFile'] = $mysource['DiskFile'];
+
+				// SOURCE_DB specific
+				$content['SourceDBType'] = $mysource['DBType'];
+				CreateDBTypesList($content['SourceDBType']);
+				$content['SourceDBName'] = $mysource['DBName'];
+				$content['SourceDBTableType'] = $mysource['DBTableType'];
+				$content['SourceDBServer'] = $mysource['DBServer'];
+				$content['SourceDBTableName'] = $mysource['DBTableName'];
+				$content['SourceDBUser'] = $mysource['DBUser'];
+				$content['SourceDBPassword'] = $mysource['DBPassword'];
+				$content['SourceDBEnableRowCounting'] = $mysource['DBEnableRowCounting'];
+				if ( $content['SourceDBEnableRowCounting'] == 1 )
+				{
+					$content['SourceDBEnableRowCounting_true'] = "checked";
+					$content['SourceDBEnableRowCounting_false'] = "";
+				}
+				else
+				{
+					$content['SourceDBEnableRowCounting_true'] = "";
+					$content['SourceDBEnableRowCounting_false'] = "checked";
+				}
+
+				if ( $mysource['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
@@ -144,7 +181,7 @@ if ( isset($_GET['op']) )
 					// Process All Groups
 					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
 					{
-						if ( $mysearch['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysearch['groupid'] )
+						if ( $mysource['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysource['groupid'] )
 							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
 						else
 							$content['SUBGROUPS'][$i]['group_selected'] = "";
@@ -156,40 +193,12 @@ if ( isset($_GET['op']) )
 				else
 					$content['ISGROUPSAVAILABLE'] = false;
 				// ---
-/*
-				// --- Check if groups are available
-				$sqlquery = "SELECT " . 
-							DB_GROUPS . ".ID as mygroupid, " . 
-							DB_GROUPS . ".groupname " . 
-							"FROM " . DB_GROUPS . 
-							" ORDER BY " . DB_GROUPS . ".groupname";
-				$result = DB_Query($sqlquery);
-				$content['SUBGROUPS'] = DB_GetAllRows($result, true);
-				if ( isset($content['SUBGROUPS']) && count($content['SUBGROUPS']) > 0 )
-				{
-					// Process All Groups
-					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
-					{
-						if ( $mysearch['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysearch['groupid'] )
-							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
-						else
-							$content['SUBGROUPS'][$i]['group_selected'] = "";
-					}
-
-					// Enable Group Selection
-					$content['ISGROUPSAVAILABLE'] = true;
-					array_unshift( $content['SUBGROUPS'], array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
-				}
-				else
-					$content['ISGROUPSAVAILABLE'] = false;
-				// ---
-*/
 			}
 			else
 			{
-				$content['ISEDITORNEWSEARCH'] = false;
+				$content['ISEDITORNEWSOURCE'] = false;
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] );
+				$content['ERROR_MSG'] =  $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
 			}
 		}
 		else
@@ -204,42 +213,42 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
 
 			// Get UserInfo
-			$result = DB_Query("SELECT DisplayName FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] ); 
+			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
 			$myrow = DB_GetSingleRow($result, true);
-			if ( !isset($myrow['DisplayName']) )
+			if ( !isset($myrow['Name']) )
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
 			}
 
 			// --- Ask for deletion first!
 			if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
 			{
 				// This will print an additional secure check which the user needs to confirm and exit the script execution.
-				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SEARCH_WARNDELETESEARCH'], $myrow['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETESEARCH'], $myrow['Name'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
 			}
 			// ---
 
 			// do the delete!
-			$result = DB_Query( "DELETE FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] );
+			$result = DB_Query( "DELETE FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] );
 			if ($result == FALSE)
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_DELSEARCH'], $content['SEARCHID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELSOURCE'], $content['SOURCEID'] ); 
 			}
 			else
 				DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_HASBEENDEL'], $myrow['DisplayName'] ) , "searches.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_HASBEENDEL'], $myrow['Name'] ) , "sources.php" );
 		}
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
 		}
 	}
 }
@@ -270,12 +279,11 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['SourceDBTableName']) ) { $content['SourceDBTableName'] = DB_RemoveBadChars($_POST['SourceDBTableName']); }
 			if ( isset($_POST['SourceDBUser']) ) { $content['SourceDBUser'] = DB_RemoveBadChars($_POST['SourceDBUser']); }
 			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
-			if ( isset($_POST['SourceDBEnableRowCounting']) ) 
-			{	// Extra Check for this propberty
-				$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceViewID']); 
-				if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
-					$_SESSION['SourceDBEnableRowCounting'] = "false";
-			}
+			if ( isset($_POST['SourceDBEnableRowCounting']) ) {	$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']); }
+			// Extra Check for this property
+			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
+				$_SESSION['SourceDBEnableRowCounting'] = "false";
+
 		}
 	}
 
@@ -413,32 +421,58 @@ if ( isset($_POST['op']) )
 
 			$result = DB_Query($sqlquery);
 			DB_FreeQuery($result);
-			
+
 			// Do the final redirect
 			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], $content['Name'] ) , "sources.php" );
 		}
-		else if ( $_POST['op'] == "editsearch" )
+		else if ( $_POST['op'] == "editsource" )
 		{
-			$result = DB_Query("SELECT ID FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID']);
+			$result = DB_Query("SELECT ID FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID']);
 			$myrow = DB_GetSingleRow($result, true);
 			if ( !isset($myrow['ID']) )
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
 			}
 			else
 			{
 				// Edit the Search Entry now!
-				$result = DB_Query("UPDATE " . DB_SEARCHES . " SET 
-					DisplayName = '" . $content['DisplayName'] . "', 
-					SearchQuery = '" . $content['SearchQuery'] . "', 
-					userid = " . $content['userid'] . ", 
-					groupid = " . $content['groupid'] . "
-					WHERE ID = " . $content['SEARCHID']);
+				if ( $content['SourceType'] == SOURCE_DISK ) 
+				{
+					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
+									Name = '" . $content['Name'] . "', 
+									SourceType = " . $content['SourceType'] . ", 
+									ViewID = '" . $content['SourceViewID'] . "', 
+									LogLineType = '" . $content['SourceLogLineType'] . "', 
+									DiskFile = '" . $content['SourceDiskFile'] . "', 
+									userid = " . $content['userid'] . ", 
+									groupid = " . $content['groupid'] . "
+									WHERE ID = " . $content['SOURCEID'];
+				}
+				else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+				{
+					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
+									Name = '" . $content['Name'] . "', 
+									SourceType = " . $content['SourceType'] . ", 
+									ViewID = '" . $content['SourceViewID'] . "', 
+									DBTableType = '" . $content['SourceDBTableType'] . "', 
+									DBType = " . $content['SourceDBType'] . ", 
+									DBServer = '" . $content['SourceDBServer'] . "', 
+									DBName = '" . $content['SourceDBName'] . "', 
+									DBUser = '" . $content['SourceDBUser'] . "', 
+									DBPassword = '" . $content['SourceDBPassword'] . "', 
+									DBTableName = '" . $content['SourceDBTableName'] . "', 
+									DBEnableRowCounting = " . $content['SourceDBEnableRowCounting'] . ", 
+									userid = " . $content['userid'] . ", 
+									groupid = " . $content['groupid'] . "
+									WHERE ID = " . $content['SOURCEID'];
+				}
+
+				$result = DB_Query($sqlquery);
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENEDIT'], $content['DisplayName']) , "searches.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], $content['Name']) , "sources.php" );
 			}
 		}
 	}
@@ -460,6 +494,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		// NonNUMERIC are config files Sources, can not be editied
 		if ( is_numeric($mySource['ID']) )
 		{
+			// Allow EDIT
+			$mySource['ActionsAllowed'] = true;
+
 			if ( $mySource['userid'] != null )
 			{
 				$mySource['SourcesAssignedToImage']	= $content["MENU_ADMINUSERS"];
@@ -478,6 +515,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		}
 		else
 		{
+			// Disallow EDIT
+			$mySource['ActionsAllowed'] = false;
+
 			$mySource['SourcesAssignedToImage'] = $content["MENU_INTERNAL"];
 			$mySource['SourcesAssignedToText'] = $content["LN_GEN_CONFIGFILE"];
 		}

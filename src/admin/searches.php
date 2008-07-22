@@ -80,28 +80,6 @@ if ( isset($_GET['op']) )
 			$content['ISGROUPSAVAILABLE'] = true;
 		else
 			$content['ISGROUPSAVAILABLE'] = false;
-		
-		/*
-		$sqlquery = "SELECT " . 
-					DB_GROUPS . ".ID as mygroupid, " . 
-					DB_GROUPS . ".groupname " . 
-					"FROM " . DB_GROUPS . 
-					" ORDER BY " . DB_GROUPS . ".groupname";
-		$result = DB_Query($sqlquery);
-		$content['SUBGROUPS'] = DB_GetAllRows($result, true);
-		if ( isset($content['SUBGROUPS']) && count($content['SUBGROUPS']) > 0 )
-		{
-			// Process All Groups
-			for($i = 0; $i < count($content['SUBGROUPS']); $i++)
-				$content['SUBGROUPS'][$i]['group_selected'] = "";
-
-			// Enable Group Selection
-			$content['ISGROUPSAVAILABLE'] = true;
-			array_unshift( $content['SUBGROUPS'], array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
-		}
-		else
-			$content['ISGROUPSAVAILABLE'] = false;*/
-		// ---
 	}
 	else if ($_GET['op'] == "edit") 
 	{
@@ -150,34 +128,6 @@ if ( isset($_GET['op']) )
 				else
 					$content['ISGROUPSAVAILABLE'] = false;
 				// ---
-/*
-				// --- Check if groups are available
-				$sqlquery = "SELECT " . 
-							DB_GROUPS . ".ID as mygroupid, " . 
-							DB_GROUPS . ".groupname " . 
-							"FROM " . DB_GROUPS . 
-							" ORDER BY " . DB_GROUPS . ".groupname";
-				$result = DB_Query($sqlquery);
-				$content['SUBGROUPS'] = DB_GetAllRows($result, true);
-				if ( isset($content['SUBGROUPS']) && count($content['SUBGROUPS']) > 0 )
-				{
-					// Process All Groups
-					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
-					{
-						if ( $mysearch['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysearch['groupid'] )
-							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
-						else
-							$content['SUBGROUPS'][$i]['group_selected'] = "";
-					}
-
-					// Enable Group Selection
-					$content['ISGROUPSAVAILABLE'] = true;
-					array_unshift( $content['SUBGROUPS'], array ("mygroupid" => -1, "groupname" => $content['LN_SEARCH_SELGROUPENABLE'], "group_selected" => "") );
-				}
-				else
-					$content['ISGROUPSAVAILABLE'] = false;
-				// ---
-*/
 			}
 			else
 			{
