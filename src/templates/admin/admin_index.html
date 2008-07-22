@@ -12,7 +12,7 @@
 	<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" align="center">
 	<tr>
 		<td colspan="2" align="center" valign="top" class="title">
-		<strong>{LN_ADMIN_FRONTEND}</strong></td>
+		<strong>{LN_ADMIN_GLOBFRONTEND}</strong></td>
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu1" width="250" nowrap><b>{LN_GEN_WEBSTYLE}</b></td>
@@ -95,11 +95,16 @@
 		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DEBUGUSERLOGIN}</b></td>
 		<td align="right" class="line1" ><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked}></td>
 	</tr>
-
 	<tr>
 		<td align="center" colspan="2">
+			<!-- IF EditAllowed="true" -->
 			<input type="submit" value="{LN_ADMIN_SEND}">
 			<input type="hidden" name="op" value="edit">
+			<!-- ENDIF EditAllowed="true" -->
+			<!-- IF EditAllowed!="true" -->
+			<input type="submit" value="{LN_GEN_ACCESSDENIED}" disabled>
+			<!-- ENDIF EditAllowed!="true" -->
+			
 		</td>
 	</tr>
 	</table>

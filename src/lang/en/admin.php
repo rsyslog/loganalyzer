@@ -51,13 +51,14 @@ $content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
 
 
 // General Options
+$content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";
+$content['LN_ADMIN_USERFRONTEND'] = "User specific frontend options";
 $content['LN_ADMIN_MISC'] = "Miscellaneous Options";
 $content['LN_GEN_SHOWDEBUGMSG'] = "Show Debug messages";
 $content['LN_GEN_DEBUGGRIDCOUNTER'] = "Show Debug Gridcounter";
 $content['LN_GEN_SHOWPAGERENDERSTATS'] = "Show Pagerenderstats";
 $content['LN_GEN_ENABLEGZIP'] = "Enable GZIP Compressed Output";
 $content['LN_GEN_DEBUGUSERLOGIN'] = "Debug Userlogin";
-$content['LN_ADMIN_FRONTEND'] = "Frontend Options";
 $content['LN_GEN_WEBSTYLE'] = "Default selected style";
 $content['LN_GEN_SELLANGUAGE'] = "Default selected language";
 $content['LN_GEN_PREPENDTITLE'] = "Prepend this string in title";
@@ -73,7 +74,7 @@ $content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been succe
 $content['LN_GEN_INTERNAL'] = "Internal";
 $content['LN_GEN_DISABLED'] = "Function disabled";
 $content['LN_GEN_CONFIGFILE'] = "Configuration File";
-$content['LN_GEN_'] = "";
+$content['LN_GEN_ACCESSDENIED'] = "Access denied to this function";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

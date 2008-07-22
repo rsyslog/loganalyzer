@@ -55,15 +55,17 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // Init admin langauge file now!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 
-// --- Define Extra Stylesheet!
-//$content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
-//$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
-// --- 
-
 // --- BEGIN Custom Code
 
-// Check for changes first
-if ( isset($_POST['op']) )
+if ( isset($_SESSION['SESSION_ISADMIN']) && $_SESSION['SESSION_ISADMIN'] == 1 ) 
+	$content['EditAllowed'] = true;
+else	
+	$content['EditAllowed'] = false;
+
+
+
+// Check for changes first | Abort if Edit is not allowed
+if ( isset($_POST['op']) && $content['EditAllowed'] )
 {
 	if ( $_POST['op'] == "edit" )
 	{
@@ -135,8 +137,6 @@ if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCoun
 if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
 if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
 if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
-
-
 // --- 
 
 // --- BEGIN CREATE TITLE
