@@ -662,7 +662,7 @@ function CheckUrlOrIP($ip)
 function DieWithErrorMsg( $szerrmsg )
 {
 	global $content;
-	print("<html><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
+	print("<html><title>phpLogCon :: Critical Error occured</title><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
 	print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
 	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
 	print("</td></tr></table>");

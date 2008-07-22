@@ -101,7 +101,7 @@ else
 // --- 
 
 // --- Set Title
-GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
+$content['TITLE'] = GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
 // --- 
 
 // --- Start Setup Processing

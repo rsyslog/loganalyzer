@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{TITLE}</title>
+	<link rel="stylesheet" href="css/defaults.css" type="text/css">
+	<link rel="stylesheet" href="themes/{user_theme}/main.css" type="text/css">
+	<script type='text/javascript' src='{BASEPATH}js/common.js'></script>
+</head>
+<body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="mainheader">
+<tr> 
+	<td rowspan="4" width="500" align="left" valign="top"><a href="index.php"><img src="{BASEPATH}images/main/Header-Logo.png" width="500" height="79" name="HeaderLogo"></a></td>
+	<td width="100%" align="center" valign="top" height="20">&nbsp;</td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_with_border">
+<tr> 
+	<td>
+	<table border="0" cellspacing="1" cellpadding="10" align="center" width="100%">
+	<tr>
+		<td>
+
+		<br><br>
+
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="title">
+				<h1 align="center">Converting phpLogCon configuration settings - Step {CONVERT_STEP}</h1>
+			</td>
+		</tr>
+		</table>
+
+		<!-- IF iserror="true" -->
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line2" align="center">
+				<br>
+				<h3><font color="red">ERROR: {errormsg}</font></h3>
+				<br>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF iserror="true" -->
+		
+		<form action="?step={CONVERT_NEXT_STEP}" method="post" id="sourcesform">
+
+		<!-- IF CONVERT_STEP="1" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+
+			<h1>Step 1 - Informations</h1>
+			<p>This script allows you to import your existing configuration from the <b>config.php</b> file. This includes frontend settings, data sources, custom views and custom searches. Do only perform this conversion if you did install phpLogCon without the UserDB System, and decided to enable it now. 
+			<br><br>
+
+			<b>ANY EXISTING INSTANCE OF A USERDB WILL BE OVERWRITTEN!</b>
+
+			<br><br>
+			<input type="submit" value="Click here"> to start the first conversion step!</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="1" -->
+
+		<!-- IF CONVERT_STEP="2" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>Step 2 - Create Tables</h1>
+			<p>If you reached this step, the database connection has been successfully verified! <br><br>
+			The next step will be to create the necessary database tables used by the phpLogCon User System. This might take a while! <br>
+			<b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>! Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database. 
+			<br><br>
+			<b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>
+
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="2" -->
+
+		<!-- IF INSTALL_STEP="3" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>Step 3 - Check SQL Results</h1>
+			<p>Tables have been created. Check the List below for possible Error's<br><br>
+			<ul>
+			<li>Successfully executed statements: <B>{sql_sucess}</B><br>
+			<li>Failed statements: <B>{sql_failed}</B> <br>
+			</ul>
+			<!-- IF sql_failed="0" -->
+				You can now proceed to the <B>next</B> step adding the first phpLogCon Admin User!
+				<p>&nbsp;</p>
+			<!-- ENDIF sql_failed="0" -->
+			<!-- IF sql_failed!="0" -->
+				<table width="700" class="with_border_alternate" cellpadding="2" cellspacing="1" border="0" align="center">
+				<tr>
+					<td colspan="2" nowrap class="cellmenu1" align="center"><B>At least one statement failed,see error reasons below</B></td>
+				</tr>
+				<tr>
+					<td width="400" class="cellmenu1">Error Message</td>
+					<td width="300" class="cellmenu1" align="center"><B>SQL Statement</B></td>
+				</tr>
+				<!-- BEGIN failedstatements -->
+				<tr>
+					<td class="line0">{myerrmsg}</td>
+					<td class="line0" align="center">{mystatement}</td>
+				</tr>
+				<!-- END failedstatements -->
+				</table>
+				<p>&nbsp;</p>
+			<!-- ENDIF sql_failed!="0" -->
+
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF INSTALL_STEP="3" -->
+
+		<!-- IF INSTALL_STEP="4" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>Step 4 - Creating the Main Useraccount</h1>
+			<p>You are now about to create the initial phpLogCon User Account. <br>
+			This will be the first administrative user, which will be needed to login into phpLogCon and access the Admin Center!
+			<br><br>
+
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>Create User Account</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>Username</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="username" size="40" maxlength="255" value="{MAIN_Username}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>Password</b></td>
+					<td align="right" class="line1" width="100%"><input type="password" name="password1" size="40" maxlength="255" value="{MAIN_Password1}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>Repeat Password</b></td>
+					<td align="right" class="line2" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
+				</tr>
+				</table>
+
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF INSTALL_STEP="4" -->
+
+		<!-- IF INSTALL_STEP="5" -->
+
+		<!-- IF createduser="true" -->
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line2" align="center">
+				<br>
+				<h3><font color="red">Successfully created User '{MAIN_Username}'.</font></h3>
+				<br>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF createduser="true" -->
+
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>Step 5 - Create the first source for syslog messages</h1>
+			<p>&nbsp;</p>
+
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_FIRSTSYSLOGSOURCE}</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_NAMEOFTHESOURCE}</b></td>
+					<td align="right" class="line0" width="100%"><input type="text" name="SourceName" size="40" maxlength="255" value="{SourceName}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SOURCETYPE}</b></td>
+					<td align="right" class="line1" width="100%">
+						<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
+							<!-- BEGIN SOURCETYPES -->
+							<option {selected} value="{type}">{DisplayName}</option>
+							<!-- END SOURCETYPES -->
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
+					<td align="right" class="line1" width="100%">
+						<select id="SourceViewID" name="SourceViewID" size="1">
+							<!-- BEGIN Views -->
+							<option {selected} value="{ID}">{DisplayName}</option>
+							<!-- END Views -->
+						</select>
+					</td>
+				</tr>
+				</table>
+
+				<div id="HiddenDiskTypeOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" align="center" class="with_border">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DISKTYPEOPTIONS}</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
+					<td align="right" class="line0" width="100%">
+						<select name="SourceLogLineType" size="1">
+							<!-- BEGIN LOGLINETYPES -->
+							<option {selected} value="{type}">{DisplayName}</option>
+							<!-- END LOGLINETYPES -->
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SYSLOGFILE}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="SourceDiskFile" size="60" maxlength="255" value="{SourceDiskFile}"></td>
+				</tr>
+				</table>
+				</div>
+
+				<div id="HiddenDatabaseTypeOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
+				</table>
+
+				<div id="HiddenDBTYpesOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
+					<td align="right" class="line1" width="100%">
+						<select name="SourceDBType" size="1">
+							<!-- BEGIN DBTYPES -->
+							<option {selected} value="{type}">{DisplayName}</option>
+							<!-- END DBTYPES -->
+						</select>
+					</td>
+				</tr>
+				</table>
+				</div>
+
+				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
+					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
+					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLENAME}</b></td>
+					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
+					<td align="right" class="line0" width="100%"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
+					<td align="right" class="line1" width="100%">
+						<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
+					</td>
+				</tr>
+				</table>
+				</div>
+
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+
+		<script language="javascript">
+			// Manually perform initial Javascript Calls
+			toggleSourceTypeVisibility('SourceType');
+		</script>
+		<!-- ENDIF INSTALL_STEP="5" -->
+
+		<!-- IF INSTALL_STEP="6" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>Step 8 - Done</h1>
+			<p>Congratulations! You have successfully installed phpLogCon :D!<br><br>
+			To finish the Installation, remove the file install.php from the main directory!<br><br>
+
+			Click <a href="index.php">here</a> to go to your installation.
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF INSTALL_STEP="6" -->
+
+
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="cellmenu1" width="50%">
+			</td>
+			<td class="line0" width="150" align="center" nowrap><B>Conversion Progress: </B></td>
+			<td class="line0" width="300" nowrap>
+				<table width="100%" bgcolor="#007700" cellpadding="0" cellspacing="0" border="0" align="center">
+				<tr>
+					<td width="100%" align="left" nowrap><img src="{BarImageLeft}" width="8" height="17"><img src="{BarImagePlus}" width="{WidthPlus}%" height="17" title="{WidthPlusText}"><img src="{BarImageRight}" width="9" height="17"></td>
+				</tr>
+				</table>
+			</td>
+			<td class="line1" width="75" nowrap align="center">
+				<!-- IF NEXT_ENABLED="true" -->
+				<input type="submit" value="Next">
+				<!-- ENDIF NEXT_ENABLED="true" -->
+				<!-- IF RECHECK_ENABLED="true" -->
+				<a href="?step={CONVERT_STEP}">ReCheck</a>
+				<!-- ENDIF RECHECK_ENABLED="true" -->
+				<!-- IF FINISH_ENABLED="true" -->
+				<a href="index.php">Finish!</a>
+				<!-- ENDIF FINISH_ENABLED="true" -->
+			</td>
+			<td class="cellmenu1" width="50%">
+			</td>
+		</tr>
+		</table>
+
+		</form>
+
+		</td>
+	</tr>
+	</table>
+<!-- INCLUDE include_footer.html -->

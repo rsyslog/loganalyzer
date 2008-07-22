@@ -59,7 +59,6 @@ $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_SELECTVIEW'] = "Select View";
 	$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
 	
-
 // Topmenu Entries
 	$content['LN_MENU_SEARCH'] = "Search";
 	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
@@ -175,6 +174,11 @@ $content['LN_LOGIN_PASSWORD'] = "Password";
 $content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
 $content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
 $content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
+
+// Converter Site
+$content['LN_CONVERT_TITLE'] = "Configuration Converter Step %1";
+$content['LN_CONVERT_NOTALLOWED'] = "Login";
+
 
 
 ?>
