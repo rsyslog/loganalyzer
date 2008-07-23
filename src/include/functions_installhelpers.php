@@ -79,6 +79,141 @@ function ForwardOneStep()
 	exit;
 }
 
+function ConvertGeneralSettings()
+{
+	global $content; 
+
+	// Only call the same function as in admin index!
+	SaveGeneralSettingsIntoDB();
+}
+
+function ConvertCustomSearches()
+{
+	global $CFG, $content;
+	
+	// Insert all searches into the DB!
+	foreach($CFG['Search'] as $searchid => &$mySearch)
+	{
+		// New Entry
+		$result = DB_Query("INSERT INTO  " . DB_SEARCHES . " (DisplayName, SearchQuery) VALUES ( '" . PrepareValueForDB($mySearch['DisplayName']) . "', '" . PrepareValueForDB($mySearch['SearchQuery']) . "')");
+		$mySearch['DBID'] = DB_ReturnLastInsertID($result);
+		DB_FreeQuery($result);
+
+	}
+}
+
+function ConvertCustomViews()
+{
+	global $CFG, $content;
+	
+	// Insert all searches into the DB!
+	foreach($CFG['Views'] as $viewid => &$myView)
+	{
+		if ( is_numeric($viewid) || $viewid == "LEGACY" )
+		{
+			// Create Columns String
+			foreach ($myView['Columns'] as $myCol )
+			{
+				if ( isset($myView['ColumnsAsString']) ) 
+					$myView['ColumnsAsString'] .= ", " . $myCol;
+				else
+					$myView['ColumnsAsString'] = $myCol;
+			}
+
+			// New Entry
+			$result = DB_Query("INSERT INTO  " . DB_VIEWS . " (DisplayName, Columns) VALUES ( '" . PrepareValueForDB($myView['DisplayName']) . "', '" . PrepareValueForDB($myView['ColumnsAsString']) . "')");
+			$myView['DBID'] = DB_ReturnLastInsertID($result);
+			DB_FreeQuery($result);
+		}
+	}
+
+	// --- Check and set DefaultViewID!
+	if ( 
+			(isset($content['DefaultViewsID']) && strlen($content['DefaultViewsID']) > 0) 
+				&&
+			(isset($CFG['Views'][$content['DefaultViewsID']]['DBID']))
+		)
+	{
+		// Copy the new DefaultViewID back!
+		$content['DefaultViewsID'] = $CFG['Views'][$content['DefaultViewsID']]['DBID'];
+		$CFG['DefaultViewsID'] = $content['DefaultViewsID'];
+	}
+	// ---
+}
+
+function ConvertCustomSources()
+{
+	global $CFG, $content;
+	
+	// Insert all searches into the DB!
+	foreach($CFG['Sources'] as $sourceid => &$mySource)
+	{
+		// Correct VIEWID!
+		if ( isset($mySource['ViewID']) )
+		{
+			if ( isset($CFG['Views'][$mySource['ViewID']]['DBID']) )
+				$mySource['ViewID'] = $CFG['Views'][$mySource['ViewID']]['DBID'];
+		} 
+		else
+			$mySource['ViewID'] = ""; // Set empty default
+
+		// Add New Entry
+		if ( $mySource['SourceType'] == SOURCE_DISK ) 
+		{
+			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, SourceType, ViewID, LogLineType, DiskFile) VALUES ( " . 
+				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
+				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
+				"'" . PrepareValueForDB($mySource['ViewID']) . "', " . 
+				"'" . PrepareValueForDB($mySource['LogLineType']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DiskFile']) . "'" . 
+				")");
+		}
+		else if ( $mySource['SourceType'] == SOURCE_DB || $mySource['SourceType'] == SOURCE_PDO ) 
+		{
+			// Set Default for number fields
+			if ( !isset($mySource['DBEnableRowCounting']) ) 
+				$mySource['DBEnableRowCounting'] = 0;
+			else // Force to number
+				$mySource['DBEnableRowCounting'] = intval($mySource['DBEnableRowCounting']);
+			if ( !isset($mySource['DBType']) ) 
+				$mySource['DBType'] = DB_MYSQL;
+
+			// Perform the insert
+			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, SourceType, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
+				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
+				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
+				"'" . PrepareValueForDB($mySource['ViewID']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBTableType']) . "', " . 
+				" " . PrepareValueForDB($mySource['DBType']) . " , " . 
+				"'" . PrepareValueForDB($mySource['DBServer']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBName']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBUser']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBPassword']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBTableName']) . "', " . 
+				" " . PrepareValueForDB($mySource['DBEnableRowCounting']) . " " . 
+				")");
+		}
+		else
+			DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_CONVERT_ERROR_SOURCEIMPORT'], $mySource['SourceType']) );
+		
+		// Copy DBID!
+		$mySource['DBID'] = DB_ReturnLastInsertID($result);
+		DB_FreeQuery($result);
+	}
+
+	// --- Check and set DefaultSourceID!
+	if ( 
+			(isset($content['DefaultSourceID']) && strlen($content['DefaultSourceID']) > 0) 
+				&&
+			(isset($CFG['Sources'][$content['DefaultSourceID']]['DBID']))
+		)
+	{
+		// Copy the new DefaultSourceID back!
+		$content['DefaultSourceID'] = $CFG['Sources'][$content['DefaultSourceID']]['DBID'];
+		$CFG['DefaultSourceID'] = $content['DefaultSourceID'];
+	}
+	// ---
+}
 // --- 
 
 ?>

@@ -483,61 +483,70 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 function InitConfigurationValues()
 {
 	global $content, $CFG, $LANG, $gl_root_path;
-
-	// If Database is enabled, try to read from database!
-	if ( $CFG['UserDBEnabled'] )
+	
+	// To avoid this code in case of conversion
+	if ( !defined('IN_PHPLOGCON_CONVERT') )
 	{
-		// Get configuration variables 
-		$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
-		$rows = DB_GetAllRows($result, true, true);
-
-		// Read results from DB and overwrite in $CFG Array!
-		if ( isset($rows ) )
+		// If Database is enabled, try to read from database!
+		if ( $CFG['UserDBEnabled'] )
 		{
-			for($i = 0; $i < count($rows); $i++)
+			// Get configuration variables 
+			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
+			
+			if ( $result )
 			{
-				$CFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
-				$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+				$rows = DB_GetAllRows($result, true, true);
+				// Read results from DB and overwrite in $CFG Array!
+				if ( isset($rows ) )
+				{
+					for($i = 0; $i < count($rows); $i++)
+					{
+						$CFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+						$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+					}
+				}
+			}
+			else // Critical ERROR HERE!
+				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
+
+			// Now we init the user session stuff
+			InitUserSession();
+			
+			// Check if user needs to be logged in
+			if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+			{
+				if ( !$content['SESSION_LOGGEDIN'] ) 
+				{
+					// User needs to be logged in, redirect to login page
+					if ( !defined("IS_NOLOGINPAGE") )
+						RedirectToUserLogin();
+				}
+			}
+			else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
+				DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
+
+			// Load Configured Searches 
+			LoadSearchesFromDatabase();
+
+			// Load Configured Views
+			LoadViewsFromDatabase();
+
+			// Load Configured Sources
+			LoadSourcesFromDatabase();
+
+			
+			// Database Version Checker! 
+			if ( $content['database_internalversion'] > $content['database_installedversion'] )
+			{	
+				// Database is out of date, we need to upgrade
+				$content['database_forcedatabaseupdate'] = "yes"; 
 			}
 		}
-
-		// Now we init the user session stuff
-		InitUserSession();
-		
-		// Check if user needs to be logged in
-		if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+		else
 		{
-			if ( !$content['SESSION_LOGGEDIN'] ) 
-			{
-				// User needs to be logged in, redirect to login page
-				if ( !defined("IS_NOLOGINPAGE") )
-					RedirectToUserLogin();
-			}
+			if ( defined('IS_ADMINPAGE') || defined("IS_NOLOGINPAGE") )	// Language System not initialized yet
+				DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
 		}
-		else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
-			DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
-
-		// Load Configured Searches 
-		LoadSearchesFromDatabase();
-
-		// Load Configured Views
-		LoadViewsFromDatabase();
-
-		// Load Configured Sources
-		LoadSourcesFromDatabase();
-
-		
-		// Database Version Checker! 
-		if ( $content['database_internalversion'] > $content['database_installedversion'] )
-		{	
-			// Database is out of date, we need to upgrade
-			$content['database_forcedatabaseupdate'] = "yes"; 
-		}
-	}
-	else
-	{
-		if ( defined('IS_ADMINPAGE') || defined("IS_NOLOGINPAGE") )	// Language System not initialized yet
-			DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
 	}
 
 	// --- Language Handling
@@ -661,7 +670,7 @@ function CheckUrlOrIP($ip)
 
 function DieWithErrorMsg( $szerrmsg )
 {
-	global $content;
+	global $gl_root_path, $content;
 	print("<html><title>phpLogCon :: Critical Error occured</title><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
 	print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
 	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
@@ -1000,5 +1009,31 @@ function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 	exit;
 }
 
+function SaveGeneralSettingsIntoDB()
+{
+	WriteConfigValue( "ViewDefaultLanguage", true );
+	WriteConfigValue( "ViewDefaultTheme", true );
+
+	WriteConfigValue( "ViewUseTodayYesterday", true );
+	WriteConfigValue( "ViewEnableDetailPopups", true );
+	WriteConfigValue( "EnableIPAddressResolve", true );
+	WriteConfigValue( "MiscShowDebugMsg", true );
+	WriteConfigValue( "MiscShowDebugGridCounter", true );
+	WriteConfigValue( "MiscShowPageRenderStats", true );
+	WriteConfigValue( "MiscEnableGzipCompression", true );
+	WriteConfigValue( "DebugUserLogin", true );
+
+	WriteConfigValue( "ViewMessageCharacterLimit", true );
+	WriteConfigValue( "ViewEntriesPerPage", true );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
+
+	WriteConfigValue( "PrependTitle", true );
+	WriteConfigValue( "SearchCustomButtonCaption", true );
+	WriteConfigValue( "SearchCustomButtonSearch", true );
+	
+	// Extra Fields
+	WriteConfigValue( "DefaultViewsID", true );
+	WriteConfigValue( "DefaultSourceID", true );
+}
 
 ?>

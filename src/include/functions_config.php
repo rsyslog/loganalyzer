@@ -83,13 +83,12 @@ function InitSourceConfigs()
 				}
 				else
 				{
-					if ( isset($mysource['ViewID']) )
+					if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 )
 						// Set to configured Source ViewID
 						$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
 					else
 						// Not configured, maybe old legacy cfg. Set default view.
 						$content['Sources'][$iSourceID]['ViewID'] = strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
-
 				}
 
 				// Only for the display box

@@ -53,6 +53,10 @@ function DB_Connect()
 {
 	global $userdbconn, $CFG;
 
+	// Avoid if already OPEN
+	if ($userdbconn) 
+		return;
+
 	//TODO: Check variables first
 	$userdbconn = mysql_connect($CFG['UserDBServer'],$CFG['UserDBUser'],$CFG['UserDBPass']);
 	if (!$userdbconn) 
@@ -225,16 +229,35 @@ function DB_PrintError($MyErrorMsg, $DieOrNot)
 
 function DB_RemoveParserSpecialBadChars($myString)
 {
-// DO NOT REPLACD!	$returnstr = str_replace("\\","\\\\",$myString);
+// DO NOT REPLACE!	$returnstr = str_replace("\\","\\\\",$myString);
 	$returnstr = str_replace("'","\\'",$myString);
 	return $returnstr;
 }
 
 function DB_RemoveBadChars($myString)
 {
+	// Replace with internal PHP Functions!
+	if ( !get_magic_quotes_runtime() )
+		return addslashes($myString);
+	else
+		return $myString;
+/*
 	$returnstr = str_replace("\\","\\\\",$myString);
 	$returnstr = str_replace("'","\\'",$returnstr);
 	return $returnstr;
+*/
+}
+
+function DB_ReturnLastInsertID($myResult = false)
+{
+	// --- Abort in this case!
+	global $CFG;
+	if ( $CFG['UserDBEnabled'] == false ) 
+		return;
+	// ---
+
+	global $userdbconn;
+	return mysql_insert_id($userdbconn);
 }
 
 function DB_GetRowCount($query)
@@ -279,7 +302,16 @@ function DB_Exec($query)
 		return false; 
 } 
 
-function WriteConfigValue($szValue, $is_global = true, $userid = false, $groupid = false)
+function PrepareValueForDB($szValue)
+{
+	// Copy value for DB and check for BadDB Chars!
+	if ( preg_match("/(?<!\\\\)\'/e", $szValue) )
+		return DB_RemoveBadChars($szValue);
+	else
+		return $szValue;
+}
+
+function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false)
 {
 	// --- Abort in this case!
 	global $CFG, $content;
@@ -287,23 +319,36 @@ function WriteConfigValue($szValue, $is_global = true, $userid = false, $groupid
 		return;
 	// ---
 
-	// TODO HANDLE USER AND GROUP FIELDS!
+	// !!! TODO HANDLE USER AND GROUP FIELDS!
+		
+	if ( isset($content[$szPropName]) )
+	{
+		// Copy value for DB and check for BadDB Chars!
+		$szDbValue = PrepareValueForDB( $content[$szPropName] );
+	}
+	else
+	{
+		// Set empty in this case
+		$szDbValue = "";
+		$content[$szPropName] = "";
+	}
 
-	// Also copy to $CFG array
-	$CFG[$szValue] = $content[$szValue];
-
-	$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szValue . "' AND is_global = " . $is_global);
+	// Copy to $CFG array as well
+	$CFG[$szPropName] = $content[$szPropName];
+	
+	// Check if we need to INSERT or UPDATE
+	$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 	$rows = DB_GetAllRows($result, true);
 	if ( !isset($rows) )
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szValue . "', '" . $CFG[$szValue] . "', " . $is_global . ")");
+		$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
 		DB_FreeQuery($result);
 	}
 	else
 	{
 		// Update Entry
-		$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $CFG[$szValue] . "' WHERE propname = '" . $szValue . "' AND is_global = " . $is_global);
+		$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 		DB_FreeQuery($result);
 	}
 } 

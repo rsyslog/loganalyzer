@@ -398,8 +398,8 @@ else if ( $content['INSTALL_STEP'] == 5 )
 			$content['sql_failed']++;
 		}
 
-		// Append INSERT Statement for Config Table to set the GameVersion and Database Version ^^!
-		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '1', 1)";
+		// Append INSERT Statement for Config Table to set the Database Version ^^!
+		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!

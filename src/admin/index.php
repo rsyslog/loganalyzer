@@ -101,25 +101,7 @@ if ( isset($_POST['op']) && $content['EditAllowed'] )
 		if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = DB_RemoveBadChars($_POST['SearchCustomButtonSearch']); }
 
 		// Save configuration variables now
-		WriteConfigValue( "ViewDefaultLanguage", true );
-		WriteConfigValue( "ViewDefaultTheme", true );
-
-		WriteConfigValue( "ViewUseTodayYesterday", true );
-		WriteConfigValue( "ViewEnableDetailPopups", true );
-		WriteConfigValue( "EnableIPAddressResolve", true );
-		WriteConfigValue( "MiscShowDebugMsg", true );
-		WriteConfigValue( "MiscShowDebugGridCounter", true );
-		WriteConfigValue( "MiscShowPageRenderStats", true );
-		WriteConfigValue( "MiscEnableGzipCompression", true );
-		WriteConfigValue( "DebugUserLogin", true );
-
-		WriteConfigValue( "ViewMessageCharacterLimit", true );
-		WriteConfigValue( "ViewEntriesPerPage", true );
-		WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
-
-		WriteConfigValue( "PrependTitle", true );
-		WriteConfigValue( "SearchCustomButtonCaption", true );
-		WriteConfigValue( "SearchCustomButtonSearch", true );
+		SaveGeneralSettingsIntoDB();
 
 		// Do a redirect
 		RedirectResult( $content['LN_GEN_SUCCESSFULLYSAVED'], "index.php" );

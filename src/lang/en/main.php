@@ -244,7 +244,7 @@ $content['LN_CONVERT_STEP5_TEXT'] = '<input type="submit" value="Click here"> to
 $content['LN_CONVERT_STEP6'] = "Step 8 - Done";
 $content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
 $content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
-$content['LN_CONVERT_'] = "";
+$content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
 $content['LN_CONVERT_'] = "";
 $content['LN_CONVERT_'] = "";
 $content['LN_CONVERT_'] = "";

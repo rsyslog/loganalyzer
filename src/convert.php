@@ -34,6 +34,7 @@
 
 // *** Default includes	and procedures *** //
 define('IN_PHPLOGCON', true);
+define('IN_PHPLOGCON_CONVERT', true);		// Extra for CONVERT Script!
 define('STEPSCRIPTNAME', "convert.php");	// Helper variable for the STEP helper functions
 $gl_root_path = './';
 
@@ -114,12 +115,12 @@ if ( $content['CONVERT_STEP'] == 2 )
 	// Check the database connect
 	$link_id = mysql_connect( $CFG['UserDBServer'], $CFG['UserDBUser'], $CFG['UserDBPass']);
 	if (!$link_id) 
-		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $CFG['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
+		RevertOneStep( $content['CONVERT_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $CFG['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
 	
 	// Try to select the DB!
 	$db_selected = mysql_select_db($CFG['UserDBName'], $link_id);
 	if(!$db_selected) 
-		RevertOneStep( $content['INSTALL_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $CFG['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
+		RevertOneStep( $content['CONVERT_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $CFG['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
 
 	
 }
@@ -129,78 +130,140 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	$content['sql_sucess'] = 0;
 	$content['sql_failed'] = 0;
 
-	// Import default database if user db is enabled!
-	if ( $_SESSION['UserDBEnabled'] == 1 )
+	// Init $totaldbdefs
+	$totaldbdefs = "";
+
+	// Read the table GLOBAL definitions 
+	ImportDataFile( $content['BASEPATH'] . "include/db_template.txt" );
+
+	// Process definitions ^^
+	if ( strlen($totaldbdefs) <= 0 )
 	{
-		// Init $totaldbdefs
-		$totaldbdefs = "";
+		$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINVALIDDBFILE'], $content['BASEPATH'] . "include/db_template.txt");
+		$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
+		$content['sql_failed']++;
+	}
 
-		// Read the table GLOBAL definitions 
-		ImportDataFile( $content['BASEPATH'] . "include/db_template.txt" );
-
-		// Process definitions ^^
-		if ( strlen($totaldbdefs) <= 0 )
-		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINVALIDDBFILE'], $content['BASEPATH'] . "include/db_template.txt");
-			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
-			$content['sql_failed']++;
-		}
-
-		// Replace stats_ with the custom one ;)
-		$totaldbdefs = str_replace( "`logcon_", "`" . $_SESSION["UserDBPref"], $totaldbdefs );
-		
-		// Now split by sql command
-		$mycommands = split( ";\n", $totaldbdefs );
-		
+	// Replace stats_ with the custom one ;)
+	$totaldbdefs = str_replace( "`logcon_", "`" . $CFG["UserDBPref"], $totaldbdefs );
+	
+	// Now split by sql command
+	$mycommands = split( ";\n", $totaldbdefs );
+	
 //		// check for different linefeed
 //		if ( count($mycommands) <= 1 )
 //			$mycommands = split( ";\n", $totaldbdefs );
 
-		//Still only one? Abort
-		if ( count($mycommands) <= 1 )
+	//Still only one? Abort
+	if ( count($mycommands) <= 1 )
+	{
+		$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt"); 
+		$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
+		$content['sql_failed']++;
+	}
+
+	// Append INSERT Statement for Config Table to set the Database Version ^^!
+	$mycommands[count($mycommands)] = "INSERT INTO `" . $CFG["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
+
+	// --- Now execute all commands
+	ini_set('error_reporting', E_WARNING); // Enable Warnings!
+
+	// Establish DB Connection
+	DB_Connect();
+
+	for($i = 0; $i < count($mycommands); $i++)
+	{
+		if ( strlen(trim($mycommands[$i])) > 1 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt"); 
-			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
-			$content['sql_failed']++;
-		}
-
-		// Append INSERT Statement for Config Table to set the GameVersion and Database Version ^^!
-		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '1', 1)";
-
-		// --- Now execute all commands
-		ini_set('error_reporting', E_WARNING); // Enable Warnings!
-		InitUserDbSettings();
-
-		// Establish DB Connection
-		DB_Connect();
-
-		for($i = 0; $i < count($mycommands); $i++)
-		{
-			if ( strlen(trim($mycommands[$i])) > 1 )
+			$result = DB_Query( $mycommands[$i], false );
+			if ($result == FALSE)
 			{
-				$result = DB_Query( $mycommands[$i], false );
-				if ($result == FALSE)
-				{
-					$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = DB_ReturnSimpleErrorMsg();
-					$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = $mycommands[$i];
+				$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = DB_ReturnSimpleErrorMsg();
+				$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = $mycommands[$i];
 
-					// --- Set CSS Class
-					if ( $content['sql_failed'] % 2 == 0 )
-						$content['failedstatements'][ $content['sql_failed'] ]['cssclass'] = "line1";
-					else
-						$content['failedstatements'][ $content['sql_failed'] ]['cssclass'] = "line2";
-					// --- 
-
-					$content['sql_failed']++;
-				}
+				// --- Set CSS Class
+				if ( $content['sql_failed'] % 2 == 0 )
+					$content['failedstatements'][ $content['sql_failed'] ]['cssclass'] = "line1";
 				else
-					$content['sql_sucess']++;
+					$content['failedstatements'][ $content['sql_failed'] ]['cssclass'] = "line2";
+				// --- 
 
-				// Free result
-				DB_FreeQuery($result);
+				$content['sql_failed']++;
 			}
+			else
+				$content['sql_sucess']++;
+
+			// Free result
+			DB_FreeQuery($result);
 		}
 	}
+}
+else if ( $content['CONVERT_STEP'] == 4 )
+{
+	if ( isset($_SESSION['MAIN_Username']) )
+		$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
+	else
+		$content['MAIN_Username'] = "";
+
+	$content['MAIN_Password1'] = "";
+	$content['MAIN_Password2'] = "";
+
+	// Check for Error Msg
+	if ( isset($_GET['errormsg']) )
+	{
+		$content['iserror'] = "true";
+		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+	}
+}
+else if ( $content['CONVERT_STEP'] == 5 )
+{
+	// Verify Username and Password Input
+	if ( isset($_POST['username']) )
+		$_SESSION['MAIN_Username'] = DB_RemoveBadChars($_POST['username']);
+	else
+		RevertOneStep( $content['CONVERT_STEP']-1, $content['LN_INSTALL_MISSINGUSERNAME'] );
+
+	if ( isset($_POST['password1']) )
+		$_SESSION['MAIN_Password1'] = DB_RemoveBadChars($_POST['password1']);
+	else
+		$_SESSION['MAIN_Password1'] = "";
+
+	if ( isset($_POST['password2']) )
+		$_SESSION['MAIN_Password2'] = DB_RemoveBadChars($_POST['password2']);
+	else
+		$_SESSION['MAIN_Password2'] = "";
+
+	if (	
+			strlen($_SESSION['MAIN_Password1']) < 4 ||
+			$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
+		)
+		RevertOneStep( $content['CONVERT_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
+
+	// --- Now execute all commands
+	ini_set('error_reporting', E_WARNING); // Enable Warnings!
+
+	// Establish DB Connection
+	DB_Connect();
+
+	// Everything is fine, lets go create the User!
+	CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 1 );
+	
+	// Show User success!
+	$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
+	$content['createduser'] = true;
+}
+else if ( $content['CONVERT_STEP'] == 6 )
+{
+	// To be on the save side, establish DB Connection
+	DB_Connect();
+
+	// Perform conversion of settings into the database now!
+	ConvertCustomSearches();
+	ConvertCustomViews();
+	ConvertCustomSources();
+	
+	// Import General Settings in the last step!
+	ConvertGeneralSettings();
 }
 // --- 
 
