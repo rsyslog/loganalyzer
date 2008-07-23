@@ -305,7 +305,7 @@ function DB_Exec($query)
 function PrepareValueForDB($szValue)
 {
 	// Copy value for DB and check for BadDB Chars!
-	if ( preg_match("/(?<!\\\\)\'/e", $szValue) )
+	if ( preg_match("/(?<!\\\\)\'|(?<!\\\\)\\\\/e", $szValue) )
 		return DB_RemoveBadChars($szValue);
 	else
 		return $szValue;

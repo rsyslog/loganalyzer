@@ -512,18 +512,22 @@ function InitConfigurationValues()
 			// Now we init the user session stuff
 			InitUserSession();
 			
-			// Check if user needs to be logged in
-			if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+			if ( !$content['SESSION_LOGGEDIN'] ) 
 			{
-				if ( !$content['SESSION_LOGGEDIN'] ) 
+
+				// Check if user needs to be logged in
+				if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
 				{
-					// User needs to be logged in, redirect to login page
-					if ( !defined("IS_NOLOGINPAGE") )
-						RedirectToUserLogin();
+						// User needs to be logged in, redirect to login page
+						if ( !defined("IS_NOLOGINPAGE") )
+							RedirectToUserLogin();
+				}
+				else if ( defined('IS_ADMINPAGE') )
+				{
+					// Language System not initialized yet
+					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
 				}
 			}
-			else if ( defined('IS_ADMINPAGE') )							// Language System not initialized yet
-				DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
 
 			// Load Configured Searches 
 			LoadSearchesFromDatabase();

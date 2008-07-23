@@ -176,7 +176,7 @@ $content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
 $content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
 
 // Install Site
-$content['LN_INSTALL_TITLETOP'] = "Installing phpLogCon Version %1 - Step %1";
+$content['LN_INSTALL_TITLETOP'] = "Installing phpLogCon Version %1 - Step %2";
 $content['LN_INSTALL_TITLE'] = "Installer Step %1";
 $content['LN_INSTALL_ERRORINSTALLED'] = 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.';
 $content['LN_INSTALL_FILEORDIRNOTWRITEABLE'] = "At least one file or directory (or more) is not writeable, please check the file permissions (chmod 666)!";

@@ -89,10 +89,7 @@ else
 }
 // --- 
 
-
-
 // --- BEGIN Custom Code
-
 // --- Set Bar Image
 	$content['BarImagePlus'] = $gl_root_path . "images/bars/bar-middle/green_middle_17.png";
 	$content['BarImageLeft'] = $gl_root_path . "images/bars/bar-middle/green_left_17.png";
@@ -224,8 +221,6 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['UserDBLoginRequired_true'] = "";
 		$content['UserDBLoginRequired_false'] = "checked";
 	}
-
-	
 	// ---
 
 	// --- Read and predefine Frontend options
@@ -551,6 +546,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 }
 else if ( $content['INSTALL_STEP'] == 8 )
 {
+	// --- Write Config File!
 	// Read vars
 	if ( isset($_POST['SourceType']) )
 		$_SESSION['SourceType'] = DB_RemoveBadChars($_POST['SourceType']);
@@ -628,8 +624,6 @@ else if ( $content['INSTALL_STEP'] == 8 )
 			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
 				$_SESSION['SourceDBEnableRowCounting'] = "false";
 		}
-
-		// TODO: Check database connectivity!
 	}
 
 	// If we reached this point, we have gathered all necessary information to create our configuration file ;)!
@@ -730,6 +724,25 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	
 	fwrite($handle, $filebuffer);
 	fclose($handle);
+	// --- 
+
+	// --- If UserDB is enabled, we need to convert the settings now 
+	if ( $_SESSION['UserDBEnabled'] ) 
+	{
+		// Fully Initialize phpLogCon now!
+		InitPhpLogCon();
+		InitSourceConfigs();
+
+		// Perform conversion of settings into the database now!
+		ConvertCustomSearches();
+		ConvertCustomViews();
+		ConvertCustomSources();
+		
+		// Import General Settings in the last step!
+		ConvertGeneralSettings();
+	}
+	// --- 
+
 }
 // --- 
 
