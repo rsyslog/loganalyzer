@@ -41,8 +41,8 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 //include($gl_root_path . 'include/functions_filters.php');
 
 // To avoid infinite redirects!
-define('IS_LOGINPAGE', true);
-$content['IS_LOGINPAGE'] = true;
+define('IS_NOLOGINPAGE', true);
+$content['IS_NOLOGINPAGE'] = true;
 InitPhpLogCon();
 // --- //
 

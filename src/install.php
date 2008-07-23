@@ -34,20 +34,21 @@
 
 // *** Default includes	and procedures *** //
 define('IN_PHPLOGCON', true);
-define('IN_PHPLOGCON_INSTALL', true); // Extra for INSTALL Script!
+define('IN_PHPLOGCON_INSTALL', true);		// Extra for INSTALL Script!
+define('STEPSCRIPTNAME', "install.php");	// Helper variable for the STEP helper functions
 $gl_root_path = './';
 
 // Now include necessary include files!
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
+include($gl_root_path . 'include/functions_installhelpers.php');
 
 // Init Langauge first!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 InitBasicPhpLogCon();
 if ( InitPhpLogConConfigFile(false) ) 
-	DieWithErrorMsg( 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.');
-//InitPhpLogCon();
+	DieWithErrorMsg( $content['LN_INSTALL_ERRORINSTALLED'] );
 
 // Set some static values
 define('MAX_STEPS', 8);
@@ -59,7 +60,7 @@ $configsamplefile = $content['BASEPATH'] . "include/config.sample.php";
 // ***					*** //
 
 // --- CONTENT Vars
-$content['TITLE'] = "phpLogCon :: Installer Step %1";
+$content['TITLE'] = "phpLogCon :: " . $content['LN_INSTALL_TITLE'];
 // --- 
 
 // --- Read Vars
@@ -102,6 +103,7 @@ else
 
 // --- Set Title
 $content['TITLE'] = GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
+$content['LN_INSTALL_TITLETOP'] = GetAndReplaceLangStr( $content['LN_INSTALL_TITLETOP'], $content['BUILDNUMBER'],  $content['INSTALL_STEP'] );
 // --- 
 
 // --- Start Setup Processing
@@ -179,7 +181,7 @@ if ( $content['INSTALL_STEP'] == 2 )
 		$content['NEXT_ENABLED'] = "false";
 		$content['RECHECK_ENABLED'] = "true";
 		$content['iserror'] = "true";
-		$content['errormsg'] = "One file or directory (or more) are not writeable, please check the file permissions (chmod 777)!";
+		$content['errormsg'] = $content['LN_INSTALL_FILEORDIRNOTWRITEABLE'];
 	}
 
 	// Check if sample config file is available
@@ -188,7 +190,7 @@ if ( $content['INSTALL_STEP'] == 2 )
 		$content['NEXT_ENABLED'] = "false";
 		$content['RECHECK_ENABLED'] = "true";
 		$content['iserror'] = "true";
-		$content['errormsg'] = "The sample configuration file '" . $configsamplefile . "' is missing. You have not fully uploaded phplogcon.";
+		$content['errormsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_SAMPLECONFIGMISSING'], $configsamplefile);
 	}
 	
 }
@@ -311,12 +313,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 			// Now Check database connect
 			$link_id = mysql_connect( $_SESSION['UserDBServer'], $_SESSION['UserDBUser'], $_SESSION['UserDBPass']);
 			if (!$link_id) 
-				RevertOneStep( $content['INSTALL_STEP']-1, "Connect to " .$_SESSION['UserDBServer'] . " failed! Check Servername, Port, User and Password!<br>" . DB_ReturnSimpleErrorMsg() );
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $_SESSION['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
 			
 			// Try to select the DB!
 			$db_selected = mysql_select_db($_SESSION['UserDBName'], $link_id);
 			if(!$db_selected) 
-				RevertOneStep( $content['INSTALL_STEP']-1, "Cannot use database  " .$_SESSION['UserDBName'] . "! If the database does not exists, create it or check access permissions! <br>" . DB_ReturnSimpleErrorMsg());
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $_SESSION['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
 		}
 	}
 	// ---
@@ -373,7 +375,7 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		// Process definitions ^^
 		if ( strlen($totaldbdefs) <= 0 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (to short!), file '" . $content['BASEPATH'] . "include/db_template.txt" . "'! <br>Maybe the file was not correctly uploaded?";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINVALIDDBFILE'], $content['BASEPATH'] . "include/db_template.txt");
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
@@ -391,7 +393,7 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		//Still only one? Abort
 		if ( count($mycommands) <= 1 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (no statements found!) in '" . $content['BASEPATH'] . "include/db_template.txt" . "'!<br> Maybe the file was not correctly uploaded, or a strange bug with your system? Contact phpLogCon forums for assistance!";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt"); 
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
@@ -465,7 +467,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 		if ( isset($_POST['username']) )
 			$_SESSION['MAIN_Username'] = DB_RemoveBadChars($_POST['username']);
 		else
-			RevertOneStep( $content['INSTALL_STEP']-1, "Username needs to be specified" );
+			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_MISSINGUSERNAME'] );
 
 		if ( isset($_POST['password1']) )
 			$_SESSION['MAIN_Password1'] = DB_RemoveBadChars($_POST['password1']);
@@ -481,7 +483,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 				strlen($_SESSION['MAIN_Password1']) < 4 ||
 				$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
 			)
-			RevertOneStep( $content['INSTALL_STEP']-1, "Either the password does not match or is to short!" );
+			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
@@ -581,7 +583,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 
 		// Check if access to the configured file is possible
 		if ( !is_file($_SESSION['SourceDiskFile']) )
-			RevertOneStep( $content['INSTALL_STEP']-1, "Failed to open the syslog file " .$_SESSION['SourceDiskFile'] . "! Check if the file exists and phplogcon has sufficient rights to it<br>" );
+			RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDTOOPENSYSLOGFILE'], $_SESSION['SourceDiskFile']) ); 
 	}
 	else if (	$_SESSION['SourceType'] == SOURCE_DB || $_SESSION['SourceType'] == SOURCE_PDO )
 	{
@@ -724,7 +726,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// Create file and write config into it!
 	$handle = fopen( $content['BASEPATH'] . "config.php" , "w");
 	if ( $handle === false ) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Coult not create the configuration file " . $content['BASEPATH'] . "config.php" . "! Check File permissions!!!" );
+		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDCREATECFGFILE'], $content['BASEPATH'] . "config.php") );
 	
 	fwrite($handle, $filebuffer);
 	fclose($handle);
@@ -742,21 +744,6 @@ $page -> output();
 // ---
 
 // --- Helper functions
-
-function RevertOneStep($stepback, $errormsg)
-{
-	header("Location: install.php?step=" . $stepback . "&errormsg=" . urlencode($errormsg) );
-	exit;
-}
-
-function ForwardOneStep()
-{
-	global $content; 
-
-	header("Location: install.php?step=" . ($content['INSTALL_STEP']+1) );
-	exit;
-}
-
 function LoadDataFile($szFileName)
 {
 	global $content;
@@ -765,7 +752,7 @@ function LoadDataFile($szFileName)
 	$buffer = "";
 	$handle = @fopen($szFileName, "r");
 	if ($handle === false) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Error reading the file " . $szFileName . "! Check if the file exists!" );
+		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDREADINGFILE'], $szFileName) );
 	else
 	{
 		while (!feof($handle)) 
@@ -777,30 +764,6 @@ function LoadDataFile($szFileName)
 
 	// return file buffer!
 	return $buffer;
-}
-
-function ImportDataFile($szFileName)
-{
-	global $content, $totaldbdefs;
-
-	// Lets read the table definitions :)
-	$handle = @fopen($szFileName, "r");
-	if ($handle === false) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Error reading the default database defintion file " . $szFileName . "! Check if the file exists!!!" );
-	else
-	{
-		while (!feof($handle)) 
-		{
-			$buffer = fgets($handle, 4096);
-
-			$pos = strpos($buffer, "--");
-			if ($pos === false)
-				$totaldbdefs .= $buffer; 
-			else if ( $pos > 2 && strlen( trim($buffer) ) > 1 )
-				$totaldbdefs .= $buffer; 
-		}
-	   fclose($handle);
-	}
 }
 
 function InitUserDbSettings()
@@ -824,6 +787,5 @@ function InitUserDbSettings()
 	define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
 	define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
 }
-
 // ---
 ?>

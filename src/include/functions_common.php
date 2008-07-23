@@ -510,7 +510,7 @@ function InitConfigurationValues()
 			if ( !$content['SESSION_LOGGEDIN'] ) 
 			{
 				// User needs to be logged in, redirect to login page
-				if ( !defined("IS_LOGINPAGE") )
+				if ( !defined("IS_NOLOGINPAGE") )
 					RedirectToUserLogin();
 			}
 		}
@@ -536,7 +536,7 @@ function InitConfigurationValues()
 	}
 	else
 	{
-		if ( defined('IS_ADMINPAGE') || defined("IS_LOGINPAGE") )	// Language System not initialized yet
+		if ( defined('IS_ADMINPAGE') || defined("IS_NOLOGINPAGE") )	// Language System not initialized yet
 			DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
 	}
 

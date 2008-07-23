@@ -56,7 +56,7 @@
 		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="title">
-				<h1 align="center">Installing phpLogCon Version <U>{BUILDNUMBER}</U> - Step {INSTALL_STEP}</h1>
+				<h1 align="center">{LN_INSTALL_TITLE}</h1>
 			</td>
 		</tr>
 		</table>
@@ -80,10 +80,10 @@
 		<tr>
 			<td class="tableBackground">
 
-			<h1>Step 1 - Prerequisites</h1>
-			<p>Before you start installing phpLogCon, the Installer setup has to check a few things first.<br>
-			You may have to correct some file permissions first. <br><br>
-			Click on <input type="submit" value="Next"> to start the Test!</p>
+			<h1>{LN_INSTALL_STEP1}</h1>
+			<p>
+			{LN_INSTALL_STEP1_TEXT}
+			</p>
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 
@@ -97,9 +97,9 @@
 		<tr>
 			<td class="tableBackground">
 
-				<h1>Step 2 - Verify File Permissions</h1>
-				<p>The following file permissions have been checked. Verify the results below! <br>
-				You may use the <B>configure.sh</B> script from the <B>contrib</B> folder to set the permissions for you. 
+				<h1>{LN_INSTALL_STEP2}</h1>
+				<p>
+				{LN_INSTALL_STEP2_TEXT}
 				</p>
 				<p>&nbsp;</p>
 
@@ -125,31 +125,31 @@
 		<tr>
 			<td class="tableBackground">
 
-			<h1>Step 3 - Basic Configuration</h1>
+			<h1>{LN_INSTALL_STEP3}</h1>
 			<p>
-			In this step, you configure the basic configurations for phpLogCon.
+			{LN_INSTALL_STEP3_TEXT}
 			<br><br>
 			</p>
 			<p>&nbsp;</p>
 
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
-				<tr><td align="center" class="cellmenu1" colspan="2"><b>Frontend Options</b></td></tr>
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_INSTALL_FRONTEND}</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu2" width="265" nowrap><b>Number of syslog messages per page</b></td>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_INSTALL_NUMOFSYSLOGS}</b></td>
 					<td align="right" class="line1" width="100%"><input type="text" name="ViewEntriesPerPage" size="40" maxlength="8" value="{ViewEntriesPerPage}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>Message character limit for the main view</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_MSGCHARLIMIT}</b></td>
 					<td align="right" class="line2" width="100%"><input type="text" name="ViewMessageCharacterLimit" size="40" maxlength="8" value="{ViewMessageCharacterLimit}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>Show message details popup</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_SHOWDETAILPOP}</b></td>
 					<td align="right" class="line1" width="100%">
 					<input type="radio" name="ViewEnableDetailPopups" value="1" {ViewEnableDetailPopups_true}> Yes <input type="radio" name="ViewEnableDetailPopups" value="0" {ViewEnableDetailPopups_false}> No
 					</td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>Automatically resolved IP Addresses (inline)</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_AUTORESOLVIP}</b></td>
 					<td align="right" class="line2" width="100%">
 					<input type="radio" name="EnableIPAddressResolve" value="1" {EnableIPAddressResolve_true}> Yes <input type="radio" name="EnableIPAddressResolve" value="0" {EnableIPAddressResolve_false}> No
 					</td>
@@ -157,9 +157,9 @@
 
 				<tr><td align="center" class="line2" colspan="2">&nbsp;</td></tr>
 
-				<tr><td align="center" class="cellmenu1" colspan="2"><b>User Database Options</b></td></tr>
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_INSTALL_USERDBOPTIONS}</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu2" width="265" nowrap><b>Enable User Database</b></td>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_INSTALL_ENABLEUSERDB}</b></td>
 					<td align="right" class="line1" width="100%">
 						<input type="radio" name="UserDBEnabled" value="1" {UserDBEnabled_true} OnChange="showvisibility('HiddenUserDBOptions');"> Yes 
 						<input type="radio" name="UserDBEnabled" value="0" {UserDBEnabled_false} OnChange="hidevisibility('HiddenUserDBOptions');"> No
@@ -224,13 +224,9 @@
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">
-			<h1>Step 4 - Create Tables</h1>
-			<p>If you reached this step, the database connection has been successfully verified! <br><br>
-			The next step will be to create the necessary database tables used by the phpLogCon User System. This might take a while! <br>
-			<b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>! Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database. 
-			<br><br>
-			<b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>
-
+			<h1>{LN_INSTALL_STEP4}</h1>
+			<p>
+			{LN_INSTALL_STEP4_TEXT}
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 			</td>
@@ -242,24 +238,26 @@
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">
-			<h1>Step 5 - Check SQL Results</h1>
-			<p>Tables have been created. Check the List below for possible Error's<br><br>
+			<h1>{LN_INSTALL_STEP5}</h1>
+			<p>
+			{LN_INSTALL_STEP5_TEXT}
+			<br><br>
 			<ul>
-			<li>Successfully executed statements: <B>{sql_sucess}</B><br>
-			<li>Failed statements: <B>{sql_failed}</B> <br>
+			<li>{LN_INSTALL_SUCCESSSTATEMENTS} <B>{sql_sucess}</B><br>
+			<li>{LN_INSTALL_FAILEDSTATEMENTS} <B>{sql_failed}</B> <br>
 			</ul>
 			<!-- IF sql_failed="0" -->
-				You can now proceed to the <B>next</B> step adding the first phpLogCon Admin User!
+				{LN_INSTALL_STEP5_TEXT_NEXT}
 				<p>&nbsp;</p>
 			<!-- ENDIF sql_failed="0" -->
 			<!-- IF sql_failed!="0" -->
 				<table width="700" class="with_border_alternate" cellpadding="2" cellspacing="1" border="0" align="center">
 				<tr>
-					<td colspan="2" nowrap class="cellmenu1" align="center"><B>At least one statement failed,see error reasons below</B></td>
+					<td colspan="2" nowrap class="cellmenu1" align="center"><B>{LN_INSTALL_STEP5_TEXT_FAILED}</B></td>
 				</tr>
 				<tr>
-					<td width="400" class="cellmenu1">Error Message</td>
-					<td width="300" class="cellmenu1" align="center"><B>SQL Statement</B></td>
+					<td width="400" class="cellmenu1">{LN_INSTALL_ERRORMSG}</td>
+					<td width="300" class="cellmenu1" align="center"><B>{LN_INSTALL_SQLSTATEMENT}</B></td>
 				</tr>
 				<!-- BEGIN failedstatements -->
 				<tr>
@@ -281,23 +279,22 @@
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">
-			<h1>Step 6 - Creating the Main Useraccount</h1>
-			<p>You are now about to create the initial phpLogCon User Account. <br>
-			This will be the first administrative user, which will be needed to login into phpLogCon and access the Admin Center!
+			<h1>{LN_INSTALL_STEP6}</h1>
+			<p>
+			{LN_INSTALL_STEP6_TEXT}
 			<br><br>
-
 				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
-				<tr><td align="center" class="cellmenu1" colspan="2"><b>Create User Account</b></td></tr>
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_INSTALL_CREATEUSER}</b></td></tr>
 				<tr>
-					<td align="left" class="cellmenu2" width="150" nowrap><b>Username</b></td>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_LOGIN_USERNAME}</b></td>
 					<td align="right" class="line2" width="100%"><input type="text" name="username" size="40" maxlength="255" value="{MAIN_Username}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>Password</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_PASSWORD}</b></td>
 					<td align="right" class="line1" width="100%"><input type="password" name="password1" size="40" maxlength="255" value="{MAIN_Password1}"></td>
 				</tr>
 				<tr>
-					<td align="left" class="cellmenu2" nowrap><b>Repeat Password</b></td>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_PASSWORDREPEAT}</b></td>
 					<td align="right" class="line2" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
 				</tr>
 				</table>
@@ -316,7 +313,7 @@
 		<tr>
 			<td class="line2" align="center">
 				<br>
-				<h3><font color="red">Successfully created User '{MAIN_Username}'.</font></h3>
+				<h3><font color="red">{LN_INSTALL_SUCCESSCREATED} '{MAIN_Username}'.</font></h3>
 				<br>
 			</td>
 		</tr>
@@ -326,7 +323,7 @@
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">
-			<h1>Step 7 - Create the first source for syslog messages</h1>
+			<h1>{LN_INSTALL_STEP7}</h1>
 			<p>&nbsp;</p>
 
 				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
@@ -447,11 +444,9 @@
 		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td class="tableBackground">
-			<h1>Step 8 - Done</h1>
-			<p>Congratulations! You have successfully installed phpLogCon :D!<br><br>
-			To finish the Installation, remove the file install.php from the main directory!<br><br>
-
-			Click <a href="index.php">here</a> to go to your installation.
+			<h1>{LN_INSTALL_STEP8}</h1>
+			<p>
+			{LN_INSTALL_STEP8_TEXT}
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 			</td>
@@ -464,7 +459,7 @@
 		<tr>
 			<td class="cellmenu1" width="50%">
 			</td>
-			<td class="line0" width="100" nowrap><B>Install Progress: </B></td>
+			<td class="line0" width="100" nowrap><B>{LN_INSTALL_PROGRESS}</B></td>
 			<td class="line0" width="300" nowrap>
 				<table width="100%" bgcolor="#007700" cellpadding="0" cellspacing="0" border="0" align="center">
 				<tr>
@@ -477,10 +472,10 @@
 				<input type="submit" value="Next">
 				<!-- ENDIF NEXT_ENABLED="true" -->
 				<!-- IF RECHECK_ENABLED="true" -->
-				<a href="?step={INSTALL_STEP}">ReCheck</a>
+				<a href="?step={INSTALL_STEP}">{LN_INSTALL_RECHECK}</a>
 				<!-- ENDIF RECHECK_ENABLED="true" -->
 				<!-- IF FINISH_ENABLED="true" -->
-				<a href="index.php">Finish!</a>
+				<a href="index.php">{LN_INSTALL_FINISH}</a>
 				<!-- ENDIF FINISH_ENABLED="true" -->
 			</td>
 			<td class="cellmenu1" width="50%">
