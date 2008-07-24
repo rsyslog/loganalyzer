@@ -1,13 +1,23 @@
 ---------------------------------------------------------------------------
-<<<<<<< HEAD:ChangeLog
-Version 2.5.0 (devel), 2008-06-10
-- Moved older devel branch to beta branch. Increment Version minor number.
-=======
+Version 2.5.0 (devel), 2008-07-24
+- Fully implemented the UserDB System. This is the next major milestone 
+  in the development of phpLogCon. The new UserDB System allows you to 
+  fully customize phpLogCon using an admin interface and offers the 
+  following sub-features: Users, Groups, Sources, Views, Searches and 
+  general options. Exiting configurations can be imported into the 
+  user system using the convert.php script. The installer has an option 
+  to install the user system.
+- Added Icons to all Topmenu entries, as well as into the Admin 
+  Topmenu entries.
+- Improved stylesheets
+---------------------------------------------------------------------------
 Version 2.3.7 (beta), 2008-07-07
 - Added missing db mapping for program field of syslogng - thanks to 
   Micha "Wolvverine" Panasiewicz
 - Added translation for Brazilian Portuguese, thanks to Ricardo Maraschini
->>>>>>> 3e647291ba2e5cba972a52679cd8640db0a6614f:ChangeLog
+---------------------------------------------------------------------------
+Version 2.5.0 (devel), 2008-06-10
+- Moved older devel branch to beta branch. Increment Version minor number.
 ---------------------------------------------------------------------------
 Version 2.3.6 (devel), 2008-06-09
 - Added new feature, multiple configureable views which can be configured 
