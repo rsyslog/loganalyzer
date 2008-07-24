@@ -627,12 +627,12 @@ class LogStreamPDO extends LogStream {
 		{
 			// Get SQL Statement
 			$szSql = $this->CreateSQLStatement($uID);
-			
+
 			// Perform Database Query
 			$this->_myDBQuery = $this->_dbhandle->query($szSql);
 			if ( !$this->_myDBQuery ) 
 			{
-				$this->PrintDebugError("Invalid SQL: ".$szSql);
+				$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
 				return ERROR_DB_QUERYFAILED;
 			}
 
@@ -672,19 +672,23 @@ class LogStreamPDO extends LogStream {
 			// return error if there was one!
 			if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
 				return $res;
+
+			// return specially with NO RECORDS when 0 records are returned! Otherwise it will be -1
+			if ( $this->_myDBQuery->rowCount() == 0 )
+				return ERROR_NOMORERECORDS;
 		}
 
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
 
 		$iCount = 0;
-		while( $this->_logStreamConfigObj->RecordsPerQuery > $iCount )
+		while( $this->_logStreamConfigObj->RecordsPerQuery > $iCount)
 		{
 			//Obtain next record 
 			$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
-			
+
 			// Check if result was successfull!
-			if ( $myRow === FALSE )
+			if ( $myRow === FALSE || !$myRow  )
 				break;
 
 			$this->bufferedRecords[$iBegin] = $myRow;
@@ -694,16 +698,6 @@ class LogStreamPDO extends LogStream {
 			$iCount++;
 		}
 
-/*
-		// Only obtain count if enabled and not done before
-		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
-		{
-			$this->_totalRecordCount = $this->GetRowCountFromTable();
-
-//			if ( $this->_totalRecordCount <= 0 )
-//				return ERROR_NOMORERECORDS;
-		}
-*/		
 		// return success state if reached this point!
 		return SUCCESS;
 	}
