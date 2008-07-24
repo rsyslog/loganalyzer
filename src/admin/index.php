@@ -62,8 +62,6 @@ if ( isset($_SESSION['SESSION_ISADMIN']) && $_SESSION['SESSION_ISADMIN'] == 1 )
 else	
 	$content['EditAllowed'] = false;
 
-
-
 // Check for changes first | Abort if Edit is not allowed
 if ( isset($_POST['op']) && $content['EditAllowed'] )
 {
@@ -78,7 +76,13 @@ if ( isset($_POST['op']) && $content['EditAllowed'] )
 		}
 
 		// Read default theme
-		if ( isset ($_POST['ViewDefaultTheme']) ) { $content['ViewDefaultTheme'] = DB_RemoveBadChars($_POST['ViewDefaultTheme']); }
+		if ( isset ($_POST['ViewDefaultTheme']) ) { $content['ViewDefaultTheme'] = $_POST['ViewDefaultTheme']; }
+
+		// Read default VIEW | Check if View exists as well!
+		if ( isset ($_POST['DefaultViewsID']) && isset($content['Views'][$_POST['DefaultViewsID']] )) { $content['DefaultViewsID'] = $_POST['DefaultViewsID']; }
+
+		// Read default SOURCES | Check if Source exists as well!
+		if ( isset ($_POST['DefaultSourceID']) && isset($content['Sources'][$_POST['DefaultSourceID']] )) { $content['DefaultSourceID'] = $_POST['DefaultSourceID']; }
 
 		// Read checkboxes
 		if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
@@ -91,14 +95,14 @@ if ( isset($_POST['op']) && $content['EditAllowed'] )
 		if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
 
 		// Read Text number fields
-		if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = DB_RemoveBadChars($_POST['ViewMessageCharacterLimit']); }
-		if ( isset ($_POST['ViewEntriesPerPage']) && is_numeric($_POST['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = DB_RemoveBadChars($_POST['ViewEntriesPerPage']); }
-		if ( isset ($_POST['ViewEnableAutoReloadSeconds']) && is_numeric($_POST['ViewEnableAutoReloadSeconds']) ) { $content['ViewEnableAutoReloadSeconds'] = DB_RemoveBadChars($_POST['ViewEnableAutoReloadSeconds']); }
+		if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
+		if ( isset ($_POST['ViewEntriesPerPage']) && is_numeric($_POST['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = $_POST['ViewEntriesPerPage']; }
+		if ( isset ($_POST['ViewEnableAutoReloadSeconds']) && is_numeric($_POST['ViewEnableAutoReloadSeconds']) ) { $content['ViewEnableAutoReloadSeconds'] = $_POST['ViewEnableAutoReloadSeconds']; }
 
 		// Read Text fields
-		if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = DB_RemoveBadChars($_POST['PrependTitle']); }
-		if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = DB_RemoveBadChars($_POST['SearchCustomButtonCaption']); }
-		if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = DB_RemoveBadChars($_POST['SearchCustomButtonSearch']); }
+		if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = $_POST['PrependTitle']; }
+		if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = $_POST['SearchCustomButtonCaption']; }
+		if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = $_POST['SearchCustomButtonSearch']; }
 
 		// Save configuration variables now
 		SaveGeneralSettingsIntoDB();
@@ -119,6 +123,32 @@ if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCoun
 if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
 if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
 if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
+// --- 
+
+// --- Init for DefaultView field!
+// copy Views Array
+$content['VIEWS'] = $content['Views'];
+if ( !isset($content['DefaultViewsID']) ) { $content['DefaultViewsID'] = 'SYSLOG'; }
+foreach ( $content['VIEWS'] as $myView )
+{
+	if ( $myView['ID'] == $content['DefaultViewsID'] )
+		$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
+	else
+		$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
+}
+// --- 
+
+// --- Init for DefaultSource  field!
+// copy Views Array
+$content['SOURCES'] = $content['Sources'];
+if ( !isset($content['DefaultSourceID']) ) { $content['DefaultSourceID'] = ''; }
+foreach ( $content['SOURCES'] as $myView )
+{
+	if ( $myView['ID'] == $content['DefaultSourceID'] )
+		$content['SOURCES'][ $myView['ID'] ]['selected'] = "selected";
+	else
+		$content['SOURCES'][ $myView['ID'] ]['selected'] = "";
+}
 // --- 
 
 // --- BEGIN CREATE TITLE

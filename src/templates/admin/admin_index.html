@@ -35,6 +35,29 @@
 		</td>
 	</tr>
 	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DEFVIEWS}</b></td>
+		<td align="right" class="line1" width="100%">
+			<select id="DefaultViewsID" name="DefaultViewsID" size="1">
+				<!-- BEGIN VIEWS -->
+				<option {selected} value="{ID}">{DisplayName}</option>
+				<!-- END VIEWS -->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_DEFSOURCE}</b></td>
+		<td align="right" class="line1" width="100%">
+			<select id="DefaultSourceID" name="DefaultSourceID" size="1">
+				<!-- BEGIN SOURCES -->
+				<option {selected} value="{ID}">{Name}</option>
+				<!-- END SOURCES -->
+			</select>
+		</td>
+	</tr>
+
+	
+
+	<tr>
 		<td align="left" class="cellmenu1" nowrap><b>{LN_GEN_PREPENDTITLE}</b></td>
 		<td align="right" class="line1" ><input type="text" name="PrependTitle" size="40" maxlength="255" value="{PrependTitle}"></td>
 	</tr>

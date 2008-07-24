@@ -75,6 +75,9 @@ $content['LN_GEN_INTERNAL'] = "Internal";
 $content['LN_GEN_DISABLED'] = "Function disabled";
 $content['LN_GEN_CONFIGFILE'] = "Configuration File";
 $content['LN_GEN_ACCESSDENIED'] = "Access denied to this function";
+$content['LN_GEN_DEFVIEWS'] = "Default selected view";
+$content['LN_GEN_DEFSOURCE'] = "Default selected source";
+
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

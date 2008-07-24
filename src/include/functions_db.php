@@ -304,11 +304,12 @@ function DB_Exec($query)
 
 function PrepareValueForDB($szValue)
 {
+//echo	"<br>" . $szValue . "<br>!" . preg_match("/[^\\\\]['\\\\][^'\\\\]/e", $szValue, $matches) . "<br>";
 	// Copy value for DB and check for BadDB Chars!
-	if ( preg_match("/(?<!\\\\)\'|(?<!\\\\)\\\\/e", $szValue) )
+//	if ( preg_match("/(?<!\\\\)\'|\\\\\\\\/x", $szValue) ) /* OLD /(?<!\\\\)\'|(?<!\\\\)\\\\/e */
 		return DB_RemoveBadChars($szValue);
-	else
-		return $szValue;
+//	else
+//		return $szValue;
 }
 
 function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false)
