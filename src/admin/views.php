@@ -103,7 +103,7 @@ if ( isset($_GET['op']) )
 
 				$content['DisplayName'] = $myview['DisplayName'] ;
 				$content['userid'] = $myview['userid'];
-				$content['Columns'] = $myview['Columns'];
+				$content['COLUMNS'] = $myview['Columns'];
 				if ( $content['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
@@ -194,9 +194,8 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 	// If Columns are send using POST we use them, otherwise we try to use from the view itself, if available
 	if ( isset($_POST['Columns']) )
 		$AllColumns = $_POST['Columns'];
-	else if ( isset($content['Columns']) )
-		$AllColumns = $content['Columns'];
-
+	else if ( isset($content['COLUMNS']) )
+		$AllColumns = $content['COLUMNS'];
 
 	// Read Columns from FORM data!
 	if ( isset($AllColumns) )
@@ -406,16 +405,16 @@ if ( isset($_POST['op']) )
 					// Copy columns ID's
 					foreach ($_POST['Columns'] as $myColKey)
 					{
-						if ( isset($content['Columns']) ) 
-							$content['Columns'] .= ", " . $myColKey;
+						if ( isset($content['COLUMNS']) ) 
+							$content['COLUMNS'] .= ", " . $myColKey;
 						else
-							$content['Columns'] = $myColKey;
+							$content['COLUMNS'] = $myColKey;
 					}
 
 					// Add custom search now!
 					$sqlquery = "INSERT INTO " . DB_VIEWS. " (DisplayName, Columns, userid, groupid) 
 					VALUES ('" . $content['DisplayName'] . "', 
-							'" . $content['Columns'] . "',
+							'" . $content['COLUMNS'] . "',
 							" . $content['userid'] . ", 
 							" . $content['groupid'] . " 
 							)";
@@ -446,20 +445,20 @@ if ( isset($_POST['op']) )
 					if ( isset($_POST['Columns']) && is_array($_POST['Columns']) )
 					{
 						// Copy columns ID's
-						unset($content['Columns']);
+						unset($content['COLUMNS']);
 						foreach ($_POST['Columns'] as $myColKey)
 						{
-							if ( isset($content['Columns']) ) 
-								$content['Columns'] .= ", " . $myColKey;
+							if ( isset($content['COLUMNS']) ) 
+								$content['COLUMNS'] .= ", " . $myColKey;
 							else
-								$content['Columns'] = $myColKey;
+								$content['COLUMNS'] = $myColKey;
 						}
 
 
 						// Edit the Search Entry now!
 						$result = DB_Query("UPDATE " . DB_VIEWS . " SET 
 							DisplayName = '" . $content['DisplayName'] . "', 
-							Columns = '" . $content['Columns'] . "', 
+							Columns = '" . $content['COLUMNS'] . "', 
 							userid = " . $content['userid'] . ", 
 							groupid = " . $content['groupid'] . "
 							WHERE ID = " . $content['VIEWID']);
