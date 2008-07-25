@@ -929,7 +929,8 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 				(($pos = strpos($szIP, "10.")) !== FALSE && $pos == 0) ||
 				(($pos = strpos($szIP, "127.")) !== FALSE && $pos == 0) ||
 				(($pos = strpos($szIP, "172.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) 
+				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) ||
+				(($pos = strpos($szIP, "255.")) !== FALSE && $pos == 0) 
 			)
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';
