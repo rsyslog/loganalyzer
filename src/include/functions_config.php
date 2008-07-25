@@ -75,20 +75,30 @@ function InitSourceConfigs()
 				}
 				// ---
 
-				// Set different view if necessary
+				// Set default view id to source
+				$szDefaultViewID = isset($CFG['DefaultViewsID']) && strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
+
 				if ( isset($_SESSION[$iSourceID . "-View"]) ) 
 				{
-					// Overwrite configured view!
-					$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
+					// check if view is valid
+					$UserSessionViewID = $_SESSION[$iSourceID . "-View"];
+
+					if ( isset($content['Views'][$UserSessionViewID]) ) 
+					{
+						// Overwrite configured view!
+						$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
+					}
+					else
+						$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
 				}
 				else
 				{
-					if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 )
+					if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 && isset($content['Views'][ $mysource['ViewID'] ]) )
 						// Set to configured Source ViewID
 						$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
 					else
 						// Not configured, maybe old legacy cfg. Set default view.
-						$content['Sources'][$iSourceID]['ViewID'] = strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
+						$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
 				}
 
 				// Only for the display box
