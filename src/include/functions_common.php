@@ -867,7 +867,6 @@ function AddContextLinks(&$sourceTxt)
 	$search = array 
 				(
 					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/e',
-//					'|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|',
 /* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/e',
 				);
 
@@ -898,7 +897,8 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 				(($pos = strpos($szIP, "10.")) !== FALSE && $pos == 0) ||
 				(($pos = strpos($szIP, "127.")) !== FALSE && $pos == 0) ||
 				(($pos = strpos($szIP, "172.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) 
+				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) ||
+				(($pos = strpos($szIP, "255.")) !== FALSE && $pos == 0) 
 			)
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';
