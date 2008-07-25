@@ -58,6 +58,9 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 //if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
 //	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
 
+// Init helper variable to empty string
+$content['FormUrlAddOP'] = "";
+
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "add") 
@@ -72,6 +75,7 @@ if ( isset($_GET['op']) )
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
 		$content['VIEWID'] = "";
+		$content['FormUrlAddOP'] = "?op=add";
 
 		// --- Check if groups are available
 		$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -88,7 +92,6 @@ if ( isset($_GET['op']) )
 		$content['VIEW_FORMACTION'] = "editview";
 		$content['VIEW_SENDBUTTON'] = $content['LN_VIEWS_EDIT'];
 
-
 		// Copy Views array for further modifications
 		$content['VIEWS'] = $content['Views'];
 
@@ -99,6 +102,10 @@ if ( isset($_GET['op']) )
 			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
 			if ( isset($content['VIEWS'][ $content['VIEWID'] ]) )
 			{
+
+				//Set the FormAdd URL
+				$content['FormUrlAddOP'] = "?op=edit&id=" . $content['VIEWID'];
+
 				$myview = $content['VIEWS'][ $content['VIEWID'] ];
 
 				$content['DisplayName'] = $myview['DisplayName'] ;

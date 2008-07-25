@@ -57,6 +57,8 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_SELECTVIEW'] = "Select View";
 	$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
+	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
+	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Suchen";
