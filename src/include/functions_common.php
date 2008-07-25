@@ -1038,5 +1038,3 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "DefaultViewsID", true );
 	WriteConfigValue( "DefaultSourceID", true );
 }
-
-?>
