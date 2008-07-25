@@ -874,7 +874,7 @@ function AddContextLinks(&$sourceTxt)
 	$replace = array 
 				(
 					"'.' . InsertLookupLink(\"\", \"\\1.\\2\", \"\", \"\\3\")",
-					"'.' . InsertLookupLink(\"\\1.\\2.\\3.\\4\", \"\", \"\", \"\")", 
+					"InsertLookupLink(\"\\1.\\2.\\3.\\4\", \"\", \"\", \"\")", 
 				);
 	
 	// Replace and return!
