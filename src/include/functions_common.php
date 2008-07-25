@@ -893,12 +893,15 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 	$szReturn  = $prepend;
 	if ( strlen($szIP) > 0 )
 	{
+		// Split IP into array
+		$IPArray = explode(".", $szIP);
+
 		if ( 
-				(($pos = strpos($szIP, "10.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "127.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "172.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) ||
-				(($pos = strpos($szIP, "255.")) !== FALSE && $pos == 0) 
+				(intval($IPArray[0]) == 10	) ||
+				(intval($IPArray[0]) == 127 ) ||
+				(intval($IPArray[0]) == 172 && intval($IPArray[1]) >= 16 && intval($IPArray[1]) <= 31) || 
+				(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
+				(intval($IPArray[0]) == 255	)
 			)
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';
