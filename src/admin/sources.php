@@ -334,10 +334,29 @@ if ( isset($_POST['op']) )
 				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_SYSLOGFILE'] );
 			}
 			// Check if file is accessable!
-			else if ( !is_file($content['SourceDiskFile']) )
+			else 
 			{
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $content['SourceDiskFile'] );
+				// Get plain filename for testing!
+				$szFileName = DB_StripSlahes($content['SourceDiskFile']);
+
+				// Take as it is if rootpath!
+				if (
+						( ($pos = strpos($szFileName, "/")) !== FALSE && $pos == 0) ||
+						( ($pos = strpos($szFileName, ":\\")) !== FALSE ) ||
+						( ($pos = strpos($szFileName, ":/")) !== FALSE )
+					)
+				{
+					// Nothing really todo
+					$szFileName = $szFileName;
+				}
+				else // prepend basepath!
+					$szFileName = $gl_root_path . $szFileName;
+
+				if ( !is_file($szFileName) )
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $szFileName );
+				}
 			}
 		}
 		// DB Params
