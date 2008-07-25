@@ -898,15 +898,15 @@ function AddContextLinks(&$sourceTxt)
 	// Create Search Array
 	$search = array 
 				(
-					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/x',
-/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/x',
+					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/e',
+/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/e',
 				);
 
 	// Create Replace Array
 	$replace = array 
 				(
-					'.<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=$1.$2" target="_top" class="contextlink">$1.$2</a>$3',
-					'<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=$1.$2.$3.$4" target="_top" class="contextlink">$1.$2.$3.$4</a>',
+					"'.' . InsertLookupLink(\"\", \"\\1.\\2\", \"\", \"\\3\")",
+					"'.' . InsertLookupLink(\"\\1.\\2.\\3.\\4\", \"\", \"\", \"\")", 
 				);
 	
 	// Replace and return!
@@ -914,6 +914,35 @@ function AddContextLinks(&$sourceTxt)
 
 //echo $outTxt . " <br>" ;
 //return $outTxt;
+}
+
+/*
+*	Helper to create a Lookup Link!
+*/
+function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
+{
+	// Create string
+	$szReturn  = $prepend;
+	if ( strlen($szIP) > 0 )
+	{
+		if ( 
+				(($pos = strpos($szIP, "10.")) !== FALSE && $pos == 0) ||
+				(($pos = strpos($szIP, "127.")) !== FALSE && $pos == 0) ||
+				(($pos = strpos($szIP, "172.")) !== FALSE && $pos == 0) ||
+				(($pos = strpos($szIP, "192.")) !== FALSE && $pos == 0) 
+			)
+			// Do not create a LINK in this case!
+			$szReturn .= '<b>' . $szIP . '</b>';
+		else
+			// Normal LINK!
+			$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
+	}
+	else if ( strlen($szDomain) > 0 ) 
+		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
+	$szReturn .= $append;
+
+	// return result
+	return $szReturn;
 }
 
 /*
@@ -1038,3 +1067,5 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "DefaultViewsID", true );
 	WriteConfigValue( "DefaultSourceID", true );
 }
+
+?>
