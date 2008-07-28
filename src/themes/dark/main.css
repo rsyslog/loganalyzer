@@ -236,6 +236,14 @@ font
 	color: #FFFFFF;
 	background-color: #290604;
 }
+.topmenuextra
+{
+	height: 16px;
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #053841;
+}
+
 .topmenu2begin
 {
 	height: 20px;

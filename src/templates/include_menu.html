@@ -23,5 +23,11 @@
 <!-- IF UserDBEnabled!="true" -->
 	<td class="topmenuend" nowrap align="center" width="max">&nbsp;</td>
 <!-- ENDIF UserDBEnabled!="true" -->
+
+<!-- IF IS_NOLOGINPAGE!="true" -->
+	<td class="topmenuextra" nowrap align="center" width="16">
+	<a class="topmenu1_link" href="{MAXURL}" target="_top"><img align="left" src="{MAXIMAGE}" width="16" height="16" vspace="0" alt="{MAXLANGTEXT}" title="{MAXLANGTEXT}"></a>
+	</td>
+<!-- ENDIF IS_NOLOGINPAGE!="true" -->
 </tr>
 </table>

@@ -440,6 +440,8 @@ function InitFrontEndVariables()
 	$content['MENU_SOURCE_DISK'] = $content['BASEPATH'] . "images/icons/document_text.png";
 	$content['MENU_SOURCE_DB'] = $content['BASEPATH'] . "images/icons/data_table.png";
 	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
+	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";
+	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

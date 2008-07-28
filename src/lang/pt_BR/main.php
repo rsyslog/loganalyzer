@@ -73,6 +73,8 @@ $content['LN_GEN_SELECTVIEW'] = "Vis&atilde;o";
 	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
 	$content['LN_MENU_LOGOFF'] = "Logoff";
 	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
+	$content['LN_MENU_MAXVIEW'] = "Maximize View";
+	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Aten&ccedil;&atilde;o! Voc&ecirc; ainda N&Atilde;O removeu o arquivo 'install.php' do diret&oacute;rio de seu phpLogCon!";

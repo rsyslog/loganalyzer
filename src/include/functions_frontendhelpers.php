@@ -41,12 +41,28 @@ if ( !defined('IN_PHPLOGCON') )
 
 function InitFrontEndDefaults()
 {
+	global $content;
+
 	// To create the current URL
 	CreateCurrentUrl();
 
 	// --- BEGIN Main Info Area
 
-
+	$content['MAXURL'] = $content['BASEPATH'] . "userchange.php?";
+	if ( isset($_SESSION['SESSION_MAXIMIZED']) && $_SESSION['SESSION_MAXIMIZED'] == true )
+	{
+		$content['MAXIMIZED'] = true;
+		$content['MAXIMAGE'] = $content['MENU_NORMAL'];
+		$content['MAXLANGTEXT'] = $content['LN_MENU_NORMALVIEW'];
+		$content['MAXURL'] .= "op=maximize&max=0";
+	}
+	else
+	{
+		$content['MAXIMIZED'] = false;
+		$content['MAXIMAGE'] = $content['MENU_MAXIMIZE'];
+		$content['MAXLANGTEXT'] = $content['LN_MENU_MAXVIEW'];
+		$content['MAXURL'] .= "op=maximize&max=1";
+	}
 	
 	// --- END Main Info Area
 	
@@ -65,6 +81,40 @@ function InstallFileReminder()
 	}
 }
 
+function GetAdditionalUrl($skipParam, $appendParam = "")
+{
+	global $content;
+//echo $content['additional_url_full'];
+	if ( isset($content['additional_url_full']) && strlen($content['additional_url_full']) > 0 )
+	{
+		if ( strlen($skipParam) > 0 ) 
+		{
+			// remove parameters from string!
+			$szReturn = preg_replace("#(&{$skipParam}=[\w]+)#is", '', $content['additional_url_full']);
+			if ( strlen($szReturn) > 0 )
+			{
+				if ( strlen($appendParam) > 0 )
+					return $szReturn . "&" . $appendParam;
+				else
+					return $szReturn;
+			}
+			else if ( strlen($appendParam) > 0 )
+				return "?" . $appendParam;
+			else
+				return "";
+		}
+		else
+			return $content['additional_url_full'];
+	}
+	else
+	{
+		if ( strlen($appendParam) > 0 )
+			return "?" . $appendParam;
+		else
+			return "";
+	}
+}
+
 function CreateCurrentUrl()
 {
 	global $content, $CFG;
@@ -72,6 +122,7 @@ function CreateCurrentUrl()
 	
 	// Init additional_url helper variable
 	$content['additional_url'] = ""; 
+	$content['additional_url_full'] = ""; 
 	$content['additional_url_uidonly'] = ""; 
 	$content['additional_url_sortingonly'] = ""; 
 	$content['additional_url_sourceonly'] = ""; 
@@ -143,6 +194,9 @@ function CreateCurrentUrl()
 						}
 						else
 							$content['additional_url'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+
+						// always append to this URL!
+						$content['additional_url_full'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
 					}
 
 					$hvCounter++;

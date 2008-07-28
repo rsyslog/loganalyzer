@@ -69,6 +69,9 @@ $content['LN_MENU_LOGIN'] = "Login";
 	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
 $content['LN_MENU_LOGOFF'] = "Logoff";
 	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
+	$content['LN_MENU_MAXVIEW'] = "Maximize View";
+	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
+
 
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";
