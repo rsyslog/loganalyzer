@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.3.8 (beta), 2008-07-28
+- Fixed a "notice" bug in the installer, which was missing to save the 
+  DBType for MYSQL Datasource. 
+- Fixed a bug in the pdo logstream class which caused display of empty 
+  rows when no records where found.
+- Fixed Bug ID82 from bugtracker. Internal and invalid IP Addresses are 
+  not linked to whois anymore. 
+- Fixed Line Ending to Unix in some code files. 
+---------------------------------------------------------------------------
 Version 2.3.7 (beta), 2008-07-07
 - Added missing db mapping for program field of syslogng - thanks to 
   Micha "Wolvverine" Panasiewicz
