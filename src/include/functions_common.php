@@ -65,6 +65,7 @@ $LANG = "en";		// Default language
 $content['BUILDNUMBER'] = "2.5.0";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
+$content['SHOW_DONATEBUTTON'] = true; // Default = true!
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";

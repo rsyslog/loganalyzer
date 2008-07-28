@@ -54,6 +54,11 @@ function InitUserSession()
 {
 	global $content; 
 
+	// --- Hide donate Button if not on Admin Page
+	if ( !defined('IS_ADMINPAGE') )
+		$content['SHOW_DONATEBUTTON'] = false;
+	// --- 
+
 	if ( isset($_SESSION['SESSION_LOGGEDIN']) )
 	{
 		if ( !$_SESSION['SESSION_LOGGEDIN'] ) 
@@ -72,7 +77,7 @@ function InitUserSession()
 			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
 			if ( isset($_SESSION['SESSION_GROUPIDS']) )
 				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
-
+			
 			// Successfully logged in
 			return true;
 		}
