@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.3.8 (beta), 2008-07-28
+- Fixed a "notice" bug in the installer, which was missing to save the 
+  DBType for MYSQL Datasource. 
+- Fixed a bug in the pdo logstream class which caused display of empty 
+  rows when no records where found.
+- Fixed Bug ID82 from bugtracker. Internal and invalid IP Addresses are 
+  not linked to whois anymore. 
+- Fixed Line Ending to Unix in some code files. 
+---------------------------------------------------------------------------
 Version 2.5.0 (devel), 2008-07-24
 - Fully implemented the UserDB System. This is the next major milestone 
   in the development of phpLogCon. The new UserDB System allows you to 
