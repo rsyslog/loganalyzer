@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------
+Version 2.5.1 (beta), 2008-07-29
+- Added a new option to suppress displaying multiple messages. This
+  means if you have two or more messages of the exact same text one after
+  another, only ONE message will be shown. This helps to "compress" the
+  logview a little bit. 
+- New feature, added Maximize/Normalize button into the menu. You can 
+  hide the header now by using this feature for maximum log display.
+- If the UserDB System is enabled, the donate button will only being 
+  shown within the Admin Center. 
+- Fixed a bug in the input checking of files when a Diskfile source 
+  was added or reconfigured.
+- Fixed minor bug reading the correct default view for sources from DB.
+- Fixed a problem in the Views Admin, a set of predefined columns could be 
+  in the list. 
+- Enhanced error display in all admin templates.
+---------------------------------------------------------------------------
 Version 2.3.8 (beta), 2008-07-28
 - Fixed a "notice" bug in the installer, which was missing to save the 
   DBType for MYSQL Datasource. 
