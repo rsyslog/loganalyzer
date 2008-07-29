@@ -93,6 +93,7 @@ if ( isset($_POST['op']) && $content['EditAllowed'] )
 		if ( isset ($_POST['MiscShowPageRenderStats']) ) { $content['MiscShowPageRenderStats'] = 1; } else { $content['MiscShowPageRenderStats'] = 0; } 
 		if ( isset ($_POST['MiscEnableGzipCompression']) ) { $content['MiscEnableGzipCompression'] = 1; } else { $content['MiscEnableGzipCompression'] = 0; } 
 		if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
+		if ( isset ($_POST['SuppressDuplicatedMessages']) ) { $content['SuppressDuplicatedMessages'] = 1; } else { $content['SuppressDuplicatedMessages'] = 0; } 
 
 		// Read Text number fields
 		if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
@@ -123,6 +124,7 @@ if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCoun
 if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
 if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
 if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
+if ($content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
 // --- 
 
 // --- Init for DefaultView field!

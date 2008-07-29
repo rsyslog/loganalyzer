@@ -1061,6 +1061,7 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscShowPageRenderStats", true );
 	WriteConfigValue( "MiscEnableGzipCompression", true );
 	WriteConfigValue( "DebugUserLogin", true );
+	WriteConfigValue( "SuppressDuplicatedMessages", true );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true );
 	WriteConfigValue( "ViewEntriesPerPage", true );

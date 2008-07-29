@@ -298,6 +298,31 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 			//Loop through the messages!
 			do
 			{
+				// --- Extra stuff for suppressing messages
+				if (
+						isset($CFG['SuppressDuplicatedMessages']) && $CFG['SuppressDuplicatedMessages'] == 1 
+						&&
+						isset($logArray[SYSLOG_MESSAGE])
+					)
+				{
+
+					if ( !isset($szLastMessage) ) // Only set lastmgr
+						$szLastMessage = $logArray[SYSLOG_MESSAGE];
+					else
+					{
+						// Skip if same msg
+						if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] )
+						{
+							// Set last mgr
+							$szLastMessage = $logArray[SYSLOG_MESSAGE];
+
+							// Skip entry
+							continue;
+						}
+					}
+				}
+				// --- 
+
 				// --- Set CSS Class
 				if ( $counter % 2 == 0 )
 					$content['syslogmessages'][$counter]['cssclass'] = "line1";
