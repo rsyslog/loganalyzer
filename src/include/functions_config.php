@@ -76,7 +76,8 @@ function InitSourceConfigs()
 				// ---
 
 				// Set default view id to source
-				$szDefaultViewID = isset($CFG['DefaultViewsID']) && strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
+				$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
+				$szDefaultViewID = strlen($tmpVar) > 0 ? $tmpVar : "SYSLOG";
 
 				if ( isset($_SESSION[$iSourceID . "-View"]) ) 
 				{
@@ -169,7 +170,7 @@ function InitSourceConfigs()
 				}
 				
 				// Set generic configuration options
-				$content['Sources'][$iSourceID]['ObjRef']->_pageCount = $CFG['ViewEntriesPerPage'];
+				$content['Sources'][$iSourceID]['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
 
 				// Set default SourceID here!
 				if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
@@ -191,9 +192,10 @@ function InitSourceConfigs()
 			$currentSourceID = $_SESSION['currentSourceID'];
 		else
 		{
-			if ( isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ]) ) 
+			$tmpVar = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
+			if ( isset($content['Sources'][ $tmpVar ]) ) 
 				// Set Source to preconfigured sourceID!
-				$_SESSION['currentSourceID'] = $CFG['DefaultSourceID'];
+				$_SESSION['currentSourceID'] = $tmpVar;
 			else
 				// No Source stored in session, then to so now!
 				$_SESSION['currentSourceID'] = $currentSourceID;
@@ -211,7 +213,8 @@ function InitSourceConfigs()
 	$content['Views'][ $currentViewID ]['selected'] = "selected";
 
 	// If DEBUG Mode is enabled, we prepend the UID field into the col list!
-	if ( $CFG['MiscShowDebugMsg'] == 1 && isset($content['Views'][$currentViewID]) )
+	
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['Views'][$currentViewID]) )
 		array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
 	// ---
 }
@@ -262,7 +265,8 @@ function AppendLegacyColumns()
 								   );
 	
 	// set default to legacy of no default view is specified!
-	if ( !isset($CFG['DefaultViewsID']) || strlen($CFG['DefaultViewsID']) <= 0 )
+	$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
+	if ( strlen($tmpVar) <= 0 )
 		$CFG['DefaultViewsID'] = "LEGACY";
 }
 
@@ -277,13 +281,14 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		include_once($gl_root_path . 'config.php');
 		
 		// Easier DB Access
-		define('DB_CONFIG',			$CFG['UserDBPref'] . "config");
-		define('DB_GROUPS',			$CFG['UserDBPref'] . "groups");
-		define('DB_GROUPMEMBERS',	$CFG['UserDBPref'] . "groupmembers");
-		define('DB_SEARCHES',		$CFG['UserDBPref'] . "searches");
-		define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
-		define('DB_USERS',			$CFG['UserDBPref'] . "users");
-		define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
+		$tblPref = GetConfigSetting("UserDBPref", "logcon");
+		define('DB_CONFIG',			$tblPref . "config");
+		define('DB_GROUPS',			$tblPref . "groups");
+		define('DB_GROUPMEMBERS',	$tblPref . "groupmembers");
+		define('DB_SEARCHES',		$tblPref . "searches");
+		define('DB_SOURCES',		$tblPref . "sources");
+		define('DB_USERS',			$tblPref . "users");
+		define('DB_VIEWS',			$tblPref . "views");
 
 		// Legacy support for old columns definition format!
 		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
@@ -295,7 +300,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		// --- 
 
 		// For MiscShowPageRenderStats
-		if ( $CFG['MiscShowPageRenderStats'] == 1 )
+		if ( GetConfigSetting("MiscShowPageRenderStats", 1) )
 		{
 			$content['ShowPageRenderStats'] = "true";
 			InitPageRenderStats();

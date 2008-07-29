@@ -52,8 +52,9 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 
 // --- PreCheck if conversion is allowed!
 if ( 
-		(isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled']) &&
-		(isset($CFG['UserDBConvertAllowed']) && $CFG['UserDBConvertAllowed']) 
+		
+		GetConfigSetting("UserDBEnabled", false) &&
+		GetConfigSetting("UserDBConvertAllowed", false) 
 	) 
 {
 	// Setup static values
@@ -113,16 +114,14 @@ $content['LN_CONVERT_TITLETOP'] = GetAndReplaceLangStr( $content['LN_CONVERT_TIT
 if ( $content['CONVERT_STEP'] == 2 )
 {	
 	// Check the database connect
-	$link_id = mysql_connect( $CFG['UserDBServer'], $CFG['UserDBUser'], $CFG['UserDBPass']);
+	$link_id = mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass") );
 	if (!$link_id) 
-		RevertOneStep( $content['CONVERT_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $CFG['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
+		RevertOneStep( $content['CONVERT_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], GetConfigSetting("UserDBServer") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
 	
 	// Try to select the DB!
-	$db_selected = mysql_select_db($CFG['UserDBName'], $link_id);
+	$db_selected = mysql_select_db(GetConfigSetting("UserDBName"), $link_id);
 	if(!$db_selected) 
-		RevertOneStep( $content['CONVERT_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $CFG['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
-
-	
+		RevertOneStep( $content['CONVERT_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], GetConfigSetting("UserDBName") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
 }
 else if ( $content['CONVERT_STEP'] == 3 )
 {	
@@ -145,7 +144,7 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	}
 
 	// Replace stats_ with the custom one ;)
-	$totaldbdefs = str_replace( "`logcon_", "`" . $CFG["UserDBPref"], $totaldbdefs );
+	$totaldbdefs = str_replace( "`logcon_", "`" . GetConfigSetting("UserDBPref"), $totaldbdefs );
 	
 	// Now split by sql command
 	$mycommands = split( ";\n", $totaldbdefs );
@@ -163,7 +162,7 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	}
 
 	// Append INSERT Statement for Config Table to set the Database Version ^^!
-	$mycommands[count($mycommands)] = "INSERT INTO `" . $CFG["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
+	$mycommands[count($mycommands)] = "INSERT INTO `" . GetConfigSetting("UserDBPref") . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
 
 	// --- Now execute all commands
 	ini_set('error_reporting', E_WARNING); // Enable Warnings!

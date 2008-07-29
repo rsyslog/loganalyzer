@@ -117,7 +117,7 @@ function GetAdditionalUrl($skipParam, $appendParam = "")
 
 function CreateCurrentUrl()
 {
-	global $content, $CFG;
+	global $content;
 	$content['CURRENTURL'] = $_SERVER['PHP_SELF']; // . "?" . $_SERVER['QUERY_STRING']
 	
 	// Init additional_url helper variable
@@ -131,11 +131,12 @@ function CreateCurrentUrl()
 	$hvCounter = 0;
 
 	// Append SourceID into everything!
-	if ( (isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ])) && isset($_SESSION['currentSourceID']) ) 
+	$tmpDefSourceID = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
+	if ( isset($content['Sources'][ $tmpDefSourceID ]) && isset($_SESSION['currentSourceID']) ) 
 	{
 
 		// If the DefaultSourceID differes from the SourceID in our Session, we will append the sourceid within all URL's!
-		if ( $CFG['DefaultSourceID'] != $_SESSION['currentSourceID'] )
+		if ( $tmpDefSourceID != $_SESSION['currentSourceID'] )
 		{
 //			$content['additional_url'] .= "&sourceid=" . $_SESSION['currentSourceID'];
 			$content['additional_url_uidonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
@@ -210,13 +211,13 @@ function CreateCurrentUrl()
 
 function GetFormatedDate($evttimearray)
 {
-	global $content, $CFG;
+	global $content;
 
 	if ( !is_array($evttimearray) )
 		return $evttimearray;
 
 	if ( 
-			( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
+			GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
 			&&
 			( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
 		)
@@ -233,9 +234,7 @@ function GetFormatedDate($evttimearray)
 
 function OutputDebugMessage($szDbg)
 {
-	global $CFG;
-
-	if ( $CFG['MiscShowDebugMsg'] == 1 )
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 	{
 		print("<table width=\"600\" align=\"center\" class=\"with_border\">");
 		print("<tr><td valign='top'><B>Debugmessage:</B> </td>");

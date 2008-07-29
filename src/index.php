@@ -300,7 +300,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 			{
 				// --- Extra stuff for suppressing messages
 				if (
-						isset($CFG['SuppressDuplicatedMessages']) && $CFG['SuppressDuplicatedMessages'] == 1 
+						GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
 						&&
 						isset($logArray[SYSLOG_MESSAGE])
 					)
@@ -474,7 +474,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 								// Set truncasted message for display
 								if ( isset($logArray[SYSLOG_MESSAGE]) )
 								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $CFG['ViewMessageCharacterLimit'] ? substr($logArray[SYSLOG_MESSAGE], 0, $CFG['ViewMessageCharacterLimit'] ) . " ..." : $logArray[SYSLOG_MESSAGE]);
+									// Copy tmp
+									$tmpCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
+
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $tmpCharLimit ? substr($logArray[SYSLOG_MESSAGE], 0, $tmpCharLimit) . " ..." : $logArray[SYSLOG_MESSAGE]);
 
 									// Enable LINK property! for this field
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['ismessagefield'] = true;
@@ -493,7 +496,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 								AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
 								// --- 
 
-								if ( isset($CFG['ViewEnableDetailPopups']) && $CFG['ViewEnableDetailPopups'] == 1 )
+								if ( GetConfigSetting("ViewEnableDetailPopups", 0, CFGLEVEL_USER) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $logArray[SYSLOG_UID]);
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";

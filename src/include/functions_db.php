@@ -51,16 +51,16 @@ $content['database_installedversion'] = "0";	// 0 is default which means Prior V
 
 function DB_Connect() 
 {
-	global $userdbconn, $CFG;
+	global $userdbconn;
 
 	// Avoid if already OPEN
 	if ($userdbconn) 
 		return;
 
 	//TODO: Check variables first
-	$userdbconn = mysql_connect($CFG['UserDBServer'],$CFG['UserDBUser'],$CFG['UserDBPass']);
+	$userdbconn = mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
 	if (!$userdbconn) 
-		DB_PrintError("Link-ID == false, connect to ".$CFG['UserDBServer']." failed", true);
+		DB_PrintError("Link-ID == false, connect to " . GetConfigSetting("UserDBServer") . " failed", true);
 	
 	// --- Now, check Mysql DB Version!
 	$strmysqlver = mysql_get_server_info();
@@ -82,9 +82,9 @@ function DB_Connect()
 	}
 	// ---
 
-	$db_selected = mysql_select_db($CFG['UserDBName'], $userdbconn);
+	$db_selected = mysql_select_db( GetConfigSetting("UserDBName"), $userdbconn );
 	if(!$db_selected) 
-		DB_PrintError("Cannot use database '" . $CFG['UserDBName'] . "'", true);
+		DB_PrintError("Cannot use database '" .GetConfigSetting("UserDBName") . "'", true);
 	// :D Success connecting to db
 
 	// TODO Do some more validating on the database
@@ -99,8 +99,7 @@ function DB_Disconnect()
 function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -118,8 +117,7 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 function DB_FreeQuery($query_id)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -130,8 +128,7 @@ function DB_FreeQuery($query_id)
 function DB_GetRow($query_id) 
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -143,8 +140,7 @@ function DB_GetRow($query_id)
 function DB_GetSingleRow($query_id, $bClose) 
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -165,8 +161,7 @@ function DB_GetSingleRow($query_id, $bClose)
 function DB_GetAllRows($query_id, $bClose)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -191,8 +186,7 @@ function DB_GetAllRows($query_id, $bClose)
 function DB_GetMysqlStats()
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -209,7 +203,7 @@ function DB_ReturnSimpleErrorMsg()
 
 function DB_PrintError($MyErrorMsg, $DieOrNot)
 {
-	global $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep, $CFG;
+	global $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep;
 
 	$errdesc = mysql_error();
 	$errno = mysql_errno();
@@ -260,8 +254,7 @@ function DB_StripSlahes($myString)
 function DB_ReturnLastInsertID($myResult = false)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -272,8 +265,7 @@ function DB_ReturnLastInsertID($myResult = false)
 function DB_GetRowCount($query)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -288,8 +280,7 @@ function DB_GetRowCount($query)
 function DB_GetRowCountByResult($myresult)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -300,8 +291,7 @@ function DB_GetRowCountByResult($myresult)
 function DB_Exec($query)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -323,9 +313,10 @@ function PrepareValueForDB($szValue)
 
 function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false)
 {
+	global $content;
+
 	// --- Abort in this case!
-	global $CFG, $content;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -366,8 +357,7 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 function GetSingleDBEntryOnly( $myqry )
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -384,8 +374,7 @@ function GetSingleDBEntryOnly( $myqry )
 function GetRowsAffected()
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 

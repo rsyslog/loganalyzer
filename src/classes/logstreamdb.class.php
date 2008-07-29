@@ -772,9 +772,7 @@ class LogStreamDB extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
-		global $CFG;
-
-		if ( isset($CFG['MiscShowDebugMsg']) && $CFG['MiscShowDebugMsg'] == 1 )
+		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 		{
 			$errdesc = mysql_error();
 			$errno = mysql_errno();

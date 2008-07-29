@@ -788,8 +788,7 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
-		global $CFG;
-		if ( isset($CFG['MiscShowDebugMsg']) && $CFG['MiscShowDebugMsg'] == 1 )
+		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 		{
 			$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
 			$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();

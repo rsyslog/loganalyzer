@@ -125,7 +125,7 @@ function CreateUserName( $username, $password, $is_admin )
 
 function CheckUserLogin( $username, $password )
 {
-	global $content, $CFG;
+	global $content;
 
 	// TODO: SessionTime and AccessLevel check
 
@@ -180,7 +180,7 @@ function CheckUserLogin( $username, $password )
 	}
 	else
 	{
-		if ( $CFG['DebugUserLogin'] == 1 )
+		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
 			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
 		
 		// Default return false

@@ -81,7 +81,7 @@ if ( $myPhpVerArray[0] < 5 )
 function InitBasicPhpLogCon()
 {
 	// Needed to make global
-	global $CFG, $gl_root_path, $content;
+	global $gl_root_path, $content;
 
 	// Check RunMode first!
 	CheckAndSetRunMode();
@@ -99,9 +99,9 @@ function InitBasicPhpLogCon()
 function InitUserSystemPhpLogCon()
 {
 	// global vars needed
-	global $CFG, $gl_root_path, $content;
+	global $gl_root_path, $content;
 
-	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
+	if ( GetConfigSetting("UserDBEnabled", false) )
 	{
 		// Include User Functions
 		include($gl_root_path . 'include/functions_users.php');
@@ -135,7 +135,7 @@ function GetFileLength($szFileName)
 function InitPhpLogCon()
 {
 	// Needed to make global
-	global $CFG, $gl_root_path, $content;
+	global $gl_root_path, $content;
 
 	// Init Basics which do not need a database
 	InitBasicPhpLogCon();
@@ -150,7 +150,7 @@ function InitPhpLogCon()
 	InitRuntimeInformations();
 
 	// Establish DB Connection
-	if ( $CFG['UserDBEnabled'] )
+	if ( GetConfigSetting("UserDBEnabled", false) )
 		DB_Connect();
 
 	// Now load the Page configuration values
@@ -272,10 +272,11 @@ function CreateDBTypesList( $selectedDBType )
 
 function CreatePagesizesList()
 {
-	global $CFG, $content;
+	global $content;
 
+	$tmpViewsPerPage = GetConfigSetting("ViewEntriesPerPage", 50, CFGLEVEL_USER);
 	$iCounter = 0;
-	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $tmpViewsPerPage . ")", "Value" => $tmpViewsPerPage ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 25 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 25 ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 50 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 50 ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 75 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 75 ); $iCounter++;
@@ -292,14 +293,15 @@ function CreatePagesizesList()
 
 function CreateReloadTimesList()
 {
-	global $CFG, $content;
+	global $content;
 
-// $CFG['ViewEnableAutoReloadSeconds']
 	$iCounter = 0;	
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_DISABLED'], "Value" => 0 ); $iCounter++;
-	if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+
+	$tmpReloadSeconds = GetConfigSetting("ViewEnableAutoReloadSeconds", "", CFGLEVEL_USER);
+	if ( $tmpReloadSeconds > 0 )
 	{
-		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $CFG['ViewEnableAutoReloadSeconds'] . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $CFG['ViewEnableAutoReloadSeconds'] ); $iCounter++;
+		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $tmpReloadSeconds . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $tmpReloadSeconds ); $iCounter++;
 	}
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 5 ); $iCounter++;
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 10 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 10 ); $iCounter++;
@@ -349,10 +351,10 @@ function CreatePredefinedSearches()
 
 function InitPhpDebugMode()
 {
-	global $content, $CFG;
+	global $content;
 
 	// --- Set Global DEBUG Level!
-	if ( $CFG['MiscShowDebugMsg'] == 1 )
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 		ini_set( "error_reporting", E_ALL ); // ALL PHP MESSAGES!
 	else
 		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
@@ -372,12 +374,12 @@ function CheckAndSetRunMode()
 
 function InitRuntimeInformations()
 {
-	global $content, $CFG;
+	global $content;
 
 	// TODO| maybe not needed!
 	
 	// Enable GZIP Compression if enabled!
-	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && (isset($CFG['MiscEnableGzipCompression']) && $CFG['MiscEnableGzipCompression'] == 1) ) 
+	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
 	{
 		// This starts gzip compression!
 		ob_start("ob_gzhandler");
@@ -491,7 +493,7 @@ function InitConfigurationValues()
 	if ( !defined('IN_PHPLOGCON_CONVERT') )
 	{
 		// If Database is enabled, try to read from database!
-		if ( $CFG['UserDBEnabled'] )
+		if ( GetConfigSetting("UserDBEnabled", false) )
 		{
 			// Get configuration variables 
 			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
@@ -519,7 +521,7 @@ function InitConfigurationValues()
 			{
 
 				// Check if user needs to be logged in
-				if ( isset($CFG["UserDBLoginRequired"]) && $CFG["UserDBLoginRequired"] == true )
+				if ( GetConfigSetting("UserDBLoginRequired", false) )
 				{
 						// User needs to be logged in, redirect to login page
 						if ( !defined("IS_NOLOGINPAGE") )
@@ -569,7 +571,7 @@ function InitConfigurationValues()
 	}
 	else	// Failsave!
 	{
-		$content['user_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/;
+		$content['user_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_USER) /*"en"*/;
 		$LANG = $content['user_lang'];
 		$content['gen_lang'] = $content['user_lang'];
 	}
@@ -585,14 +587,14 @@ function InitConfigurationValues()
 	// Auto reload handling!
 	if ( !isset($_SESSION['AUTORELOAD_ID']) )
 	{
-		if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+		if ( GetConfigSetting("ViewEnableAutoReloadSeconds", 0, CFGLEVEL_USER) > 0 )
 			$_SESSION['AUTORELOAD_ID'] = 1; // Autoreload ID will be the first item!
 		else	// Default is 0, which means auto reload disabled
 			$_SESSION['AUTORELOAD_ID'] = 0;
 	}
 
 	// Theme Handling
-	if ( !isset($content['web_theme']) ) { $content['web_theme'] = $CFG['ViewDefaultTheme'] /*"default"*/; }
+	if ( !isset($content['web_theme']) ) { $content['web_theme'] = GetConfigSetting("ViewDefaultTheme", "default", CFGLEVEL_USER); }
 	if ( isset($_SESSION['CUSTOM_THEME']) && VerifyTheme($_SESSION['CUSTOM_THEME']) )
 		$content['user_theme'] = $_SESSION['CUSTOM_THEME'];
 	else
@@ -700,10 +702,11 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 */
 function InitPageTitle()
 {
-	global $content, $CFG, $currentSourceID;
+	global $content, $currentSourceID;
 
-	if ( isset($CFG['PrependTitle']) && strlen($CFG['PrependTitle']) > 0 )
-		$szReturn = $CFG['PrependTitle'] . " :: ";
+	$tmpTitle = GetConfigSetting("PrependTitle", "");
+	if ( strlen($tmpTitle) > 0 )
+		$szReturn = $tmpTitle . " :: ";
 	else
 		$szReturn = "";
 
@@ -885,10 +888,10 @@ function GetMonthFromString($szMonth)
 */
 function AddContextLinks(&$sourceTxt)
 {
-	global $szTLDDomains, $CFG;
+	global $szTLDDomains;
 	
 	// Return if not enabled!
-	if ( !isset($CFG['EnableIPAddressResolve']) || $CFG['EnableIPAddressResolve'] == 1 )
+	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
 		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/e', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
@@ -1074,6 +1077,25 @@ function SaveGeneralSettingsIntoDB()
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", true );
 	WriteConfigValue( "DefaultSourceID", true );
+}
+
+function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLevel = CFGLEVEL_GLOBAL)
+{
+	global $content, $CFG;
+
+	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
+	{
+		if ( $DesiredConfigLevel == CFGLEVEL_USER )
+		{
+			// TODO!
+		}
+	}
+
+	// Either UserDB disabled, or global setting wanted - easier handling
+	if ( isset($CFG[$szSettingName]) ) 
+		return $CFG[$szSettingName];
+	else
+		return $szDefaultValue;
 }
 
 ?>

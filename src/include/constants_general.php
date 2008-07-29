@@ -57,6 +57,12 @@ define('STR_DEBUG_WARN', "Warning");
 define('STR_DEBUG_ERROR', "Error");
 define('STR_DEBUG_ERROR_WTF', "WTF OMFG");
 
+// --- Config Level defines
+define('CFGLEVEL_GLOBAL', 0);
+define('CFGLEVEL_GROUP', 1);
+define('CFGLEVEL_USER', 2);
+// --- 
+
 // --- Source Type defines
 define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
