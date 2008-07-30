@@ -320,38 +320,77 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		return;
 	// ---
 
-	// !!! TODO HANDLE USER AND GROUP FIELDS!
-		
-	if ( isset($content[$szPropName]) )
+	if ( $is_global ) 
 	{
-		// Copy value for DB and check for BadDB Chars!
-		$szDbValue = PrepareValueForDB( $content[$szPropName] );
-	}
-	else
-	{
-		// Set empty in this case
-		$szDbValue = "";
-		$content[$szPropName] = "";
-	}
+		if ( isset($content[$szPropName]) )
+		{
+			// Copy value for DB and check for BadDB Chars!
+			$szDbValue = PrepareValueForDB( $content[$szPropName] );
+		}
+		else
+		{
+			// Set empty in this case
+			$szDbValue = "";
+			$content[$szPropName] = "";
+		}
 
-	// Copy to $CFG array as well
-	$CFG[$szPropName] = $content[$szPropName];
-	
-	// Check if we need to INSERT or UPDATE
-	$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
-	$rows = DB_GetAllRows($result, true);
-	if ( !isset($rows) )
-	{
-		// New Entry
-		$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
-		DB_FreeQuery($result);
+		// Copy to $CFG array as well
+		$CFG[$szPropName] = $content[$szPropName];
+		
+		// Check if we need to INSERT or UPDATE
+		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+		$rows = DB_GetAllRows($result, true);
+		if ( !isset($rows) )
+		{
+			// New Entry
+			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+			DB_FreeQuery($result);
+		}
+		else
+		{
+			// Update Entry
+			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+			DB_FreeQuery($result);
+		}
 	}
-	else
+	else if ( $userid != false ) 
 	{
-		// Update Entry
-		$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
-		DB_FreeQuery($result);
+		global $USERCFG;
+
+		if ( isset($USERCFG[$szPropName]) )
+		{
+			// Copy value for DB and check for BadDB Chars!
+			$szDbValue = PrepareValueForDB( $USERCFG[$szPropName] );
+		}
+		else
+		{
+			// Set empty in this case
+			$szDbValue = "";
+			$USERCFG[$szPropName] = "";
+		}
+
+		// Check if we need to INSERT or UPDATE
+		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+		$rows = DB_GetAllRows($result, true);
+		if ( !isset($rows) )
+		{
+			// New Entry
+			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, userid) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $userid . ")");
+			DB_FreeQuery($result);
+		}
+		else
+		{
+			// Update Entry
+			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+			DB_FreeQuery($result);
+		}
+
 	}
+	else if ( $groupid != false ) 
+		DieWithFriendlyErrorMsg( "Critical Error occured in WriteConfigValue, writing GROUP specific properties is not supported yet!" );
+
+		
+
 } 
 
 function GetSingleDBEntryOnly( $myqry )

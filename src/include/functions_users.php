@@ -52,7 +52,7 @@ $content['IS_USERSYSTEMENABLED'] = true;
 // --- BEGIN Usermanagement Function --- 
 function InitUserSession()
 {
-	global $content; 
+	global $USERCFG, $content; 
 
 	// --- Hide donate Button if not on Admin Page
 	if ( !defined('IS_ADMINPAGE') )
@@ -77,6 +77,26 @@ function InitUserSession()
 			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
 			if ( isset($_SESSION['SESSION_GROUPIDS']) )
 				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
+
+			// --- Now we obtain user specific general settings from the DB for the user!
+			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE userid = " . $content['SESSION_USERID']);
+			if ( $result )
+			{
+				$rows = DB_GetAllRows($result, true);
+				// Read results from DB and overwrite in $CFG Array!
+				if ( isset($rows ) )
+				{
+					for($i = 0; $i < count($rows); $i++)
+					{
+						// Store and overwrite settings from the user here!
+						$USERCFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+//						$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+					}
+				}
+			}
+			else // Critical ERROR HERE!
+				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
+			// --- 
 			
 			// Successfully logged in
 			return true;

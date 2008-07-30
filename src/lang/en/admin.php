@@ -78,6 +78,12 @@ $content['LN_GEN_ACCESSDENIED'] = "Access denied to this function";
 $content['LN_GEN_DEFVIEWS'] = "Default selected view";
 $content['LN_GEN_DEFSOURCE'] = "Default selected source";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Suppress duplicated messages";
+	$content['LN_GEN_OPTIONNAME'] = "Option name";
+	$content['LN_GEN_GLOBALVALUE'] = "Global value";
+	$content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
+	$content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
+	$content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
+
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

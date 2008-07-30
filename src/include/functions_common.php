@@ -146,15 +146,15 @@ function InitPhpLogCon()
 	// Init UserDB related stuff!
 	InitUserSystemPhpLogCon();
 
-	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
-	InitRuntimeInformations();
-
 	// Establish DB Connection
 	if ( GetConfigSetting("UserDBEnabled", false) )
 		DB_Connect();
 
 	// Now load the Page configuration values
 	InitConfigurationValues();
+
+	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
+	InitRuntimeInformations();
 
 	// Now Create Themes List because we haven't the config before!
 	CreateThemesList();
@@ -376,8 +376,6 @@ function InitRuntimeInformations()
 {
 	global $content;
 
-	// TODO| maybe not needed!
-	
 	// Enable GZIP Compression if enabled!
 	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
 	{
@@ -445,7 +443,8 @@ function InitFrontEndVariables()
 	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
 	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";
 	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
-
+	$content['MENU_USEROPTIONS'] = $content['BASEPATH'] . "images/icons/businessman_preferences.png";
+	
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
 	$content['MENU_PAGER_NEXT'] = $content['BASEPATH'] . "images/icons/media_fast_forward.png";
@@ -500,7 +499,7 @@ function InitConfigurationValues()
 			
 			if ( $result )
 			{
-				$rows = DB_GetAllRows($result, true, true);
+				$rows = DB_GetAllRows($result, true);
 				// Read results from DB and overwrite in $CFG Array!
 				if ( isset($rows ) )
 				{
@@ -704,7 +703,7 @@ function InitPageTitle()
 {
 	global $content, $currentSourceID;
 
-	$tmpTitle = GetConfigSetting("PrependTitle", "");
+	$tmpTitle = GetConfigSetting("PrependTitle", "", CFGLEVEL_USER);
 	if ( strlen($tmpTitle) > 0 )
 		$szReturn = $tmpTitle . " :: ";
 	else
@@ -1079,15 +1078,51 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "DefaultSourceID", true );
 }
 
+function SaveUserGeneralSettingsIntoDB()
+{
+	global $content;
+
+	WriteConfigValue( "ViewDefaultLanguage", false, $content['SESSION_USERID']);
+	WriteConfigValue( "ViewDefaultTheme", false, $content['SESSION_USERID'] );
+
+	WriteConfigValue( "ViewUseTodayYesterday", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEnableDetailPopups", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "EnableIPAddressResolve", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowDebugMsg", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowDebugGridCounter", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowPageRenderStats", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscEnableGzipCompression", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SuppressDuplicatedMessages", false, $content['SESSION_USERID'] );
+
+	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", false, $content['SESSION_USERID'] );
+
+	WriteConfigValue( "PrependTitle", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SearchCustomButtonCaption", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SearchCustomButtonSearch", false, $content['SESSION_USERID'] );
+	
+	// Extra Fields
+	WriteConfigValue( "DefaultViewsID", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "DefaultSourceID", false, $content['SESSION_USERID'] );
+}
+
+
 function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLevel = CFGLEVEL_GLOBAL)
 {
-	global $content, $CFG;
+	global $content, $CFG, $USERCFG;
 
 	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
 	{
 		if ( $DesiredConfigLevel == CFGLEVEL_USER )
 		{
-			// TODO!
+			// only use user settings if desired by the user
+			if ( isset($USERCFG['UserOverwriteOptions']) && $USERCFG['UserOverwriteOptions'] == 1 ) 
+			{
+				// return user specific setting if available
+				if ( isset($USERCFG[$szSettingName]) ) 
+					return $USERCFG[$szSettingName];
+			}
 		}
 	}
 
