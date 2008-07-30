@@ -32,8 +32,9 @@
      you can skip the following step: 
      
          Upload the scripts configure.sh and secure.sh from the 
-         contrib folder to your webserver, and set the execution 
-         flag to them (chmod +x configure.sh secure.sh). 
+         contrib folder to your webserver, into the same folder 
+	 where you uploaded the other phplogcon files into. Then set 
+	 the execution flag to them (chmod +x configure.sh secure.sh). 
          
          Now run ./configure.sh, this will create a blank config.php, 
          and will also set write access to everyone to it.
