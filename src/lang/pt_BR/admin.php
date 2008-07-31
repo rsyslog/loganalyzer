@@ -48,6 +48,11 @@ $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
 $content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
+$content['LN_GEN_OPTIONNAME'] = "Option name";
+$content['LN_GEN_GLOBALVALUE'] = "Global value";
+$content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
+$content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
+$content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
 
 
 // General Options

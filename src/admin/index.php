@@ -213,16 +213,44 @@ if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "che
 if ($content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
 // --- 
 
+// --- Init for Style field!
+
+// copy STYLES Array
+$content['GLOBAL_STYLES'] = $content['STYLES'];
+$defaultStyleID = GetConfigSetting('ViewDefaultTheme', "default", CFGLEVEL_GLOBAL);
+foreach ( $content['GLOBAL_STYLES'] as &$myStyle )
+{
+	if ( $myStyle['StyleName'] == $defaultStyleID )
+		$myStyle['selected'] = "selected";
+	else
+		$myStyle['selected'] = "";
+}
+// --- 
+
+// --- Init for ViewDefaultLanguage field!
+// copy LANGUAGES Array
+$content['GLOBAL_LANGUAGES'] = $content['LANGUAGES'];
+
+$defaultLangID = GetConfigSetting('ViewDefaultLanguage', "en", CFGLEVEL_GLOBAL);
+foreach ( $content['GLOBAL_LANGUAGES'] as &$myLang )
+{
+	if ( $myLang['langcode'] == $defaultLangID )
+		$myLang['selected'] = "selected";
+	else
+		$myLang['selected'] = "";
+}
+// --- 
+
 // --- Init for DefaultView field!
 // copy Views Array
 $content['VIEWS'] = $content['Views'];
 if ( !isset($content['DefaultViewsID']) ) { $content['DefaultViewsID'] = 'SYSLOG'; }
-foreach ( $content['VIEWS'] as $myView )
+foreach ( $content['VIEWS'] as &$myView )
 {
 	if ( $myView['ID'] == $content['DefaultViewsID'] )
-		$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
+		$myView['selected'] = "selected";
 	else
-		$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
+		$myView['selected'] = "";
 }
 // --- 
 
@@ -230,12 +258,12 @@ foreach ( $content['VIEWS'] as $myView )
 // copy Sources Array
 $content['SOURCES'] = $content['Sources'];
 if ( !isset($content['DefaultSourceID']) ) { $content['DefaultSourceID'] = ''; }
-foreach ( $content['SOURCES'] as $mySource )
+foreach ( $content['SOURCES'] as &$mySource )
 {
 	if ( $mySource['ID'] == $content['DefaultSourceID'] )
-		$content['SOURCES'][ $mySource['ID'] ]['selected'] = "selected";
+		$mySource['selected'] = "selected";
 	else
-		$content['SOURCES'][ $mySource['ID'] ]['selected'] = "";
+		$mySource['selected'] = "";
 }
 // --- 
 
@@ -305,7 +333,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	// --- Init for DefaultSource field!
 	// copy Sources Array
 	$content['USER_SOURCES'] = $content['Sources'];
-	$userSourceID = GetConfigSetting('DefaultViewsID', $content['DefaultViewsID'], CFGLEVEL_USER);
+	$userSourceID = GetConfigSetting('DefaultSourceID', $content['DefaultSourceID'], CFGLEVEL_USER);
 	foreach ( $content['USER_SOURCES'] as &$mySource )
 	{
 		if ( $mySource['ID'] == $userSourceID )
