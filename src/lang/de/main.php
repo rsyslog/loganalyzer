@@ -61,8 +61,24 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
 	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error: '%2'";
+	$content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
 $content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.";
-
+	$content['LN_ERROR_FILE_NOT_FOUND'] = "Syslog file could not be found";
+	$content['LN_ERROR_FILE_NOT_READABLE'] = "Syslog file is not readable, read access may be denied";
+	$content['LN_ERROR_UNKNOWN'] = "Unknown or unhandled error occured (Error Code '%1')";
+	$content['LN_ERROR_FILE_EOF'] = "End of File reached";
+	$content['LN_ERROR_FILE_BOF'] = "Begin of File reeached";
+	$content['LN_ERROR_FILE_CANT_CLOSE'] = "Can't close File";
+	$content['LN_ERROR_UNDEFINED'] = "Undefined Error";
+	$content['LN_ERROR_EOS'] = "End of stream reached";
+	$content['LN_ERROR_FILTER_NOT_MATCH'] = "Filter does not match any results";
+	$content['LN_ERROR_DB_CONNECTFAILED'] = "Connection to the database server failed";
+	$content['LN_ERROR_DB_CANNOTSELECTDB'] = "Could not find the configured database";
+	$content['LN_ERROR_DB_QUERYFAILED'] = "Dataquery failed to execute";
+	$content['LN_ERROR_DB_NOPROPERTIES'] = "No database properties found";
+	$content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
+	$content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
+	$content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Suchen";
@@ -250,7 +266,5 @@ $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 	$content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
 	$content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
 	$content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
-	$content['LN_CONVERT_'] = "";
-	$content['LN_CONVERT_'] = "";
-	$content['LN_CONVERT_'] = "";
+
 ?>

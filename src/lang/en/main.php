@@ -56,13 +56,13 @@ $content['LN_GEN_DB_DB2'] = "	IBM DB2";
 $content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
 $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
-	$content['LN_GEN_SELECTVIEW'] = "Select View";
-	$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
-	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
-	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
+$content['LN_GEN_SELECTVIEW'] = "Select View";
+$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
+$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
+$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
-	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error:<br>%2";
-	$content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
+$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error:<br>%2";
+$content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
 $content['LN_ERROR_NORECORDS'] = "No syslog records found";
 $content['LN_ERROR_FILE_NOT_FOUND'] = "Syslog file could not be found";
 $content['LN_ERROR_FILE_NOT_READABLE'] = "Syslog file is not readable, read access may be denied";
@@ -80,19 +80,18 @@ $content['LN_ERROR_DB_NOPROPERTIES'] = "No database properties found";
 $content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
 $content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
 $content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
-$content['LN_ERROR_'] = "";
 
 // Topmenu Entries
-	$content['LN_MENU_SEARCH'] = "Search";
-	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
-	$content['LN_MENU_HELP'] = "Help";
-	$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
-	$content['LN_MENU_LOGIN'] = "Login";
-	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
-	$content['LN_MENU_LOGOFF'] = "Logoff";
-	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
-	$content['LN_MENU_MAXVIEW'] = "Maximize View";
-	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
+$content['LN_MENU_SEARCH'] = "Search";
+$content['LN_MENU_SHOWEVENTS'] = "Show Events";
+$content['LN_MENU_HELP'] = "Help";
+$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
+$content['LN_MENU_LOGIN'] = "Login";
+$content['LN_MENU_ADMINCENTER'] = "Admin Center";
+$content['LN_MENU_LOGOFF'] = "Logoff";
+$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
+$content['LN_MENU_MAXVIEW'] = "Maximize View";
+$content['LN_MENU_NORMALVIEW'] = "Normalize View";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";
@@ -110,8 +109,8 @@ $content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message
 $content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
 $content['LN_VIEW_FILTERFOR'] = "Filter message for ";
 $content['LN_VIEW_SEARCHFOR'] = "Search online for ";
-	$content['LN_VIEW_SEARCHFORGOOGLE'] = "Search Google for ";
-	$content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
+$content['LN_VIEW_SEARCHFORGOOGLE'] = "Search Google for ";
+$content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
@@ -268,9 +267,6 @@ $content['LN_CONVERT_STEP6'] = "Step 8 - Done";
 $content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
 $content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
 $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
-$content['LN_CONVERT_'] = "";
-$content['LN_CONVERT_'] = "";
-$content['LN_CONVERT_'] = "";
 
 
 ?>
