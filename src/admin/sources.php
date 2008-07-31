@@ -281,9 +281,8 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
 			if ( isset($_POST['SourceDBEnableRowCounting']) ) {	$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']); }
 			// Extra Check for this property
-			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
-				$_SESSION['SourceDBEnableRowCounting'] = "false";
-
+			if ( $content['SourceDBEnableRowCounting'] != "true" )
+				$content['SourceDBEnableRowCounting'] = "false";
 		}
 	}
 
@@ -337,26 +336,27 @@ if ( isset($_POST['op']) )
 			else 
 			{
 				// Get plain filename for testing!
-				$szFileName = DB_StripSlahes($content['SourceDiskFile']);
+				$content['SourceDiskFileTesting'] = DB_StripSlahes($content['SourceDiskFile']);
 
 				// Take as it is if rootpath!
 				if (
-						( ($pos = strpos($szFileName, "/")) !== FALSE && $pos == 0) ||
-						( ($pos = strpos($szFileName, ":\\")) !== FALSE ) ||
-						( ($pos = strpos($szFileName, ":/")) !== FALSE )
+						( ($pos = strpos($content['SourceDiskFileTesting'], "/")) !== FALSE && $pos == 0) ||
+						( ($pos = strpos($content['SourceDiskFileTesting'], ":\\")) !== FALSE ) ||
+						( ($pos = strpos($content['SourceDiskFileTesting'], ":/")) !== FALSE )
 					)
 				{
 					// Nothing really todo
-					$szFileName = $szFileName;
+					true;
 				}
 				else // prepend basepath!
-					$szFileName = $gl_root_path . $szFileName;
-
-				if ( !is_file($szFileName) )
+					$content['SourceDiskFileTesting'] = $gl_root_path . $content['SourceDiskFileTesting'];
+/*
+				if ( !is_file($content['SourceDiskFileTesting']) )
 				{
 					$content['ISERROR'] = true;
 					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $szFileName );
 				}
+*/
 			}
 		}
 		// DB Params
@@ -398,6 +398,52 @@ if ( isset($_POST['op']) )
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'], $content['SourceDBType'] );
 		}
+
+		// --- Verify the Source and report and error if needed!
+
+		// Include LogStream facility
+		include($gl_root_path . 'classes/logstream.class.php');
+
+		// First create a tmp source array
+		$tmpSource['ID']		= $content['SOURCEID'];
+		$tmpSource['Name']		= $content['Name'];
+		$tmpSource['SourceType']= $content['SourceType'];
+		$tmpSource['ViewID']	= $content['SourceViewID'];
+		if ( $tmpSource['SourceType'] == SOURCE_DISK ) 
+		{
+			$tmpSource['LogLineType']	= $content['SourceLogLineType'];
+			$tmpSource['DiskFile']		= $content['SourceDiskFileTesting']; // use SourceDiskFileTesting rather then SourceDiskFile as it is corrected
+		}
+		// DB Params
+		else if ( $tmpSource['SourceType'] == SOURCE_DB || $tmpSource['SourceType'] == SOURCE_PDO ) 
+		{
+			$tmpSource['DBType']		= $content['SourceDBType'];
+			$tmpSource['DBName']		= $content['SourceDBName'];
+			$tmpSource['DBTableType']	= $content['SourceDBTableType'];
+			$tmpSource['DBServer']		= $content['SourceDBServer'];
+			$tmpSource['DBTableName']	= $content['SourceDBTableName'];
+			$tmpSource['DBUser']		= $content['SourceDBUser'];
+			$tmpSource['DBPassword']	= $content['SourceDBPassword'];
+			$tmpSource['DBEnableRowCounting'] = $content['SourceDBEnableRowCounting'];
+			$tmpSource['userid']		= $content['userid'];
+			$tmpSource['groupid']		= $content['groupid'];
+		}
+
+		// Init the source
+		InitSource($tmpSource);
+
+		// Create LogStream Object 
+		$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+		$res = $stream->Verify();
+		if ( $res != SUCCESS ) 
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+
+			if ( isset($extraErrorDescription) )
+				$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+		}
+		// ---
 	}
 
 	// --- Now ADD/EDIT do the processing!

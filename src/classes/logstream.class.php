@@ -69,6 +69,13 @@ abstract class LogStream {
 	public abstract function Close();
 
 	/**
+	* Verifies the logstream source
+	*
+	* @return integer Error stat
+	*/
+	public abstract function Verify();
+
+	/**
 	* Read the next data from the current stream. If it reads
 	* forwards or backwards depends on the current read direction.
 	*

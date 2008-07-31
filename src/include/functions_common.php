@@ -53,8 +53,12 @@ include($gl_root_path . 'include/functions_config.php');
 $RUNMODE = RUNMODE_WEBSERVER;
 $DEBUGMODE = DEBUG_INFO;
 
-// --- Disable ARGV setting @webserver!
-ini_set( "register_argc_argv", "Off" );
+// --- Change some runtime variables
+// Disable ARGV setting @webserver!
+@ini_set( "register_argc_argv", "Off" );
+
+// Enable error tracking
+@ini_set( "track_errors", "On" );
 // --- 
 
 // Default language
@@ -1131,6 +1135,54 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 		return $CFG[$szSettingName];
 	else
 		return $szDefaultValue;
+}
+
+/*
+*	Helper function to get the errorCode
+*/
+function GetErrorMessage($errorCode)
+{
+	global $content;
+
+	switch( $errorCode )
+	{
+		case ERROR_FILE_NOT_FOUND: 
+			return $content['LN_ERROR_FILE_NOT_FOUND'];
+		case ERROR_FILE_NOT_READABLE: 
+			return $content['LN_ERROR_FILE_NOT_READABLE'];
+		case ERROR_FILE_EOF:
+			return $content['LN_ERROR_FILE_EOF'];
+		case ERROR_FILE_BOF:
+			return $content['LN_ERROR_FILE_BOF'];
+		case ERROR_FILE_CANT_CLOSE:
+			return $content['LN_ERROR_FILE_CANT_CLOSE'];
+		case ERROR_UNDEFINED:
+			return $content['LN_ERROR_UNDEFINED'];
+		case ERROR_EOS:
+			return $content['LN_ERROR_EOS'];
+		case ERROR_NOMORERECORDS:
+			return $content['LN_ERROR_NORECORDS'];
+		case ERROR_FILTER_NOT_MATCH:
+			return $content['LN_ERROR_FILTER_NOT_MATCH'];
+		case ERROR_DB_CONNECTFAILED:
+			return $content['LN_ERROR_DB_CONNECTFAILED'];
+		case ERROR_DB_CANNOTSELECTDB:
+			return $content['LN_ERROR_DB_CANNOTSELECTDB'];
+		case ERROR_DB_QUERYFAILED:
+			return $content['LN_ERROR_DB_QUERYFAILED'];
+		case ERROR_DB_NOPROPERTIES:
+			return $content['LN_ERROR_DB_NOPROPERTIES'];
+		case ERROR_DB_INVALIDDBMAPPING:
+			return $content['LN_ERROR_DB_INVALIDDBMAPPING'];
+		case ERROR_DB_INVALIDDBDRIVER:
+			return $content['LN_ERROR_DB_INVALIDDBDRIVER'];
+		case ERROR_DB_TABLENOTFOUND:
+			return $content['LN_ERROR_DB_TABLENOTFOUND'];
+		
+
+		default:
+			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );
+	}
 }
 
 ?>

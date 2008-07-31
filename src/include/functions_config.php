@@ -41,141 +41,152 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'classes/logstreamconfig.class.php');
 // --- 
 
+function InitSource(&$mysource)
+{
+	global $CFG, $content, $gl_root_path, $currentSourceID;
+
+	if ( isset($mysource['SourceType']) ) 
+	{
+		// Set Array Index, TODO: Check for invalid characters!
+		$iSourceID = $mysource['ID'];
+		
+		// --- Set defaults if not set!
+		if ( !isset($mysource['LogLineType']) ) 
+		{
+			$CFG['Sources'][$iSourceID]['LogLineType'] = "syslog";
+			$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
+		}
+
+		if ( !isset($mysource['userid']) )
+		{
+			$CFG['Sources'][$iSourceID]['userid'] = null;
+			$content['Sources'][$iSourceID]['userid'] = null;
+		}
+		if ( !isset($mysource['groupid']) )
+		{
+			$CFG['Sources'][$iSourceID]['groupid'] = null;
+			$content['Sources'][$iSourceID]['groupid'] = null;
+		}
+		// ---
+
+		// Set default view id to source
+		$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
+		$szDefaultViewID = strlen($tmpVar) > 0 ? $tmpVar : "SYSLOG";
+
+		if ( isset($_SESSION[$iSourceID . "-View"]) ) 
+		{
+			// check if view is valid
+			$UserSessionViewID = $_SESSION[$iSourceID . "-View"];
+
+			if ( isset($content['Views'][$UserSessionViewID]) ) 
+			{
+				// Overwrite configured view!
+				$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
+			}
+			else
+				$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
+		}
+		else
+		{
+			if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 && isset($content['Views'][ $mysource['ViewID'] ]) )
+				// Set to configured Source ViewID
+				$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
+			else
+				// Not configured, maybe old legacy cfg. Set default view.
+				$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
+		}
+
+		// Only for the display box
+		$content['Sources'][$iSourceID]['selected'] = ""; 
+		
+		// Create Config instance!
+		if ( $mysource['SourceType'] == SOURCE_DISK )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
+			$mysource['ObjRef'] = new LogStreamConfigDisk();
+			$mysource['ObjRef']->FileName = $mysource['DiskFile'];
+			$mysource['ObjRef']->LineParserType = $mysource['LogLineType'];
+		}
+		else if ( $mysource['SourceType'] == SOURCE_DB )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigdb.class.php');
+
+			$mysource['ObjRef'] = new LogStreamConfigDB();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			// Workaround a little bug from the installer script
+			if ( isset($mysource['DBType']) )
+				$mysource['ObjRef']->DBType = $mysource['DBType'];
+			else
+				$mysource['ObjRef']->DBType = DB_MYSQL;
+
+			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
+			
+			// Legacy handling for tabletype!
+			if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
+				$mysource['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
+			else
+				$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+		}
+		else if ( $mysource['SourceType'] == SOURCE_PDO )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigpdo.class.php');
+
+			$mysource['ObjRef'] = new LogStreamConfigPDO();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			$mysource['ObjRef']->DBType = $mysource['DBType'];
+			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
+			$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+		}
+		else
+		{	
+			// UNKNOWN, remove config entry!
+			unset($content['Sources'][$iSourceID]);
+
+			// Output CRITICAL WARNING
+			DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
+		}
+
+		// Set generic configuration options
+		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
+
+		// Set default SourceID here!
+		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
+			$currentSourceID = $iSourceID;
+
+		// Copy Object REF into CFG and content Array as well!
+		$content['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef'];
+		$CFG['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef']; 
+	}
+}
+
 function InitSourceConfigs()
 {
-	global $CFG, $content, $currentSourceID, $gl_root_path;
+	global $CFG, $content, $currentSourceID;
 
 	// Init Source Configs!
 	if ( isset($CFG['Sources']) )
 	{	
-		$iCount = count($CFG['Sources']);
 		foreach( $CFG['Sources'] as &$mysource )
 		{
-			if ( isset($mysource['SourceType']) ) 
-			{
-				// Set Array Index, TODO: Check for invalid characters!
-				$iSourceID = $mysource['ID'];
-				
-				// --- Set defaults if not set!
-				if ( !isset($mysource['LogLineType']) ) 
-				{
-					$CFG['Sources'][$iSourceID]['LogLineType'] = "syslog";
-					$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
-				}
-
-				if ( !isset($mysource['userid']) )
-				{
-					$CFG['Sources'][$iSourceID]['userid'] = null;
-					$content['Sources'][$iSourceID]['userid'] = null;
-				}
-				if ( !isset($mysource['groupid']) )
-				{
-					$CFG['Sources'][$iSourceID]['groupid'] = null;
-					$content['Sources'][$iSourceID]['groupid'] = null;
-				}
-				// ---
-
-				// Set default view id to source
-				$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
-				$szDefaultViewID = strlen($tmpVar) > 0 ? $tmpVar : "SYSLOG";
-
-				if ( isset($_SESSION[$iSourceID . "-View"]) ) 
-				{
-					// check if view is valid
-					$UserSessionViewID = $_SESSION[$iSourceID . "-View"];
-
-					if ( isset($content['Views'][$UserSessionViewID]) ) 
-					{
-						// Overwrite configured view!
-						$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
-					}
-					else
-						$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
-				}
-				else
-				{
-					if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 && isset($content['Views'][ $mysource['ViewID'] ]) )
-						// Set to configured Source ViewID
-						$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
-					else
-						// Not configured, maybe old legacy cfg. Set default view.
-						$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
-				}
-
-				// Only for the display box
-				$content['Sources'][$iSourceID]['selected'] = ""; 
-				
-				// Create Config instance!
-				if ( $mysource['SourceType'] == SOURCE_DISK )
-				{
-					// Perform necessary include
-					require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
-					$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
-					$content['Sources'][$iSourceID]['ObjRef']->FileName = $mysource['DiskFile'];
-					$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $mysource['LogLineType'];
-				}
-				else if ( $mysource['SourceType'] == SOURCE_DB )
-				{
-					// Perform necessary include
-					require_once($gl_root_path . 'classes/logstreamconfigdb.class.php');
-
-					$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDB();
-					$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
-					$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
-					// Workaround a little bug from the installer script
-					if ( isset($mysource['DBType']) )
-						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
-					else
-						$content['Sources'][$iSourceID]['ObjRef']->DBType = DB_MYSQL;
-
-					$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
-					
-					// Legacy handling for tabletype!
-					if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
-					else
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
-
-					// Optional parameters!
-					if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
-					if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
-					if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
-					if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
-				}
-				else if ( $mysource['SourceType'] == SOURCE_PDO )
-				{
-					// Perform necessary include
-					require_once($gl_root_path . 'classes/logstreamconfigpdo.class.php');
-
-					$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigPDO();
-					$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
-					$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
-					$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
-					$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
-					$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
-
-					// Optional parameters!
-					if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
-					if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
-					if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
-					if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
-				}
-				else
-				{	
-					// UNKNOWN, remove config entry!
-					unset($content['Sources'][$iSourceID]);
-
-					// Output CRITICAL WARNING
-					DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
-				}
-				
-				// Set generic configuration options
-				$content['Sources'][$iSourceID]['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
-
-				// Set default SourceID here!
-				if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
-					$currentSourceID = $iSourceID;
-			}
+			// Init each source using this function!
+			InitSource($mysource);
 		}
 	}
 

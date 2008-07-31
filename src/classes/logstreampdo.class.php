@@ -87,38 +87,11 @@ class LogStreamPDO extends LogStream {
 	{
 		global $dbmapping;
 
-		// Create DSN String
-		$myDBDriver = $this->_logStreamConfigObj->GetPDODatabaseType();
-		$myDsn = $this->_logStreamConfigObj->CreateConnectDSN();
-		if ( strlen($myDsn) > 0 )
-		{
-			// Check if configured driver is actually loaded!
-			//print_r(PDO::getAvailableDrivers());
-			if ( !in_array($myDBDriver, PDO::getAvailableDrivers()) )
-			{
-				$this->PrintDebugError('PDO Database Driver not loaded: ' . $myDBDriver . "<br>Please check your php configuration extensions");
-				return ERROR_DB_INVALIDDBDRIVER;
-			}
+		// Verify database driver and connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
 
-			try 
-			{
-				// Try to connect to the database
-				$this->_dbhandle = new PDO( $myDsn, $this->_logStreamConfigObj->DBUser, $this->_logStreamConfigObj->DBPassword);
-
-//$handle->setAttribute(PDO::ATTR_TIMEOUT, 3);
-			}
-			catch (PDOException $e) 
-			{
-				$this->PrintDebugError('PDO Database Connection failed: ' . $e->getMessage() . "<br>DSN: " . $myDsn);
-				return ERROR_DB_CONNECTFAILED;
-			}
-		}
-		else
-		{
-			// Invalid DB Driver!
-			return ERROR_DB_INVALIDDBDRIVER;
-		}
-		
 		// Copy the Property Array 
 		$this->_arrProperties = $arrProperties;
 
@@ -153,6 +126,73 @@ class LogStreamPDO extends LogStream {
 // TODO CLOSE DB CONN?!
 
 		return true;
+	}
+
+	/**
+	* Verify if the database connection exists!
+	*
+	* @return integer Error state
+	*/
+	public function Verify() {
+		// Create DSN String
+		$myDBDriver = $this->_logStreamConfigObj->GetPDODatabaseType();
+		$myDsn = $this->_logStreamConfigObj->CreateConnectDSN();
+		if ( strlen($myDsn) > 0 )
+		{
+			// Check if configured driver is actually loaded!
+			//print_r(PDO::getAvailableDrivers());
+			if ( !in_array($myDBDriver, PDO::getAvailableDrivers()) )
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "PDO Database Driver not loaded: " . $myDBDriver . "<br>Please check your php configuration extensions";
+				// $this->PrintDebugError($extraErrorDescription);
+
+				// return error code
+				return ERROR_DB_INVALIDDBDRIVER;
+			}
+
+			try 
+			{
+				// Try to connect to the database
+				$this->_dbhandle = new PDO( $myDsn, $this->_logStreamConfigObj->DBUser, $this->_logStreamConfigObj->DBPassword /*, array(PDO::ATTR_TIMEOUT =>25)*/);
+				//$this->_dbhandle->setAttribute(PDO::ATTR_TIMEOUT, 25);
+			}
+			catch (PDOException $e) 
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "PDO Database Connection failed: " . $e->getMessage() . "<br>DSN: " . $myDsn;
+				// $this->PrintDebugError($extraErrorDescription);
+
+				// return error code
+				return ERROR_DB_CONNECTFAILED;
+			}
+
+			try 
+			{
+				// This is one way to check if the table exists! But I don't really like it tbh -.-
+				$tmpStmnt = $this->_dbhandle->prepare("SELECT ID FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE ID=1");
+				$tmpStmnt->execute();
+				$colcount = $tmpStmnt->columnCount();
+				if ( $colcount <= 0 )
+					return ERROR_DB_TABLENOTFOUND;
+			}
+			catch (PDOException $e) 
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "Could not find table: " . $e->getMessage();
+
+				// return error code
+				return ERROR_DB_TABLENOTFOUND;
+			}
+		}
+		else
+		{
+			// Invalid DB Driver!
+			return ERROR_DB_INVALIDDBDRIVER;
+		}
+
+		// reached this point means success ;)!
+		return SUCCESS;
 	}
 
 	/**

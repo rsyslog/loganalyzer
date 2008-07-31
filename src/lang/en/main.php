@@ -61,6 +61,27 @@ $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
 	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
+	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error:<br>%2";
+	$content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
+$content['LN_ERROR_NORECORDS'] = "No syslog records found";
+$content['LN_ERROR_FILE_NOT_FOUND'] = "Syslog file could not be found";
+$content['LN_ERROR_FILE_NOT_READABLE'] = "Syslog file is not readable, read access may be denied";
+$content['LN_ERROR_UNKNOWN'] = "Unknown or unhandled error occured (Error Code '%1')";
+$content['LN_ERROR_FILE_EOF'] = "End of File reached";
+$content['LN_ERROR_FILE_BOF'] = "Begin of File reeached";
+$content['LN_ERROR_FILE_CANT_CLOSE'] = "Can't close File";
+$content['LN_ERROR_UNDEFINED'] = "Undefined Error";
+$content['LN_ERROR_EOS'] = "End of stream reached";
+$content['LN_ERROR_FILTER_NOT_MATCH'] = "Filter does not match any results";
+$content['LN_ERROR_DB_CONNECTFAILED'] = "Connection to the database server failed";
+$content['LN_ERROR_DB_CANNOTSELECTDB'] = "Could not find the configured database";
+$content['LN_ERROR_DB_QUERYFAILED'] = "Dataquery failed to execute";
+$content['LN_ERROR_DB_NOPROPERTIES'] = "No database properties found";
+$content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
+$content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
+$content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
+$content['LN_ERROR_'] = "";
+
 // Topmenu Entries
 	$content['LN_MENU_SEARCH'] = "Search";
 	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
@@ -101,8 +122,6 @@ $content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
 $content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
 $content['LN_AUTORELOAD_SECONDS'] = "seconds";
 $content['LN_AUTORELOAD_MINUTES'] = "minutes";
-
-$content['LN_ERROR_NORECORDS'] = "No syslog records found.";
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Datetime Range";

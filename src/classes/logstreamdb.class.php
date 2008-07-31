@@ -84,15 +84,11 @@ class LogStreamDB extends LogStream {
 	{
 		global $dbmapping;
 
-		// Try to connect to the database
-		$this->_dbhandle = mysql_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword);
-		if (!$this->_dbhandle) 
-			return ERROR_DB_CONNECTFAILED;
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
 
-		$bRet = mysql_select_db($this->_logStreamConfigObj->DBName, $this->_dbhandle);
-		if(!$bRet) 
-			return ERROR_DB_CANNOTSELECTDB;
-		
 		// Copy the Property Array 
 		$this->_arrProperties = $arrProperties;
 		
@@ -118,6 +114,52 @@ class LogStreamDB extends LogStream {
 	public function Close()
 	{
 		mysql_close($this->_dbhandle);
+		return SUCCESS;
+	}
+
+	/**
+	* Verify if the database connection exists!
+	*
+	* @return integer Error state
+	*/
+	public function Verify() {
+		// Try to connect to the database
+		if ( $this->_dbhandle == null ) 
+		{
+			$this->_dbhandle = @mysql_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword);
+			if (!$this->_dbhandle) 
+			{
+				if ( isset($php_errormsg) )
+				{
+					global $extraErrorDescription;
+					$extraErrorDescription = $php_errormsg;
+				}
+
+				// Return error code
+				return ERROR_DB_CONNECTFAILED;
+			}
+		}
+		
+		// Select the database now!
+		$bRet = @mysql_select_db($this->_logStreamConfigObj->DBName, $this->_dbhandle);
+		if(!$bRet) 
+		{
+			if ( isset($php_errormsg) )
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = $php_errormsg;
+			}
+			
+			// Return error code
+			return ERROR_DB_CANNOTSELECTDB;
+		}
+		
+		// Check if the table exists!
+		$numTables = @mysql_num_rows( mysql_query("SHOW TABLES LIKE '%" . $this->_logStreamConfigObj->DBTableName . "%'"));
+		if( $numTables <= 0 )
+			return ERROR_DB_TABLENOTFOUND;
+
+		// reached this point means success ;)!
 		return SUCCESS;
 	}
 

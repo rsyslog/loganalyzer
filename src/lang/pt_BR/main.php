@@ -64,6 +64,10 @@ $content['LN_GEN_SELECTVIEW'] = "Vis&atilde;o";
 	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
 	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
+	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error: '%2'";
+$content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
+
+
 // Topmenu Entries
 	$content['LN_MENU_SEARCH'] = "Search";
 	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
@@ -104,8 +108,6 @@ $content['LN_AUTORELOAD_DISABLED'] = "Auto recarregamento desabilitado";
 $content['LN_AUTORELOAD_PRECONFIGURED'] = "Auto recarregamento pr&eacute;-configurado ";
 $content['LN_AUTORELOAD_SECONDS'] = "segundos";
 $content['LN_AUTORELOAD_MINUTES'] = "minutos";
-
-$content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Intervalo Data/Hora";

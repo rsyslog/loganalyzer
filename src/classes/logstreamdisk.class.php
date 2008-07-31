@@ -74,18 +74,14 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error stat
 	*/
 	public function Open($arrProperties) {
+
 		// Check if file exists!
-		if(!file_exists($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_FOUND;
-		}
-
-		// Check if file is readable!
-		if(!is_readable($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_READABLE;
-		}
+		$result = $this->Verify(); 
+		if ( $result != SUCCESS) 
+			return $result;
 		
+		// Now open the file 
 		$this->_fp = fopen($this->_logStreamConfigObj->FileName, 'r');	
-
 		$this->_currentOffset = ftell($this->_fp);
 		$this->_currentStartPos = $this->_currentOffset;
 		$this->_arrProperties = $arrProperties;
@@ -110,6 +106,27 @@ class LogStreamDisk extends LogStream {
 		// return result
 		return SUCCESS;
 	}
+
+	/**
+	* Verify if the file exists!
+	*
+	* @return integer Error state
+	*/
+	public function Verify() {
+		// Check if file exists!
+		if(!file_exists($this->_logStreamConfigObj->FileName)) {
+			return ERROR_FILE_NOT_FOUND;
+		}
+
+		// Check if file is readable!
+		if(!is_readable($this->_logStreamConfigObj->FileName)) {
+			return ERROR_FILE_NOT_READABLE;
+		}
+
+		// reached this point means success ;)!
+		return SUCCESS;
+	}
+		
 
 	private function ReadNextBlock() {
 		$this->_bEOS = false;

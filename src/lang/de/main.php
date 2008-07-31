@@ -60,6 +60,10 @@ $content['LN_GEN_SOURCE_DB'] = "Datenbank";
 	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
 	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
+	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error: '%2'";
+$content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.";
+
+
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Suchen";
 	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
@@ -101,8 +105,6 @@ $content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
 $content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
 $content['LN_AUTORELOAD_SECONDS'] = "seconds";
 $content['LN_AUTORELOAD_MINUTES'] = "minutes";
-
-$content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.";
 
 // Filter Options
 $content['LN_FILTER_DATE'] = "Zeitliche Abgrenzung";
