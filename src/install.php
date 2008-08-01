@@ -257,7 +257,7 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = urldecode($_GET['errormsg']);
 	}
 }
 else if ( $content['INSTALL_STEP'] == 4 )
@@ -449,7 +449,7 @@ else if ( $content['INSTALL_STEP'] == 6 )
 		if ( isset($_GET['errormsg']) )
 		{
 			$content['iserror'] = "true";
-			$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+			$content['errormsg'] = urldecode($_GET['errormsg']);
 		}
 	}
 	else // NO Database means NO user management, so next step!
@@ -541,7 +541,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = urldecode($_GET['errormsg']);
 	}
 }
 else if ( $content['INSTALL_STEP'] == 8 )
@@ -624,14 +624,23 @@ else if ( $content['INSTALL_STEP'] == 8 )
 			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
 				$_SESSION['SourceDBEnableRowCounting'] = "false";
 		}
+
+		// Check Database Access!
+
 	}
 
 	// If we reached this point, we have gathered all necessary information to create our configuration file ;)!
 	$filebuffer = LoadDataFile($configsamplefile);
 	
-	// helper variables
-	if ( $_SESSION['UserDBEnabled'] ) { $_SESSION['UserDBEnabled_value'] = "true"; } else { $_SESSION['UserDBEnabled_value'] = "false"; }
-	if ( $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
+	// Sez helper variables and init user vars if needed!
+	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] ) { $_SESSION['UserDBEnabled_value'] = "true"; } else { $_SESSION['UserDBEnabled_value'] = "false"; }
+	if ( isset($_SESSION['UserDBLoginRequired']) && $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
+	if ( !isset($_SESSION['UserDBServer']))	{ $_SESSION['UserDBServer'] = "localhost"; }
+	if ( !isset($_SESSION['UserDBPort']))	{ $_SESSION['UserDBPort'] = "3306"; }
+	if ( !isset($_SESSION['UserDBName']))	{ $_SESSION['UserDBName'] = "phplogcon"; }
+	if ( !isset($_SESSION['UserDBPref']))	{ $_SESSION['UserDBPref'] = "logcon_"; }
+	if ( !isset($_SESSION['UserDBUser']))	{ $_SESSION['UserDBUser'] = "root"; }
+	if ( !isset($_SESSION['UserDBPass']))	{ $_SESSION['UserDBPass'] = ""; }
 
 	// Start replacing existing sample configurations
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
@@ -646,6 +655,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['UserDBUser'\] = (.*?);/";
 	$patterns[] = "/\\\$CFG\['UserDBPass'\] = (.*?);/";
 	$patterns[] = "/\\\$CFG\['UserDBLoginRequired'\] = (.*?);/";
+
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
@@ -660,7 +670,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . $_SESSION['UserDBLoginRequired_value'] . ";";
 	
 	//User Database	Options
-	if ( $_SESSION['UserDBEnabled'] == 1 )
+	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] )
 	{
 		// TODO!
 	}
