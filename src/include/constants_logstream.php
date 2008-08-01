@@ -187,7 +187,6 @@ $dbmapping['monitorware'][SYSLOG_EVENT_SOURCE] = "EventSource";
 $dbmapping['monitorware'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
 $dbmapping['monitorware'][SYSLOG_EVENT_USER] = "EventUser";
 
-
 $dbmapping['syslogng'][SYSLOG_UID] = "seq";
 $dbmapping['syslogng'][SYSLOG_DATE] = "datetime";
 $dbmapping['syslogng'][SYSLOG_HOST] = "host";
@@ -196,6 +195,14 @@ $dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
 //TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
 $dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
 $dbmapping['syslogng'][SYSLOG_PROCESSID] = "program";
+
+// Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 
+foreach( $dbmapping as &$myMapping ) 
+{
+	foreach( $myMapping as &$myField ) 
+		$myField = strtolower($myField);
+}
+
 // --- 
 
 // EventTime Constants
