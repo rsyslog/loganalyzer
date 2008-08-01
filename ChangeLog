@@ -1,5 +1,15 @@
 ---------------------------------------------------------------------------
-Version 2.5.1 (beta), 2008-07-29
+Version 2.5.2 (devel), 2008-08-01
+- General Options are now configureable on user basis, if UserDB System
+  is installed of course. This means first, phpLogCon used the global
+  configured options, then the user configured - if available. 
+- When you add new Sources, the source is checked with better error details. 
+  If you have a database connection, even the existence of the configured
+  table is checked. This helps locating configuration problems. 
+- Fixed minor bug in the installer which was added in v2.5.0.
+- Fixed spelling errors in the admin index template. 
+---------------------------------------------------------------------------
+Version 2.5.1 (devel), 2008-07-29
 - Added a new option to suppress displaying multiple messages. This
   means if you have two or more messages of the exact same text one after
   another, only ONE message will be shown. This helps to "compress" the
