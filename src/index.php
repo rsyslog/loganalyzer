@@ -114,6 +114,69 @@ else
 	$content['TITLE'] .= " :: All Syslogmessages";
 // --- END CREATE TITLE
 
+// --- Read and process filters from search dialog!
+if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filter']) || isset($_GET['filter'])) )
+{
+	// Copy search over
+	if		( isset($_POST['search']) )
+		$mysearch = $_POST['search'];
+	else if ( isset($_GET['search']) )
+		$mysearch = $_GET['search'];
+
+	if		( isset($_POST['filter']) )
+		$myfilter = $_POST['filter'];
+	else if ( isset($_GET['filter']) )
+		$myfilter = $_GET['filter'];
+
+	// Optionally read highlight words
+	if ( isset($_POST['highlight']) )
+		$content['highlightstr'] = $_POST['highlight'];
+	else if ( isset($_GET['highlight']) )
+		$content['highlightstr'] = $_GET['highlight'];
+	
+//	else if ( $mysearch == $content['LN_SEARCH']) 
+	{
+		// Message is just appended
+		if ( isset($myfilter) && strlen($myfilter) > 0 )
+			$content['searchstr'] = $myfilter;
+	}
+
+	if ( strlen($content['highlightstr']) > 0 ) 
+	{
+		$searchArray = array("\\", "/", ".", ">");
+		$replaceArray = array("\\\\", "\/", "\.", ">");
+
+		// user also wants to highlight words!
+		if ( strpos($content['highlightstr'], ",") === false)
+		{
+
+			$content['highlightwords'][0]['highlight_raw'] = $content['highlightstr'];
+			$content['highlightwords'][0]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightstr']);
+			$content['highlightwords'][0]['cssclass'] = "highlight_1";
+			$content['highlightwords'][0]['htmlcode'] = '<span class="' . $content['highlightwords'][0]['cssclass'] . '">' . $content['highlightwords'][0]['highlight']. '</span>';
+		}
+		else
+		{
+			// Split array into words
+			$tmparray = explode( ",", $content['highlightstr'] );
+			foreach( $tmparray as $word ) 
+				$content['highlightwords'][]['highlight_raw'] = $word;
+			
+			// Assign other variables needed for this array entry
+			for ($i = 0; $i < count($content['highlightwords']); $i++)
+			{
+				$content['highlightwords'][$i]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightwords'][$i]['highlight_raw']);
+				$content['highlightwords'][$i]['cssclass'] = "highlight_" . ($i+1);
+				$content['highlightwords'][$i]['htmlcode'] = '<span class="' . $content['highlightwords'][$i]['cssclass'] . '">' . $content['highlightwords'][$i]['highlight']. '</span>';
+			}
+		}
+		
+		// Default expand Highlight Arrea!
+		$content['EXPAND_HIGHLIGHT'] = "true";
+	}
+}
+// --- 
+
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
@@ -666,68 +729,5 @@ function PrepareStringForSearch($myString)
 	return str_replace(" ", "+", $myString);
 }
 // ---
-
-// --- Read and process filters from search dialog!
-if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filter']) || isset($_GET['filter'])) )
-{
-	// Copy search over
-	if		( isset($_POST['search']) )
-		$mysearch = $_POST['search'];
-	else if ( isset($_GET['search']) )
-		$mysearch = $_GET['search'];
-
-	if		( isset($_POST['filter']) )
-		$myfilter = $_POST['filter'];
-	else if ( isset($_GET['filter']) )
-		$myfilter = $_GET['filter'];
-	
-	// Optionally read highlight words
-	if ( isset($_POST['highlight']) )
-		$content['highlightstr'] = $_POST['highlight'];
-	else if ( isset($_GET['highlight']) )
-		$content['highlightstr'] = $_GET['highlight'];
-	
-//	else if ( $mysearch == $content['LN_SEARCH']) 
-	{
-		// Message is just appended
-		if ( isset($myfilter) && strlen($myfilter) > 0 )
-			$content['searchstr'] = $myfilter;
-	}
-
-	if ( strlen($content['highlightstr']) > 0 ) 
-	{
-		$searchArray = array("\\", "/", ".", ">");
-		$replaceArray = array("\\\\", "\/", "\.", ">");
-
-		// user also wants to highlight words!
-		if ( strpos($content['highlightstr'], ",") === false)
-		{
-
-			$content['highlightwords'][0]['highlight_raw'] = $content['highlightstr'];
-			$content['highlightwords'][0]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightstr']);
-			$content['highlightwords'][0]['cssclass'] = "highlight_1";
-			$content['highlightwords'][0]['htmlcode'] = '<span class="' . $content['highlightwords'][0]['cssclass'] . '">' . $content['highlightwords'][0]['highlight']. '</span>';
-		}
-		else
-		{
-			// Split array into words
-			$tmparray = explode( ",", $content['highlightstr'] );
-			foreach( $tmparray as $word ) 
-				$content['highlightwords'][]['highlight_raw'] = $word;
-			
-			// Assign other variables needed for this array entry
-			for ($i = 0; $i < count($content['highlightwords']); $i++)
-			{
-				$content['highlightwords'][$i]['highlight'] = str_replace( $searchArray, $replaceArray, $content['highlightwords'][$i]['highlight_raw']);
-				$content['highlightwords'][$i]['cssclass'] = "highlight_" . ($i+1);
-				$content['highlightwords'][$i]['htmlcode'] = '<span class="' . $content['highlightwords'][$i]['cssclass'] . '">' . $content['highlightwords'][$i]['highlight']. '</span>';
-			}
-		}
-		
-		// Default expand Highlight Arrea!
-		$content['EXPAND_HIGHLIGHT'] = "true";
-	}
-}
-// --- 
 
 ?>
