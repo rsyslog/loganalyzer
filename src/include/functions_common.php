@@ -175,6 +175,9 @@ function InitPhpLogCon()
 	// Init predefined reload times
 	CreateReloadTimesList();
 
+	// Init predefined reload times
+	CreateExportFormatList();
+
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
@@ -325,6 +328,23 @@ function CreateReloadTimesList()
 
 }
 
+function CreateExportFormatList()
+{
+	global $content;
+	
+	// Add basic formats!
+	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
+	$content['EXPORTTYPES'][EXPORT_HTML] = array( "ID" => EXPORT_HTML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_HTML'] );
+	$content['EXPORTTYPES'][EXPORT_EXCEL] = array( "ID" => EXPORT_EXCEL, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_EXCEL'] );
+
+	// Add formats by loaded extensions
+	if ( $content['XML_IS_ENABLED'] ) 
+		$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
+	if ( $content['PDF_IS_ENABLED'] ) 
+		$content['EXPORTTYPES'][EXPORT_PDF] = array( "ID" => EXPORT_PDF, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_PDF'] );
+
+}
+
 function CreatePredefinedSearches()
 {
 	global $CFG, $content;
@@ -367,13 +387,49 @@ function InitPhpDebugMode()
 
 function CheckAndSetRunMode()
 {
-	global $RUNMODE, $MaxExecutionTime;
+	global $content, $RUNMODE, $MaxExecutionTime;
 	// Set to command line mode if argv is set! 
 	if ( !isset($_SERVER["GATEWAY_INTERFACE"]) )
 		$RUNMODE = RUNMODE_COMMANDLINE;
 	
 	// Obtain max_execution_time
 	$MaxExecutionTime = ini_get("max_execution_time");
+	
+	// --- Check necessary PHP Extensions!
+	$loadedExtensions = get_loaded_extensions();
+	
+	// Check for GD libary
+	if ( in_array("gd", $loadedExtensions) ) 
+		$content['GD_IS_ENABLED'] = true;
+	else 
+		$content['GD_IS_ENABLED'] = false;
+	
+	// Check MYSQL Extension
+	if ( in_array("mysql", $loadedExtensions) ) 
+		$content['MYSQL_IS_ENABLED'] = true;
+	else 
+		$content['MYSQL_IS_ENABLED'] = false;
+
+	// Check PDO Extension
+	if ( in_array("PDO", $loadedExtensions) ) 
+		$content['PDO_IS_ENABLED'] = true;
+	else 
+		$content['PDO_IS_ENABLED'] = false;
+	// ---
+
+	// Check XML Extension
+	if ( in_array("xml", $loadedExtensions) ) 
+		$content['XML_IS_ENABLED'] = true;
+	else 
+		$content['XML_IS_ENABLED'] = false;
+	// ---
+
+	// Check PDF Extension
+	if ( in_array("pdf", $loadedExtensions) ) 
+		$content['PDF_IS_ENABLED'] = true;
+	else 
+		$content['PDF_IS_ENABLED'] = false;
+	// ---
 }
 
 function InitRuntimeInformations()
@@ -448,7 +504,8 @@ function InitFrontEndVariables()
 	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";
 	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
 	$content['MENU_USEROPTIONS'] = $content['BASEPATH'] . "images/icons/businessman_preferences.png";
-	
+	$content['MENU_EXPORT'] = $content['BASEPATH'] . "images/icons/export1.png";
+
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
 	$content['MENU_PAGER_NEXT'] = $content['BASEPATH'] . "images/icons/media_fast_forward.png";

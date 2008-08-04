@@ -89,12 +89,34 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td class="title" nowrap><B>Recent syslog messages</B></td>
+	<td class="title" width="100%" nowrap><B>Recent syslog messages</B></td>
+<!-- IF EXPORT_ENABLED="true" -->
+		<td class="line2" align="left" nowrap>
+			<form action="{BASEPATH}export.php" method="get" name="exportform">
+			<table border="0" cellspacing="0" cellpadding="0" align="left">
+			<tr> 
+				<td align="right">
+					<input type="hidden" name="op" value="export">
+					<input type="hidden" name="uid" value="{uid_current}">
+					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 125px">
+						<option {selected} value="">{LN_GEN_SELECTEXPORT}</option>
+						<!-- BEGIN EXPORTTYPES -->
+						<option {selected} value="{ID}">{DisplayName}</option>
+						<!-- END EXPORTTYPES -->
+					</select>
+				</td>
+				<td nowrap width="16"><input type="image" src="{MENU_EXPORT}" width="16" hight="16" alt="{LN_GEN_EXPORT}" class="borderless"></td>
+			</tr>
+			</table>
+			</form>
+		</td>
+<!-- ENDIF EXPORT_ENABLED="true" -->
 </tr>
 </table>
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
+
 	<td nowrap width="100%" class="line2" align="left">
 <!-- IF main_currentpagenumber_found="true" -->
 	{LN_GEN_PAGE} {main_currentpagenumber}
@@ -109,8 +131,7 @@
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-<!--			<input type="checkbox" {autoreload_checked} name="autoreload">-->
-			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
+			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();"  STYLE="width: 100px">
 				<!-- BEGIN reloadtimes -->
 				<option {Selected} value="{ID}">{DisplayName}</option>
 				<!-- END reloadtimes -->
@@ -126,16 +147,16 @@
 	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
 	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>
 <!-- ENDIF main_recordcount_found="true" -->
+
 <!-- IF main_pagerenabled="true" -->
 		<td nowrap width="115" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
 		<td nowrap width="50" class="line2">
-		
 		<form action="userchange.php" method="get" name="pageingsize">
 		<input type="hidden" name="op" value="changepagesize">
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();"  STYLE="width: 100px">
 					<!-- BEGIN pagesizes -->
 					<option {Selected} value="{ID}">{DisplayName}</option>
 					<!-- END pagesizes -->
@@ -144,7 +165,6 @@
 		</tr>
 		</table>
 		</form>
-
 		</td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>

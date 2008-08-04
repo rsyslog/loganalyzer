@@ -60,7 +60,6 @@ $content['LN_GEN_SELECTVIEW'] = "Select View";
 $content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
 $content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
 $content['LN_GEN_ERRORDETAILS'] = "Error Details:";
-
 $content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error:<br>%2";
 $content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
 $content['LN_ERROR_NORECORDS'] = "No syslog records found";
@@ -80,6 +79,13 @@ $content['LN_ERROR_DB_NOPROPERTIES'] = "No database properties found";
 $content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
 $content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
 $content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
+	$content['LN_GEN_SELECTEXPORT'] = "Select to Export";
+	$content['LN_GEN_EXPORT_CVS'] = "CVS (Comma separated)";
+	$content['LN_GEN_EXPORT_HTML'] = "HTML";
+	$content['LN_GEN_EXPORT_XML'] = "XML";
+	$content['LN_GEN_EXPORT_PDF'] = "PDF";
+	$content['LN_GEN_EXPORT_EXCEL'] = "Excel";
+
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";

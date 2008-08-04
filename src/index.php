@@ -86,6 +86,8 @@ else
 	$content['skipone'] = false;
 // ---
 
+// Init Export Stuff!
+$content['EXPORT_ENABLED'] = true;
 
 // Init Pager variables
 // $content['uid_previous'] = UID_UNKNOWN;
