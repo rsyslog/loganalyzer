@@ -334,8 +334,8 @@ function CreateExportFormatList()
 	
 	// Add basic formats!
 	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
-	$content['EXPORTTYPES'][EXPORT_HTML] = array( "ID" => EXPORT_HTML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_HTML'] );
-	$content['EXPORTTYPES'][EXPORT_EXCEL] = array( "ID" => EXPORT_EXCEL, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_EXCEL'] );
+//TODO	$content['EXPORTTYPES'][EXPORT_HTML] = array( "ID" => EXPORT_HTML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_HTML'] );
+//TODO	$content['EXPORTTYPES'][EXPORT_EXCEL] = array( "ID" => EXPORT_EXCEL, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_EXCEL'] );
 
 	// Add formats by loaded extensions
 	if ( $content['XML_IS_ENABLED'] ) 

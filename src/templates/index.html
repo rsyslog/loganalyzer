@@ -98,7 +98,7 @@
 				<td align="right">
 					<input type="hidden" name="op" value="export">
 					<input type="hidden" name="uid" value="{uid_current}">
-					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 125px">
+					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 150px">
 						<option {selected} value="">{LN_GEN_SELECTEXPORT}</option>
 						<!-- BEGIN EXPORTTYPES -->
 						<option {selected} value="{ID}">{DisplayName}</option>
@@ -360,15 +360,15 @@
 
 
 <!-- IF syslogmessagesenabled="false" -->
-	<center>
-	<font color="red">
-	<br>
-	<h3>{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</h3>
-	{detailederror}
-	<br>
-	<br>
-	</font>
-	</center>
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</div>
+		<p>{detailederror}</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
 <!-- ENDIF syslogmessagesenabled="false" -->
 
 

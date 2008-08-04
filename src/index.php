@@ -180,7 +180,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 // --- 
 
 // --- BEGIN Custom Code
-if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
+if ( isset($content['Sources'][$currentSourceID]) ) 
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
@@ -703,6 +703,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['Sources'][$c
 
 	// Close file!
 	$stream->Close();
+}
+else
+{
+	$content['syslogmessagesenabled'] = "false";
+	$content['detailederror'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_SOURCENOTFOUND'], $currentSourceID);
 }
 // --- 
 
