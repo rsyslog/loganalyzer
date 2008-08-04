@@ -76,7 +76,16 @@ if (
 		(isset($_GET['op']) && $_GET['op'] == "export") && 
 		(isset($_GET['exporttype']) && array_key_exists($_GET['exporttype'], $content['EXPORTTYPES']))
 	) 
+{
 	$content['exportformat'] = $_GET['exporttype'];
+	
+	// Check for extensions 
+	if ( $content['exportformat'] == EXPORT_PDF && !$content['PDF_IS_ENABLED'] ) 
+	{
+		$content['error_occured'] = true;
+		$content['error_details'] = $content['LN_GEN_ERROR_PDFMISSINGEXTENSION'];
+	}
+}
 else
 {
 	$content['error_occured'] = true;
@@ -405,10 +414,50 @@ else
 		// Set MIME TYPE and File Extension
 		$szOutputMimeType = "application/pdf";
 		$szOutputFileExtension = ".pdf";
+		
+		try 
+		{
+			// Init PDF Document
+			$myPdf = new PDFlib(); 
+			if ($myPdf->begin_document("", "") == 0) {
+			die("Error: " . $myPdf->get_errmsg());
+			}
+
+			$myPdf->set_info("Creator", "hello.php");
+			$myPdf->set_info("Author", "Rainer Schaaf");
+			$myPdf->set_info("Title", "Hello world (PHP)!");
+
+			$myPdf->begin_page_ext(595, 842, "");
+
+			$font = $myPdf->load_font("Helvetica-Bold", "winansi", "");
+
+			$myPdf->setfont($font, 24.0);
+			$myPdf->set_text_pos(50, 700);
+
+			$myPdf->show("Hello world!");
+			$myPdf->continue_text("(says PHP)");
+			$myPdf->end_page_ext("");
+			$myPdf->end_document("");
+
+			// Copy PDF Output
+			$szOutputContent = $myPdf->get_buffer();
+		}
+		catch (PDFlibException $e) {
+			die("PDFlib exception occurred in hello sample:\n" .
+			"[" . $e->get_errnum() . "] " . $e->get_apiname() . ": " .
+			$e->get_errmsg() . "\n");
+		}
+		catch (Exception $e) {
+			die($e);
+		}
+
+		// Delete PDF Object!
+		$myPdf = 0;
 	}
 
 	// Set needed Header properties
 	header('Content-type: ' . $szOutputMimeType . "; " . $szOutputCharset);
+	header("Content-Length: " .  strlen($szOutputContent) );
 	header('Content-Disposition: attachment; filename="' . $szOutputFileName . $szOutputFileExtension . '"');
 
 	// Output Content!

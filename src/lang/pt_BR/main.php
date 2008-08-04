@@ -83,6 +83,14 @@ $content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 	$content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
 	$content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
 	$content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
+	$content['LN_GEN_SELECTEXPORT'] = "&gt; Select Exportformat &lt;";
+	$content['LN_GEN_EXPORT_CVS'] = "CVS (Comma separated)";
+	$content['LN_GEN_EXPORT_XML'] = "XML";
+	$content['LN_GEN_EXPORT_PDF'] = "PDF";
+	$content['LN_GEN_ERROR_EXPORING'] = "Error exporting data";
+	$content['LN_GEN_ERROR_INVALIDEXPORTTYPE'] = "Invalid Export format selected, or other parameters were wrong.";
+	$content['LN_GEN_ERROR_SOURCENOTFOUND'] = "The Source with ID '%1' could not be found.";
+	$content['LN_GEN_ERROR_PDFMISSINGEXTENSION'] = "The PDF Extension is missing in your php environment.";
 
 
 // Topmenu Entries

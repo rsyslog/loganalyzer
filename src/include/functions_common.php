@@ -334,12 +334,9 @@ function CreateExportFormatList()
 	
 	// Add basic formats!
 	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
-//TODO	$content['EXPORTTYPES'][EXPORT_HTML] = array( "ID" => EXPORT_HTML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_HTML'] );
-//TODO	$content['EXPORTTYPES'][EXPORT_EXCEL] = array( "ID" => EXPORT_EXCEL, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_EXCEL'] );
+	$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
 
 	// Add formats by loaded extensions
-	if ( $content['XML_IS_ENABLED'] ) 
-		$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
 	if ( $content['PDF_IS_ENABLED'] ) 
 		$content['EXPORTTYPES'][EXPORT_PDF] = array( "ID" => EXPORT_PDF, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_PDF'] );
 
@@ -405,31 +402,12 @@ function CheckAndSetRunMode()
 		$content['GD_IS_ENABLED'] = false;
 	
 	// Check MYSQL Extension
-	if ( in_array("mysql", $loadedExtensions) ) 
-		$content['MYSQL_IS_ENABLED'] = true;
-	else 
-		$content['MYSQL_IS_ENABLED'] = false;
-
+	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
-	if ( in_array("PDO", $loadedExtensions) ) 
-		$content['PDO_IS_ENABLED'] = true;
-	else 
-		$content['PDO_IS_ENABLED'] = false;
-	// ---
-
-	// Check XML Extension
-	if ( in_array("xml", $loadedExtensions) ) 
-		$content['XML_IS_ENABLED'] = true;
-	else 
-		$content['XML_IS_ENABLED'] = false;
-	// ---
-
+	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
 	// Check PDF Extension
-	if ( in_array("pdf", $loadedExtensions) ) 
-		$content['PDF_IS_ENABLED'] = true;
-	else 
-		$content['PDF_IS_ENABLED'] = false;
-	// ---
+	if ( in_array("pdf", $loadedExtensions) ) { $content['PDF_IS_ENABLED'] = true; } else { $content['PDF_IS_ENABLED'] = false; }
+
 }
 
 function InitRuntimeInformations()

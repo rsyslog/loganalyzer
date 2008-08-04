@@ -99,9 +99,9 @@
 					<input type="hidden" name="op" value="export">
 					<input type="hidden" name="uid" value="{uid_current}">
 					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 150px">
-						<option {selected} value="">{LN_GEN_SELECTEXPORT}</option>
+						<option selected value="">{LN_GEN_SELECTEXPORT}</option>
 						<!-- BEGIN EXPORTTYPES -->
-						<option {selected} value="{ID}">{DisplayName}</option>
+						<option value="{ID}">{DisplayName}</option>
 						<!-- END EXPORTTYPES -->
 					</select>
 				</td>
