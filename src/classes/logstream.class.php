@@ -493,25 +493,38 @@ abstract class LogStream {
 	*/
 	private function SetFilterIncludeMode(&$szValue)
 	{
-		// Set Filtermode
+		// Init BIT!
+		$myBits = FILTER_MODE_INCLUDE;
+
+		// If Filter is Included 
 		$pos = strpos($szValue, "+");
 		if ( $pos !== false && $pos == 0 )
 		{
 			//trunscate +
 			$szValue = substr( $szValue, 1);
-			return FILTER_MODE_INCLUDE;
+			$myBits = FILTER_MODE_INCLUDE;
 		}
 
+		// If Filter is Excluded
 		$pos = strpos($szValue, "-");
 		if ( $pos !== false && $pos == 0 )
 		{
 			//trunscate -
 			$szValue = substr( $szValue, 1);
-			return FILTER_MODE_EXCLUDE;
+			$myBits = FILTER_MODE_EXCLUDE;
 		}
 
-		// Default is include which means +
-		return FILTER_MODE_INCLUDE;
+		// If Filter is a FULL text match!				
+		$pos = strpos($szValue, "=");
+		if ( $pos !== false && $pos == 0 )
+		{
+			//trunscate -
+			$szValue = substr( $szValue, 1);
+			$myBits |= FILTER_MODE_SEARCHFULL;
+		}
+
+		// return result 
+		return $myBits;
 	}
 
 	/*

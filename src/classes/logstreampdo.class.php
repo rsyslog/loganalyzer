@@ -530,25 +530,40 @@ class LogStreamPDO extends LogStream {
 						switch( $myfilter[FILTER_TYPE] )
 						{
 							case FILTER_TYPE_STRING:
-								// Check if user wants to include or exclude!
-								if ( $myfilter[FILTER_MODE] == FILTER_MODE_INCLUDE)
+								// --- Check if user wants to include or exclude!
+								if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
 									$addnod = "";
 								else
 									$addnod = " NOT";
+								// --- 
 
-								// If Syslog message, we have AND handling, otherwise OR!
+								// --- Either make a LIKE or a equal query!
+								if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
+								{
+									$szSearchBegin = " = '";
+									$szSearchEnd = "' ";
+								}
+								else
+								{
+									$szSearchBegin = " LIKE '%";
+									$szSearchEnd = "%' ";
+								}
+								// ---
+
+								// --- If Syslog message, we have AND handling, otherwise OR!
 								if ( $propertyname == SYSLOG_MESSAGE )
 									$addor = " AND ";
 								else
 									$addor = " OR ";
+								// --- 
 								
 								// Not create LIKE Filters
 								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . " LIKE '%" . $myfilter[FILTER_VALUE] . "%'";
+									$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
 								else
 								{
 									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . " LIKE '%" . $myfilter[FILTER_VALUE] . "%'";
+									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
 								}
 								break;
 							case FILTER_TYPE_NUMBER:

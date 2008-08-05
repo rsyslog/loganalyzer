@@ -545,7 +545,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								// Set OnClick Menu for SYSLOG_SYSLOGTAG
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=syslogtag%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -560,7 +560,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								// Set OnClick Menu for SYSLOG_HOST
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=source%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -571,7 +571,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								// Set OnClick Menu for SYSLOG_EVENT_LOGTYPE
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogtype%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -586,7 +586,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								// Set OnClick Menu for SYSLOG_EVENT_SOURCE
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogsource%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => $content['LN_VIEW_FILTERFOR'] . "'" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);

@@ -63,8 +63,9 @@ define('FILTER_TYPE', 'filtertype');
 define('FILTER_DATEMODENAME', 'datemodename');
 define('FILTER_VALUE', 'value');
 define('FILTER_MODE', 'filtermode');
-define('FILTER_MODE_INCLUDE', 0);
-define('FILTER_MODE_EXCLUDE', 1);
+define('FILTER_MODE_INCLUDE', 1);
+define('FILTER_MODE_EXCLUDE', 2);
+define('FILTER_MODE_SEARCHFULL', 4);
 
 // --- Init Facility LIST
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );

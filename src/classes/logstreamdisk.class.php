@@ -633,13 +633,13 @@ class LogStreamDisk extends LogStream {
 								if ( $propertyname == SYSLOG_MESSAGE )
 								{
 									// Include Filter
-									if ( $myfilter[FILTER_MODE] == FILTER_MODE_INCLUDE ) 
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 									{
 										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
 											$bEval = false;
 									}
 									// Exclude Filter
-									else if ( $myfilter[FILTER_MODE] == FILTER_MODE_EXCLUDE ) 
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 									{
 										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
 											$bEval = false;
@@ -649,8 +649,35 @@ class LogStreamDisk extends LogStream {
 								else
 								{
 									$bIsOrFilter = true; // Set isOrFilter to true 
-									if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
-										$bOrFilter = true;
+
+									// Include Filter
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+									{
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+										{
+											if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
+												$bOrFilter = true;
+										}
+										else
+										{
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+												$bOrFilter = true;
+										}
+									}
+									// Exclude Filter
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+									{
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+										{
+											if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
+												$bOrFilter = true;
+										}
+										else
+										{
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+												$bOrFilter = true;
+										}
+									}
 									break;
 								}
 								break;
