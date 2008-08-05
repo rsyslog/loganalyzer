@@ -336,10 +336,7 @@ function CreateExportFormatList()
 	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
 	$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
 
-	// Add formats by loaded extensions
-	if ( $content['PDF_IS_ENABLED'] ) 
-		$content['EXPORTTYPES'][EXPORT_PDF] = array( "ID" => EXPORT_PDF, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_PDF'] );
-
+	// TODO: Add formats by loaded extensions
 }
 
 function CreatePredefinedSearches()
@@ -405,8 +402,6 @@ function CheckAndSetRunMode()
 	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
 	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
-	// Check PDF Extension
-	if ( in_array("pdf", $loadedExtensions) ) { $content['PDF_IS_ENABLED'] = true; } else { $content['PDF_IS_ENABLED'] = false; }
 
 }
 

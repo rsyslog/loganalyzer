@@ -409,51 +409,6 @@ else
 		// End first XML Node
 		$szOutputContent .= "</syslogmessages>";
 	}
-	else if	( $content['exportformat'] == EXPORT_PDF )
-	{
-		// Set MIME TYPE and File Extension
-		$szOutputMimeType = "application/pdf";
-		$szOutputFileExtension = ".pdf";
-		
-		try 
-		{
-			// Init PDF Document
-			$myPdf = new PDFlib(); 
-			if ($myPdf->begin_document("", "") == 0) {
-			die("Error: " . $myPdf->get_errmsg());
-			}
-
-			$myPdf->set_info("Creator", "hello.php");
-			$myPdf->set_info("Author", "Rainer Schaaf");
-			$myPdf->set_info("Title", "Hello world (PHP)!");
-
-			$myPdf->begin_page_ext(595, 842, "");
-
-			$font = $myPdf->load_font("Helvetica-Bold", "winansi", "");
-
-			$myPdf->setfont($font, 24.0);
-			$myPdf->set_text_pos(50, 700);
-
-			$myPdf->show("Hello world!");
-			$myPdf->continue_text("(says PHP)");
-			$myPdf->end_page_ext("");
-			$myPdf->end_document("");
-
-			// Copy PDF Output
-			$szOutputContent = $myPdf->get_buffer();
-		}
-		catch (PDFlibException $e) {
-			die("PDFlib exception occurred in hello sample:\n" .
-			"[" . $e->get_errnum() . "] " . $e->get_apiname() . ": " .
-			$e->get_errmsg() . "\n");
-		}
-		catch (Exception $e) {
-			die($e);
-		}
-
-		// Delete PDF Object!
-		$myPdf = 0;
-	}
 
 	// Set needed Header properties
 	header('Content-type: ' . $szOutputMimeType . "; " . $szOutputCharset);

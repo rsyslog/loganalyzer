@@ -72,7 +72,6 @@ define('SOURCE_PDO', '3');
 // --- Exportformat defines
 define('EXPORT_CVS', 'CVS');
 define('EXPORT_XML', 'XML');
-define('EXPORT_PDF', 'PDF');
 // --- 
 
 // --- 
