@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.5.3 (devel), 2008-08-05
+- Added support to export the current visible events into a XML or CSV 
+  file. If you have further recommendations for useful export file 
+  formats, just let us know in the phpLogCon forums or mailinglist.
+- Extended Filter Engine to support Full and Partial Text searches on
+  string fields. The submenu buttons also now use the Full Text search
+  by default, which performs much better on database logstream sources. 
+- A new menu entry on each value on each field in the main EventView 
+  gives you the option to search for this field only, or extend an 
+  existing filterset. 
+---------------------------------------------------------------------------
 Version 2.5.2 (devel), 2008-08-01
 - General Options are now configureable on user basis, if UserDB System
   is installed of course. This means first, phpLogCon used the global
