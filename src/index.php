@@ -508,6 +508,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							// kindly copy!
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
 
+							// Convert into filter format for submenus
+							$szFilterEncodedStr = str_replace(' ', '+', $logArray[$mycolkey]);
+
 							// Special Handling for the Syslog Message!
 							if ( $mycolkey == SYSLOG_MESSAGE )
 							{
@@ -597,7 +600,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+syslogtag%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+syslogtag%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -605,7 +608,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -624,7 +627,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+source%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+source%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -632,7 +635,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -647,7 +650,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogtype%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogtype%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -655,7 +658,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -674,7 +677,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogsource%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogsource%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -682,7 +685,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($logArray[$mycolkey]) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
