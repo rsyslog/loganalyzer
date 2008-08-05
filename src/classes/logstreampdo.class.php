@@ -101,6 +101,7 @@ class LogStreamPDO extends LogStream {
 
 		// Create SQL Where Clause first!
 		$this->CreateSQLWhereClause();
+//debug echo $this->_SQLwhereClause;
 
 		// Only obtain rowcount if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 

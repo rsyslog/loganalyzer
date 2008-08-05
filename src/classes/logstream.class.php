@@ -457,6 +457,10 @@ abstract class LogStream {
 							// Set Filter value!
 							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
 						}
+
+						// Replace + with spaces
+						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = str_replace( '+', ' ', $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]);
+
 						// ---
 					}
 
