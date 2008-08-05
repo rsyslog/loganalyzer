@@ -97,7 +97,13 @@
 			<tr> 
 				<td align="right">
 					<input type="hidden" name="op" value="export">
-					<input type="hidden" name="uid" value="{uid_current}">
+					<input type="hidden" name="uid" value="{uid_original}">
+					<!-- IF skipone="true" -->
+					<input type="hidden" name="skipone" value="true">
+					<!-- ENDIF skipone="true" -->
+					<!-- IF direction="desc" -->
+					<input type="hidden" name="direction" value="desc">
+					<!-- ENDIF direction="desc" -->
 					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 150px">
 						<option selected value="">{LN_GEN_SELECTEXPORT}</option>
 						<!-- BEGIN EXPORTTYPES -->

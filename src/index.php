@@ -63,6 +63,9 @@ if ( isset($_GET['uid']) )
 else
 	$content['uid_current'] = UID_UNKNOWN;
 
+// copy needed for export function
+$content['uid_original'] = $content['uid_current'];
+
 // --- Set Autoreload as meta refresh
 if ( $content['uid_current'] == UID_UNKNOWN )
 {
@@ -73,11 +76,21 @@ if ( $content['uid_current'] == UID_UNKNOWN )
 else
 	$content['ViewEnableAutoReloadSeconds_visible'] = false;
 
-// Read direction parameter
-if ( isset($_GET['direction']) && $_GET['direction'] == "desc" ) 
+// --- Read direction parameter
+if ( isset($_GET['direction']) )
+{
+	// Copy to content array
+	$content['direction'] = $_GET['direction'];
+}
+else 
+	$content['direction'] = "";
+
+// Check for reading direction
+if ( $content['direction'] == "desc" )
 	$content['read_direction'] = EnumReadDirection::Forward;
 else
 	$content['read_direction'] = EnumReadDirection::Backward;
+// --- 
 
 // If direction is DESC, should we SKIP one? 
 if ( isset($_GET['skipone']) && $_GET['skipone'] == "true" ) 

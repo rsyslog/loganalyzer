@@ -79,12 +79,14 @@ if (
 {
 	$content['exportformat'] = $_GET['exporttype'];
 	
+/*
 	// Check for extensions 
 	if ( $content['exportformat'] == EXPORT_PDF && !$content['PDF_IS_ENABLED'] ) 
 	{
 		$content['error_occured'] = true;
 		$content['error_details'] = $content['LN_GEN_ERROR_PDFMISSINGEXTENSION'];
 	}
+*/
 }
 else
 {
