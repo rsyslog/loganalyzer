@@ -122,6 +122,8 @@ $content['LN_VIEW_FILTERFOR'] = "Filtrar mensagens por ";
 $content['LN_VIEW_SEARCHFOR'] = "Busca online por ";
 $content['LN_VIEW_SEARCHFORGOOGLE'] = "Busca no Google por ";
 $content['LN_GEN_MESSAGEDETAILS'] = "Detalhes da Mensagem";
+	$content['LN_VIEW_ADDTOFILTER'] = "Add '%1' to filterset";
+	$content['LN_VIEW_FILTERFORONLY'] = "Filter for '%1' only";
 
 $content['LN_HIGHLIGHT'] = "Destacar >>";
 $content['LN_HIGHLIGHT_OFF'] = "Destacar <<";

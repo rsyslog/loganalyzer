@@ -118,6 +118,8 @@ $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
 	$content['LN_VIEW_SEARCHFOR'] = "Search online for ";
 	$content['LN_VIEW_SEARCHFORGOOGLE'] = "Search Google for ";
 	$content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
+	$content['LN_VIEW_ADDTOFILTER'] = "Add '%1' to filterset";
+	$content['LN_VIEW_FILTERFORONLY'] = "Filter for '%1' only";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
