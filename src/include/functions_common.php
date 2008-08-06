@@ -802,7 +802,12 @@ function GetEventTime($szTimStr)
 	}
 	else
 	{
-		die ("wtf GetEventTime unparsable time - " . $szTimStr );
+		$eventtime[EVTIME_TIMESTAMP] = 0;
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+		
+		// Print Error!
+		OutputDebugMessage("GetEventTime got an unparsable time '" . $szTimStr . "', returning 0");
 	}
 
 	// return result!

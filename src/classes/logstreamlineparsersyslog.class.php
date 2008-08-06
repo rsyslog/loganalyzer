@@ -64,31 +64,31 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
 
 		// Sample (Syslog): Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
-		if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)\[(.*?)\]:(.*?)$/", $szLine, $out ) )
+		if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)\[(.*?)\]:(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[2];
-			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
-			$arrArguments[SYSLOG_PROCESSID] = $out[4];
-			$arrArguments[SYSLOG_MESSAGE] = $out[5];
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
+			$arrArguments[SYSLOG_HOST] = $out[3];
+			$arrArguments[SYSLOG_SYSLOGTAG] = $out[4];
+			$arrArguments[SYSLOG_PROCESSID] = $out[5];
+			$arrArguments[SYSLOG_MESSAGE] = $out[6];
 		}
 		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart.
-		else if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[2];
-			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
-			$arrArguments[SYSLOG_MESSAGE] = $out[4];
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
+			$arrArguments[SYSLOG_HOST] = $out[3];
+			$arrArguments[SYSLOG_SYSLOGTAG] = $out[4];
+			$arrArguments[SYSLOG_MESSAGE] = $out[5];
 		}
 		// Sample (Syslog): Mar 7 17:18:35 debandre exiting on signal 15
-		else if ( preg_match("/(... [0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[2];
-			$arrArguments[SYSLOG_MESSAGE] = $out[3];
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
+			$arrArguments[SYSLOG_HOST] = $out[3];
+			$arrArguments[SYSLOG_MESSAGE] = $out[4];
 		}
 		// Sample (RSyslog): 2008-03-28T11:07:40+01:00 localhost rger: test 1
 		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
