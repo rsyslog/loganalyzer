@@ -33,19 +33,30 @@
 {
 	font-weight:normal;
     text-decoration:none;
+    position:relative;
+	overflow:visible;
 }
 .syslogdetails
 {
-    position:relative; /*this is the key*/
+    position:relative;
+	overflow:visible;
 	z-index:4;
 }
 
 .syslogdetails:hover
 {
+    position:relative; /*this is the key*/
 	font-weight:normal;
 	z-index:5; 
 }
-.syslogdetails span {display: none}
+.syslogdetails span
+{
+    position:relative;
+	overflow:visible;
+	display: none;
+	z-index:-1; 
+
+}
 /*the span will display just on :hover state*/
 /*
 .syslogdetails:hover span
@@ -60,6 +71,7 @@
 { 
     display:block;
     position:absolute;
+	overflow:auto;
 	z-index:5; 
 /*    top:15px; */
 /*    left:15px; */
