@@ -234,3 +234,65 @@ function DebugShowElementsById(ObjName)
 		document.write(obj[key]);
 	}
 }
+
+
+/* 
+*	Detail popup handling functions
+*/
+var myPopupHovering = false;
+function HoveringPopup(event, parentObj)
+{
+	// This will allow the detail window to be relocated
+	myPopupHovering = true;
+}
+
+function FinishHoveringPopup(event, parentObj)
+{
+	// This will avoid moving the detail window when it is open
+	myPopupHovering = false;
+}
+
+function initPopupWindow(parentObj)
+{
+	// Change CSS Class
+	parentObj.className='syslogdetails_popup';
+}
+
+function FinishPopupWindow(parentObj)
+{
+	// Change CSS Class
+	parentObj.className='syslogdetails';
+}
+
+function disableEventPropagation(myEvent)
+{
+	/* This workaround is specially for our beloved Internet Explorer */
+	if ( window.event)
+	{
+		window.event.cancelBubble = true; 
+	}
+}
+
+function movePopupWindow(myEvent, ObjName, PopupContentWidth, parentObj)
+{
+	var obj = document.getElementById(ObjName);
+	var middle = PopupContentWidth / 2;
+//	alert ( parentObj.className ) ;
+	if (myPopupHovering == false)
+	{
+		obj.style.left = (myEvent.clientX - middle) + 'px';
+	}
+}
+
+function GoToPopupTarget(myTarget, parentObj)
+{
+	if (!myPopupHovering)
+	{
+		// Change document location
+		document.location=myTarget;
+	}
+	else /* Close Popup */
+	{
+		FinishPopupWindow(parentObj);
+	}
+}
