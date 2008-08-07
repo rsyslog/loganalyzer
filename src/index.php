@@ -342,6 +342,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
+						$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "TOP";
 
 						// Set default link 
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
@@ -546,7 +547,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $logArray[SYSLOG_UID]);
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";
-									
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "left"; // Other alignment needed!
+
 									foreach($content['syslogmessages'][$counter]['values'] as $mykey => $myfield)
 									{
 										// Set Caption!
