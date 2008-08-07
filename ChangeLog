@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 2.3.9 (beta), 2008-08-07
+- Fixed a bug in the parsing of RFC 3164 date and time stamps which 
+  occured from the 1st to the 9th of each month. During this time, the 
+  date was not correctly parsed. 
+- Enhanced detail popup window, it performs much better now and is less
+  annoying. It still can be turned off very easily.
+- Fixed an image alignment problem of the message once and for all. 
+---------------------------------------------------------------------------
 Version 2.3.8 (beta), 2008-07-28
 - Fixed a "notice" bug in the installer, which was missing to save the 
   DBType for MYSQL Datasource. 
