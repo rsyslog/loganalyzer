@@ -1,3 +1,7 @@
+---------------------------------------------------------------------------
+Version 2.5.4 (devel), 2008-08-05
+- Included fixed from Beta v2.3.9
+---------------------------------------------------------------------------
 Version 2.3.9 (beta), 2008-08-07
 - Fixed a bug in the parsing of RFC 3164 date and time stamps which 
   occured from the 1st to the 9th of each month. During this time, the 
