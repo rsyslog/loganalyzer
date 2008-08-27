@@ -724,6 +724,7 @@ class LogStreamDB extends LogStream {
 		
 		// Append LIMIT clause
 		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
+echo $szSql . "<br>";
 
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);

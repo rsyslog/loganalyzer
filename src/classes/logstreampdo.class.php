@@ -254,11 +254,12 @@ class LogStreamPDO extends LogStream {
 
 				// Set new Record start, will be used in the SQL Statement!
 				$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
-				
+
 				// Now read new ones
 				$ret = $this->ReadNextRecordsFromDB($uID);
-//echo "1mowl " . $this->_currentRecordStart . "=" . $this->_currentRecordNum;
+//echo "!" . $ret . " " . $this->_currentRecordStart . "=" . $this->_currentRecordNum;
 
+				// Check if we found more records
 				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 					$ret = ERROR_NOMORERECORDS;
 			}
@@ -677,12 +678,22 @@ class LogStreamPDO extends LogStream {
 	private function CreateMainSQLQuery($uID)
 	{
 		global $querycount;
-
+		
 		// create query if necessary!
-		if ( $this->_myDBQuery == null )
+//		if ( $this->_myDBQuery == null )
 		{
 			// Get SQL Statement
 			$szSql = $this->CreateSQLStatement($uID);
+
+			// --- Append LIMIT if supported by the driver! Why the hell do we still have no unified solution for this crap in the sql language?!
+			if			( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+//				$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
+			else if		( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+//				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery . " OFFSET " . $this->_currentRecordStart;
+//			echo $szSql . "<br>";
+			// ---
 
 			// Perform Database Query
 			$this->_myDBQuery = $this->_dbhandle->query($szSql);
@@ -690,6 +701,16 @@ class LogStreamPDO extends LogStream {
 			{
 				$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
 				return ERROR_DB_QUERYFAILED;
+			}
+			else
+			{
+				// Skip one entry in this case
+				if ( $this->_currentRecordStart > 0 ) 
+				{
+					// Throw away 
+					$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
+				}
+
 			}
 
 			// Increment for the Footer Stats 
@@ -709,7 +730,7 @@ class LogStreamPDO extends LogStream {
 		if ( $this->_myDBQuery != null )
 		{
 			// Free Query ressources
-	//		$this->_myDBQuery->closeCursor();
+			$this->_myDBQuery->closeCursor();
 			$this->_myDBQuery = null;
 		}
 
@@ -722,8 +743,11 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function ReadNextRecordsFromDB($uID)
 	{
+		// Clear SQL Query first!
+		$this->DestroyMainSQLQuery();
+
 		// Create query if necessary
-		if ( $this->_myDBQuery == null )
+//		if ( $this->_myDBQuery == null )
 		{
 			// return error if there was one!
 			if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
