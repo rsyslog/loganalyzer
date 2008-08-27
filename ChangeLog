@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------
+Version 2.3.10 (beta), 2008-08-27
+- Fixed a few parsing issues with prior RFC 3164 syslog messages. 
+  These messages are now correctly parsed, or better do not cause
+  any parsing problems anymore. 
+---------------------------------------------------------------------------
 Version 2.3.9 (beta), 2008-08-07
 - Fixed a bug in the parsing of RFC 3164 date and time stamps which 
   occured from the 1st to the 9th of each month. During this time, the 
