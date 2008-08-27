@@ -64,7 +64,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
 
 		// Sample (Syslog): Mar 10 14:45:44 debandre anacron[3226]: Job `cron.daily' terminated (mailing output)
-		if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?)\[(.*?)\]:(.*?)$/", $szLine, $out ) )
+		if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) ([a-zA-Z0-9_\-\.]{1,256}) ([A-Za-z0-9_\-\/\.]{1,32})\[(.*?)\]:(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
@@ -73,8 +73,8 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_PROCESSID] = $out[5];
 			$arrArguments[SYSLOG_MESSAGE] = $out[6];
 		}
-		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart.
-		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
+		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart. ([A-Za-z0-9_\/]{1,32})
+		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) ([a-zA-Z0-9_\-\.]{1,256}) ([A-Za-z0-9_\-\/\.]{1,32}):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
