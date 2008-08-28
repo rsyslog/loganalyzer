@@ -262,7 +262,7 @@ function GetTimeStampFromTimeString($szTimeString)
 	}
 	else
 	{
-		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'");
+		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'", DEBUG_WARN);
 		return $szTimeString;
 	}
 }

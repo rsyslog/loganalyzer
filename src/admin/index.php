@@ -132,8 +132,9 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['MiscShowDebugGridCounter']) ) { $content['MiscShowDebugGridCounter'] = 1; } else { $content['MiscShowDebugGridCounter'] = 0; } 
 			if ( isset ($_POST['MiscShowPageRenderStats']) ) { $content['MiscShowPageRenderStats'] = 1; } else { $content['MiscShowPageRenderStats'] = 0; } 
 			if ( isset ($_POST['MiscEnableGzipCompression']) ) { $content['MiscEnableGzipCompression'] = 1; } else { $content['MiscEnableGzipCompression'] = 0; } 
-			if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
 			if ( isset ($_POST['SuppressDuplicatedMessages']) ) { $content['SuppressDuplicatedMessages'] = 1; } else { $content['SuppressDuplicatedMessages'] = 0; } 
+			if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
+			if ( isset ($_POST['MiscDebugToSyslog']) ) { $content['MiscDebugToSyslog'] = 1; } else { $content['MiscDebugToSyslog'] = 0; } 
 
 			// Read Text number fields
 			if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
@@ -177,7 +178,6 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_MiscShowDebugGridCounter']) ) { $USERCFG['MiscShowDebugGridCounter'] = 1; } else { $USERCFG['MiscShowDebugGridCounter'] = 0; } 
 			if ( isset ($_POST['User_MiscShowPageRenderStats']) ) { $USERCFG['MiscShowPageRenderStats'] = 1; } else { $USERCFG['MiscShowPageRenderStats'] = 0; } 
 			if ( isset ($_POST['User_MiscEnableGzipCompression']) ) { $USERCFG['MiscEnableGzipCompression'] = 1; } else { $USERCFG['MiscEnableGzipCompression'] = 0; } 
-// DISABLED FOR USER!			if ( isset ($_POST['User_DebugUserLogin']) ) { $USERCFG['DebugUserLogin'] = 1; } else { $USERCFG['DebugUserLogin'] = 0; } 
 			if ( isset ($_POST['User_SuppressDuplicatedMessages']) ) { $USERCFG['SuppressDuplicatedMessages'] = 1; } else { $USERCFG['SuppressDuplicatedMessages'] = 0; } 
 
 			// Read Text number fields
@@ -209,8 +209,10 @@ if ($content['MiscShowDebugMsg'] == 1) { $content['MiscShowDebugMsg_checked'] = 
 if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCounter_checked'] = "checked"; } else { $content['MiscShowDebugGridCounter_checked'] = ""; }
 if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
 if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
-if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
 if ($content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
+
+if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
+if ($content['MiscDebugToSyslog'] == 1) { $content['MiscDebugToSyslog_checked'] = "checked"; } else { $content['MiscDebugToSyslog_checked'] = ""; }
 // --- 
 
 // --- Init for Style field!

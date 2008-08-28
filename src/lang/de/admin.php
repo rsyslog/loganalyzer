@@ -83,7 +83,8 @@ $content['LN_GEN_GLOBALVALUE'] = "Global value";
 $content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
 $content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
 $content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
-
+$content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
+$content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

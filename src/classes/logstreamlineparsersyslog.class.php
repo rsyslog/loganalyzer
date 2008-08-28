@@ -118,7 +118,7 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 		else
 		{
 			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
-				OutputDebugMessage("Unparseable syslog msg - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
+				OutputDebugMessage("Unparseable syslog msg - '" . $arrArguments[SYSLOG_MESSAGE] . "'", DEBUG_ERROR);
 		}
 
 		// If SyslogTag is set, we check for MessageType!

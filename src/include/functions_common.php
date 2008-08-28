@@ -388,6 +388,10 @@ function CheckAndSetRunMode()
 	
 	// Obtain max_execution_time
 	$MaxExecutionTime = ini_get("max_execution_time");
+
+	// Define and Inits Syslog variables now!
+	define_syslog_variables();
+	openlog("phpLogCon", LOG_PID, LOG_USER);
 	
 	// --- Check necessary PHP Extensions!
 	$loadedExtensions = get_loaded_extensions();
@@ -402,7 +406,7 @@ function CheckAndSetRunMode()
 	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
 	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
-
+	// --- 
 }
 
 function InitRuntimeInformations()
@@ -878,7 +882,7 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 		
 		// Print Error!
-		OutputDebugMessage("GetEventTime got an unparsable time '" . $szTimStr . "', returning 0");
+		OutputDebugMessage("GetEventTime got an unparsable time '" . $szTimStr . "', returning 0", DEBUG_WARN);
 	}
 
 	// return result!
@@ -1101,7 +1105,6 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscShowDebugGridCounter", true );
 	WriteConfigValue( "MiscShowPageRenderStats", true );
 	WriteConfigValue( "MiscEnableGzipCompression", true );
-	WriteConfigValue( "DebugUserLogin", true );
 	WriteConfigValue( "SuppressDuplicatedMessages", true );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true );
@@ -1115,6 +1118,10 @@ function SaveGeneralSettingsIntoDB()
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", true );
 	WriteConfigValue( "DefaultSourceID", true );
+	
+	// GLOBAL ONLY
+	WriteConfigValue( "DebugUserLogin", true );
+	WriteConfigValue( "MiscDebugToSyslog", true );
 }
 
 function SaveUserGeneralSettingsIntoDB()

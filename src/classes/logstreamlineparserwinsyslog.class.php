@@ -88,7 +88,7 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 		else
 		{
 			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
-				OutputDebugMessage("Unparseable Winsyslog message - '" . $arrArguments[SYSLOG_MESSAGE] . "'");
+				OutputDebugMessage("Unparseable Winsyslog message - '" . $arrArguments[SYSLOG_MESSAGE] . "'", DEBUG_ERROR);
 		}
 		
 		// If SyslogTag is set, we check for MessageType!

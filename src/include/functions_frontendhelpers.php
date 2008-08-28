@@ -232,14 +232,40 @@ function GetFormatedDate($evttimearray)
 	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
-function OutputDebugMessage($szDbg)
+function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 {
+	// Check if we should print the Error!
 	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 	{
 		print("<table width=\"600\" align=\"center\" class=\"with_border\">");
 		print("<tr><td valign='top'><B>Debugmessage:</B> </td>");
 		print("<td>" . $szDbg . "</td></tr>");
 		print("</table><br>");
+	}
+
+	// Check if the user wants to syslog the error!
+	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
+	{
+		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+	}
+}
+
+function GetPriorityFromDebugLevel( $DebugLevel ) 
+{
+	switch ( $DebugLevel )
+	{
+		case DEBUG_ULTRADEBUG:
+			return LOG_DEBUG;
+		case DEBUG_DEBUG:
+			return LOG_INFO;
+		case DEBUG_INFO:
+			return LOG_NOTICE;
+		case DEBUG_WARN:
+			return LOG_WARNING;
+		case DEBUG_ERROR:
+			return LOG_ERR;
+		case DEBUG_ERROR_WTF:
+			return LOG_CRIT;
 	}
 }
 

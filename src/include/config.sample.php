@@ -54,6 +54,7 @@ $CFG['UserDBLoginRequired'] = false;
 
 // --- Misc Options
 $CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
+$CFG['MiscDebugToSyslog'] = 0;				// if enabled, debug messages from phpLogCon will be send to syslog on linux, and into the EventLog on Windows
 $CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add a counter column into the grid!
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 $CFG['MiscEnableGzipCompression'] = 1;		// If enabled, phplogcon will use gzip compression for output, we recommend
