@@ -66,7 +66,7 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
 
 		// Sample (WinSyslog/EventReporter): 2008-04-02,15:19:06,2008-04-02,15:19:06,127.0.0.1,16,5,EvntSLog: Performance counters for the RSVP (QoS RSVP) service were loaded successfully. 
-		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szLine, $out ) )
+		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
@@ -76,7 +76,7 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[7];
 		}
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
+		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}.[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
