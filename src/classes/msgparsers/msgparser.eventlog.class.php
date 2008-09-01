@@ -3,7 +3,8 @@
 	*********************************************************************
 	* -> www.phplogcon.org <-											*
 	* -----------------------------------------------------------------	*
-	* LogStream Parser is used to split syslog messages into fields		*
+	* EventLog MSG Parser is used to split EventLog fields if found 
+	* in the msg 
 	*																	*
 	* All directives are explained within this file						*
 	*
@@ -44,7 +45,7 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 
-class LogStreamLineParserwinsyslog extends LogStreamLineParser {
+class MsgParserEventLog extends MsgParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
@@ -58,15 +59,16 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 	* @param arrArguments array in&out: properties of interest. There can be no guarantee the logstream can actually deliver them.
 	* @return integer Error stat
 	*/
-	public function ParseLine($szLine, &$arrArguments)
+	public function ParseMsg($szMsg, &$arrArguments)
 	{
 		global $content; 
 
 		// Set IUT Property first!
 		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
 
+/*
 		// Sample (WinSyslog/EventReporter): 2008-04-02,15:19:06,2008-04-02,15:19:06,127.0.0.1,16,5,EvntSLog: Performance counters for the RSVP (QoS RSVP) service were loaded successfully. 
-		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szLine, $out ) )
+		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szMsg, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
@@ -76,33 +78,16 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[7];
 		}
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?)$/", $szLine, $out ) )
-		{
-			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[3];
-			$arrArguments[SYSLOG_FACILITY] = $out[4];
-			$arrArguments[SYSLOG_SEVERITY] = $out[5];
-			$arrArguments[SYSLOG_MESSAGE] = $out[6];
-		}
 		else
+*/
 		{
-			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
-				OutputDebugMessage("Unparseable Winsyslog message - '" . $arrArguments[SYSLOG_MESSAGE] . "'", DEBUG_ERROR);
+			// return no match in this case!
+			return ERROR_MSG_NOMATCH;
 		}
 		
-		// If SyslogTag is set, we check for MessageType!
-		if ( isset($arrArguments[SYSLOG_SYSLOGTAG]) )
-		{
-			if ( strpos($arrArguments[SYSLOG_SYSLOGTAG], "EvntSLog" ) !== false ) 
-				$arrArguments[SYSLOG_MESSAGETYPE] = IUT_NT_EventReport;
-		}
-		
-		// Return success!
+		// If we reached this position, return success!
 		return SUCCESS;
 	}
-
-
 }
 
 ?>

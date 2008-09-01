@@ -3,9 +3,7 @@
 	*********************************************************************
 	* -> www.phplogcon.org <-											*
 	* -----------------------------------------------------------------	*
-	* Some constants													*
-	*																	*
-	* -> Stuff which has to be static and predefined					*
+	* LogStream MSGParser abstract basic class							*
 	*																	*
 	* All directives are explained within this file						*
 	*
@@ -39,27 +37,24 @@ if ( !defined('IN_PHPLOGCON') )
 }
 // --- 
 
-define('SUCCESS', 0);
-define('ERROR', 1);			// This is a simple helper constant! which we can use to check if there even was an error! Any result code above 0 is an error!
-define('ERROR_FILE_NOT_FOUND', 2);
-define('ERROR_FILE_CANT_CLOSE', 3);
-define('ERROR_FILE_EOF', 4);
-define('ERROR_FILE_BOF', 5);
-define('ERROR_FILE_NOT_READABLE', 15);
-define('ERROR_UNDEFINED', 6);
-define('ERROR_EOS', 7);
-define('ERROR_NOMORERECORDS', 8);
-define('ERROR_FILTER_NOT_MATCH', 9);
+// --- Basic Includes
+require_once($gl_root_path . 'classes/enums.class.php');
+require_once($gl_root_path . 'include/constants_errors.php');
+require_once($gl_root_path . 'include/constants_logstream.php');
+// --- 
 
-define('ERROR_DB_CONNECTFAILED', 10);
-define('ERROR_DB_CANNOTSELECTDB', 11);
-define('ERROR_DB_QUERYFAILED', 12);
-define('ERROR_DB_NOPROPERTIES', 13);
-define('ERROR_DB_INVALIDDBMAPPING', 14);
-define('ERROR_DB_INVALIDDBDRIVER', 16);
-define('ERROR_DB_TABLENOTFOUND', 17);
 
-define('ERROR_MSG_NOMATCH', 18);
+abstract class MsgParser{
+//	protected $_arrProperties = null;
 
+	/**
+	* ParseLine
+	*
+	* @param arrArguments array in&out: properties of interest. There can be no guarantee the logstream can actually deliver them.
+	* @return integer Error stat
+	*/
+	public abstract function ParseMsg($szMsg, &$arrArguments);
+
+}
 
 ?>
