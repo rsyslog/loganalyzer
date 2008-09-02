@@ -257,6 +257,10 @@ class LogStreamDB extends LogStream {
 					$arrProperitesOut[$property] = '';
 			}
 
+			// Run optional Message Parsers now
+			if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
+				$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+
 			// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
 			$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
 			
@@ -727,7 +731,7 @@ class LogStreamDB extends LogStream {
 		
 		// Append LIMIT clause
 		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
-echo $szSql . "<br>";
+//echo $szSql . "<br>";
 
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);
