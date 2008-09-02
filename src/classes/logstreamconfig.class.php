@@ -50,8 +50,9 @@ abstract class LogStreamConfig {
 	protected $_defaultSeverity = '';
 	
 	// helpers properties for message parser list!
-	protected $_msgParserList = null;	// Contains a string list of configure msg parsers
-	protected $_msgParserObjList = null;		// Contains an object reference list to the msg parsers
+	protected $_msgParserList = null;		// Contains a string list of configure msg parsers
+	protected $_msgParserObjList = null;	// Contains an object reference list to the msg parsers
+	protected $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
 	
 	// Constructor prototype 
 	public abstract function LogStreamFactory($o);
@@ -71,13 +72,26 @@ abstract class LogStreamConfig {
 				$szClassName = "MsgParser_" . $szParser;
 
 				// Create OBjectRef!
-				$this->_msgParserObjList[] = new $szClassName();
+				$NewParser = new $szClassName();					// Create new instance
+				$NewParser->_MsgNormalize = $this->_MsgNormalize;	// Copy property!
+				$this->_msgParserObjList[] = $NewParser;			// Append NewParser to Parser array
 			}
 		}
 	}
 
 	/*
-	*
+	* Helper function to init Parserlist
+	*/
+	public function SetMsgNormalize( $nNewVal )
+	{
+		if ( $nNewVal == 0 ) 
+			$this->_MsgNormalize = 0;
+		else
+			$this->_MsgNormalize = 1;
+	}
+
+	/*
+	* Helper function to init Parserlist
 	*/
 	public function SetMsgParserList( $szParsers )
 	{

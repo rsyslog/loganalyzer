@@ -61,7 +61,7 @@ class MsgParser_eventlog extends MsgParser {
 	*/
 	public function ParseMsg($szMsg, &$arrArguments)
 	{
-		global $content; 
+		global $content, $fields; 
 
 		// Sample (WinSyslog/EventReporter):	7035,XPVS2005\Administrator,Service Control Manager,System,[INF],0,The Adiscon EvntSLog service was successfully sent a start control.
 		// Source:								%id%,%user%,%sourceproc%,%NTEventLogType%,%severity%,%category%,%msg%%$CRLF%
@@ -75,6 +75,25 @@ class MsgParser_eventlog extends MsgParser {
 ///			$arrArguments[SYSLOG_SEVERITY] = $out[5];
 			$arrArguments[SYSLOG_EVENT_CATEGORY] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[7];
+
+			if ( $this->_MsgNormalize == 1 ) 
+			{
+				// Create Field Array to prepend into msg! Reverse Order here
+				$myFields = array( SYSLOG_EVENT_CATEGORY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_USER, SYSLOG_EVENT_ID );
+
+				foreach ( $myFields as $myField )
+				{
+					// Set Field Caption
+					if ( isset($content[ $fields[$myField]['FieldCaptionID'] ]) )
+						$szFieldName = $content[ $fields[$myField]['FieldCaptionID'] ];
+					else
+						$szFieldName = $fields[$myField]['FieldCaptionID'];
+
+					// Append Field into msg
+					$arrArguments[SYSLOG_MESSAGE] = $szFieldName . "='" . $arrArguments[$myField] . "' " . $arrArguments[SYSLOG_MESSAGE];
+				}
+
+			}
 		}
 		else
 		{

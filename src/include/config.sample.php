@@ -105,6 +105,7 @@ $CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "S
 	$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
 	$CFG['Sources']['Source1']['LogLineType'] = "syslog";
 	$CFG['Sources']['Source1']['MsgParserList'] = "";
+	$CFG['Sources']['Source1']['MsgNormalize'] = 0;
 	$CFG['Sources']['Source1']['DiskFile'] = "/var/log/syslog";
 	$CFG['Sources']['Source1']['ViewID'] = "SYSLOG";
 

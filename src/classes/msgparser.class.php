@@ -45,7 +45,7 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 
 
 abstract class MsgParser{
-//	protected $_arrProperties = null;
+	public $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
 
 	/**
 	* ParseLine

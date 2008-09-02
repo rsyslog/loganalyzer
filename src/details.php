@@ -245,9 +245,9 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 				else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 				{
 					if ( $mycolkey == SYSLOG_MESSAGE )
-						$content['fields'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[$mycolkey]);
+						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
 					else	// kindly copy!
-						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( $logArray[$mycolkey] );
 
 					// --- HOOK here to add context links!
 					AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);

@@ -762,8 +762,15 @@ function InitPageTitle()
 	return $szReturn;
 }
 
+function ReplaceLineBreaksInString($myStr)
+{
+	// Add linebreaks!
+	return str_replace( "\n", "<br>", $myStr );
+}
+
 function GetStringWithHTMLCodes($myStr)
 {
+
 	// Replace all special characters with valid html representations
 	return htmlentities($myStr);
 }

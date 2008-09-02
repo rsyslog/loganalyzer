@@ -196,6 +196,7 @@ $content['LN_CFG_DBROWCOUNTING'] = "Habilitar contagem de registro";
 $content['LN_CFG_VIEW'] = "Selecione vis&atilde;o";
 	$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Require user to be logged in";
 	$content['LN_CFG_MSGPARSERS'] = "Message Parsers (comma seperated)";
+	$content['LN_CFG_NORMALIZEMSG'] = "Normalize Message within Parsers";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Detalhes para a mensagem com id";

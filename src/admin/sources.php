@@ -68,6 +68,8 @@ if ( isset($_GET['op']) )
 		$content['SourceType'] = SOURCE_DISK;
 		CreateSourceTypesList($content['SourceType']);
 		$content['MsgParserList'] = "";
+		$content['MsgNormalize'] = 0;
+		$content['CHECKED_ISNORMALIZEMSG'] = "";
 
 		// Init View List!
 		$content['SourceViewID'] = 'SYSLOG';
@@ -133,6 +135,11 @@ if ( isset($_GET['op']) )
 				$content['SourceType'] = $mysource['SourceType'];
 				CreateSourceTypesList($content['SourceType']);
 				$content['MsgParserList'] = $mysource['MsgParserList'];
+				$content['MsgNormalize'] = $mysource['MsgNormalize'];
+				if ( $mysource['MsgNormalize'] == 1 )
+					$content['CHECKED_ISNORMALIZEMSG'] = "checked";
+				else
+					$content['CHECKED_ISNORMALIZEMSG'] = "";
 
 				// Init View List!
 				$content['SourceViewID'] = $mysource['ViewID'];
@@ -262,6 +269,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
 	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
 	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
+	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
 	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
 
 	if ( isset($content['SourceType']) )
@@ -408,11 +416,12 @@ if ( isset($_POST['op']) )
 		include($gl_root_path . 'classes/logstream.class.php');
 
 		// First create a tmp source array
-		$tmpSource['ID']		= $content['SOURCEID'];
-		$tmpSource['Name']		= $content['Name'];
-		$tmpSource['SourceType']= $content['SourceType'];
-		$tmpSource['MsgParserList']= $content['MsgParserList'];
-		$tmpSource['ViewID']	= $content['SourceViewID'];
+		$tmpSource['ID']			= $content['SOURCEID'];
+		$tmpSource['Name']			= $content['Name'];
+		$tmpSource['SourceType']	= $content['SourceType'];
+		$tmpSource['MsgParserList']	= $content['MsgParserList'];
+		$tmpSource['MsgNormalize']	= $content['MsgNormalize'];
+		$tmpSource['ViewID']		= $content['SourceViewID'];
 		if ( $tmpSource['SourceType'] == SOURCE_DISK ) 
 		{
 			$tmpSource['LogLineType']	= $content['SourceLogLineType'];
@@ -459,10 +468,11 @@ if ( isset($_POST['op']) )
 			// Add custom search now!
 			if ( $content['SourceType'] == SOURCE_DISK ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, ViewID, LogLineType, DiskFile, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						" . $content['SourceType'] . ", 
-						'" . $content['MsgParserList'] . "', 
+						'" . $content['MsgParserList'] . "',
+						" . $content['MsgNormalize'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceLogLineType'] . "',
 						'" . $content['SourceDiskFile'] . "',
@@ -472,10 +482,11 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "', 
+						" . $content['MsgNormalize'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceDBTableType'] . "',
 						" . $content['SourceDBType'] . ",
@@ -514,6 +525,7 @@ if ( isset($_POST['op']) )
 									Name = '" . $content['Name'] . "', 
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
+									MsgNormalize = " . $content['MsgNormalize'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									LogLineType = '" . $content['SourceLogLineType'] . "', 
 									DiskFile = '" . $content['SourceDiskFile'] . "', 
@@ -527,6 +539,7 @@ if ( isset($_POST['op']) )
 									Name = '" . $content['Name'] . "', 
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
+									MsgNormalize = " . $content['MsgNormalize'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									DBTableType = '" . $content['SourceDBTableType'] . "', 
 									DBType = " . $content['SourceDBType'] . ", 

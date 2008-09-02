@@ -567,10 +567,13 @@ if ( isset($content['Sources'][$currentSourceID]) )
 										// If message field, we need to handle differently!
 										if ( $mykey == SYSLOG_MESSAGE )
 										{
+											// Get DetailMsg with linebreaks
+											$szDetailMsg = ReplaceLineBreaksInString(GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]));
+
 											if ( isset($content['highlightwords']) )
-												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = HighLightString( $content['highlightwords'],GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]) );
+												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = HighLightString( $content['highlightwords'], $szDetailMsg);
 											else
-												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]);
+												$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $szDetailMsg;
 
 											// --- HOOK here to add context links!
 											AddContextLinks( $content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] );

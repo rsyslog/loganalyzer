@@ -73,6 +73,12 @@ function InitSource(&$mysource)
 			$CFG['Sources'][$iSourceID]['MsgParserList'] = null;
 			$content['Sources'][$iSourceID]['MsgParserList'] = null;
 		}
+
+		if ( !isset($mysource['MsgNormalize']) )
+		{
+			$CFG['Sources'][$iSourceID]['MsgNormalize'] = 0;
+			$content['Sources'][$iSourceID]['MsgNormalize'] = 0;
+		}
 		// ---
 
 		// Set default view id to source
@@ -172,6 +178,7 @@ function InitSource(&$mysource)
 		// Set generic configuration options
 		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
 		$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
+		$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
 
 		// Set default SourceID here!
 		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
