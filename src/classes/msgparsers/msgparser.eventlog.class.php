@@ -78,8 +78,11 @@ class MsgParser_eventlog extends MsgParser {
 
 			if ( $this->_MsgNormalize == 1 ) 
 			{
+				//Init tmp msg
+				$szTmpMsg = "";
+
 				// Create Field Array to prepend into msg! Reverse Order here
-				$myFields = array( SYSLOG_EVENT_CATEGORY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_USER, SYSLOG_EVENT_ID );
+				$myFields = array( SYSLOG_MESSAGE, SYSLOG_EVENT_CATEGORY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_USER, SYSLOG_EVENT_ID );
 
 				foreach ( $myFields as $myField )
 				{
@@ -90,8 +93,11 @@ class MsgParser_eventlog extends MsgParser {
 						$szFieldName = $fields[$myField]['FieldCaptionID'];
 
 					// Append Field into msg
-					$arrArguments[SYSLOG_MESSAGE] = $szFieldName . "='" . $arrArguments[$myField] . "' " . $arrArguments[SYSLOG_MESSAGE];
+					$szTmpMsg = $szFieldName . ": '" . $arrArguments[$myField] . "'\n" . $szTmpMsg;
 				}
+
+				// copy finished MSG back!
+				$arrArguments[SYSLOG_MESSAGE] = $szTmpMsg;
 
 			}
 		}
