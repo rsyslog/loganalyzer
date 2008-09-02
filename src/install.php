@@ -394,7 +394,7 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		}
 
 		// Append INSERT Statement for Config Table to set the Database Version ^^!
-		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
+		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', " . $content['database_internalversion'] . ")";
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!

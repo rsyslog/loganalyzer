@@ -60,10 +60,11 @@ CREATE TABLE IF NOT EXISTS `logcon_searches` (
 -- 
 
 DROP TABLE IF EXISTS `logcon_sources`;
-CREATE TABLE IF NOT EXISTS `logcon_sources` (
+CREATE TABLE `logcon_sources` (
   `ID` int(11) NOT NULL auto_increment,
   `Name` varchar(255) NOT NULL,
   `SourceType` tinyint(4) NOT NULL,
+  `MsgParserList` varchar(255) NOT NULL,
   `ViewID` varchar(64) NOT NULL,
   `LogLineType` varchar(64) default NULL,
   `DiskFile` varchar(255) default NULL,

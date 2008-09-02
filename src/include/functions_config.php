@@ -67,6 +67,12 @@ function InitSource(&$mysource)
 			$CFG['Sources'][$iSourceID]['groupid'] = null;
 			$content['Sources'][$iSourceID]['groupid'] = null;
 		}
+
+		if ( !isset($mysource['MsgParserList']) )
+		{
+			$CFG['Sources'][$iSourceID]['MsgParserList'] = null;
+			$content['Sources'][$iSourceID]['MsgParserList'] = null;
+		}
 		// ---
 
 		// Set default view id to source
@@ -165,6 +171,7 @@ function InitSource(&$mysource)
 
 		// Set generic configuration options
 		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
+		$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
 
 		// Set default SourceID here!
 		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 

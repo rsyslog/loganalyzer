@@ -87,6 +87,9 @@ class LogStreamPDO extends LogStream {
 	{
 		global $dbmapping;
 
+		// Initialise Basic stuff within the Classs
+		$this->RunBasicInits();
+
 		// Verify database driver and connection (This also opens the database!)
 		$res = $this->Verify();
 		if ( $res != SUCCESS ) 

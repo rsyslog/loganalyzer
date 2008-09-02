@@ -48,8 +48,89 @@ abstract class LogStreamConfig {
 	protected $_logStreamName = '';
 	protected $_defaultFacility = '';
 	protected $_defaultSeverity = '';
-
+	
+	// helpers properties for message parser list!
+	protected $_msgParserList = null;	// Contains a string list of configure msg parsers
+	protected $_msgParserObjList = null;		// Contains an object reference list to the msg parsers
+	
+	// Constructor prototype 
 	public abstract function LogStreamFactory($o);
+	
+	/*
+	* Initialize Msg Parsers!
+	*/
+	public function InitMsgParsers()
+	{
+		// Init parsers if available and not initialized already!
+		if ( $this->_msgParserList != null && $this->_msgParserObjList == null ) 
+		{
+			// Loop through parsers
+			foreach( $this->_msgParserList as $szParser )
+			{
+				// Set Classname
+				$szClassName = "MsgParser_" . $szParser;
+
+				// Create OBjectRef!
+				$this->_msgParserObjList[] = new $szClassName();
+			}
+		}
+	}
+
+	/*
+	*
+	*/
+	public function SetMsgParserList( $szParsers )
+	{
+		global $gl_root_path;
+
+		// Check if we have at least something to check 
+		if ( $szParsers == null || strlen($szParsers) <= 0 )
+			return;
+
+		// Set list of Parsers!
+		if ( strpos($szParsers, ",") ) 
+			$aParsers = explode( ",", $szParsers );
+		else
+			$aParsers[0] = $szParsers;
+
+		// Loop through parsers
+		foreach( $aParsers as $szParser )
+		{
+			// Remove whitespaces
+			$szParser = trim($szParser);
+
+			// Check if parser file include exists
+			$szIncludeFile = $gl_root_path . 'classes/msgparsers/msgparser.' . $szParser . '.class.php';
+			if ( file_exists($szIncludeFile) )
+			{
+				// Try to include
+				if ( @include_once($szIncludeFile) )
+					$this->_msgParserList[] = $szParser;
+				else
+					OutputDebugMessage("Error, MsgParser '" . $szParser . "' could not be included. ", DEBUG_ERROR);
+
+			}
+		}
+
+//		print_r ( $this->_msgParserList );
+	}
+
+	public function ProcessMsgParsers($szMsg, &$arrArguments)
+	{
+		// Process if set!
+		if ( $this->_msgParserObjList != null )
+		{
+			foreach( $this->_msgParserObjList as $myMsgParser )
+			{
+				// Perform Parsing, and return if was successfull! Otherwise the next Parser will be called. 
+				if ( $myMsgParser->ParseMsg($szMsg, $arrArguments) == SUCCESS )
+					return SUCCESS;
+			}
+		}
+
+		// reached this means all work is done!
+		return SUCCESS;
+	}
 
 }
 ?>

@@ -104,12 +104,14 @@ $CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "S
 	$CFG['Sources']['Source1']['Name'] = "Syslog Disk File";
 	$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
 	$CFG['Sources']['Source1']['LogLineType'] = "syslog";
+	$CFG['Sources']['Source1']['MsgParserList'] = "";
 	$CFG['Sources']['Source1']['DiskFile'] = "/var/log/syslog";
 	$CFG['Sources']['Source1']['ViewID'] = "SYSLOG";
 
 	$CFG['Sources']['Source2']['ID'] = "Source5";
 	$CFG['Sources']['Source2']['Name'] = "WinSyslog DB";
 	$CFG['Sources']['Source2']['SourceType'] = SOURCE_DB;
+	$CFG['Sources']['Source1']['MsgParserList'] = "";
 	$CFG['Sources']['Source2']['DBTableType'] = "winsyslog";
 	$CFG['Sources']['Source2']['DBType'] = DB_MYSQL;
 	$CFG['Sources']['Source2']['DBServer'] = "localhost";

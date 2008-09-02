@@ -166,7 +166,7 @@ $content['LN_SEARCH_ERROR_DELSEARCH'] = "Deleting of the Custom Search with id '
 $content['LN_SEARCH_ERROR_HASBEENDEL'] = "The Custom Search '%1' has been successfully deleted!";
 $content['LN_SEARCH_'] = "";
 
-// Custom Searches center
+// Custom Views center
 $content['LN_VIEWS_CENTER'] = "Views Options";
 $content['LN_VIEWS_ID'] = "ID";
 $content['LN_VIEWS_NAME'] = "View Name";
@@ -190,6 +190,7 @@ $content['LN_VIEWS_ERROR_NOCOLUMNS'] = "You need to add at least one column in o
 $content['LN_VIEWS_HASBEENEDIT'] = "The Custom Search '%1' has been successfully edited.";
 $content['LN_VIEWS_'] = "";
 
+// Custom Sources center
 $content['LN_SOURCES_CENTER'] = "Sources Options";
 $content['LN_SOURCES_EDIT'] = "Edit Source";
 $content['LN_SOURCES_DELETE'] = "Delete Source";
@@ -217,5 +218,19 @@ $content['LN_SOURCES_ERROR_DELSOURCE'] = "Deleting of the Source with id '%1' fa
 $content['LN_SOURCES_ERROR_HASBEENDEL'] = "The Source '%1' has been successfully deleted!";
 $content['LN_SOURCES_'] = "";
 
+// Database Upgrade
+$content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";
+$content['LN_DBUPGRADE_DBFILENOTFOUND'] = "The database upgrade file '%1' could not be found in the include folder! Please check if all files were successfully uploaded.";
+$content['LN_DBUPGRADE_DBDEFFILESHORT'] = "The database upgrade files where empty or did not contain any SQL Command! Please check if all files were successfully uploaded.";
+$content['LN_DBUPGRADE_WELCOME'] = "Welcome to the database upgrade";
+$content['LN_DBUPGRADE_BEFORESTART'] = "Before you start upgrading your database, you should create a <b>FULL BACKUP OF YOUR DATABASE</b>. Anything else will be done automatically by the upgrade Script.";
+$content['LN_DBUPGRADE_CURRENTINSTALLED'] = "Current Installed Database Version";
+$content['LN_DBUPGRADE_TOBEINSTALLED'] = "Do be Installed Database Version";
+$content['LN_DBUPGRADE_HASBEENDONE'] = "Database Update has been performed, see the results below";
+$content['LN_DBUPGRADE_SUCCESSEXEC'] = "Successfully executed statements";
+$content['LN_DBUPGRADE_FAILEDEXEC'] = "Failed statements";
+$content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "At least one statement failed, you may need to correct and fix this issue manually. See error details below";
+$content['LN_DBUPGRADE_ERRMSG'] = "Error Message";
+$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "phpLogCon Database Version";
 
 ?>

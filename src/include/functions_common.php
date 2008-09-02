@@ -40,13 +40,13 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 // --- Basic Includes
-include($gl_root_path . 'include/constants_general.php');
-include($gl_root_path . 'include/constants_logstream.php');
+include_once($gl_root_path . 'include/constants_general.php');
+include_once($gl_root_path . 'include/constants_logstream.php');
 
-include($gl_root_path . 'classes/class_template.php');
-include($gl_root_path . 'include/functions_themes.php');
-include($gl_root_path . 'include/functions_db.php');
-include($gl_root_path . 'include/functions_config.php');
+include_once($gl_root_path . 'classes/class_template.php');
+include_once($gl_root_path . 'include/functions_themes.php');
+include_once($gl_root_path . 'include/functions_db.php');
+include_once($gl_root_path . 'include/functions_config.php');
 // --- 
 
 // --- Define Basic vars
@@ -551,6 +551,13 @@ function InitConfigurationValues()
 			else // Critical ERROR HERE!
 				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
 
+			// Database Version Checker! 
+			if ( $content['database_internalversion'] > $content['database_installedversion'] )
+			{	
+				// Database is out of date, we need to upgrade
+				$content['database_forcedatabaseupdate'] = "yes"; 
+			}
+
 			// Now we init the user session stuff
 			InitUserSession();
 			
@@ -579,14 +586,6 @@ function InitConfigurationValues()
 
 			// Load Configured Sources
 			LoadSourcesFromDatabase();
-
-			
-			// Database Version Checker! 
-			if ( $content['database_internalversion'] > $content['database_installedversion'] )
-			{	
-				// Database is out of date, we need to upgrade
-				$content['database_forcedatabaseupdate'] = "yes"; 
-			}
 		}
 		else
 		{

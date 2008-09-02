@@ -40,6 +40,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Basic Includes
 require_once($gl_root_path . 'classes/enums.class.php');
+require_once($gl_root_path . 'classes/msgparser.class.php');
 require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
@@ -203,6 +204,14 @@ abstract class LogStream {
 	*
 	*/
 	public abstract function IsPropertySortable($myProperty);
+
+	/*
+	* Helper functino to trigger initialisation of MsgParsers
+	*/
+	public function RunBasicInits()
+	{
+		$this->_logStreamConfigObj->InitMsgParsers();
+	}
 
 	/**
 	* Set the filter for the current stream.
@@ -582,7 +591,6 @@ abstract class LogStream {
 		return -1;
 	}
 	
-
 }
 
 ?>

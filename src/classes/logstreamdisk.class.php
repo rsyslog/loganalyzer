@@ -73,7 +73,10 @@ class LogStreamDisk extends LogStream {
 	* @param arrProperties array in: Properties wish list.
 	* @return integer Error stat
 	*/
-	public function Open($arrProperties) {
+	public function Open($arrProperties)
+	{
+		// Initialise Basic stuff within the Classs
+		$this->RunBasicInits();
 
 		// Check if file exists!
 		$result = $this->Verify(); 
@@ -235,6 +238,9 @@ class LogStreamDisk extends LogStream {
 		{
 			// Line Parser Hook here
 			$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+			
+			// Run optional Message Parsers now
+			$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
 			// Set uID to the PropertiesOut!
 			$arrProperitesOut[SYSLOG_UID] = $uID;

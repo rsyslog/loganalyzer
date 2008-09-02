@@ -97,18 +97,15 @@ function InitUserSession()
 			else // Critical ERROR HERE!
 				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
 			// --- 
+
+			// --- Extracheck for available database updates!
+			if ( isset($content['database_forcedatabaseupdate']) && $content['database_forcedatabaseupdate'] == "yes" && !defined('IS_UPRGADEPAGE') )
+				RedirectToDatabaseUpgrade();
+			// ---
 			
 			// Successfully logged in
 			return true;
 		}
-/*
-		// New, Check for database Version and may redirect to updatepage!
-		if (	isset($content['database_forcedatabaseupdate']) && 
-				$content['database_forcedatabaseupdate'] == "yes" && 
-				$isUpgradePage == false 
-			)
-				RedirectToDatabaseUpgrade();
-*/
 	}
 	else
 	{
@@ -189,10 +186,14 @@ function CheckUserLogin( $username, $password )
 		$_SESSION['SESSION_GROUPIDS'] = $content['SESSION_GROUPIDS'];
 		// ---
 
-
 		// ---Set LASTLOGIN Time!
 		$result = DB_Query("UPDATE " . DB_USERS . " SET last_login = " . time() . " WHERE ID = " . $content['SESSION_USERID']);
 		DB_FreeQuery($result);
+		// ---
+
+		// --- Extracheck for available database updates!
+		if ( isset($content['database_forcedatabaseupdate']) && $content['database_forcedatabaseupdate'] == "yes" && !defined('IS_UPRGADEPAGE') )
+			RedirectToDatabaseUpgrade();
 		// ---
 
 		// Success !
@@ -236,12 +237,14 @@ function RedirectToUserLogin()
 
 function RedirectToDatabaseUpgrade()
 {
+	global $content;
+
 	// build referer
 	$referer = $_SERVER['PHP_SELF'];
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
 		$referer .= "?" . $_SERVER['QUERY_STRING'];
 
-	header("Location: upgrade.php?referer=" . urlencode($referer) );
+	header("Location: " . $content['BASEPATH'] . "admin/upgrade.php?referer=" . urlencode($referer) );
 	exit;
 }
 // --- END Usermanagement Function --- 

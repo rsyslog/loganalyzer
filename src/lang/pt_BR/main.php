@@ -194,6 +194,8 @@ $content['LN_CFG_NAMEOFTHESOURCE'] = "Nome da origem";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Fonte prim&aacute;ria Syslog";
 $content['LN_CFG_DBROWCOUNTING'] = "Habilitar contagem de registro";
 $content['LN_CFG_VIEW'] = "Selecione vis&atilde;o";
+	$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Require user to be logged in";
+	$content['LN_CFG_MSGPARSERS'] = "Message Parsers (comma seperated)";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Detalhes para a mensagem com id";

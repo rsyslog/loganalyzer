@@ -40,16 +40,16 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Basic Includes
 require_once($gl_root_path . 'classes/enums.class.php');
+require_once($gl_root_path . 'classes/msgparser.class.php');
 require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
-
-class MsgParserEventLog extends MsgParser {
+class MsgParser_eventlog extends MsgParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
-	public function LogStreamLineParserwinsyslog() {
+	public function MsgParser_eventlog() {
 		return; // Nothing
 	}
 
@@ -63,28 +63,28 @@ class MsgParserEventLog extends MsgParser {
 	{
 		global $content; 
 
-		// Set IUT Property first!
-		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_Syslog;
-
-/*
-		// Sample (WinSyslog/EventReporter): 2008-04-02,15:19:06,2008-04-02,15:19:06,127.0.0.1,16,5,EvntSLog: Performance counters for the RSVP (QoS RSVP) service were loaded successfully. 
-		if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2},[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}),(.*?),([0-9]{1,2}),([0-9]{1,2}),(.*?):(.*?)$/", $szMsg, $out ) )
+		// Sample (WinSyslog/EventReporter):	7035,XPVS2005\Administrator,Service Control Manager,System,[INF],0,The Adiscon EvntSLog service was successfully sent a start control.
+		// Source:								%id%,%user%,%sourceproc%,%NTEventLogType%,%severity%,%category%,%msg%%$CRLF%
+		if ( preg_match("/([0-9]{1,12}),(.*?),(.*?),(.*?),(.*?),([0-9]{1,12}),(.*?)$/", $szMsg, $out ) )
 		{
 			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[3];
-			$arrArguments[SYSLOG_FACILITY] = $out[4];
-			$arrArguments[SYSLOG_SEVERITY] = $out[5];
-			$arrArguments[SYSLOG_SYSLOGTAG] = $out[6];
+			$arrArguments[SYSLOG_EVENT_ID] = $out[1];
+			$arrArguments[SYSLOG_EVENT_USER] = $out[2];
+			$arrArguments[SYSLOG_EVENT_SOURCE] = $out[3];
+			$arrArguments[SYSLOG_EVENT_LOGTYPE] = $out[4];
+///			$arrArguments[SYSLOG_SEVERITY] = $out[5];
+			$arrArguments[SYSLOG_EVENT_CATEGORY] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[7];
 		}
 		else
-*/
 		{
 			// return no match in this case!
 			return ERROR_MSG_NOMATCH;
 		}
 		
+		// Set IUT Property if success!
+		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_NT_EventReport;
+
 		// If we reached this position, return success!
 		return SUCCESS;
 	}
