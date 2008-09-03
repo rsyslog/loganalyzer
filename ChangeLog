@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------
+Version 2.5.6 (devel), 2008-09-03
+- Implemented Message Parser facility. This new extendable facility of 
+  phpLogCon helps splitting messages into fields. And the fields can
+  be filtered and searched for, this expands the full potential of 
+  phpLogCon. A message parser for windows eventlog logfiles generated 
+  by Adiscon products is included. 
+- Linebreaks within messages are now displayed in the popup window, 
+  and the detail page. 
+- Added Database Upgrade functionalety, the reason is simple, because 
+  there was an update to the database structure. If you are using the
+  User Management system, you will be prompted to upgrade your database
+  next time you login. 
+---------------------------------------------------------------------------
 Version 2.5.5 (devel), 2008-08-28
 - Added option to send debug messages (warnings and error's) from 
   phpLogCon to the local syslog server on linux. On Windows, the debug 
