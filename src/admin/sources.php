@@ -352,6 +352,7 @@ if ( isset($_POST['op']) )
 				// Take as it is if rootpath!
 				if (
 						( ($pos = strpos($content['SourceDiskFileTesting'], "/")) !== FALSE && $pos == 0) ||
+						( ($pos = strpos($content['SourceDiskFileTesting'], "\\\\")) !== FALSE && $pos == 0) ||
 						( ($pos = strpos($content['SourceDiskFileTesting'], ":\\")) !== FALSE ) ||
 						( ($pos = strpos($content['SourceDiskFileTesting'], ":/")) !== FALSE )
 					)
