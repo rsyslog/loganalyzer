@@ -348,12 +348,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 		$content['error_code'] = $ret;
 
 		if ( $ret == ERROR_FILE_NOT_FOUND ) 
-			$content['detailederror'] = "Syslog file could not be found.";
+			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_FOUND'];
 		else if ( $ret == ERROR_FILE_NOT_READABLE ) 
-			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
+			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_READABLE'];
 		else 
-			$content['detailederror'] = "Unknown or unhandeled error occured.";
-			
+			$content['detailederror'] = $content['LN_ERROR_UNKNOWN'];
 	}
 
 	// Close file!

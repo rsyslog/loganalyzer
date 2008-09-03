@@ -482,6 +482,7 @@ function InitFrontEndVariables()
 	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
 	$content['MENU_USEROPTIONS'] = $content['BASEPATH'] . "images/icons/businessman_preferences.png";
 	$content['MENU_EXPORT'] = $content['BASEPATH'] . "images/icons/export1.png";
+	$content['MENU_CHARTS'] = $content['BASEPATH'] . "images/icons/line-chart.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";

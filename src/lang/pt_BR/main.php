@@ -103,6 +103,7 @@ $content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 	$content['LN_MENU_MAXVIEW'] = "Maximize View";
 	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
+	$content['LN_MENU_STATISTICS'] = "Statistics";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Aten&ccedil;&atilde;o! Voc&ecirc; ainda N&Atilde;O removeu o arquivo 'install.php' do diret&oacute;rio de seu phpLogCon!";

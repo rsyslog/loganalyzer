@@ -98,6 +98,7 @@ $content['LN_MENU_LOGOFF'] = "Logoff";
 $content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 $content['LN_MENU_MAXVIEW'] = "Maximize View";
 $content['LN_MENU_NORMALVIEW'] = "Normalize View";
+	$content['LN_MENU_STATISTICS'] = "Statistics";
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";
@@ -277,6 +278,10 @@ $content['LN_CONVERT_STEP6'] = "Step 8 - Done";
 $content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
 $content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
 $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
+
+// Stats Site
+	$content['LN_STATS_COUNTBYSOURCE'] = "Messagecount by Source";
+	$content['LN_STATS_GRAPH'] = "Graph";
 
 
 ?>

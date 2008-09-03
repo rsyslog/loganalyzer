@@ -74,6 +74,12 @@ define('EXPORT_CVS', 'CVS');
 define('EXPORT_XML', 'XML');
 // --- 
 
+// --- GFX Chart Types
+define('CHART_CAKE', 1);
+define('CHART_BARS_VERTICAL', 2);
+define('CHART_BARS_HORIZONTAL', 3);
+// --- 
+
 // --- 
 define('UID_UNKNOWN', -1);
 // --- 

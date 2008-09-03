@@ -98,6 +98,7 @@ $content['LN_MENU_LOGOFF'] = "Logoff";
 	$content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 	$content['LN_MENU_MAXVIEW'] = "Maximize View";
 	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
+	$content['LN_MENU_STATISTICS'] = "Statistics";
 
 
 // Index Site
