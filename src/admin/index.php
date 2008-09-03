@@ -201,18 +201,18 @@ if ( isset($_POST['op']) )
 
 
 // Set checkbox States
-if ($content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
-if ($content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
-if ($content['EnableIPAddressResolve'] == 1) { $content['EnableIPAddressResolve_checked'] = "checked"; } else { $content['EnableIPAddressResolve_checked'] = ""; }
+if (isset($content['ViewUseTodayYesterday']) && $content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
+if (isset($content['ViewEnableDetailPopups']) && $content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
+if (isset($content['EnableIPAddressResolve']) && $content['EnableIPAddressResolve'] == 1) { $content['EnableIPAddressResolve_checked'] = "checked"; } else { $content['EnableIPAddressResolve_checked'] = ""; }
 
-if ($content['MiscShowDebugMsg'] == 1) { $content['MiscShowDebugMsg_checked'] = "checked"; } else { $content['MiscShowDebugMsg_checked'] = ""; }
-if ($content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCounter_checked'] = "checked"; } else { $content['MiscShowDebugGridCounter_checked'] = ""; }
-if ($content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
-if ($content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
-if ($content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
+if (isset($content['MiscShowDebugMsg']) && $content['MiscShowDebugMsg'] == 1) { $content['MiscShowDebugMsg_checked'] = "checked"; } else { $content['MiscShowDebugMsg_checked'] = ""; }
+if (isset($content['MiscShowDebugGridCounter']) && $content['MiscShowDebugGridCounter'] == 1) { $content['MiscShowDebugGridCounter_checked'] = "checked"; } else { $content['MiscShowDebugGridCounter_checked'] = ""; }
+if (isset($content['MiscShowPageRenderStats']) && $content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
+if (isset($content['MiscEnableGzipCompression']) && $content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
+if (isset($content['SuppressDuplicatedMessages']) && $content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
 
-if ($content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
-if ($content['MiscDebugToSyslog'] == 1) { $content['MiscDebugToSyslog_checked'] = "checked"; } else { $content['MiscDebugToSyslog_checked'] = ""; }
+if (isset($content['DebugUserLogin']) && $content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
+if (isset($content['MiscDebugToSyslog']) && $content['MiscDebugToSyslog'] == 1) { $content['MiscDebugToSyslog_checked'] = "checked"; } else { $content['MiscDebugToSyslog_checked'] = ""; }
 // --- 
 
 // --- Init for Style field!
