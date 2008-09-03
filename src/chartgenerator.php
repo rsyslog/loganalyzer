@@ -50,18 +50,39 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
 
 // --- READ CONTENT Vars
+$content['error_occured'] = false;
+
 if ( isset($_GET['type']) ) 
 	$content['chart_type'] = intval($_GET['type']);
 else
 	$content['chart_type'] = CHART_CAKE;
 
 if ( isset($_GET['width']) ) 
+{
 	$content['chart_width'] = intval($_GET['width']);
+	
+	// Limit Chart Size for now
+	if		( $content['chart_width'] < 100 ) 
+		$content['chart_width'] = 100;
+	else if	( $content['chart_width'] > 1000 ) 
+		$content['chart_width'] = 1000;
+}
 else
 	$content['chart_width'] = 100;
 
 if ( isset($_GET['byfield']) )
-	$content['chart_field'] = $_GET['byfield'];
+{
+	if ( isset($fields[ $_GET['byfield'] ]) )
+	{
+		$content['chart_field'] = $_GET['byfield'];
+		$content['chart_fieldtype'] = $fields[SYSLOG_UID]['FieldType'];
+	}
+	else
+	{
+		$content['error_occured'] = true;
+		$content['error_details'] = $content['LN_GEN_ERROR_INVALIDFIELD'];
+	}
+}
 else
 {
 	$content['error_occured'] = true;
@@ -74,6 +95,23 @@ $content['TITLE'] = InitPageTitle();
 // --- END CREATE TITLE
 
 // --- BEGIN Custom Code
+
+include_once ($gl_root_path . "classes/jpgraph/jpgraph.php");
+include_once ($gl_root_path . "classes/jpgraph/jpgraph_bar.php");
+
+// Create Basic Image!
+$myGraph = new Graph($content['chart_width'], $content['chart_width'], 'auto');
+$myGraph->SetScale("textlin");
+$myGraph->img->SetMargin(60,30,20,40);
+$myGraph->yaxis->SetTitleMargin(45);
+$myGraph->yaxis->scale->SetGrace(30);
+$myGraph->SetShadow();
+
+// Turn the tickmarks
+$myGraph->xaxis->SetTickSide(SIDE_DOWN);
+$myGraph->yaxis->SetTickSide(SIDE_LEFT);
+
+// Get data and print on the image!
 if ( !$content['error_occured'] )
 {
 	if ( isset($content['Sources'][$currentSourceID]) ) 
@@ -87,8 +125,51 @@ if ( !$content['error_occured'] )
 		$res = $stream->Open( $content['Columns'], true );
 		if ( $res == SUCCESS )
 		{
+			// Obtain data from the logstream!
+			$chartData = $stream->GetCountSortedByField($content['chart_field'], $content['chart_fieldtype']);
+
+			// If data is valid, we have an array!
+			if ( is_array($chartData) )
+			{
+				// Sort Array, so the highest count comes first!
+				array_multisort($chartData, SORT_NUMERIC, SORT_DESC);
+
+				// Create y array!
+				foreach( $chartData as $myYData)
+					$YchartData[] = intval($myYData);
+
+				//print_r ($chartData);
+				//$datay=array(12,26,9,17,31);
+
+				// Create a bar pot
+				$bplot = new BarPlot($YchartData);
+//				$bplot->SetFillColor("orange");
+
+				// Use a shadow on the bar graphs (just use the default settings)
+				$bplot->SetShadow();
+				$bplot->value->SetFormat("%2.0f",70);
+				$bplot->value->SetFont(FF_ARIAL,FS_NORMAL,9);
+				$bplot->value->SetColor("blue");
+				$bplot->value->Show();
+
+				$myGraph->Add($bplot);
+
+				$myGraph->title->Set("Chart blabla");
+				$myGraph->xaxis->title->Set("X-title");
+				$myGraph->yaxis->title->Set("Y-title");
 
 
+			}
+			else
+			{
+				$content['error_occured'] = true;
+				$content['error_details'] = GetErrorMessage($chartData);
+				if ( isset($extraErrorDescription) )
+					$content['error_details'] .= "\n\n" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+
+
+//$fields[SYSLOG_UID]['FieldID']
 
 		}
 		else
@@ -97,7 +178,7 @@ if ( !$content['error_occured'] )
 			$content['error_occured'] = true;
 			$content['error_details'] = GetErrorMessage($res);
 			if ( isset($extraErrorDescription) )
-				$content['error_details'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+				$content['error_details'] .= "\n\n" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 		}
 
 		// Close file!
@@ -109,122 +190,40 @@ if ( !$content['error_occured'] )
 		$content['error_details'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_SOURCENOTFOUND'], $currentSourceID);
 	}
 }
-// --- 
 
-// --- Convert and Output
-if ( $content['error_occured'] ) 
+if ( $content['error_occured'] )
 {
-	// TODO PRINT ERROR ON PICTURE STREAM!
+	// QUICK AND DIRTY!
+	$myImage = imagecreatetruecolor( $content['chart_width'], $content['chart_width']);
 
-//	InitTemplateParser();
-//	$page -> parser($content, "export.html");
-//	$page -> output(); 
-}
-else
-{
-	// Create ChartDiagram!
+/*	// create basic colours
+	$red = ImageColorAllocate($myImage, 255, 0, 0); 
+	$green = ImageColorAllocate($myImage, 0, 255, 0);
+	$gray = ImageColorAllocate($myImage, 128, 128, 128);
+	$black = ImageColorAllocate($myImage, 0, 0, 0);
+	$white = ImageColorAllocate($myImage, 255, 255, 255);
+
+	// Fill image with colour, and create a border
+	imagerectangle( $myImage, 0, 0, $content['chart_width']-1, $content['chart_width']-1, $gray );
+	imagefill( $myImage, 1, 1, $white );
+*/
+	$text_color = imagecolorallocate($myImage, 255, 0, 0);
+	imagestring($myImage, 3, 10, 10, $content['LN_GEN_ERRORDETAILS'], $text_color);
+	imagestring($myImage, 3, 10, 25, $content['error_details'], $text_color);
+
+	header ("Content-type: image/png");
+	imagepng($myImage);		// Outputs the image to the browser
+	imagedestroy($myImage); // Clean Image resource
 
 	exit;
-
-	// Create a CVS File!
-	$szOutputContent = "";
-	$szOutputMimeType = "text/plain";
-	$szOutputCharset = "";
-
-	$szOutputFileName = "ExportMessages";
-	$szOutputFileExtension = ".txt";
-	if		( $content['exportformat'] == EXPORT_CVS ) 
-	{
-		// Set MIME TYPE and File Extension
-		$szOutputMimeType = "text/csv";
-		$szOutputFileExtension = ".csv";
-
-		// Set Column line in cvs file!
-		foreach($content['Columns'] as $mycolkey)
-		{
-			if ( isset($fields[$mycolkey]) )
-			{
-				// Prepend Comma if needed
-				if (strlen($szOutputContent) > 0)
-					$szOutputContent .= ",";  
-
-				// Append column name
-				$szOutputContent .= $content[ $fields[$mycolkey]['FieldCaptionID'] ];
-			}
-		}
-		
-		// Append line break
-		$szOutputContent .= "\n";
-
-		// Append messages into output
-		foreach ( $content['syslogmessages'] as $myIndex => $mySyslogMessage )
-		{
-			$szLine = "";
-
-			// --- Process columns
-			foreach($mySyslogMessage as $myColkey => $mySyslogField)
-			{
-				// Prepend Comma if needed
-				if (strlen($szLine) > 0)
-					$szLine .= ",";
-
-				// Append field contents
-				$szLine .= '"' . str_replace('"', '\\"', $mySyslogField['fieldvalue']) . '"';
-			}
-			// --- 
-
-			// Append line!
-			$szOutputContent .= $szLine . "\n";
-		}
-	}
-	else if	( $content['exportformat'] == EXPORT_XML ) 
-	{
-		// Set MIME TYPE and File Extension
-		$szOutputMimeType = "application/xml";
-		$szOutputFileExtension = ".xml";
-		$szOutputCharset = "charset=UTF-8";
-
-		// Create XML Header and first node!!
-		$szOutputContent .= "\xef\xbb\xbf";
-		$szOutputContent .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$szOutputContent .= "<syslogmessages>\n";
-
-		// Append messages into output
-		foreach ( $content['syslogmessages'] as $myIndex => $mySyslogMessage )
-		{
-			$szXmlLine = "\t<syslogmsg>\n";
-
-			// --- Process columns
-			foreach($mySyslogMessage as $myColkey => $mySyslogField)
-			{
-
-//				if ( isset($content[ $fields[$mycolkey]['FieldCaptionID'] ]) ) 
-//					$szNodeTitle = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
-//				else
-
-				// Append field content | first run htmlentities,tnen utf8 encoding!!
-				$szXmlLine .= "\t\t<" . $myColkey . ">" . utf8_encode( htmlentities($mySyslogField['fieldvalue']) ) . "</" . $myColkey . ">\n";
-			}
-			// --- 
-
-			$szXmlLine .= "\t</syslogmsg>\n";
-
-			// Append line!
-			$szOutputContent .= $szXmlLine;
-		}
-
-		// End first XML Node
-		$szOutputContent .= "</syslogmessages>";
-	}
-
-	// Set needed Header properties
-	header('Content-type: ' . $szOutputMimeType . "; " . $szOutputCharset);
-	header("Content-Length: " .  strlen($szOutputContent) );
-	header('Content-Disposition: attachment; filename="' . $szOutputFileName . $szOutputFileExtension . '"');
-
-	// Output Content!
-	print( $szOutputContent );
 }
+// --- 
+
+
+// --- Output the image
+
+// Send back the HTML page which will call this script again to retrieve the image.
+$myGraph->StrokeCSIM();
 // --- 
 
 ?>

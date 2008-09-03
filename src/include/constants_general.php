@@ -78,6 +78,9 @@ define('EXPORT_XML', 'XML');
 define('CHART_CAKE', 1);
 define('CHART_BARS_VERTICAL', 2);
 define('CHART_BARS_HORIZONTAL', 3);
+
+define('CHARTDATA_NAME', 'NAME');
+define('CHARTDATA_COUNT', 'COUNT');
 // --- 
 
 // --- 

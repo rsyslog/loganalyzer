@@ -282,6 +282,10 @@ $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the 
 // Stats Site
 	$content['LN_STATS_COUNTBYSOURCE'] = "Messagecount by Source";
 	$content['LN_STATS_GRAPH'] = "Graph";
+	$content['LN_GEN_ERROR_INVALIDFIELD'] = "Invalid fieldname";
+	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Missing fieldname";
+
+
 
 
 ?>

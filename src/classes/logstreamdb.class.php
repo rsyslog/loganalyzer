@@ -499,6 +499,18 @@ class LogStreamDB extends LogStream {
 			return false;
 	}
 
+	/**
+	* Implementation of GetCountSortedByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function GetCountSortedByField($szFieldId, $nFieldType)
+	{
+	}
+
+
 	/*
 	*	============= Beginn of private functions =============
 	*/

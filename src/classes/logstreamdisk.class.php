@@ -574,6 +574,49 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* Implementation of GetCountSortedByField 
+	*
+	* For now, the disk source needs to loop through the whole file 
+	* to consolidate and sort the data
+	*
+	* @return integer Error stat
+	*/
+	public function GetCountSortedByField($szFieldId, $nFieldType)
+	{
+		// We loop through all loglines! this may take a while!
+		$uID = UID_UNKNOWN;
+		$ret = $this->ReadNext($uID, $logArray);
+		if ( $ret == SUCCESS )
+		{
+			do
+			{
+				if ( isset($logArray[$szFieldId]) )
+				{
+					if ( isset($aResult[ $logArray[$szFieldId] ]) )
+						$aResult[ $logArray[$szFieldId] ]++;
+					else
+						$aResult[ $logArray[$szFieldId] ] = 1;
+					/*
+					if ( isset($aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]) )
+						$aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]++;
+					else
+					{
+						$aResult[ $logArray[$szFieldId] ][CHARTDATA_NAME] = $logArray[$szFieldId];
+						$aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT] = 1;
+					}
+					*/
+				}
+			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
+
+			// finally return result!
+			return $aResult;
+		}
+		else
+			return ERROR_NOMORERECORDS;
+	}
+
+
+	/**
 	* Set the direction the stream should read data.
 	*
 	* 

@@ -195,6 +195,13 @@ abstract class LogStream {
 	*/
 	public abstract function GetCurrentPageNumber();
 
+	/**
+	* This functions is used by charts/graph generator to obtain data
+	*
+	* @return integer Error stat
+	*/
+	public abstract function GetCountSortedByField($szFieldId, $nFieldType);
+
 	
 	/**
 	* Gets a property and checks if the class is able to sort the records
