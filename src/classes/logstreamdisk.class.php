@@ -581,7 +581,7 @@ class LogStreamDisk extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
 		// We loop through all loglines! this may take a while!
 		$uID = UID_UNKNOWN;
@@ -607,6 +607,9 @@ class LogStreamDisk extends LogStream {
 					*/
 				}
 			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
+
+			// Sort Array, so the highest count comes first!
+			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
 
 			// finally return result!
 			return $aResult;

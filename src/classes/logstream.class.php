@@ -200,7 +200,7 @@ abstract class LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public abstract function GetCountSortedByField($szFieldId, $nFieldType);
+	public abstract function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit);
 
 	
 	/**

@@ -506,7 +506,7 @@ class LogStreamDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
 	}
 
