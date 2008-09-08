@@ -73,8 +73,17 @@ class LogStreamLineParsersyslog extends LogStreamLineParser {
 			$arrArguments[SYSLOG_PROCESSID] = $out[5];
 			$arrArguments[SYSLOG_MESSAGE] = $out[6];
 		}
-		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart. ([A-Za-z0-9_\/]{1,32})
+		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd 1.4.1#18: restart
 		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) ([a-zA-Z0-9_\-\.]{1,256}) ([A-Za-z0-9_\-\/\.]{1,32}):(.*?)$/", $szLine, $out ) )
+		{
+			// Copy parsed properties!
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
+			$arrArguments[SYSLOG_HOST] = $out[3];
+			$arrArguments[SYSLOG_SYSLOGTAG] = $out[4];
+			$arrArguments[SYSLOG_MESSAGE] = $out[5];
+		}
+		// Sample (Syslog): Mar 10 14:45:39 debandre syslogd restart
+		else if ( preg_match("/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) ([a-zA-Z0-9_\-\.]{1,256}) ([A-Za-z0-9_\-\/\.]{1,32}) (.*?)$/", $szLine, $out ) )
 		{
 			// Copy parsed properties!
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
