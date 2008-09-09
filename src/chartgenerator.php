@@ -145,7 +145,7 @@ if ( !$content['error_occured'] )
 
 					// Create Basic Image, and set basic properties!
 					$graph = new PieGraph($content['chart_width'], $content['chart_width'], 'auto');
-					$graph->SetMargin(60,20,30,30);	// Adjust margin area
+					$graph->SetMargin(30,20,30,30);	// Adjust margin area
 					$graph->SetScale("textlin");
 					$graph->SetMarginColor('white');
 					$graph->SetBox();					// Box around plotarea
@@ -156,13 +156,22 @@ if ( !$content['error_occured'] )
 //					$graph->title->SetColor("darkred");
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
-
+					$graph->tabtitle->SetPos('left'); 
+					
+					// Set Graph footer
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
+					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+					$graph->footer->right->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+//					$graph->footer->right->SetColor("darkred");
 
 					// Setup font for axis
-					$graph->xaxis->SetFont(FF_VERDANA,FS_NORMAL,10);
-					$graph->yaxis->SetFont(FF_VERDANA,FS_NORMAL,10);
+					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,10);
+					$graph->yaxis->SetFont(FF_ARIAL,FS_NORMAL,10);
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
@@ -178,16 +187,23 @@ if ( !$content['error_occured'] )
 //					$alts=array("val=%d","val=%d","val=%d","val=%d","val=%d","val=%d");
 //					$p1->SetCSIMTargets($targ,$alts);
 
-					// Use absolute labels
+					// Set label format
 					$p1->SetLabelType(0);
 					$p1->value->SetFormat("%d%%");
 //					$p1->SetLabelType(1);
 //					$p1->value->SetFormat("%d");
 
-					// Move the pie slightly to the left
+					// Set label properties
+					$p1->SetLabelPos(1.0);
+					$p1->SetSliceColors(array('#FFF584','#CBFF84','#FF6B9E','#FF9584','#EAFF84','#7BFF51','#51FFA6','#51FF52','#6BCFFF','#5170FF','#519CFF','#EAE3AD','#FFF184','#8584FF','#E698FF','#C384FF','#FF84EC','#FF98A3','#E5C285','#FFDA98' ));
+					$p1->value->SetFont(FF_ARIAL,FS_NORMAL);
+					$p1->value->SetColor("black");
+
+					// Adjust other Pie Properties
 					$p1->SetLabelMargin(5);
-					$p1->SetCenter(0.4,0.7);
+					$p1->SetCenter(0.4,0.65);
 					$p1->SetSize(0.3); 
+					$p1->SetAngle(60); 
 
 					$graph->Add($p1);
 				}
@@ -199,27 +215,35 @@ if ( !$content['error_occured'] )
 
 					// Create Basic Image, and set basic properties!
 					$graph = new Graph($content['chart_width'], $content['chart_width'], 'auto');
-					$graph->SetMargin(60,20,30,30);	// Adjust margin area
+					$graph->SetMargin(60,20,30,50);	// Adjust margin area
 					$graph->SetScale("textlin");
 					$graph->SetMarginColor('white');
 					$graph->SetBox();					// Box around plotarea
 
-					// Set up the title for the graph
-			//		$graph->title->Set("Bar gradient (Left reflection)");
-			//		$graph->title->SetFont(FF_VERDANA,FS_NORMAL,12);
-			//		$graph->title->SetColor("darkred");
+					// Setup X-AXIS
+//					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,10);
+					$graph->xaxis->SetTickLabels($XchartData);
+					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
+					$graph->xaxis->SetLabelAngle(0);
 
-					// Setup font for axis
-					$graph->xaxis->SetFont(FF_VERDANA,FS_NORMAL,10);
-					$graph->yaxis->SetFont(FF_VERDANA,FS_NORMAL,10);
+					// Setup Y-AXIS
+					$graph->yaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
+					$graph->yaxis->scale->SetGrace(10); // So the value is readable
+//					$graph->yaxis->SetLabelFormat('%d %%'); 
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
-
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
+					$graph->tabtitle->SetPos('left'); 
+
+					// Set Graph footer
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
+					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+					$graph->footer->right->SetFont( FF_ARIAL, FS_NORMAL, 8); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -229,12 +253,7 @@ if ( !$content['error_occured'] )
 					$graph->xgrid->SetLineStyle('dashed');
 					$graph->xgrid->SetColor('gray');
 
-					// Setup X-axis labels
-					$graph->xaxis->SetTickLabels($XchartData);
-					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
-					$graph->xaxis->SetLabelAngle(0);
-
-					// Create a bar pot
+					// Create and Add bar pot
 					$bplot = new BarPlot($YchartData);
 					$bplot->SetWidth(0.6);
 					$fcol='#440000';
@@ -242,24 +261,108 @@ if ( !$content['error_occured'] )
 					$bplot->SetFillGradient($fcol,$tcol,GRAD_LEFT_REFLECTION);
 					$graph->Add($bplot);
 
-					// Create filled line plot
+					// Display value in bars
+					$bplot->value->Show();
+					$bplot->value->SetFont(FF_ARIAL,FS_NORMAL,10);
+//					$bplot->value->SetAlign('left','center');
+//					$bplot->value->SetColor("black","darkred");
+					$bplot->value->SetFormat('%d');
+
+
+// TODO: Make Optional!
+					// Create and Add filled line plot
 					$lplot = new LinePlot($YchartData);
-					$lplot->SetFillColor('skyblue@0.5');
+					$lplot->SetFillColor('skyblue@0.7');
 					$lplot->SetColor('navy@0.7');
 					$lplot->SetBarCenter();
-
 					$lplot->mark->SetType(MARK_SQUARE);
-					$lplot->mark->SetColor('blue@0.5');
+					$lplot->mark->SetColor('blue@0.7');
 					$lplot->mark->SetFillColor('lightblue');
 					$lplot->mark->SetSize(6);
-
 					$graph->Add($lplot);
 				}
 				else if ( $content['chart_type'] == CHART_BARS_HORIZONTAL )
 				{
-					$content['error_occured'] = true;
-					$content['error_details'] = $content['LN_GEN_ERROR_INVALIDTYPE'];
+					// Include additional code filers for this chart!
+					include_once ($gl_root_path . "classes/jpgraph/jpgraph_bar.php");
+					include_once ($gl_root_path . "classes/jpgraph/jpgraph_line.php");
 
+					// Create Basic Image, and set basic properties!
+					$graph = new Graph($content['chart_width'], $content['chart_width'], 'auto');
+//					$graph->SetMargin(60,20,30,50);	
+					$graph->SetScale("textlin");
+					$graph->Set90AndMargin(80,20,30,50); // Adjust margin area
+					$graph->SetMarginColor('white');
+					$graph->SetBox();					// Box around plotarea
+
+					// Setup X-AXIS
+//					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,10);
+					$graph->xaxis->SetTickLabels($XchartData);
+					$graph->xaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
+					$graph->xaxis->SetLabelAngle(0);
+//					$graph->xaxis->SetLabelAlign('center','top');
+					$graph->xaxis->SetPos('min');
+
+					// Setup Y-AXIS
+					$graph->yaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
+					$graph->yaxis->scale->SetGrace(10); // So the value is readable
+//					$graph->yaxis->SetLabelFormat('%d %%'); 
+					$graph->yaxis->SetLabelAlign('center','top');
+					$graph->yaxis->SetLabelFormat('%d');
+					$graph->yaxis->SetLabelSide(SIDE_RIGHT);
+					$graph->yaxis->SetTickSide(SIDE_LEFT);
+//					$graph->yaxis->SetTitleSide(SIDE_RIGHT);
+//					$graph->yaxis->SetTitleMargin(35);
+					$graph->yaxis->SetPos('max');
+
+					// Show 0 label on Y-axis (default is not to show)
+					$graph->yscale->ticks->SupressZeroLabel(false);
+
+					// Setup the tab title
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
+					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
+					$graph->tabtitle->SetPos('left'); 
+
+					// Set Graph footer
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
+					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+					$graph->footer->right->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+
+					// Setup the X and Y grid
+					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
+					$graph->ygrid->SetLineStyle('dashed');
+					$graph->ygrid->SetColor('gray');
+					$graph->xgrid->Show();
+					$graph->xgrid->SetLineStyle('dashed');
+					$graph->xgrid->SetColor('gray');
+
+					// Create and Add bar pot
+					$bplot = new BarPlot($YchartData);
+					$bplot->SetWidth(0.6);
+					$fcol='#440000';
+					$tcol='#FF9090';
+					$bplot->SetFillGradient($fcol,$tcol,GRAD_LEFT_REFLECTION);
+					$graph->Add($bplot);
+
+					// Display value in bars
+					$bplot->value->Show();
+					$bplot->value->SetFont(FF_ARIAL,FS_NORMAL,10);
+//					$bplot->value->SetAlign('left','center');
+//					$bplot->value->SetColor("black","darkred");
+					$bplot->value->SetFormat('%d');
+
+// TODO: Make Optional!
+					// Create and Add filled line plot
+					$lplot = new LinePlot($YchartData);
+					$lplot->SetFillColor('skyblue@0.7');
+					$lplot->SetColor('navy@0.7');
+					$lplot->SetBarCenter();
+					$lplot->mark->SetType(MARK_SQUARE);
+					$lplot->mark->SetColor('blue@0.7');
+					$lplot->mark->SetFillColor('lightblue');
+					$lplot->mark->SetSize(6);
+					$graph->Add($lplot);
 				}
 				else
 				{
