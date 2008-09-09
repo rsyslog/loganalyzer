@@ -291,7 +291,7 @@ if ( !$content['error_occured'] )
 					$graph = new Graph($content['chart_width'], $content['chart_width'], 'auto');
 //					$graph->SetMargin(60,20,30,50);	
 					$graph->SetScale("textlin");
-					$graph->Set90AndMargin(80,20,30,50); // Adjust margin area
+					$graph->Set90AndMargin(80,30,30,50); // Adjust margin area
 					$graph->SetMarginColor('white');
 					$graph->SetBox();					// Box around plotarea
 
@@ -302,11 +302,12 @@ if ( !$content['error_occured'] )
 					$graph->xaxis->SetLabelAngle(0);
 //					$graph->xaxis->SetLabelAlign('center','top');
 					$graph->xaxis->SetPos('min');
+					$graph->xaxis->SetLabelMargin(5);
+					$graph->xaxis->SetLabelAlign('right','center');
 
 					// Setup Y-AXIS
 					$graph->yaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
 					$graph->yaxis->scale->SetGrace(10); // So the value is readable
-//					$graph->yaxis->SetLabelFormat('%d %%'); 
 					$graph->yaxis->SetLabelAlign('center','top');
 					$graph->yaxis->SetLabelFormat('%d');
 					$graph->yaxis->SetLabelSide(SIDE_RIGHT);
@@ -321,7 +322,8 @@ if ( !$content['error_occured'] )
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
-					$graph->tabtitle->SetPos('left'); 
+					$graph->tabtitle->SetPos('right');
+					$graph->tabtitle->SetTabAlign('right');
 
 					// Set Graph footer
 					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
