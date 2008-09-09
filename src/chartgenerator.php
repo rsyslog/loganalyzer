@@ -90,7 +90,12 @@ else
 }
 
 if ( isset($_GET['maxrecords']) ) 
+{
+	// read and verify value
 	$content['maxrecords'] = intval($_GET['maxrecords']);
+	if ( $content['maxrecords'] < 2 || $content['maxrecords'] > 100 ) 
+		$content['maxrecords'] = 10;
+}
 else
 	$content['maxrecords'] = 10;
 // ---
@@ -166,17 +171,23 @@ if ( !$content['error_occured'] )
 					// Create
 					$p1 = new PiePlot3D($YchartData);
 					$p1->SetLegends($XchartData);
+					$p1->SetEdge('#333333', 1);
+					$p1->SetTheme('earth'); /*   "earth"    * "pastel"    * "sand"    * "water" */
 //					$targ=array("pie3d_csimex1.php?v=1","pie3d_csimex1.php?v=2","pie3d_csimex1.php?v=3",
 //								"pie3d_csimex1.php?v=4","pie3d_csimex1.php?v=5","pie3d_csimex1.php?v=6");
 //					$alts=array("val=%d","val=%d","val=%d","val=%d","val=%d","val=%d");
 //					$p1->SetCSIMTargets($targ,$alts);
 
 					// Use absolute labels
-					$p1->SetLabelType(1);
-					$p1->value->SetFormat("%d");
+					$p1->SetLabelType(0);
+					$p1->value->SetFormat("%d%%");
+//					$p1->SetLabelType(1);
+//					$p1->value->SetFormat("%d");
 
 					// Move the pie slightly to the left
-					$p1->SetCenter(0.4,0.5);
+					$p1->SetLabelMargin(5);
+					$p1->SetCenter(0.4,0.7);
+					$p1->SetSize(0.3); 
 
 					$graph->Add($p1);
 				}

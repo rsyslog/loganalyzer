@@ -603,7 +603,7 @@ class LogStreamDisk extends LogStream {
 					else
 					{
 						// Initialize entry if we haven't exceeded the RecordLImit yet!
-						if ( count($aResult) < $nRecordLimit ) 
+						if ( count($aResult) < ($nRecordLimit-1) ) // -1 because the last entry will become all others 
 							$aResult[ $logArray[$szFieldId] ] = 1;
 						else
 						{
