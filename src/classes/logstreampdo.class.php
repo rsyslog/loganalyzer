@@ -518,6 +518,54 @@ class LogStreamPDO extends LogStream {
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
+		global $content, $dbmapping;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($dbmapping[$szTableType][$szFieldId]) )
+		{
+			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+
+			// Create SQL String now!
+			$szSql =	"SELECT " . 
+						$myDBFieldName . ", " . 
+						"count(" . $myDBFieldName . ") as TotalCount " . 
+						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" GROUP BY " . $myDBFieldName . 
+						" ORDER BY TotalCount DESC"; 
+			// Append LIMIT in this case!
+			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+							$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szSql .= " LIMIT " . $nRecordLimit; 
+
+			// Perform Database Query
+			$this->_myDBQuery = $this->_dbhandle->query($szSql);
+			if ( !$this->_myDBQuery ) 
+				return ERROR_DB_QUERYFAILED;
+
+			if ( $this->_myDBQuery->rowCount() == 0 )
+				return ERROR_NOMORERECORDS;
+
+			// Initialize Array variable
+			$aResult = array();
+
+			// read data records
+			$iCount = 0;
+			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
+			{
+				$aResult[ $myRow[$myDBFieldName] ] = $myRow['TotalCount'];
+				$iCount++;
+			}
+
+			// return finished array
+			return $aResult;
+		}
+		else
+		{
+			// return error code, field mapping not found
+			return ERROR_DB_DBFIELDNOTFOUND;
+		}
 	}
 
 

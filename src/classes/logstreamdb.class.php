@@ -508,6 +508,46 @@ class LogStreamDB extends LogStream {
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
+		global $content, $dbmapping;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($dbmapping[$szTableType][$szFieldId]) )
+		{
+			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+
+			// Create SQL String now!
+			$szSql =	"SELECT " . 
+						$myDBFieldName . ", " . 
+						"count(" . $myDBFieldName . ") as TotalCount " . 
+						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" GROUP BY " . $myDBFieldName . 
+						" ORDER BY TotalCount DESC" . 
+						" LIMIT " . $nRecordLimit;
+						
+
+			// Perform Database Query
+			$myquery = mysql_query($szSql, $this->_dbhandle);
+			if ( !$myquery ) 
+				return ERROR_DB_QUERYFAILED;
+			
+			// Initialize Array variable
+			$aResult = array();
+
+			// read data records
+			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+				$aResult[ $myRow[$myDBFieldName] ] = $myRow['TotalCount'];
+//print_r ($aResult);
+//exit;
+			// return finished array
+			return $aResult;
+		}
+		else
+		{
+			// return error code, field mapping not found
+			return ERROR_DB_DBFIELDNOTFOUND;
+		}
 	}
 
 

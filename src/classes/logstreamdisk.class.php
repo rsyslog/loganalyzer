@@ -613,17 +613,7 @@ class LogStreamDisk extends LogStream {
 							else
 								$aResult[ $content['LN_STATS_OTHERS'] ] = 1;
 						}
-
 					}
-					/*
-					if ( isset($aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]) )
-						$aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]++;
-					else
-					{
-						$aResult[ $logArray[$szFieldId] ][CHARTDATA_NAME] = $logArray[$szFieldId];
-						$aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT] = 1;
-					}
-					*/
 				}
 			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
 

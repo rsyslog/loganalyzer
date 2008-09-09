@@ -307,7 +307,7 @@ if ( !$content['error_occured'] )
 
 					// Setup Y-AXIS
 					$graph->yaxis->SetFont(FF_ARIAL,FS_NORMAL,8);
-					$graph->yaxis->scale->SetGrace(10); // So the value is readable
+					$graph->yaxis->scale->SetGrace(20); // So the value is readable
 					$graph->yaxis->SetLabelAlign('center','top');
 					$graph->yaxis->SetLabelFormat('%d');
 					$graph->yaxis->SetLabelSide(SIDE_RIGHT);
