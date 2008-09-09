@@ -151,7 +151,7 @@ if ( !$content['error_occured'] )
 //					$graph->title->SetColor("darkred");
 
 					// Setup the tab title
-					$graph->tabtitle->Set('Messagecount sorted by "' . $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . '"');
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
 
 
@@ -207,7 +207,7 @@ if ( !$content['error_occured'] )
 
 
 					// Setup the tab title
-					$graph->tabtitle->Set('Messagecount sorted by "' . $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . '"');
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
 
 					// Setup the X and Y grid

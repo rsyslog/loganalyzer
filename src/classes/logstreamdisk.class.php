@@ -583,11 +583,17 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
+		global $content;
+
 		// We loop through all loglines! this may take a while!
 		$uID = UID_UNKNOWN;
 		$ret = $this->ReadNext($uID, $logArray);
 		if ( $ret == SUCCESS )
 		{
+			// Initialize Array variable
+			$aResult = array();
+			
+			// Loop through messages
 			do
 			{
 				if ( isset($logArray[$szFieldId]) )
@@ -595,7 +601,20 @@ class LogStreamDisk extends LogStream {
 					if ( isset($aResult[ $logArray[$szFieldId] ]) )
 						$aResult[ $logArray[$szFieldId] ]++;
 					else
-						$aResult[ $logArray[$szFieldId] ] = 1;
+					{
+						// Initialize entry if we haven't exceeded the RecordLImit yet!
+						if ( count($aResult) < $nRecordLimit ) 
+							$aResult[ $logArray[$szFieldId] ] = 1;
+						else
+						{
+							// Count record to others 
+							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+								$aResult[ $content['LN_STATS_OTHERS'] ]++;
+							else
+								$aResult[ $content['LN_STATS_OTHERS'] ] = 1;
+						}
+
+					}
 					/*
 					if ( isset($aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]) )
 						$aResult[ $logArray[$szFieldId] ][CHARTDATA_COUNT]++;
@@ -610,6 +629,14 @@ class LogStreamDisk extends LogStream {
 
 			// Sort Array, so the highest count comes first!
 			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
+
+			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+			{
+				// This will move the "Others" Element to the last position!
+				$arrEntryCopy = $aResult[ $content['LN_STATS_OTHERS'] ];
+				unset($aResult[ $content['LN_STATS_OTHERS'] ]);
+				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
+			}
 
 			// finally return result!
 			return $aResult;

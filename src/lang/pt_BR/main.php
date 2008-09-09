@@ -285,8 +285,7 @@ $content['LN_DETAIL_BACKTOLIST'] = "Voltar para a lista";
 	$content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
 
 // Stats Site
-	$content['LN_STATS_COUNTBYSOURCE'] = "Messagecount by Source";
-	$content['LN_STATS_COUNTBYSYSLOGTAG'] = "Messagecount by SyslogTag";
+	$content['LN_STATS_COUNTBY'] = "Messagecount by '%1'";
 	$content['LN_STATS_GRAPH'] = "Graph";
 	$content['LN_GEN_ERROR_INVALIDFIELD'] = "Invalid fieldname";
 	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Missing fieldname";
