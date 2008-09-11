@@ -156,7 +156,7 @@ if ( !$content['error_occured'] )
 //					$graph->title->SetColor("darkred");
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
 					$graph->tabtitle->SetPos('left'); 
 					
@@ -165,8 +165,8 @@ if ( !$content['error_occured'] )
 					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
 					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
 					$graph->footer->right->SetFont( FF_ARIAL, FS_NORMAL, 8); 
-					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
+//					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+//					$graph->footer->left->SetFont( FF_ARIAL, FS_NORMAL, 8); 
 //					$graph->footer->right->SetColor("darkred");
 
 					// Setup font for axis
@@ -235,7 +235,7 @@ if ( !$content['error_occured'] )
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
 					$graph->tabtitle->SetPos('left'); 
 
@@ -320,7 +320,7 @@ if ( !$content['error_occured'] )
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_COUNTBY'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) . " - " . GetAndReplaceLangStr($content['LN_STATS_TOPRECORDS'], $content['maxrecords']) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
 					$graph->tabtitle->SetFont(FF_ARIAL,FS_BOLD,10);
 					$graph->tabtitle->SetPos('right');
 					$graph->tabtitle->SetTabAlign('right');
