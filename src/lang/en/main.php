@@ -299,5 +299,6 @@ $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the 
 	$content['LN_CHART_TYPE_CAKE'] = "Cake (Pie)";
 	$content['LN_CHART_TYPE_BARS_VERTICAL'] = "Bars vertical";
 	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Bars horizontal";
+	$content['LN_STATS_WARNINGDISPLAY'] = "Generating graphics on large data sources currently is very time consuming. This will be addressed in later versions. If processing takes too long, please simply cancel the request.";
 
 ?>

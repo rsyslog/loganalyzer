@@ -62,6 +62,16 @@ A.title:hover
 	COLOR: #FF0A0C; 
 	TEXT-DECORATION: none;
 }
+.titleSecond
+{
+	FONT: bold 10px Verdana, Arial, Helvetica, sans-serif; 
+    BACKGROUND-COLOR: #301B22;
+	COLOR: #E5F377;
+	height: 18px;
+	text-align:center;
+	vertical-align:middle;
+}
+
 
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink

@@ -81,6 +81,16 @@ A.title:hover
 	COLOR: #982D00; 
 	TEXT-DECORATION: none;
 }
+.titleSecond
+{
+	FONT: bold 10px Verdana, Arial, Helvetica, sans-serif; 
+    BACKGROUND-COLOR: #E3D2AE;
+	COLOR: #1A3745;
+	height: 18px;
+	text-align:center;
+	vertical-align:middle;
+}
+
 
 /* Default Font Classes */
 font
