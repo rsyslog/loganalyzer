@@ -109,7 +109,7 @@ if ( isset($_GET['showpercent']) )
 		$content['showpercent'] = 0;
 }
 else
-	$content['maxrecords'] = 10;
+	$content['showpercent'] = 0;
 // ---
 
 // --- BEGIN CREATE TITLE
@@ -200,10 +200,16 @@ if ( !$content['error_occured'] )
 //					$p1->SetCSIMTargets($targ,$alts);
 
 					// Set label format
-					$p1->SetLabelType(0);
-					$p1->value->SetFormat("%d%%");
-//					$p1->SetLabelType(1);
-//					$p1->value->SetFormat("%d");
+					if ( $content['showpercent'] == 1 )
+					{
+						$p1->SetLabelType(0);
+						$p1->value->SetFormat("%d%%");
+					}
+					else
+					{
+						$p1->SetLabelType(1);
+						$p1->value->SetFormat("%d");
+					}
 
 					// Set label properties
 					$p1->SetLabelPos(1.0);
