@@ -53,43 +53,44 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
 
 // --- BEGIN Custom Code
-/*if ( isset($content['Sources'][$currentSourceID]) )
+
+if ( isset($content['Charts']) ) 
 {
-	// Obtain and get the Config Object
-	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
+	// This will enable to Stats View 
+	$content['statsenabled'] = true;
 
-	// Create LogStream Object 
-	$stream = $stream_config->LogStreamFactory($stream_config);
-	$res = $stream->Open( $content['AllColumns'], true );
-	if ( $res == SUCCESS ) 
+	// PreProcess Charts Array for display!
+	$i = 0; // Help counter!
+	foreach ($content['Charts'] as &$myChart )
 	{
-		// This will enable to Stats View 
-		$content['statsenabled'] = "true";
 
-
-
-	}
-	else
-	{
-		// This will disable to Stats View and show an error message
-		$content['statsenabled'] = "false";
-
-		// Set error code 
-		$content['error_code'] = $ret;
-
-		if ( $ret == ERROR_FILE_NOT_FOUND ) 
-			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_FOUND'];
-		else if ( $ret == ERROR_FILE_NOT_READABLE ) 
-			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_READABLE'];
-		else 
-			$content['detailederror'] = $content['LN_ERROR_UNKNOWN'];
+		// --- Set CSS Class
+		if ( $i % 2 == 0 )
+		{
+			$myChart['cssclass'] = "line1";
+			$myChart['rowbegin'] = '<tr><td width="50%" valign="top">';
+			$myChart['rowend'] = '</td>';
+		}
+		else
+		{
+			$myChart['cssclass'] = "line2";
+			$myChart['rowbegin'] = '<td width="50%" valign="top">';
+			$myChart['rowend'] = '</td></tr>';
+		}
+		$i++;
+		// --- 
 	}
 
-	// Close file!
-	$stream->Close();
 }
-*/
+else
+{
+	// This will disable to Stats View and show an error message
+	$content['statsenabled'] = false;
 
+	// Set error code 
+	$content['ISERROR'] = true;
+	$content['ERROR_MSG'] = GetErrorMessage(ERROR_CHARTS_NOTCONFIGURED);
+}
 // --- 
 
 // --- BEGIN CREATE TITLE

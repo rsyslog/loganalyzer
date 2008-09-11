@@ -87,6 +87,9 @@ function ConvertGeneralSettings()
 	SaveGeneralSettingsIntoDB();
 }
 
+/*
+*	Convert Custom searches into DB
+*/
 function ConvertCustomSearches()
 {
 	global $CFG, $content;
@@ -102,6 +105,34 @@ function ConvertCustomSearches()
 	}
 }
 
+/*
+*	Convert Custom Charts into DB
+*/
+function ConvertCustomCharts()
+{
+	global $CFG, $content;
+	
+	// Insert all searches into the DB!
+	foreach($CFG['Charts'] as $chartid => &$myChart)
+	{
+		// New Entry
+		$result = DB_Query("INSERT INTO  " . DB_CHARTS . " (DisplayName, chart_type, chart_width, chart_field, maxrecords, showpercent) 
+							VALUES ( 
+									'" . PrepareValueForDB($myChart['DisplayName']) . "', 
+									" . intval($mySearch['chart_type']) . ", 
+									" . intval($mySearch['chart_width']) . ", 
+									'" . PrepareValueForDB($mySearch['chart_field']) . "', 
+									" . intval($mySearch['maxrecords']) . ", 
+									" . intval($mySearch['showpercent']) . "
+									)");
+		$myChart['DBID'] = DB_ReturnLastInsertID($result);
+		DB_FreeQuery($result);
+	}
+}
+
+/*
+*	Convert Custom Views into DB
+*/
 function ConvertCustomViews()
 {
 	global $CFG, $content;

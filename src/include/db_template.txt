@@ -109,3 +109,21 @@ CREATE TABLE IF NOT EXISTS `logcon_views` (
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Stores custom defined user views.' AUTO_INCREMENT=1 ;
+
+-- 
+-- Table structure for table `logcon_charts`
+-- 
+
+DROP TABLE IF EXISTS `logcon_charts`;
+CREATE TABLE IF NOT EXISTS `logcon_charts` (
+  `ID` int(11) NOT NULL auto_increment,
+  `DisplayName` varchar(255) NOT NULL,
+  `chart_type` int(11) NOT NULL,
+  `chart_width` int(11) NOT NULL,
+  `chart_field` varchar(255) NOT NULL,
+  `maxrecords` int(11) NOT NULL,
+  `showpercent` tinyint(1) NOT NULL,
+  `userid` int(11) default NULL,
+  `groupid` int(11) default NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains all configured charts' AUTO_INCREMENT=1 ;

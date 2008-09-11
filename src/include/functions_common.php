@@ -582,6 +582,9 @@ function InitConfigurationValues()
 			// Load Configured Searches 
 			LoadSearchesFromDatabase();
 
+			// Load Configured Charts 
+			LoadChartsFromDatabase();
+
 			// Load Configured Views
 			LoadViewsFromDatabase();
 
@@ -1227,7 +1230,9 @@ function GetErrorMessage($errorCode)
 			return $content['LN_ERROR_DB_INVALIDDBDRIVER'];
 		case ERROR_DB_TABLENOTFOUND:
 			return $content['LN_ERROR_DB_TABLENOTFOUND'];
-		
+
+		case ERROR_CHARTS_NOTCONFIGURED:
+			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];
 
 		default:
 			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );

@@ -314,6 +314,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		define('DB_SOURCES',		$tblPref . "sources");
 		define('DB_USERS',			$tblPref . "users");
 		define('DB_VIEWS',			$tblPref . "views");
+		define('DB_CHARTS',			$tblPref . "charts");
 
 		// Legacy support for old columns definition format!
 		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
@@ -393,6 +394,58 @@ function LoadSearchesFromDatabase()
 		$content['Search'] = $myrows;
 	}
 }
+
+/*
+*	Helper function to load configured Searches from the database
+*/
+function LoadChartsFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_CHARTS . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_CHARTS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_CHARTS . ".ID, " . 
+				DB_CHARTS . ".DisplayName, " . 
+				DB_CHARTS . ".chart_type, " . 
+				DB_CHARTS . ".chart_width, " . 
+				DB_CHARTS . ".chart_field, " . 
+				DB_CHARTS . ".maxrecords, " . 
+				DB_CHARTS . ".showpercent, " . 
+				DB_CHARTS . ".userid, " .
+				DB_CHARTS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_CHARTS . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_CHARTS . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_CHARTS . ".groupid=" . DB_GROUPS . ".ID ) " . 
+				" WHERE (" . DB_CHARTS . ".userid IS NULL AND " . DB_CHARTS . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_CHARTS . ".userid, " . DB_CHARTS . ".groupid, " . DB_CHARTS . ".DisplayName";
+	// ---
+
+	// Get Searches from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+		// Overwrite Search Array with Database one
+		$CFG['Charts'] = $myrows;
+		$content['Charts'] = $myrows;
+	}
+}
+
 
 function LoadViewsFromDatabase()
 {

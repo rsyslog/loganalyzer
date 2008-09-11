@@ -98,6 +98,18 @@ if ( isset($_GET['maxrecords']) )
 }
 else
 	$content['maxrecords'] = 10;
+
+if ( isset($_GET['showpercent']) ) 
+{
+	// read and verify value
+	$content['showpercent'] = intval($_GET['showpercent']);
+	if ( $content['showpercent'] >= 1 ) 
+		$content['showpercent'] = 1;
+	else
+		$content['showpercent'] = 0;
+}
+else
+	$content['maxrecords'] = 10;
 // ---
 
 // --- BEGIN CREATE TITLE
