@@ -289,5 +289,14 @@ $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Missing fieldname";
 	$content['LN_GEN_ERROR_INVALIDTYPE'] = "Invalid or unknown chart type";
 	$content['LN_ERROR_CHARTS_NOTCONFIGURED'] = "There are no charts configured at all.";
+	$content['LN_CHART_TYPE'] = "Chart type";
+	$content['LN_CHART_WIDTH'] = "Chart width";
+	$content['LN_CHART_FIELD'] = "Chart field";
+	$content['LN_CHART_MAXRECORDS'] = "Top records count";
+	$content['LN_CHART_SHOWPERCENT'] = "Show percentage data";
+	$content['LN_CHART_TYPE_CAKE'] = "Cake (Pie)";
+	$content['LN_CHART_TYPE_BARS_VERTICAL'] = "Bars vertical";
+	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Bars horizontal";
+	$content['LN_STATS_WARNINGDISPLAY'] = "Generating graphics on large data sources currently is very time consuming. This will be addressed in later versions. If processing takes too long, please simply cancel the request.";
 
 ?>

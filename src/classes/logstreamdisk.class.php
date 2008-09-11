@@ -598,13 +598,22 @@ class LogStreamDisk extends LogStream {
 			{
 				if ( isset($logArray[$szFieldId]) )
 				{
-					if ( isset($aResult[ $logArray[$szFieldId] ]) )
-						$aResult[ $logArray[$szFieldId] ]++;
+					if ( $nFieldType == FILTER_TYPE_DATE ) 
+					{
+						// Convert to FULL Day Date for now!
+						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+					}
+					else // Just copy the value!
+						$myFieldData = $logArray[$szFieldId];
+
+
+					if ( isset($aResult[ $myFieldData ]) )
+						$aResult[ $myFieldData ]++;
 					else
 					{
 						// Initialize entry if we haven't exceeded the RecordLImit yet!
 						if ( count($aResult) < ($nRecordLimit-1) ) // -1 because the last entry will become all others 
-							$aResult[ $logArray[$szFieldId] ] = 1;
+							$aResult[ $myFieldData ] = 1;
 						else
 						{
 							// Count record to others 

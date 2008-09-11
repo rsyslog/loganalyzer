@@ -75,7 +75,7 @@ if ( isset($_GET['byfield']) )
 	if ( isset($fields[ $_GET['byfield'] ]) )
 	{
 		$content['chart_field'] = $_GET['byfield'];
-		$content['chart_fieldtype'] = $fields[SYSLOG_UID]['FieldType'];
+		$content['chart_fieldtype'] = $fields[ $content['chart_field'] ]['FieldType'];
 	}
 	else
 	{
