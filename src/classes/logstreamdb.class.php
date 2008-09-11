@@ -515,17 +515,27 @@ class LogStreamDB extends LogStream {
 
 		if ( isset($dbmapping[$szTableType][$szFieldId]) )
 		{
+			// Set DB Field name first!
 			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+			$myDBQueryFieldName = $myDBFieldName;
+			$mySelectFieldName = $myDBFieldName;
+			
+			// Special handling for date fields
+			if ( $nFieldType == FILTER_TYPE_DATE )
+			{
+				// Helper variable for the select statement
+				$mySelectFieldName = $mySelectFieldName . "Grouped";
+				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+			}
 
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
-						$myDBFieldName . ", " . 
+						$myDBQueryFieldName . ", " . 
 						"count(" . $myDBFieldName . ") as TotalCount " . 
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
-						" GROUP BY " . $myDBFieldName . 
+						" GROUP BY " . $mySelectFieldName . 
 						" ORDER BY TotalCount DESC" . 
 						" LIMIT " . $nRecordLimit;
-						
 
 			// Perform Database Query
 			$myquery = mysql_query($szSql, $this->_dbhandle);
@@ -537,9 +547,8 @@ class LogStreamDB extends LogStream {
 
 			// read data records
 			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
-				$aResult[ $myRow[$myDBFieldName] ] = $myRow['TotalCount'];
-//print_r ($aResult);
-//exit;
+				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
+
 			// return finished array
 			return $aResult;
 		}

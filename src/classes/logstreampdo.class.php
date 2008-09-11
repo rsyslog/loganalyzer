@@ -525,14 +525,33 @@ class LogStreamPDO extends LogStream {
 
 		if ( isset($dbmapping[$szTableType][$szFieldId]) )
 		{
+			// Set DB Field name first!
 			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+			$myDBQueryFieldName = $myDBFieldName;
+			$mySelectFieldName = $myDBFieldName;
+
+			// Special handling for date fields
+			if ( $nFieldType == FILTER_TYPE_DATE )
+			{
+				if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+						$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				{
+					// Helper variable for the select statement
+					$mySelectFieldName = $mySelectFieldName . "Grouped";
+					$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+				}
+				else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
+				{
+					// TODO FIND A WAY FOR MSSQL!
+				}
+			}
 
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
-						$myDBFieldName . ", " . 
+						$myDBQueryFieldName . ", " . 
 						"count(" . $myDBFieldName . ") as TotalCount " . 
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
-						" GROUP BY " . $myDBFieldName . 
+						" GROUP BY " . $mySelectFieldName . 
 						" ORDER BY TotalCount DESC"; 
 			// Append LIMIT in this case!
 			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
@@ -554,7 +573,7 @@ class LogStreamPDO extends LogStream {
 			$iCount = 0;
 			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
 			{
-				$aResult[ $myRow[$myDBFieldName] ] = $myRow['TotalCount'];
+				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
 				$iCount++;
 			}
 
