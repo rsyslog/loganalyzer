@@ -104,6 +104,12 @@ font
 	border-color: #CCCCCC #000000 #000000 #CCCCCC; 
 }
 
+.table_with_border_light
+{ 
+	background-color:#CCCCCC;
+	border:1px #AAAAAA solid;
+}
+
 .with_border
 {
 	text-indent:3px;

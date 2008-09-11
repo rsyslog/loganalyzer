@@ -63,6 +63,37 @@ if ( isset($content['Charts']) )
 	$i = 0; // Help counter!
 	foreach ($content['Charts'] as &$myChart )
 	{
+		// --- Set display name for chart type
+		switch($myChart['chart_type'])
+		{
+			case CHART_CAKE: 
+				$myChart['CHART_TYPE_DISPLAYNAME'] = $content['LN_CHART_TYPE_CAKE'];
+				break;
+			case CHART_BARS_VERTICAL: 
+				$myChart['CHART_TYPE_DISPLAYNAME'] = $content['LN_CHART_TYPE_BARS_VERTICAL'];
+				break;
+			case CHART_BARS_HORIZONTAL: 
+				$myChart['CHART_TYPE_DISPLAYNAME'] = $content['LN_CHART_TYPE_BARS_HORIZONTAL'];
+				break;
+			default: 
+				$myChart['CHART_TYPE_DISPLAYNAME'] = $content['LN_GEN_ERROR_INVALIDTYPE'];
+				break;
+		}
+		// --- 
+
+		// --- Set display name for chart field
+		if ( isset($myChart['chart_field']) && isset($content[ $fields[$myChart['chart_field']]['FieldCaptionID'] ]) ) 
+			$myChart['CHART_FIELD_DISPLAYNAME'] = $content[ $fields[$myChart['chart_field']]['FieldCaptionID'] ];
+		else
+			$myChart['CHART_FIELD_DISPLAYNAME'] = $myChart['chart_field']; 
+		// --- 
+
+		// --- Set showpercent display
+		if ( $myChart['showpercent'] == 1 )
+			$myChart['showpercent_display'] = "Yes";
+		else
+			$myChart['showpercent_display'] = "No";
+		// --- 
 
 		// --- Set CSS Class
 		if ( $i % 2 == 0 )

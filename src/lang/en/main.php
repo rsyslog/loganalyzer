@@ -289,9 +289,15 @@ $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the 
 	$content['LN_STATS_GRAPH'] = "Graph";
 	$content['LN_GEN_ERROR_INVALIDFIELD'] = "Invalid fieldname";
 	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Missing fieldname";
-	$content['LN_GEN_ERROR_INVALIDTYPE'] = "Invalid or unknown chart type";
-
-
-
+	$content['LN_GEN_ERROR_INVALIDTYPE'] = "Invalid or unknown chart type.";
+	$content['LN_ERROR_CHARTS_NOTCONFIGURED'] = "There are no charts configured at all.";
+	$content['LN_CHART_TYPE'] = "Chart type";
+	$content['LN_CHART_WIDTH'] = "Chart width";
+	$content['LN_CHART_FIELD'] = "Chart field";
+	$content['LN_CHART_MAXRECORDS'] = "Top records count";
+	$content['LN_CHART_SHOWPERCENT'] = "Show percentage data";
+	$content['LN_CHART_TYPE_CAKE'] = "Cake (Pie)";
+	$content['LN_CHART_TYPE_BARS_VERTICAL'] = "Bars vertical";
+	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Bars horizontal";
 
 ?>

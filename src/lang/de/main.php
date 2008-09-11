@@ -288,5 +288,6 @@ $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 	$content['LN_GEN_ERROR_INVALIDFIELD'] = "Invalid fieldname";
 	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Missing fieldname";
 	$content['LN_GEN_ERROR_INVALIDTYPE'] = "Invalid or unknown chart type";
+	$content['LN_ERROR_CHARTS_NOTCONFIGURED'] = "There are no charts configured at all.";
 
 ?>

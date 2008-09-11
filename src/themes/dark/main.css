@@ -103,6 +103,12 @@ font
 	border-color: #050A0F #050A0F #050A0F #050A0F; 
 }
 
+.table_with_border_light
+{ 
+	background-color:#1C2021;
+	border:1px #050A0F solid;
+}
+
 .with_border
 {
 	text-indent:3px;
