@@ -116,14 +116,15 @@ function ConvertCustomCharts()
 	foreach($CFG['Charts'] as $chartid => &$myChart)
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . DB_CHARTS . " (DisplayName, chart_type, chart_width, chart_field, maxrecords, showpercent) 
+		$result = DB_Query("INSERT INTO  " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, maxrecords, showpercent) 
 							VALUES ( 
 									'" . PrepareValueForDB($myChart['DisplayName']) . "', 
-									" . intval($mySearch['chart_type']) . ", 
-									" . intval($mySearch['chart_width']) . ", 
-									'" . PrepareValueForDB($mySearch['chart_field']) . "', 
-									" . intval($mySearch['maxrecords']) . ", 
-									" . intval($mySearch['showpercent']) . "
+									" . intval($myChart['chart_enabled']) . ", 
+									" . intval($myChart['chart_type']) . ", 
+									" . intval($myChart['chart_width']) . ", 
+									'" . PrepareValueForDB($myChart['chart_field']) . "', 
+									" . intval($myChart['maxrecords']) . ", 
+									" . intval($myChart['showpercent']) . "
 									)");
 		$myChart['DBID'] = DB_ReturnLastInsertID($result);
 		DB_FreeQuery($result);

@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS `logcon_charts` (
   `ID` int(11) NOT NULL auto_increment,
   `DisplayName` varchar(255) NOT NULL,
+  `chart_enabled` tinyint(1) NOT NULL default '1',
   `chart_type` int(11) NOT NULL,
   `chart_width` int(11) NOT NULL,
   `chart_field` varchar(255) NOT NULL,
@@ -13,5 +14,9 @@ CREATE TABLE IF NOT EXISTS `logcon_charts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains all configured charts' AUTO_INCREMENT=1 ;
 
 -- Insert data
+INSERT INTO `logcon_charts` (`ID`, `DisplayName`, `chart_enabled`, `chart_type`, `chart_width`, `chart_field`, `maxrecords`, `showpercent`, `userid`, `groupid`) VALUES (1, 'Top Hosts', 1, 3, 400, 'FROMHOST', 10, 0, NULL, NULL);
+INSERT INTO `logcon_charts` (`ID`, `DisplayName`, `chart_enabled`, `chart_type`, `chart_width`, `chart_field`, `maxrecords`, `showpercent`, `userid`, `groupid`) VALUES (2, 'SyslogTags', 1, 1, 400, 'syslogtag', 10, 0, NULL, NULL);
+INSERT INTO `logcon_charts` (`ID`, `DisplayName`, `chart_enabled`, `chart_type`, `chart_width`, `chart_field`, `maxrecords`, `showpercent`, `userid`, `groupid`) VALUES (3, 'Severity Occurences', 1, 2, 400, 'syslogseverity', 10, 1, NULL, NULL);
+INSERT INTO `logcon_charts` (`ID`, `DisplayName`, `chart_enabled`, `chart_type`, `chart_width`, `chart_field`, `maxrecords`, `showpercent`, `userid`, `groupid`) VALUES (4, 'Usage by Day', 1, 1, 400, 'timereported', 10, 1, NULL, NULL);
 
 -- Updated Data

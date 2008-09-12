@@ -417,6 +417,7 @@ function LoadChartsFromDatabase()
 	$sqlquery = " SELECT " . 
 				DB_CHARTS . ".ID, " . 
 				DB_CHARTS . ".DisplayName, " . 
+				DB_CHARTS . ".chart_enabled, " . 
 				DB_CHARTS . ".chart_type, " . 
 				DB_CHARTS . ".chart_width, " . 
 				DB_CHARTS . ".chart_field, " . 
