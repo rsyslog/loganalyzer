@@ -35,6 +35,7 @@ $content['LN_ADMINMENU_VIEWSOPT'] = "Views Options";
 $content['LN_ADMINMENU_SEARCHOPT'] = "Search Options";
 $content['LN_ADMINMENU_USEROPT'] = "User Options";
 $content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
+$content['LN_ADMINMENU_CHARTOPT'] = "Chart Options";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
@@ -232,6 +233,11 @@ $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "At least one statement failed, yo
 $content['LN_DBUPGRADE_ERRMSG'] = "Error Message";
 $content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "phpLogCon Database Version";
 
+// Charts Options
+$content['LN_CHARTS_CENTER'] = "Charts Options";
+$content['LN_CHARTS_EDIT'] = "Edit Chart";
+$content['LN_CHARTS_DELETE'] = "Delete Chart";
+$content['LN_CHARTS_ADD'] = "Add new Chart";
 
 
 ?>
