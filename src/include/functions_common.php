@@ -218,6 +218,47 @@ function CreateSourceTypesList( $selectedSource )
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
 }
 
+function CreateChartTypesList( $selectedChart )
+{
+	global $content;
+
+	// CHART_CAKE
+	$content['CHARTTYPES'][CHART_CAKE]['type'] = CHART_CAKE;
+	$content['CHARTTYPES'][CHART_CAKE]['DisplayName'] = $content['LN_CHART_TYPE_CAKE'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_CAKE]['type'] ) { $content['CHARTTYPES'][CHART_CAKE]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_CAKE]['selected'] = ""; }
+
+	// CHART_BARS_VERTICAL
+	$content['CHARTTYPES'][CHART_BARS_VERTICAL]['type'] = CHART_BARS_VERTICAL;
+	$content['CHARTTYPES'][CHART_BARS_VERTICAL]['DisplayName'] = $content['LN_CHART_TYPE_BARS_VERTICAL'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_BARS_VERTICAL]['type'] ) { $content['CHARTTYPES'][CHART_BARS_VERTICAL]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_BARS_VERTICAL]['selected'] = ""; }
+
+	// CHART_BARS_HORIZONTAL
+	$content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['type'] = CHART_BARS_HORIZONTAL;
+	$content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['DisplayName'] = $content['LN_CHART_TYPE_BARS_HORIZONTAL'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['type'] ) { $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['selected'] = ""; }
+}
+
+function CreateChartFields( $selectedChartField)
+{
+	global $content, $fields;
+	
+	// Process all fields
+	foreach ( $fields as $myField )
+	{
+		$myFieldID = $myField['FieldID'];
+
+		// Add new entry to array
+		$content['CHARTFIELDS'][$myFieldID]['ID'] = $myFieldID;
+		if ( isset($content[ $myField['FieldCaptionID'] ]) )
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $content[ $myField['FieldCaptionID'] ];
+		else
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myFieldID;
+		
+		// set selected state
+		if ( $selectedChartField == $content['CHARTFIELDS'][$myFieldID]['ID'] ) { $content['CHARTFIELDS'][$myFieldID]['selected'] = "selected"; } else { $content['CHARTFIELDS'][$myFieldID]['selected'] = ""; }
+	}
+}
+
 function CreateDBTypesList( $selectedDBType )
 {
 	global $content;

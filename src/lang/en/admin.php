@@ -238,6 +238,20 @@ $content['LN_CHARTS_CENTER'] = "Charts Options";
 $content['LN_CHARTS_EDIT'] = "Edit Chart";
 $content['LN_CHARTS_DELETE'] = "Delete Chart";
 $content['LN_CHARTS_ADD'] = "Add new Chart";
-
+$content['LN_CHARTS_ADDEDIT'] = "Add / Edit a Chart";
+$content['LN_CHARTS_NAME'] = "Chart Name";
+$content['LN_CHARTS_ENABLED'] = "Chart enabled";
+$content['LN_CHARTS_ENABLEDONLY'] = "Enabled";
+$content['LN_CHARTS_ERROR_INVALIDORNOTFOUNDID'] = "The Chart-ID is invalid or could not be found.";
+$content['LN_CHARTS_ERROR_IDNOTFOUND'] = "The Chart-ID could not be found in the database.";
+$content['LN_CHARTS_WARNDELETESEARCH'] = "Are you sure that you want to delete the Chart '%1'? This cannot be undone!";
+$content['LN_CHARTS_ERROR_DELCHART'] = "Deleting of the Chart with id '%1' failed!";
+$content['LN_CHARTS_ERROR_HASBEENDEL'] = "The Chart '%1' has been successfully deleted!";
+$content['LN_CHARTS_ERROR_MISSINGPARAM'] = "The paramater '%1' is missing.";
+$content['LN_CHARTS_HASBEENADDED'] = "The new Chart '%1' has been successfully added.";
+$content['LN_CHARTS_ERROR_IDNOTFOUND'] = "The Chart-ID could not be found in the database.";
+$content['LN_CHARTS_HASBEENEDIT'] = "The Chart '%1' has been successfully edited.";
+$content['LN_CHARTS_ID'] = "ID";
+$content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
 
 ?>

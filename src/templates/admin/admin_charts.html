@@ -1,34 +1,5 @@
 <!-- INCLUDE include_header.html --> 
 
-<script language="javascript">
-	/*
-	*	Helper function to show and hide areas of the filterview
-	*/
-	function toggleSourceTypeVisibility(FormFieldName)
-	{
-		var myfield = document.getElementById(FormFieldName);
-		if (myfield.value == 1)
-		{
-			showvisibility("HiddenDiskTypeOptions");
-			hidevisibility("HiddenDatabaseTypeOptions");
-		}
-		else if (myfield.value == 2)
-		{
-			showvisibility("HiddenDatabaseTypeOptions");
-			hidevisibility("HiddenDiskTypeOptions");
-
-			hidevisibility("HiddenDBTypesOptions");
-		}
-		else if (myfield.value == 3)
-		{
-			showvisibility("HiddenDatabaseTypeOptions");
-			hidevisibility("HiddenDiskTypeOptions");
-
-			showvisibility("HiddenDBTypesOptions");
-		}
-	}
-</script>
-
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
@@ -53,24 +24,25 @@
 <!-- IF LISTCHARTS="true" -->
 		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_SOURCES_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SOURCES_NAME}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_SOURCES_TYPE}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SOURCES_ASSIGNTO}</b></td>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_CHARTS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_CHARTS_NAME}</b></td>
+			<td align="center" width="60" class="cellmenu1"><b>{LN_CHARTS_ENABLEDONLY}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_CHART_TYPE}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_CHARTS_ASSIGNTO}</b></td>
 			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN CHARTS -->
 		<tr>
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
 			<td align="left" class="{cssclass}">
-			<!-- IF ActionsAllowed="true" -->
-			<a href="{BASEPATH}admin/charts.php?op=edit&id={ID}">{DisplayName}</a>
-			<!-- ENDIF ActionsAllowed="true" -->
-			<!-- IF ActionsAllowed!="true" -->
-			<b>{DisplayName}</b>
-			<!-- ENDIF ActionsAllowed!="true" -->
-			
+				<!-- IF ActionsAllowed="true" -->
+				<a href="{BASEPATH}admin/charts.php?op=edit&id={ID}">{DisplayName}</a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				<b>{DisplayName}</b>
+				<!-- ENDIF ActionsAllowed!="true" -->
 			</td>
+			<td align="center" class="{cssclass}"><img src="{ChartEnabledImage}" width="16" align="center"></td>
 			<td align="left" class="{cssclass}"><img src="{ChartTypeImage}" width="16" align="left"> <b>{ChartTypeText}</b></td>
 			<td align="left" class="{cssclass}"><img src="{ChartAssignedToImage}" width="16" align="left"> <b>{ChartAssignedToText}</b></td>
 			<td align="center" class="{cssclass}">
@@ -86,49 +58,57 @@
 		</tr>
 		<!-- END CHARTS -->
 		<tr>
-			<td align="center" colspan="5" class="line0"><b><a href="{BASEPATH}admin/charts.php?op=add"><img src="{MENU_ADD}" title="{LN_CHARTS_ADD}">&nbsp;{LN_CHARTS_ADD}</a></b></td>
+			<td align="center" colspan="6" class="line0"><b><a href="{BASEPATH}admin/charts.php?op=add"><img src="{MENU_ADD}" title="{LN_CHARTS_ADD}">&nbsp;{LN_CHARTS_ADD}</a></b></td>
 		</tr>
 		</table>
 <!-- ENDIF LISTCHARTS="true" -->
 
-<!-- IF ISEDITORNEWSOURCE="true" -->
-		<form action="{BASEPATH}admin/sources.php" method="post">
+<!-- IF ISEDITORNEWCHART="true" -->
+		<form action="{BASEPATH}admin/charts.php" method="post">
 			
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
-				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_ADDEDIT}</b></td>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_CHARTS_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_SOURCES_NAME}</b></td>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_CHARTS_NAME}</b></td>
 				<td align="right" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_SOURCES_TYPE}</b></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHARTS_ENABLED}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="chart_enabled" value="1" {CHECKED_ISCHARTENABLED}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_TYPE}</b></td>
 				<td align="right" class="line1">
-					<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
-						<!-- BEGIN SOURCETYPES -->
+					<select id="chart_type" name="chart_type" size="1" OnChange="toggleSourceTypeVisibility('chart_type');">
+						<!-- BEGIN CHARTTYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
-						<!-- END SOURCETYPES -->
+						<!-- END CHARTTYPES -->
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_FIELD}</b></td>
 				<td align="right" class="line1">
-					<select id="SourceViewID" name="SourceViewID" size="1">
-						<!-- BEGIN VIEWS -->
+					<select id="chart_field" name="chart_field" size="1">
+						<!-- BEGIN CHARTFIELDS -->
 						<option {selected} value="{ID}">{DisplayName}</option>
-						<!-- END VIEWS -->
+						<!-- END CHARTFIELDS -->
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_MSGPARSERS}</b></td>
-				<td align="right" class="line1"><input type="text" name="MsgParserList" size="55" maxlength="255" value="{MsgParserList}"></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_WIDTH}</b></td>
+				<td align="right" class="line1"><input type="text" name="chart_width" size="55" maxlength="255" value="{chart_width}"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_NORMALIZEMSG}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="MsgNormalize" value="1" {CHECKED_ISNORMALIZEMSG}></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_MAXRECORDS}</b></td>
+				<td align="right" class="line1"><input type="text" name="maxrecords" size="55" maxlength="255" value="{maxrecords}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_SHOWPERCENT}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="showpercent" value="1" {CHECKED_ISSHOWPERCENT}></td>
 			</tr>
 
 			<tr>
@@ -150,96 +130,17 @@
 			</table>
 			<br>
 
-			<div id="HiddenDiskTypeOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
-			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DISKTYPEOPTIONS}</b></td></tr>
-			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
-				<td align="right" class="line0" width="350">
-					<select name="SourceLogLineType" size="1">
-						<!-- BEGIN LOGLINETYPES -->
-						<option {selected} value="{type}">{DisplayName}</option>
-						<!-- END LOGLINETYPES -->
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SYSLOGFILE}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
-			</tr>
-			</table>
-			</div>
-
-			<div id="HiddenDatabaseTypeOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
-			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
-			</table>
-
-			<div id="HiddenDBTypesOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
-			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
-				<td align="right" class="line1" width="350">
-					<select name="SourceDBType" size="1">
-						<!-- BEGIN DBTYPES -->
-						<option {selected} value="{type}">{DisplayName}</option>
-						<!-- END DBTYPES -->
-					</select>
-				</td>
-			</tr>
-			</table>
-			</div>
-
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
-			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
-				<td align="right" class="line0" width="350"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
-				<td align="right" class="line0"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLENAME}</b></td>
-				<td align="right" class="line0"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
-				<td align="right" class="line0"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
-			</tr>
-			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
-				<td align="right" class="line1" width="100%">
-					<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
-				</td>
-			</tr>
-			</table>
-			</div>
-
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
 				<td align="center" colspan="2">
-					<input type="submit" value="{SOURCE_SENDBUTTON}">
-					<input type="hidden" name="op" value="{SOURCE_FORMACTION}">
-					<input type="hidden" name="id" value="{SOURCEID}">
+					<input type="submit" value="{CHART_SENDBUTTON}">
+					<input type="hidden" name="op" value="{CHART_FORMACTION}">
+					<input type="hidden" name="id" value="{CHARTID}">
 				</td>
 			</tr>
 			</table>
 		</form>
-
-		<script language="javascript">
-			// Manually perform initial Javascript Calls
-			toggleSourceTypeVisibility('SourceType');
-		</script>
-<!-- ENDIF ISEDITORNEWSOURCE="true" -->
+<!-- ENDIF ISEDITORNEWCHART="true" -->
 
 		<br><br>
 

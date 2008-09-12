@@ -59,51 +59,28 @@ if ( isset($_GET['op']) )
 	if ($_GET['op'] == "add") 
 	{
 		// Set Mode to add
-		$content['ISEDITORNEWSOURCE'] = "true";
-		$content['SOURCE_FORMACTION'] = "addnewsource";
-		$content['SOURCE_SENDBUTTON'] = $content['LN_SOURCES_ADD'];
+		$content['ISEDITORNEWCHART'] = "true";
+		$content['CHART_FORMACTION'] = "addnewchart";
+		$content['CHART_SENDBUTTON'] = $content['LN_CHARTS_ADD'];
 		
 		//PreInit these values 
-		$content['Name'] = "";
-		$content['SourceType'] = SOURCE_DISK;
-		CreateSourceTypesList($content['SourceType']);
-		$content['MsgParserList'] = "";
-		$content['MsgNormalize'] = 0;
-		$content['CHECKED_ISNORMALIZEMSG'] = "";
+		$content['Name'] = "MyChart";
+		$content['chart_type'] = CHART_BARS_VERTICAL;
+		CreateChartTypesList($content['chart_type']);
+		$content['chart_enabled'] = 1;
+		$content['CHECKED_ISCHARTENABLED'] = "checked";
+		$content['chart_width'] = 400; 
+		$content['maxrecords'] = 5; 
+		$content['showpercent'] = 0; 
+		$content['CHECKED_ISSHOWPERCENT'] = "";
+		// Chart Field
+		$content['chart_field'] = SYSLOG_HOST; 
+		CreateChartFields($content['chart_field']);
 
-		// Init View List!
-		$content['SourceViewID'] = 'SYSLOG';
-		$content['VIEWS'] = $content['Views'];
-		foreach ( $content['VIEWS'] as $myView )
-		{
-			if ( $myView['ID'] == $content['SourceViewID'] )
-				$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
-			else
-				$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
-		}
-
-		// SOURCE_DISK specific
-		$content['SourceLogLineType'] = ""; 
-		CreateLogLineTypesList($content['SourceLogLineType']);
-		$content['SourceDiskFile'] = "/var/log/syslog";
-
-		// SOURCE_DB specific
-		$content['SourceDBType'] = DB_MYSQL;
-		CreateDBTypesList($content['SourceDBType']);
-		$content['SourceDBName'] = "phplogcon";
-		$content['SourceDBTableType'] = "monitorware";
-		$content['SourceDBServer'] = "localhost";
-		$content['SourceDBTableName'] = "systemevents";
-		$content['SourceDBUser'] = "user";
-		$content['SourceDBPassword'] = "";
-		$content['SourceDBEnableRowCounting'] = "false";
-		$content['SourceDBEnableRowCounting_true'] = "";
-		$content['SourceDBEnableRowCounting_false'] = "checked";
-
-		// General stuff
+		// COMMON Fields
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
-		$content['SOURCEID'] = "";
+		$content['CHARTID'] = "";
 		
 		// --- Check if groups are available
 		$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -115,70 +92,44 @@ if ( isset($_GET['op']) )
 	else if ($_GET['op'] == "edit") 
 	{
 		// Set Mode to edit
-		$content['ISEDITORNEWSOURCE'] = "true";
-		$content['SOURCE_FORMACTION'] = "editsource";
-		$content['SOURCE_SENDBUTTON'] = $content['LN_SOURCES_EDIT'];
+		$content['ISEDITORNEWCHART'] = "true";
+		$content['CHART_FORMACTION'] = "editchart";
+		$content['CHART_SENDBUTTON'] = $content['LN_CHARTS_EDIT'];
 
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
 
 			// Check if exists
-			if ( is_numeric($content['SOURCEID']) && isset($content['Sources'][ $content['SOURCEID'] ]) )
+			if ( is_numeric($content['CHARTID']) && isset($content['Charts'][ $content['CHARTID'] ]) )
 			{
 				// Get Source reference
-				$mysource = $content['Sources'][ $content['SOURCEID'] ];
+				$myChart = $content['Charts'][ $content['CHARTID'] ];
 
 				// Copy basic properties
-				$content['Name'] = $mysource['Name'];
-				$content['SourceType'] = $mysource['SourceType'];
-				CreateSourceTypesList($content['SourceType']);
-				$content['MsgParserList'] = $mysource['MsgParserList'];
-				$content['MsgNormalize'] = $mysource['MsgNormalize'];
-				if ( $mysource['MsgNormalize'] == 1 )
-					$content['CHECKED_ISNORMALIZEMSG'] = "checked";
+				$content['Name'] = $myChart['DisplayName'];
+				$content['chart_type'] = $myChart['chart_type'];
+				CreateChartTypesList($content['chart_type']);
+				$content['chart_enabled'] = $myChart['chart_enabled'];
+				if ( $myChart['chart_enabled'] == 1 )
+					$content['CHECKED_ISCHARTENABLED'] = "checked";
 				else
-					$content['CHECKED_ISNORMALIZEMSG'] = "";
-
-				// Init View List!
-				$content['SourceViewID'] = $mysource['ViewID'];
-				$content['VIEWS'] = $content['Views'];
-				foreach ( $content['VIEWS'] as $myView )
-				{
-					if ( $myView['ID'] == $content['SourceViewID'] )
-						$content['VIEWS'][ $myView['ID'] ]['selected'] = "selected";
-					else
-						$content['VIEWS'][ $myView['ID'] ]['selected'] = "";
-				}
-
-				// SOURCE_DISK specific
-				$content['SourceLogLineType'] = $mysource['LogLineType']; 
-				CreateLogLineTypesList($content['SourceLogLineType']);
-				$content['SourceDiskFile'] = $mysource['DiskFile'];
-
-				// SOURCE_DB specific
-				$content['SourceDBType'] = $mysource['DBType'];
-				CreateDBTypesList($content['SourceDBType']);
-				$content['SourceDBName'] = $mysource['DBName'];
-				$content['SourceDBTableType'] = $mysource['DBTableType'];
-				$content['SourceDBServer'] = $mysource['DBServer'];
-				$content['SourceDBTableName'] = $mysource['DBTableName'];
-				$content['SourceDBUser'] = $mysource['DBUser'];
-				$content['SourceDBPassword'] = $mysource['DBPassword'];
-				$content['SourceDBEnableRowCounting'] = $mysource['DBEnableRowCounting'];
-				if ( $content['SourceDBEnableRowCounting'] == 1 )
-				{
-					$content['SourceDBEnableRowCounting_true'] = "checked";
-					$content['SourceDBEnableRowCounting_false'] = "";
-				}
+					$content['CHECKED_ISCHARTENABLED'] = "";
+				$content['chart_width'] = $myChart['chart_width'];
+				$content['maxrecords'] = $myChart['maxrecords'];
+				$content['showpercent'] = $myChart['showpercent'];
+				if ( $myChart['showpercent'] == 1 )
+					$content['CHECKED_ISSHOWPERCENT'] = "checked";
 				else
-				{
-					$content['SourceDBEnableRowCounting_true'] = "";
-					$content['SourceDBEnableRowCounting_false'] = "checked";
-				}
+					$content['CHECKED_ISSHOWPERCENT'] = "";
 
-				if ( $mysource['userid'] != null )
+				// Chart Field
+				$content['chart_field'] = $myChart['chart_field'];
+				CreateChartFields($content['chart_field']);
+				
+				// COMMON Fields
+				if ( $myChart['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
@@ -190,7 +141,7 @@ if ( isset($_GET['op']) )
 					// Process All Groups
 					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
 					{
-						if ( $mysource['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysource['groupid'] )
+						if ( $myChart['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $myChart['groupid'] )
 							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
 						else
 							$content['SUBGROUPS'][$i]['group_selected'] = "";
@@ -205,16 +156,16 @@ if ( isset($_GET['op']) )
 			}
 			else
 			{
-				$content['ISEDITORNEWSOURCE'] = false;
+				$content['ISEDITORNEWCHART'] = false;
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] =  $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
+				$content['ERROR_MSG'] = "!" . $content['LN_CHARTS_ERROR_INVALIDORNOTFOUNDID'];
 			}
 		}
 		else
 		{
-			$content['ISEDITORNEWSEARCH'] = false;
+			$content['ISEDITORNEWCHART'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] =  $content['LN_SEARCH_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] =  $content['LN_CHARTS_ERROR_INVALIDID'];
 		}
 	}
 	else if ($_GET['op'] == "delete") 
@@ -222,42 +173,42 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
 
 			// Get UserInfo
-			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
+			$result = DB_Query("SELECT DisplayName FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID'] ); 
 			$myrow = DB_GetSingleRow($result, true);
-			if ( !isset($myrow['Name']) )
+			if ( !isset($myrow['DisplayName']) )
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_IDNOTFOUND'], $content['CHARTID'] ); 
 			}
 
 			// --- Ask for deletion first!
 			if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
 			{
 				// This will print an additional secure check which the user needs to confirm and exit the script execution.
-				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETESEARCH'], $myrow['Name'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_CHARTS_WARNDELETESEARCH'], $myrow['Name'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
 			}
 			// ---
 
 			// do the delete!
-			$result = DB_Query( "DELETE FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] );
+			$result = DB_Query( "DELETE FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID'] );
 			if ($result == FALSE)
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELSOURCE'], $content['SOURCEID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_DELCHART'], $content['CHARTID'] ); 
 			}
 			else
 				DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_HASBEENDEL'], $myrow['Name'] ) , "sources.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_HASBEENDEL'], $myrow['Name'] ) , "charts.php" );
 		}
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
+			$content['ERROR_MSG'] = $content['LN_CHARTS_ERROR_INVALIDORNOTFOUNDID'];
 		}
 	}
 }
@@ -265,38 +216,15 @@ if ( isset($_GET['op']) )
 if ( isset($_POST['op']) )
 {
 	// Read parameters first!
-	if ( isset($_POST['id']) ) { $content['SOURCEID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SOURCEID'] = -1; }
+	if ( isset($_POST['id']) ) { $content['CHARTID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['CHARTID'] = -1; }
 	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
-	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
-	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
-	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
-	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
-
-	if ( isset($content['SourceType']) )
-	{
-		// Disk Params
-		if ( $content['SourceType'] == SOURCE_DISK ) 
-		{
-			if ( isset($_POST['SourceLogLineType']) ) { $content['SourceLogLineType'] = DB_RemoveBadChars($_POST['SourceLogLineType']); }
-			if ( isset($_POST['SourceDiskFile']) ) { $content['SourceDiskFile'] = DB_RemoveBadChars($_POST['SourceDiskFile']); }
-		}
-		// DB Params
-		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
-		{
-			if ( isset($_POST['SourceDBType']) ) { $content['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']); }
-			if ( isset($_POST['SourceDBName']) ) { $content['SourceDBName'] = DB_RemoveBadChars($_POST['SourceDBName']); }
-			if ( isset($_POST['SourceDBTableType']) ) { $content['SourceDBTableType'] = DB_RemoveBadChars($_POST['SourceDBTableType']); }
-			if ( isset($_POST['SourceDBServer']) ) { $content['SourceDBServer'] = DB_RemoveBadChars($_POST['SourceDBServer']); }
-			if ( isset($_POST['SourceDBTableName']) ) { $content['SourceDBTableName'] = DB_RemoveBadChars($_POST['SourceDBTableName']); }
-			if ( isset($_POST['SourceDBUser']) ) { $content['SourceDBUser'] = DB_RemoveBadChars($_POST['SourceDBUser']); }
-			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
-			if ( isset($_POST['SourceDBEnableRowCounting']) ) {	$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']); }
-			// Extra Check for this property
-			if ( $content['SourceDBEnableRowCounting'] != "true" )
-				$content['SourceDBEnableRowCounting'] = "false";
-		}
-	}
-
+	if ( isset($_POST['chart_enabled']) ) { $content['chart_enabled'] = intval(DB_RemoveBadChars($_POST['chart_enabled'])); } else {$content['chart_enabled'] = 0; }
+	if ( isset($_POST['chart_type']) ) { $content['chart_type'] = intval(DB_RemoveBadChars($_POST['chart_type'])); }
+	if ( isset($_POST['chart_width']) ) { $content['chart_width'] = intval(DB_RemoveBadChars($_POST['chart_width'])); } else {$content['chart_width'] = 400; }
+	if ( isset($_POST['chart_field']) ) { $content['chart_field'] = DB_RemoveBadChars($_POST['chart_field']); }
+	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval(DB_RemoveBadChars($_POST['maxrecords'])); }
+	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval(DB_RemoveBadChars($_POST['showpercent'])); } else {$content['showpercent'] = 0; }
+	
 	// User & Group handeled specially
 	if ( isset ($_POST['isuseronly']) ) 
 	{ 
@@ -316,250 +244,72 @@ if ( isset($_POST['op']) )
 	if ( $content['Name'] == "" )
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_NAMEOFTHESOURCE'] );
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_CHARTS_NAME'] );
 	}
-	else if ( !isset($content['SourceType']) ) 
+	else if ( !isset($content['chart_type']) ) 
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_SOURCETYPE'] );
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_CHART_TYPE'] );
 	}
-	else if ( !isset($content['SourceViewID']) ) 
+	else if ( !isset($content['chart_field']) ) 
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_VIEW'] );
-	}
-	else
-	{
-		// Disk Params
-		if ( $content['SourceType'] == SOURCE_DISK ) 
-		{
-			if ( !isset($content['SourceLogLineType']) ) 
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_LOGLINETYPE'] );
-			}
-			else if ( !isset($content['SourceDiskFile']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_SYSLOGFILE'] );
-			}
-			// Check if file is accessable!
-			else 
-			{
-				// Get plain filename for testing!
-				$content['SourceDiskFileTesting'] = DB_StripSlahes($content['SourceDiskFile']);
-
-				// Take as it is if rootpath!
-				if (
-						( ($pos = strpos($content['SourceDiskFileTesting'], "/")) !== FALSE && $pos == 0) ||
-						( ($pos = strpos($content['SourceDiskFileTesting'], "\\\\")) !== FALSE && $pos == 0) ||
-						( ($pos = strpos($content['SourceDiskFileTesting'], ":\\")) !== FALSE ) ||
-						( ($pos = strpos($content['SourceDiskFileTesting'], ":/")) !== FALSE )
-					)
-				{
-					// Nothing really todo
-					true;
-				}
-				else // prepend basepath!
-					$content['SourceDiskFileTesting'] = $gl_root_path . $content['SourceDiskFileTesting'];
-/*
-				if ( !is_file($content['SourceDiskFileTesting']) )
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $szFileName );
-				}
-*/
-			}
-		}
-		// DB Params
-		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
-		{
-			if ( !isset($content['SourceDBType']) ) 
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DATABASETYPEOPTIONS'] );
-			}
-			else if ( !isset($content['SourceDBName']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBNAME'] );
-			}
-			else if ( !isset($content['SourceDBTableType']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBTABLETYPE'] );
-			}
-			else if ( !isset($content['SourceDBServer']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBSERVER'] );
-			}
-			else if ( !isset($content['SourceDBTableName']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBTABLENAME'] );
-			}
-			else if ( !isset($content['SourceDBUser']) )
-			{ 
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBUSER'] );
-			}
-		}
-		else
-		{
-			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'], $content['SourceDBType'] );
-		}
-
-		// --- Verify the Source and report and error if needed!
-
-		// Include LogStream facility
-		include($gl_root_path . 'classes/logstream.class.php');
-
-		// First create a tmp source array
-		$tmpSource['ID']			= $content['SOURCEID'];
-		$tmpSource['Name']			= $content['Name'];
-		$tmpSource['SourceType']	= $content['SourceType'];
-		$tmpSource['MsgParserList']	= $content['MsgParserList'];
-		$tmpSource['MsgNormalize']	= $content['MsgNormalize'];
-		$tmpSource['ViewID']		= $content['SourceViewID'];
-		if ( $tmpSource['SourceType'] == SOURCE_DISK ) 
-		{
-			$tmpSource['LogLineType']	= $content['SourceLogLineType'];
-			$tmpSource['DiskFile']		= $content['SourceDiskFileTesting']; // use SourceDiskFileTesting rather then SourceDiskFile as it is corrected
-		}
-		// DB Params
-		else if ( $tmpSource['SourceType'] == SOURCE_DB || $tmpSource['SourceType'] == SOURCE_PDO ) 
-		{
-			$tmpSource['DBType']		= $content['SourceDBType'];
-			$tmpSource['DBName']		= $content['SourceDBName'];
-			$tmpSource['DBTableType']	= $content['SourceDBTableType'];
-			$tmpSource['DBServer']		= $content['SourceDBServer'];
-			$tmpSource['DBTableName']	= $content['SourceDBTableName'];
-			$tmpSource['DBUser']		= $content['SourceDBUser'];
-			$tmpSource['DBPassword']	= $content['SourceDBPassword'];
-			$tmpSource['DBEnableRowCounting'] = $content['SourceDBEnableRowCounting'];
-			$tmpSource['userid']		= $content['userid'];
-			$tmpSource['groupid']		= $content['groupid'];
-		}
-
-		// Init the source
-		InitSource($tmpSource);
-
-		// Create LogStream Object 
-		$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
-		$res = $stream->Verify();
-		if ( $res != SUCCESS ) 
-		{
-			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
-
-			if ( isset($extraErrorDescription) )
-				$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
-		}
-		// ---
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_CHART_FIELD'] );
 	}
 
 	// --- Now ADD/EDIT do the processing!
 	if ( !isset($content['ISERROR']) ) 
 	{	
 		// Everything was alright, so we go to the next step!
-		if ( $_POST['op'] == "addnewsource" )
+		if ( $_POST['op'] == "addnewchart" )
 		{
 			// Add custom search now!
-			if ( $content['SourceType'] == SOURCE_DISK ) 
-			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
-				VALUES ('" . $content['Name'] . "', 
-						" . $content['SourceType'] . ", 
-						'" . $content['MsgParserList'] . "',
-						" . $content['MsgNormalize'] . ", 
-						'" . $content['SourceViewID'] . "',
-						'" . $content['SourceLogLineType'] . "',
-						'" . $content['SourceDiskFile'] . "',
-						" . $content['userid'] . ", 
-						" . $content['groupid'] . " 
-						)";
-			}
-			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
-			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
-				VALUES ('" . $content['Name'] . "', 
-						" . $content['SourceType'] . ", 
-						'" . $content['MsgParserList'] . "', 
-						" . $content['MsgNormalize'] . ", 
-						'" . $content['SourceViewID'] . "',
-						'" . $content['SourceDBTableType'] . "',
-						" . $content['SourceDBType'] . ",
-						'" . $content['SourceDBServer'] . "',
-						'" . $content['SourceDBName'] . "',
-						'" . $content['SourceDBUser'] . "',
-						'" . $content['SourceDBPassword'] . "',
-						'" . $content['SourceDBTableName'] . "',
-						" . $content['SourceDBEnableRowCounting'] . ",
-						" . $content['userid'] . ", 
-						" . $content['groupid'] . " 
-						)";
-			}
+			$sqlquery = "INSERT INTO " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, maxrecords, showpercent, userid, groupid) 
+			VALUES ('" . $content['Name'] . "', 
+					" . $content['chart_enabled'] . ", 
+					" . $content['chart_type'] . ", 
+					" . $content['chart_width'] . ", 
+					'" . $content['chart_field'] . "',
+					" . $content['maxrecords'] . ", 
+					" . $content['showpercent'] . ", 
+					" . $content['userid'] . ", 
+					" . $content['groupid'] . " 
+					)";
 
 			$result = DB_Query($sqlquery);
 			DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], $content['Name'] ) , "sources.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENADDED'], $content['Name'] ) , "charts.php" );
 		}
-		else if ( $_POST['op'] == "editsource" )
+		else if ( $_POST['op'] == "editchart" )
 		{
-			$result = DB_Query("SELECT ID FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID']);
+			$result = DB_Query("SELECT ID FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID']);
 			$myrow = DB_GetSingleRow($result, true);
 			if ( !isset($myrow['ID']) )
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_IDNOTFOUND'], $content['CHARTID'] ); 
 			}
 			else
 			{
-				// Edit the Search Entry now!
-				if ( $content['SourceType'] == SOURCE_DISK ) 
-				{
-					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
-									Name = '" . $content['Name'] . "', 
-									SourceType = " . $content['SourceType'] . ", 
-									MsgParserList = '" . $content['MsgParserList'] . "', 
-									MsgNormalize = " . $content['MsgNormalize'] . ", 
-									ViewID = '" . $content['SourceViewID'] . "', 
-									LogLineType = '" . $content['SourceLogLineType'] . "', 
-									DiskFile = '" . $content['SourceDiskFile'] . "', 
-									userid = " . $content['userid'] . ", 
-									groupid = " . $content['groupid'] . "
-									WHERE ID = " . $content['SOURCEID'];
-				}
-				else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
-				{
-					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
-									Name = '" . $content['Name'] . "', 
-									SourceType = " . $content['SourceType'] . ", 
-									MsgParserList = '" . $content['MsgParserList'] . "', 
-									MsgNormalize = " . $content['MsgNormalize'] . ", 
-									ViewID = '" . $content['SourceViewID'] . "', 
-									DBTableType = '" . $content['SourceDBTableType'] . "', 
-									DBType = " . $content['SourceDBType'] . ", 
-									DBServer = '" . $content['SourceDBServer'] . "', 
-									DBName = '" . $content['SourceDBName'] . "', 
-									DBUser = '" . $content['SourceDBUser'] . "', 
-									DBPassword = '" . $content['SourceDBPassword'] . "', 
-									DBTableName = '" . $content['SourceDBTableName'] . "', 
-									DBEnableRowCounting = " . $content['SourceDBEnableRowCounting'] . ", 
-									userid = " . $content['userid'] . ", 
-									groupid = " . $content['groupid'] . "
-									WHERE ID = " . $content['SOURCEID'];
-				}
+				$sqlquery =	"UPDATE " . DB_CHARTS . " SET 
+								DisplayName = '" . $content['Name'] . "', 
+								chart_enabled = " . $content['chart_enabled'] . ", 
+								chart_type = " . $content['chart_type'] . ", 
+								chart_width = " . $content['chart_width'] . ", 
+								chart_field = '" . $content['chart_field'] . "', 
+								maxrecords = " . $content['maxrecords'] . ", 
+								showpercent = " . $content['showpercent'] . ", 
+								userid = " . $content['userid'] . ", 
+								groupid = " . $content['groupid'] . "
+								WHERE ID = " . $content['CHARTID'];
 
 				$result = DB_Query($sqlquery);
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], $content['Name']) , "sources.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENEDIT'], $content['Name']) , "charts.php" );
 			}
 		}
 	}
@@ -635,6 +385,14 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['ChartTypeText']	= $content["LN_CHART_TYPE_BARS_HORIZONTAL"];
 		}
 		// ---
+
+		// --- Set enabled or disabled state
+		if ( $myChart['chart_enabled'] == 1 )
+			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_ENABLED"];
+		else 
+			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_DISABLED"];
+		// ---
+
 
 		// --- Set CSS Class
 		if ( $i % 2 == 0 )
