@@ -188,7 +188,7 @@ if ( isset($_GET['op']) )
 			if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
 			{
 				// This will print an additional secure check which the user needs to confirm and exit the script execution.
-				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_CHARTS_WARNDELETESEARCH'], $myrow['Name'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_CHARTS_WARNDELETESEARCH'], $myrow['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
 			}
 			// ---
 
@@ -203,7 +203,7 @@ if ( isset($_GET['op']) )
 				DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_HASBEENDEL'], $myrow['Name'] ) , "charts.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_HASBEENDEL'], $myrow['DisplayName'] ) , "charts.php" );
 		}
 		else
 		{
