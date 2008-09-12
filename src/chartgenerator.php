@@ -147,6 +147,9 @@ if ( !$content['error_occured'] )
 //					echo $myKey . "<br>";
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
+					$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . strtolower ( $fields[$content['chart_field']]['FieldID'] ) . "%3A%3D" . $myKey . "&search=Search";
+					$chartImageMapAlts[] =  $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . ": " . $myKey;
+					$chartImageMapTargets[] ="_top";
 				}
 
 				if ( $content['chart_type'] == CHART_CAKE )
@@ -197,7 +200,7 @@ if ( !$content['error_occured'] )
 //					$targ=array("pie3d_csimex1.php?v=1","pie3d_csimex1.php?v=2","pie3d_csimex1.php?v=3",
 //								"pie3d_csimex1.php?v=4","pie3d_csimex1.php?v=5","pie3d_csimex1.php?v=6");
 //					$alts=array("val=%d","val=%d","val=%d","val=%d","val=%d","val=%d");
-//					$p1->SetCSIMTargets($targ,$alts);
+					$p1->SetCSIMTargets($chartImageMapLinks, $chartImageMapAlts, $chartImageMapTargets);
 
 					// Set label format
 					if ( $content['showpercent'] == 1 )
@@ -285,6 +288,9 @@ if ( !$content['error_occured'] )
 //					$bplot->value->SetAlign('left','center');
 //					$bplot->value->SetColor("black","darkred");
 					$bplot->value->SetFormat('%d');
+					
+					// Add links
+					$bplot->SetCSIMTargets($chartImageMapLinks, $chartImageMapAlts, $chartImageMapTargets);
 
 
 // TODO: Make Optional!
@@ -372,6 +378,10 @@ if ( !$content['error_occured'] )
 //					$bplot->value->SetColor("black","darkred");
 					$bplot->value->SetFormat('%d');
 
+					// Add links
+					$bplot->SetCSIMTargets($chartImageMapLinks, $chartImageMapAlts, $chartImageMapTargets);
+
+
 // TODO: Make Optional!
 					// Create and Add filled line plot
 					$lplot = new LinePlot($YchartData);
@@ -451,8 +461,8 @@ if ( $content['error_occured'] )
 // --- 
 
 // --- Output the image
-$graph->Stroke(); 
-//$graph->StrokeCSIM(); 
+//$graph->Stroke(); 
+$graph->StrokeCSIM(); 
 // --- 
 
 ?>
