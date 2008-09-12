@@ -389,9 +389,22 @@ function LoadSearchesFromDatabase()
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
 	{
-		// Overwrite Search Array with Database one
-		$CFG['Search'] = $myrows;
-		$content['Search'] = $myrows;
+		// Overwrite existing Charts array
+		unset($CFG['Search']);
+		
+		// Loop through all data rows 
+		foreach ($myrows as &$mySearch )
+		{
+			// Append to Chart Array
+			$CFG['Search'][ $mySearch['ID'] ] = $mySearch;
+		}
+		
+		// Copy to content array!
+		$content['Search'] = $CFG['Search'];
+
+//		// Overwrite Search Array with Database one
+//		$CFG['Search'] = $myrows;
+//		$content['Search'] = $myrows;
 	}
 }
 
@@ -441,8 +454,7 @@ function LoadChartsFromDatabase()
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
 	{
-
-		// Overwrite existing Views array
+		// Overwrite existing Charts array
 		unset($CFG['Charts']);
 		
 		// Loop through all data rows 
@@ -454,10 +466,6 @@ function LoadChartsFromDatabase()
 		
 		// Copy to content array!
 		$content['Charts'] = $CFG['Charts'];
-
-//		// Overwrite Search Array with Database one
-//		$CFG['Charts'] = $myrows;
-//		$content['Charts'] = $myrows;
 	}
 }
 
