@@ -253,5 +253,7 @@ $content['LN_CHARTS_ERROR_IDNOTFOUND'] = "The Chart-ID could not be found in the
 $content['LN_CHARTS_HASBEENEDIT'] = "The Chart '%1' has been successfully edited.";
 $content['LN_CHARTS_ID'] = "ID";
 $content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
+$content['LN_CHARTS_PREVIEW'] = "Preview Chart in a new Window";
+
 
 ?>

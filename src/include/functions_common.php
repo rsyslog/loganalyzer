@@ -527,6 +527,7 @@ function InitFrontEndVariables()
 	$content['MENU_CHART_CAKE'] = $content['BASEPATH'] . "images/icons/pie-chart.png";
 	$content['MENU_CHART_BARSVERT'] = $content['BASEPATH'] . "images/icons/column-chart.png";
 	$content['MENU_CHART_BARSHORI'] = $content['BASEPATH'] . "images/icons/column-chart-hori.png";
+	$content['MENU_CHART_PREVIEW'] = $content['BASEPATH'] . "images/icons/pie-chart_view.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
