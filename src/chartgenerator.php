@@ -151,7 +151,7 @@ if ( !$content['error_occured'] )
 //					echo $myKey . "<br>";
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
-					if ( isset($fields[$content['chart_field']]['SearchField']) ) 
+					if ( isset($fields[$content['chart_field']]['SearchField']) && strlen($myKey) > 0 ) 
 						$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) . "&search=Search";
 					else
 						$chartImageMapLinks[] = "";

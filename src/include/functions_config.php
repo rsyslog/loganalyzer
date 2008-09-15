@@ -416,6 +416,10 @@ function LoadChartsFromDatabase()
 	// Needed to make global
 	global $CFG, $content;
 
+	// Abort reading charts if the database version is below 3, because prior v3, there were no charts table
+	if ( $content['database_installedversion'] < 3 )
+		return;
+
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
