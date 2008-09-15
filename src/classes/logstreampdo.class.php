@@ -651,11 +651,11 @@ class LogStreamPDO extends LogStream {
 									
 									// Not create LIKE Filters
 									if ( isset($tmpfilters[$propertyname]) ) 
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
 									else
 									{
 										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
 									}
 									break;
 								case FILTER_TYPE_NUMBER:
@@ -669,7 +669,7 @@ class LogStreamPDO extends LogStream {
 										else
 										{
 											$tmpfilters[$szArrayKey][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . $myfilter[FILTER_VALUE];
+											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
 										}
 									}
 									else
@@ -680,7 +680,7 @@ class LogStreamPDO extends LogStream {
 										else
 										{
 											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
+											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
 										}
 									}
 									// ---
