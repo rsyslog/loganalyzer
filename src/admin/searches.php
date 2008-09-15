@@ -65,6 +65,8 @@ if ( isset($_GET['op']) )
 		//PreInit these values 
 		$content['DisplayName'] = "";
 		$content['SearchQuery'] = "";
+
+		// General stuff
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
 		$content['SEARCHID'] = "";
