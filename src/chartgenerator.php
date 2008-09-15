@@ -145,11 +145,14 @@ if ( !$content['error_occured'] )
 				// Create Y array!
 				foreach( $chartData as $myKey => $myData)
 				{
+					// Convert into filter format for submenus
+					$szEncodedKeyStr = str_replace(' ', '+', $myKey);
+
 //					echo $myKey . "<br>";
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
 					if ( isset($fields[$content['chart_field']]['SearchField']) ) 
-						$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . $myKey . "&search=Search";
+						$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) . "&search=Search";
 					else
 						$chartImageMapLinks[] = "";
 
