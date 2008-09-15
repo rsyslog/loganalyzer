@@ -143,35 +143,35 @@ $fields[SYSLOG_EVENT_ID]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_EVENT_ID]['Sortable'] = true;
 $fields[SYSLOG_EVENT_ID]['DefaultWidth'] = "65";
 $fields[SYSLOG_EVENT_ID]['FieldAlign'] = "center";
-$fields[SYSLOG_EVENT_ID]['SearchField'] = "";
+$fields[SYSLOG_EVENT_ID]['SearchField'] = "eventid";
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldID'] = SYSLOG_EVENT_LOGTYPE;
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldCaptionID'] = 'LN_FIELDS_EVENTLOGTYPE';
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_LOGTYPE]['Sortable'] = true;
 $fields[SYSLOG_EVENT_LOGTYPE]['DefaultWidth'] = "100";
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldAlign'] = "left";
-$fields[SYSLOG_EVENT_LOGTYPE]['SearchField'] = "";
+$fields[SYSLOG_EVENT_LOGTYPE]['SearchField'] = "eventlogtype";
 $fields[SYSLOG_EVENT_SOURCE]['FieldID'] = SYSLOG_EVENT_SOURCE;
 $fields[SYSLOG_EVENT_SOURCE]['FieldCaptionID'] = 'LN_FIELDS_EVENTSOURCE';
 $fields[SYSLOG_EVENT_SOURCE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_SOURCE]['Sortable'] = true;
 $fields[SYSLOG_EVENT_SOURCE]['DefaultWidth'] = "100";
 $fields[SYSLOG_EVENT_SOURCE]['FieldAlign'] = "left";
-$fields[SYSLOG_EVENT_SOURCE]['SearchField'] = "";
+$fields[SYSLOG_EVENT_SOURCE]['SearchField'] = "eventlogsource";
 $fields[SYSLOG_EVENT_CATEGORY]['FieldID'] = SYSLOG_EVENT_CATEGORY;
 $fields[SYSLOG_EVENT_CATEGORY]['FieldCaptionID'] = 'LN_FIELDS_EVENTCATEGORY';
 $fields[SYSLOG_EVENT_CATEGORY]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_EVENT_CATEGORY]['Sortable'] = true;
 $fields[SYSLOG_EVENT_CATEGORY]['DefaultWidth'] = "50";
 $fields[SYSLOG_EVENT_CATEGORY]['FieldAlign'] = "center";
-$fields[SYSLOG_EVENT_CATEGORY]['SearchField'] = "";
+$fields[SYSLOG_EVENT_CATEGORY]['SearchField'] = "eventcategory";
 $fields[SYSLOG_EVENT_USER]['FieldID'] = SYSLOG_EVENT_USER;
 $fields[SYSLOG_EVENT_USER]['FieldCaptionID'] = 'LN_FIELDS_EVENTUSER';
 $fields[SYSLOG_EVENT_USER]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_USER]['Sortable'] = true;
 $fields[SYSLOG_EVENT_USER]['DefaultWidth'] = "85";
 $fields[SYSLOG_EVENT_USER]['FieldAlign'] = "left";
-$fields[SYSLOG_EVENT_USER]['SearchField'] = "";
+$fields[SYSLOG_EVENT_USER]['SearchField'] = "eventuser";
 
 // Message is the last element, this order is important for the Detail page for now!
 $fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
@@ -180,7 +180,6 @@ $fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_MESSAGE]['Sortable'] = false;
 $fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
 $fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
-
 // --- 
 
 // --- Define default Database field mappings!

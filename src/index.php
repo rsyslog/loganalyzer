@@ -525,6 +525,29 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'IconSource' => $content['MENU_NETWORK']
 									);
 							}
+							else if ( $mycolkey == SYSLOG_EVENT_CATEGORY )
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_ID
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+
+								// Menu Option to append filter
+								if ( strlen($content['searchstr']) > 0 )
+								{
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
+										'IconSource' => $content['MENU_BULLET_GREEN']
+										);
+								}
+
+								// More Menu entries
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=eventcategory%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
+							
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
@@ -720,6 +743,28 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_EVENT_SOURCE . '&q=' . $logArray[$mycolkey], 
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
+									);
+							}
+							else if ( $mycolkey == SYSLOG_EVENT_USER ) 
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_USER
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+
+								// Menu Option to append filter
+								if ( strlen($content['searchstr']) > 0 )
+								{
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventuser%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
+										'IconSource' => $content['MENU_BULLET_GREEN']
+										);
+								}
+
+								// More Menu entries
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=eventuser%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
+									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
 						}

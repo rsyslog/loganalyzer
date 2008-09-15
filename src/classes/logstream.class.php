@@ -288,8 +288,17 @@ abstract class LogStream {
 
 					// Check for multiple values!
 					if ( strpos($tmpArray[FILTER_TMP_VALUE], ",") )
-						$tmpValues = explode(",", $tmpArray[FILTER_TMP_VALUE]);
-
+					{
+						// Split by comma and fill tmp Value array
+						$tmpValueArray = explode(",", $tmpArray[FILTER_TMP_VALUE]);
+						foreach($tmpValueArray as $myValueEntry)
+						{
+							// Append to temp array
+							$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+						}
+					}
+					
+					// Handle filter based
 					switch( $tmpArray[FILTER_TMP_KEY] )
 					{
 						case "facility": 
@@ -300,16 +309,19 @@ abstract class LogStream {
 							{
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
-									if ( !is_numeric($szValue) )
+									if ( !is_numeric($szValue[FILTER_TMP_VALUE]) )
 									{
-										$tmpFacilityCode = $this->ConvertFacilityString($szValue);
+										$tmpFacilityCode = $this->ConvertFacilityString($szValue[FILTER_TMP_VALUE]);
 										if ( $tmpFacilityCode != -1 ) 
-											$tmpValues[$mykey] = $tmpFacilityCode;
+											$tmpValues[$mykey][FILTER_TMP_VALUE] = $tmpFacilityCode;
 									}
 								}
 							}
 							else
 							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
 									$tmpFacilityCode = $this->ConvertFacilityString($tmpArray[FILTER_TMP_VALUE]);
@@ -327,16 +339,19 @@ abstract class LogStream {
 							{
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
-									if ( !is_numeric($szValue) )
+									if ( !is_numeric($szValue[FILTER_TMP_VALUE]) )
 									{
-										$tmpFacilityCode = $this->ConvertSeverityString($szValue);
+										$tmpFacilityCode = $this->ConvertSeverityString($szValue[FILTER_TMP_VALUE]);
 										if ( $tmpFacilityCode != -1 ) 
-											$tmpValues[$mykey] = $tmpFacilityCode;
+											$tmpValues[$mykey][FILTER_TMP_VALUE] = $tmpFacilityCode;
 									}
 								}
 							}
 							else
 							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
 									$tmpFacilityCode = $this->ConvertSeverityString($tmpArray[FILTER_TMP_VALUE]);
@@ -354,16 +369,25 @@ abstract class LogStream {
 							{
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
-									if ( !is_numeric($szValue) )
+									if ( !is_numeric($szValue[FILTER_TMP_VALUE]) )
 									{
-										$tmpMsgTypeCode = $this->ConvertMessageTypeString($szValue);
+										$tmpMsgTypeCode = $this->ConvertMessageTypeString($szValue[FILTER_TMP_VALUE]);
 										if ( $tmpMsgTypeCode != -1 ) 
-											$tmpValues[$mykey] = $tmpMsgTypeCode;
+											$tmpValues[$mykey][FILTER_TMP_VALUE] = $tmpMsgTypeCode;
 									}
+								}
+
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									// First set Filter Mode
+									$tmpValues[$mykey][FILTER_TMP_MODE] = $this->SetFilterIncludeMode($szValue);
 								}
 							}
 							else
 							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
 									$tmpMsgTypeCode = $this->ConvertMessageTypeString($tmpArray[FILTER_TMP_VALUE]);
@@ -381,12 +405,17 @@ abstract class LogStream {
 							{
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
-									if ( is_numeric($szValue) )
-										$tmpValues[$mykey] = $szValue;
+									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+									else
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
 								}
 							}
 							else
 							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
 							}
@@ -401,12 +430,42 @@ abstract class LogStream {
 							{
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
-									if ( is_numeric($szValue) )
-										$tmpValues[$mykey] = $szValue;
+									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+									else
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
 								}
 							}
 							else
 							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+									$tmpArray[FILTER_TMP_VALUE] = "";
+
+							}
+							// --- 
+							break;
+						case "eventcategory": 
+							$tmpKeyName = SYSLOG_EVENT_CATEGORY; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra numeric Check 
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+									else
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
+								}
+							}
+							else
+							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
 							}
@@ -418,6 +477,10 @@ abstract class LogStream {
 							break;
 						case "eventlogsource": 
 							$tmpKeyName = SYSLOG_EVENT_SOURCE; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case "eventuser": 
+							$tmpKeyName = SYSLOG_EVENT_USER; 
 							$tmpFilterType = FILTER_TYPE_STRING;
 							break;
 						/* END Eventlog based fields */
@@ -464,10 +527,11 @@ abstract class LogStream {
 						}
 						else if ( isset($tmpValues) ) 
 						{
-							foreach( $tmpValues as $szValue ) 
+//print_r( $tmpValues );
+							foreach( $tmpValues as $szValue )
 							{
 								// Continue if empty!
-								if ( strlen(trim($szValue)) == 0 ) 
+								if ( strlen($szValue[FILTER_TMP_VALUE]) == 0 ) 
 									continue;
 
 								if ( isset($this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]) )
@@ -478,16 +542,22 @@ abstract class LogStream {
 								}
 
 								// Set Filter Mode
-								$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($szValue);
+								if ( isset($szValue[FILTER_TMP_MODE]) ) 
+									$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $szValue[FILTER_TMP_MODE];
+								else
+									$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($szValue[FILTER_TMP_VALUE]);
 
 								// Set Value
-								$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue;
+								$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $szValue[FILTER_TMP_VALUE];
 							}
 						}
 						else
 						{
 							// Set Filter Mode
-							$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+							if ( isset($tmpArray[FILTER_TMP_MODE]) ) 
+								$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $tmpArray[FILTER_TMP_MODE];
+							else
+								$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
 							
 							// Set Filter value!
 							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];

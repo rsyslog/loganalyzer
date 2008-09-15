@@ -58,6 +58,7 @@ define('DATE_LASTX_31DAYS', 5);
 // Helper constants needed for parsing filters
 define('FILTER_TMP_KEY', 0);
 define('FILTER_TMP_VALUE', 1);
+define('FILTER_TMP_MODE', 2);
 define('FILTER_DATEMODE', 'datemode');
 define('FILTER_TYPE', 'filtertype');
 define('FILTER_DATEMODENAME', 'datemodename');

@@ -632,13 +632,31 @@ class LogStreamDB extends LogStream {
 									}
 									break;
 								case FILTER_TYPE_NUMBER:
-									if ( isset($tmpfilters[$propertyname]) ) 
-										$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+									// --- Check if user wants to include or exclude!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE )
+									{
+										// Add to filterset
+										$szArrayKey = $propertyname . "-NOT";
+										if ( isset($tmpfilters[$szArrayKey]) ) 
+											$tmpfilters[$szArrayKey][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+										else
+										{
+											$tmpfilters[$szArrayKey][FILTER_TYPE] = FILTER_TYPE_NUMBER;
+											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . $myfilter[FILTER_VALUE];
+										}
+									}
 									else
 									{
-										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
+										// Add to filterset
+										if ( isset($tmpfilters[$propertyname]) ) 
+											$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+										else
+										{
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
+											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
+										}
 									}
+									// ---
 									break;
 								case FILTER_TYPE_DATE:
 									if ( isset($tmpfilters[$propertyname]) ) 
