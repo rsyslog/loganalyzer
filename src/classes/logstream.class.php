@@ -373,6 +373,25 @@ abstract class LogStream {
 							}
 							// --- 
 							break;
+						case "processid": 
+							$tmpKeyName = SYSLOG_PROCESSID; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra numeric Check 
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( is_numeric($szValue) )
+										$tmpValues[$mykey] = $szValue;
+								}
+							}
+							else
+							{
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+									$tmpArray[FILTER_TMP_VALUE] = "";
+							}
+							// --- 
+							break;
 						/* BEGIN Eventlog based fields */
 						case "eventid": 
 							$tmpKeyName = SYSLOG_EVENT_ID; 

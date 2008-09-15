@@ -147,7 +147,11 @@ if ( !$content['error_occured'] )
 //					echo $myKey . "<br>";
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
-					$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . strtolower ( $fields[$content['chart_field']]['FieldID'] ) . "%3A%3D" . $myKey . "&search=Search";
+					if ( isset($fields[$content['chart_field']]['SearchField']) ) 
+						$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . $myKey . "&search=Search";
+					else
+						$chartImageMapLinks[] = "";
+
 					$chartImageMapAlts[] =  $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . ": " . $myKey;
 					$chartImageMapTargets[] ="_top";
 				}

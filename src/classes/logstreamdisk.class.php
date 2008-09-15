@@ -681,7 +681,8 @@ class LogStreamDisk extends LogStream {
 		// IF result was unsuccessfull, return success - nothing we can do here.
 		if ( $myResults >= ERROR ) 
 			return SUCCESS;
-
+		
+		// Process all filters
 		if ( $this->_filters != null )
 		{
 			// Evaluation default for now is true
@@ -692,9 +693,9 @@ class LogStreamDisk extends LogStream {
 			{
 				// TODO: NOT SURE IF THIS WILL WORK ON NUMBERS AND OTHER TYPES RIGHT NOW
 				if (	
-						array_key_exists($propertyname, $this->_filters) && 
-						isset($propertyvalue) && 
-						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0 ) /* Negative because it only matters if the propvalure is a string*/
+						array_key_exists($propertyname, $this->_filters) &&
+						isset($propertyvalue) /* && 
+						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
 					// Extra var needed for number checks!
@@ -707,62 +708,89 @@ class LogStreamDisk extends LogStream {
 						switch( $myfilter[FILTER_TYPE] )
 						{
 							case FILTER_TYPE_STRING:
-								// If Syslog message, we have AND handling!
-								if ( $propertyname == SYSLOG_MESSAGE )
+								// Only filter if value is non zero
+								if ( strlen($propertyvalue) > 0 && strlen($myfilter[FILTER_VALUE]) > 0 )
 								{
-									// Include Filter
-									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+									// If Syslog message, we have AND handling!
+									if ( $propertyname == SYSLOG_MESSAGE )
 									{
-										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-											$bEval = false;
-									}
-									// Exclude Filter
-									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
-									{
-										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
-											$bEval = false;
-									}
-								}
-								// Otherwise we use OR Handling!
-								else
-								{
-									$bIsOrFilter = true; // Set isOrFilter to true 
-
-									// Include Filter
-									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
-									{
-										if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
-										{
-											if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
-												$bOrFilter = true;
-										}
-										else
-										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
-												$bOrFilter = true;
-										}
-									}
-									// Exclude Filter
-									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
-									{
-										if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
-										{
-											if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
-												$bOrFilter = true;
-										}
-										else
+										// Include Filter
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
 											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-												$bOrFilter = true;
+												$bEval = false;
+										}
+										// Exclude Filter
+										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+										{
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+												$bEval = false;
 										}
 									}
-									break;
+									// Otherwise we use OR Handling!
+									else
+									{
+										$bIsOrFilter = true; // Set isOrFilter to true 
+
+										// Include Filter
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+										{
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+											{
+												if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
+													$bOrFilter = true;
+											}
+											else
+											{
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+													$bOrFilter = true;
+											}
+										}
+										// Exclude Filter
+										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+										{
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+											{
+												if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
+													$bOrFilter = true;
+											}
+											else
+											{
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+													$bOrFilter = true;
+											}
+										}
+										break;
+									}
 								}
 								break;
 							case FILTER_TYPE_NUMBER:
-								$bIsOrFilter = true; // Set to true in any case!
-								if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
-									$bOrFilter = true;
+								$bIsOrFilter = true; // Default is set to TRUE
+								if ( is_numeric($arrProperitesOut[$propertyname]) )
+								{
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+									{
+										if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
+											$bOrFilter = true;
+										else
+											$bOrFilter = false;
+									}
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+									{
+										if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
+											$bOrFilter = false;
+										else
+											$bOrFilter = true;
+									}
+								}
+								else
+								{
+									// If wanted, we treat this filter as a success!
+									if ( GetConfigSetting("TreatNotFoundFiltersAsTrue", 0, CFGLEVEL_USER) == 1 )
+										$bOrFilter = true;
+									else
+										$bOrFilter = false;
+								}
 								break;
 							case FILTER_TYPE_DATE:
 								// Get Log TimeStamp
@@ -786,6 +814,7 @@ class LogStreamDisk extends LogStream {
 									else
 										// WTF default? 
 										$nLastXTime = 86400;
+									
 									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.
 									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )
 										$bEval = false;
@@ -793,7 +822,7 @@ class LogStreamDisk extends LogStream {
 								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
 								{
 									// Get filter timestamp!
- 									$nFromTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
+									$nFromTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
 									
 									// If logtime is smaller then FromTime, then the Event is outside of our scope!
 									if ( $nLogTimeStamp < $nFromTimeStamp )

@@ -475,6 +475,28 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
+							else if ( $mycolkey == SYSLOG_PROCESSID )
+							{
+								// Set OnClick Menu for SYSLOG_EVENT_ID
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
+
+								// Menu Option to append filter
+								if ( strlen($content['searchstr']) > 0 )
+								{
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+processid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
+										'IconSource' => $content['MENU_BULLET_GREEN']
+										);
+								}
+
+								// More Menu entries
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
+									'ButtonUrl' => '?filter=processid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
+									'IconSource' => $content['MENU_BULLET_BLUE']
+									);
+							}
 							/* Eventlog based fields */
 							else if ( $mycolkey == SYSLOG_EVENT_ID )
 							{

@@ -103,8 +103,9 @@ class LogStreamPDO extends LogStream {
 			return ERROR_DB_INVALIDDBMAPPING;
 
 		// Create SQL Where Clause first!
-		$this->CreateSQLWhereClause();
-//debug echo $this->_SQLwhereClause;
+		$res = $this->CreateSQLWhereClause();
+		if ( $res != SUCCESS ) 
+			return $res;
 
 		// Only obtain rowcount if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
@@ -615,105 +616,115 @@ class LogStreamPDO extends LogStream {
 					// Process all filters
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
-						switch( $myfilter[FILTER_TYPE] )
+						// Only perform if database mapping is available for this filter!
+						if ( isset($dbmapping[$szTableType][$propertyname]) ) 
 						{
-							case FILTER_TYPE_STRING:
-								// --- Check if user wants to include or exclude!
-								if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
-									$addnod = "";
-								else
-									$addnod = " NOT";
-								// --- 
+							switch( $myfilter[FILTER_TYPE] )
+							{
+								case FILTER_TYPE_STRING:
+									// --- Check if user wants to include or exclude!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+										$addnod = "";
+									else
+										$addnod = " NOT";
+									// --- 
 
-								// --- Either make a LIKE or a equal query!
-								if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
-								{
-									$szSearchBegin = " = '";
-									$szSearchEnd = "' ";
-								}
-								else
-								{
-									$szSearchBegin = " LIKE '%";
-									$szSearchEnd = "%' ";
-								}
-								// ---
-
-								// --- If Syslog message, we have AND handling, otherwise OR!
-								if ( $propertyname == SYSLOG_MESSAGE )
-									$addor = " AND ";
-								else
-									$addor = " OR ";
-								// --- 
-								
-								// Not create LIKE Filters
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
-								}
-								break;
-							case FILTER_TYPE_NUMBER:
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
-								}
-								break;
-							case FILTER_TYPE_DATE:
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= " AND ";
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_VALUE] = "";
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
-								}
-								
-								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
-								{
-									// Get current timestamp
-									$nNowTimeStamp = time();
-
-									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
-										$nNowTimeStamp -= 60 * 60; // One Hour!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
-										$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
-										$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
-										$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
-										$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
-									else 
+									// --- Either make a LIKE or a equal query!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
 									{
-										// Set filter to unknown and Abort in this case!
-										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
-										break;
+										$szSearchBegin = " = '";
+										$szSearchEnd = "' ";
+									}
+									else
+									{
+										$szSearchBegin = " LIKE '%";
+										$szSearchEnd = "%' ";
+									}
+									// ---
+
+									// --- If Syslog message, we have AND handling, otherwise OR!
+									if ( $propertyname == SYSLOG_MESSAGE )
+										$addor = " AND ";
+									else
+										$addor = " OR ";
+									// --- 
+									
+									// Not create LIKE Filters
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . $myfilter[FILTER_VALUE] . $szSearchEnd;
+									}
+									break;
+								case FILTER_TYPE_NUMBER:
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
+									}
+									break;
+								case FILTER_TYPE_DATE:
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= " AND ";
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_VALUE] = "";
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
 									}
 									
-									// Append filter
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
-								}
-								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
-								{
-									// Obtain Event struct for the time!
-									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
-								}
-								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
-								{
-									// Obtain Event struct for the time!
-									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
-								}
+									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+									{
+										// Get current timestamp
+										$nNowTimeStamp = time();
 
-								break;
-							default:
-								// Nothing to do!
-								break;
+										if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+											$nNowTimeStamp -= 60 * 60; // One Hour!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
+											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
+											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
+										else 
+										{
+											// Set filter to unknown and Abort in this case!
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
+											break;
+										}
+										
+										// Append filter
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+									}
+
+									break;
+								default:
+									// Nothing to do!
+									break;
+							}
+						}
+						else
+						{
+							// Check how to treat not found db mappings / filters
+							if ( GetConfigSetting("TreatNotFoundFiltersAsTrue", 0, CFGLEVEL_USER) == 0 )
+								return ERROR_DB_DBFIELDNOTFOUND;
 						}
 					}
 				}

@@ -299,28 +299,30 @@ if ( isset($_POST['op']) )
 		// Check subop's first!
 		if ( isset($_POST['subop']) )
 		{
-			// Get NewColID
-			$szColId = DB_RemoveBadChars($_POST['newcolumn']);
-			
-			// Add a new Column into our list!
-			if ( $_POST['subop'] == $content['LN_VIEWS_ADDCOLUMN'] && isset($_POST['newcolumn']) )
+			if ( isset($_POST['newcolumn']) )
 			{
-				// Add New entry into columnlist
-				$content['SUBCOLUMNS'][$szColId]['ColFieldID'] = $szColId;
-
-				// Set Fieldcaption
-				if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
-					$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
-				else
-					$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $szColId;
-
-				// Set CSSClass
-				$content['SUBCOLUMNS'][$szColId]['colcssclass'] = count($content['SUBCOLUMNS']) % 2 == 0 ? "line1" : "line2";
+				// Get NewColID
+				$szColId = DB_RemoveBadChars($_POST['newcolumn']);
 				
-				// Remove from fields list as well
-				if ( isset($content['FIELDS'][$szColId]) ) 
-					unset($content['FIELDS'][$szColId]);
+				// Add a new Column into our list!
+				if ( $_POST['subop'] == $content['LN_VIEWS_ADDCOLUMN'] && isset($_POST['newcolumn']) )
+				{
+					// Add New entry into columnlist
+					$content['SUBCOLUMNS'][$szColId]['ColFieldID'] = $szColId;
 
+					// Set Fieldcaption
+					if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
+						$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
+					else
+						$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $szColId;
+
+					// Set CSSClass
+					$content['SUBCOLUMNS'][$szColId]['colcssclass'] = count($content['SUBCOLUMNS']) % 2 == 0 ? "line1" : "line2";
+					
+					// Remove from fields list as well
+					if ( isset($content['FIELDS'][$szColId]) ) 
+						unset($content['FIELDS'][$szColId]);
+				}
 			}
 		}
 		else if ( isset($_POST['subop_delete']) )

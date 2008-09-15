@@ -79,6 +79,8 @@ $content['LN_ERROR_DB_NOPROPERTIES'] = "No database properties found";
 $content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
 $content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
 $content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
+$content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least one field could not be found.";
+
 	$content['LN_GEN_SELECTEXPORT'] = "&gt; Select Exportformat &lt;";
 	$content['LN_GEN_EXPORT_CVS'] = "CVS (Comma separated)";
 	$content['LN_GEN_EXPORT_XML'] = "XML";

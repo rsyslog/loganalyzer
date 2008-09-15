@@ -1161,6 +1161,7 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscShowPageRenderStats", true );
 	WriteConfigValue( "MiscEnableGzipCompression", true );
 	WriteConfigValue( "SuppressDuplicatedMessages", true );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true );
 	WriteConfigValue( "ViewEntriesPerPage", true );
@@ -1194,6 +1195,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscShowPageRenderStats", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "MiscEnableGzipCompression", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SuppressDuplicatedMessages", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
@@ -1275,6 +1277,8 @@ function GetErrorMessage($errorCode)
 			return $content['LN_ERROR_DB_INVALIDDBDRIVER'];
 		case ERROR_DB_TABLENOTFOUND:
 			return $content['LN_ERROR_DB_TABLENOTFOUND'];
+		case ERROR_DB_DBFIELDNOTFOUND:
+			return $content['LN_ERROR_DB_DBFIELDNOTFOUND'];
 
 		case ERROR_CHARTS_NOTCONFIGURED:
 			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];

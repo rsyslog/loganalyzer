@@ -133,6 +133,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['MiscShowPageRenderStats']) ) { $content['MiscShowPageRenderStats'] = 1; } else { $content['MiscShowPageRenderStats'] = 0; } 
 			if ( isset ($_POST['MiscEnableGzipCompression']) ) { $content['MiscEnableGzipCompression'] = 1; } else { $content['MiscEnableGzipCompression'] = 0; } 
 			if ( isset ($_POST['SuppressDuplicatedMessages']) ) { $content['SuppressDuplicatedMessages'] = 1; } else { $content['SuppressDuplicatedMessages'] = 0; } 
+			if ( isset ($_POST['TreatNotFoundFiltersAsTrue']) ) { $content['TreatNotFoundFiltersAsTrue'] = 1; } else { $content['TreatNotFoundFiltersAsTrue'] = 0; } 
 			if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
 			if ( isset ($_POST['MiscDebugToSyslog']) ) { $content['MiscDebugToSyslog'] = 1; } else { $content['MiscDebugToSyslog'] = 0; } 
 
@@ -179,6 +180,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_MiscShowPageRenderStats']) ) { $USERCFG['MiscShowPageRenderStats'] = 1; } else { $USERCFG['MiscShowPageRenderStats'] = 0; } 
 			if ( isset ($_POST['User_MiscEnableGzipCompression']) ) { $USERCFG['MiscEnableGzipCompression'] = 1; } else { $USERCFG['MiscEnableGzipCompression'] = 0; } 
 			if ( isset ($_POST['User_SuppressDuplicatedMessages']) ) { $USERCFG['SuppressDuplicatedMessages'] = 1; } else { $USERCFG['SuppressDuplicatedMessages'] = 0; } 
+			if ( isset ($_POST['User_TreatNotFoundFiltersAsTrue']) ) { $USERCFG['TreatNotFoundFiltersAsTrue'] = 1; } else { $USERCFG['TreatNotFoundFiltersAsTrue'] = 0; } 
 
 			// Read Text number fields
 			if ( isset ($_POST['User_ViewMessageCharacterLimit']) && is_numeric($_POST['User_ViewMessageCharacterLimit']) ) { $USERCFG['ViewMessageCharacterLimit'] = $_POST['User_ViewMessageCharacterLimit']; }
@@ -210,6 +212,7 @@ if (isset($content['MiscShowDebugGridCounter']) && $content['MiscShowDebugGridCo
 if (isset($content['MiscShowPageRenderStats']) && $content['MiscShowPageRenderStats'] == 1) { $content['MiscShowPageRenderStats_checked'] = "checked"; } else { $content['MiscShowPageRenderStats_checked'] = ""; }
 if (isset($content['MiscEnableGzipCompression']) && $content['MiscEnableGzipCompression'] == 1) { $content['MiscEnableGzipCompression_checked'] = "checked"; } else { $content['MiscEnableGzipCompression_checked'] = ""; }
 if (isset($content['SuppressDuplicatedMessages']) && $content['SuppressDuplicatedMessages'] == 1) { $content['SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['SuppressDuplicatedMessages_checked'] = ""; }
+if (isset($content['TreatNotFoundFiltersAsTrue']) && $content['TreatNotFoundFiltersAsTrue'] == 1) { $content['TreatNotFoundFiltersAsTrue_checked'] = "checked"; } else { $content['TreatNotFoundFiltersAsTrue_checked'] = ""; }
 
 if (isset($content['DebugUserLogin']) && $content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
 if (isset($content['MiscDebugToSyslog']) && $content['MiscDebugToSyslog'] == 1) { $content['MiscDebugToSyslog_checked'] = "checked"; } else { $content['MiscDebugToSyslog_checked'] = ""; }
@@ -282,6 +285,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	if ( GetConfigSetting('MiscShowPageRenderStats', $content['MiscShowPageRenderStats'], CFGLEVEL_USER) == 1) { $content['User_MiscShowPageRenderStats_checked'] = "checked"; } else { $content['User_MiscShowPageRenderStats_checked'] = ""; }
 	if ( GetConfigSetting('MiscEnableGzipCompression', $content['MiscEnableGzipCompression'], CFGLEVEL_USER) == 1) { $content['User_MiscEnableGzipCompression_checked'] = "checked"; } else { $content['User_MiscEnableGzipCompression_checked'] = ""; }
 	if ( GetConfigSetting('SuppressDuplicatedMessages', $content['SuppressDuplicatedMessages'], CFGLEVEL_USER) == 1) { $content['User_SuppressDuplicatedMessages_checked'] = "checked"; } else { $content['User_SuppressDuplicatedMessages_checked'] = ""; }
+	if ( GetConfigSetting('TreatNotFoundFiltersAsTrue', $content['TreatNotFoundFiltersAsTrue'], CFGLEVEL_USER) == 1) { $content['User_TreatNotFoundFiltersAsTrue_checked'] = "checked"; } else { $content['User_TreatNotFoundFiltersAsTrue_checked'] = ""; }
 	// --- 
 
 	// --- Set TextFields!
