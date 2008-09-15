@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.5.7 (devel), 2008-09-15
+- Added Statistics page for chart generation. The following charts are 
+  possible right now: Pie, bars vertical and bars horicontal. 
+  All charts can be configured within the Admin Center, if the user system 
+  is installed and enabled. Custom charts can be added as well. 
+- Added filter / search support for processid, event category and the 
+  event user field
+- Added database update, as we now have a new table to store 
+  configured charts into.
+- Fixed a few minor filtering issues, specially with numeric filters.
+---------------------------------------------------------------------------
 Version 2.3.11 (beta), 2008-09-08
 - Fix another parsing issue in the logline parser. Most of RFC 3164
   formatted syslog messages should now be correctly splitted into their
