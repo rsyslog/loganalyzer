@@ -534,7 +534,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventcategory%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);

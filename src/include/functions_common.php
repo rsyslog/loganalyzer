@@ -108,7 +108,7 @@ function InitUserSystemPhpLogCon()
 	if ( GetConfigSetting("UserDBEnabled", false) )
 	{
 		// Include User Functions
-		include($gl_root_path . 'include/functions_users.php');
+		include_once($gl_root_path . 'include/functions_users.php');
 	}
 }
 
@@ -140,6 +140,10 @@ function InitPhpLogCon()
 {
 	// Needed to make global
 	global $gl_root_path, $content;
+
+	// Abort if already defined
+	if ( defined('PHPLOGCON_INITIALIZED') )
+		return;
 
 	// Init Basics which do not need a database
 	InitBasicPhpLogCon();
@@ -181,6 +185,9 @@ function InitPhpLogCon()
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
+
+	// Finally defined PHPLOGCON_INITIALIZED!
+	define( 'PHPLOGCON_INITIALIZED', TRUE );
 }
 
 function CreateLogLineTypesList( $selectedType )

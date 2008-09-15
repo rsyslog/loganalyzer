@@ -61,11 +61,14 @@ if ( isset($content['Charts']) )
 
 	// PreProcess Charts Array for display!
 	$i = 0; // Help counter!
-	foreach ($content['Charts'] as &$myChart )
+	foreach ($content['Charts'] as $myChartID => &$myChart )
 	{
 		// Only process if chart is enabled
 		if ( isset($myChart['chart_enabled']) && $myChart['chart_enabled'] == 1 )
 		{
+			// Set Chart ID
+			$myChart['CHART_ID'] = $myChartID;
+
 			// --- Set display name for chart type
 			switch($myChart['chart_type'])
 			{

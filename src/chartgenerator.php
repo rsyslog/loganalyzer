@@ -32,16 +32,17 @@
 */
 
 // *** Default includes	and procedures *** //
-define('IN_PHPLOGCON', true);
+if ( !defined('IN_PHPLOGCON') )
+	define('IN_PHPLOGCON', true);
 $gl_root_path = './';
 
 // Now include necessary include files!
-include($gl_root_path . 'include/functions_common.php');
-include($gl_root_path . 'include/functions_frontendhelpers.php');
-include($gl_root_path . 'include/functions_filters.php');
+include_once($gl_root_path . 'include/functions_common.php');
+include_once($gl_root_path . 'include/functions_frontendhelpers.php');
+include_once($gl_root_path . 'include/functions_filters.php');
 
 // Include LogStream facility
-include($gl_root_path . 'classes/logstream.class.php');
+include_once($gl_root_path . 'classes/logstream.class.php');
 
 InitPhpLogCon();
 InitSourceConfigs();
@@ -465,8 +466,8 @@ if ( $content['error_occured'] )
 // --- 
 
 // --- Output the image
-//$graph->Stroke(); 
-$graph->StrokeCSIM(); 
+//$graph->Stroke();
+$graph->StrokeCSIM( basename(__FILE__), '', 0); 
 // --- 
 
 ?>
