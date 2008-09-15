@@ -538,7 +538,7 @@ class LogStreamPDO extends LogStream {
 						$this->_logStreamConfigObj->DBType == DB_PGSQL )
 				{
 					// Helper variable for the select statement
-					$mySelectFieldName = $mySelectFieldName . "Grouped";
+					$mySelectFieldName = $mySelectFieldName . "grouped";
 					$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
 				}
 				else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
@@ -550,10 +550,10 @@ class LogStreamPDO extends LogStream {
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
 						$myDBQueryFieldName . ", " . 
-						"count(" . $myDBFieldName . ") as TotalCount " . 
+						"count(" . $myDBFieldName . ") as totalcount " . 
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
 						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY TotalCount DESC"; 
+						" ORDER BY totalcount DESC"; 
 			// Append LIMIT in this case!
 			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
 							$this->_logStreamConfigObj->DBType == DB_PGSQL )
@@ -574,12 +574,18 @@ class LogStreamPDO extends LogStream {
 			$iCount = 0;
 			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
 			{
-				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
-				$iCount++;
+				if ( isset($myRow[$mySelectFieldName]) )
+				{
+					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
+					$iCount++;
+				}
 			}
 
 			// return finished array
-			return $aResult;
+			if ( count($aResult) > 0 )
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
 		}
 		else
 		{

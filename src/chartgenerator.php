@@ -44,6 +44,9 @@ include_once($gl_root_path . 'include/functions_filters.php');
 // Include LogStream facility
 include_once($gl_root_path . 'classes/logstream.class.php');
 
+// Include basic jpgraph lib
+require_once ($gl_root_path . "classes/jpgraph/jpgraph.php");
+
 InitPhpLogCon();
 InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
@@ -124,9 +127,6 @@ if ( !$content['error_occured'] )
 {
 	if ( isset($content['Sources'][$currentSourceID]) ) 
 	{
-		// Include basic files needed
-		require_once ($gl_root_path . "classes/jpgraph/jpgraph.php");
-
 		// Obtain and get the Config Object
 		$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
@@ -140,7 +140,7 @@ if ( !$content['error_occured'] )
 			$chartData = $stream->GetCountSortedByField($content['chart_field'], $content['chart_fieldtype'], $content['maxrecords']);
 
 			// If data is valid, we have an array!
-			if ( is_array($chartData) )
+			if ( is_array($chartData) && count($chartData) > 0 )
 			{
 				// Create Y array!
 				foreach( $chartData as $myKey => $myData)
@@ -438,21 +438,15 @@ if ( !$content['error_occured'] )
 
 if ( $content['error_occured'] )
 {
-	// QUICK AND DIRTY!
+	// Use JpGraph to display errors!
+	$myError = new JpGraphErrObjectImg();
+	$myError->SetTitle($content['LN_GEN_ERRORDETAILS']);
+	$myError->Raise($content['error_details'], true);
+	exit;
+
+/*	// QUICK AND DIRTY!
 	$myImage = imagecreatetruecolor( $content['chart_width'], $content['chart_width']);
-
-/*	// create basic colours
-	$red = ImageColorAllocate($myImage, 255, 0, 0); 
-	$green = ImageColorAllocate($myImage, 0, 255, 0);
-	$gray = ImageColorAllocate($myImage, 128, 128, 128);
-	$black = ImageColorAllocate($myImage, 0, 0, 0);
-	$white = ImageColorAllocate($myImage, 255, 255, 255);
-
-	// Fill image with colour, and create a border
-	imagerectangle( $myImage, 0, 0, $content['chart_width']-1, $content['chart_width']-1, $gray );
-	imagefill( $myImage, 1, 1, $white );
-*/
-
+	
 	$text_color = imagecolorallocate($myImage, 255, 0, 0);
 	imagestring($myImage, 3, 10, 10, $content['LN_GEN_ERRORDETAILS'], $text_color);
 	imagestring($myImage, 3, 10, 25, $content['error_details'], $text_color);
@@ -460,8 +454,7 @@ if ( $content['error_occured'] )
 	header ("Content-type: image/png");
 	imagepng($myImage);		// Outputs the image to the browser
 	imagedestroy($myImage); // Clean Image resource
-
-	exit;
+*/
 }
 // --- 
 

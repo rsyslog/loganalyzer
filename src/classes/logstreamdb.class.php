@@ -552,7 +552,10 @@ class LogStreamDB extends LogStream {
 				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
 
 			// return finished array
-			return $aResult;
+			if ( count($aResult) > 0 )
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
 		}
 		else
 		{
