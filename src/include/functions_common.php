@@ -203,6 +203,11 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["winsyslog"]['type'] = "winsyslog";
 	$content['LOGLINETYPES']["winsyslog"]['DisplayName'] = "Adiscon WinSyslog";
 	if ( $selectedType == $content['LOGLINETYPES']["winsyslog"]['type'] ) { $content['LOGLINETYPES']["winsyslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["winsyslog"]['selected'] = ""; }
+
+	// Misc logline Types
+	$content['LOGLINETYPES']["misc"]['type'] = "misc";
+	$content['LOGLINETYPES']["misc"]['DisplayName'] = "Miscellaneous logfiles";
+	if ( $selectedType == $content['LOGLINETYPES']["misc"]['type'] ) { $content['LOGLINETYPES']["misc"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["misc"]['selected'] = ""; }
 }
 
 function CreateSourceTypesList( $selectedSource )

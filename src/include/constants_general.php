@@ -178,6 +178,7 @@ define('IUT_IMAPProbe', '21');
 define('IUT_NNTPProbe', '22');
 define('IUT_WEVTMONV2', '23');
 define('IUT_SMTPLISTENER', '24');
+define('IUT_APACHELOG', '10001');
 $msgtype_colors[IUT_Unknown] = "#D0FBDC";
 $msgtype_colors[IUT_Syslog] = "#D0FBF1";
 $msgtype_colors[IUT_Heartbeat] = "#D0EEFB";
@@ -200,6 +201,7 @@ $msgtype_colors[IUT_IMAPProbe] = "#D0FBE8";
 $msgtype_colors[IUT_NNTPProbe] = "#D0F7FB";
 $msgtype_colors[IUT_WEVTMONV2] = "#CCE4D2";
 $msgtype_colors[IUT_SMTPLISTENER] = "#CCE4DE";
+$msgtype_colors[IUT_APACHELOG] = "#E1FBD0";
 // --- 
 
 ?>
