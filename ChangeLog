@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 2.5.8 (devel), 2008-09-16
+- Added Bitstream Vera Fonts into the package which will be used by the
+  chart generator. So there won't be a problem of missing truetype fonts
+  anymore. 
+- Tweaked the visual appereance of all chart types.
+---------------------------------------------------------------------------
 Version 2.5.7 (devel), 2008-09-15
 - Added Statistics page for chart generation. The following charts are 
   possible right now: Pie, bars vertical and bars horicontal. 
