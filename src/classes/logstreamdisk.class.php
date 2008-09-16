@@ -606,7 +606,6 @@ class LogStreamDisk extends LogStream {
 					else // Just copy the value!
 						$myFieldData = $logArray[$szFieldId];
 
-
 					if ( isset($aResult[ $myFieldData ]) )
 						$aResult[ $myFieldData ]++;
 					else
@@ -627,7 +626,8 @@ class LogStreamDisk extends LogStream {
 			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
 
 			// Sort Array, so the highest count comes first!
-			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
+			arsort($aResult);
+//			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
 
 			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
 			{
