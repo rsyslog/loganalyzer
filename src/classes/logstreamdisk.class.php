@@ -638,7 +638,10 @@ class LogStreamDisk extends LogStream {
 			}
 
 			// finally return result!
-			return $aResult;
+			if ( count($aResult) > 0 ) 
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
 		}
 		else
 			return ERROR_NOMORERECORDS;
