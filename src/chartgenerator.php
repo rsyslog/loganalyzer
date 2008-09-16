@@ -184,30 +184,27 @@ if ( !$content['error_occured'] )
 					$graph->tabtitle->SetPos('left'); 
 					
 					// Set Graph footer
-					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 8); 
-					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
+					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+//					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
 //					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
 //					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 8); 
 //					$graph->footer->right->SetColor("darkred");
 
-					// Setup font for axis
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,8);
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
-
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
+					// Set Fonts for graph!
+					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,8);
+					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
+					$graph->legend->SetFont(FF_VERA,FS_NORMAL,8);
 
 					// Create
 					$p1 = new PiePlot3D($YchartData);
 					$p1->SetLegends($XchartData);
 					$p1->SetEdge('#333333', 1);
 					$p1->SetTheme('earth'); /*   "earth"    * "pastel"    * "sand"    * "water" */
-//					$targ=array("pie3d_csimex1.php?v=1","pie3d_csimex1.php?v=2","pie3d_csimex1.php?v=3",
-//								"pie3d_csimex1.php?v=4","pie3d_csimex1.php?v=5","pie3d_csimex1.php?v=6");
-//					$alts=array("val=%d","val=%d","val=%d","val=%d","val=%d","val=%d");
 					$p1->SetCSIMTargets($chartImageMapLinks, $chartImageMapAlts, $chartImageMapTargets);
 
 					// Set label format
@@ -252,16 +249,28 @@ if ( !$content['error_occured'] )
 					// Setup X-AXIS
 //					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,10);
 					$graph->xaxis->SetTickLabels($XchartData);
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,8);
-					$graph->xaxis->SetLabelAngle(0);
+					
+					if ( count($XchartData) > 5 ) 
+					{
+						$graph->SetMargin(60,20,30,80);	// Adjust margin area
+						$graph->xaxis->SetLabelAngle(45);
+						$graph->xaxis->SetLabelMargin(2);
+					}
+					else
+						$graph->xaxis->SetLabelAngle(0);
+
+//					$graph->xaxis->scale->SetGrace(30); // So the value is readable
 
 					// Setup Y-AXIS
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 					$graph->yaxis->scale->SetGrace(10); // So the value is readable
 //					$graph->yaxis->SetLabelFormat('%d %%'); 
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
+
+					// Set Fonts for graph!
+					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,7);
+					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
@@ -269,10 +278,10 @@ if ( !$content['error_occured'] )
 					$graph->tabtitle->SetPos('left'); 
 
 					// Set Graph footer
-					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 8); 
-					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
+					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+//					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -329,7 +338,6 @@ if ( !$content['error_occured'] )
 
 					// Setup X-AXIS
 					$graph->xaxis->SetTickLabels($XchartData);
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,8);
 					$graph->xaxis->SetLabelAngle(0);
 //					$graph->xaxis->SetLabelAlign('center','top');
 					$graph->xaxis->SetPos('min');
@@ -337,7 +345,6 @@ if ( !$content['error_occured'] )
 					$graph->xaxis->SetLabelAlign('right','center');
 
 					// Setup Y-AXIS
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 					$graph->yaxis->scale->SetGrace(20); // So the value is readable
 					$graph->yaxis->SetLabelAlign('center','top');
 					$graph->yaxis->SetLabelFormat('%d');
@@ -346,9 +353,14 @@ if ( !$content['error_occured'] )
 //					$graph->yaxis->SetTitleSide(SIDE_RIGHT);
 //					$graph->yaxis->SetTitleMargin(35);
 					$graph->yaxis->SetPos('max');
+					$graph->yaxis->SetTextLabelInterval(2);
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
+
+					// Set Fonts for graph!
+					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,7);
+					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
@@ -357,10 +369,10 @@ if ( !$content['error_occured'] )
 					$graph->tabtitle->SetTabAlign('right');
 
 					// Set Graph footer
-					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 8); 
-					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
+					$graph->footer->left->Set ("phpLogCon v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
+					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+//					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
+//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
