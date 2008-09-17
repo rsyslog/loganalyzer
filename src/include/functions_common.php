@@ -464,7 +464,7 @@ function CheckAndSetRunMode()
 
 function InitRuntimeInformations()
 {
-	global $content;
+	global $gl_root_path, $content;
 
 	// Enable GZIP Compression if enabled!
 	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
@@ -475,6 +475,13 @@ function InitRuntimeInformations()
 	}
 	else
 		$content['GzipCompressionEnmabled'] = "no";
+
+	// --- Check and Set manual link
+	if ( is_dir($gl_root_path . "doc") )
+		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc";
+	else
+		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
+	// ---
 }
 
 function CreateDebugModes()
