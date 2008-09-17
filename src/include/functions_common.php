@@ -478,7 +478,7 @@ function InitRuntimeInformations()
 
 	// --- Check and Set manual link
 	if ( is_dir($gl_root_path . "doc") )
-		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc";
+		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc/manual.html";
 	else
 		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
 	// ---
