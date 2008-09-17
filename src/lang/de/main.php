@@ -171,6 +171,15 @@ $content['LN_FIELDS_MESSAGE'] = "Meldung";
 	$content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
 	$content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
 	$content['LN_FIELDS_EVENTUSER'] = "Event User";
+	$content['LN_FIELDS_WEBLOG_USER'] = "Remote User";
+	$content['LN_FIELDS_WEBLOG_METHOD'] = "Method";
+	$content['LN_FIELDS_WEBLOG_URL'] = "URL";
+	$content['LN_FIELDS_WEBLOG_QUERYSTRING'] = "Querystring";
+	$content['LN_FIELDS_WEBLOG_PVER'] = "Version";
+	$content['LN_FIELDS_WEBLOG_STATUS'] = "Status";
+	$content['LN_FIELDS_WEBLOG_BYTESSEND'] = "Bytes Send";
+	$content['LN_FIELDS_WEBLOG_REFERER'] = "Referer";
+	$content['LN_FIELDS_WEBLOG_USERAGENT'] = "User Agent";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Datenbank Host";

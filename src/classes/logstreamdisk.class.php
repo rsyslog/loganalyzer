@@ -233,18 +233,18 @@ class LogStreamDisk extends LogStream {
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
 		
-		// Only PARSE on success!
-		if ( $ret == SUCCESS && $bParseMessage) 
-		{
-			// Line Parser Hook here
-			$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
-			
-			// Run optional Message Parsers now
-			$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+			// Only PARSE on success!
+			if ( $ret == SUCCESS && $bParseMessage) 
+			{
+				// Line Parser Hook here
+				$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				
+				// Run optional Message Parsers now
+				$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
-			// Set uID to the PropertiesOut!
-			$arrProperitesOut[SYSLOG_UID] = $uID;
-		}
+				// Set uID to the PropertiesOut!
+				$arrProperitesOut[SYSLOG_UID] = $uID;
+			}
 
 		// Loop until the filter applies, or another error occurs. 
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
@@ -606,7 +606,6 @@ class LogStreamDisk extends LogStream {
 					else // Just copy the value!
 						$myFieldData = $logArray[$szFieldId];
 
-
 					if ( isset($aResult[ $myFieldData ]) )
 						$aResult[ $myFieldData ]++;
 					else
@@ -627,7 +626,8 @@ class LogStreamDisk extends LogStream {
 			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
 
 			// Sort Array, so the highest count comes first!
-			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
+			arsort($aResult);
+//			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
 
 			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
 			{
@@ -638,7 +638,10 @@ class LogStreamDisk extends LogStream {
 			}
 
 			// finally return result!
-			return $aResult;
+			if ( count($aResult) > 0 ) 
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
 		}
 		else
 			return ERROR_NOMORERECORDS;
@@ -852,7 +855,7 @@ class LogStreamDisk extends LogStream {
 
 					if ( !$bEval ) 
 					{
-						// unmatching filter, rest property array
+						// unmatching filter, reset property array
 						foreach ( $this->_arrProperties as $property ) 
 							$arrProperitesOut[$property] = '';
 

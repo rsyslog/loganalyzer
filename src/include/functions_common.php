@@ -203,6 +203,11 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["winsyslog"]['type'] = "winsyslog";
 	$content['LOGLINETYPES']["winsyslog"]['DisplayName'] = "Adiscon WinSyslog";
 	if ( $selectedType == $content['LOGLINETYPES']["winsyslog"]['type'] ) { $content['LOGLINETYPES']["winsyslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["winsyslog"]['selected'] = ""; }
+
+	// Misc logline Types
+	$content['LOGLINETYPES']["misc"]['type'] = "misc";
+	$content['LOGLINETYPES']["misc"]['DisplayName'] = "Miscellaneous logfiles";
+	if ( $selectedType == $content['LOGLINETYPES']["misc"]['type'] ) { $content['LOGLINETYPES']["misc"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["misc"]['selected'] = ""; }
 }
 
 function CreateSourceTypesList( $selectedSource )
@@ -459,7 +464,7 @@ function CheckAndSetRunMode()
 
 function InitRuntimeInformations()
 {
-	global $content;
+	global $gl_root_path, $content;
 
 	// Enable GZIP Compression if enabled!
 	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
@@ -470,6 +475,13 @@ function InitRuntimeInformations()
 	}
 	else
 		$content['GzipCompressionEnmabled'] = "no";
+
+	// --- Check and Set manual link
+	if ( is_dir($gl_root_path . "doc") )
+		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc";
+	else
+		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
+	// ---
 }
 
 function CreateDebugModes()
@@ -935,6 +947,14 @@ function GetEventTime($szTimStr)
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
+	// Sample: 16/Sep/2008:13:37:47 +0200
+	else if ( preg_match("/([0-9]{1,2})\/(...)\/([0-9]{1,4}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) \+([0-9]{1,4})/", $szTimStr, $out ) )
+	{
+		// Apache Logfile typical timestamp
+		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], GetMonthFromString($out[2]), $out[1], $out[3]);
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // > WTF TODO! > $out[7]
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	else
