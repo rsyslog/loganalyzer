@@ -65,6 +65,7 @@ $content['LN_GEN_PREPENDTITLE'] = "Prepend this string in title";
 $content['LN_GEN_USETODAY'] = "Use Today and Yesterday in timefields";
 $content['LN_GEN_DETAILPOPUPS'] = "Use Popup to display the full messagedetails";
 $content['LN_GEN_MSGCHARLIMIT'] = "Character limit of the message in main view";
+$content['LN_GEN_STRCHARLIMIT'] = "Character display limit for all string type fields";
 $content['LN_GEN_ENTRIESPERPAGE'] = "Number of entries per page";
 $content['LN_GEN_AUTORELOADSECONDS'] = "Enable autoreload after seconds";
 $content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";

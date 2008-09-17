@@ -1191,6 +1191,7 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true );
+	WriteConfigValue( "ViewStringCharacterLimit", true );
 	WriteConfigValue( "ViewEntriesPerPage", true );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
 
@@ -1225,6 +1226,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", false, $content['SESSION_USERID'] );
 
