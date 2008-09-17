@@ -552,16 +552,27 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
-							
+							// WebServer Type fields
+							else if ( $mycolkey == SYSLOG_WEBLOG_STATUS ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_WEBLOG_STATUS, 'LN_FIELDS_WEBLOG_STATUS', false);
+							}
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
-							// Kindly Copy Value first!
-							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
-							$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = $logArray[$mycolkey]; // helper variable used for Popups!
+							// Set some basic variables first
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];		// May contain the field value trunscated 
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = $logArray[$mycolkey];	// helper variable used for Popups!
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue'] = str_replace(' ', '+', $logArray[$mycolkey]); // Convert into filter format for submenus
 
-							// Convert into filter format for submenus
-							$szFilterEncodedStr = str_replace(' ', '+', $logArray[$mycolkey]);
+							// --- Check for reached string character limit
+							if ( $mycolkey != SYSLOG_MESSAGE ) 
+							{
+								if ( $myStrCharLimit > 0 )
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . " ..." : $logArray[$mycolkey]);
+							}
+							// --- 
 
 							// Special Handling for the Syslog Message!
 							if ( $mycolkey == SYSLOG_MESSAGE )
@@ -656,7 +667,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+syslogtag%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+syslogtag%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -664,7 +675,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -683,7 +694,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+source%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+source%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -691,7 +702,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -706,7 +717,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogtype%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogtype%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -714,7 +725,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -733,7 +744,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogsource%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogsource%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -741,7 +752,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
@@ -760,7 +771,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								if ( strlen($content['searchstr']) > 0 )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventuser%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
@@ -768,19 +779,48 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 								// More Menu entries
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventuser%3A%3D' . urlencode($szFilterEncodedStr) . '&search=Search' . $content['additional_url_sourceonly'], 
+									'ButtonUrl' => '?filter=eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
 									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
-							
-							// --- Check for reached string character limit
-							if ( $mycolkey != SYSLOG_MESSAGE ) 
+							// WebServer Type fields
+							else if ( $mycolkey == SYSLOG_WEBLOG_USER ) 
 							{
-								if ( $myStrCharLimit > 0 )
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . " ..." : $logArray[$mycolkey]);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USER, 'LN_FIELDS_WEBLOG_USER', false);
 							}
-							// --- 
+							else if ( $mycolkey == SYSLOG_WEBLOG_METHOD ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_METHOD, 'LN_FIELDS_WEBLOG_USERAGENT', false);
+							}
+							else if ( $mycolkey == SYSLOG_WEBLOG_URL ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_URL, 'LN_FIELDS_WEBLOG_URL', false);
+							}
+							else if ( $mycolkey == SYSLOG_WEBLOG_QUERYSTRING ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_QUERYSTRING, 'LN_FIELDS_WEBLOG_QUERYSTRING', false);
+							}
+							else if ( $mycolkey == SYSLOG_WEBLOG_PVER ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_PVER, 'LN_FIELDS_WEBLOG_PVER', false);
+							}
+							else if ( $mycolkey == SYSLOG_WEBLOG_REFERER ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_REFERER, 'LN_FIELDS_WEBLOG_REFERER', true);
+							}
+							else if ( $mycolkey == SYSLOG_WEBLOG_USERAGENT ) 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USERAGENT, 'LN_FIELDS_WEBLOG_USERAGENT', true);
+							}
+
 						}
 					}
 				}
@@ -934,7 +974,46 @@ function PrepareStringForSearch($myString)
 	return str_replace(" ", "+", $myString);
 }
 
+function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFieldDisplayNameID, $searchOnline = false)
+{
+	global $content; 
 
+	// Set OnClick Menu for SYSLOG_SYSLOGTAG
+	$fieldGridItem['hasbuttons'] = true;
+	
+	// Set FieldSearch Value
+	if ( $fieldType == FILTER_TYPE_STRING) 
+		$szEncodedFieldValue = urlencode($fieldGridItem['encodedfieldvalue']);
+	else
+		$szEncodedFieldValue = $fieldGridItem['fieldvalue'];
+
+	// Menu Option to append filter
+	if ( strlen($content['searchstr']) > 0 )
+	{
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']), 
+			'IconSource' => $content['MENU_BULLET_GREEN']
+			);
+	}
+	
+	// More Menu entries
+	$fieldGridItem['buttons'][] = array( 
+		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']), 
+		'IconSource' => $content['MENU_BULLET_BLUE']
+		);
+
+	// Add Online Search Button
+	if ( $searchOnline )
+	{
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $szSearchFieldName . '&q=' . $szEncodedFieldValue, 
+			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content[$szFieldDisplayNameID] . " '" . $fieldGridItem['fieldvalue'] . "'", 
+			'IconSource' => $content['MENU_NETWORK']
+			);
+	}
+}
 // ---
 
 ?>

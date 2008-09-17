@@ -507,6 +507,86 @@ abstract class LogStream {
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_LASTX; 
 							break;
+						/* BEGIN WebLog based fields */
+						case SYSLOG_WEBLOG_USER: 
+							$tmpKeyName = SYSLOG_WEBLOG_USER; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case SYSLOG_WEBLOG_METHOD: 
+							$tmpKeyName = SYSLOG_WEBLOG_METHOD; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case SYSLOG_WEBLOG_URL: 
+							$tmpKeyName = SYSLOG_WEBLOG_URL; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+
+						case SYSLOG_WEBLOG_QUERYSTRING: 
+							$tmpKeyName = SYSLOG_WEBLOG_QUERYSTRING; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case SYSLOG_WEBLOG_PVER: 
+							$tmpKeyName = SYSLOG_WEBLOG_PVER; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case SYSLOG_WEBLOG_STATUS: 
+							$tmpKeyName = SYSLOG_WEBLOG_STATUS; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra numeric Check 
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+									else
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
+								}
+							}
+							else
+							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+									$tmpArray[FILTER_TMP_VALUE] = "";
+							}
+							// --- 
+							break;
+
+						case SYSLOG_WEBLOG_BYTESSEND: 
+							$tmpKeyName = SYSLOG_WEBLOG_BYTESSEND; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra numeric Check 
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+									else
+										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
+								}
+							}
+							else
+							{
+								// First set Filter Mode
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+									$tmpArray[FILTER_TMP_VALUE] = "";
+							}
+							// --- 
+							break;
+						case SYSLOG_WEBLOG_REFERER: 
+							$tmpKeyName = SYSLOG_WEBLOG_REFERER; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case SYSLOG_WEBLOG_USERAGENT: 
+							$tmpKeyName = SYSLOG_WEBLOG_USERAGENT; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						/* END WebLog based fields */
 						default:
 							$tmpFilterType = FILTER_TYPE_UNKNOWN;
 							break;
