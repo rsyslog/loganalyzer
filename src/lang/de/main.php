@@ -174,6 +174,7 @@ $content['LN_FIELDS_MESSAGE'] = "Meldung";
 	$content['LN_FIELDS_WEBLOG_USER'] = "Remote User";
 	$content['LN_FIELDS_WEBLOG_METHOD'] = "Method";
 	$content['LN_FIELDS_WEBLOG_URL'] = "URL";
+	$content['LN_FIELDS_WEBLOG_QUERYSTRING'] = "Querystring";
 	$content['LN_FIELDS_WEBLOG_PVER'] = "Version";
 	$content['LN_FIELDS_WEBLOG_STATUS'] = "Status";
 	$content['LN_FIELDS_WEBLOG_BYTESSEND'] = "Bytes Send";

@@ -942,6 +942,14 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
+	// Sample: 16/Sep/2008:13:37:47 +0200
+	else if ( preg_match("/([0-9]{1,2})\/(...)\/([0-9]{1,4}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) \+([0-9]{1,4})/", $szTimStr, $out ) )
+	{
+		// Apache Logfile typical timestamp
+		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], GetMonthFromString($out[2]), $out[1], $out[3]);
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // > WTF TODO! > $out[7]
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
 	else
 	{
 		$eventtime[EVTIME_TIMESTAMP] = 0;
