@@ -65,7 +65,8 @@ $CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informati
 // --- Default Frontend Options 
 $CFG['PrependTitle'] = "";					// If set, this	text will be prepended withint the title tag
 $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yesterday is displayed as "today" and "yesterday"
-$CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated.
+$CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated! 0 means NO trunscation.
+$CFG['ViewStringCharacterLimit'] = 30;		// Default character limit for all other string type fields before they get trunscated! 0 means NO trunscation.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
 $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Details for each syslog message on mouse over. 
 $CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens phplogcon the first time. 

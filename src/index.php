@@ -290,6 +290,11 @@ if ( isset($content['Sources'][$currentSourceID]) )
 //echo $content['main_currentpagenumber'];
 			// ---
 
+			// --- Obtain characters limits first!
+			$myMsgCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
+			$myStrCharLimit = GetConfigSetting("ViewStringCharacterLimit", 30, CFGLEVEL_USER);
+			// ---
+
 			//Loop through the messages!
 			do
 			{
@@ -551,8 +556,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
-							// kindly copy!
+							// Kindly Copy Value first!
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = $logArray[$mycolkey]; // helper variable used for Popups!
 
 							// Convert into filter format for submenus
 							$szFilterEncodedStr = str_replace(' ', '+', $logArray[$mycolkey]);
@@ -566,10 +572,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								// Set truncasted message for display
 								if ( isset($logArray[SYSLOG_MESSAGE]) )
 								{
-									// Copy tmp
-									$tmpCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
-
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $tmpCharLimit ? substr($logArray[SYSLOG_MESSAGE], 0, $tmpCharLimit) . " ..." : $logArray[SYSLOG_MESSAGE]);
+									if ( $myMsgCharLimit > 0 )
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[SYSLOG_MESSAGE]) > $myMsgCharLimit ? substr($logArray[SYSLOG_MESSAGE], 0, $myMsgCharLimit) . " ..." : $logArray[SYSLOG_MESSAGE]);
+									else
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[SYSLOG_MESSAGE]);
 
 									// Enable LINK property! for this field
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['ismessagefield'] = true;
@@ -625,7 +631,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 											// ---
 										}
 										else // Just set field value
-											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = $myfield['fieldvalue'];
+											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = isset($myfield['rawfieldvalue']) ? $myfield['rawfieldvalue'] : $myfield['fieldvalue'];
 									}
 								}
 
@@ -767,6 +773,14 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'IconSource' => $content['MENU_BULLET_BLUE']
 									);
 							}
+							
+							// --- Check for reached string character limit
+							if ( $mycolkey != SYSLOG_MESSAGE ) 
+							{
+								if ( $myStrCharLimit > 0 )
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . " ..." : $logArray[$mycolkey]);
+							}
+							// --- 
 						}
 					}
 				}
@@ -919,6 +933,8 @@ function PrepareStringForSearch($myString)
 {
 	return str_replace(" ", "+", $myString);
 }
+
+
 // ---
 
 ?>
