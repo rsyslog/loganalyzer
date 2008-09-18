@@ -136,9 +136,11 @@ abstract class LogStreamConfig {
 		{
 			foreach( $this->_msgParserObjList as $myMsgParser )
 			{
-				// Perform Parsing, and return if was successfull! Otherwise the next Parser will be called. 
-				if ( $myMsgParser->ParseMsg($szMsg, $arrArguments) == SUCCESS )
-					return SUCCESS;
+				// Perform Parsing, and return if was successfull or the message needs to be skipped!
+				// Otherwise the next Parser will be called. 
+				$ret = $myMsgParser->ParseMsg($szMsg, $arrArguments);
+				if ( $ret == SUCCESS || $ret == ERROR_MSG_SKIPMESSAGE )
+					return $ret;
 			}
 		}
 

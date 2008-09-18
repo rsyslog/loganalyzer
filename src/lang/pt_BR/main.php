@@ -91,6 +91,7 @@ $content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 	$content['LN_GEN_ERROR_EXPORING'] = "Error exporting data";
 	$content['LN_GEN_ERROR_INVALIDEXPORTTYPE'] = "Invalid Export format selected, or other parameters were wrong.";
 	$content['LN_GEN_ERROR_SOURCENOTFOUND'] = "The Source with ID '%1' could not be found.";
+	$content['LN_GEN_MOREINFORMATION'] = "More Information";
 
 
 // Topmenu Entries

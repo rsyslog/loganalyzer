@@ -519,8 +519,13 @@ function InitFrontEndVariables()
 	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
 	$content['MENU_TEXT_FIND'] = $content['BASEPATH'] . "images/icons/text_find.png";
+	$content['MENU_EARTH_FIND'] = $content['BASEPATH'] . "images/icons/earth_find.png";
+	$content['MENU_FIND'] = $content['BASEPATH'] . "images/icons/find.png";
+	$content['MENU_NEXT_FIND'] = $content['BASEPATH'] . "images/icons/find_next.png";
 	$content['MENU_NETWORK'] = $content['BASEPATH'] . "images/icons/earth_network.png";
 	$content['MENU_HELP'] = $content['BASEPATH'] . "images/icons/help.png";
+	$content['MENU_HELP_BLUE'] = $content['BASEPATH'] . "images/icons/help2.png";
+	$content['MENU_HELP_ORANGE'] = $content['BASEPATH'] . "images/icons/help3.png";
 	$content['MENU_KB'] = $content['BASEPATH'] . "images/icons/books.png";
 	$content['MENU_DOCUMENTVIEW'] = $content['BASEPATH'] . "images/icons/document_view.png";
 	$content['MENU_DATAEDIT'] = $content['BASEPATH'] . "images/icons/data_edit.png";
@@ -1051,6 +1056,8 @@ function AddContextLinks(&$sourceTxt)
 */
 function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 {
+	global $content;
+
 	// Create string
 	$szReturn  = $prepend;
 	if ( strlen($szIP) > 0 )
@@ -1070,9 +1077,20 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 		else
 			// Normal LINK!
 			$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
+
+		// Add InfoSearch Link
+		$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 	}
 	else if ( strlen($szDomain) > 0 ) 
+	{
 		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
+
+		// Add InfoSearch Link
+		$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
+
+	}
+
+	// Append the append string now
 	$szReturn .= $append;
 
 	// return result

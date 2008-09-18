@@ -237,10 +237,14 @@ class LogStreamDisk extends LogStream {
 			if ( $ret == SUCCESS && $bParseMessage) 
 			{
 				// Line Parser Hook here
-				$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				$retParser = $this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 				
 				// Run optional Message Parsers now
-				$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				
+				// Check if we have to skip the message!
+				if ( $retParser == ERROR_MSG_SKIPMESSAGE )
+					$ret = $retParser;
 
 				// Set uID to the PropertiesOut!
 				$arrProperitesOut[SYSLOG_UID] = $uID;
