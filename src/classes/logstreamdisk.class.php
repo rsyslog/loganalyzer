@@ -259,7 +259,9 @@ class LogStreamDisk extends LogStream {
 				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
 				$content['logstream_warning'] = "false";
 				$content['logstream_warning_details'] = $content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'];
-
+				$content['logstream_warning_code'] = ERROR_FILE_NOMORETIME;
+				
+				// Return error code 
 				return ERROR_FILE_NOMORETIME;
 			}
 

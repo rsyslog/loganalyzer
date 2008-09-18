@@ -1341,6 +1341,10 @@ function GetErrorMessage($errorCode)
 
 		case ERROR_CHARTS_NOTCONFIGURED:
 			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];
+		case ERROR_FILE_NOMORETIME:
+			return $content['LN_ERROR_FILE_NOMORETIME'];
+		case ERROR_SOURCENOTFOUND:
+			return $content['LN_GEN_ERROR_SOURCENOTFOUND'];
 
 		default:
 			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );

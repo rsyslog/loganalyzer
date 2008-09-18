@@ -369,7 +369,13 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:600px">
 		<div class="PriorityError">{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</div>
-		<p>{detailederror}</p>
+		<p align="left">{detailederror}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
 		</div>
 	<br><br>
 </center>
@@ -382,6 +388,12 @@
 	<div class="table_with_border_second ErrorMsg" style="width:600px">
 		<div class="PriorityWarning">{LN_WARNING_LOGSTREAMTITLE}</div>
 		<p align="left">{logstream_warning_details}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{logstream_warning_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
 		</div>
 	<br><br>
 </center>

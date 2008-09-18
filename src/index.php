@@ -268,6 +268,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			// This will disable to Main SyslogView and show an error message
 			$content['syslogmessagesenabled'] = "false";
 			$content['detailederror'] = $content['LN_ERROR_NORECORDS'];
+			$content['detailederror_code'] = ERROR_NOMORERECORDS;
 		}
 		// ---
 
@@ -934,6 +935,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 		// This will disable to Main SyslogView and show an error message
 		$content['syslogmessagesenabled'] = "false";
 		$content['detailederror'] = GetErrorMessage($res);
+		$content['detailederror_code'] = $res;
 
 		if ( isset($extraErrorDescription) )
 			$content['detailederror'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
@@ -946,6 +948,7 @@ else
 {
 	$content['syslogmessagesenabled'] = "false";
 	$content['detailederror'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_SOURCENOTFOUND'], $currentSourceID);
+	$content['detailederror_code'] = ERROR_SOURCENOTFOUND;
 }
 // --- 
 
