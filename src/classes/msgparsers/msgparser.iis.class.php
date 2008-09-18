@@ -63,11 +63,32 @@ class MsgParser_iis extends MsgParser {
 	{
 		global $content, $fields; 
 		
+//		$iSharpPos = strpos($szMsg, "#");
+//		if ( $iSharpPos !== false && $iSharpPos == 0 )
+//			return ERROR_MSG_SKIPMESSAGE; 
+		
 		// Special case here, if loglines start with #, they are comments and have to be skipped!
-		$iSharpPos = strpos($szMsg, "#");
-		if ( $iSharpPos !== false && $iSharpPos == 0 )
-			return ERROR_MSG_SKIPMESSAGE; 
+		if ( ($iSharpPos = strpos($szMsg, "#")) !== false && $iSharpPos == 0 )
+		{
+			// Only init fields then 
+			// Set generic properties
+			$arrArguments[SYSLOG_DATE] = "";
+			$arrArguments[SYSLOG_HOST] = "";
 
+			// Set weblog specific properties!
+			$arrArguments[SYSLOG_WEBLOG_METHOD] = "";
+			$arrArguments[SYSLOG_WEBLOG_URL] = "";
+			$arrArguments[SYSLOG_WEBLOG_QUERYSTRING] = "";
+			$arrArguments[SYSLOG_WEBLOG_USER] = "";
+			$arrArguments[SYSLOG_WEBLOG_PVER] = "";
+			$arrArguments[SYSLOG_WEBLOG_USERAGENT] = "";
+			$arrArguments[SYSLOG_WEBLOG_REFERER] = "";
+			$arrArguments[SYSLOG_WEBLOG_STATUS] = "";
+			$arrArguments[SYSLOG_WEBLOG_BYTESSEND] = "";
+
+			// Set msg to whole logline 
+			$arrArguments[SYSLOG_MESSAGE] = $szMsg;
+		}
 		// LogFormat: date time cs-method cs-uri-stem cs-uri-query cs-username c-ip cs-version cs(User-Agent) cs(Referer) sc-status sc-bytes 
 		// Sample: 2008-09-17 00:15:24 GET /Include/MyStyleV2.css - - 208.111.154.249 HTTP/1.0 Mozilla/5.0+(X11;+U;+Linux+i686+(x86_64);+en-US;+rv:1.8.1.11)+Gecko/20080109+(Charlotte/0.9t;+http://www.searchme.com/support/) http://www.adiscon.com/Common/en/News/MWCon-2005-09-12.php 200 1812
 		if ( preg_match('/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?) (.|.*?)$/', $szMsg, $out ) )
@@ -81,17 +102,9 @@ class MsgParser_iis extends MsgParser {
 
 			// Set weblog specific properties!
 			$arrArguments[SYSLOG_WEBLOG_METHOD] = $out[2];
-//			$arrArguments[SYSLOG_WEBLOG_USER] = $out[3];
-			if ( strpos($out[3], "?") === false ) 
-			{
-				$arrArguments[SYSLOG_WEBLOG_URL] = $out[3];
-				$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= "";
-			}
-			else
-			{
-				$arrArguments[SYSLOG_WEBLOG_URL]		= substr( $out[6], 0, strpos($out[3], "?"));
-				$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= substr( $out[6], strpos($out[3], "?")+1 );
-			}
+			$arrArguments[SYSLOG_WEBLOG_URL] = $out[3];
+			$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= $out[4];
+			$arrArguments[SYSLOG_WEBLOG_USER] = $out[5];
 			$arrArguments[SYSLOG_WEBLOG_PVER] = $out[7];
 			$arrArguments[SYSLOG_WEBLOG_USERAGENT] = $out[8];
 			$arrArguments[SYSLOG_WEBLOG_REFERER] = $out[9];

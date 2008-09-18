@@ -770,6 +770,13 @@ class LogStreamDisk extends LogStream {
 										break;
 									}
 								}
+								else 
+								{
+									// Either filter value or property value was empty! 
+									// This means we have no match
+									$bEval = false;
+								}
+
 								break;
 							case FILTER_TYPE_NUMBER:
 								$bIsOrFilter = true; // Default is set to TRUE
