@@ -434,13 +434,13 @@ function InitPhpDebugMode()
 
 function CheckAndSetRunMode()
 {
-	global $content, $RUNMODE, $MaxExecutionTime;
+	global $content, $RUNMODE;
 	// Set to command line mode if argv is set! 
 	if ( !isset($_SERVER["GATEWAY_INTERFACE"]) )
 		$RUNMODE = RUNMODE_COMMANDLINE;
 	
 	// Obtain max_execution_time
-	$MaxExecutionTime = ini_get("max_execution_time");
+	$content['MaxExecutionTime'] = ini_get("max_execution_time");
 
 	// Define and Inits Syslog variables now!
 	define_syslog_variables();
@@ -481,6 +481,15 @@ function InitRuntimeInformations()
 		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc/manual.html";
 	else
 		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
+	// ---
+
+	// --- Try to extend the script timeout if possible!
+	$iTmp = GetConfigSetting("MiscMaxExecutionTime", 30, CFGLEVEL_GLOBAL);
+	if ( $iTmp != $content['MaxExecutionTime'] && $iTmp > 10 )
+	{	//Try to extend the runtime in this case!
+		@ini_set("max_execution_time", $iTmp);
+		$content['MaxExecutionTime'] = ini_get("max_execution_time");
+	}
 	// ---
 }
 
@@ -1102,11 +1111,11 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 */
 function ReverseResolveIP( $szIP, $prepend, $append )
 {
-	global $gl_starttime, $MaxExecutionTime;
+	global $gl_starttime, $content; 
 
 	// Substract 5 savety seconds!
 	$scriptruntime = intval(microtime_float() - $gl_starttime);
-	if ( $scriptruntime > ($MaxExecutionTime-5) )
+	if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
 		return "";
 
 	// Abort if these IP's are postet
@@ -1212,6 +1221,7 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "ViewStringCharacterLimit", true );
 	WriteConfigValue( "ViewEntriesPerPage", true );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
+	WriteConfigValue( "PopupMenuTimeout", true );
 
 	WriteConfigValue( "PrependTitle", true );
 	WriteConfigValue( "SearchCustomButtonCaption", true );
@@ -1224,6 +1234,7 @@ function SaveGeneralSettingsIntoDB()
 	// GLOBAL ONLY
 	WriteConfigValue( "DebugUserLogin", true );
 	WriteConfigValue( "MiscDebugToSyslog", true );
+	WriteConfigValue( "MiscMaxExecutionTime", true );
 }
 
 function SaveUserGeneralSettingsIntoDB()
@@ -1247,6 +1258,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "PopupMenuTimeout", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "PrependTitle", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SearchCustomButtonCaption", false, $content['SESSION_USERID'] );

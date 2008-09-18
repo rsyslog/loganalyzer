@@ -90,6 +90,13 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 	$content['LN_GEN_ERROR_SOURCENOTFOUND'] = "The Source with ID '%1' could not be found.";
 	$content['LN_GEN_MOREINFORMATION'] = "More Information";
 
+	$content['LN_FOOTER_PAGERENDERED'] = "Page rendered in";
+	$content['LN_FOOTER_DBQUERIES'] = "DB queries";
+	$content['LN_FOOTER_GZIPENABLED'] = "GZIP enabled";
+	$content['LN_FOOTER_SCRIPTTIMEOUT'] = "Script Timeout";
+	$content['LN_FOOTER_SECONDS'] = "seconds";
+	
+
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";
 $content['LN_MENU_SHOWEVENTS'] = "Show Events";

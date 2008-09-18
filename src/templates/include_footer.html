@@ -1,22 +1,25 @@
 
 	<table width="100%" border="0" cellspacing="1" cellpadding="0" class="mainfooter">
 	<tr>
-		<td align="center" class="line0">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2008)</td>
-		<td align="center" class="line1">
+		<td align="center" class="line0" valign="_top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2008)</td>
+		<td align="center" class="line1" valign="_top">
 			&nbsp;<a href="http://www.phplogcon.org" target="_blank">phpLogCon</A> Version {BUILDNUMBER}
 		</td>
-		<td align="center" class="line0">
+		<td align="center" class="line0" valign="_top">
 			&nbsp;<B>Partners:</B> 
  		 </td>
-		<td align="center" class="line1">
+		<td align="center" class="line1" valign="_top">
 			&nbsp;<a href="http://www.rsyslog.com" target="_blank">Rsyslog</a> | 
 			&nbsp;<a href="http://www.winsyslog.com" target="_blank">WinSyslog</a>
  		 </td>
 		<!-- IF ShowPageRenderStats="true" -->
-		<td align="center" class="line2">
-			Page rendered: <B>{PAGERENDERTIME}</B> seconds
-			&nbsp;|&nbsp;DB queries: <B>{TOTALQUERIES}</B>
-			&nbsp;|&nbsp;GZIP enabled: <B>{GzipCompressionEnmabled}</B>
+		<td align="center" class="line2" valign="_top">
+			<small>
+			{LN_FOOTER_PAGERENDERED}: <B>{PAGERENDERTIME}</B> {LN_FOOTER_SECONDS}
+			&nbsp;|&nbsp;{LN_FOOTER_DBQUERIES}: <B>{TOTALQUERIES}</B>
+			&nbsp;|&nbsp;{LN_FOOTER_GZIPENABLED}: <B>{GzipCompressionEnmabled}</B>
+			&nbsp;|&nbsp;{LN_FOOTER_SCRIPTTIMEOUT}: <B>{MaxExecutionTime}</B> {LN_FOOTER_SECONDS}
+			</small>
  		 </td>
 		<!-- ENDIF ShowPageRenderStats="true" -->
 	 </tr>

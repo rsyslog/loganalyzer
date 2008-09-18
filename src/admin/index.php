@@ -140,8 +140,10 @@ if ( isset($_POST['op']) )
 			// Read Text number fields
 			if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
 			if ( isset ($_POST['ViewStringCharacterLimit']) && is_numeric($_POST['ViewStringCharacterLimit']) ) { $content['ViewStringCharacterLimit'] = $_POST['ViewStringCharacterLimit']; }
+			if ( isset ($_POST['PopupMenuTimeout']) && is_numeric($_POST['PopupMenuTimeout']) ) { $content['PopupMenuTimeout'] = $_POST['PopupMenuTimeout']; }
 			if ( isset ($_POST['ViewEntriesPerPage']) && is_numeric($_POST['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = $_POST['ViewEntriesPerPage']; }
 			if ( isset ($_POST['ViewEnableAutoReloadSeconds']) && is_numeric($_POST['ViewEnableAutoReloadSeconds']) ) { $content['ViewEnableAutoReloadSeconds'] = $_POST['ViewEnableAutoReloadSeconds']; }
+			if ( isset ($_POST['MiscMaxExecutionTime']) && is_numeric($_POST['MiscMaxExecutionTime']) ) { $content['MiscMaxExecutionTime'] = $_POST['MiscMaxExecutionTime']; }
 
 			// Read Text fields
 			if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = $_POST['PrependTitle']; }
@@ -186,8 +188,10 @@ if ( isset($_POST['op']) )
 			// Read Text number fields
 			if ( isset ($_POST['User_ViewMessageCharacterLimit']) && is_numeric($_POST['User_ViewMessageCharacterLimit']) ) { $USERCFG['ViewMessageCharacterLimit'] = $_POST['User_ViewMessageCharacterLimit']; }
 			if ( isset ($_POST['User_ViewStringCharacterLimit']) && is_numeric($_POST['User_ViewStringCharacterLimit']) ) { $USERCFG['ViewStringCharacterLimit'] = $_POST['User_ViewStringCharacterLimit']; }
+			if ( isset ($_POST['User_PopupMenuTimeout']) && is_numeric($_POST['User_PopupMenuTimeout']) ) { $USERCFG['PopupMenuTimeout'] = $_POST['User_PopupMenuTimeout']; }
 			if ( isset ($_POST['User_ViewEntriesPerPage']) && is_numeric($_POST['User_ViewEntriesPerPage']) ) { $USERCFG['ViewEntriesPerPage'] = $_POST['User_ViewEntriesPerPage']; }
 			if ( isset ($_POST['User_ViewEnableAutoReloadSeconds']) && is_numeric($_POST['User_ViewEnableAutoReloadSeconds']) ) { $USERCFG['ViewEnableAutoReloadSeconds'] = $_POST['User_ViewEnableAutoReloadSeconds']; }
+// TODO!!!!!!!!!!!111111111			
 
 			// Read Text fields
 			if ( isset ($_POST['User_PrependTitle']) ) { $USERCFG['PrependTitle'] = $_POST['User_PrependTitle']; }
@@ -294,6 +298,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	$content['User_PrependTitle'] = GetConfigSetting('PrependTitle', $content['PrependTitle'], CFGLEVEL_USER);
 	$content['User_ViewMessageCharacterLimit'] = GetConfigSetting('ViewMessageCharacterLimit', $content['ViewMessageCharacterLimit'], CFGLEVEL_USER);
 	$content['User_ViewStringCharacterLimit'] = GetConfigSetting('ViewStringCharacterLimit', $content['ViewStringCharacterLimit'], CFGLEVEL_USER);
+	$content['User_PopupMenuTimeout'] = GetConfigSetting('PopupMenuTimeout', $content['PopupMenuTimeout'], CFGLEVEL_USER);
 	$content['User_ViewEntriesPerPage'] = GetConfigSetting('ViewEntriesPerPage', $content['ViewEntriesPerPage'], CFGLEVEL_USER);
 	$content['User_ViewEnableAutoReloadSeconds'] = GetConfigSetting('ViewEnableAutoReloadSeconds', $content['ViewEnableAutoReloadSeconds'], CFGLEVEL_USER);
 	$content['User_SearchCustomButtonCaption'] = GetConfigSetting('SearchCustomButtonCaption', $content['SearchCustomButtonCaption'], CFGLEVEL_USER);

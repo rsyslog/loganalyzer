@@ -87,6 +87,8 @@ $content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options"
 $content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
 $content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
 $content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
+$content['LN_GEN_POPUPMENUTIMEOUT'] = "Popupmenu Timeout in milli seconds";
+$content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

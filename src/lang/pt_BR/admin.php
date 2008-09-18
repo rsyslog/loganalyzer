@@ -49,13 +49,7 @@ $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
 $content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
-$content['LN_GEN_OPTIONNAME'] = "Option name";
-$content['LN_GEN_GLOBALVALUE'] = "Global value";
-$content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
-$content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
-$content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
-$content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
-$content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
+
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";
@@ -86,6 +80,15 @@ $content['LN_GEN_ACCESSDENIED'] = "Access denied to this function";
 $content['LN_GEN_DEFVIEWS'] = "Default selected view";
 $content['LN_GEN_DEFSOURCE'] = "Default selected source";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Suppress duplicated messages";
+$content['LN_GEN_OPTIONNAME'] = "Option name";
+$content['LN_GEN_GLOBALVALUE'] = "Global value";
+$content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
+$content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
+$content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
+$content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
+$content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
+$content['LN_GEN_POPUPMENUTIMEOUT'] = "Popupmenu Timeout in milli seconds";
+$content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

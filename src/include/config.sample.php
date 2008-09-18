@@ -59,6 +59,8 @@ $CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add 
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
 $CFG['MiscEnableGzipCompression'] = 1;		// If enabled, phplogcon will use gzip compression for output, we recommend
 											// to have this option enabled, it will highly reduce bandwith usage. 
+$CFG['MiscMaxExecutionTime'] = 30;			// phpLogCon will try to overwrite the default script timeout with this value during runtime!
+											// This can of course only work if phpLogCon is allowed to changed the script timeout. 
 $CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informations on failed logins
 // --- 
 
@@ -80,6 +82,7 @@ $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the
 $CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline messages are automatically resolved and the result is added in brackets {} behind the IP Address
 $CFG['SuppressDuplicatedMessages'] = 0;		// If enabled, duplicated messages will be suppressed in the main display. 
 $CFG['TreatNotFoundFiltersAsTrue'] = 0;		// If you filter / search for messages, and the fields you are filtering for is not found, the filter result is treaten as TRUE! 
+$CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout value for popup menus in milliseconds. (those menus which popup when you click on the value of a field.
 // ---
 
 // --- Define which fields you want to see 
