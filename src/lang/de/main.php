@@ -261,6 +261,7 @@ $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 	$content['LN_INSTALL_FRONTEND'] = "Frontend Options";
 	$content['LN_INSTALL_NUMOFSYSLOGS'] = "Number of syslog messages per page";
 	$content['LN_INSTALL_MSGCHARLIMIT'] = "Message character limit for the main view";
+	$content['LN_INSTALL_STRCHARLIMIT'] = "Character display limit for all string type fields";
 	$content['LN_INSTALL_SHOWDETAILPOP'] = "Show message details popup";
 	$content['LN_INSTALL_AUTORESOLVIP'] = "Automatically resolved IP Addresses (inline)";
 	$content['LN_INSTALL_USERDBOPTIONS'] = "User Database Options";

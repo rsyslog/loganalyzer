@@ -225,6 +225,7 @@ else if ( $content['INSTALL_STEP'] == 3 )
 
 	// --- Read and predefine Frontend options
 	if ( isset($_SESSION['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_SESSION['ViewMessageCharacterLimit']; } else { $content['ViewMessageCharacterLimit'] = 80; }
+	if ( isset($_SESSION['ViewStringCharacterLimit']) ) { $content['ViewStringCharacterLimit'] = $_SESSION['ViewStringCharacterLimit']; } else { $content['ViewStringCharacterLimit'] = 30; }
 	if ( isset($_SESSION['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = $_SESSION['ViewEntriesPerPage']; } else { $content['ViewEntriesPerPage'] = 50; }
 	if ( isset($_SESSION['ViewEnableDetailPopups']) ) { $content['ViewEnableDetailPopups'] = $_SESSION['ViewEnableDetailPopups']; } else { $content['ViewEnableDetailPopups'] = 1; }
 	if ( $content['ViewEnableDetailPopups'] == 1 )
@@ -327,6 +328,15 @@ else if ( $content['INSTALL_STEP'] == 4 )
 	}
 	else
 		$_SESSION['ViewMessageCharacterLimit'] = 80; // Fallback default!
+
+	if ( isset($_POST['ViewStringCharacterLimit']) )
+	{
+		$_SESSION['ViewStringCharacterLimit'] = intval( DB_RemoveBadChars($_POST['ViewStringCharacterLimit']) );
+		if ( $_SESSION['ViewStringCharacterLimit'] < 0 )
+			$_SESSION['ViewStringCharacterLimit'] = 30; // Fallback default!
+	}
+	else
+		$_SESSION['ViewStringCharacterLimit'] = 30; // Fallback default!
 
 	if ( isset($_POST['ViewEntriesPerPage']) )
 	{
@@ -644,6 +654,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 
 	// Start replacing existing sample configurations
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['ViewStringCharacterLimit'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEntriesPerPage'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEnableDetailPopups'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['EnableIPAddressResolve'\] = [0-9]{1,2};/";
@@ -657,6 +668,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['UserDBLoginRequired'\] = (.*?);/";
 
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
+	$replacements[] = "\$CFG['ViewStringCharacterLimit'] = " . $_SESSION['ViewStringCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
 	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
