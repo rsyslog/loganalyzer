@@ -131,6 +131,12 @@ abstract class LogStreamConfig {
 
 	public function ProcessMsgParsers($szMsg, &$arrArguments)
 	{
+		// Abort msgparsers if we have less then 5 seconds of processing time!
+		global $content, $gl_starttime;
+		$scriptruntime = intval(microtime_float() - $gl_starttime);
+		if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
+			return ERROR_MSG_SCANABORTED;
+
 		// Process if set!
 		if ( $this->_msgParserObjList != null )
 		{

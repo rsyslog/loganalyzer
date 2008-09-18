@@ -136,7 +136,7 @@ class MsgParser_apache2 extends MsgParser {
 		}
 		
 		// Set IUT Property if success!
-		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_APACHELOG;
+		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_WEBSERVERLOG;
 
 		// If we reached this position, return success!
 		return SUCCESS;

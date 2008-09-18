@@ -111,6 +111,6 @@ $content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" 
 $content['filter_messagetype_list'][] = array( "ID" => IUT_Syslog, "DisplayName" => "Syslog", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_NT_EventReport, "DisplayName" => "WinEventLog", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_File_Monitor, "DisplayName" => "File Monitor", "selected" => "" );
-$content['filter_messagetype_list'][] = array( "ID" => IUT_APACHELOG, "DisplayName" => "Apache Webserver Logfile", "selected" => "" );
+$content['filter_messagetype_list'][] = array( "ID" => IUT_WEBSERVERLOG, "DisplayName" => "Webserver Logfile", "selected" => "" );
 
 ?>

@@ -1113,7 +1113,7 @@ function ReverseResolveIP( $szIP, $prepend, $append )
 {
 	global $gl_starttime, $content; 
 
-	// Substract 5 savety seconds!
+	// Substract 5 seconds we need to finish processing!
 	$scriptruntime = intval(microtime_float() - $gl_starttime);
 	if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
 		return "";
