@@ -225,6 +225,8 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true)
 	{
+		global $content, $gl_starttime;
+
 		do
 		{
 			// Read next entry first!
@@ -250,7 +252,18 @@ class LogStreamDisk extends LogStream {
 				$arrProperitesOut[SYSLOG_UID] = $uID;
 			}
 
-		// Loop until the filter applies, or another error occurs. 
+			// Check how long we are running. If only two seconds of execution time are left, we abort further reading!
+			$scriptruntime = intval(microtime_float() - $gl_starttime);
+			if ( $scriptruntime > ($content['MaxExecutionTime']-2) )
+			{
+				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
+				$content['logstream_warning'] = "false";
+				$content['logstream_warning_details'] = $content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'];
+
+				return ERROR_FILE_NOMORETIME;
+			}
+
+		// Loop until the filter applies, or another error occurs, and we still have TIME!
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
 
 		// reached here means return result!

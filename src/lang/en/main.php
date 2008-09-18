@@ -89,13 +89,13 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 	$content['LN_GEN_ERROR_INVALIDEXPORTTYPE'] = "Invalid Export format selected, or other parameters were wrong.";
 	$content['LN_GEN_ERROR_SOURCENOTFOUND'] = "The Source with ID '%1' could not be found.";
 	$content['LN_GEN_MOREINFORMATION'] = "More Information";
-
 	$content['LN_FOOTER_PAGERENDERED'] = "Page rendered in";
 	$content['LN_FOOTER_DBQUERIES'] = "DB queries";
 	$content['LN_FOOTER_GZIPENABLED'] = "GZIP enabled";
 	$content['LN_FOOTER_SCRIPTTIMEOUT'] = "Script Timeout";
 	$content['LN_FOOTER_SECONDS'] = "seconds";
-	
+	$content['LN_WARNING_LOGSTREAMTITLE'] = "Logstream Warning";
+	$content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'] = "While reading the logstream, the php script timeout forced me to abort at this point.<br><br> If you want to avoid this, please increase the phpLogCon script timeout in your config.php. If the user system is installed, you can do that in Admin center.";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";

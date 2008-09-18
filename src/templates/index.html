@@ -364,7 +364,6 @@
 </table>
 <!-- ENDIF main_pagerenabled="true" -->
 
-
 <!-- IF syslogmessagesenabled="false" -->
 <br><br>
 <center>
@@ -376,6 +375,18 @@
 </center>
 <br><br>
 <!-- ENDIF syslogmessagesenabled="false" -->
+
+<!-- IF logstream_warning="false" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityWarning">{LN_WARNING_LOGSTREAMTITLE}</div>
+		<p align="left">{logstream_warning_details}</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
+<!-- ENDIF logstream_warning="false" -->
 
 
 <!-- INCLUDE include_footer.html -->
