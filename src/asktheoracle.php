@@ -1,0 +1,152 @@
+<?php
+/*
+	*********************************************************************
+	* phpLogCon - http://www.phplogcon.org
+	* -----------------------------------------------------------------
+	* Details File											
+	*																	
+	* ->	This "oracle" is a helper page which generates and shows a bunch
+	*		of usefull links ;)!
+	*																	
+	* All directives are explained within this file
+	*
+	* Copyright (C) 2008 Adiscon GmbH.
+	*
+	* This file is part of phpLogCon.
+	*
+	* PhpLogCon is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
+	*
+	* PhpLogCon is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
+	*
+	* You should have received a copy of the GNU General Public License
+	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	*
+	* A copy of the GPL can be found in the file "COPYING" in this
+	* distribution				
+	*********************************************************************
+*/
+
+// *** Default includes	and procedures *** //
+define('IN_PHPLOGCON', true);
+$gl_root_path = './';
+
+// Now include necessary include files!
+include($gl_root_path . 'include/functions_common.php');
+include($gl_root_path . 'include/functions_frontendhelpers.php');
+include($gl_root_path . 'include/functions_filters.php');
+
+InitPhpLogCon();
+InitSourceConfigs();
+InitFrontEndDefaults();	// Only in WebFrontEnd
+InitFilterHelpers();	// Helpers for frontend filtering!
+// ---
+
+// --- Define Extra Stylesheet!
+//$content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
+//$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
+// --- 
+
+// --- READ Vars
+if ( isset($_GET['type']) ) 
+	$content['oracle_type'] = $_GET['type'];
+else
+	$content['oracle_type'] = "";
+
+if ( isset($_GET['query']) ) 
+	$content['oracle_query'] = $_GET['query'];
+else
+	$content['oracle_query'] = "";
+
+if ( isset($_GET['uid']) ) 
+	$content['uid_current'] = $_GET['uid'];
+else
+	$content['uid_current'] = "-1";
+
+// Init 
+
+// --- BEGIN Custom Code
+
+// Set readable type
+if ( $content['oracle_type'] == "ip" ) 
+	$content['oracle_type_readable'] = "ip";
+else if ( $content['oracle_type'] == "domain" ) 
+	$content['oracle_type_readable'] = "domain";
+else
+	$content['oracle_type_readable'] = "unknown type";
+
+$content['ORACLE_HELP_DETAIL'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_DETAIL'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
+
+
+// Enable help links!
+$content['helplinksenabled'] = true;
+
+// Loop through all Sources
+$i = 0;
+foreach( $content['Sources'] as $mySource )
+{
+	$myHelpLink['SourceName'] = GetAndReplaceLangStr("Source %1",$mySource['Name'] );
+	$myHelpLink['MsgUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode($content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];
+	$myHelpLink['MsgDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Message" );
+	$myHelpLink['SourceUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode("source:=" . $content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];
+	$myHelpLink['SourceDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Source" );
+
+	// --- Set CSS Class
+	if ( $i % 2 == 0 )
+		$myHelpLink['cssclass'] = "line1";
+	else
+		$myHelpLink['cssclass'] = "line2";
+	$i++;
+	// --- 
+	
+	// Add to help Link array!
+	$content['HelpLinks'][] = $myHelpLink;
+}
+
+/*
+if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
+{
+	// Obtain and get the Config Object
+	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
+
+	// Create LogStream Object 
+	$stream = $stream_config->LogStreamFactory($stream_config);
+//	$stream->SetFilter($content['searchstr']);
+
+	// --- Init the fields we need
+	foreach($fields as $mycolkey => $myfield)
+	{
+		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
+		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $myfield['FieldCaptionID'] ];
+		$content['fields'][$mycolkey]['FieldType'] = $myfield['FieldType'];
+		$content['fields'][$mycolkey]['DefaultWidth'] = $myfield['DefaultWidth'];
+
+		// Append to columns array
+		$content['AllColumns'][] = $mycolkey;
+	}
+	// --- 
+
+	// Close file!
+	$stream->Close();
+}
+*/
+// --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+// Append custom title part!
+$content['TITLE'] .= GetAndReplaceLangStr( $content['LN_ORACLE_TITLE'], $content['oracle_query']);
+// --- END CREATE TITLE
+
+// --- Parsen and Output
+InitTemplateParser();
+$page -> parser($content, "asktheoracle.html");
+$page -> output(); 
+// --- 
+
+?>

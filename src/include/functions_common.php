@@ -1065,10 +1065,18 @@ function AddContextLinks(&$sourceTxt)
 */
 function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 {
-	global $content;
+	global $content, $uID;
 
 	// Create string
-	$szReturn  = $prepend;
+	$szReturn = $prepend;
+
+	// Set IUD property if available
+	if ( isset($uID) )
+		$includeLinkUID = "&uid=" . $uID;
+	else
+		$includeLinkUID = "";
+	
+	// check if it is an IP or domain
 	if ( strlen($szIP) > 0 )
 	{
 		// Split IP into array
@@ -1088,14 +1096,14 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 			$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
 
 		// Add InfoSearch Link
-		$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
+		$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 	}
 	else if ( strlen($szDomain) > 0 ) 
 	{
 		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
 
 		// Add InfoSearch Link
-		$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
+		$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 
 	}
 

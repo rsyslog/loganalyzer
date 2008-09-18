@@ -128,6 +128,7 @@ else
 	// Set error code 
 	$content['ISERROR'] = true;
 	$content['ERROR_MSG'] = GetErrorMessage(ERROR_CHARTS_NOTCONFIGURED);
+	$content['detailederror_code'] = ERROR_CHARTS_NOTCONFIGURED;
 }
 // --- 
 

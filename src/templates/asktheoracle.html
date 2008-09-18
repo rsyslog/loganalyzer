@@ -1,0 +1,74 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p align="left">{ERROR_MSG}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border_alternative">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_ORACLE_HELP_FOR}</B></td>
+</tr>
+	<td colspan="3">
+	<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+	<tr>
+		<td width="100%" class="line2" align="left">
+		<a href="index.php?uid={uid_current}{additional_url_sourceonly}" target="_top"><img src="{MENU_HOMEPAGE}" align="middle" width="16" height="16" alt="{LN_DETAIL_BACKTOLIST}" title="{LN_DETAIL_BACKTOLIST}">&nbsp;{LN_DETAIL_BACKTOLIST}</a>
+		</td>
+	</tr>
+	</table>
+	</td>
+<tr>
+	<td colspan="3" class="titleSecond"><br><blockquote>{LN_ORACLE_HELP_TEXT}</blockquote><br></td>
+</tr>
+
+<!-- IF helplinksenabled="true" -->
+<tr>
+	<td class="tableBackground">
+
+	<br><br>
+	<table cellpadding="0" cellspacing="0" border="0" align="center" valign="top" width="800" class="table_with_border">
+	<tr><td class="cellmenu1" align="center" colspan="3"><B>{ORACLE_HELP_DETAIL}</B></td></tr>
+
+<!-- BEGIN HelpLinks -->
+	<tr>
+		<td class="cellmenu2" nowrap>{SourceName}</td>
+		<td class="{cssclass}" width="50%">
+			<a href="{MsgUrl}" target="_top">
+			&nbsp;<img src="{MENU_EARTH_FIND}" align="middle" width="16" height="16">
+			{MsgDisplayName}
+			</a>
+		</td>
+		<td class="{cssclass}" width="50%">
+			<a href="{SourceUrl}" target="_top">
+			&nbsp;<img src="{MENU_EARTH_FIND}" align="middle" width="16" height="16">
+			{SourceDisplayName}
+			</a>
+		</td>
+	</tr>
+
+
+<!-- END HelpLinks -->
+	</table>
+	<br><br>
+
+	</td>
+</tr>
+
+<!-- ENDIF helplinksenabled="true" -->
+</table>
+
+<!-- INCLUDE include_footer.html -->

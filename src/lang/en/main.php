@@ -322,5 +322,13 @@ $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the 
 	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Bars horizontal";
 	$content['LN_STATS_WARNINGDISPLAY'] = "Generating graphics on large data sources currently is very time consuming. This will be addressed in later versions. If processing takes too long, please simply cancel the request.";
 
+// asktheoracle site
+$content['LN_ORACLE_TITLE'] = "Asking the oracle for '%1'";
+$content['LN_ORACLE_HELP_FOR'] = "These are the links the oracle got for you";
+$content['LN_ORACLE_HELP_TEXT'] = "Spieglein Spieglein an der Wand, wer hat das größte Logfile im ganzen Land?";
+$content['LN_ORACLE_HELP_DETAIL'] = "Usefull search links for the type '%1', value = '%2'";
+$content['LN_ORACLE_SEARCHINFIELD'] = "Search in '%1' Field";
+
+
 
 ?>
