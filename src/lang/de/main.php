@@ -321,9 +321,14 @@ $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 	// asktheoracle site
 	$content['LN_ORACLE_TITLE'] = "Asking the oracle for '%1'";
 	$content['LN_ORACLE_HELP_FOR'] = "These are the links the oracle got for you";
-	$content['LN_ORACLE_HELP_TEXT'] = "You asked the oracle to find more information about the '%1' value '%2'. <br>
-	The oracle has come to an answer, and brought up the following link suggestions:
+	$content['LN_ORACLE_HELP_TEXT'] = "<br><h3>You asked the oracle to find more information about the '%1' value '%2'.</h3>
+	<p align=\"left\">This pages enables you do a a search over multiple log sources. %3
+	<br>The overall idea is to make it easy to find information about a specific subject in all places where it may exist.
+	</p>
+	<p align=\"left\">A useful use case may be a hack attempt you see in a web log. Click on the attacker's IP, which brings up this search page here. Now you can both lookup information about the IP range as well as check your other logs (e.g. firewall or mail) if they contain information about the attacker. We hope that this facilitates your analysis process.
+	</p>
 	";
+	$content['LN_ORACLE_HELP_TEXT_EXTERNAL'] = "It also enables you to perform canned searches over some external databases";
 	$content['LN_ORACLE_HELP_DETAIL'] = "Link matrix for the '%1' value '%2'";
 	$content['LN_ORACLE_SEARCH'] = "Search"; // in '%1' Field";
 	$content['LN_ORACLE_SOURCENAME'] = "Source name";
