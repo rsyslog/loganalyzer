@@ -32,7 +32,7 @@
 	</table>
 	</td>
 <tr>
-	<td colspan="3" class="titleSecond"><br><blockquote>{LN_ORACLE_HELP_TEXT}</blockquote><br></td>
+	<td colspan="3" class="titleSecond"><br><blockquote>{ORACLE_HELP_TEXT}</blockquote><br></td>
 </tr>
 
 <!-- IF helplinksenabled="true" -->
@@ -40,24 +40,44 @@
 	<td class="tableBackground">
 
 	<br><br>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" valign="top" width="800" class="table_with_border">
-	<tr><td class="cellmenu1" align="center" colspan="3"><B>{ORACLE_HELP_DETAIL}</B></td></tr>
+	<table cellpadding="1" cellspacing="0" border="0" align="center" valign="top" width="800" class="table_with_border">
+	<tr><td class="title" align="center" colspan="4"><B>{LN_ORACLE_ONLINESEARCH}</B></td></tr>
+	<tr>
+		<td class="tableBackground">
+			<a href="{WhoisUrl}" target="_top">
+			<img src="{MENU_EARTH_FIND}" align="middle" width="16" height="16">&nbsp; {ORACLE_WHOIS}
+			</a>
+		</td>
+	</tr>
+	</table>
+
+	<br><br>
+	<table cellpadding="1" cellspacing="0" border="0" align="center" valign="top" width="800" class="table_with_border">
+	<tr><td class="title" align="center" colspan="4"><B>{ORACLE_HELP_DETAIL}</B></td></tr>
+
+	<tr>
+		<td class="cellmenu1" nowrap>{LN_ORACLE_SOURCENAME}</td>
+		<td class="cellmenu1" width="100" nowrap align="center">{LN_ORACLE_FIELD} '{LN_FIELDS_MESSAGE}'</td>
+		<td class="cellmenu1" width="100" nowrap align="center">{LN_ORACLE_FIELD} '{LN_FIELDS_HOST}'</td>
+		<td class="cellmenu1" width="100%">&nbsp;</td>
+	</tr>
 
 <!-- BEGIN HelpLinks -->
 	<tr>
 		<td class="cellmenu2" nowrap>{SourceName}</td>
-		<td class="{cssclass}" width="50%">
+		<td class="{cssclass}" align="center">
 			<a href="{MsgUrl}" target="_top">
-			&nbsp;<img src="{MENU_EARTH_FIND}" align="middle" width="16" height="16">
-			{MsgDisplayName}
+			&nbsp;<img src="{MENU_FIND}" align="middle" width="16" height="16">
+			{LN_ORACLE_SEARCH}
 			</a>
 		</td>
-		<td class="{cssclass}" width="50%">
+		<td class="{cssclass}" align="center">
 			<a href="{SourceUrl}" target="_top">
-			&nbsp;<img src="{MENU_EARTH_FIND}" align="middle" width="16" height="16">
-			{SourceDisplayName}
+			&nbsp;<img src="{MENU_FIND}" align="middle" width="16" height="16">
+			{LN_ORACLE_SEARCH}
 			</a>
 		</td>
+		<td class="{cssclass}">&nbsp;</td>
 	</tr>
 
 

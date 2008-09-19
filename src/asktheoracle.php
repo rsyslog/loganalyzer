@@ -74,14 +74,25 @@ else
 
 // Set readable type
 if ( $content['oracle_type'] == "ip" ) 
+{
 	$content['oracle_type_readable'] = "ip";
+	$content['oracle_kb_type'] = "ip";
+}
 else if ( $content['oracle_type'] == "domain" ) 
+{
 	$content['oracle_type_readable'] = "domain";
+	$content['oracle_kb_type'] = "name";
+}
 else
+{
 	$content['oracle_type_readable'] = "unknown type";
+	$content['oracle_kb_type'] = "";
+}
 
 $content['ORACLE_HELP_DETAIL'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_DETAIL'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
-
+$content['ORACLE_HELP_TEXT'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_TEXT'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
+$content['ORACLE_WHOIS'] = GetAndReplaceLangStr( $content['LN_ORACLE_WHOIS'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
+$content['WhoisUrl'] = "http://kb.monitorware.com/kbsearch.php?sa=whois&oid=" . $content['oracle_kb_type'] . "&origin=phplogcon&q=" . urlencode($content['oracle_query']); 
 
 // Enable help links!
 $content['helplinksenabled'] = true;
@@ -90,11 +101,11 @@ $content['helplinksenabled'] = true;
 $i = 0;
 foreach( $content['Sources'] as $mySource )
 {
-	$myHelpLink['SourceName'] = GetAndReplaceLangStr("Source %1",$mySource['Name'] );
+	$myHelpLink['SourceName'] = $mySource['Name'];
 	$myHelpLink['MsgUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode($content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];
-	$myHelpLink['MsgDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Message" );
+//	$myHelpLink['MsgDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Message" );
 	$myHelpLink['SourceUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode("source:=" . $content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];
-	$myHelpLink['SourceDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Source" );
+//	$myHelpLink['SourceDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Source" );
 
 	// --- Set CSS Class
 	if ( $i % 2 == 0 )

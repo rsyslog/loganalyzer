@@ -325,9 +325,15 @@ $content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the 
 // asktheoracle site
 $content['LN_ORACLE_TITLE'] = "Asking the oracle for '%1'";
 $content['LN_ORACLE_HELP_FOR'] = "These are the links the oracle got for you";
-$content['LN_ORACLE_HELP_TEXT'] = "Spieglein Spieglein an der Wand, wer hat das größte Logfile im ganzen Land?";
-$content['LN_ORACLE_HELP_DETAIL'] = "Usefull search links for the type '%1', value = '%2'";
-$content['LN_ORACLE_SEARCHINFIELD'] = "Search in '%1' Field";
+$content['LN_ORACLE_HELP_TEXT'] = "You asked the oracle to find more information about the '%1' value '%2'. <br>
+The oracle has come to an answer, and brought up the following link suggestions:
+";
+$content['LN_ORACLE_HELP_DETAIL'] = "Link matrix for the '%1' value '%2'";
+$content['LN_ORACLE_SEARCH'] = "Search"; // in '%1' Field";
+$content['LN_ORACLE_SOURCENAME'] = "Source name";
+$content['LN_ORACLE_FIELD'] = "Field";
+$content['LN_ORACLE_ONLINESEARCH'] = "Online Search";
+$content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 
 
 

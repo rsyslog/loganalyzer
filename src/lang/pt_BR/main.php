@@ -322,4 +322,17 @@ $content['LN_DETAIL_BACKTOLIST'] = "Voltar para a lista";
 	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Bars horizontal";
 	$content['LN_STATS_WARNINGDISPLAY'] = "Generating graphics on large data sources currently is very time consuming. This will be addressed in later versions. If processing takes too long, please simply cancel the request.";
 
+	// asktheoracle site
+	$content['LN_ORACLE_TITLE'] = "Asking the oracle for '%1'";
+	$content['LN_ORACLE_HELP_FOR'] = "These are the links the oracle got for you";
+	$content['LN_ORACLE_HELP_TEXT'] = "You asked the oracle to find more information about the '%1' value '%2'. <br>
+	The oracle has come to an answer, and brought up the following link suggestions:
+	";
+	$content['LN_ORACLE_HELP_DETAIL'] = "Link matrix for the '%1' value '%2'";
+	$content['LN_ORACLE_SEARCH'] = "Search"; // in '%1' Field";
+	$content['LN_ORACLE_SOURCENAME'] = "Source name";
+	$content['LN_ORACLE_FIELD'] = "Field";
+	$content['LN_ORACLE_ONLINESEARCH'] = "Online Search";
+	$content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
+
 ?>
