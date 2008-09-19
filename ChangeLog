@@ -1,4 +1,25 @@
 ---------------------------------------------------------------------------
+Version 2.5.9 (devel), 2008-09-19
+- Implemented support to analyze Webserver logfiles from Apache and
+  Microsoft IIS Webserver. There is a collection of new fields available,
+  filtering is possible. . In order to read Apache or IIS logfiles, 
+  you need to use the "iis" or "apache2" message parser in your disk 
+  sources. 
+- Added a new page called "asktheoracle.php" which will be automatically 
+  linked on IP's and domain names. It is a simple helper page which 
+  creates a bunch of usefull filter links. 
+- Added some basic documentation into the doc folder. phpLogCon
+  does also link to this documentation now (Help Menu Entry).
+- Added a general option to limit the display of string fields. 
+- Added a general option to configure the timeout value of popup menus. 
+- Added a general option to alter the php scrip timeout. This is of course 
+  only possible if the php interpreter is allowed to change the script 
+  timeout. 
+- Added checks for the script timeout in the disk logstream, this avoids
+  that the script is suddenly stopped by the php interpreter. 
+- Fixed a sorting bug in the disk logstream, which removed numeric 
+  values in the charts
+---------------------------------------------------------------------------
 Version 2.5.8 (devel), 2008-09-16
 - Added Bitstream Vera Fonts into the package which will be used by the
   chart generator. So there won't be a problem of missing truetype fonts
