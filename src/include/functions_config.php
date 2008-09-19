@@ -266,6 +266,13 @@ function InitViewConfigs()
 									'userid' =>		null, 
 									'groupid' =>	null, 
 								   );
+	$CFG['Views']['WEBLOG']= array( 
+									'ID' =>			"WEBLOG", 
+									'DisplayName' =>"Webserver Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_WEBLOG_URL, SYSLOG_WEBLOG_USERAGENT, SYSLOG_WEBLOG_STATUS, SYSLOG_WEBLOG_BYTESSEND, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
 	
 	// Set default of 'DefaultViewsID'
 	$CFG['DefaultViewsID'] = "SYSLOG";
