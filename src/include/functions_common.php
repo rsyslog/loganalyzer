@@ -1032,7 +1032,7 @@ function AddContextLinks(&$sourceTxt)
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
-		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/e', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
 	}
 
 	// Create if not set!
@@ -1042,8 +1042,8 @@ function AddContextLinks(&$sourceTxt)
 	// Create Search Array
 	$search = array 
 				(
-					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/e',
-/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/e',
+					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/ie',
+/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/ie',
 				);
 
 	// Create Replace Array
@@ -1079,9 +1079,8 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 	// check if it is an IP or domain
 	if ( strlen($szIP) > 0 )
 	{
-		// Split IP into array
+/*		// Split IP into array
 		$IPArray = explode(".", $szIP);
-
 		if ( 
 				(intval($IPArray[0]) == 10	) ||
 				(intval($IPArray[0]) == 127 ) ||
@@ -1089,6 +1088,8 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 				(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
 				(intval($IPArray[0]) == 255	)
 			)
+*/
+		if ( IsInternalIP($szIP) )
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';
 		else
@@ -1112,6 +1113,29 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 
 	// return result
 	return $szReturn;
+}
+
+/*
+*	Helper function to check, if an IP Address is within private address space!
+*/
+function IsInternalIP($szIPAddress)
+{
+	// Split IP into array
+	$IPArray = explode(".", $szIPAddress);
+
+	if ( 
+			(intval($IPArray[0]) == 10	) ||
+			(intval($IPArray[0]) == 127 ) ||
+			(intval($IPArray[0]) == 172 && intval($IPArray[1]) >= 16 && intval($IPArray[1]) <= 31) || 
+			(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
+			(intval($IPArray[0]) == 255	)
+		)
+
+		// return true in this case
+		return true;
+	else
+		// This is an external IP
+		return false;
 }
 
 /*

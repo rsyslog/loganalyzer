@@ -77,16 +77,23 @@ if ( $content['oracle_type'] == "ip" )
 {
 	$content['oracle_type_readable'] = "ip";
 	$content['oracle_kb_type'] = "ip";
+
+	if ( IsInternalIP($content['oracle_query']) )
+		$content['showonlinesearches'] = false;
+	else
+		$content['showonlinesearches'] = true;
 }
 else if ( $content['oracle_type'] == "domain" ) 
 {
 	$content['oracle_type_readable'] = "domain";
 	$content['oracle_kb_type'] = "name";
+	$content['showonlinesearches'] = true;
 }
 else
 {
 	$content['oracle_type_readable'] = "unknown type";
 	$content['oracle_kb_type'] = "";
+	$content['showonlinesearches'] = false;
 }
 
 $content['ORACLE_HELP_DETAIL'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_DETAIL'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
