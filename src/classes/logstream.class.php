@@ -281,6 +281,7 @@ abstract class LogStream {
 				{
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
+//print_r (  $tmpArray );
 
 					// Continue if empty filter!
 					if ( strlen(trim($tmpArray[FILTER_TMP_VALUE])) == 0 ) 
@@ -643,9 +644,20 @@ abstract class LogStream {
 							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
 						}
 
-						// Replace + with spaces
-						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = str_replace( '+', ' ', $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]);
-
+						// Reverse string prepareation
+						$searchArray = array(
+												'/(?<!\+)\+/',	// First one replaces all single + into spaces, but unfortunatelly replaces ONE + from a double ++ 
+												'/ (?=\+)/',	// This is a helper, removes spaces if a + is following
+//												'/\+\+/',		// Not needed, due the rules above, a double + has already become a single +
+											);
+						$replaceArray = array(
+												" ", 
+												"", 
+//												"+", 
+											);
+						
+						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = preg_replace( $searchArray, $replaceArray, $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] ); 
+//						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = str_replace( '+', ' ', $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]);
 						// ---
 					}
 

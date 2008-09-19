@@ -565,7 +565,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							// Set some basic variables first
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];		// May contain the field value trunscated 
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = $logArray[$mycolkey];	// helper variable used for Popups!
-							$content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue'] = str_replace(' ', '+', $logArray[$mycolkey]); // Convert into filter format for submenus
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue'] = PrepareStringForSearch($logArray[$mycolkey]); // Convert into filter format for submenus
 
 							// --- Check for reached string character limit
 							if ( $mycolkey != SYSLOG_MESSAGE ) 
@@ -972,9 +972,18 @@ function HighLightString($highlightArray, $strmsg)
 	return $strmsg;
 }
 
+/*
+*	Prepare a string for search! spaces will be replaces with a single +
+*	+ will be replaced with a double ++
+*/
 function PrepareStringForSearch($myString)
 {
-	return str_replace(" ", "+", $myString);
+	// Create Find & Replace arrays
+	$searchArray = array("+", " ");
+	$replaceArray = array("++", "+");
+
+	// str_replace(' ', '+', $logArray[$mycolkey]);
+	return str_replace($searchArray, $replaceArray, $myString);
 }
 
 function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFieldDisplayNameID, $searchOnline = false)
