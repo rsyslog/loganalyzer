@@ -19,6 +19,9 @@ Version 2.5.9 (devel), 2008-09-19
   that the script is suddenly stopped by the php interpreter. 
 - Fixed a sorting bug in the disk logstream, which removed numeric 
   values in the charts
+- Added support to filter for a + character as well now. In order to filter
+  for strings containing the + character, just add replace it with ++. 
+  A single + will still be equal to a space character in the filter engine.
 ---------------------------------------------------------------------------
 Version 2.5.8 (devel), 2008-09-16
 - Added Bitstream Vera Fonts into the package which will be used by the
