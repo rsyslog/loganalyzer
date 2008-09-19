@@ -230,10 +230,6 @@ if ( isset($content['Sources'][$currentSourceID]) )
 		// TODO Implement ORDER
 		$stream->SetReadDirection($content['read_direction']);
 
-		// Read First and LAST UID's before start reading the stream!
- 		$content['uid_last'] = $stream->GetLastPageUID();
- 		$content['uid_first'] = $stream->GetFirstPageUID();
-
 		// Set current ID and init Counter
 		$uID = $content['uid_current'];
 		$counter = 0;
@@ -830,8 +826,11 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				// Increment Counter
 				$counter++;
 			} while ($counter < $content['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
-
 //print_r ( $content['syslogmessages'] );
+
+			// Move below processing - Read First and LAST UID's before start reading the stream!
+			$content['uid_last'] = $stream->GetLastPageUID();
+			$content['uid_first'] = $stream->GetFirstPageUID();
 
 			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['ViewEntriesPerPage'] )
 			{

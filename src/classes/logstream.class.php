@@ -656,8 +656,8 @@ abstract class LogStream {
 //												"+", 
 											);
 						
-						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = preg_replace( $searchArray, $replaceArray, $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] ); 
 //						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = str_replace( '+', ' ', $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]);
+						$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = preg_replace( $searchArray, $replaceArray, $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] ); 
 						// ---
 					}
 

@@ -234,7 +234,7 @@ class LogStreamDisk extends LogStream {
 				$ret = $this->ReadNextForwards($uID, $arrProperitesOut);
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
-		
+
 			// Only PARSE on success!
 			if ( $ret == SUCCESS && $bParseMessage) 
 			{
@@ -243,7 +243,7 @@ class LogStreamDisk extends LogStream {
 				
 				// Run optional Message Parsers now
 				$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
-				
+
 				// Check if we have to skip the message!
 				if ( $retParser == ERROR_MSG_SKIPMESSAGE )
 					$ret = $retParser;
@@ -523,8 +523,10 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function GetLastPageUID()
 	{
-		// Obtain last UID if enough records are available!
-		
+		// Only perform lastUID scan if there are NO filters, for performance REASONS!
+		if ( $this->_filters != null )
+			return UID_UNKNOWN;
+
 		// Helper variables
 		$myuid = -1;
 		$counter = 0;
