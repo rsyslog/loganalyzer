@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------
+Version 2.5.10 (beta), 2008-09-24
+- Merged devel branch into beta branch.
+- Enhanced search performance in disk logstream, specially when searching 
+  in large files. 
+- Enhanced critical error display, and added better error details if the 
+  user db server is not reachable
+---------------------------------------------------------------------------
 Version 2.4.0 (v2-stable), 2008-09-24
 - Merged beta branch into v2-stable branch.
 ---------------------------------------------------------------------------
