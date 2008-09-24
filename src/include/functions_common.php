@@ -70,9 +70,12 @@ $content['BUILDNUMBER'] = "2.5.9";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
+
+// PreInit overall user variables
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
+$content['CURRENTURL'] = "";
 // --- 
 
 // --- Check PHP Version! If lower the 5, phplogcon will not work proberly!
@@ -798,20 +801,36 @@ function CheckUrlOrIP($ip)
 function DieWithErrorMsg( $szerrmsg )
 {
 	global $gl_root_path, $content;
-	print("<html><title>phpLogCon :: Critical Error occured</title><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
-	print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
-	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
-	print("</td></tr></table>");
-
+	echo 
+		"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
+		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
+		"<H3>Critical Error occured</H3>" . 
+		"</td></tr>" . 
+		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\">" . 
+		$szerrmsg . 
+		"</td></tr></table>" . 
+		"</body></html>";
 	exit;
 }
 
 function DieWithFriendlyErrorMsg( $szerrmsg )
 {
-	//TODO: Make with template
-	print("<html><body>");
-	print("<center><H3><font color='red'>Error occured</font></H3><br></center>");
-	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
+	global $gl_root_path, $content;
+	echo 
+		"<html><title>phpLogCon :: Error occured</title><head>" . 
+		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
+		"<H3>Error occured</H3>" . 
+		"</td></tr>" . 
+		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\">" . 
+		$szerrmsg . 
+		"</td></tr></table>" . 
+		"</body></html>";
 	exit;
 }
 

@@ -57,10 +57,18 @@ function DB_Connect()
 	if ($userdbconn) 
 		return;
 
-	//TODO: Check variables first
-	$userdbconn = mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
+	$userdbconn = @mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
 	if (!$userdbconn) 
-		DB_PrintError("Link-ID == false, connect to " . GetConfigSetting("UserDBServer") . " failed", true);
+	{
+		// Create Error Msg
+		$szErrorMsg = "Failed to establish a connection to the configured MYSQL Server. <br>PhpLogCon is not able to initialize the user system.";
+		if ( isset($php_errormsg) ) 
+			$szErrorMsg .= "<br><br><b>Extra Error Details</b>:<br>" . $php_errormsg;
+
+		DieWithErrorMsg( $szErrorMsg  );
+	}
+
+	//TODO: Check variables first
 	
 	// --- Now, check Mysql DB Version!
 	$strmysqlver = mysql_get_server_info();
