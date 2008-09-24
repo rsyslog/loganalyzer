@@ -64,6 +64,7 @@ function CreateLanguageList()
 
 		// Init Language DisplayName
 		$content['USERLANG'][$i]['DisplayName'] = GetLanguageDisplayName( $alldirectories[$i] );
+		$content['LANGUAGES'][$i]['DisplayName'] = GetLanguageDisplayName( $alldirectories[$i] );
 	}
 }
 

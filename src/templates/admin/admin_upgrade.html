@@ -1,0 +1,110 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_DBUPGRADE_TITLE}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+
+		<!-- IF UPGRADE_DEFAULT="1" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line1">
+
+			<br><br>
+			<h1>{LN_DBUPGRADE_WELCOME}</h1>
+			<p>{LN_DBUPGRADE_BEFORESTART}<br><br> 
+			{LN_DBUPGRADE_CURRENTINSTALLED}: <B>{database_installedversion}</B><br>
+			{LN_DBUPGRADE_TOBEINSTALLED}: <B>{database_internalversion}</B><br></p>
+
+			<br><br>
+			<center>Click on <a href="?op=upgrade"><B>Upgrade</B></a> to start!</center>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF UPGRADE_DEFAULT="1" -->
+
+		<!-- IF UPGRADE_RUNNING="1" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line1">
+			<br><br>
+			<p>{LN_DBUPGRADE_HASBEENDONE}: <br><br>
+
+			<li>{LN_DBUPGRADE_SUCCESSEXEC}: <B>{sql_sucess}</B><br>
+			<li>{LN_DBUPGRADE_FAILEDEXEC}: <B>{sql_failed}</B> <br>
+
+			<!-- IF sql_failed!="0" -->
+				<table width="700" class="with_border_alternate" cellpadding="2" cellspacing="1" border="0" align="center">
+				<tr>
+					<td colspan="2" nowrap class="cellmenu1" align="center"><B>{LN_DBUPGRADE_ONESTATEMENTFAILED}</B></td>
+				</tr>
+				<tr>
+					<td width="400" class="cellmenu1">{LN_DBUPGRADE_ERRMSG}</td>
+					<td width="300" class="cellmenu1" align="center"><B>SQL Statement</B></td>
+				</tr>
+				<!-- BEGIN failedstatements -->
+				<tr>
+					<td class="line0">{myerrmsg}</td>
+					<td class="line0" align="center">{mystatement}</td>
+				</tr>
+				<!-- END failedstatements -->
+				</table>
+				<p>&nbsp;</p>
+			<!-- ENDIF sql_failed!="0" -->
+
+
+			{LN_DBUPGRADE_CURRENTINSTALLED}: <B>{database_installedversion}</B><br>
+			{LN_DBUPGRADE_TOBEINSTALLED}: <B>{database_internalversion}</B><br>
+
+			<br><br>
+			<center>Click on <a href="index.php"><B>here</B></a> to return to the <B>Admin Center</B></center>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF UPGRADE_RUNNING="1" -->
+
+		<!-- IF UPGRADE_DEFAULT="0" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line1">
+
+			<h1>Welcome to the Database Upgrade</h1>
+			<center><h2><font color="blue">Your database is fully updated!</font></h2></center></p>
+			{LN_DBUPGRADE_CURRENTINSTALLED}: <B>{database_installedversion}</B><br>
+			{LN_DBUPGRADE_ULTRASTATSDBVERSION}: <B>{database_internalversion}</B><br></p>
+			
+			<br><br>
+			<center>Click on <a href="index.php"><B>here</B></a> to return to the <B>Admin Center</B></center>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF UPGRADE_DEFAULT="0" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->

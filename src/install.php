@@ -34,20 +34,21 @@
 
 // *** Default includes	and procedures *** //
 define('IN_PHPLOGCON', true);
-define('IN_PHPLOGCON_INSTALL', true); // Extra for INSTALL Script!
+define('IN_PHPLOGCON_INSTALL', true);		// Extra for INSTALL Script!
+define('STEPSCRIPTNAME', "install.php");	// Helper variable for the STEP helper functions
 $gl_root_path = './';
 
 // Now include necessary include files!
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
+include($gl_root_path . 'include/functions_installhelpers.php');
 
 // Init Langauge first!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 InitBasicPhpLogCon();
 if ( InitPhpLogConConfigFile(false) ) 
-	DieWithErrorMsg( 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.');
-//InitPhpLogCon();
+	DieWithErrorMsg( $content['LN_INSTALL_ERRORINSTALLED'] );
 
 // Set some static values
 define('MAX_STEPS', 8);
@@ -59,7 +60,7 @@ $configsamplefile = $content['BASEPATH'] . "include/config.sample.php";
 // ***					*** //
 
 // --- CONTENT Vars
-$content['TITLE'] = "phpLogCon :: Installer Step %1";
+$content['TITLE'] = "phpLogCon :: " . $content['LN_INSTALL_TITLE'];
 // --- 
 
 // --- Read Vars
@@ -88,10 +89,7 @@ else
 }
 // --- 
 
-
-
 // --- BEGIN Custom Code
-
 // --- Set Bar Image
 	$content['BarImagePlus'] = $gl_root_path . "images/bars/bar-middle/green_middle_17.png";
 	$content['BarImageLeft'] = $gl_root_path . "images/bars/bar-middle/green_left_17.png";
@@ -101,7 +99,8 @@ else
 // --- 
 
 // --- Set Title
-GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
+$content['TITLE'] = GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
+$content['LN_INSTALL_TITLETOP'] = GetAndReplaceLangStr( $content['LN_INSTALL_TITLETOP'], $content['BUILDNUMBER'],  $content['INSTALL_STEP'] );
 // --- 
 
 // --- Start Setup Processing
@@ -179,7 +178,7 @@ if ( $content['INSTALL_STEP'] == 2 )
 		$content['NEXT_ENABLED'] = "false";
 		$content['RECHECK_ENABLED'] = "true";
 		$content['iserror'] = "true";
-		$content['errormsg'] = "One file or directory (or more) are not writeable, please check the file permissions (chmod 777)!";
+		$content['errormsg'] = $content['LN_INSTALL_FILEORDIRNOTWRITEABLE'];
 	}
 
 	// Check if sample config file is available
@@ -188,7 +187,7 @@ if ( $content['INSTALL_STEP'] == 2 )
 		$content['NEXT_ENABLED'] = "false";
 		$content['RECHECK_ENABLED'] = "true";
 		$content['iserror'] = "true";
-		$content['errormsg'] = "The sample configuration file '" . $configsamplefile . "' is missing. You have not fully uploaded phplogcon.";
+		$content['errormsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_SAMPLECONFIGMISSING'], $configsamplefile);
 	}
 	
 }
@@ -212,10 +211,21 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['UserDBEnabled_true'] = "";
 		$content['UserDBEnabled_false'] = "checked";
 	}
+	if ( $content['UserDBLoginRequired'] == 1 )
+	{
+		$content['UserDBLoginRequired_true'] = "checked";
+		$content['UserDBLoginRequired_false'] = "";
+	}
+	else
+	{
+		$content['UserDBLoginRequired_true'] = "";
+		$content['UserDBLoginRequired_false'] = "checked";
+	}
 	// ---
 
 	// --- Read and predefine Frontend options
 	if ( isset($_SESSION['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_SESSION['ViewMessageCharacterLimit']; } else { $content['ViewMessageCharacterLimit'] = 80; }
+	if ( isset($_SESSION['ViewStringCharacterLimit']) ) { $content['ViewStringCharacterLimit'] = $_SESSION['ViewStringCharacterLimit']; } else { $content['ViewStringCharacterLimit'] = 30; }
 	if ( isset($_SESSION['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = $_SESSION['ViewEntriesPerPage']; } else { $content['ViewEntriesPerPage'] = 50; }
 	if ( isset($_SESSION['ViewEnableDetailPopups']) ) { $content['ViewEnableDetailPopups'] = $_SESSION['ViewEnableDetailPopups']; } else { $content['ViewEnableDetailPopups'] = 1; }
 	if ( $content['ViewEnableDetailPopups'] == 1 )
@@ -248,7 +258,7 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = urldecode($_GET['errormsg']);
 	}
 }
 else if ( $content['INSTALL_STEP'] == 4 )
@@ -290,15 +300,21 @@ else if ( $content['INSTALL_STEP'] == 4 )
 			else
 				$_SESSION['UserDBPass'] = "";
 
+			if ( isset($_POST['UserDBLoginRequired']) )
+				$_SESSION['UserDBLoginRequired'] = intval(DB_RemoveBadChars($_POST['UserDBLoginRequired']));
+			else
+				$_SESSION['UserDBLoginRequired'] = false;
+			
+
 			// Now Check database connect
 			$link_id = mysql_connect( $_SESSION['UserDBServer'], $_SESSION['UserDBUser'], $_SESSION['UserDBPass']);
 			if (!$link_id) 
-				RevertOneStep( $content['INSTALL_STEP']-1, "Connect to " .$_SESSION['UserDBServer'] . " failed! Check Servername, Port, User and Password!<br>" . DB_ReturnSimpleErrorMsg() );
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $_SESSION['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
 			
 			// Try to select the DB!
 			$db_selected = mysql_select_db($_SESSION['UserDBName'], $link_id);
 			if(!$db_selected) 
-				RevertOneStep( $content['INSTALL_STEP']-1, "Cannot use database  " .$_SESSION['UserDBName'] . "! If the database does not exists, create it or check access permissions! <br>" . DB_ReturnSimpleErrorMsg());
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $_SESSION['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
 		}
 	}
 	// ---
@@ -312,6 +328,15 @@ else if ( $content['INSTALL_STEP'] == 4 )
 	}
 	else
 		$_SESSION['ViewMessageCharacterLimit'] = 80; // Fallback default!
+
+	if ( isset($_POST['ViewStringCharacterLimit']) )
+	{
+		$_SESSION['ViewStringCharacterLimit'] = intval( DB_RemoveBadChars($_POST['ViewStringCharacterLimit']) );
+		if ( $_SESSION['ViewStringCharacterLimit'] < 0 )
+			$_SESSION['ViewStringCharacterLimit'] = 30; // Fallback default!
+	}
+	else
+		$_SESSION['ViewStringCharacterLimit'] = 30; // Fallback default!
 
 	if ( isset($_POST['ViewEntriesPerPage']) )
 	{
@@ -350,12 +375,12 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		$totaldbdefs = "";
 
 		// Read the table GLOBAL definitions 
-		ImportDataFile( $content['BASEPATH'] . "contrib/db_template.txt" );
+		ImportDataFile( $content['BASEPATH'] . "include/db_template.txt" );
 
 		// Process definitions ^^
 		if ( strlen($totaldbdefs) <= 0 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (to short!), file '" . $content['BASEPATH'] . "contrib/db_template.txt" . "'! <br>Maybe the file was not correctly uploaded?";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINVALIDDBFILE'], $content['BASEPATH'] . "include/db_template.txt");
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
@@ -366,24 +391,24 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		// Now split by sql command
 		$mycommands = split( ";\n", $totaldbdefs );
 		
-		// check for different linefeed
-		if ( count($mycommands) <= 1 )
-			$mycommands = split( ";\n", $totaldbdefs );
+//		// check for different linefeed
+//		if ( count($mycommands) <= 1 )
+//			$mycommands = split( ";\n", $totaldbdefs );
 
 		//Still only one? Abort
 		if ( count($mycommands) <= 1 )
 		{
-			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = "Error, invalid Database Defintion File (no statements found!) in '" . $content['BASEPATH'] . "contrib/db_template.txt" . "'!<br> Maybe the file was not correctly uploaded, or a strange bug with your system? Contact phpLogCon forums for assistance!";
+			$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt"); 
 			$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 			$content['sql_failed']++;
 		}
 
-		// Append INSERT Statement for Config Table to set the GameVersion and Database Version ^^!
-		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`name`, `value`) VALUES ('database_installedversion', '1')";
+		// Append INSERT Statement for Config Table to set the Database Version ^^!
+		$mycommands[count($mycommands)] = "INSERT INTO `" . $_SESSION["UserDBPref"] . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', " . $content['database_internalversion'] . ")";
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
-		InitPhpLogConConfigFile();
+		InitUserDbSettings();
 
 		// Establish DB Connection
 		DB_Connect();
@@ -434,7 +459,7 @@ else if ( $content['INSTALL_STEP'] == 6 )
 		if ( isset($_GET['errormsg']) )
 		{
 			$content['iserror'] = "true";
-			$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+			$content['errormsg'] = urldecode($_GET['errormsg']);
 		}
 	}
 	else // NO Database means NO user management, so next step!
@@ -447,7 +472,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 		if ( isset($_POST['username']) )
 			$_SESSION['MAIN_Username'] = DB_RemoveBadChars($_POST['username']);
 		else
-			RevertOneStep( $content['INSTALL_STEP']-1, "Username needs to be specified" );
+			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_MISSINGUSERNAME'] );
 
 		if ( isset($_POST['password1']) )
 			$_SESSION['MAIN_Password1'] = DB_RemoveBadChars($_POST['password1']);
@@ -460,20 +485,25 @@ else if ( $content['INSTALL_STEP'] == 7 )
 			$_SESSION['MAIN_Password2'] = "";
 
 		if (	
-				strlen($_SESSION['MAIN_Password1']) <= 4 ||
+				strlen($_SESSION['MAIN_Password1']) < 4 ||
 				$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
 			)
-			RevertOneStep( $content['INSTALL_STEP']-1, "Either the password does not match or is to short!" );
+			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
-		InitPhpLogConConfigFile();
+		InitUserDbSettings();		// We need some DB Settings
+		InitUserSystemPhpLogCon();	// We need the user system now!
 
 		// Establish DB Connection
 		DB_Connect();
 
 		// Everything is fine, lets go create the User!
-		CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 0 );
+		CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 1 );
+		
+		// Show User success!
+		$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
+		$content['createduser'] = true;
 	}
 
 	// Init Source Options
@@ -490,7 +520,6 @@ else if ( $content['INSTALL_STEP'] == 7 )
 		else
 			$content['Views'][ $myView['ID'] ]['selected'] = "";
 	}
-
 
 	// SOURCE_DISK specific
 	if ( isset($_SESSION['SourceLogLineType']) ) { $content['SourceLogLineType'] = $_SESSION['SourceLogLineType']; } else { $content['SourceLogLineType'] = ""; }
@@ -522,11 +551,12 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = urldecode($_GET['errormsg']);
 	}
 }
 else if ( $content['INSTALL_STEP'] == 8 )
 {
+	// --- Write Config File!
 	// Read vars
 	if ( isset($_POST['SourceType']) )
 		$_SESSION['SourceType'] = DB_RemoveBadChars($_POST['SourceType']);
@@ -559,7 +589,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 
 		// Check if access to the configured file is possible
 		if ( !is_file($_SESSION['SourceDiskFile']) )
-			RevertOneStep( $content['INSTALL_STEP']-1, "Failed to open the syslog file " .$_SESSION['SourceDiskFile'] . "! Check if the file exists and phplogcon has sufficient rights to it<br>" );
+			RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDTOOPENSYSLOGFILE'], $_SESSION['SourceDiskFile']) ); 
 	}
 	else if (	$_SESSION['SourceType'] == SOURCE_DB || $_SESSION['SourceType'] == SOURCE_PDO )
 	{
@@ -605,26 +635,54 @@ else if ( $content['INSTALL_STEP'] == 8 )
 				$_SESSION['SourceDBEnableRowCounting'] = "false";
 		}
 
-		// TODO: Check database connectivity!
+		// Check Database Access!
+
 	}
 
 	// If we reached this point, we have gathered all necessary information to create our configuration file ;)!
 	$filebuffer = LoadDataFile($configsamplefile);
 	
+	// Sez helper variables and init user vars if needed!
+	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] ) { $_SESSION['UserDBEnabled_value'] = "true"; } else { $_SESSION['UserDBEnabled_value'] = "false"; }
+	if ( isset($_SESSION['UserDBLoginRequired']) && $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
+	if ( !isset($_SESSION['UserDBServer']))	{ $_SESSION['UserDBServer'] = "localhost"; }
+	if ( !isset($_SESSION['UserDBPort']))	{ $_SESSION['UserDBPort'] = "3306"; }
+	if ( !isset($_SESSION['UserDBName']))	{ $_SESSION['UserDBName'] = "phplogcon"; }
+	if ( !isset($_SESSION['UserDBPref']))	{ $_SESSION['UserDBPref'] = "logcon_"; }
+	if ( !isset($_SESSION['UserDBUser']))	{ $_SESSION['UserDBUser'] = "root"; }
+	if ( !isset($_SESSION['UserDBPass']))	{ $_SESSION['UserDBPass'] = ""; }
+
 	// Start replacing existing sample configurations
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['ViewStringCharacterLimit'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEntriesPerPage'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEnableDetailPopups'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['EnableIPAddressResolve'\] = [0-9]{1,2};/";
-	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBServer'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPort'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBName'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPref'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBUser'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBPass'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBLoginRequired'\] = (.*?);/";
+
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
+	$replacements[] = "\$CFG['ViewStringCharacterLimit'] = " . $_SESSION['ViewStringCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
 	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
-	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled'] . ";";
+	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled_value'] . ";";
+	$replacements[] = "\$CFG['UserDBServer'] = '" . $_SESSION['UserDBServer'] . "';";
+	$replacements[] = "\$CFG['UserDBPort'] = " . $_SESSION['UserDBPort'] . ";";
+	$replacements[] = "\$CFG['UserDBName'] = '" . $_SESSION['UserDBName'] . "';";
+	$replacements[] = "\$CFG['UserDBPref'] = '" . $_SESSION['UserDBPref'] . "';";
+	$replacements[] = "\$CFG['UserDBUser'] = '" . $_SESSION['UserDBUser'] . "';";
+	$replacements[] = "\$CFG['UserDBPass'] = '" . $_SESSION['UserDBPass'] . "';";
+	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . $_SESSION['UserDBLoginRequired_value'] . ";";
 	
 	//User Database	Options
-	if ( $_SESSION['UserDBEnabled'] == 1 )
+	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] )
 	{
 		// TODO!
 	}
@@ -684,10 +742,29 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// Create file and write config into it!
 	$handle = fopen( $content['BASEPATH'] . "config.php" , "w");
 	if ( $handle === false ) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Coult not create the configuration file " . $content['BASEPATH'] . "config.php" . "! Check File permissions!!!" );
+		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDCREATECFGFILE'], $content['BASEPATH'] . "config.php") );
 	
 	fwrite($handle, $filebuffer);
 	fclose($handle);
+	// --- 
+
+	// --- If UserDB is enabled, we need to convert the settings now 
+	if ( $_SESSION['UserDBEnabled'] ) 
+	{
+		// Fully Initialize phpLogCon now!
+		InitPhpLogCon();
+		InitSourceConfigs();
+
+		// Perform conversion of settings into the database now!
+		ConvertCustomSearches();
+		ConvertCustomViews();
+		ConvertCustomSources();
+		
+		// Import General Settings in the last step!
+		ConvertGeneralSettings();
+	}
+	// --- 
+
 }
 // --- 
 
@@ -702,21 +779,6 @@ $page -> output();
 // ---
 
 // --- Helper functions
-
-function RevertOneStep($stepback, $errormsg)
-{
-	header("Location: install.php?step=" . $stepback . "&errormsg=" . urlencode($errormsg) );
-	exit;
-}
-
-function ForwardOneStep()
-{
-	global $content; 
-
-	header("Location: install.php?step=" . ($content['INSTALL_STEP']+1) );
-	exit;
-}
-
 function LoadDataFile($szFileName)
 {
 	global $content;
@@ -725,7 +787,7 @@ function LoadDataFile($szFileName)
 	$buffer = "";
 	$handle = @fopen($szFileName, "r");
 	if ($handle === false) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Error reading the file " . $szFileName . "! Check if the file exists!" );
+		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDREADINGFILE'], $szFileName) );
 	else
 	{
 		while (!feof($handle)) 
@@ -739,29 +801,26 @@ function LoadDataFile($szFileName)
 	return $buffer;
 }
 
-function ImportDataFile($szFileName)
+function InitUserDbSettings()
 {
-	global $content, $totaldbdefs;
+	global $CFG;
 
-	// Lets read the table definitions :)
-	$handle = @fopen($szFileName, "r");
-	if ($handle === false) 
-		RevertOneStep( $content['INSTALL_STEP']-1, "Error reading the default database defintion file " . $szFileName . "! Check if the file exists!!!" );
-	else
-	{
-		while (!feof($handle)) 
-		{
-			$buffer = fgets($handle, 4096);
-
-			$pos = strpos($buffer, "--");
-			if ($pos === false)
-				$totaldbdefs .= $buffer; 
-			else if ( $pos > 2 && strlen( trim($buffer) ) > 1 )
-				$totaldbdefs .= $buffer; 
-		}
-	   fclose($handle);
-	}
+	// Init DB Configs 
+	$CFG['UserDBEnabled'] = true;
+	$CFG['UserDBServer'] = $_SESSION['UserDBServer'];
+	$CFG['UserDBPort'] = $_SESSION['UserDBPort'];
+	$CFG['UserDBName'] = $_SESSION['UserDBName'];
+	$CFG['UserDBPref'] = $_SESSION['UserDBPref'];
+	$CFG['UserDBUser'] = $_SESSION['UserDBUser'];
+	$CFG['UserDBPass'] = $_SESSION['UserDBPass'];
+	$CFG['UserDBLoginRequired'] = $_SESSION['UserDBLoginRequired'];
+	
+	// Needed table defs
+	define('DB_CONFIG',			$CFG['UserDBPref'] . "config");
+	define('DB_USERS',			$CFG['UserDBPref'] . "users");
+	define('DB_SEARCHES',		$CFG['UserDBPref'] . "searches");
+	define('DB_SOURCES',		$CFG['UserDBPref'] . "sources");
+	define('DB_VIEWS',			$CFG['UserDBPref'] . "views");
 }
-
 // ---
 ?>

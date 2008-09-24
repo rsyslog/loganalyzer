@@ -1,0 +1,153 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_CHARTS_CENTER}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTCHARTS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<tr>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_CHARTS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_CHARTS_NAME}</b></td>
+			<td align="center" width="60" class="cellmenu1"><b>{LN_CHARTS_ENABLEDONLY}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_CHART_TYPE}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_CHARTS_ASSIGNTO}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+		<!-- BEGIN CHARTS -->
+		<tr>
+			<td align="center" class="{cssclass}"><b>{ID}</b></td>
+			<td align="left" class="{cssclass}">
+				<!-- IF ActionsAllowed="true" -->
+				<a href="{BASEPATH}admin/charts.php?op=edit&id={ID}">{DisplayName}</a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				<b>{DisplayName}</b>
+				<!-- ENDIF ActionsAllowed!="true" -->
+			</td>
+			<td align="center" class="{cssclass}"><img src="{ChartEnabledImage}" width="16" align="center"></td>
+			<td align="left" class="{cssclass}"><img src="{ChartTypeImage}" width="16" align="left"> <b>{ChartTypeText}</b></td>
+			<td align="left" class="{cssclass}"><img src="{ChartAssignedToImage}" width="16" align="left"> <b>{ChartAssignedToText}</b></td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ActionsAllowed="true" -->
+				&nbsp;<a href="{BASEPATH}admin/charts.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_CHARTS_EDIT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/charts.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_CHARTS_DELETE}"></a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				<!-- ENDIF ActionsAllowed!="true" -->
+				&nbsp;<a href="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
+				
+			</td>
+		</tr>
+		<!-- END CHARTS -->
+		<tr>
+			<td align="center" colspan="6" class="line0"><b><a href="{BASEPATH}admin/charts.php?op=add"><img src="{MENU_ADD}" title="{LN_CHARTS_ADD}">&nbsp;{LN_CHARTS_ADD}</a></b></td>
+		</tr>
+		</table>
+<!-- ENDIF LISTCHARTS="true" -->
+
+<!-- IF ISEDITORNEWCHART="true" -->
+		<form action="{BASEPATH}admin/charts.php" method="post">
+			
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_CHARTS_ADDEDIT}</b></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_CHARTS_NAME}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHARTS_ENABLED}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="chart_enabled" value="1" {CHECKED_ISCHARTENABLED}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_TYPE}</b></td>
+				<td align="right" class="line1">
+					<select id="chart_type" name="chart_type" size="1" OnChange="toggleSourceTypeVisibility('chart_type');">
+						<!-- BEGIN CHARTTYPES -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END CHARTTYPES -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_FIELD}</b></td>
+				<td align="right" class="line1">
+					<select id="chart_field" name="chart_field" size="1">
+						<!-- BEGIN CHARTFIELDS -->
+						<option {selected} value="{ID}">{DisplayName}</option>
+						<!-- END CHARTFIELDS -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_WIDTH}</b></td>
+				<td align="right" class="line1"><input type="text" name="chart_width" size="55" maxlength="255" value="{chart_width}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_MAXRECORDS}</b></td>
+				<td align="right" class="line1"><input type="text" name="maxrecords" size="55" maxlength="255" value="{maxrecords}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_SHOWPERCENT}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="showpercent" value="1" {CHECKED_ISSHOWPERCENT}></td>
+			</tr>
+
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
+			</tr>
+			<!-- IF ISGROUPSAVAILABLE="true" -->
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
+				<td align="right" class="line2">
+					<select name="groupid" size="1" STYLE="width: 300px">
+						<!-- BEGIN SUBGROUPS -->
+						<option value="{mygroupid}" {group_selected}>{groupname}</option>
+						<!-- END SUBGROUPS -->
+					</select>
+				</td>
+			</tr>
+			<!-- ENDIF ISGROUPSAVAILABLE="true" -->
+			</table>
+			<br>
+
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{CHART_SENDBUTTON}">
+					<input type="hidden" name="op" value="{CHART_FORMACTION}">
+					<input type="hidden" name="id" value="{CHARTID}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISEDITORNEWCHART="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->

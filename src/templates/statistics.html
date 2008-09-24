@@ -1,0 +1,69 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p align="left">{ERROR_MSG}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<!-- IF statsenabled="true" -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border_alternative">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_MENU_STATISTICS}</B></td>
+</tr>
+
+
+<tr>
+	<td colspan="3" class="titleSecond"><br><blockquote>{LN_STATS_WARNINGDISPLAY}</blockquote><br></td>
+</tr>
+
+<!-- BEGIN Charts -->
+<!-- IF chart_enabled="1" -->
+{rowbegin}
+	<br><br>
+	<table cellpadding="0" cellspacing="0" border="0" align="center" valign="top" width="{chart_width}" class="table_with_border_light">
+	<tr><td class="cellmenu1" align="center" colspan="2"><B>{DisplayName}</B></td></tr>
+	<tr>
+		<td class="cellmenu2" width="150" nowrap><B>{LN_CHART_TYPE}</B></td>
+		<td class="line1" width="100%">&nbsp;{CHART_TYPE_DISPLAYNAME}</td>
+	</tr>
+	<tr>
+		<td class="cellmenu2" nowrap><B>{LN_CHART_FIELD}</B></td>
+		<td class="line2">&nbsp;{CHART_FIELD_DISPLAYNAME}</td>
+	</tr>
+	<tr>
+		<td class="cellmenu2" nowrap><B>{LN_CHART_WIDTH}</B></td>
+		<td class="line1">&nbsp;{chart_width}</td>
+	</tr>
+	<tr>
+		<td class="cellmenu2" nowrap><B>{LN_CHART_MAXRECORDS}</B></td>
+		<td class="line2">&nbsp;{maxrecords}</td>
+	</tr>
+	<tr>
+		<td class="cellmenu2" nowrap><B>{LN_CHART_SHOWPERCENT}</B></td>
+		<td class="line1">&nbsp;{showpercent_display}</td>
+	</tr>
+	<tr><td class="{cssclass}" colspan="2">
+		<iframe name="Chart{CHART_ID}" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" src="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}" width="{chart_width}" height="{chart_width}"></iframe>
+	</td></tr>
+	</table>
+	<br><br>
+{rowend}
+<!-- ENDIF chart_enabled="1" -->
+<!-- END Charts -->
+</table>
+<!-- ENDIF statsenabled="true" -->
+
+<!-- INCLUDE include_footer.html -->

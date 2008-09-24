@@ -1,13 +1,34 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
-<tr> 
-	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="search.php" target="_top">Search</a></td>
-	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="index.php?{additional_url}" target="_top">Show Events</a></td>
+<tr>
+	<td class="topmenu1begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_GREEN}" width="16" height="16" vspace="0"></td>
+	<td class="topmenu1" nowrap align="center" width="75"><a class="topmenu1_link" href="{BASEPATH}search.php" target="_top"><img align="left" src="{MENU_SEARCH}" width="16" height="16" vspace="0">{LN_MENU_SEARCH}</a></td>
+	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="{BASEPATH}index.php?{additional_url}" target="_top"><img align="left" src="{MENU_HOMEPAGE}" width="16" height="16" vspace="0">{LN_MENU_SHOWEVENTS}</a></td>
+	<td class="topmenu1" nowrap align="center" width="90"><a class="topmenu1_link" href="{BASEPATH}statistics.php" target="_top"><img align="left" src="{MENU_CHARTS}" width="16" height="16" vspace="0">{LN_MENU_STATISTICS}</a></td>
 <!--	<td class="topmenu1" nowrap align="center" width="125"><a class="topmenu1_link" href="" target="_top">Show SysLogTags</a></td>-->
 <!--	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="" target="_top">User Options</a></td>-->
 <!--	<td class="topmenu1" nowrap align="center" width="125"><a class="topmenu1_link" href="" target="_top">Database Options</a></td>-->
 <!--	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="?" target="_top">Refresh</a></td>-->
-	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="http://wiki.rsyslog.com/index.php/PhpLogCon" target="phplogcon_help">Help</a></td>
-	<td class="topmenu1" nowrap align="center" width="200"><a class="topmenu1_link" href="http://kb.monitorware.com/search.php" target="_blank">Search in Knowledge Base</a></td>
+	<td class="topmenu1" nowrap align="center" width="60"><a class="topmenu1_link" href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_HELP}" width="16" height="16" vspace="0">{LN_MENU_HELP}</a></td>
+	<td class="topmenu1" nowrap align="center" width="200"><a class="topmenu1_link" href="http://kb.monitorware.com/search.php" target="_blank"><img align="left" src="{MENU_KB}" width="16" height="16" vspace="0">{LN_MENU_SEARCHINKB}</a></td>
+<!-- IF UserDBEnabled="true" -->
+	<!-- IF SESSION_LOGGEDIN!="true" -->
+	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="{BASEPATH}login.php" target="_top"><img align="left" src="{MENU_ADMINLOGOFF}" width="16" height="16" vspace="0">{LN_MENU_LOGIN}</a></td>
 	<td class="topmenuend" nowrap align="center" width="max">&nbsp;</td>
+	<!-- ENDIF SESSION_LOGGEDIN!="true" -->
+	<!-- IF SESSION_LOGGEDIN="true" -->
+	<td class="topmenu1" nowrap align="center" width="110"><a class="topmenu1_link" href="{BASEPATH}admin/index.php" target="_top"><img align="left" src="{MENU_ADMINENTRY}" width="16" height="16" vspace="0">{LN_MENU_ADMINCENTER}</a></td>
+	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="{BASEPATH}login.php?op=logoff" target="_top"><img align="left" src="{MENU_ADMINLOGOFF}" width="16" height="16" vspace="0">{LN_MENU_LOGOFF}</a></td>
+	<td class="topmenuend" nowrap align="center" width="max">{LN_MENU_LOGGEDINAS} "{SESSION_USERNAME}"</td>
+	<!-- ENDIF SESSION_LOGGEDIN="true" -->
+<!-- ENDIF UserDBEnabled="true" -->
+<!-- IF UserDBEnabled!="true" -->
+	<td class="topmenuend" nowrap align="center" width="max">&nbsp;</td>
+<!-- ENDIF UserDBEnabled!="true" -->
+
+<!-- IF IS_NOLOGINPAGE!="true" -->
+	<td class="topmenuextra" nowrap align="center" width="16">
+	<a class="topmenu1_link" href="{MAXURL}" target="_top"><img align="left" src="{MAXIMAGE}" width="16" height="16" vspace="0" alt="{MAXLANGTEXT}" title="{MAXLANGTEXT}"></a>
+	</td>
+<!-- ENDIF IS_NOLOGINPAGE!="true" -->
 </tr>
 </table>

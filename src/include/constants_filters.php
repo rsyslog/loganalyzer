@@ -58,13 +58,15 @@ define('DATE_LASTX_31DAYS', 5);
 // Helper constants needed for parsing filters
 define('FILTER_TMP_KEY', 0);
 define('FILTER_TMP_VALUE', 1);
+define('FILTER_TMP_MODE', 2);
 define('FILTER_DATEMODE', 'datemode');
 define('FILTER_TYPE', 'filtertype');
 define('FILTER_DATEMODENAME', 'datemodename');
 define('FILTER_VALUE', 'value');
 define('FILTER_MODE', 'filtermode');
-define('FILTER_MODE_INCLUDE', 0);
-define('FILTER_MODE_EXCLUDE', 1);
+define('FILTER_MODE_INCLUDE', 1);
+define('FILTER_MODE_EXCLUDE', 2);
+define('FILTER_MODE_SEARCHFULL', 4);
 
 // --- Init Facility LIST
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );
@@ -109,5 +111,6 @@ $content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" 
 $content['filter_messagetype_list'][] = array( "ID" => IUT_Syslog, "DisplayName" => "Syslog", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_NT_EventReport, "DisplayName" => "WinEventLog", "selected" => "" );
 $content['filter_messagetype_list'][] = array( "ID" => IUT_File_Monitor, "DisplayName" => "File Monitor", "selected" => "" );
+$content['filter_messagetype_list'][] = array( "ID" => IUT_WEBSERVERLOG, "DisplayName" => "Webserver Logfile", "selected" => "" );
 
 ?>

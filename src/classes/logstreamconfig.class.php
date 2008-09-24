@@ -48,8 +48,111 @@ abstract class LogStreamConfig {
 	protected $_logStreamName = '';
 	protected $_defaultFacility = '';
 	protected $_defaultSeverity = '';
-
+	
+	// helpers properties for message parser list!
+	protected $_msgParserList = null;		// Contains a string list of configure msg parsers
+	protected $_msgParserObjList = null;	// Contains an object reference list to the msg parsers
+	protected $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
+	
+	// Constructor prototype 
 	public abstract function LogStreamFactory($o);
+	
+	/*
+	* Initialize Msg Parsers!
+	*/
+	public function InitMsgParsers()
+	{
+		// Init parsers if available and not initialized already!
+		if ( $this->_msgParserList != null && $this->_msgParserObjList == null ) 
+		{
+			// Loop through parsers
+			foreach( $this->_msgParserList as $szParser )
+			{
+				// Set Classname
+				$szClassName = "MsgParser_" . $szParser;
+
+				// Create OBjectRef!
+				$NewParser = new $szClassName();					// Create new instance
+				$NewParser->_MsgNormalize = $this->_MsgNormalize;	// Copy property!
+				$this->_msgParserObjList[] = $NewParser;			// Append NewParser to Parser array
+			}
+		}
+	}
+
+	/*
+	* Helper function to init Parserlist
+	*/
+	public function SetMsgNormalize( $nNewVal )
+	{
+		if ( $nNewVal == 0 ) 
+			$this->_MsgNormalize = 0;
+		else
+			$this->_MsgNormalize = 1;
+	}
+
+	/*
+	* Helper function to init Parserlist
+	*/
+	public function SetMsgParserList( $szParsers )
+	{
+		global $gl_root_path;
+
+		// Check if we have at least something to check 
+		if ( $szParsers == null || strlen($szParsers) <= 0 )
+			return;
+
+		// Set list of Parsers!
+		if ( strpos($szParsers, ",") ) 
+			$aParsers = explode( ",", $szParsers );
+		else
+			$aParsers[0] = $szParsers;
+
+		// Loop through parsers
+		foreach( $aParsers as $szParser )
+		{
+			// Remove whitespaces
+			$szParser = trim($szParser);
+
+			// Check if parser file include exists
+			$szIncludeFile = $gl_root_path . 'classes/msgparsers/msgparser.' . $szParser . '.class.php';
+			if ( file_exists($szIncludeFile) )
+			{
+				// Try to include
+				if ( @include_once($szIncludeFile) )
+					$this->_msgParserList[] = $szParser;
+				else
+					OutputDebugMessage("Error, MsgParser '" . $szParser . "' could not be included. ", DEBUG_ERROR);
+
+			}
+		}
+
+//		print_r ( $this->_msgParserList );
+	}
+
+	public function ProcessMsgParsers($szMsg, &$arrArguments)
+	{
+		// Abort msgparsers if we have less then 5 seconds of processing time!
+		global $content, $gl_starttime;
+		$scriptruntime = intval(microtime_float() - $gl_starttime);
+		if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
+			return ERROR_MSG_SCANABORTED;
+
+		// Process if set!
+		if ( $this->_msgParserObjList != null )
+		{
+			foreach( $this->_msgParserObjList as $myMsgParser )
+			{
+				// Perform Parsing, and return if was successfull or the message needs to be skipped!
+				// Otherwise the next Parser will be called. 
+				$ret = $myMsgParser->ParseMsg($szMsg, $arrArguments);
+				if ( $ret == SUCCESS || $ret == ERROR_MSG_SKIPMESSAGE )
+					return $ret;
+			}
+		}
+
+		// reached this means all work is done!
+		return SUCCESS;
+	}
 
 }
 ?>

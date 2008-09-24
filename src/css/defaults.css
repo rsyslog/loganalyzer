@@ -22,6 +22,12 @@
 	display: none;
 }
 
+.ShownContent
+{
+	visibility: visible;
+	display: inline;
+}
+
 .SelectSavedFilter
 {
 	margin-top: 2px;
@@ -80,4 +86,18 @@
 .gridline
 {
 	height: 16px;
+}
+
+.borderless
+{ 
+	border:0px solid;
+	background-color: transparent; 
+}
+
+.borderlessbuttons
+{ 
+	border:0px solid;
+	background-color: transparent; 
+	width:20px; 
+	padding: 0px;
 }

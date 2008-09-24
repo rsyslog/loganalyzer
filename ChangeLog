@@ -2,15 +2,80 @@
 Version 2.4.0 (v2-stable), 2008-09-24
 - Merged beta branch into v2-stable branch.
 ---------------------------------------------------------------------------
+Version 2.5.9 (devel), 2008-09-19
+- Implemented support to analyze Webserver logfiles from Apache and
+  Microsoft IIS Webserver. There is a collection of new fields available,
+  filtering is possible. . In order to read Apache or IIS logfiles, 
+  you need to use the "iis" or "apache2" message parser in your disk 
+  sources. 
+- Added a new page called "asktheoracle.php" which will be automatically 
+  linked on IP's and domain names. It is a simple helper page which 
+  creates a bunch of usefull filter links. 
+- Added some basic documentation into the doc folder. phpLogCon
+  does also link to this documentation now (Help Menu Entry).
+- Added a general option to limit the display of string fields. 
+- Added a general option to configure the timeout value of popup menus. 
+- Added a general option to alter the php scrip timeout. This is of course 
+  only possible if the php interpreter is allowed to change the script 
+  timeout. 
+- Added checks for the script timeout in the disk logstream, this avoids
+  that the script is suddenly stopped by the php interpreter. 
+- Fixed a sorting bug in the disk logstream, which removed numeric 
+  values in the charts
+- Added support to filter for a + character as well now. In order to filter
+  for strings containing the + character, just add replace it with ++. 
+  A single + will still be equal to a space character in the filter engine.
+---------------------------------------------------------------------------
+Version 2.5.8 (devel), 2008-09-16
+- Added Bitstream Vera Fonts into the package which will be used by the
+  chart generator. So there won't be a problem of missing truetype fonts
+  anymore. 
+- Tweaked the visual appereance of all chart types.
+---------------------------------------------------------------------------
+Version 2.5.7 (devel), 2008-09-15
+- Added Statistics page for chart generation. The following charts are 
+  possible right now: Pie, bars vertical and bars horicontal. 
+  All charts can be configured within the Admin Center, if the user system 
+  is installed and enabled. Custom charts can be added as well. 
+- Added filter / search support for processid, event category and the 
+  event user field
+- Added database update, as we now have a new table to store 
+  configured charts into.
+- Fixed a few minor filtering issues, specially with numeric filters.
+---------------------------------------------------------------------------
 Version 2.3.11 (beta), 2008-09-08
 - Fix another parsing issue in the logline parser. Most of RFC 3164
   formatted syslog messages should now be correctly splitted into their
   fields. 
 ---------------------------------------------------------------------------
+Version 2.5.6 (devel), 2008-09-03
+- Implemented Message Parser facility. This new extendable facility of 
+  phpLogCon helps splitting messages into fields. And the fields can
+  be filtered and searched for, this expands the full potential of 
+  phpLogCon. A message parser for windows eventlog logfiles generated 
+  by Adiscon products is included. 
+- Linebreaks within messages are now displayed in the popup window, 
+  and the detail page. 
+- Added Database Upgrade functionalety, the reason is simple, because 
+  there was an update to the database structure. If you are using the
+  User Management system, you will be prompted to upgrade your database
+  next time you login. 
+---------------------------------------------------------------------------
+Version 2.5.5 (devel), 2008-08-28
+- Added option to send debug messages (warnings and error's) from 
+  phpLogCon to the local syslog server on linux. On Windows, the debug 
+  messages will appear in the application event log. 
+- Enhanced the PDO Logstream Driver for better performance on large 
+  databases. On MYSQL and POSTGRES, the PDO Logstream does not uses the 
+  LIMIT statement to minimize database usage.
+---------------------------------------------------------------------------
 Version 2.3.10 (beta), 2008-08-27
 - Fixed a few parsing issues with prior RFC 3164 syslog messages. 
   These messages are now correctly parsed, or better do not cause
   any parsing problems anymore. 
+---------------------------------------------------------------------------
+Version 2.5.4 (devel), 2008-08-05
+- Included fixed from Beta v2.3.9
 ---------------------------------------------------------------------------
 Version 2.3.9 (beta), 2008-08-07
 - Fixed a bug in the parsing of RFC 3164 date and time stamps which 
@@ -19,6 +84,44 @@ Version 2.3.9 (beta), 2008-08-07
 - Enhanced detail popup window, it performs much better now and is less
   annoying. It still can be turned off very easily.
 - Fixed an image alignment problem of the message once and for all. 
+---------------------------------------------------------------------------
+Version 2.5.3 (devel), 2008-08-05
+- Added support to export the current visible events into a XML or CSV 
+  file. If you have further recommendations for useful export file 
+  formats, just let us know in the phpLogCon forums or mailinglist.
+- Extended Filter Engine to support Full and Partial Text searches on
+  string fields. The submenu buttons also now use the Full Text search
+  by default, which performs much better on database logstream sources. 
+- A new menu entry on each value on each field in the main EventView 
+  gives you the option to search for this field only, or extend an 
+  existing filterset. 
+---------------------------------------------------------------------------
+Version 2.5.2 (devel), 2008-08-01
+- General Options are now configureable on user basis, if UserDB System
+  is installed of course. This means first, phpLogCon used the global
+  configured options, then the user configured - if available. 
+- When you add new Sources, the source is checked with better error details. 
+  If you have a database connection, even the existence of the configured
+  table is checked. This helps locating configuration problems. 
+- Fixed minor bug in the installer which was added in v2.5.0.
+- Fixed spelling errors in the admin index template. 
+- Error messages in the admin center contain more useful details now.
+---------------------------------------------------------------------------
+Version 2.5.1 (devel), 2008-07-29
+- Added a new option to suppress displaying multiple messages. This
+  means if you have two or more messages of the exact same text one after
+  another, only ONE message will be shown. This helps to "compress" the
+  logview a little bit. 
+- New feature, added Maximize/Normalize button into the menu. You can 
+  hide the header now by using this feature for maximum log display.
+- If the UserDB System is enabled, the donate button will only being 
+  shown within the Admin Center. 
+- Fixed a bug in the input checking of files when a Diskfile source 
+  was added or reconfigured.
+- Fixed minor bug reading the correct default view for sources from DB.
+- Fixed a problem in the Views Admin, a set of predefined columns could be 
+  in the list. 
+- Enhanced error display in all admin templates.
 ---------------------------------------------------------------------------
 Version 2.3.8 (beta), 2008-07-28
 - Fixed a "notice" bug in the installer, which was missing to save the 
@@ -29,10 +132,25 @@ Version 2.3.8 (beta), 2008-07-28
   not linked to whois anymore. 
 - Fixed Line Ending to Unix in some code files. 
 ---------------------------------------------------------------------------
+Version 2.5.0 (devel), 2008-07-24
+- Fully implemented the UserDB System. This is the next major milestone 
+  in the development of phpLogCon. The new UserDB System allows you to 
+  fully customize phpLogCon using an admin interface and offers the 
+  following sub-features: Users, Groups, Sources, Views, Searches and 
+  general options. Exiting configurations can be imported into the 
+  user system using the convert.php script. The installer has an option 
+  to install the user system.
+- Added Icons to all Topmenu entries, as well as into the Admin 
+  Topmenu entries.
+- Improved stylesheets
+---------------------------------------------------------------------------
 Version 2.3.7 (beta), 2008-07-07
 - Added missing db mapping for program field of syslogng - thanks to 
   Micha "Wolvverine" Panasiewicz
 - Added translation for Brazilian Portuguese, thanks to Ricardo Maraschini
+---------------------------------------------------------------------------
+Version 2.5.0 (devel), 2008-06-10
+- Moved older devel branch to beta branch. Increment Version minor number.
 ---------------------------------------------------------------------------
 Version 2.2.0 (v2-stable), 2008-06-10
 - Moved beta branch to v2-stable branch.

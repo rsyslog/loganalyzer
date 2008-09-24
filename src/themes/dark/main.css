@@ -62,6 +62,16 @@ A.title:hover
 	COLOR: #FF0A0C; 
 	TEXT-DECORATION: none;
 }
+.titleSecond
+{
+	FONT: bold 10px Verdana, Arial, Helvetica, sans-serif; 
+    BACKGROUND-COLOR: #301B22;
+	COLOR: #E5F377;
+	height: 18px;
+	text-align:center;
+	vertical-align:middle;
+}
+
 
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
@@ -101,6 +111,12 @@ font
 	background-color:#19232D;
 	border:1px solid;
 	border-color: #050A0F #050A0F #050A0F #050A0F; 
+}
+
+.table_with_border_light
+{ 
+	background-color:#1C2021;
+	border:1px #050A0F solid;
 }
 
 .with_border
@@ -191,11 +207,22 @@ font
 }
 
 /* TOP Menu Classes */
+.topmenu1begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #38110E;
+}
 .topmenu1
 {
 	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
 
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
@@ -204,6 +231,8 @@ font
 .topmenu1:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #D79993 #290604 #290604 #D79993;
 	background-color: #492D2B;
 	text-decoration: none;
 }
@@ -223,19 +252,40 @@ font
 	color: #FFFFFF;
 	background-color: #290604;
 }
-.topmenu2
+.topmenuextra
 {
 	height: 16px;
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #053841;
+}
+
+.topmenu2begin
+{
+	height: 20px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #49221F;
+}
+.topmenu2
+{
+	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
 
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #38110E;
+	background-color: #49221F;
 }
 .topmenu2:hover 
 { 
 	color: #FFFF99;
+	border:1px inset;
+	border-color: #D79993 #290604 #290604 #D79993;
 	background-color: #492D2B;
 	text-decoration: none;
 }
@@ -250,12 +300,11 @@ font
 }
 .topmenu2end
 {
-	height: 16px;
-	border:1px inset;
-	border-color: #D79993 #290604 #D79993 #D79993;
+	height: 20px;
+	border:0px;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
-	background-color: #290604;
+	background-color: #49221F;
 }
 
 /* Cell Columns */
@@ -308,9 +357,6 @@ A.cellmenu1_link:hover
 {
 	font: bold 12px Verdana, Arial, Helvetica, sans-serif; 
 	COLOR: #FF2222;
-	border-top: 1px solid;
-	border-bottom: 1px solid;
-	border-color: #58363E;
 }
 .PriorityEmergency
 {

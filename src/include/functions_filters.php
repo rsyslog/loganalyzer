@@ -41,7 +41,7 @@ require_once($gl_root_path . 'include/constants_filters.php');
 
 function InitFilterHelpers()
 {
-	global $CFG, $content, $filters;
+	global $content, $filters;
 
 	// Init Default DateMode from SESSION!
 	if ( isset($_SESSION['filter_datemode']) ) 
@@ -196,7 +196,7 @@ function InitFilterHelpers()
 
 function FillDateRangeArray($sourcearray, $szArrayListName, $szFilterName) // $content['years'], "filter_daterange_from_year_list", "filter_daterange_from_year")
 {
-	global $CFG, $content, $filters;
+	global $content, $filters;
 	$iCount = count($sourcearray);
 
 	for ( $i = 0; $i < $iCount; $i++)
@@ -262,7 +262,7 @@ function GetTimeStampFromTimeString($szTimeString)
 	}
 	else
 	{
-		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'");
+		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'", DEBUG_WARN);
 		return $szTimeString;
 	}
 }

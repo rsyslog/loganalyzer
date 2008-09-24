@@ -1,259 +1,597 @@
 <?php
-	/*
+/*
+*********************************************************************
+* -> www.phplogcon.org <-											*
+* -----------------------------------------------------------------	*
+* Maintain and read Source Configurations							*
+*																	*
+* -> Configuration need variables for the Database connection		*
+*
+* Copyright (C) 2008 Adiscon GmbH.
+*
+* This file is part of phpLogCon.
+*
+* PhpLogCon is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* PhpLogCon is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+*
+* A copy of the GPL can be found in the file "COPYING" in this
+* distribution.
 	*********************************************************************
-	* -> www.phplogcon.org <-											*
-	* -----------------------------------------------------------------	*
-	* Maintain and read Source Configurations							*
-	*																	*
-	* -> Configuration need variables for the Database connection		*
-	*
-	* Copyright (C) 2008 Adiscon GmbH.
-	*
-	* This file is part of phpLogCon.
-	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
-	* it under the terms of the GNU General Public License as published by
-	* the Free Software Foundation, either version 3 of the License, or
-	* (at your option) any later version.
-	*
-	* PhpLogCon is distributed in the hope that it will be useful,
-	* but WITHOUT ANY WARRANTY; without even the implied warranty of
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	* GNU General Public License for more details.
-	*
-	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
-	*
-	* A copy of the GPL can be found in the file "COPYING" in this
-	* distribution.
-		*********************************************************************
-	*/
+*/
 
-	// --- Avoid directly accessing this file! 
-	if ( !defined('IN_PHPLOGCON') )
+// --- Avoid directly accessing this file! 
+if ( !defined('IN_PHPLOGCON') )
+{
+	die('Hacking attempt');
+	exit;
+}
+// --- 
+
+// --- Perform necessary includes
+require_once($gl_root_path . 'classes/logstreamconfig.class.php');
+// --- 
+
+function InitSource(&$mysource)
+{
+	global $CFG, $content, $gl_root_path, $currentSourceID;
+
+	if ( isset($mysource['SourceType']) ) 
 	{
-		die('Hacking attempt');
-		exit;
-	}
-	// --- 
-
-	// --- Perform necessary includes
-	require_once($gl_root_path . 'classes/logstreamconfig.class.php');
-	// --- 
-
-	function InitSourceConfigs()
-	{
-		global $CFG, $content, $currentSourceID, $gl_root_path;
-
-		// Init Source Configs!
-		if ( isset($CFG['Sources']) )
-		{	
-			$iCount = count($CFG['Sources']);
-			foreach( $CFG['Sources'] as &$mysource )
-			{
-				if ( isset($mysource['SourceType']) ) 
-				{
-					// Set Array Index, TODO: Check for invalid characters!
-					$iSourceID = $mysource['ID'];
-					// Copy general properties
-//						$content['Sources'][$iSourceID]['ID'] = $mysource['ID'];
-//						$content['Sources'][$iSourceID]['Name'] = $mysource['Name'];
-//						$content['Sources'][$iSourceID]['SourceType'] = $mysource['SourceType'];
-					
-					// Set default if not set!
-					if ( !isset($mysource['LogLineType']) ) 
-						$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
-
-					// Set different view if necessary
-					if ( isset($_SESSION[$iSourceID . "-View"]) ) 
-					{
-						// Overwrite configured view!
-						$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
-					}
-					else
-					{
-						if ( isset($mysource['ViewID']) )
-							// Set to configured Source ViewID
-							$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
-						else
-							// Not configured, maybe old legacy cfg. Set default view.
-							$content['Sources'][$iSourceID]['ViewID'] = strlen($CFG['DefaultViewsID']) > 0 ? $CFG['DefaultViewsID'] : "SYSLOG";
-
-					}
-
-					// Only for the display box
-					$content['Sources'][$iSourceID]['selected'] = ""; 
-					
-					// Create Config instance!
-					if ( $mysource['SourceType'] == SOURCE_DISK )
-					{
-						// Perform necessary include
-						require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
-
-						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDisk();
-						$content['Sources'][$iSourceID]['ObjRef']->FileName = $mysource['DiskFile'];
-						$content['Sources'][$iSourceID]['ObjRef']->LineParserType = $mysource['LogLineType'];
-					}
-					else if ( $mysource['SourceType'] == SOURCE_DB )
-					{
-						// Perform necessary include
-						require_once($gl_root_path . 'classes/logstreamconfigdb.class.php');
-
-						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigDB();
-						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
-						// Workaround a little bug from the installer script
-						if ( isset($mysource['DBType']) )
-							$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
-						else
-							$content['Sources'][$iSourceID]['ObjRef']->DBType = DB_MYSQL;
-
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
-						
-						// Legacy handling for tabletype!
-						if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
-							$content['Sources'][$iSourceID]['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
-						else
-							$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
-
-						// Optional parameters!
-						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
-						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
-						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
-						if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
-					}
-					else if ( $mysource['SourceType'] == SOURCE_PDO )
-					{
-						// Perform necessary include
-						require_once($gl_root_path . 'classes/logstreamconfigpdo.class.php');
-
-						$content['Sources'][$iSourceID]['ObjRef'] = new LogStreamConfigPDO();
-						$content['Sources'][$iSourceID]['ObjRef']->DBServer = $mysource['DBServer'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBName = $mysource['DBName'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBType = $mysource['DBType'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableName = $mysource['DBTableName'];
-						$content['Sources'][$iSourceID]['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
-
-						// Optional parameters!
-						if ( isset($mysource['DBPort']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPort = $mysource['DBPort']; }
-						if ( isset($mysource['DBUser']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBUser = $mysource['DBUser']; }
-						if ( isset($mysource['DBPassword']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBPassword = $mysource['DBPassword']; }
-						if ( isset($mysource['DBEnableRowCounting']) ) { $content['Sources'][$iSourceID]['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
-					}
-					else
-					{	
-						// UNKNOWN, remove config entry!
-						unset($content['Sources'][$iSourceID]);
-
-						// TODO: Output CONFIG WARNING
-						die( "Not supported yet!" );
-					}
-					
-					// Set generic configuration options
-					$content['Sources'][$iSourceID]['ObjRef']->_pageCount = $CFG['ViewEntriesPerPage'];
-
-					// Set default SourceID here!
-					if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
-						$currentSourceID = $iSourceID;
-				}
-			}
+		// Set Array Index, TODO: Check for invalid characters!
+		$iSourceID = $mysource['ID'];
+		
+		// --- Set defaults if not set!
+		if ( !isset($mysource['LogLineType']) ) 
+		{
+			$CFG['Sources'][$iSourceID]['LogLineType'] = "syslog";
+			$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
 		}
 
-		// Read SourceID from GET Querystring
-		if ( isset($_GET['sourceid']) && isset($content['Sources'][$_GET['sourceid']]) )
+		if ( !isset($mysource['userid']) )
 		{
-			$currentSourceID = $_GET['sourceid'];
-			$_SESSION['currentSourceID'] = $currentSourceID;
+			$CFG['Sources'][$iSourceID]['userid'] = null;
+			$content['Sources'][$iSourceID]['userid'] = null;
+		}
+		if ( !isset($mysource['groupid']) )
+		{
+			$CFG['Sources'][$iSourceID]['groupid'] = null;
+			$content['Sources'][$iSourceID]['groupid'] = null;
+		}
+
+		if ( !isset($mysource['MsgParserList']) )
+		{
+			$CFG['Sources'][$iSourceID]['MsgParserList'] = null;
+			$content['Sources'][$iSourceID]['MsgParserList'] = null;
+		}
+
+		if ( !isset($mysource['MsgNormalize']) )
+		{
+			$CFG['Sources'][$iSourceID]['MsgNormalize'] = 0;
+			$content['Sources'][$iSourceID]['MsgNormalize'] = 0;
+		}
+		// ---
+
+		// Set default view id to source
+		$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
+		$szDefaultViewID = strlen($tmpVar) > 0 ? $tmpVar : "SYSLOG";
+
+		if ( isset($_SESSION[$iSourceID . "-View"]) ) 
+		{
+			// check if view is valid
+			$UserSessionViewID = $_SESSION[$iSourceID . "-View"];
+
+			if ( isset($content['Views'][$UserSessionViewID]) ) 
+			{
+				// Overwrite configured view!
+				$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
+			}
+			else
+				$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
 		}
 		else
 		{
-			// Set Source from session if available!
-			if ( isset($_SESSION['currentSourceID']) && isset($content['Sources'][$_SESSION['currentSourceID']]) )
-				$currentSourceID = $_SESSION['currentSourceID'];
+			if ( isset($mysource['ViewID']) && strlen($mysource['ViewID']) > 0 && isset($content['Views'][ $mysource['ViewID'] ]) )
+				// Set to configured Source ViewID
+				$content['Sources'][$iSourceID]['ViewID'] = $mysource['ViewID'];
 			else
-			{
-				if ( isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ]) ) 
-					// Set Source to preconfigured sourceID!
-					$_SESSION['currentSourceID'] = $CFG['DefaultSourceID'];
-				else
-					// No Source stored in session, then to so now!
-					$_SESSION['currentSourceID'] = $currentSourceID;
-			}
+				// Not configured, maybe old legacy cfg. Set default view.
+				$content['Sources'][$iSourceID]['ViewID'] = $szDefaultViewID;
 		}
+
+		// Only for the display box
+		$content['Sources'][$iSourceID]['selected'] = ""; 
 		
-		// Set for the selection box in the header
-		$content['Sources'][$currentSourceID]['selected'] = "selected";
-
-		// --- Additional handling needed for the current view!
-		global $currentViewID;
-		$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
-
-		// Set selected state for correct View, for selection box ^^
-		$content['Views'][ $currentViewID ]['selected'] = "selected";
-
-		// If DEBUG Mode is enabled, we prepend the UID field into the col list!
-		if ( $CFG['MiscShowDebugMsg'] == 1 && isset($content['Views'][$currentViewID]) )
-			array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
-		// ---
-	}
-
-	/*
-	*	This function Inits preconfigured Views. 
-	*/
-	function InitViewConfigs()
-	{
-		global $CFG, $content, $currentViewID;
-		
-		// Predefined phpLogCon Views 
-		$CFG['Views']['SYSLOG']= array( 
-										'ID' =>			"SYSLOG", 
-										'DisplayName' =>"Syslog Fields", 
-										'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
-									   );
-		$CFG['Views']['EVTRPT']= array( 
-										'ID' =>			"EVTRPT", 
-										'DisplayName' =>"EventLog Fields", 
-										'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ), 
-									   );
-		
-		// Set default of 'DefaultViewsID'
-		$CFG['DefaultViewsID'] = "SYSLOG";
-
-		// Loop through views now and copy into content array!
-		foreach ( $CFG['Views'] as $key => $view )
+		// Create Config instance!
+		if ( $mysource['SourceType'] == SOURCE_DISK )
 		{
-			$content['Views'][$key] = $view;
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
+			$mysource['ObjRef'] = new LogStreamConfigDisk();
+			$mysource['ObjRef']->FileName = $mysource['DiskFile'];
+			$mysource['ObjRef']->LineParserType = $mysource['LogLineType'];
+		}
+		else if ( $mysource['SourceType'] == SOURCE_DB )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigdb.class.php');
 
-			/*
-			// Set View from session if available!
-			if ( isset($_SESSION['currentSourceID']) )
-			{
-				$currentSourceID = $_SESSION['currentSourceID'];
+			$mysource['ObjRef'] = new LogStreamConfigDB();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			// Workaround a little bug from the installer script
+			if ( isset($mysource['DBType']) )
+				$mysource['ObjRef']->DBType = $mysource['DBType'];
+			else
+				$mysource['ObjRef']->DBType = DB_MYSQL;
 
-				if ( isset($_SESSION[$currentSourceID . "-View"]) && )
-					$content['Views'][$key]['selected'] = "selected";
-			}
-			*/
+			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
+			
+			// Legacy handling for tabletype!
+			if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
+				$mysource['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
+			else
+				$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+		}
+		else if ( $mysource['SourceType'] == SOURCE_PDO )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigpdo.class.php');
+
+			$mysource['ObjRef'] = new LogStreamConfigPDO();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			$mysource['ObjRef']->DBType = $mysource['DBType'];
+			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
+			$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+		}
+		else
+		{	
+			// UNKNOWN, remove config entry!
+			unset($content['Sources'][$iSourceID]);
+
+			// Output CRITICAL WARNING
+			DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
+		}
+
+		// Set generic configuration options
+		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
+		$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
+		$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
+
+		// Set default SourceID here!
+		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
+			$currentSourceID = $iSourceID;
+
+		// Copy Object REF into CFG and content Array as well!
+		$content['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef'];
+		$CFG['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef']; 
+	}
+}
+
+function InitSourceConfigs()
+{
+	global $CFG, $content, $currentSourceID;
+
+	// Init Source Configs!
+	if ( isset($CFG['Sources']) )
+	{	
+		foreach( $CFG['Sources'] as &$mysource )
+		{
+			// Init each source using this function!
+			InitSource($mysource);
 		}
 	}
 
-	/*
-	*	This function Inits preconfigured Views. 
-	*/
-	function AppendLegacyColumns()
+	// Read SourceID from GET Querystring
+	if ( isset($_GET['sourceid']) && isset($content['Sources'][$_GET['sourceid']]) )
 	{
-		global $CFG, $content;
-
-		// Init View from legacy Columns 
-		$CFG['Views']['LEGACY']= array( 
-										'ID' =>			"LEGACY", 
-										'DisplayName' =>"Legacy Columns Configuration", 
-										'Columns' =>	$CFG['Columns'], 
-									   );
-		
-		// set default to legacy of no default view is specified!
-		if ( !isset($CFG['DefaultViewsID']) || strlen($CFG['DefaultViewsID']) <= 0 )
-			$CFG['DefaultViewsID'] = "LEGACY";
+		$currentSourceID = $_GET['sourceid'];
+		$_SESSION['currentSourceID'] = $currentSourceID;
 	}
+	else
+	{
+		// Set Source from session if available!
+		if ( isset($_SESSION['currentSourceID']) && isset($content['Sources'][$_SESSION['currentSourceID']]) )
+			$currentSourceID = $_SESSION['currentSourceID'];
+		else
+		{
+			$tmpVar = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
+			if ( isset($content['Sources'][ $tmpVar ]) ) 
+				// Set Source to preconfigured sourceID!
+				$_SESSION['currentSourceID'] = $tmpVar;
+			else
+				// No Source stored in session, then to so now!
+				$_SESSION['currentSourceID'] = $currentSourceID;
+		}
+	}
+	
+	// Set for the selection box in the header
+	$content['Sources'][$currentSourceID]['selected'] = "selected";
+
+	// --- Additional handling needed for the current view!
+	global $currentViewID;
+	$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
+
+	// Set selected state for correct View, for selection box ^^
+	$content['Views'][ $currentViewID ]['selected'] = "selected";
+
+	// If DEBUG Mode is enabled, we prepend the UID field into the col list!
+	
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['Views'][$currentViewID]) )
+		array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
+	// ---
+}
+
+/*
+*	This function Inits preconfigured Views. 
+*/
+function InitViewConfigs()
+{
+	global $CFG, $content, $currentViewID;
+	
+	// Predefined phpLogCon Views 
+	$CFG['Views']['SYSLOG']= array( 
+									'ID' =>			"SYSLOG", 
+									'DisplayName' =>"Syslog Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	$CFG['Views']['EVTRPT']= array( 
+									'ID' =>			"EVTRPT", 
+									'DisplayName' =>"EventLog Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	$CFG['Views']['WEBLOG']= array( 
+									'ID' =>			"WEBLOG", 
+									'DisplayName' =>"Webserver Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_WEBLOG_URL, SYSLOG_WEBLOG_USERAGENT, SYSLOG_WEBLOG_STATUS, SYSLOG_WEBLOG_BYTESSEND, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	
+	// Set default of 'DefaultViewsID'
+	$CFG['DefaultViewsID'] = "SYSLOG";
+
+	// Loop through views now and copy into content array!
+	foreach ( $CFG['Views'] as $key => $view )
+		$content['Views'][$key] = $view;
+}
+
+/*
+*	This function Inits preconfigured Views. 
+*/
+function AppendLegacyColumns()
+{
+	global $CFG, $content;
+
+	// Init View from legacy Columns 
+	$CFG['Views']['LEGACY']= array( 
+									'ID' =>			"LEGACY", 
+									'DisplayName' =>"Legacy Columns Configuration", 
+									'Columns' =>	$CFG['Columns'], 
+								   );
+	
+	// set default to legacy of no default view is specified!
+	$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
+	if ( strlen($tmpVar) <= 0 )
+		$CFG['DefaultViewsID'] = "LEGACY";
+}
+
+function InitPhpLogConConfigFile($bHandleMissing = true)
+{
+	// Needed to make global
+	global $CFG, $gl_root_path, $content;
+
+	if ( file_exists($gl_root_path . 'config.php') && GetFileLength($gl_root_path . 'config.php') > 0 )
+	{
+		// Include the main config
+		include_once($gl_root_path . 'config.php');
+		
+		// Easier DB Access
+		$tblPref = GetConfigSetting("UserDBPref", "logcon");
+		define('DB_CONFIG',			$tblPref . "config");
+		define('DB_GROUPS',			$tblPref . "groups");
+		define('DB_GROUPMEMBERS',	$tblPref . "groupmembers");
+		define('DB_SEARCHES',		$tblPref . "searches");
+		define('DB_SOURCES',		$tblPref . "sources");
+		define('DB_USERS',			$tblPref . "users");
+		define('DB_VIEWS',			$tblPref . "views");
+		define('DB_CHARTS',			$tblPref . "charts");
+
+		// Legacy support for old columns definition format!
+		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
+			AppendLegacyColumns();
+
+		// --- Now Copy all entries into content variable
+		foreach ($CFG as $key => $value )
+			$content[$key] = $value;
+		// --- 
+
+		// For MiscShowPageRenderStats
+		if ( GetConfigSetting("MiscShowPageRenderStats", 1) )
+		{
+			$content['ShowPageRenderStats'] = "true";
+			InitPageRenderStats();
+		}
+		
+		// return result
+		return true;
+	}
+	else
+	{
+		// if handled ourselfe, we die in CheckForInstallPhp.
+		if ( $bHandleMissing == true )
+		{
+			// Check for installscript!
+			CheckForInstallPhp();
+		}
+		else
+			return false;
+	}
+}
+
+/*
+*	Helper function to load configured Searches from the database
+*/
+function LoadSearchesFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_SEARCHES . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_SEARCHES . ".ID, " . 
+				DB_SEARCHES . ".DisplayName, " . 
+				DB_SEARCHES . ".SearchQuery, " . 
+				DB_SEARCHES . ".userid, " .
+				DB_SEARCHES . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_SEARCHES . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SEARCHES . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SEARCHES . ".groupid=" . DB_GROUPS . ".ID ) " . 
+				" WHERE (" . DB_SEARCHES . ".userid IS NULL AND " . DB_SEARCHES . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
+	// ---
+
+	// Get Searches from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+		// Overwrite existing Charts array
+		unset($CFG['Search']);
+		
+		// Loop through all data rows 
+		foreach ($myrows as &$mySearch )
+		{
+			// Append to Chart Array
+			$CFG['Search'][ $mySearch['ID'] ] = $mySearch;
+		}
+		
+		// Copy to content array!
+		$content['Search'] = $CFG['Search'];
+
+//		// Overwrite Search Array with Database one
+//		$CFG['Search'] = $myrows;
+//		$content['Search'] = $myrows;
+	}
+}
+
+/*
+*	Helper function to load configured Searches from the database
+*/
+function LoadChartsFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// Abort reading charts if the database version is below 3, because prior v3, there were no charts table
+	if ( $content['database_installedversion'] < 3 )
+		return;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_CHARTS . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_CHARTS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_CHARTS . ".ID, " . 
+				DB_CHARTS . ".DisplayName, " . 
+				DB_CHARTS . ".chart_enabled, " . 
+				DB_CHARTS . ".chart_type, " . 
+				DB_CHARTS . ".chart_width, " . 
+				DB_CHARTS . ".chart_field, " . 
+				DB_CHARTS . ".maxrecords, " . 
+				DB_CHARTS . ".showpercent, " . 
+				DB_CHARTS . ".userid, " .
+				DB_CHARTS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_CHARTS . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_CHARTS . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_CHARTS . ".groupid=" . DB_GROUPS . ".ID ) " . 
+				" WHERE (" . DB_CHARTS . ".userid IS NULL AND " . DB_CHARTS . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_CHARTS . ".userid, " . DB_CHARTS . ".groupid, " . DB_CHARTS . ".DisplayName";
+	// ---
+
+	// Get Searches from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+		// Overwrite existing Charts array
+		unset($CFG['Charts']);
+		
+		// Loop through all data rows 
+		foreach ($myrows as &$myChart )
+		{
+			// Append to Chart Array
+			$CFG['Charts'][ $myChart['ID'] ] = $myChart;
+		}
+		
+		// Copy to content array!
+		$content['Charts'] = $CFG['Charts'];
+	}
+}
+
+
+function LoadViewsFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_VIEWS . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_VIEWS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_VIEWS . ".ID, " . 
+				DB_VIEWS . ".DisplayName, " . 
+				DB_VIEWS . ".Columns, " . 
+				DB_VIEWS . ".userid, " .
+				DB_VIEWS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_VIEWS . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_VIEWS . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID ) " . 
+				" WHERE (" . DB_VIEWS . ".userid IS NULL AND " . DB_VIEWS . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_VIEWS . ".userid, " . DB_VIEWS . ".groupid, " . DB_VIEWS . ".DisplayName";
+	// ---
+
+	// Get Views from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows) && count($myrows) > 0 )
+	{
+		// Overwrite existing Views array
+		unset($CFG['Views']);
+
+		// ReINIT Views Array
+		InitViewConfigs();
+		
+		// Unpack the Columns and append to Views Array
+		foreach ($myrows as &$myView )
+		{
+			// Split into array
+			$myView['Columns'] = explode( ",", $myView['Columns'] );
+			
+			// remove spaces
+			foreach ($myView['Columns'] as &$myCol )
+				$myCol = trim($myCol);
+			
+			// Append to Views Array
+			$CFG['Views'][ $myView['ID'] ] = $myView;
+		}
+
+		// Merge into existing Views Array!
+//		$CFG['Views'] = array_merge ( $CFG['Views'], $myrows );
+		$content['Views'] = $CFG['Views'];
+	}
+}
+
+function LoadSourcesFromDatabase()
+{
+	// Needed to make global
+	global $CFG, $content;
+
+	// --- Create SQL Query
+	// Create Where for USERID
+	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+		$szWhereUser = " OR " . DB_SOURCES . ".userid = " . $content['SESSION_USERID'] . " ";
+	else
+		$szWhereUser = "";
+
+	if ( isset($content['SESSION_GROUPIDS']) )
+		$szGroupWhere = " OR " . DB_SOURCES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+	else
+		$szGroupWhere = "";
+	$sqlquery = " SELECT " . 
+				DB_SOURCES . ".*, " . 
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM " . DB_SOURCES . 
+				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SOURCES . ".userid=" . DB_USERS . ".ID ) " . 
+				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SOURCES . ".groupid=" . DB_GROUPS . ".ID ) " . 
+				" WHERE (" . DB_SOURCES . ".userid IS NULL AND " . DB_SOURCES . ".groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY " . DB_SOURCES . ".userid, " . DB_SOURCES . ".groupid, " . DB_SOURCES . ".Name";
+	// ---
+	// Get Sources from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows) && count($myrows) > 0 )
+	{
+		// Overwrite existing Views array
+		unset($CFG['Sources']);
+		
+		// Append to Source Array
+		foreach ($myrows as &$mySource )
+		{
+			// Append to Source Array
+			$CFG['Sources'][ $mySource['ID'] ] = $mySource; //['ID'];
+		}
+		
+		// Copy to content array!
+		$content['Sources'] = $CFG['Sources'];
+	}
+
+}
 
 ?>

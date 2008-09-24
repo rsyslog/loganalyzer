@@ -87,38 +87,14 @@ class LogStreamPDO extends LogStream {
 	{
 		global $dbmapping;
 
-		// Create DSN String
-		$myDBDriver = $this->_logStreamConfigObj->GetPDODatabaseType();
-		$myDsn = $this->_logStreamConfigObj->CreateConnectDSN();
-		if ( strlen($myDsn) > 0 )
-		{
-			// Check if configured driver is actually loaded!
-			//print_r(PDO::getAvailableDrivers());
-			if ( !in_array($myDBDriver, PDO::getAvailableDrivers()) )
-			{
-				$this->PrintDebugError('PDO Database Driver not loaded: ' . $myDBDriver . "<br>Please check your php configuration extensions");
-				return ERROR_DB_INVALIDDBDRIVER;
-			}
+		// Initialise Basic stuff within the Classs
+		$this->RunBasicInits();
 
-			try 
-			{
-				// Try to connect to the database
-				$this->_dbhandle = new PDO( $myDsn, $this->_logStreamConfigObj->DBUser, $this->_logStreamConfigObj->DBPassword);
+		// Verify database driver and connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
 
-//$handle->setAttribute(PDO::ATTR_TIMEOUT, 3);
-			}
-			catch (PDOException $e) 
-			{
-				$this->PrintDebugError('PDO Database Connection failed: ' . $e->getMessage() . "<br>DSN: " . $myDsn);
-				return ERROR_DB_CONNECTFAILED;
-			}
-		}
-		else
-		{
-			// Invalid DB Driver!
-			return ERROR_DB_INVALIDDBDRIVER;
-		}
-		
 		// Copy the Property Array 
 		$this->_arrProperties = $arrProperties;
 
@@ -127,7 +103,9 @@ class LogStreamPDO extends LogStream {
 			return ERROR_DB_INVALIDDBMAPPING;
 
 		// Create SQL Where Clause first!
-		$this->CreateSQLWhereClause();
+		$res = $this->CreateSQLWhereClause();
+		if ( $res != SUCCESS ) 
+			return $res;
 
 		// Only obtain rowcount if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
@@ -153,6 +131,73 @@ class LogStreamPDO extends LogStream {
 // TODO CLOSE DB CONN?!
 
 		return true;
+	}
+
+	/**
+	* Verify if the database connection exists!
+	*
+	* @return integer Error state
+	*/
+	public function Verify() {
+		// Create DSN String
+		$myDBDriver = $this->_logStreamConfigObj->GetPDODatabaseType();
+		$myDsn = $this->_logStreamConfigObj->CreateConnectDSN();
+		if ( strlen($myDsn) > 0 )
+		{
+			// Check if configured driver is actually loaded!
+			//print_r(PDO::getAvailableDrivers());
+			if ( !in_array($myDBDriver, PDO::getAvailableDrivers()) )
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "PDO Database Driver not loaded: " . $myDBDriver . "<br>Please check your php configuration extensions";
+				// $this->PrintDebugError($extraErrorDescription);
+
+				// return error code
+				return ERROR_DB_INVALIDDBDRIVER;
+			}
+
+			try 
+			{
+				// Try to connect to the database
+				$this->_dbhandle = new PDO( $myDsn, $this->_logStreamConfigObj->DBUser, $this->_logStreamConfigObj->DBPassword /*, array(PDO::ATTR_TIMEOUT =>25)*/);
+				//$this->_dbhandle->setAttribute(PDO::ATTR_TIMEOUT, 25);
+			}
+			catch (PDOException $e) 
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "PDO Database Connection failed: " . $e->getMessage() . "<br>DSN: " . $myDsn;
+				// $this->PrintDebugError($extraErrorDescription);
+
+				// return error code
+				return ERROR_DB_CONNECTFAILED;
+			}
+
+			try 
+			{
+				// This is one way to check if the table exists! But I don't really like it tbh -.-
+				$tmpStmnt = $this->_dbhandle->prepare("SELECT ID FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE ID=1");
+				$tmpStmnt->execute();
+				$colcount = $tmpStmnt->columnCount();
+				if ( $colcount <= 0 )
+					return ERROR_DB_TABLENOTFOUND;
+			}
+			catch (PDOException $e) 
+			{
+				global $extraErrorDescription;
+				$extraErrorDescription = "Could not find table: " . $e->getMessage();
+
+				// return error code
+				return ERROR_DB_TABLENOTFOUND;
+			}
+		}
+		else
+		{
+			// Invalid DB Driver!
+			return ERROR_DB_INVALIDDBDRIVER;
+		}
+
+		// reached this point means success ;)!
+		return SUCCESS;
 	}
 
 	/**
@@ -213,11 +258,12 @@ class LogStreamPDO extends LogStream {
 
 				// Set new Record start, will be used in the SQL Statement!
 				$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
-				
+
 				// Now read new ones
 				$ret = $this->ReadNextRecordsFromDB($uID);
-//echo "1mowl " . $this->_currentRecordStart . "=" . $this->_currentRecordNum;
+//echo "!" . $ret . " " . $this->_currentRecordStart . "=" . $this->_currentRecordNum;
 
+				// Check if we found more records
 				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 					$ret = ERROR_NOMORERECORDS;
 			}
@@ -246,6 +292,10 @@ class LogStreamPDO extends LogStream {
 				else
 					$arrProperitesOut[$property] = '';
 			}
+
+			// Run optional Message Parsers now
+			if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
+				$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
 			// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
 			$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
@@ -460,6 +510,91 @@ class LogStreamPDO extends LogStream {
 			return false;
 	}
 
+	/**
+	* Implementation of GetCountSortedByField 
+	*
+	* In the PDO DB Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	{
+		global $content, $dbmapping;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($dbmapping[$szTableType][$szFieldId]) )
+		{
+			// Set DB Field name first!
+			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+			$myDBQueryFieldName = $myDBFieldName;
+			$mySelectFieldName = $myDBFieldName;
+
+			// Special handling for date fields
+			if ( $nFieldType == FILTER_TYPE_DATE )
+			{
+				if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+						$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				{
+					// Helper variable for the select statement
+					$mySelectFieldName = $mySelectFieldName . "grouped";
+					$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+				}
+				else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
+				{
+					// TODO FIND A WAY FOR MSSQL!
+				}
+			}
+
+			// Create SQL String now!
+			$szSql =	"SELECT " . 
+						$myDBQueryFieldName . ", " . 
+						"count(" . $myDBFieldName . ") as totalcount " . 
+						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" GROUP BY " . $mySelectFieldName . 
+						" ORDER BY totalcount DESC"; 
+			// Append LIMIT in this case!
+			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+							$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szSql .= " LIMIT " . $nRecordLimit; 
+
+			// Perform Database Query
+			$this->_myDBQuery = $this->_dbhandle->query($szSql);
+			if ( !$this->_myDBQuery ) 
+				return ERROR_DB_QUERYFAILED;
+
+			if ( $this->_myDBQuery->rowCount() == 0 )
+				return ERROR_NOMORERECORDS;
+
+			// Initialize Array variable
+			$aResult = array();
+
+			// read data records
+			$iCount = 0;
+			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
+			{
+				if ( isset($myRow[$mySelectFieldName]) )
+				{
+					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
+					$iCount++;
+				}
+			}
+
+			// return finished array
+			if ( count($aResult) > 0 )
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+		{
+			// return error code, field mapping not found
+			return ERROR_DB_DBFIELDNOTFOUND;
+		}
+	}
+
+
 	/*
 	*	============= Beginn of private functions =============
 	*/
@@ -487,90 +622,133 @@ class LogStreamPDO extends LogStream {
 					// Process all filters
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
-						switch( $myfilter[FILTER_TYPE] )
+						// Only perform if database mapping is available for this filter!
+						if ( isset($dbmapping[$szTableType][$propertyname]) ) 
 						{
-							case FILTER_TYPE_STRING:
-								// Check if user wants to include or exclude!
-								if ( $myfilter[FILTER_MODE] == FILTER_MODE_INCLUDE)
-									$addnod = "";
-								else
-									$addnod = " NOT";
+							switch( $myfilter[FILTER_TYPE] )
+							{
+								case FILTER_TYPE_STRING:
+									// --- Check if user wants to include or exclude!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+										$addnod = "";
+									else
+										$addnod = " NOT";
+									// --- 
 
-								// If Syslog message, we have AND handling, otherwise OR!
-								if ( $propertyname == SYSLOG_MESSAGE )
-									$addor = " AND ";
-								else
-									$addor = " OR ";
-								
-								// Not create LIKE Filters
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . " LIKE '%" . $myfilter[FILTER_VALUE] . "%'";
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . " LIKE '%" . $myfilter[FILTER_VALUE] . "%'";
-								}
-								break;
-							case FILTER_TYPE_NUMBER:
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-									$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . $myfilter[FILTER_VALUE];
-								}
-								break;
-							case FILTER_TYPE_DATE:
-								if ( isset($tmpfilters[$propertyname]) ) 
-									$tmpfilters[$propertyname][FILTER_VALUE] .= " AND ";
-								else
-								{
-									$tmpfilters[$propertyname][FILTER_VALUE] = "";
-									$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
-								}
-								
-								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
-								{
-									// Get current timestamp
-									$nNowTimeStamp = time();
-
-									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
-										$nNowTimeStamp -= 60 * 60; // One Hour!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
-										$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
-										$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
-										$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
-										$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
-									else 
+									// --- Either make a LIKE or a equal query!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
 									{
-										// Set filter to unknown and Abort in this case!
-										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
-										break;
+										$szSearchBegin = " = '";
+										$szSearchEnd = "' ";
+									}
+									else
+									{
+										$szSearchBegin = " LIKE '%";
+										$szSearchEnd = "%' ";
+									}
+									// ---
+
+									// --- If Syslog message, we have AND handling, otherwise OR!
+									if ( $propertyname == SYSLOG_MESSAGE )
+										$addor = " AND ";
+									else
+										$addor = " OR ";
+									// --- 
+									
+									// Not create LIKE Filters
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+									}
+									break;
+								case FILTER_TYPE_NUMBER:
+									// --- Check if user wants to include or exclude!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE )
+									{
+										// Add to filterset
+										$szArrayKey = $propertyname . "-NOT";
+										if ( isset($tmpfilters[$szArrayKey]) ) 
+											$tmpfilters[$szArrayKey][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+										else
+										{
+											$tmpfilters[$szArrayKey][FILTER_TYPE] = FILTER_TYPE_NUMBER;
+											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
+										}
+									}
+									else
+									{
+										// Add to filterset
+										if ( isset($tmpfilters[$propertyname]) ) 
+											$tmpfilters[$propertyname][FILTER_VALUE] .= ", " . $myfilter[FILTER_VALUE];
+										else
+										{
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
+											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
+										}
+									}
+									// ---
+									break;
+								case FILTER_TYPE_DATE:
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= " AND ";
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_VALUE] = "";
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
 									}
 									
-									// Append filter
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
-								}
-								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
-								{
-									// Obtain Event struct for the time!
-									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
-								}
-								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
-								{
-									// Obtain Event struct for the time!
-									$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-									$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
-								}
+									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+									{
+										// Get current timestamp
+										$nNowTimeStamp = time();
 
-								break;
-							default:
-								// Nothing to do!
-								break;
+										if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+											$nNowTimeStamp -= 60 * 60; // One Hour!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
+											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
+											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
+										else 
+										{
+											// Set filter to unknown and Abort in this case!
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
+											break;
+										}
+										
+										// Append filter
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+									}
+
+									break;
+								default:
+									// Nothing to do!
+									break;
+							}
+						}
+						else
+						{
+							// Check how to treat not found db mappings / filters
+							if ( GetConfigSetting("TreatNotFoundFiltersAsTrue", 0, CFGLEVEL_USER) == 0 )
+								return ERROR_DB_DBFIELDNOTFOUND;
 						}
 					}
 				}
@@ -621,12 +799,22 @@ class LogStreamPDO extends LogStream {
 	private function CreateMainSQLQuery($uID)
 	{
 		global $querycount;
-
+		
 		// create query if necessary!
-		if ( $this->_myDBQuery == null )
+//		if ( $this->_myDBQuery == null )
 		{
 			// Get SQL Statement
 			$szSql = $this->CreateSQLStatement($uID);
+
+			// --- Append LIMIT if supported by the driver! Why the hell do we still have no unified solution for this crap in the sql language?!
+			if			( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+//				$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
+			else if		( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+//				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery . " OFFSET " . $this->_currentRecordStart;
+//			echo $szSql . "<br>";
+			// ---
 
 			// Perform Database Query
 			$this->_myDBQuery = $this->_dbhandle->query($szSql);
@@ -634,6 +822,16 @@ class LogStreamPDO extends LogStream {
 			{
 				$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
 				return ERROR_DB_QUERYFAILED;
+			}
+			else
+			{
+				// Skip one entry in this case
+				if ( $this->_currentRecordStart > 0 ) 
+				{
+					// Throw away 
+					$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
+				}
+
 			}
 
 			// Increment for the Footer Stats 
@@ -653,7 +851,7 @@ class LogStreamPDO extends LogStream {
 		if ( $this->_myDBQuery != null )
 		{
 			// Free Query ressources
-	//		$this->_myDBQuery->closeCursor();
+			$this->_myDBQuery->closeCursor();
 			$this->_myDBQuery = null;
 		}
 
@@ -666,8 +864,11 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function ReadNextRecordsFromDB($uID)
 	{
+		// Clear SQL Query first!
+		$this->DestroyMainSQLQuery();
+
 		// Create query if necessary
-		if ( $this->_myDBQuery == null )
+//		if ( $this->_myDBQuery == null )
 		{
 			// return error if there was one!
 			if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
@@ -788,8 +989,7 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
-		global $CFG;
-		if ( isset($CFG['MiscShowDebugMsg']) && $CFG['MiscShowDebugMsg'] == 1 )
+		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 		{
 			$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
 			$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();

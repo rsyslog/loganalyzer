@@ -63,7 +63,7 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		require_once($gl_root_path . 'classes/logstreamlineparser.class.php');
 		
 		// Probe if file exists then include it!
-		$strIncludeFile = 'classes/logstreamlineparser' . $this->LineParserType . '.class.php';
+		$strIncludeFile = $gl_root_path . 'classes/logstreamlineparser' . $this->LineParserType . '.class.php';
 		$strClassName = "LogStreamLineParser" . $this->LineParserType;
 
 		if ( is_file($strIncludeFile) )

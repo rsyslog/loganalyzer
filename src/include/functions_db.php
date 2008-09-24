@@ -40,23 +40,35 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 
-$link_id  = 0;
+$userdbconn  = 0;
 $errdesc = "";
 $errno = 0;
 
 // --- Current Database Version, this is important for automated database Updates!
-$content['database_internalversion'] = "1";	// Whenever incremented, a database upgrade is needed
+$content['database_internalversion'] = "3";	// Whenever incremented, a database upgrade is needed
 $content['database_installedversion'] = "0";	// 0 is default which means Prior Versioning Database
 // --- 
 
 function DB_Connect() 
 {
-	global $link_id, $CFG;
+	global $userdbconn;
+
+	// Avoid if already OPEN
+	if ($userdbconn) 
+		return;
+
+	$userdbconn = @mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
+	if (!$userdbconn) 
+	{
+		// Create Error Msg
+		$szErrorMsg = "Failed to establish a connection to the configured MYSQL Server. <br>PhpLogCon is not able to initialize the user system.";
+		if ( isset($php_errormsg) ) 
+			$szErrorMsg .= "<br><br><b>Extra Error Details</b>:<br>" . $php_errormsg;
+
+		DieWithErrorMsg( $szErrorMsg  );
+	}
 
 	//TODO: Check variables first
-	$link_id = mysql_connect($CFG['DBServer'],$CFG['User'],$CFG['Pass']);
-	if (!$link_id) 
-		DB_PrintError("Link-ID == false, connect to ".$CFG['DBServer']." failed", true);
 	
 	// --- Now, check Mysql DB Version!
 	$strmysqlver = mysql_get_server_info();
@@ -78,28 +90,29 @@ function DB_Connect()
 	}
 	// ---
 
-	$db_selected = mysql_select_db($CFG['DBName'], $link_id);
+	$db_selected = mysql_select_db( GetConfigSetting("UserDBName"), $userdbconn );
 	if(!$db_selected) 
-		DB_PrintError("Cannot use database '" . $CFG['DBName'] . "'", true);
+		DB_PrintError("Cannot use database '" .GetConfigSetting("UserDBName") . "'", true);
 	// :D Success connecting to db
+
+	// TODO Do some more validating on the database
 }
 
 function DB_Disconnect()
 {
-	global $link_id;
-	mysql_close($link_id);
+	global $userdbconn;
+	mysql_close($userdbconn);
 }
 
 function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
-	global $link_id, $querycount;
-	$query_id = mysql_query($query_string,$link_id);
+	global $userdbconn, $querycount;
+	$query_id = mysql_query($query_string,$userdbconn);
 	if (!$query_id && $bProcessError) 
 		DB_PrintError("Invalid SQL: ".$query_string, $bCritical);
 
@@ -112,8 +125,7 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 function DB_FreeQuery($query_id)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -124,8 +136,7 @@ function DB_FreeQuery($query_id)
 function DB_GetRow($query_id) 
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -137,23 +148,19 @@ function DB_GetRow($query_id)
 function DB_GetSingleRow($query_id, $bClose) 
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
 	if ($query_id != false && $query_id != 1 )
 	{
 		$row = mysql_fetch_array($query_id,  MYSQL_ASSOC);
-		
+
 		if ( $bClose )
 			DB_FreeQuery ($query_id); 
 
-		if ( isset($row) )
-		{
-			// Return array
+		if ( isset($row) ) // Return array
 			return $row;
-		}
 		else
 			return;
 	}
@@ -162,8 +169,7 @@ function DB_GetSingleRow($query_id, $bClose)
 function DB_GetAllRows($query_id, $bClose)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -188,13 +194,12 @@ function DB_GetAllRows($query_id, $bClose)
 function DB_GetMysqlStats()
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
-	global $link_id;
-	$status = explode('  ', mysql_stat($link_id));
+	global $userdbconn;
+	$status = explode('  ', mysql_stat($userdbconn));
 	return $status;
 }
 
@@ -206,7 +211,7 @@ function DB_ReturnSimpleErrorMsg()
 
 function DB_PrintError($MyErrorMsg, $DieOrNot)
 {
-	global $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep, $CFG;
+	global $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep;
 
 	$errdesc = mysql_error();
 	$errno = mysql_errno();
@@ -226,23 +231,49 @@ function DB_PrintError($MyErrorMsg, $DieOrNot)
 
 function DB_RemoveParserSpecialBadChars($myString)
 {
-// DO NOT REPLACD!	$returnstr = str_replace("\\","\\\\",$myString);
+// DO NOT REPLACE!	$returnstr = str_replace("\\","\\\\",$myString);
 	$returnstr = str_replace("'","\\'",$myString);
 	return $returnstr;
 }
 
 function DB_RemoveBadChars($myString)
 {
+	// Replace with internal PHP Functions!
+	if ( !get_magic_quotes_runtime() )
+		return addslashes($myString);
+	else
+		return $myString;
+/*
 	$returnstr = str_replace("\\","\\\\",$myString);
 	$returnstr = str_replace("'","\\'",$returnstr);
 	return $returnstr;
+*/
+}
+
+function DB_StripSlahes($myString)
+{
+	// Replace with internal PHP Functions!
+	if ( !get_magic_quotes_runtime() )
+		return stripslashes($myString);
+	else
+		return $myString;
+}
+
+function DB_ReturnLastInsertID($myResult = false)
+{
+	// --- Abort in this case!
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
+		return;
+	// ---
+
+	global $userdbconn;
+	return mysql_insert_id($userdbconn);
 }
 
 function DB_GetRowCount($query)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -257,8 +288,7 @@ function DB_GetRowCount($query)
 function DB_GetRowCountByResult($myresult)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -269,8 +299,7 @@ function DB_GetRowCountByResult($myresult)
 function DB_Exec($query)
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -280,37 +309,102 @@ function DB_Exec($query)
 		return false; 
 } 
 
-function WriteConfigValue($szValue)
+function PrepareValueForDB($szValue)
 {
+//echo	"<br>" . $szValue . "<br>!" . preg_match("/[^\\\\]['\\\\][^'\\\\]/e", $szValue, $matches) . "<br>";
+	// Copy value for DB and check for BadDB Chars!
+//	if ( preg_match("/(?<!\\\\)\'|\\\\\\\\/x", $szValue) ) /* OLD /(?<!\\\\)\'|(?<!\\\\)\\\\/e */
+		return DB_RemoveBadChars($szValue);
+//	else
+//		return $szValue;
+}
+
+function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false)
+{
+	global $content;
+
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
-	global $content;
+	if ( $is_global ) 
+	{
+		if ( isset($content[$szPropName]) )
+		{
+			// Copy value for DB and check for BadDB Chars!
+			$szDbValue = PrepareValueForDB( $content[$szPropName] );
+		}
+		else
+		{
+			// Set empty in this case
+			$szDbValue = "";
+			$content[$szPropName] = "";
+		}
 
-	$result = DB_Query("SELECT name FROM " . STATS_CONFIG . " WHERE name = '" . $szValue . "'");
-	$rows = DB_GetAllRows($result, true);
-	if ( !isset($rows) )
-	{
-		// New Entry
-		$result = DB_Query("INSERT INTO  " . STATS_CONFIG . " (name, value) VALUES ( '" . $szValue . "', '" . $content[$szValue] . "')");
-		DB_FreeQuery($result);
+		// Copy to $CFG array as well
+		$CFG[$szPropName] = $content[$szPropName];
+		
+		// Check if we need to INSERT or UPDATE
+		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+		$rows = DB_GetAllRows($result, true);
+		if ( !isset($rows) )
+		{
+			// New Entry
+			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+			DB_FreeQuery($result);
+		}
+		else
+		{
+			// Update Entry
+			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+			DB_FreeQuery($result);
+		}
 	}
-	else
+	else if ( $userid != false ) 
 	{
-		// Update Entry
-		$result = DB_Query("UPDATE " . STATS_CONFIG . " SET value = '" . $content[$szValue] . "' WHERE name = '" . $szValue . "'");
-		DB_FreeQuery($result);
+		global $USERCFG;
+
+		if ( isset($USERCFG[$szPropName]) )
+		{
+			// Copy value for DB and check for BadDB Chars!
+			$szDbValue = PrepareValueForDB( $USERCFG[$szPropName] );
+		}
+		else
+		{
+			// Set empty in this case
+			$szDbValue = "";
+			$USERCFG[$szPropName] = "";
+		}
+
+		// Check if we need to INSERT or UPDATE
+		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+		$rows = DB_GetAllRows($result, true);
+		if ( !isset($rows) )
+		{
+			// New Entry
+			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, userid) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $userid . ")");
+			DB_FreeQuery($result);
+		}
+		else
+		{
+			// Update Entry
+			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+			DB_FreeQuery($result);
+		}
+
 	}
+	else if ( $groupid != false ) 
+		DieWithFriendlyErrorMsg( "Critical Error occured in WriteConfigValue, writing GROUP specific properties is not supported yet!" );
+
+		
+
 } 
 
 function GetSingleDBEntryOnly( $myqry )
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 
@@ -327,8 +421,7 @@ function GetSingleDBEntryOnly( $myqry )
 function GetRowsAffected()
 {
 	// --- Abort in this case!
-	global $CFG;
-	if ( $CFG['UserDBEnabled'] == false ) 
+	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
 

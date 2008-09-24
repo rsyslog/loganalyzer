@@ -58,6 +58,17 @@ define('SYSLOG_EVENT_LOGTYPE', 'NTEventLogType');
 define('SYSLOG_EVENT_SOURCE', 'sourceproc');
 define('SYSLOG_EVENT_CATEGORY', 'category');
 define('SYSLOG_EVENT_USER', 'user');
+
+// Weblog specific
+define('SYSLOG_WEBLOG_USER', 'http_user');
+define('SYSLOG_WEBLOG_METHOD', 'http_method');
+define('SYSLOG_WEBLOG_URL', 'http_url');
+define('SYSLOG_WEBLOG_QUERYSTRING', 'http_querystring');
+define('SYSLOG_WEBLOG_PVER', 'http_ver');
+define('SYSLOG_WEBLOG_STATUS', 'http_status');
+define('SYSLOG_WEBLOG_BYTESSEND', 'http_bytessend');
+define('SYSLOG_WEBLOG_REFERER', 'http_referer');
+define('SYSLOG_WEBLOG_USERAGENT', 'http_useragent');
 // ---
 
 // Defines which kind of field types we have
@@ -97,12 +108,14 @@ $fields[SYSLOG_HOST]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_HOST]['Sortable'] = true;
 $fields[SYSLOG_HOST]['DefaultWidth'] = "80";
 $fields[SYSLOG_HOST]['FieldAlign'] = "left";
+$fields[SYSLOG_HOST]['SearchField'] = "source";
 $fields[SYSLOG_MESSAGETYPE]['FieldID'] = SYSLOG_MESSAGETYPE;
 $fields[SYSLOG_MESSAGETYPE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGETYPE';
 $fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_MESSAGETYPE]['Sortable'] = true;
 $fields[SYSLOG_MESSAGETYPE]['DefaultWidth'] = "90";
 $fields[SYSLOG_MESSAGETYPE]['FieldAlign'] = "center";
+$fields[SYSLOG_MESSAGETYPE]['SearchField'] = "messagetype";
 
 // Syslog specific
 $fields[SYSLOG_FACILITY]['FieldID'] = SYSLOG_FACILITY;
@@ -111,56 +124,130 @@ $fields[SYSLOG_FACILITY]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_FACILITY]['Sortable'] = true;
 $fields[SYSLOG_FACILITY]['DefaultWidth'] = "50";
 $fields[SYSLOG_FACILITY]['FieldAlign'] = "center";
+$fields[SYSLOG_FACILITY]['SearchField'] = "facility";
 $fields[SYSLOG_SEVERITY]['FieldID'] = SYSLOG_SEVERITY;
 $fields[SYSLOG_SEVERITY]['FieldCaptionID'] = 'LN_FIELDS_SEVERITY';
 $fields[SYSLOG_SEVERITY]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_SEVERITY]['Sortable'] = true;
 $fields[SYSLOG_SEVERITY]['DefaultWidth'] = "50";
 $fields[SYSLOG_SEVERITY]['FieldAlign'] = "center";
+$fields[SYSLOG_SEVERITY]['SearchField'] = "severity";
 $fields[SYSLOG_SYSLOGTAG]['FieldID'] = SYSLOG_SYSLOGTAG;
 $fields[SYSLOG_SYSLOGTAG]['FieldCaptionID'] = 'LN_FIELDS_SYSLOGTAG';
 $fields[SYSLOG_SYSLOGTAG]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_SYSLOGTAG]['Sortable'] = true;
 $fields[SYSLOG_SYSLOGTAG]['DefaultWidth'] = "85";
 $fields[SYSLOG_SYSLOGTAG]['FieldAlign'] = "left";
+$fields[SYSLOG_SYSLOGTAG]['SearchField'] = "syslogtag";
 $fields[SYSLOG_PROCESSID]['FieldID'] = SYSLOG_PROCESSID;
 $fields[SYSLOG_PROCESSID]['FieldCaptionID'] = 'LN_FIELDS_PROCESSID';
 $fields[SYSLOG_PROCESSID]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_PROCESSID]['Sortable'] = true;
 $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
+$fields[SYSLOG_PROCESSID]['SearchField'] = "processid";
 
-// TODO! EventLog specific
+// EventLog specific
 $fields[SYSLOG_EVENT_ID]['FieldID'] = SYSLOG_EVENT_ID;
 $fields[SYSLOG_EVENT_ID]['FieldCaptionID'] = 'LN_FIELDS_EVENTID';
 $fields[SYSLOG_EVENT_ID]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_EVENT_ID]['Sortable'] = true;
 $fields[SYSLOG_EVENT_ID]['DefaultWidth'] = "65";
 $fields[SYSLOG_EVENT_ID]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_ID]['SearchField'] = "eventid";
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldID'] = SYSLOG_EVENT_LOGTYPE;
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldCaptionID'] = 'LN_FIELDS_EVENTLOGTYPE';
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_LOGTYPE]['Sortable'] = true;
 $fields[SYSLOG_EVENT_LOGTYPE]['DefaultWidth'] = "100";
 $fields[SYSLOG_EVENT_LOGTYPE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_LOGTYPE]['SearchField'] = "eventlogtype";
 $fields[SYSLOG_EVENT_SOURCE]['FieldID'] = SYSLOG_EVENT_SOURCE;
 $fields[SYSLOG_EVENT_SOURCE]['FieldCaptionID'] = 'LN_FIELDS_EVENTSOURCE';
 $fields[SYSLOG_EVENT_SOURCE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_SOURCE]['Sortable'] = true;
 $fields[SYSLOG_EVENT_SOURCE]['DefaultWidth'] = "100";
 $fields[SYSLOG_EVENT_SOURCE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_SOURCE]['SearchField'] = "eventlogsource";
 $fields[SYSLOG_EVENT_CATEGORY]['FieldID'] = SYSLOG_EVENT_CATEGORY;
 $fields[SYSLOG_EVENT_CATEGORY]['FieldCaptionID'] = 'LN_FIELDS_EVENTCATEGORY';
 $fields[SYSLOG_EVENT_CATEGORY]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_EVENT_CATEGORY]['Sortable'] = true;
 $fields[SYSLOG_EVENT_CATEGORY]['DefaultWidth'] = "50";
 $fields[SYSLOG_EVENT_CATEGORY]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_CATEGORY]['SearchField'] = "eventcategory";
 $fields[SYSLOG_EVENT_USER]['FieldID'] = SYSLOG_EVENT_USER;
 $fields[SYSLOG_EVENT_USER]['FieldCaptionID'] = 'LN_FIELDS_EVENTUSER';
 $fields[SYSLOG_EVENT_USER]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_EVENT_USER]['Sortable'] = true;
 $fields[SYSLOG_EVENT_USER]['DefaultWidth'] = "85";
 $fields[SYSLOG_EVENT_USER]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_USER]['SearchField'] = "eventuser";
+
+// Weblogfile specific
+$fields[SYSLOG_WEBLOG_USER]['FieldID'] = SYSLOG_WEBLOG_USER;
+$fields[SYSLOG_WEBLOG_USER]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_USER';
+$fields[SYSLOG_WEBLOG_USER]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_USER]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_USER]['DefaultWidth'] = "75";
+$fields[SYSLOG_WEBLOG_USER]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_USER]['SearchField'] = SYSLOG_WEBLOG_USER;
+$fields[SYSLOG_WEBLOG_METHOD]['FieldID'] = SYSLOG_WEBLOG_METHOD;
+$fields[SYSLOG_WEBLOG_METHOD]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_METHOD';
+$fields[SYSLOG_WEBLOG_METHOD]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_METHOD]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_METHOD]['DefaultWidth'] = "50";
+$fields[SYSLOG_WEBLOG_METHOD]['FieldAlign'] = "center";
+$fields[SYSLOG_WEBLOG_METHOD]['SearchField'] = SYSLOG_WEBLOG_METHOD;
+$fields[SYSLOG_WEBLOG_URL]['FieldID'] = SYSLOG_WEBLOG_URL;
+$fields[SYSLOG_WEBLOG_URL]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_URL';
+$fields[SYSLOG_WEBLOG_URL]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_URL]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_URL]['DefaultWidth'] = "200";
+$fields[SYSLOG_WEBLOG_URL]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_URL]['SearchField'] = SYSLOG_WEBLOG_URL;
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['FieldID'] = SYSLOG_WEBLOG_QUERYSTRING;
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_QUERYSTRING';
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['DefaultWidth'] = "200";
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_QUERYSTRING]['SearchField'] = SYSLOG_WEBLOG_QUERYSTRING;
+$fields[SYSLOG_WEBLOG_PVER]['FieldID'] = SYSLOG_WEBLOG_PVER;
+$fields[SYSLOG_WEBLOG_PVER]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_PVER';
+$fields[SYSLOG_WEBLOG_PVER]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_PVER]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_PVER]['DefaultWidth'] = "50";
+$fields[SYSLOG_WEBLOG_PVER]['FieldAlign'] = "center";
+$fields[SYSLOG_WEBLOG_PVER]['SearchField'] = SYSLOG_WEBLOG_PVER;
+$fields[SYSLOG_WEBLOG_STATUS]['FieldID'] = SYSLOG_WEBLOG_STATUS;
+$fields[SYSLOG_WEBLOG_STATUS]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_STATUS';
+$fields[SYSLOG_WEBLOG_STATUS]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_WEBLOG_STATUS]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_STATUS]['DefaultWidth'] = "50";
+$fields[SYSLOG_WEBLOG_STATUS]['FieldAlign'] = "center";
+$fields[SYSLOG_WEBLOG_STATUS]['SearchField'] = SYSLOG_WEBLOG_STATUS;
+$fields[SYSLOG_WEBLOG_BYTESSEND]['FieldID'] = SYSLOG_WEBLOG_BYTESSEND;
+$fields[SYSLOG_WEBLOG_BYTESSEND]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_BYTESSEND';
+$fields[SYSLOG_WEBLOG_BYTESSEND]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_WEBLOG_BYTESSEND]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_BYTESSEND]['DefaultWidth'] = "75";
+$fields[SYSLOG_WEBLOG_BYTESSEND]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_BYTESSEND]['SearchField'] = SYSLOG_WEBLOG_BYTESSEND;
+$fields[SYSLOG_WEBLOG_REFERER]['FieldID'] = SYSLOG_WEBLOG_REFERER;
+$fields[SYSLOG_WEBLOG_REFERER]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_REFERER';
+$fields[SYSLOG_WEBLOG_REFERER]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_REFERER]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_REFERER]['DefaultWidth'] = "200";
+$fields[SYSLOG_WEBLOG_REFERER]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_REFERER]['SearchField'] = SYSLOG_WEBLOG_REFERER;
+$fields[SYSLOG_WEBLOG_USERAGENT]['FieldID'] = SYSLOG_WEBLOG_USERAGENT;
+$fields[SYSLOG_WEBLOG_USERAGENT]['FieldCaptionID'] = 'LN_FIELDS_WEBLOG_USERAGENT';
+$fields[SYSLOG_WEBLOG_USERAGENT]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_WEBLOG_USERAGENT]['Sortable'] = false;
+$fields[SYSLOG_WEBLOG_USERAGENT]['DefaultWidth'] = "100";
+$fields[SYSLOG_WEBLOG_USERAGENT]['FieldAlign'] = "left";
+$fields[SYSLOG_WEBLOG_USERAGENT]['SearchField'] = SYSLOG_WEBLOG_USERAGENT;
 
 // Message is the last element, this order is important for the Detail page for now!
 $fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
@@ -169,7 +256,6 @@ $fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_MESSAGE]['Sortable'] = false;
 $fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
 $fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
-
 // --- 
 
 // --- Define default Database field mappings!

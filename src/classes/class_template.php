@@ -98,9 +98,8 @@ class Template {
 	function parser ($vars = '', $filename = '')
 	{
 // BEGIN DELTA MOD
-		global $CFG;
 		// For MiscShowPageRenderStats
-		if ( $CFG['MiscShowPageRenderStats'] == 1 )
+		if ( GetConfigSetting("MiscShowPageRenderStats", 1, CFGLEVEL_USER) == 1 )
 			FinishPageRenderStats( $vars );
 // END DELTA MOD
 

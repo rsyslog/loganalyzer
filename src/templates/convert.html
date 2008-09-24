@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{TITLE}</title>
+	<link rel="stylesheet" href="css/defaults.css" type="text/css">
+	<link rel="stylesheet" href="themes/{user_theme}/main.css" type="text/css">
+	<script type='text/javascript' src='{BASEPATH}js/common.js'></script>
+</head>
+<body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="mainheader">
+<tr> 
+	<td rowspan="4" width="500" align="left" valign="top"><a href="index.php"><img src="{BASEPATH}images/main/Header-Logo.png" width="500" height="79" name="HeaderLogo"></a></td>
+	<td width="100%" align="center" valign="top" height="20">&nbsp;</td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_with_border">
+<tr> 
+	<td>
+	<table border="0" cellspacing="1" cellpadding="10" align="center" width="100%">
+	<tr>
+		<td>
+
+		<br><br>
+
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="title">
+				<h1 align="center">{LN_CONVERT_TITLETOP}</h1>
+			</td>
+		</tr>
+		</table>
+
+		<!-- IF iserror="true" -->
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line2" align="center">
+				<br>
+				<h3><font color="red">ERROR: {errormsg}</font></h3>
+				<br>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF iserror="true" -->
+		
+		<form action="?step={CONVERT_NEXT_STEP}" method="post" id="sourcesform">
+
+		<!-- IF CONVERT_STEP="1" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+
+			<h1>{LN_CONVERT_STEP1}</h1>
+			<p>
+			{LN_CONVERT_STEP1_TEXT}
+			</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="1" -->
+
+		<!-- IF CONVERT_STEP="2" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>{LN_CONVERT_STEP2}</h1>
+			<p>
+			{LN_CONVERT_STEP2_TEXT}
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="2" -->
+
+		<!-- IF CONVERT_STEP="3" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>{LN_CONVERT_STEP3}</h1>
+			<p>
+			{LN_INSTALL_STEP5_TEXT}
+			<br><br>
+			<ul>
+			<li>{LN_INSTALL_SUCCESSSTATEMENTS} <B>{sql_sucess}</B><br>
+			<li>{LN_INSTALL_FAILEDSTATEMENTS} <B>{sql_failed}</B> <br>
+			</ul>
+			<!-- IF sql_failed="0" -->
+				{LN_INSTALL_STEP5_TEXT_NEXT}
+				<p>&nbsp;</p>
+			<!-- ENDIF sql_failed="0" -->
+			<!-- IF sql_failed!="0" -->
+				<table width="700" class="with_border_alternate" cellpadding="2" cellspacing="1" border="0" align="center">
+				<tr>
+					<td colspan="2" nowrap class="cellmenu1" align="center"><B>{LN_INSTALL_STEP5_TEXT_FAILED}</B></td>
+				</tr>
+				<tr>
+					<td width="400" class="cellmenu1">{LN_INSTALL_ERRORMSG}</td>
+					<td width="300" class="cellmenu1" align="center"><B>{LN_INSTALL_SQLSTATEMENT}</B></td>
+				</tr>
+				<!-- BEGIN failedstatements -->
+				<tr>
+					<td class="line0">{myerrmsg}</td>
+					<td class="line0" align="center">{mystatement}</td>
+				</tr>
+				<!-- END failedstatements -->
+				</table>
+				<p>&nbsp;</p>
+			<!-- ENDIF sql_failed!="0" -->
+
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="3" -->
+
+		<!-- IF CONVERT_STEP="4" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>{LN_CONVERT_STEP4}</h1>
+			<p>
+			{LN_INSTALL_STEP6_TEXT}
+			</p>
+			<br><br>
+
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_INSTALL_CREATEUSER}</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_LOGIN_USERNAME}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="username" size="40" maxlength="255" value="{MAIN_Username}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_PASSWORD}</b></td>
+					<td align="right" class="line1" width="100%"><input type="password" name="password1" size="40" maxlength="255" value="{MAIN_Password1}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_INSTALL_PASSWORDREPEAT}</b></td>
+					<td align="right" class="line2" width="100%"><input type="password" name="password2" size="40" maxlength="255" value="{MAIN_Password2}"></td>
+				</tr>
+				</table>
+
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="4" -->
+
+		<!-- IF CONVERT_STEP="5" -->
+
+		<!-- IF createduser="true" -->
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="line2" align="center">
+				<br>
+				<h3><font color="red">{LN_INSTALL_SUCCESSCREATED} '{MAIN_Username}'.</font></h3>
+				<br>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF createduser="true" -->
+
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>{LN_CONVERT_STEP5}</h1>
+			<p>
+			{LN_CONVERT_STEP5_TEXT}
+			</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+
+			</td>
+		</tr>
+		</table>
+
+		<script language="javascript">
+			// Manually perform initial Javascript Calls
+			toggleSourceTypeVisibility('SourceType');
+		</script>
+		<!-- ENDIF CONVERT_STEP="5" -->
+
+		<!-- IF CONVERT_STEP="6" -->
+		<table width="100%" cellpadding="5" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="tableBackground">
+			<h1>{LN_CONVERT_STEP6}</h1>
+			<p>
+			{LN_CONVERT_STEP6_TEXT}
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			</td>
+		</tr>
+		</table>
+		<!-- ENDIF CONVERT_STEP="6" -->
+
+
+		<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td class="cellmenu1" width="50%">
+			</td>
+			<td class="line0" width="150" align="center" nowrap><B>{LN_CONVERT_PROCESS} </B></td>
+			<td class="line0" width="300" nowrap>
+				<table width="100%" bgcolor="#007700" cellpadding="0" cellspacing="0" border="0" align="center">
+				<tr>
+					<td width="100%" align="left" nowrap><img src="{BarImageLeft}" width="8" height="17"><img src="{BarImagePlus}" width="{WidthPlus}%" height="17" title="{WidthPlusText}"><img src="{BarImageRight}" width="9" height="17"></td>
+				</tr>
+				</table>
+			</td>
+			<td class="line1" width="75" nowrap align="center">
+				<!-- IF NEXT_ENABLED="true" -->
+				<input type="submit" value="Next">
+				<!-- ENDIF NEXT_ENABLED="true" -->
+				<!-- IF RECHECK_ENABLED="true" -->
+				<a href="?step={CONVERT_STEP}">{LN_INSTALL_RECHECK}</a>
+				<!-- ENDIF RECHECK_ENABLED="true" -->
+				<!-- IF FINISH_ENABLED="true" -->
+				<a href="index.php">{LN_INSTALL_FINISH}</a>
+				<!-- ENDIF FINISH_ENABLED="true" -->
+			</td>
+			<td class="cellmenu1" width="50%">
+			</td>
+		</tr>
+		</table>
+
+		</form>
+
+		</td>
+	</tr>
+	</table>
+<!-- INCLUDE include_footer.html -->

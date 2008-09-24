@@ -80,8 +80,17 @@ if ( isset($_GET['op']) )
 			exit;
 		}
 	}
-	
-
+	if ( $_GET['op'] == "maximize" && isset($_GET['max']) ) 
+	{
+		if ( intval($_GET['max']) == 1 )
+		{
+			$_SESSION['SESSION_MAXIMIZED'] = true;
+		}
+		else
+		{
+			$_SESSION['SESSION_MAXIMIZED'] = false;
+		}
+	}
 	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
 	{
 		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < count($content['pagesizes']) ) 

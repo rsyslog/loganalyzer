@@ -73,19 +73,18 @@ class LogStreamDisk extends LogStream {
 	* @param arrProperties array in: Properties wish list.
 	* @return integer Error stat
 	*/
-	public function Open($arrProperties) {
+	public function Open($arrProperties)
+	{
+		// Initialise Basic stuff within the Classs
+		$this->RunBasicInits();
+
 		// Check if file exists!
-		if(!file_exists($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_FOUND;
-		}
-
-		// Check if file is readable!
-		if(!is_readable($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_READABLE;
-		}
+		$result = $this->Verify(); 
+		if ( $result != SUCCESS) 
+			return $result;
 		
+		// Now open the file 
 		$this->_fp = fopen($this->_logStreamConfigObj->FileName, 'r');	
-
 		$this->_currentOffset = ftell($this->_fp);
 		$this->_currentStartPos = $this->_currentOffset;
 		$this->_arrProperties = $arrProperties;
@@ -110,6 +109,27 @@ class LogStreamDisk extends LogStream {
 		// return result
 		return SUCCESS;
 	}
+
+	/**
+	* Verify if the file exists!
+	*
+	* @return integer Error state
+	*/
+	public function Verify() {
+		// Check if file exists!
+		if(!file_exists($this->_logStreamConfigObj->FileName)) {
+			return ERROR_FILE_NOT_FOUND;
+		}
+
+		// Check if file is readable!
+		if(!is_readable($this->_logStreamConfigObj->FileName)) {
+			return ERROR_FILE_NOT_READABLE;
+		}
+
+		// reached this point means success ;)!
+		return SUCCESS;
+	}
+		
 
 	private function ReadNextBlock() {
 		$this->_bEOS = false;
@@ -205,6 +225,8 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true)
 	{
+		global $content, $gl_starttime;
+
 		do
 		{
 			// Read next entry first!
@@ -212,18 +234,38 @@ class LogStreamDisk extends LogStream {
 				$ret = $this->ReadNextForwards($uID, $arrProperitesOut);
 			else
 				$ret = $this->ReadNextBackwards($uID, $arrProperitesOut);
-		
-		// Only PARSE on success!
-		if ( $ret == SUCCESS && $bParseMessage) 
-		{
-			// Line Parser Hook here
-			$this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
-			// Set uID to the PropertiesOut!
-			$arrProperitesOut[SYSLOG_UID] = $uID;
-		}
+			// Only PARSE on success!
+			if ( $ret == SUCCESS && $bParseMessage) 
+			{
+				// Line Parser Hook here
+				$retParser = $this->_logStreamConfigObj->_lineParser->ParseLine($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				
+				// Run optional Message Parsers now
+				$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
 
-		// Loop until the filter applies, or another error occurs. 
+				// Check if we have to skip the message!
+				if ( $retParser == ERROR_MSG_SKIPMESSAGE )
+					$ret = $retParser;
+
+				// Set uID to the PropertiesOut!
+				$arrProperitesOut[SYSLOG_UID] = $uID;
+			}
+
+			// Check how long we are running. If only two seconds of execution time are left, we abort further reading!
+			$scriptruntime = intval(microtime_float() - $gl_starttime);
+			if ( $scriptruntime > ($content['MaxExecutionTime']-2) )
+			{
+				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
+				$content['logstream_warning'] = "false";
+				$content['logstream_warning_details'] = $content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'];
+				$content['logstream_warning_code'] = ERROR_FILE_NOMORETIME;
+				
+				// Return error code 
+				return ERROR_FILE_NOMORETIME;
+			}
+
+		// Loop until the filter applies, or another error occurs, and we still have TIME!
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
 
 		// reached here means return result!
@@ -481,8 +523,10 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function GetLastPageUID()
 	{
-		// Obtain last UID if enough records are available!
-		
+		// Only perform lastUID scan if there are NO filters, for performance REASONS!
+		if ( $this->_filters != null )
+			return UID_UNKNOWN;
+
 		// Helper variables
 		$myuid = -1;
 		$counter = 0;
@@ -551,6 +595,81 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* Implementation of GetCountSortedByField 
+	*
+	* For now, the disk source needs to loop through the whole file 
+	* to consolidate and sort the data
+	*
+	* @return integer Error stat
+	*/
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	{
+		global $content;
+
+		// We loop through all loglines! this may take a while!
+		$uID = UID_UNKNOWN;
+		$ret = $this->ReadNext($uID, $logArray);
+		if ( $ret == SUCCESS )
+		{
+			// Initialize Array variable
+			$aResult = array();
+			
+			// Loop through messages
+			do
+			{
+				if ( isset($logArray[$szFieldId]) )
+				{
+					if ( $nFieldType == FILTER_TYPE_DATE ) 
+					{
+						// Convert to FULL Day Date for now!
+						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+					}
+					else // Just copy the value!
+						$myFieldData = $logArray[$szFieldId];
+
+					if ( isset($aResult[ $myFieldData ]) )
+						$aResult[ $myFieldData ]++;
+					else
+					{
+						// Initialize entry if we haven't exceeded the RecordLImit yet!
+						if ( count($aResult) < ($nRecordLimit-1) ) // -1 because the last entry will become all others 
+							$aResult[ $myFieldData ] = 1;
+						else
+						{
+							// Count record to others 
+							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+								$aResult[ $content['LN_STATS_OTHERS'] ]++;
+							else
+								$aResult[ $content['LN_STATS_OTHERS'] ] = 1;
+						}
+					}
+				}
+			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
+
+			// Sort Array, so the highest count comes first!
+			arsort($aResult);
+//			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
+
+			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+			{
+				// This will move the "Others" Element to the last position!
+				$arrEntryCopy = $aResult[ $content['LN_STATS_OTHERS'] ];
+				unset($aResult[ $content['LN_STATS_OTHERS'] ]);
+				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
+			}
+
+			// finally return result!
+			if ( count($aResult) > 0 ) 
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+			return ERROR_NOMORERECORDS;
+	}
+
+
+	/**
 	* Set the direction the stream should read data.
 	*
 	* 
@@ -586,7 +705,8 @@ class LogStreamDisk extends LogStream {
 		// IF result was unsuccessfull, return success - nothing we can do here.
 		if ( $myResults >= ERROR ) 
 			return SUCCESS;
-
+		
+		// Process all filters
 		if ( $this->_filters != null )
 		{
 			// Evaluation default for now is true
@@ -597,9 +717,9 @@ class LogStreamDisk extends LogStream {
 			{
 				// TODO: NOT SURE IF THIS WILL WORK ON NUMBERS AND OTHER TYPES RIGHT NOW
 				if (	
-						array_key_exists($propertyname, $this->_filters) && 
-						isset($propertyvalue) && 
-						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0 ) /* Negative because it only matters if the propvalure is a string*/
+						array_key_exists($propertyname, $this->_filters) &&
+						isset($propertyvalue) /* && 
+						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
 					// Extra var needed for number checks!
@@ -612,35 +732,96 @@ class LogStreamDisk extends LogStream {
 						switch( $myfilter[FILTER_TYPE] )
 						{
 							case FILTER_TYPE_STRING:
-								// If Syslog message, we have AND handling!
-								if ( $propertyname == SYSLOG_MESSAGE )
+								// Only filter if value is non zero
+								if ( strlen($propertyvalue) > 0 && strlen($myfilter[FILTER_VALUE]) > 0 )
 								{
-									// Include Filter
-									if ( $myfilter[FILTER_MODE] == FILTER_MODE_INCLUDE ) 
+									// If Syslog message, we have AND handling!
+									if ( $propertyname == SYSLOG_MESSAGE )
 									{
-										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-											$bEval = false;
+										// Include Filter
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+										{
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+												$bEval = false;
+										}
+										// Exclude Filter
+										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+										{
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+												$bEval = false;
+										}
 									}
-									// Exclude Filter
-									else if ( $myfilter[FILTER_MODE] == FILTER_MODE_EXCLUDE ) 
+									// Otherwise we use OR Handling!
+									else
 									{
-										if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
-											$bEval = false;
+										$bIsOrFilter = true; // Set isOrFilter to true 
+
+										// Include Filter
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+										{
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+											{
+												if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
+													$bOrFilter = true;
+											}
+											else
+											{
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+													$bOrFilter = true;
+											}
+										}
+										// Exclude Filter
+										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+										{
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+											{
+												if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
+													$bOrFilter = true;
+											}
+											else
+											{
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+													$bOrFilter = true;
+											}
+										}
+										break;
 									}
 								}
-								// Otherwise we use OR Handling!
-								else
+								else 
 								{
-									$bIsOrFilter = true; // Set isOrFilter to true 
-									if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
-										$bOrFilter = true;
-									break;
+									// Either filter value or property value was empty! 
+									// This means we have no match
+									$bEval = false;
 								}
+
 								break;
 							case FILTER_TYPE_NUMBER:
-								$bIsOrFilter = true; // Set to true in any case!
-								if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
-									$bOrFilter = true;
+								$bIsOrFilter = true; // Default is set to TRUE
+								if ( is_numeric($arrProperitesOut[$propertyname]) )
+								{
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+									{
+										if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
+											$bOrFilter = true;
+										else
+											$bOrFilter = false;
+									}
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+									{
+										if ( $myfilter[FILTER_VALUE] == $arrProperitesOut[$propertyname] ) 
+											$bOrFilter = false;
+										else
+											$bOrFilter = true;
+									}
+								}
+								else
+								{
+									// If wanted, we treat this filter as a success!
+									if ( GetConfigSetting("TreatNotFoundFiltersAsTrue", 0, CFGLEVEL_USER) == 1 )
+										$bOrFilter = true;
+									else
+										$bOrFilter = false;
+								}
 								break;
 							case FILTER_TYPE_DATE:
 								// Get Log TimeStamp
@@ -664,6 +845,7 @@ class LogStreamDisk extends LogStream {
 									else
 										// WTF default? 
 										$nLastXTime = 86400;
+									
 									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.
 									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )
 										$bEval = false;
@@ -671,7 +853,7 @@ class LogStreamDisk extends LogStream {
 								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
 								{
 									// Get filter timestamp!
- 									$nFromTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
+									$nFromTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
 									
 									// If logtime is smaller then FromTime, then the Event is outside of our scope!
 									if ( $nLogTimeStamp < $nFromTimeStamp )
@@ -701,7 +883,7 @@ class LogStreamDisk extends LogStream {
 
 					if ( !$bEval ) 
 					{
-						// unmatching filter, rest property array
+						// unmatching filter, reset property array
 						foreach ( $this->_arrProperties as $property ) 
 							$arrProperitesOut[$property] = '';
 

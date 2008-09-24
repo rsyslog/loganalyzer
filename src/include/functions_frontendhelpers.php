@@ -41,12 +41,28 @@ if ( !defined('IN_PHPLOGCON') )
 
 function InitFrontEndDefaults()
 {
+	global $content;
+
 	// To create the current URL
 	CreateCurrentUrl();
 
 	// --- BEGIN Main Info Area
 
-
+	$content['MAXURL'] = $content['BASEPATH'] . "userchange.php?";
+	if ( isset($_SESSION['SESSION_MAXIMIZED']) && $_SESSION['SESSION_MAXIMIZED'] == true )
+	{
+		$content['MAXIMIZED'] = true;
+		$content['MAXIMAGE'] = $content['MENU_NORMAL'];
+		$content['MAXLANGTEXT'] = $content['LN_MENU_NORMALVIEW'];
+		$content['MAXURL'] .= "op=maximize&max=0";
+	}
+	else
+	{
+		$content['MAXIMIZED'] = false;
+		$content['MAXIMAGE'] = $content['MENU_MAXIMIZE'];
+		$content['MAXLANGTEXT'] = $content['LN_MENU_MAXVIEW'];
+		$content['MAXURL'] .= "op=maximize&max=1";
+	}
 	
 	// --- END Main Info Area
 	
@@ -65,13 +81,48 @@ function InstallFileReminder()
 	}
 }
 
+function GetAdditionalUrl($skipParam, $appendParam = "")
+{
+	global $content;
+//echo $content['additional_url_full'];
+	if ( isset($content['additional_url_full']) && strlen($content['additional_url_full']) > 0 )
+	{
+		if ( strlen($skipParam) > 0 ) 
+		{
+			// remove parameters from string!
+			$szReturn = preg_replace("#(&{$skipParam}=[\w]+)#is", '', $content['additional_url_full']);
+			if ( strlen($szReturn) > 0 )
+			{
+				if ( strlen($appendParam) > 0 )
+					return $szReturn . "&" . $appendParam;
+				else
+					return $szReturn;
+			}
+			else if ( strlen($appendParam) > 0 )
+				return "?" . $appendParam;
+			else
+				return "";
+		}
+		else
+			return $content['additional_url_full'];
+	}
+	else
+	{
+		if ( strlen($appendParam) > 0 )
+			return "?" . $appendParam;
+		else
+			return "";
+	}
+}
+
 function CreateCurrentUrl()
 {
-	global $content, $CFG;
+	global $content;
 	$content['CURRENTURL'] = $_SERVER['PHP_SELF']; // . "?" . $_SERVER['QUERY_STRING']
 	
 	// Init additional_url helper variable
 	$content['additional_url'] = ""; 
+	$content['additional_url_full'] = ""; 
 	$content['additional_url_uidonly'] = ""; 
 	$content['additional_url_sortingonly'] = ""; 
 	$content['additional_url_sourceonly'] = ""; 
@@ -80,11 +131,12 @@ function CreateCurrentUrl()
 	$hvCounter = 0;
 
 	// Append SourceID into everything!
-	if ( (isset($CFG['DefaultSourceID']) && isset($content['Sources'][ $CFG['DefaultSourceID'] ])) && isset($_SESSION['currentSourceID']) ) 
+	$tmpDefSourceID = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
+	if ( isset($content['Sources'][ $tmpDefSourceID ]) && isset($_SESSION['currentSourceID']) ) 
 	{
 
 		// If the DefaultSourceID differes from the SourceID in our Session, we will append the sourceid within all URL's!
-		if ( $CFG['DefaultSourceID'] != $_SESSION['currentSourceID'] )
+		if ( $tmpDefSourceID != $_SESSION['currentSourceID'] )
 		{
 //			$content['additional_url'] .= "&sourceid=" . $_SESSION['currentSourceID'];
 			$content['additional_url_uidonly'] = "&sourceid=" . $_SESSION['currentSourceID'];
@@ -143,6 +195,9 @@ function CreateCurrentUrl()
 						}
 						else
 							$content['additional_url'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
+
+						// always append to this URL!
+						$content['additional_url_full'] .= "&" . $tmpvars[0] . "=" . $tmpvars[1];
 					}
 
 					$hvCounter++;
@@ -156,13 +211,13 @@ function CreateCurrentUrl()
 
 function GetFormatedDate($evttimearray)
 {
-	global $content, $CFG;
+	global $content;
 
 	if ( !is_array($evttimearray) )
 		return $evttimearray;
 
 	if ( 
-			( isset($CFG['ViewUseTodayYesterday']) && $CFG['ViewUseTodayYesterday'] == 1 )
+			GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
 			&&
 			( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
 		)
@@ -177,16 +232,40 @@ function GetFormatedDate($evttimearray)
 	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
-function OutputDebugMessage($szDbg)
+function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 {
-	global $CFG;
-
-	if ( $CFG['MiscShowDebugMsg'] == 1 )
+	// Check if we should print the Error!
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 	{
 		print("<table width=\"600\" align=\"center\" class=\"with_border\">");
 		print("<tr><td valign='top'><B>Debugmessage:</B> </td>");
 		print("<td>" . $szDbg . "</td></tr>");
 		print("</table><br>");
+	}
+
+	// Check if the user wants to syslog the error!
+	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
+	{
+		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+	}
+}
+
+function GetPriorityFromDebugLevel( $DebugLevel ) 
+{
+	switch ( $DebugLevel )
+	{
+		case DEBUG_ULTRADEBUG:
+			return LOG_DEBUG;
+		case DEBUG_DEBUG:
+			return LOG_INFO;
+		case DEBUG_INFO:
+			return LOG_NOTICE;
+		case DEBUG_WARN:
+			return LOG_WARNING;
+		case DEBUG_ERROR:
+			return LOG_ERR;
+		case DEBUG_ERROR_WTF:
+			return LOG_CRIT;
 	}
 }
 

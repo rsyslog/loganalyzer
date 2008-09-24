@@ -40,21 +40,25 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 // --- Basic Includes
-include($gl_root_path . 'include/constants_general.php');
-include($gl_root_path . 'include/constants_logstream.php');
+include_once($gl_root_path . 'include/constants_general.php');
+include_once($gl_root_path . 'include/constants_logstream.php');
 
-include($gl_root_path . 'classes/class_template.php');
-include($gl_root_path . 'include/functions_themes.php');
-include($gl_root_path . 'include/functions_db.php');
-include($gl_root_path . 'include/functions_config.php');
+include_once($gl_root_path . 'classes/class_template.php');
+include_once($gl_root_path . 'include/functions_themes.php');
+include_once($gl_root_path . 'include/functions_db.php');
+include_once($gl_root_path . 'include/functions_config.php');
 // --- 
 
 // --- Define Basic vars
 $RUNMODE = RUNMODE_WEBSERVER;
 $DEBUGMODE = DEBUG_INFO;
 
-// --- Disable ARGV setting @webserver!
-ini_set( "register_argc_argv", "Off" );
+// --- Change some runtime variables
+// Disable ARGV setting @webserver!
+@ini_set( "register_argc_argv", "Off" );
+
+// Enable error tracking
+@ini_set( "track_errors", "On" );
 // --- 
 
 // Default language
@@ -62,12 +66,16 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.4.0";
+$content['BUILDNUMBER'] = "2.5.10";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
+$content['SHOW_DONATEBUTTON'] = true; // Default = true!
+
+// PreInit overall user variables
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
+$content['CURRENTURL'] = "";
 // --- 
 
 // --- Check PHP Version! If lower the 5, phplogcon will not work proberly!
@@ -80,7 +88,7 @@ if ( $myPhpVerArray[0] < 5 )
 function InitBasicPhpLogCon()
 {
 	// Needed to make global
-	global $CFG, $gl_root_path, $content;
+	global $gl_root_path, $content;
 
 	// Check RunMode first!
 	CheckAndSetRunMode();
@@ -90,53 +98,20 @@ function InitBasicPhpLogCon()
 
 	// Start the PHP Session
 	StartPHPSession();
-	
+
 	// Init View Configs prior loading config.php!
 	InitViewConfigs();
 }
 
-function InitPhpLogConConfigFile($bHandleMissing = true)
+function InitUserSystemPhpLogCon()
 {
-	// Needed to make global
-	global $CFG, $gl_root_path, $content;
+	// global vars needed
+	global $gl_root_path, $content;
 
-	if ( file_exists($gl_root_path . 'config.php') && GetFileLength($gl_root_path . 'config.php') > 0 )
+	if ( GetConfigSetting("UserDBEnabled", false) )
 	{
-		// Include the main config
-		include_once($gl_root_path . 'config.php');
-		
-		// Easier DB Access
-		define('DB_CONFIG', $CFG['UserDBPref'] . "config");
-
-		// Legacy support for old columns definition format!
-		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
-			AppendLegacyColumns();
-
-		// --- Now Copy all entries into content variable
-		foreach ($CFG as $key => $value )
-			$content[$key] = $value;
-		// --- 
-
-		// For MiscShowPageRenderStats
-		if ( $CFG['MiscShowPageRenderStats'] == 1 )
-		{
-			$content['ShowPageRenderStats'] = "true";
-			InitPageRenderStats();
-		}
-		
-		// return result
-		return true;
-	}
-	else
-	{
-		// if handled ourselfe, we die in CheckForInstallPhp.
-		if ( $bHandleMissing == true )
-		{
-			// Check for installscript!
-			CheckForInstallPhp();
-		}
-		else
-			return false;
+		// Include User Functions
+		include_once($gl_root_path . 'include/functions_users.php');
 	}
 }
 
@@ -167,7 +142,11 @@ function GetFileLength($szFileName)
 function InitPhpLogCon()
 {
 	// Needed to make global
-	global $CFG, $gl_root_path, $content;
+	global $gl_root_path, $content;
+
+	// Abort if already defined
+	if ( defined('PHPLOGCON_INITIALIZED') )
+		return;
 
 	// Init Basics which do not need a database
 	InitBasicPhpLogCon();
@@ -175,15 +154,18 @@ function InitPhpLogCon()
 	// Will init the config file!
 	InitPhpLogConConfigFile();
 
-	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
-	InitRuntimeInformations();
+	// Init UserDB related stuff!
+	InitUserSystemPhpLogCon();
 
 	// Establish DB Connection
-	if ( $CFG['UserDBEnabled'] )
+	if ( GetConfigSetting("UserDBEnabled", false) )
 		DB_Connect();
 
 	// Now load the Page configuration values
 	InitConfigurationValues();
+
+	// Moved here, because we do not need if GZIP needs to be enabled before the config is loaded!
+	InitRuntimeInformations();
 
 	// Now Create Themes List because we haven't the config before!
 	CreateThemesList();
@@ -200,9 +182,15 @@ function InitPhpLogCon()
 	// Init predefined reload times
 	CreateReloadTimesList();
 
+	// Init predefined reload times
+	CreateExportFormatList();
+
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
 	// --- 
+
+	// Finally defined PHPLOGCON_INITIALIZED!
+	define( 'PHPLOGCON_INITIALIZED', TRUE );
 }
 
 function CreateLogLineTypesList( $selectedType )
@@ -218,6 +206,11 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["winsyslog"]['type'] = "winsyslog";
 	$content['LOGLINETYPES']["winsyslog"]['DisplayName'] = "Adiscon WinSyslog";
 	if ( $selectedType == $content['LOGLINETYPES']["winsyslog"]['type'] ) { $content['LOGLINETYPES']["winsyslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["winsyslog"]['selected'] = ""; }
+
+	// Misc logline Types
+	$content['LOGLINETYPES']["misc"]['type'] = "misc";
+	$content['LOGLINETYPES']["misc"]['DisplayName'] = "Miscellaneous logfiles";
+	if ( $selectedType == $content['LOGLINETYPES']["misc"]['type'] ) { $content['LOGLINETYPES']["misc"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["misc"]['selected'] = ""; }
 }
 
 function CreateSourceTypesList( $selectedSource )
@@ -238,6 +231,47 @@ function CreateSourceTypesList( $selectedSource )
 	$content['SOURCETYPES'][SOURCE_PDO]['type'] = SOURCE_PDO;
 	$content['SOURCETYPES'][SOURCE_PDO]['DisplayName'] = $content['LN_GEN_SOURCE_PDO'];
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
+}
+
+function CreateChartTypesList( $selectedChart )
+{
+	global $content;
+
+	// CHART_CAKE
+	$content['CHARTTYPES'][CHART_CAKE]['type'] = CHART_CAKE;
+	$content['CHARTTYPES'][CHART_CAKE]['DisplayName'] = $content['LN_CHART_TYPE_CAKE'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_CAKE]['type'] ) { $content['CHARTTYPES'][CHART_CAKE]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_CAKE]['selected'] = ""; }
+
+	// CHART_BARS_VERTICAL
+	$content['CHARTTYPES'][CHART_BARS_VERTICAL]['type'] = CHART_BARS_VERTICAL;
+	$content['CHARTTYPES'][CHART_BARS_VERTICAL]['DisplayName'] = $content['LN_CHART_TYPE_BARS_VERTICAL'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_BARS_VERTICAL]['type'] ) { $content['CHARTTYPES'][CHART_BARS_VERTICAL]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_BARS_VERTICAL]['selected'] = ""; }
+
+	// CHART_BARS_HORIZONTAL
+	$content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['type'] = CHART_BARS_HORIZONTAL;
+	$content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['DisplayName'] = $content['LN_CHART_TYPE_BARS_HORIZONTAL'];
+	if ( $selectedChart == $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['type'] ) { $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['selected'] = "selected"; } else { $content['CHARTTYPES'][CHART_BARS_HORIZONTAL]['selected'] = ""; }
+}
+
+function CreateChartFields( $selectedChartField)
+{
+	global $content, $fields;
+	
+	// Process all fields
+	foreach ( $fields as $myField )
+	{
+		$myFieldID = $myField['FieldID'];
+
+		// Add new entry to array
+		$content['CHARTFIELDS'][$myFieldID]['ID'] = $myFieldID;
+		if ( isset($content[ $myField['FieldCaptionID'] ]) )
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $content[ $myField['FieldCaptionID'] ];
+		else
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myFieldID;
+		
+		// set selected state
+		if ( $selectedChartField == $content['CHARTFIELDS'][$myFieldID]['ID'] ) { $content['CHARTFIELDS'][$myFieldID]['selected'] = "selected"; } else { $content['CHARTFIELDS'][$myFieldID]['selected'] = ""; }
+	}
 }
 
 function CreateDBTypesList( $selectedDBType )
@@ -301,10 +335,11 @@ function CreateDBTypesList( $selectedDBType )
 
 function CreatePagesizesList()
 {
-	global $CFG, $content;
+	global $content;
 
+	$tmpViewsPerPage = GetConfigSetting("ViewEntriesPerPage", 50, CFGLEVEL_USER);
 	$iCounter = 0;
-	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $CFG['ViewEntriesPerPage'] . ")", "Value" => $CFG['ViewEntriesPerPage'] ); $iCounter++;
+	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_GEN_PRECONFIGURED'] . " (" . $tmpViewsPerPage . ")", "Value" => $tmpViewsPerPage ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 25 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 25 ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 50 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 50 ); $iCounter++;
 	$content['pagesizes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 75 " . $content['LN_GEN_RECORDSPERPAGE'], "Value" => 75 ); $iCounter++;
@@ -321,14 +356,15 @@ function CreatePagesizesList()
 
 function CreateReloadTimesList()
 {
-	global $CFG, $content;
+	global $content;
 
-// $CFG['ViewEnableAutoReloadSeconds']
 	$iCounter = 0;	
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_DISABLED'], "Value" => 0 ); $iCounter++;
-	if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+
+	$tmpReloadSeconds = GetConfigSetting("ViewEnableAutoReloadSeconds", "", CFGLEVEL_USER);
+	if ( $tmpReloadSeconds > 0 )
 	{
-		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $CFG['ViewEnableAutoReloadSeconds'] . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $CFG['ViewEnableAutoReloadSeconds'] ); $iCounter++;
+		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $tmpReloadSeconds . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $tmpReloadSeconds ); $iCounter++;
 	}
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 5 ); $iCounter++;
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 10 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 10 ); $iCounter++;
@@ -346,6 +382,17 @@ function CreateReloadTimesList()
 	// The content variable will now contain the user selected oaging size
 	$content["ViewEnableAutoReloadSeconds"] = $content['reloadtimes'][ $_SESSION['AUTORELOAD_ID'] ]["Value"];
 
+}
+
+function CreateExportFormatList()
+{
+	global $content;
+	
+	// Add basic formats!
+	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
+	$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
+
+	// TODO: Add formats by loaded extensions
 }
 
 function CreatePredefinedSearches()
@@ -378,35 +425,52 @@ function CreatePredefinedSearches()
 
 function InitPhpDebugMode()
 {
-	global $content, $CFG;
+	global $content;
 
 	// --- Set Global DEBUG Level!
-	if ( $CFG['MiscShowDebugMsg'] == 1 )
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 		ini_set( "error_reporting", E_ALL ); // ALL PHP MESSAGES!
-//	else
-//		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
+	else
+		ini_set( "error_reporting", E_ERROR ); // ONLY PHP ERROR'S!
 	// --- 
 }
 
 function CheckAndSetRunMode()
 {
-	global $RUNMODE, $MaxExecutionTime;
+	global $content, $RUNMODE;
 	// Set to command line mode if argv is set! 
 	if ( !isset($_SERVER["GATEWAY_INTERFACE"]) )
 		$RUNMODE = RUNMODE_COMMANDLINE;
 	
 	// Obtain max_execution_time
-	$MaxExecutionTime = ini_get("max_execution_time");
+	$content['MaxExecutionTime'] = ini_get("max_execution_time");
+
+	// Define and Inits Syslog variables now!
+	define_syslog_variables();
+	openlog("phpLogCon", LOG_PID, LOG_USER);
+	
+	// --- Check necessary PHP Extensions!
+	$loadedExtensions = get_loaded_extensions();
+	
+	// Check for GD libary
+	if ( in_array("gd", $loadedExtensions) ) 
+		$content['GD_IS_ENABLED'] = true;
+	else 
+		$content['GD_IS_ENABLED'] = false;
+	
+	// Check MYSQL Extension
+	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
+	// Check PDO Extension
+	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
+	// --- 
 }
 
 function InitRuntimeInformations()
 {
-	global $content, $CFG;
+	global $gl_root_path, $content;
 
-	// TODO| maybe not needed!
-	
 	// Enable GZIP Compression if enabled!
-	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && (isset($CFG['MiscEnableGzipCompression']) && $CFG['MiscEnableGzipCompression'] == 1) ) 
+	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
 	{
 		// This starts gzip compression!
 		ob_start("ob_gzhandler");
@@ -414,6 +478,22 @@ function InitRuntimeInformations()
 	}
 	else
 		$content['GzipCompressionEnmabled'] = "no";
+
+	// --- Check and Set manual link
+	if ( is_dir($gl_root_path . "doc") )
+		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc/manual.html";
+	else
+		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
+	// ---
+
+	// --- Try to extend the script timeout if possible!
+	$iTmp = GetConfigSetting("MiscMaxExecutionTime", 30, CFGLEVEL_GLOBAL);
+	if ( $iTmp != $content['MaxExecutionTime'] && $iTmp > 10 )
+	{	//Try to extend the runtime in this case!
+		@ini_set("max_execution_time", $iTmp);
+		$content['MaxExecutionTime'] = ini_get("max_execution_time");
+	}
+	// ---
 }
 
 function CreateDebugModes()
@@ -445,13 +525,45 @@ function InitFrontEndVariables()
 	$content['MENU_PREFERENCES'] = $content['BASEPATH'] . "images/icons/preferences.png";
 	$content['MENU_ADMINENTRY'] = $content['BASEPATH'] . "images/icons/star_blue.png";
 	$content['MENU_ADMINLOGOFF'] = $content['BASEPATH'] . "images/icons/exit.png";
-	$content['MENU_ADMINUSERS'] = $content['BASEPATH'] . "images/icons/businessmen.png";
+	$content['MENU_ADMINUSERS'] = $content['BASEPATH'] . "images/icons/businessman.png";
+	$content['MENU_ADMINGROUPS'] = $content['BASEPATH'] . "images/icons/businessmen.png";
 	$content['MENU_SEARCH'] = $content['BASEPATH'] . "images/icons/view.png";
 	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
 	$content['MENU_TEXT_FIND'] = $content['BASEPATH'] . "images/icons/text_find.png";
+	$content['MENU_EARTH_FIND'] = $content['BASEPATH'] . "images/icons/earth_find.png";
+	$content['MENU_FIND'] = $content['BASEPATH'] . "images/icons/find.png";
+	$content['MENU_NEXT_FIND'] = $content['BASEPATH'] . "images/icons/find_next.png";
 	$content['MENU_NETWORK'] = $content['BASEPATH'] . "images/icons/earth_network.png";
-	
+	$content['MENU_HELP'] = $content['BASEPATH'] . "images/icons/help.png";
+	$content['MENU_HELP_BLUE'] = $content['BASEPATH'] . "images/icons/help2.png";
+	$content['MENU_HELP_ORANGE'] = $content['BASEPATH'] . "images/icons/help3.png";
+	$content['MENU_KB'] = $content['BASEPATH'] . "images/icons/books.png";
+	$content['MENU_DOCUMENTVIEW'] = $content['BASEPATH'] . "images/icons/document_view.png";
+	$content['MENU_DATAEDIT'] = $content['BASEPATH'] . "images/icons/data_edit.png";
+	$content['MENU_ADDUSER'] = $content['BASEPATH'] . "images/icons/businessman_add.png";
+	$content['MENU_DELUSER'] = $content['BASEPATH'] . "images/icons/businessman_delete.png";
+	$content['MENU_ADD'] = $content['BASEPATH'] . "images/icons/add.png";
+	$content['MENU_EDIT'] = $content['BASEPATH'] . "images/icons/edit.png";
+	$content['MENU_DELETE'] = $content['BASEPATH'] . "images/icons/delete.png";
+	$content['MENU_GLOBAL'] = $content['BASEPATH'] . "images/icons/earth.png";
+	$content['MENU_INTERNAL'] = $content['BASEPATH'] . "images/icons/gear.png";
+	$content['MENU_EDIT_DISABLED'] = $content['BASEPATH'] . "images/icons/edit_disabled.png";
+	$content['MENU_DELETE_DISABLED'] = $content['BASEPATH'] . "images/icons/delete_disabled.png";
+	$content['MENU_MOVE_UP'] = $content['BASEPATH'] . "images/icons/nav_up_blue.png";
+	$content['MENU_MOVE_DOWN'] = $content['BASEPATH'] . "images/icons/nav_down_blue.png";
+	$content['MENU_SOURCE_DISK'] = $content['BASEPATH'] . "images/icons/document_text.png";
+	$content['MENU_SOURCE_DB'] = $content['BASEPATH'] . "images/icons/data_table.png";
+	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
+	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";
+	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
+	$content['MENU_USEROPTIONS'] = $content['BASEPATH'] . "images/icons/businessman_preferences.png";
+	$content['MENU_EXPORT'] = $content['BASEPATH'] . "images/icons/export1.png";
+	$content['MENU_CHARTS'] = $content['BASEPATH'] . "images/icons/line-chart.png";
+	$content['MENU_CHART_CAKE'] = $content['BASEPATH'] . "images/icons/pie-chart.png";
+	$content['MENU_CHART_BARSVERT'] = $content['BASEPATH'] . "images/icons/column-chart.png";
+	$content['MENU_CHART_BARSHORI'] = $content['BASEPATH'] . "images/icons/column-chart-hori.png";
+	$content['MENU_CHART_PREVIEW'] = $content['BASEPATH'] . "images/icons/pie-chart_view.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -480,13 +592,13 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 {
 	$strfinal = str_replace ( "%1", $param1, $strlang );
 	if ( strlen($param2) > 0 )
-		$strfinal = str_replace ( "%1", $param2, $strfinal );
+		$strfinal = str_replace ( "%2", $param2, $strfinal );
 	if ( strlen($param3) > 0 )
-		$strfinal = str_replace ( "%1", $param3, $strfinal );
+		$strfinal = str_replace ( "%3", $param3, $strfinal );
 	if ( strlen($param4) > 0 )
-		$strfinal = str_replace ( "%1", $param4, $strfinal );
+		$strfinal = str_replace ( "%4", $param4, $strfinal );
 	if ( strlen($param5) > 0 )
-		$strfinal = str_replace ( "%1", $param5, $strfinal );
+		$strfinal = str_replace ( "%5", $param5, $strfinal );
 	
 	// And return
 	return $strfinal;
@@ -495,54 +607,96 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 function InitConfigurationValues()
 {
 	global $content, $CFG, $LANG, $gl_root_path;
-
-	// If Database is enabled, try to read from database!
-	if ( $CFG['UserDBEnabled'] )
+	
+	// To avoid this code in case of conversion
+	if ( !defined('IN_PHPLOGCON_CONVERT') )
 	{
-		$result = DB_Query("SELECT * FROM " . DB_CONFIG);
-		$rows = DB_GetAllRows($result, true, true);
-
-		if ( isset($rows ) )
+		// If Database is enabled, try to read from database!
+		if ( GetConfigSetting("UserDBEnabled", false) )
 		{
-			for($i = 0; $i < count($rows); $i++)
-				$content[ $rows[$i]['name'] ] = $rows[$i]['value'];
-		}
-		// General defaults 
-		// --- Language Handling
-		if ( !isset($content['gen_lang']) ) { $content['gen_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/; }
-		
-		// --- PHP Debug Mode
-		if ( !isset($content['gen_phpdebug']) ) { $content['gen_phpdebug'] = "no"; }
-		// --- 
+			// Get configuration variables 
+			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
+			
+			if ( $result )
+			{
+				$rows = DB_GetAllRows($result, true);
+				// Read results from DB and overwrite in $CFG Array!
+				if ( isset($rows ) )
+				{
+					for($i = 0; $i < count($rows); $i++)
+					{
+						$CFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+						$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+					}
+				}
+			}
+			else // Critical ERROR HERE!
+				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
 
-		// Database Version Checker! 
-		if ( $content['database_internalversion'] > $content['database_installedversion'] )
-		{	
-			// Database is out of date, we need to upgrade
-			$content['database_forcedatabaseupdate'] = "yes"; 
+			// Database Version Checker! 
+			if ( $content['database_internalversion'] > $content['database_installedversion'] )
+			{	
+				// Database is out of date, we need to upgrade
+				$content['database_forcedatabaseupdate'] = "yes"; 
+			}
+
+			// Now we init the user session stuff
+			InitUserSession();
+			
+			if ( !$content['SESSION_LOGGEDIN'] ) 
+			{
+
+				// Check if user needs to be logged in
+				if ( GetConfigSetting("UserDBLoginRequired", false) )
+				{
+						// User needs to be logged in, redirect to login page
+						if ( !defined("IS_NOLOGINPAGE") )
+							RedirectToUserLogin();
+				}
+				else if ( defined('IS_ADMINPAGE') )
+				{
+					// Language System not initialized yet
+					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
+				}
+			}
+
+			// Load Configured Searches 
+			LoadSearchesFromDatabase();
+
+			// Load Configured Charts 
+			LoadChartsFromDatabase();
+
+			// Load Configured Views
+			LoadViewsFromDatabase();
+
+			// Load Configured Sources
+			LoadSourcesFromDatabase();
+		}
+		else
+		{
+			if ( defined('IS_ADMINPAGE') || defined("IS_NOLOGINPAGE") )	// Language System not initialized yet
+				DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
 		}
 	}
-	else
+
+	// --- Language Handling
+	if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
 	{
-		// --- Set Defaults...
-		// Language Handling
-		if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
-		{
-			$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
-			$LANG = $content['user_lang'];
-		}
-		else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
-		{
-			$content['user_lang'] = $content['gen_lang'];
-			$LANG = $content['user_lang'];
-		}
-		else	// Failsave!
-		{
-			$content['user_lang'] = $CFG['ViewDefaultLanguage'] /*"en"*/;
-			$LANG = $content['user_lang'];
-			$content['gen_lang'] = $content['user_lang'];
-		}
+		$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
+		$LANG = $content['user_lang'];
 	}
+	else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
+	{
+		$content['user_lang'] = $content['gen_lang'];
+		$LANG = $content['user_lang'];
+	}
+	else	// Failsave!
+	{
+		$content['user_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_USER) /*"en"*/;
+		$LANG = $content['user_lang'];
+		$content['gen_lang'] = $content['user_lang'];
+	}
+	// --- 
 
 	// Paging Size handling!
 	if ( !isset($_SESSION['PAGESIZE_ID']) )
@@ -554,22 +708,21 @@ function InitConfigurationValues()
 	// Auto reload handling!
 	if ( !isset($_SESSION['AUTORELOAD_ID']) )
 	{
-		if ( isset($CFG['ViewEnableAutoReloadSeconds']) && $CFG['ViewEnableAutoReloadSeconds'] > 0 )
+		if ( GetConfigSetting("ViewEnableAutoReloadSeconds", 0, CFGLEVEL_USER) > 0 )
 			$_SESSION['AUTORELOAD_ID'] = 1; // Autoreload ID will be the first item!
 		else	// Default is 0, which means auto reload disabled
 			$_SESSION['AUTORELOAD_ID'] = 0;
 	}
 
 	// Theme Handling
-	if ( !isset($content['web_theme']) ) { $content['web_theme'] = $CFG['ViewDefaultTheme'] /*"default"*/; }
+	if ( !isset($content['web_theme']) ) { $content['web_theme'] = GetConfigSetting("ViewDefaultTheme", "default", CFGLEVEL_USER); }
 	if ( isset($_SESSION['CUSTOM_THEME']) && VerifyTheme($_SESSION['CUSTOM_THEME']) )
 		$content['user_theme'] = $_SESSION['CUSTOM_THEME'];
 	else
 		$content['user_theme'] = $content['web_theme'];
 
-	//Init Theme About Info ^^
+	// Init Theme About Info ^^
 	InitThemeAbout($content['user_theme']);
-	// ---
 
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
@@ -647,21 +800,37 @@ function CheckUrlOrIP($ip)
 
 function DieWithErrorMsg( $szerrmsg )
 {
-	global $content;
-	print("<html><head><link rel=\"stylesheet\" href=\"" . $gl_root_path . "admin/css/admin.css\" type=\"text/css\"></head><body>");
-	print("<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td><center><H3><font color='red'>Critical Error occured</font></H3><br></center>");
-	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
-	print("</td></tr></table>");
-
+	global $gl_root_path, $content;
+	echo 
+		"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
+		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
+		"<H3>Critical Error occured</H3>" . 
+		"</td></tr>" . 
+		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\">" . 
+		$szerrmsg . 
+		"</td></tr></table>" . 
+		"</body></html>";
 	exit;
 }
 
 function DieWithFriendlyErrorMsg( $szerrmsg )
 {
-	//TODO: Make with template
-	print("<html><body>");
-	print("<center><H3><font color='red'>Error occured</font></H3><br></center>");
-	print("<B>Errordetails:</B><BR>" .  $szerrmsg);
+	global $gl_root_path, $content;
+	echo 
+		"<html><title>phpLogCon :: Error occured</title><head>" . 
+		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
+		"<H3>Error occured</H3>" . 
+		"</td></tr>" . 
+		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\">" . 
+		$szerrmsg . 
+		"</td></tr></table>" . 
+		"</body></html>";
 	exit;
 }
 
@@ -670,26 +839,39 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 */
 function InitPageTitle()
 {
-	global $content, $CFG, $currentSourceID;
+	global $content, $currentSourceID;
 
-	if ( isset($CFG['PrependTitle']) && strlen($CFG['PrependTitle']) > 0 )
-		$szReturn = $CFG['PrependTitle'] . " :: ";
+	$tmpTitle = GetConfigSetting("PrependTitle", "", CFGLEVEL_USER);
+	if ( strlen($tmpTitle) > 0 )
+		$szReturn = $tmpTitle . " :: ";
 	else
 		$szReturn = "";
 
-	if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
-		$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
+	if ( !defined('IS_ADMINPAGE') )
+	{
+		if ( isset($currentSourceID) && isset($content['Sources'][$currentSourceID]['Name']) )
+			$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
+	}
 
 	// Append phpLogCon
 	$szReturn .= "phpLogCon";
+
+	if ( defined('IS_ADMINPAGE') )
+		$szReturn .= " :: " . $content['LN_ADMIN_CENTER'] . " :: ";
 
 	// return result
 	return $szReturn;
 }
 
+function ReplaceLineBreaksInString($myStr)
+{
+	// Add linebreaks!
+	return str_replace( "\n", "<br>", $myStr );
+}
 
 function GetStringWithHTMLCodes($myStr)
 {
+
 	// Replace all special characters with valid html representations
 	return htmlentities($myStr);
 }
@@ -800,6 +982,14 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
+	// Sample: 16/Sep/2008:13:37:47 +0200
+	else if ( preg_match("/([0-9]{1,2})\/(...)\/([0-9]{1,4}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) \+([0-9]{1,4})/", $szTimStr, $out ) )
+	{
+		// Apache Logfile typical timestamp
+		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], GetMonthFromString($out[2]), $out[1], $out[3]);
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // > WTF TODO! > $out[7]
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
 	else
 	{
 		$eventtime[EVTIME_TIMESTAMP] = 0;
@@ -807,7 +997,7 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 		
 		// Print Error!
-		OutputDebugMessage("GetEventTime got an unparsable time '" . $szTimStr . "', returning 0");
+		OutputDebugMessage("GetEventTime got an unparsable time '" . $szTimStr . "', returning 0", DEBUG_WARN);
 	}
 
 	// return result!
@@ -855,13 +1045,13 @@ function GetMonthFromString($szMonth)
 */
 function AddContextLinks(&$sourceTxt)
 {
-	global $szTLDDomains, $CFG;
+	global $szTLDDomains;
 	
 	// Return if not enabled!
-	if ( !isset($CFG['EnableIPAddressResolve']) || $CFG['EnableIPAddressResolve'] == 1 )
+	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
-		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/e', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
 	}
 
 	// Create if not set!
@@ -871,8 +1061,8 @@ function AddContextLinks(&$sourceTxt)
 	// Create Search Array
 	$search = array 
 				(
-					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/e',
-/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/e',
+					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/ie',
+/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/ie',
 				);
 
 	// Create Replace Array
@@ -894,13 +1084,22 @@ function AddContextLinks(&$sourceTxt)
 */
 function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 {
+	global $content, $uID;
+
 	// Create string
-	$szReturn  = $prepend;
+	$szReturn = $prepend;
+
+	// Set IUD property if available
+	if ( isset($uID) )
+		$includeLinkUID = "&uid=" . $uID;
+	else
+		$includeLinkUID = "";
+	
+	// check if it is an IP or domain
 	if ( strlen($szIP) > 0 )
 	{
-		// Split IP into array
+/*		// Split IP into array
 		$IPArray = explode(".", $szIP);
-
 		if ( 
 				(intval($IPArray[0]) == 10	) ||
 				(intval($IPArray[0]) == 127 ) ||
@@ -908,14 +1107,27 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 				(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
 				(intval($IPArray[0]) == 255	)
 			)
+*/
+		if ( IsInternalIP($szIP) )
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';
 		else
 			// Normal LINK!
 			$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
+
+		// Add InfoSearch Link
+		$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 	}
 	else if ( strlen($szDomain) > 0 ) 
+	{
 		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
+
+		// Add InfoSearch Link
+		$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
+
+	}
+
+	// Append the append string now
 	$szReturn .= $append;
 
 	// return result
@@ -923,15 +1135,38 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 }
 
 /*
+*	Helper function to check, if an IP Address is within private address space!
+*/
+function IsInternalIP($szIPAddress)
+{
+	// Split IP into array
+	$IPArray = explode(".", $szIPAddress);
+
+	if ( 
+			(intval($IPArray[0]) == 10	) ||
+			(intval($IPArray[0]) == 127 ) ||
+			(intval($IPArray[0]) == 172 && intval($IPArray[1]) >= 16 && intval($IPArray[1]) <= 31) || 
+			(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
+			(intval($IPArray[0]) == 255	)
+		)
+
+		// return true in this case
+		return true;
+	else
+		// This is an external IP
+		return false;
+}
+
+/*
 *	Reserve Resolve IP Address!
 */
 function ReverseResolveIP( $szIP, $prepend, $append )
 {
-	global $gl_starttime, $MaxExecutionTime;
+	global $gl_starttime, $content; 
 
-	// Substract 5 savety seconds!
+	// Substract 5 seconds we need to finish processing!
 	$scriptruntime = intval(microtime_float() - $gl_starttime);
-	if ( $scriptruntime > ($MaxExecutionTime-5) )
+	if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
 		return "";
 
 	// Abort if these IP's are postet
@@ -968,7 +1203,9 @@ function CreateTopLevelDomainSearch()
 	$szTLDDomains .= "aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|cTLD|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw";
 }
 
-// --- BEGIN Usermanagement Function --- 
+/*
+*	This Functions starts the main PHP Session if necessary
+*/
 function StartPHPSession()
 {
 	global $RUNMODE;
@@ -983,116 +1220,186 @@ function StartPHPSession()
 	}
 }
 
-function CheckForUserLogin( $isloginpage, $isUpgradePage = false )
+function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 {
-	global $content; 
+	global $content, $page;
 
-	if ( isset($_SESSION['SESSION_LOGGEDIN']) )
-	{
-		if ( !$_SESSION['SESSION_LOGGEDIN'] ) 
-			RedirectToUserLogin();
-		else
-		{
-			$content['SESSION_LOGGEDIN'] = "true";
-			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
-		}
+	// Copy properties
+	$content['warningtext'] = $warningtext;
+	$content['yesmsg'] = $yesmsg;
+	$content['nomsg'] = $nomsg;
 
-		// New, Check for database Version and may redirect to updatepage!
-		if (	isset($content['database_forcedatabaseupdate']) && 
-				$content['database_forcedatabaseupdate'] == "yes" && 
-				$isUpgradePage == false 
-			)
-				RedirectToDatabaseUpgrade();
-	}
-	else
-	{
-		if ( $isloginpage == false )
-			RedirectToUserLogin();
-	}
+	// Handle GET and POST input!
+	$content['form_url'] = $_SERVER['SCRIPT_NAME'] . "?";
+	foreach ($_GET as $varname => $varvalue)
+		$content['form_url'] .= $varname . "=" . $varvalue . "&";
+	$content['form_url'] .= "verify=yes"; // Append verify!
 
+	foreach ($_POST as $varname => $varvalue)
+		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+
+	// --- BEGIN CREATE TITLE
+	$content['TITLE'] = InitPageTitle();
+	$content['TITLE'] .= " :: Confirm Action";
+	// --- END CREATE TITLE
+
+	// --- Parsen and Output
+	InitTemplateParser();
+	$page -> parser($content, "admin/admin_securecheck.html");
+	$page -> output(); 
+	// --- 
+	
+	// Exit script execution
+	exit;
 }
 
-function CreateUserName( $username, $password, $access_level )
+function SaveGeneralSettingsIntoDB()
 {
-	$md5pass = md5($password);
-	$result = DB_Query("SELECT username FROM " . STATS_USERS . " WHERE username = '" . $username . "'");
-	$rows = DB_GetAllRows($result, true);
-	if ( isset($rows) )
-	{
-		DieWithFriendlyErrorMsg( "User $username already exists!" );
+	WriteConfigValue( "ViewDefaultLanguage", true );
+	WriteConfigValue( "ViewDefaultTheme", true );
 
-		// User not created!
-		return false;
-	}
-	else
-	{
-		// Create User
-		$result = DB_Query("INSERT INTO " . STATS_USERS . " (username, password, access_level) VALUES ('$username', '$md5pass', $access_level)");
-		DB_FreeQuery($result);
+	WriteConfigValue( "ViewUseTodayYesterday", true );
+	WriteConfigValue( "ViewEnableDetailPopups", true );
+	WriteConfigValue( "EnableIPAddressResolve", true );
+	WriteConfigValue( "MiscShowDebugMsg", true );
+	WriteConfigValue( "MiscShowDebugGridCounter", true );
+	WriteConfigValue( "MiscShowPageRenderStats", true );
+	WriteConfigValue( "MiscEnableGzipCompression", true );
+	WriteConfigValue( "SuppressDuplicatedMessages", true );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true );
 
-		// Success
-		return true;
-	}
+	WriteConfigValue( "ViewMessageCharacterLimit", true );
+	WriteConfigValue( "ViewStringCharacterLimit", true );
+	WriteConfigValue( "ViewEntriesPerPage", true );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
+	WriteConfigValue( "PopupMenuTimeout", true );
+
+	WriteConfigValue( "PrependTitle", true );
+	WriteConfigValue( "SearchCustomButtonCaption", true );
+	WriteConfigValue( "SearchCustomButtonSearch", true );
+	
+	// Extra Fields
+	WriteConfigValue( "DefaultViewsID", true );
+	WriteConfigValue( "DefaultSourceID", true );
+	
+	// GLOBAL ONLY
+	WriteConfigValue( "DebugUserLogin", true );
+	WriteConfigValue( "MiscDebugToSyslog", true );
+	WriteConfigValue( "MiscMaxExecutionTime", true );
 }
 
-function CheckUserLogin( $username, $password )
-{
-	global $content, $CFG;
-
-	// TODO: SessionTime and AccessLevel check
-
-	$md5pass = md5($password);
-	$sqlselect = "SELECT access_level FROM " . STATS_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
-	$result = DB_Query($sqlselect);
-	$rows = DB_GetAllRows($result, true);
-	if ( isset($rows) )
-	{
-		$_SESSION['SESSION_LOGGEDIN'] = true;
-		$_SESSION['SESSION_USERNAME'] = $username;
-		$_SESSION['SESSION_ACCESSLEVEL'] = $rows[0]['access_level'];
-		
-		$content['SESSION_LOGGEDIN'] = "true";
-		$content['SESSION_USERNAME'] = $username;
-
-		// Success !
-		return true;
-	}
-	else
-	{
-		if ( $CFG['MiscShowDebugMsg'] == 1 )
-			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
-		
-		// Default return false
-		return false;
-	}
-}
-
-function DoLogOff()
+function SaveUserGeneralSettingsIntoDB()
 {
 	global $content;
 
-	unset( $_SESSION['SESSION_LOGGEDIN'] );
-	unset( $_SESSION['SESSION_USERNAME'] );
-	unset( $_SESSION['SESSION_ACCESSLEVEL'] );
+	WriteConfigValue( "ViewDefaultLanguage", false, $content['SESSION_USERID']);
+	WriteConfigValue( "ViewDefaultTheme", false, $content['SESSION_USERID'] );
 
-	// Redir to Index Page
-	RedirectPage( "index.php");
+	WriteConfigValue( "ViewUseTodayYesterday", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEnableDetailPopups", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "EnableIPAddressResolve", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowDebugMsg", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowDebugGridCounter", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscShowPageRenderStats", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "MiscEnableGzipCompression", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SuppressDuplicatedMessages", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", false, $content['SESSION_USERID'] );
+
+	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "PopupMenuTimeout", false, $content['SESSION_USERID'] );
+
+	WriteConfigValue( "PrependTitle", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SearchCustomButtonCaption", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "SearchCustomButtonSearch", false, $content['SESSION_USERID'] );
+	
+	// Extra Fields
+	WriteConfigValue( "DefaultViewsID", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "DefaultSourceID", false, $content['SESSION_USERID'] );
 }
 
-function RedirectToUserLogin()
+
+function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLevel = CFGLEVEL_GLOBAL)
 {
-	// TODO Referer
-	header("Location: login.php?referer=" . $_SERVER['PHP_SELF']);
-	exit;
+	global $content, $CFG, $USERCFG;
+
+	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
+	{
+		if ( $DesiredConfigLevel == CFGLEVEL_USER )
+		{
+			// only use user settings if desired by the user
+			if ( isset($USERCFG['UserOverwriteOptions']) && $USERCFG['UserOverwriteOptions'] == 1 ) 
+			{
+				// return user specific setting if available
+				if ( isset($USERCFG[$szSettingName]) ) 
+					return $USERCFG[$szSettingName];
+			}
+		}
+	}
+
+	// Either UserDB disabled, or global setting wanted - easier handling
+	if ( isset($CFG[$szSettingName]) ) 
+		return $CFG[$szSettingName];
+	else
+		return $szDefaultValue;
 }
 
-function RedirectToDatabaseUpgrade()
+/*
+*	Helper function to get the errorCode
+*/
+function GetErrorMessage($errorCode)
 {
-	// TODO Referer
-	header("Location: upgrade.php"); // ?referer=" . $_SERVER['PHP_SELF']);
-	exit;
-}
-// --- END Usermanagement Function --- 
+	global $content;
 
+	switch( $errorCode )
+	{
+		case ERROR_FILE_NOT_FOUND: 
+			return $content['LN_ERROR_FILE_NOT_FOUND'];
+		case ERROR_FILE_NOT_READABLE: 
+			return $content['LN_ERROR_FILE_NOT_READABLE'];
+		case ERROR_FILE_EOF:
+			return $content['LN_ERROR_FILE_EOF'];
+		case ERROR_FILE_BOF:
+			return $content['LN_ERROR_FILE_BOF'];
+		case ERROR_FILE_CANT_CLOSE:
+			return $content['LN_ERROR_FILE_CANT_CLOSE'];
+		case ERROR_UNDEFINED:
+			return $content['LN_ERROR_UNDEFINED'];
+		case ERROR_EOS:
+			return $content['LN_ERROR_EOS'];
+		case ERROR_NOMORERECORDS:
+			return $content['LN_ERROR_NORECORDS'];
+		case ERROR_FILTER_NOT_MATCH:
+			return $content['LN_ERROR_FILTER_NOT_MATCH'];
+		case ERROR_DB_CONNECTFAILED:
+			return $content['LN_ERROR_DB_CONNECTFAILED'];
+		case ERROR_DB_CANNOTSELECTDB:
+			return $content['LN_ERROR_DB_CANNOTSELECTDB'];
+		case ERROR_DB_QUERYFAILED:
+			return $content['LN_ERROR_DB_QUERYFAILED'];
+		case ERROR_DB_NOPROPERTIES:
+			return $content['LN_ERROR_DB_NOPROPERTIES'];
+		case ERROR_DB_INVALIDDBMAPPING:
+			return $content['LN_ERROR_DB_INVALIDDBMAPPING'];
+		case ERROR_DB_INVALIDDBDRIVER:
+			return $content['LN_ERROR_DB_INVALIDDBDRIVER'];
+		case ERROR_DB_TABLENOTFOUND:
+			return $content['LN_ERROR_DB_TABLENOTFOUND'];
+		case ERROR_DB_DBFIELDNOTFOUND:
+			return $content['LN_ERROR_DB_DBFIELDNOTFOUND'];
+
+		case ERROR_CHARTS_NOTCONFIGURED:
+			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];
+		case ERROR_FILE_NOMORETIME:
+			return $content['LN_ERROR_FILE_NOMORETIME'];
+		case ERROR_SOURCENOTFOUND:
+			return $content['LN_GEN_ERROR_SOURCENOTFOUND'];
+
+		default:
+			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );
+	}
+}
 
 ?>

@@ -245,9 +245,9 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 				else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 				{
 					if ( $mycolkey == SYSLOG_MESSAGE )
-						$content['fields'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[$mycolkey]);
+						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
 					else	// kindly copy!
-						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( $logArray[$mycolkey] );
 
 					// --- HOOK here to add context links!
 					AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
@@ -348,12 +348,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 		$content['error_code'] = $ret;
 
 		if ( $ret == ERROR_FILE_NOT_FOUND ) 
-			$content['detailederror'] = "Syslog file could not be found.";
+			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_FOUND'];
 		else if ( $ret == ERROR_FILE_NOT_READABLE ) 
-			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
+			$content['detailederror'] = $content['LN_ERROR_FILE_NOT_READABLE'];
 		else 
-			$content['detailederror'] = "Unknown or unhandeled error occured.";
-			
+			$content['detailederror'] = $content['LN_ERROR_UNKNOWN'];
 	}
 
 	// Close file!

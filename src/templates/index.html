@@ -89,13 +89,41 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td class="title" nowrap><B>Recent syslog messages</B></td>
+	<td class="title" width="100%" nowrap><B>Recent syslog messages</B></td>
+<!-- IF EXPORT_ENABLED="true" -->
+		<td class="line2" align="left" nowrap>
+			<form action="{BASEPATH}export.php" method="get" name="exportform">
+			<table border="0" cellspacing="0" cellpadding="0" align="left">
+			<tr> 
+				<td align="right">
+					<input type="hidden" name="op" value="export">
+					<input type="hidden" name="uid" value="{uid_original}">
+					<!-- IF skipone="true" -->
+					<input type="hidden" name="skipone" value="true">
+					<!-- ENDIF skipone="true" -->
+					<!-- IF direction="desc" -->
+					<input type="hidden" name="direction" value="desc">
+					<!-- ENDIF direction="desc" -->
+					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 150px">
+						<option selected value="">{LN_GEN_SELECTEXPORT}</option>
+						<!-- BEGIN EXPORTTYPES -->
+						<option value="{ID}">{DisplayName}</option>
+						<!-- END EXPORTTYPES -->
+					</select>
+				</td>
+				<td nowrap width="16"><input type="image" src="{MENU_EXPORT}" width="16" hight="16" alt="{LN_GEN_EXPORT}" class="borderless"></td>
+			</tr>
+			</table>
+			</form>
+		</td>
+<!-- ENDIF EXPORT_ENABLED="true" -->
 </tr>
 </table>
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
-	<td nowrap width="100%"class="line2" align="left">
+
+	<td nowrap width="100%" class="line2" align="left">
 <!-- IF main_currentpagenumber_found="true" -->
 	{LN_GEN_PAGE} {main_currentpagenumber}
 <!-- ENDIF main_currentpagenumber_found="true" -->
@@ -109,8 +137,7 @@
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-<!--			<input type="checkbox" {autoreload_checked} name="autoreload">-->
-			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
+			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();"  STYLE="width: 100px">
 				<!-- BEGIN reloadtimes -->
 				<option {Selected} value="{ID}">{DisplayName}</option>
 				<!-- END reloadtimes -->
@@ -126,16 +153,16 @@
 	<td nowrap width="125" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
 	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>
 <!-- ENDIF main_recordcount_found="true" -->
+
 <!-- IF main_pagerenabled="true" -->
 		<td nowrap width="115" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
 		<td nowrap width="50" class="line2">
-		
 		<form action="userchange.php" method="get" name="pageingsize">
 		<input type="hidden" name="op" value="changepagesize">
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();"  STYLE="width: 100px">
 					<!-- BEGIN pagesizes -->
 					<option {Selected} value="{ID}">{DisplayName}</option>
 					<!-- END pagesizes -->
@@ -144,7 +171,6 @@
 		</tr>
 		</table>
 		</form>
-
 		</td>
 
 		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
@@ -219,7 +245,7 @@
 	<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 	<!-- BEGIN values -->
-	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="middle" {isnowrap}>
+	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top" {isnowrap}>
 		
 		<!-- IF hasbuttons="true" -->
 			<div id="menu">
@@ -230,7 +256,7 @@
 				  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
 				<!-- BEGIN buttons -->
 				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
-				  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
+				  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}{additional_url_sourceonly}" target="_top" OnClick="ToggleDisplayOffTypeById('menu_{FieldColumn}_{uid}');">{DisplayName}</a>
 				  </li>
 				<!-- END buttons -->
 				</ul>
@@ -338,18 +364,41 @@
 </table>
 <!-- ENDIF main_pagerenabled="true" -->
 
-
 <!-- IF syslogmessagesenabled="false" -->
-	<center>
-	<font color="red">
-	<br>
-	<h3>{LN_ERROR_NORECORDS} - Error Details: </h3>
-	{detailederror}
-	<br>
-	<br>
-	</font>
-	</center>
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</div>
+		<p align="left">{detailederror}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
 <!-- ENDIF syslogmessagesenabled="false" -->
+
+<!-- IF logstream_warning="false" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityWarning">{LN_WARNING_LOGSTREAMTITLE}</div>
+		<p align="left">{logstream_warning_details}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{logstream_warning_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
+<!-- ENDIF logstream_warning="false" -->
 
 
 <!-- INCLUDE include_footer.html -->

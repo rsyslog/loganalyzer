@@ -161,7 +161,7 @@ function toggleFormareaVisibility(FormFieldName, FirstHiddenArea, SecondHiddenAr
 
 // helper array to keep track of the timeouts!
 var runningTimeouts = new Array();
-var defaultMenuTimeout = 1500;
+// MOVED INTO HEADER var defaultMenuTimeout = 3000;
 /*
 * Toggle display type from NONE to BLOCK
 */ 
@@ -234,7 +234,6 @@ function DebugShowElementsById(ObjName)
 		document.write(obj[key]);
 	}
 }
-
 
 /* 
 *	Detail popup handling functions

@@ -57,10 +57,30 @@ define('STR_DEBUG_WARN', "Warning");
 define('STR_DEBUG_ERROR', "Error");
 define('STR_DEBUG_ERROR_WTF', "WTF OMFG");
 
+// --- Config Level defines
+define('CFGLEVEL_GLOBAL', 0);
+define('CFGLEVEL_GROUP', 1);
+define('CFGLEVEL_USER', 2);
+// --- 
+
 // --- Source Type defines
 define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
 define('SOURCE_PDO', '3');
+// --- 
+
+// --- Exportformat defines
+define('EXPORT_CVS', 'CVS');
+define('EXPORT_XML', 'XML');
+// --- 
+
+// --- GFX Chart Types
+define('CHART_CAKE', 1);
+define('CHART_BARS_VERTICAL', 2);
+define('CHART_BARS_HORIZONTAL', 3);
+
+define('CHARTDATA_NAME', 'NAME');
+define('CHARTDATA_COUNT', 'COUNT');
 // --- 
 
 // --- 
@@ -158,6 +178,7 @@ define('IUT_IMAPProbe', '21');
 define('IUT_NNTPProbe', '22');
 define('IUT_WEVTMONV2', '23');
 define('IUT_SMTPLISTENER', '24');
+define('IUT_WEBSERVERLOG', '10001');
 $msgtype_colors[IUT_Unknown] = "#D0FBDC";
 $msgtype_colors[IUT_Syslog] = "#D0FBF1";
 $msgtype_colors[IUT_Heartbeat] = "#D0EEFB";
@@ -180,6 +201,7 @@ $msgtype_colors[IUT_IMAPProbe] = "#D0FBE8";
 $msgtype_colors[IUT_NNTPProbe] = "#D0F7FB";
 $msgtype_colors[IUT_WEVTMONV2] = "#CCE4D2";
 $msgtype_colors[IUT_SMTPLISTENER] = "#CCE4DE";
+$msgtype_colors[IUT_WEBSERVERLOG] = "#E1FBD0";
 // --- 
 
 ?>
