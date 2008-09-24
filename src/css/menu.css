@@ -1,8 +1,10 @@
+
 #menu {
 	width: 16px; /* set width of menu */
 } 
 
 #menu ul { /* remove bullets and list indents */
+	position: absolute;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -11,44 +13,54 @@
 /* style, color and size links and headings to suit */
 #menu a, #menu h2 {
 	display: block;
-	border-width: 1px;
-	border-style: solid;
-	margin: 0;
-	padding: 2px 3px;
+	margin: 2px;
+	padding: 1px 1px; 
 }
 
 #menu h2 {
-	font: bold 11px/16px;
+	font-size: 12px;
+	font-weight: bold;
 	text-align: center;
 }
 
 #menu a {
 	text-decoration: none;
-	border-color: #44617D #203040 #203040 #44617D; 
 }
 
 #menu a:hover {
 	text-decoration: none;
-	border-color: #44617D #203040 #203040 #44617D; 
 }
 
 #menu li {
-	z-index:10;
 	/* make the list elements a containing block for the nested lists */
 	position: relative;
 } 
 
+#menu ul li ul li {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #44617D #203040 #203040 #44617D;
+} 
+
 #menu ul ul {
+	z-index:10;
+
+/*	border-color: #44617D #203040 #203040 #44617D; */
+
 	position: absolute;
-	top: 16px;
-	left: 0px; /* to position them to the right of their containing block */
-	width: 300; /* width is based on the containing block */
+	top: 12px;
+	left: 4px; /* to position them to the right of their containing block */
+	width: 350; /* width is based on the containing block */
 }
 
 div#menu ul ul,
 div#menu ul li:hover ul ul
-{display: none;}
+{
+	display: none;
+}
 
 div#menu ul li:hover ul,
 div#menu ul ul li:hover ul 
-{display: block;}
+{
+	display: block;
+}

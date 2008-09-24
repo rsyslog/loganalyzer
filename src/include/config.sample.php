@@ -51,9 +51,12 @@ $CFG['UserDBPass'] = "";
 $CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
 $CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add a counter column into the grid!
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
+$CFG['MiscEnableGzipCompression'] = 1;		// If enabled, phplogcon will use gzip compression for output, we recommend
+											// to have this option enabled, it will highly reduce bandwith usage. 
 // --- 
 
 // --- Default Frontend Options 
+$CFG['PrependTitle'] = "";					// If set, this	text will be prepended withint the title tag
 $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yesterday is displayed as "today" and "yesterday"
 $CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the message gets trunscated.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
@@ -61,20 +64,19 @@ $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Det
 $CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens phplogcon the first time. 
 											// Currently only "default" and "dark" are available. 
 $CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
+$CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is set to anything higher the 0 (which means disabled), this means auto reload is enabled by default. 
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button
+
+$CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline messages are automatically resolved and the result is added in brackets {} behind the IP Address
 // ---
 
 // --- Define which fields you want to see 
 //$CFG['ShowMessage'] = true;					// If enabled, the Message column will be appended to the columns list.
-$CFG['Columns'][] = SYSLOG_DATE;
-$CFG['Columns'][] = SYSLOG_FACILITY;
-$CFG['Columns'][] = SYSLOG_SEVERITY;
-$CFG['Columns'][] = SYSLOG_HOST;
-$CFG['Columns'][] = SYSLOG_SYSLOGTAG;
-$CFG['Columns'][] = SYSLOG_MESSAGETYPE;
-$CFG['Columns'][] = SYSLOG_MESSAGE;
+//Eventlog based fields: $CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, /*SYSLOG_EVENT_CATEGORY, */SYSLOG_EVENT_ID, SYSLOG_MESSAGE );
+//$CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE );
+$CFG['DefaultViewsID'] = "";
 // ---
 
 // --- Predefined Searches! 
@@ -90,22 +92,24 @@ $CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "S
 
 // --- Source Options
 /* Example for DiskType Source:
-	$CFG['Sources'][Source1]['ID'] = "Source1";
-	$CFG['Sources'][Source1]['Name'] = "Syslog Disk File";
-	$CFG['Sources'][Source1]['SourceType'] = SOURCE_DISK;
-	$CFG['Sources'][Source1]['LogLineType'] = "syslog";
-	$CFG['Sources'][Source1]['DiskFile'] = "/var/log/syslog";
+	$CFG['Sources']['Source1']['ID'] = "Source1";
+	$CFG['Sources']['Source1']['Name'] = "Syslog Disk File";
+	$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
+	$CFG['Sources']['Source1']['LogLineType'] = "syslog";
+	$CFG['Sources']['Source1']['DiskFile'] = "/var/log/syslog";
+	$CFG['Sources']['Source1']['ViewID'] = "SYSLOG";
 
-	$CFG['Sources'][Source2]['ID'] = "Source5";
-	$CFG['Sources'][Source2]['Name'] = "WinSyslog DB";
-	$CFG['Sources'][Source2]['SourceType'] = SOURCE_DB;
-	$CFG['Sources'][Source2]['DBTableType'] = "winsyslog";
-	$CFG['Sources'][Source2]['DBType'] = DB_MYSQL;
-	$CFG['Sources'][Source2]['DBServer'] = "localhost";
-	$CFG['Sources'][Source2]['DBName'] = "phplogcon";
-	$CFG['Sources'][Source2]['DBUser'] = "root";
-	$CFG['Sources'][Source2]['DBPassword'] = "";
-	$CFG['Sources'][Source2]['DBTableName'] = "systemevents";
+	$CFG['Sources']['Source2']['ID'] = "Source5";
+	$CFG['Sources']['Source2']['Name'] = "WinSyslog DB";
+	$CFG['Sources']['Source2']['SourceType'] = SOURCE_DB;
+	$CFG['Sources']['Source2']['DBTableType'] = "winsyslog";
+	$CFG['Sources']['Source2']['DBType'] = DB_MYSQL;
+	$CFG['Sources']['Source2']['DBServer'] = "localhost";
+	$CFG['Sources']['Source2']['DBName'] = "phplogcon";
+	$CFG['Sources']['Source2']['DBUser'] = "root";
+	$CFG['Sources']['Source2']['DBPassword'] = "";
+	$CFG['Sources']['Source2']['DBTableName'] = "systemevents";
+	$CFG['Sources']['Source2']['ViewID'] = "SYSLOG";
 */
 
 // --- %Insert Source Here%

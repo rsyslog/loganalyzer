@@ -43,6 +43,19 @@ $content['LN_GEN_PAGE'] = "Seite";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Vordefinierte Suchkriterien";
 $content['LN_GEN_SOURCE_DISK'] = "Datei";
 $content['LN_GEN_SOURCE_DB'] = "Datenbank";
+	$content['LN_GEN_RECORDSPERPAGE'] = "records per page";
+	$content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
+	$content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";
+	$content['LN_GEN_DB_MYSQL'] = "Mysql Server";
+	$content['LN_GEN_DB_MSSQL'] = "Microsoft SQL Server";
+	$content['LN_GEN_DB_ODBC'] = "ODBC Database Source";
+	$content['LN_GEN_DB_PGSQL'] = "PostgreSQL";
+	$content['LN_GEN_DB_OCI'] = "Oracle Call Interface";
+	$content['LN_GEN_DB_DB2'] = "	IBM DB2";
+	$content['LN_GEN_DB_FIREBIRD'] = "Firebird/Interbase 6";
+	$content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
+	$content['LN_GEN_DB_SQLITE'] = "SQLite 2";
+	$content['LN_GEN_SELECTVIEW'] = "Select View";
 
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Du hast das Installationsscript 'install.php' noch nicht aus dem phpLogCon Hauptordner entfernt!";
@@ -56,10 +69,22 @@ $content['LN_SEARCH_ADVANCED'] = "Erweiterte Suche";
 $content['LN_SEARCH'] = "Suche";
 $content['LN_SEARCH_RESET'] = "Suche zur&uuml;cksetzen";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
+	$content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
+	$content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
+	$content['LN_VIEW_FILTERFOR'] = "Filter message for ";
+	$content['LN_VIEW_SEARCHFOR'] = "Search online for ";
+	$content['LN_VIEW_SEARCHFORGOOGLE'] = "Search Google for ";
+	$content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
 
 $content['LN_HIGHLIGHT'] = "Hightlight >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Hightlight-W&ouml;rter durch ein  Komma voneinander trennen";
+
+$content['LN_AUTORELOAD'] = "Set auto reload";
+$content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
+$content['LN_AUTORELOAD_PRECONFIGURED'] = "Preconfigured auto reload ";
+$content['LN_AUTORELOAD_SECONDS'] = "seconds";
+$content['LN_AUTORELOAD_MINUTES'] = "minutes";
 
 $content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.";
 
@@ -84,6 +109,7 @@ $content['LN_FILTER_OTHERS'] = "Andere Filter";
 $content['LN_FILTER_MESSAGE'] = "Syslog Meldungen";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Quelle (Hostname)";
+	$content['LN_FILTER_MESSAGETYPE'] = "Message Type";
 
 // Field Captions
 $content['LN_FIELDS_DATE'] = "Datum";
@@ -95,6 +121,11 @@ $content['LN_FIELDS_PROCESSID'] = "Prozess ID";
 $content['LN_FIELDS_MESSAGETYPE'] = "Meldungstyp";
 $content['LN_FIELDS_UID'] = "uID";
 $content['LN_FIELDS_MESSAGE'] = "Meldung";
+	$content['LN_FIELDS_EVENTID'] = "Event ID";
+	$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlogtype";
+	$content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
+	$content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
+	$content['LN_FIELDS_EVENTUSER'] = "Event User";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Datenbank Host";
@@ -114,9 +145,11 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Datenbank Typ";
 $content['LN_CFG_DBTABLENAME'] = "Datenbank Tabellenname";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name der Quelle";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
+	$content['LN_CFG_VIEW'] = "Select View";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details für syslog-Nachrichten mit der ID";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details für Nachrichten-ID";
+$content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
 
 ?>

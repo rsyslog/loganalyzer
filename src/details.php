@@ -96,9 +96,6 @@ $content['searchstr'] = "";
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
-// Set Page title
-$content['TITLE'] = "phpLogCon :: Details";
-
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
@@ -251,6 +248,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						$content['fields'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes($logArray[$mycolkey]);
 					else	// kindly copy!
 						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+
+					// --- HOOK here to add context links!
+					AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
+					// --- 
 				}
 
 				// Increment helpcounter
@@ -265,7 +266,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
-
+/*
 				// --- Handle uid_first page button 
 				if ( $content['uid_fromgetrequest'] == $content['uid_first'] ) 
 					$content['main_pager_first_found'] = false;
@@ -279,10 +280,19 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						$content['main_pager_first_found'] = false;
 				}
 				// --- 
-
+*/
 				// --- Handle uid_last page button 
 				// Option the last UID from the stream!
 				$content['uid_last'] = $stream->GetLastPageUID();
+				$content['uid_first'] = $stream->GetFirstPageUID();
+
+				// --- Handle uid_first page button 
+				if ( $content['uid_current'] == $content['uid_first'] ) 
+					$content['main_pager_first_found'] = false;
+				else
+					$content['main_pager_first_found'] = true;
+				// ---
+
 
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
@@ -351,10 +361,27 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 }
 // --- 
 
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+if ( $content['messageenabled'] == "true" ) 
+{
+	// Append custom title part!
+	$content['TITLE'] .= " :: Details for '" . $content['uid_current'] . "'";
+}
+else
+{
+	// APpend to title Page title
+	$content['TITLE'] .= " :: Unknown uid";
+}
+// --- END CREATE TITLE
+
+
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "details.html");
 $page -> output(); 
 // --- 
+
 
 ?>

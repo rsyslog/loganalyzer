@@ -228,6 +228,17 @@ else if ( $content['INSTALL_STEP'] == 3 )
 		$content['ViewEnableDetailPopups_true'] = "";
 		$content['ViewEnableDetailPopups_false'] = "checked";
 	}
+	if ( isset($_SESSION['EnableIPAddressResolve']) ) { $content['EnableIPAddressResolve'] = $_SESSION['EnableIPAddressResolve']; } else { $content['EnableIPAddressResolve'] = 1; }
+	if ( $content['EnableIPAddressResolve'] == 1 )
+	{
+		$content['EnableIPAddressResolve_true'] = "checked";
+		$content['EnableIPAddressResolve_false'] = "";
+	}
+	else
+	{
+		$content['EnableIPAddressResolve_true'] = "";
+		$content['EnableIPAddressResolve_false'] = "checked";
+	}
 	// ---
 	
 	// Disable the bottom next button, as the Form in this step has its own button!
@@ -315,6 +326,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 		$_SESSION['ViewEnableDetailPopups'] = intval( DB_RemoveBadChars($_POST['ViewEnableDetailPopups']) );
 	else
 		$_SESSION['ViewEnableDetailPopups'] = 1; // Fallback default!
+
+	if ( isset($_POST['EnableIPAddressResolve']) )
+		$_SESSION['EnableIPAddressResolve'] = intval( DB_RemoveBadChars($_POST['EnableIPAddressResolve']) );
+	else
+		$_SESSION['EnableIPAddressResolve'] = 1; // Fallback default!
+
 	// ---
 
 	// If UserDB is disabled, skip next step!
@@ -347,7 +364,7 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		$totaldbdefs = str_replace( "`logcon_", "`" . $_SESSION["UserDBPref"], $totaldbdefs );
 		
 		// Now split by sql command
-		$mycommands = split( ";\r\n", $totaldbdefs );
+		$mycommands = split( ";\n", $totaldbdefs );
 		
 		// check for different linefeed
 		if ( count($mycommands) <= 1 )
@@ -463,6 +480,17 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_SESSION['SourceType']) ) { $content['SourceType'] = $_SESSION['SourceType']; } else { $content['SourceType'] = SOURCE_DISK; }
 	CreateSourceTypesList($content['SourceType']);
 	if ( isset($_SESSION['SourceName']) ) { $content['SourceName'] = $_SESSION['SourceName']; } else { $content['SourceName'] = "My Syslog Source"; }
+	
+	// Init default View
+	if ( isset($_SESSION['SourceViewID']) ) { $content['SourceViewID'] = $_SESSION['SourceViewID']; } else { $content['SourceViewID'] = 'SYSLOG'; }
+	foreach ( $content['Views'] as $myView )
+	{
+		if ( $myView['ID'] == $content['SourceViewID'] )
+			$content['Views'][ $myView['ID'] ]['selected'] = "selected";
+		else
+			$content['Views'][ $myView['ID'] ]['selected'] = "";
+	}
+
 
 	// SOURCE_DISK specific
 	if ( isset($_SESSION['SourceLogLineType']) ) { $content['SourceLogLineType'] = $_SESSION['SourceLogLineType']; } else { $content['SourceLogLineType'] = ""; }
@@ -478,6 +506,17 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_SESSION['SourceDBTableName']) ) { $content['SourceDBTableName'] = $_SESSION['SourceDBTableName']; } else { $content['SourceDBTableName'] = "systemevents"; }
 	if ( isset($_SESSION['SourceDBUser']) ) { $content['SourceDBUser'] = $_SESSION['SourceDBUser']; } else { $content['SourceDBUser'] = "user"; }
 	if ( isset($_SESSION['SourceDBPassword']) ) { $content['SourceDBPassword'] = $_SESSION['SourceDBPassword']; } else { $content['SourceDBPassword'] = ""; }
+	if ( isset($_SESSION['SourceDBEnableRowCounting']) ) { $content['SourceDBEnableRowCounting'] = $_SESSION['SourceDBEnableRowCounting']; } else { $content['SourceDBEnableRowCounting'] = "false"; }
+	if ( $content['SourceDBEnableRowCounting'] == "true" )
+	{
+		$content['SourceDBEnableRowCounting_true'] = "checked";
+		$content['SourceDBEnableRowCounting_false'] = "";
+	}
+	else
+	{
+		$content['SourceDBEnableRowCounting_true'] = "";
+		$content['SourceDBEnableRowCounting_false'] = "checked";
+	}
 
 	// Check for Error Msg
 	if ( isset($_GET['errormsg']) )
@@ -499,6 +538,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	else
 		RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_NAMEOFTHESOURCE'] );
 
+	if ( isset($_POST['SourceViewID']) )
+		$_SESSION['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']);
+	else
+		RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_VIEW'] );
+
+
 	// Check DISK Parameters!
 	if ( $_SESSION['SourceType'] == SOURCE_DISK) 
 	{
@@ -516,7 +561,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		if ( !is_file($_SESSION['SourceDiskFile']) )
 			RevertOneStep( $content['INSTALL_STEP']-1, "Failed to open the syslog file " .$_SESSION['SourceDiskFile'] . "! Check if the file exists and phplogcon has sufficient rights to it<br>" );
 	}
-	else if ( $_SESSION['SourceType'] == SOURCE_DB)
+	else if (	$_SESSION['SourceType'] == SOURCE_DB || $_SESSION['SourceType'] == SOURCE_PDO )
 	{
 		if ( isset($_POST['SourceDBType']) )
 			$_SESSION['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']);
@@ -552,7 +597,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 			$_SESSION['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']);
 		else
 			$_SESSION['SourceDBPassword'] = "";
-		
+
+		if ( isset($_POST['SourceDBEnableRowCounting']) )
+		{
+			$_SESSION['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']);
+			if ( $_SESSION['SourceDBEnableRowCounting'] != "true" )
+				$_SESSION['SourceDBEnableRowCounting'] = "false";
+		}
+
 		// TODO: Check database connectivity!
 	}
 
@@ -563,10 +615,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEntriesPerPage'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['ViewEnableDetailPopups'\] = [0-9]{1,2};/";
+	$patterns[] = "/\\\$CFG\['EnableIPAddressResolve'\] = [0-9]{1,2};/";
 	$patterns[] = "/\\\$CFG\['UserDBEnabled'\] = [0-9]{1,2};/";
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
 	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
+	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
 	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled'] . ";";
 	
 	//User Database	Options
@@ -576,24 +630,48 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	}
 
 	//Add the first source! 
-	$firstsource =	"\$CFG['Sources']['Source1']['ID'] = 'Source1';\r\n" . 
-					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\r\n" . 
-					"\$CFG['Sources']['Source1']['SourceType'] = " . $_SESSION['SourceType'] . ";\r\n";
+	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\n\n" . 
+					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\n" . 
+					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\n" . 
+					"\$CFG['Sources']['Source1']['ViewID'] = '" . $_SESSION['SourceViewID'] . "';\n";
+	
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 
 	{
-		$firstsource .=	"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\r\n" . 
+		$firstsource .= "\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;\n" . 
+						"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\n" . 
 						"";
 	}
-	else if ( $_SESSION['SourceType'] == SOURCE_DB ) 
+	else if ( $_SESSION['SourceType'] == SOURCE_DB )
 	{
-		$firstsource .=	"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBType'] = '" . $_SESSION['SourceDBType'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\r\n" . 
-						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\r\n" . 
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DB;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
+						"";
+	}
+	else if ( $_SESSION['SourceType'] == SOURCE_PDO )
+	{
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_PDO;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";

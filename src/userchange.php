@@ -50,17 +50,50 @@ else
 
 if ( isset($_GET['op']) )
 {
-	if ( $_GET['op'] == "changestyle" ) 
+	if ( $_GET['op'] == "changestyle" && isset($_GET['stylename']) ) 
 	{
 		if ( VerifyTheme($_GET['stylename']) ) 
 			$_SESSION['CUSTOM_THEME'] = $_GET['stylename'];
 	}
 
-	if ( $_GET['op'] == "changelang" ) 
+	if ( $_GET['op'] == "changelang" && isset($_GET['langcode']) ) 
 	{
 		if ( VerifyLanguage($_GET['langcode']) ) 
 			$_SESSION['CUSTOM_LANG'] = $_GET['langcode'];
 	}
+
+	if ( $_GET['op'] == "changeview" && isset($_GET['viewid']) ) 
+	{
+		// Obtain VIEW ID!
+		$newViewID = $_GET['viewid'];
+
+		if ( isset($content['Views'][$newViewID]) && isset($_SESSION['currentSourceID']))
+		{
+
+			// Save new View into session!
+			$_SESSION[$_SESSION['currentSourceID'] . "-View"] = $newViewID;
+		}
+		else
+		{
+			// DEBUG
+			echo "DEBUG: " . $_SESSION['currentSourceID'] . " - $newViewID";
+			exit;
+		}
+	}
+	
+
+	if ( $_GET['op'] == "changepagesize" && isset($_GET['pagesizeid']) ) 
+	{
+		if ( intval($_GET['pagesizeid']) >= 0 && intval($_GET['pagesizeid']) < count($content['pagesizes']) ) 
+			$_SESSION['PAGESIZE_ID'] = intval($_GET['pagesizeid']);
+	}
+
+	if ( $_GET['op'] == "autoreload" && isset($_GET['autoreloadtime']) ) 
+	{
+		if ( intval($_GET['autoreloadtime']) >= 0 && intval($_GET['autoreloadtime']) < count($content['reloadtimes']) ) 
+			$_SESSION['AUTORELOAD_ID'] = intval($_GET['autoreloadtime']);
+	}
+	
 }
 
 // Final redirect

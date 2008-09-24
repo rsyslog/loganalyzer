@@ -60,6 +60,7 @@ define('STR_DEBUG_ERROR_WTF', "WTF OMFG");
 // --- Source Type defines
 define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
+define('SOURCE_PDO', '3');
 // --- 
 
 // --- 

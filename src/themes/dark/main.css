@@ -63,6 +63,24 @@ A.title:hover
 	TEXT-DECORATION: none;
 }
 
+/* Context Link Classes */
+a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	background-color: transparent;
+	color:#FF9900;
+	text-decoration:underline;
+}
+a.contextlink:hover
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#FF9900;
+	text-decoration:none;
+}
+/*---*/
+
 /* Default Font Classes */
 font
 {
@@ -161,12 +179,12 @@ font
 	background-color: #1D3043;
 }
 
-.lineColouredWhite
+.lineColouredWhite, .lineColouredWhite:hover, a.lineColouredWhite
 {
 	font-size: 8pt;
 	color: #FFFFFF;
 }
-.lineColouredBlack
+.lineColouredBlack, .lineColouredBlack:hover, a.lineColouredBlack
 {
 	font-size: 8pt;
 	color: #000000;
@@ -243,12 +261,12 @@ font
 /* Cell Columns */
 .cellmenu1
 {
-	height: 15px;
+/*	height: 15px; */
 	border:1px solid;
 	border-color: #353A3F #050A0F #050A0F #353A3F; 
 
 	text-indent:5px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFCE5;
 	background-color: #103B65;
 }
@@ -389,4 +407,10 @@ select, input, button, textarea
 	font:10px Verdana,Arial,Helvetica,sans-serif;
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
+}
+
+.highlighted 
+{ 
+	font: bold 8pt Arial,Helvetica,sans-serif;
+	color: #CC6600 
 }

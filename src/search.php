@@ -60,14 +60,7 @@ $content['searchstr'] = "";
 
 // ---
 
-//if ( isset($content['myserver']) ) 
-//	$content['TITLE'] = "phpLogCon :: Home :: Server '" . $content['myserver']['Name'] . "'";	// Title of the Page 
-//else
-	$content['TITLE'] = "phpLogCon :: Search";
-// --- 
-
 // --- BEGIN Custom Code
-
 if ( (isset($_POST['search']) || isset($_GET['search'])) )
 {
 	// Copy search over
@@ -117,7 +110,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			}
 		}
 
-		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < 18 ) // If we have more than 18 elements, this means all facilities are enabled
+		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < count($content['filter_facility_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
 			foreach ($_GET['filter_facility'] as $tmpfacility) 
@@ -129,7 +122,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			$content['searchstr'] .= "facility:" . $tmpStr . " ";
 		}
 
-		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < 7 ) // If we have more than 7 elements, this means all facilities are enabled)
+		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < count($content['filter_severity_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
 			foreach ($_GET['filter_severity'] as $tmpfacility) 
@@ -140,6 +133,19 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			}
 			$content['searchstr'] .= "severity:" . $tmpStr . " ";
 		}
+
+		if ( isset($_GET['filter_messagetype']) && count($_GET['filter_messagetype']) < count($content['filter_messagetype_list']) ) // If we have more elements as in the filter list array, this means all are enabled
+		{
+			$tmpStr = "";
+			foreach ($_GET['filter_messagetype'] as $tmpmsgtype) 
+			{
+				if ( strlen($tmpStr) > 0 )
+					$tmpStr .= ",";
+				$tmpStr .= $tmpmsgtype;  
+			}
+			$content['searchstr'] .= "messagetype:" . $tmpStr . " ";
+		}
+		
 
 		// Spaces need to be converted!
 		if ( isset($_GET['filter_syslogtag']) && strlen($_GET['filter_syslogtag']) > 0 )
@@ -163,12 +169,24 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		if ( isset($_GET['filter_message']) && strlen($_GET['filter_message']) > 0 )
 			$content['searchstr'] .= $_GET['filter_message'];
 	}
+	
+	// Append sourceid if needed
+	if ( isset($_GET['sourceid']) && isset($content['Sources'][ $_GET['sourceid'] ]) )
+		$sourceidstr = "&sourceid=" . $_GET['sourceid'];
+	else
+		$sourceidstr = "";
 
 	// Redirect to the index page now!
-	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search");
+	RedirectPage( "index.php?filter=" . urlencode( trim($content['searchstr']) ) . "&search=Search" . $sourceidstr);
 }
-
 // --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+// Append custom title part!
+$content['TITLE'] .= " :: Search";
+// --- END CREATE TITLE
 
 // --- Parsen and Output
 InitTemplateParser();

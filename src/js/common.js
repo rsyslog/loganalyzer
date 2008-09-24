@@ -70,6 +70,30 @@ function togglevisibility(ElementNameToggle, ElementNameButton)
 /*
 *	Helper function to hide a div area
 */
+function showvisibility(ElementNameToggle, ElementNameButton)
+{
+	var toggle = document.getElementById(ElementNameToggle);
+
+	// Button is optional
+	if (ElementNameButton != null)
+	{
+		var button = document.getElementById(ElementNameButton);
+	}
+	else
+		var button = null;
+
+	if (button != null)
+	{
+		button.className = "topmenu2 ExpansionMinus";
+	}
+
+	toggle.style.visibility = "visible";
+	toggle.style.display = "inline";
+}
+
+/*
+*	Helper function to hide a div area
+*/
 function hidevisibility(ElementNameToggle, ElementNameButton)
 {
 	var toggle = document.getElementById(ElementNameToggle);
@@ -132,5 +156,143 @@ function toggleFormareaVisibility(FormFieldName, FirstHiddenArea, SecondHiddenAr
 	{
 		hidevisibility(FirstHiddenArea);
 		togglevisibility(SecondHiddenArea);
+	}
+}
+
+// helper array to keep track of the timeouts!
+var runningTimeouts = new Array();
+var defaultMenuTimeout = 1500;
+/*
+* Toggle display type from NONE to BLOCK
+*/ 
+function ToggleDisplayTypeById(ObjID)
+{
+	var obj = document.getElementById(ObjID);
+	if (obj != null)
+	{
+		if (obj.style.display == '' || obj.style.display == 'none')
+		{
+			obj.style.display='block';
+			
+			// Set Timeout to make sure the menu disappears
+			ToggleDisplaySetTimeout(ObjID);
+		}
+		else
+		{
+			obj.style.display='none';
+			
+			// Abort Timeout if set!
+			ToggleDisplayClearTimeout(ObjID);
+		}
+	}
+}
+
+function ToggleDisplaySetTimeout(ObjID)
+{
+	// Set Timeout 
+	var szTimeOut = "ToggleDisplayOffTypeById('" + ObjID + "')";
+	runningTimeouts[ObjID] = window.setTimeout(szTimeOut, defaultMenuTimeout);
+}
+
+function ToggleDisplayClearTimeout(ObjID)
+{
+	// Abort Timeout if set!
+	if ( runningTimeouts[ObjID] != null )
+	{
+		window.clearTimeout(runningTimeouts[ObjID]);
+	}
+}
+
+function ToggleDisplayEnhanceTimeOut(ObjID)
+{
+	// First clear timeout
+	ToggleDisplayClearTimeout(ObjID);
+
+	// Set new  timeout
+	ToggleDisplaySetTimeout(ObjID);
+}
+
+/*
+* Make Style sheet display OFF in any case
+*/ 
+function ToggleDisplayOffTypeById(ObjID)
+{
+	var obj = document.getElementById(ObjID);
+	if (obj != null)
+	{
+		obj.style.display='none';
+	}
+}
+
+/*
+* Debug Helper function to read possible properties of an object 
+*/ 
+function DebugShowElementsById(ObjName)
+{
+	var obj = document.getElementById(ObjName);
+	for (var key in obj) {
+		document.write(obj[key]);
+	}
+}
+
+
+/* 
+*	Detail popup handling functions
+*/
+var myPopupHovering = false;
+function HoveringPopup(event, parentObj)
+{
+	// This will allow the detail window to be relocated
+	myPopupHovering = true;
+}
+
+function FinishHoveringPopup(event, parentObj)
+{
+	// This will avoid moving the detail window when it is open
+	myPopupHovering = false;
+}
+
+function initPopupWindow(parentObj)
+{
+	// Change CSS Class
+	parentObj.className='syslogdetails_popup';
+}
+
+function FinishPopupWindow(parentObj)
+{
+	// Change CSS Class
+	parentObj.className='syslogdetails';
+}
+
+function disableEventPropagation(myEvent)
+{
+	/* This workaround is specially for our beloved Internet Explorer */
+	if ( window.event)
+	{
+		window.event.cancelBubble = true; 
+	}
+}
+
+function movePopupWindow(myEvent, ObjName, PopupContentWidth, parentObj)
+{
+	var obj = document.getElementById(ObjName);
+	var middle = PopupContentWidth / 2;
+//	alert ( parentObj.className ) ;
+	if (myPopupHovering == false)
+	{
+		obj.style.left = (myEvent.clientX - middle) + 'px';
+	}
+}
+
+function GoToPopupTarget(myTarget, parentObj)
+{
+	if (!myPopupHovering)
+	{
+		// Change document location
+		document.location=myTarget;
+	}
+	else /* Close Popup */
+	{
+		FinishPopupWindow(parentObj);
 	}
 }

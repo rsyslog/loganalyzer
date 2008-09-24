@@ -28,12 +28,13 @@
   1. Upload all files from the phplogcon/src/ folder to you webserver. 
      The other files are not needed on the webserver. 
 
-  2. If you webserver has write access to the phplogcon folder, 
+  2. If your webserver has write access to the phplogcon folder, 
      you can skip the following step: 
      
          Upload the scripts configure.sh and secure.sh from the 
-         contrib folder to your webserver, and set the execution 
-         flag to them (chmod +x configure.sh secure.sh). 
+         contrib folder to your webserver, into the same folder 
+	 where you uploaded the other phplogcon files into. Then set 
+	 the execution flag to them (chmod +x configure.sh secure.sh). 
          
          Now run ./configure.sh, this will create a blank config.php, 
          and will also set write access to everyone to it.
@@ -45,6 +46,141 @@
      script. The install script will guide you through the phplogcon 
      installation, just follow the instructions.
  
+  3.1 Step 1 - Prerequisites Beginning of installation / welcome site
+	       This is the first page of the installation. It just tells
+	       you, that before installing, some file permission have to
+	       be checked. Simply click "Next" to start the process.
+
+  3.2 Step 2 - Verify the file permissions
+	       Here you will see, if the config.php can be written or not.
+	       If it cannot be written, you have to repeat the complete
+	       Step 2.
+
+  3.3 Step 3 - Basic Configuration
+	       You can set several basic options here. 
+
+	       - Number of syslog messages per page = 50 (default)
+	       This is the number of syslog messages displayed on each page. 
+	       You can increase the value (makes phpLogCon slower) or decrease
+	       the value (makes it faster). 
+
+	       - Message character limit for the main view = 80 (default)
+	       Set the number of characters per message which will be shown
+	       in the last column of the main view. Full messages can be
+	       reviewed by hovering the mouse over it.
+
+	       - Show message details popup (default yes) = yes (default) 
+	       Here you can set, if you want the small window with the complete 
+	       message to pop up if you are hovering over a event with the 
+	       cursor. If you choose "No", then you have to click on the
+	       message to see the details.
+
+  3.4 Step 4 - not implemented yet
+
+  3.5 Step 5 - not implemented yet
+
+  3.6 Step 6 - not implemented yet
+
+  3.7 Step 7 - Create the first source for syslog messages
+	       This is the most important step. Here, you will configure
+	       your first data source, which holds all your syslog data.
+
+	       Mainly, you have to choose a "Name of the Source" and a 
+	       "Source Type". The name will be displayed later in a drop-down
+	       menu with which you choose your active syslog source. The 
+	       "Source Type" can be a file, a MySQL database or the PHP PDO
+	       which supports different database types like mssql, PostgreSQL, 
+	       odbc, oracle or even ibm db2.
+
+
+	       If you choose the diskfile, you have to provide the following
+	       information:
+
+	       - Logline Type = Syslog / Rsyslog (default) or Adiscon WinSyslog
+	       This tells phpLogCon, how the lines look like. This is 
+	       necessary for show the log messages properly.
+
+	       - Syslog File = /var/log/syslog (default)
+	       This is the position of the logfile in your file system.
+
+
+	       If you choose MySQL native as data source, following information
+	       is needed:
+
+	       - Table Type = monitorware (default)
+	       This is the table layout. Currently, you can use "monitorware" 
+	       or "syslogng". For more details see "Note on MySQL Databases"
+	       below.
+
+	       - Database Host = localhost (default)
+	       This is the host, where the database is located. By default this
+	       is localhost. You can specify any other host if necessary.
+
+	       - Database Name = phplogcon (default)
+	       The name of the database you want to use.
+
+	       - Database Tablename = systemevents (default)
+	       This is the name of the table in which the data is stored. The 
+	       default tablename corresponds to the tables created with the 
+	       MonitorWare Line of products.
+
+	       - Database User = user (default)
+	       The username for the database.
+
+	       - Database Password = not set by default
+	       The password for the username.
+
+	       - Enable Row Counting = No (default)
+	       If configured to "Yes", the amount of rows in the table will be 
+	       counted with every query, giving you the total records for your
+	       search, though having a lot of impact on your system when using
+	       a very large database. If configured to "No", the rows will not
+	       be counted, providing you a lot more performance.	     
+
+
+	       If you choose Database (PDO), the following has to be defined:
+
+	       - Database Storage Engine = MySQL Server (default)
+	       Choose the engine of the database you are using. The databases 
+	       are available: MySQL Server, Microsoft SQL Server, ODBC 
+	       Database Connection, PostgreSQL, Oracle Call Interface, IBM
+	       DB2, Firebird/Interbase 6, IBM Informix Dynamic Server, 
+	       SQLite 2.
+
+	       - Table Type = monitorware (default)
+	       This is the table layout. Currently, you can use "monitorware" 
+	       or "syslogng". For more details see "Note on MySQL Databases"
+	       below.
+
+	       - Database Host = localhost (default)
+	       This is the host, where the database is located. By default this
+	       is localhost. You can specify any other host if necessary.
+
+	       - Database Name = phplogcon (default)
+	       The name of the database you want to use.
+
+	       - Database Tablename = systemevents (default)
+	       This is the name of the table in which the data is stored. The 
+	       default tablename corresponds to the tables created with the 
+	       MonitorWare Line of products.
+
+	       - Database User = user (default)
+	       The username for the database.
+
+	       - Database Password = not set by default
+	       The password for the username.
+
+	       - Enable Row Counting = No (default)
+	       If configured to "Yes", the amount of rows in the table will be 
+	       counted with every query, giving you the total records for your
+	       search, though having a lot of impact on your system when using
+	       a very large database. If configured to "No", the rows will not
+	       be counted, providing you a lot more performance.	      
+
+  3.8 Step 8 - Finish
+
+
+
   4. If everything went right, you should see syslog messages already 
      in your phplogcon installation. You can now remove the install.php 
      script now. 

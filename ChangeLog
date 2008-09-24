@@ -1,6 +1,87 @@
 ---------------------------------------------------------------------------
+Version 2.4.0 (v2-stable), 2008-09-24
+- Merged beta branch into v2-stable branch.
+---------------------------------------------------------------------------
+Version 2.3.11 (beta), 2008-09-08
+- Fix another parsing issue in the logline parser. Most of RFC 3164
+  formatted syslog messages should now be correctly splitted into their
+  fields. 
+---------------------------------------------------------------------------
+Version 2.3.10 (beta), 2008-08-27
+- Fixed a few parsing issues with prior RFC 3164 syslog messages. 
+  These messages are now correctly parsed, or better do not cause
+  any parsing problems anymore. 
+---------------------------------------------------------------------------
+Version 2.3.9 (beta), 2008-08-07
+- Fixed a bug in the parsing of RFC 3164 date and time stamps which 
+  occured from the 1st to the 9th of each month. During this time, the 
+  date was not correctly parsed. 
+- Enhanced detail popup window, it performs much better now and is less
+  annoying. It still can be turned off very easily.
+- Fixed an image alignment problem of the message once and for all. 
+---------------------------------------------------------------------------
+Version 2.3.8 (beta), 2008-07-28
+- Fixed a "notice" bug in the installer, which was missing to save the 
+  DBType for MYSQL Datasource. 
+- Fixed a bug in the pdo logstream class which caused display of empty 
+  rows when no records where found.
+- Fixed Bug ID82 from bugtracker. Internal and invalid IP Addresses are 
+  not linked to whois anymore. 
+- Fixed Line Ending to Unix in some code files. 
+---------------------------------------------------------------------------
+Version 2.3.7 (beta), 2008-07-07
+- Added missing db mapping for program field of syslogng - thanks to 
+  Micha "Wolvverine" Panasiewicz
+- Added translation for Brazilian Portuguese, thanks to Ricardo Maraschini
+---------------------------------------------------------------------------
 Version 2.2.0 (v2-stable), 2008-06-10
 - Moved beta branch to v2-stable branch.
+---------------------------------------------------------------------------
+Version 2.3.6 (devel), 2008-06-09
+- Added new feature, multiple configureable views which can be configured 
+  and selected for each source seperately. Old configurations can still
+  be used with the new Views feature. The installer also supports 
+  selecting the default View for the first added source. 
+---------------------------------------------------------------------------
+Version 2.3.5 (devel), 2008-06-06
+- Enhanced the detected of IP Addresses and domain names, so the automatic
+  generated context links match better now.
+- Added new option (enabled by default) to resolve IP Addresses into
+  hostnames. Note that this will only be done if the IP Address is NOT in
+  square brackets. The resolved names will be cached in the users session, 
+  to speed up the resolving process. The resolved IP Addresses will be 
+  injected behind the IP Address in curly brackets, and a diffirent colour. 
+---------------------------------------------------------------------------
+Version 2.3.4 (devel), 2008-06-02
+- Added new feature to automatically link IP and domain names with our
+  whois search engine. So you can research these informations with one 
+  click.
+- Changed Online Search Parameters. For Eventlog related search links, 
+  you will now directly directed to entries in our knowledge base, if
+  found.
+---------------------------------------------------------------------------
+Version 2.3.3 (devel), 2008-05-23
+- Initial Added the new DB Driver (Logstream) which uses PHP PDO. 
+  PDO is the latest generic database interface for PHP5 and recommended 
+  for best performance. It is possible to use other database engines with 
+  this new logstream class like mssql, postgres sql, odbc, oracle 
+  or even ibm db2.
+- Optimized the logic of the pager and increased performance 
+  related to it. 
+- Added support for the new Database driver into the installation script. 
+  The old driver has been renamed to MYSQL Native and is also 
+  recommended if you use MYSQL as database server. 
+---------------------------------------------------------------------------
+Version 2.3.2 (devel), 2008-05-20
+- Implemented Online Search button into the field submenus. The search 
+  uses our new repository at kb.monitorware.com. 
+- Added pager to the bottom of the index page as well (bugtracker id 76)
+- Added filtering support for the new Eventlog fields 
+- Adding field mapping definitions for Windows Eventlog which are: 
+  SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_CATEGORY, 
+  SYSLOG_EVENT_ID and SYSLOG_EVENT_USER
+- Simplified columns configuration definition in config.sample.php
+- Fixed minor css issues.
 ---------------------------------------------------------------------------
 Version 2.1.6 (beta), 2008-05-19
 - Fixed filter bug, if you want to filter with ":", you can do this by 
@@ -12,8 +93,29 @@ Version 2.1.6 (beta), 2008-05-19
 - Added check for installed PHP Version. phpLogCon will refuse to run 
   on PHP4 or lower from now on!
 ---------------------------------------------------------------------------
+Version 2.3.1 (devel), 2008-05-02
+- The page title is now created with Source, and other useful informations. 
+  It is also possible to configure a custom title string with the 
+  configuration, which will be prepended into each phpLogcon page.
+- Added support for gzip compression (configurable), this will reduce
+  bandwidth and page load time.
+- Added Auto reload function into main list view, can be enabled by default
+  in the configuration as well. Done using a META REFRESH.
+- Added new configuration variable to set the default SourceID. The source
+  parameter will be appened to all necessary links and forms within 
+  phplogcon, if the session sources differs from the default one. 
 Version 2.1.5 (beta), 2008-05-05
 - Converted all files into UNIX format (^M has been removed)
+---------------------------------------------------------------------------
+Version 2.3.0 (devel), 2008-04-30
+- Added "Back to Listview" button in the detailview. 
+- Added filter for message type 
+- Added inline button menus into the listview. Most values can be clicked 
+  now, which opens a menu with additional useful links. 
+- Added Pagesite Selection into listview, so you can change the amount of
+  records you want to see on one page at any time you want. 
+- greatly improved database performance, runs much better now, but there
+  is still room for further optimization
 ---------------------------------------------------------------------------
 Version 2.1.4 (beta), 2008-04-29
 - Added missing facility 10 to 15 from RFC3164 into phhlogcon
@@ -32,7 +134,7 @@ Version 2.1.2 (beta), 2008-04-28
 - Changed database layout from winsyslog to monitorware.
   Added more debug handling
 ---------------------------------------------------------------------------
-Version 2.1.1 (devel), 2008-04-25
+Version 2.1.1 (beta), 2008-04-25
 - added detail page into phpLogCon. The detail page shows all possible
   details of a syslog message. It also possible to page in the 
   detail view.
@@ -43,5 +145,5 @@ Version 2.1.1 (devel), 2008-04-25
   duplicated ones from before. 
 - added full german translation (thanks to Tom Bergfeld for providing it)
 ---------------------------------------------------------------------------
-Version 2.1.0 (devel), 2008-04-24
+Version 2.1.0 (beta), 2008-04-24
 - initial release of the rewritten phpLogCon v2

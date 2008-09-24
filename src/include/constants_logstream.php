@@ -70,6 +70,13 @@ define('FILTER_TYPE_UNKNOWN', 99);
 define('DB_MYSQL', 0);
 define('DB_MSSQL', 1);
 define('DB_ODBC', 2);
+define('DB_PGSQL', 3);
+define('DB_OCI', 4);
+define('DB_DB2', 5);
+define('DB_FIREBIRD', 6);
+define('DB_INFORMIX', 7);
+define('DB_SQLITE', 8);
+
 
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;
@@ -89,7 +96,7 @@ $fields[SYSLOG_HOST]['FieldCaptionID'] = 'LN_FIELDS_HOST';
 $fields[SYSLOG_HOST]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_HOST]['Sortable'] = true;
 $fields[SYSLOG_HOST]['DefaultWidth'] = "80";
-$fields[SYSLOG_HOST]['FieldAlign'] = "center";
+$fields[SYSLOG_HOST]['FieldAlign'] = "left";
 $fields[SYSLOG_MESSAGETYPE]['FieldID'] = SYSLOG_MESSAGETYPE;
 $fields[SYSLOG_MESSAGETYPE]['FieldCaptionID'] = 'LN_FIELDS_MESSAGETYPE';
 $fields[SYSLOG_MESSAGETYPE]['FieldType'] = FILTER_TYPE_NUMBER;
@@ -115,7 +122,7 @@ $fields[SYSLOG_SYSLOGTAG]['FieldCaptionID'] = 'LN_FIELDS_SYSLOGTAG';
 $fields[SYSLOG_SYSLOGTAG]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_SYSLOGTAG]['Sortable'] = true;
 $fields[SYSLOG_SYSLOGTAG]['DefaultWidth'] = "85";
-$fields[SYSLOG_SYSLOGTAG]['FieldAlign'] = "center";
+$fields[SYSLOG_SYSLOGTAG]['FieldAlign'] = "left";
 $fields[SYSLOG_PROCESSID]['FieldID'] = SYSLOG_PROCESSID;
 $fields[SYSLOG_PROCESSID]['FieldCaptionID'] = 'LN_FIELDS_PROCESSID';
 $fields[SYSLOG_PROCESSID]['FieldType'] = FILTER_TYPE_NUMBER;
@@ -124,6 +131,36 @@ $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
 
 // TODO! EventLog specific
+$fields[SYSLOG_EVENT_ID]['FieldID'] = SYSLOG_EVENT_ID;
+$fields[SYSLOG_EVENT_ID]['FieldCaptionID'] = 'LN_FIELDS_EVENTID';
+$fields[SYSLOG_EVENT_ID]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_EVENT_ID]['Sortable'] = true;
+$fields[SYSLOG_EVENT_ID]['DefaultWidth'] = "65";
+$fields[SYSLOG_EVENT_ID]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldID'] = SYSLOG_EVENT_LOGTYPE;
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldCaptionID'] = 'LN_FIELDS_EVENTLOGTYPE';
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_LOGTYPE]['Sortable'] = true;
+$fields[SYSLOG_EVENT_LOGTYPE]['DefaultWidth'] = "100";
+$fields[SYSLOG_EVENT_LOGTYPE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_SOURCE]['FieldID'] = SYSLOG_EVENT_SOURCE;
+$fields[SYSLOG_EVENT_SOURCE]['FieldCaptionID'] = 'LN_FIELDS_EVENTSOURCE';
+$fields[SYSLOG_EVENT_SOURCE]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_SOURCE]['Sortable'] = true;
+$fields[SYSLOG_EVENT_SOURCE]['DefaultWidth'] = "100";
+$fields[SYSLOG_EVENT_SOURCE]['FieldAlign'] = "left";
+$fields[SYSLOG_EVENT_CATEGORY]['FieldID'] = SYSLOG_EVENT_CATEGORY;
+$fields[SYSLOG_EVENT_CATEGORY]['FieldCaptionID'] = 'LN_FIELDS_EVENTCATEGORY';
+$fields[SYSLOG_EVENT_CATEGORY]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_EVENT_CATEGORY]['Sortable'] = true;
+$fields[SYSLOG_EVENT_CATEGORY]['DefaultWidth'] = "50";
+$fields[SYSLOG_EVENT_CATEGORY]['FieldAlign'] = "center";
+$fields[SYSLOG_EVENT_USER]['FieldID'] = SYSLOG_EVENT_USER;
+$fields[SYSLOG_EVENT_USER]['FieldCaptionID'] = 'LN_FIELDS_EVENTUSER';
+$fields[SYSLOG_EVENT_USER]['FieldType'] = FILTER_TYPE_STRING;
+$fields[SYSLOG_EVENT_USER]['Sortable'] = true;
+$fields[SYSLOG_EVENT_USER]['DefaultWidth'] = "85";
+$fields[SYSLOG_EVENT_USER]['FieldAlign'] = "left";
 
 // Message is the last element, this order is important for the Detail page for now!
 $fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
@@ -157,6 +194,15 @@ $dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
 //TODO $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
 //TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
 $dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
+$dbmapping['syslogng'][SYSLOG_PROCESSID] = "program";
+
+// Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 
+foreach( $dbmapping as &$myMapping ) 
+{
+	foreach( $myMapping as &$myField ) 
+		$myField = strtolower($myField);
+}
+
 // --- 
 
 // EventTime Constants

@@ -11,6 +11,9 @@
 <br>
 
 <form action="" method="get" id="filterdateform" OnChange="CalculateSearchPreview('filterdateform', 'SearchCode');" onkeyup="CalculateSearchPreview('filterdateform', 'SearchCode');" >
+<!-- BEGIN HIDDENVARS_SOURCE -->
+<input type="hidden" name="{varname}" value="{varvalue}">
+<!-- END HIDDENVARS_SOURCE -->
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
 	<td width="50%" valign="top" class="table_with_border">
@@ -116,7 +119,7 @@
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_FACILITY}</b></td>
-			<td align="right" class="line1" nowrap>
+			<td align="left" class="line1" nowrap>
 				<select name="filter_facility[]" size="8" multiple>
 					<!-- BEGIN filter_facility_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
@@ -124,11 +127,21 @@
 				</select>
 			</td>
 			<td align="left" class="cellmenu2" width="50%" nowrap><b>{LN_FILTER_SEVERITY}</b></td>
-			<td align="right" class="line1" nowrap>
+			<td align="left" class="line1" nowrap>
 				<select name="filter_severity[]" size="8" multiple>
 					<!-- BEGIN filter_severity_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
 					<!-- END filter_severity_list -->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="50%" nowrap colspan="2"><b>{LN_FILTER_MESSAGETYPE}</b></td>
+			<td align="left" class="line0" nowrap colspan="2">
+				<select name="filter_messagetype[]" size="3" multiple>
+					<!-- BEGIN filter_messagetype_list -->
+					<option {selected} value="{ID}">{DisplayName}</option>
+					<!-- END filter_messagetype_list -->
 				</select>
 			</td>
 		</tr>

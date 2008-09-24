@@ -176,6 +176,12 @@ abstract class LogStream {
 
 
 	/**
+	* This function returns the FIRST UID for the FIRST PAGE, if availbale! Otherwise will 
+	* return -1!
+	*/
+	public abstract function GetFirstPageUID();
+
+	/**
 	* This function returns the current Page number, if availbale! Otherwise will 
 	* return -1!
 	*/
@@ -317,6 +323,62 @@ abstract class LogStream {
 							}
 							// --- 
 							break;
+						case "messagetype": 
+							$tmpKeyName = SYSLOG_MESSAGETYPE; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra Check to convert string representations into numbers!
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( !is_numeric($szValue) )
+									{
+										$tmpMsgTypeCode = $this->ConvertMessageTypeString($szValue);
+										if ( $tmpMsgTypeCode != -1 ) 
+											$tmpValues[$mykey] = $tmpMsgTypeCode;
+									}
+								}
+							}
+							else
+							{
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+								{
+									$tmpMsgTypeCode = $this->ConvertMessageTypeString($tmpArray[FILTER_TMP_VALUE]);
+									if ( $tmpMsgTypeCode != -1 ) 
+										$tmpArray[FILTER_TMP_VALUE] = $tmpMsgTypeCode;
+								}
+							}
+							// --- 
+							break;
+						/* BEGIN Eventlog based fields */
+						case "eventid": 
+							$tmpKeyName = SYSLOG_EVENT_ID; 
+							$tmpFilterType = FILTER_TYPE_NUMBER;
+							// --- Extra numeric Check 
+							if ( isset($tmpValues) ) 
+							{
+								foreach( $tmpValues as $mykey => $szValue ) 
+								{
+									if ( is_numeric($szValue) )
+										$tmpValues[$mykey] = $szValue;
+								}
+							}
+							else
+							{
+								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+									$tmpArray[FILTER_TMP_VALUE] = "";
+							}
+							// --- 
+							break;
+						case "eventlogtype": 
+							$tmpKeyName = SYSLOG_EVENT_LOGTYPE; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						case "eventlogsource": 
+							$tmpKeyName = SYSLOG_EVENT_SOURCE; 
+							$tmpFilterType = FILTER_TYPE_STRING;
+							break;
+						/* END Eventlog based fields */
 						case "syslogtag": 
 							$tmpKeyName = SYSLOG_SYSLOGTAG; 
 							$tmpFilterType = FILTER_TYPE_STRING;
@@ -478,6 +540,24 @@ abstract class LogStream {
 		// reached here means we failed to convert the facility!
 		return -1;
 	}
+
+	/*
+	*	Helper function to convert a messagetype string into a messagetype number
+	*/
+	private function ConvertMessageTypeString($szValue)
+	{
+		global $content;
+
+		foreach ( $content['filter_messagetype_list'] as $mymsgtype )
+		{
+			if ( stripos( $mymsgtype['DisplayName'], $szValue) !== false ) 
+				return $mymsgtype['ID'];
+		}
+		
+		// reached here means we failed to convert the facility!
+		return -1;
+	}
+	
 
 }
 
