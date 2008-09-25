@@ -79,6 +79,12 @@ function InitSource(&$mysource)
 			$CFG['Sources'][$iSourceID]['MsgNormalize'] = 0;
 			$content['Sources'][$iSourceID]['MsgNormalize'] = 0;
 		}
+
+		if ( !isset($mysource['Description']) )
+		{
+			$CFG['Sources'][$iSourceID]['Description'] = "";
+			$content['Sources'][$iSourceID]['Description'] = "";
+		}
 		// ---
 
 		// Set default view id to source
@@ -229,6 +235,14 @@ function InitSourceConfigs()
 	
 	// Set for the selection box in the header
 	$content['Sources'][$currentSourceID]['selected'] = "selected";
+
+	// Set Description properties!
+	if ( isset($content['Sources'][$currentSourceID]['Description']) && strlen($content['Sources'][$currentSourceID]['Description']) > 0 ) 
+	{
+		$content['SourceDescriptionEnabled'] = true;
+		$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description']; 
+	}
+	
 
 	// --- Additional handling needed for the current view!
 	global $currentViewID;

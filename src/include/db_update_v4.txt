@@ -1,0 +1,6 @@
+-- New Database Structure Updates
+ALTER TABLE `logcon_sources` ADD `Description` TEXT NOT NULL AFTER `Name` ;
+
+-- Insert data
+
+-- Updated Data

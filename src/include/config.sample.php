@@ -114,6 +114,7 @@ $CFG['Charts'][] = array ( "DisplayName" => "Usage by Day", "chart_type" => CHAR
 /* Example for DiskType Source:
 	$CFG['Sources']['Source1']['ID'] = "Source1";
 	$CFG['Sources']['Source1']['Name'] = "Syslog Disk File";
+	$CFG['Sources']['Source1']['Description'] = "More details you want to see about this source";
 	$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
 	$CFG['Sources']['Source1']['LogLineType'] = "syslog";
 	$CFG['Sources']['Source1']['MsgParserList'] = "";
@@ -123,6 +124,7 @@ $CFG['Charts'][] = array ( "DisplayName" => "Usage by Day", "chart_type" => CHAR
 
 	$CFG['Sources']['Source2']['ID'] = "Source5";
 	$CFG['Sources']['Source2']['Name'] = "WinSyslog DB";
+	$CFG['Sources']['Source1']['Description'] = "";
 	$CFG['Sources']['Source2']['SourceType'] = SOURCE_DB;
 	$CFG['Sources']['Source1']['MsgParserList'] = "";
 	$CFG['Sources']['Source2']['DBTableType'] = "winsyslog";
