@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.5.11 (beta), 2008-09-25
+- Fixed the "next page" button when a logstream disk source was used. 
+  The "next page" button stopped working as a side effect of some
+  performance changes made in the last version. 
+- Added new description field for logstream sources. If the description 
+  field is used, the description is shown below the pager on the 
+  main index site. The database version has also been incremented, this 
+  only affects you if you are using the user system. 
+---------------------------------------------------------------------------
 Version 2.5.10 (beta), 2008-09-24
 - Merged devel branch into beta branch.
 - Enhanced search performance in disk logstream, specially when searching 
