@@ -65,6 +65,7 @@ if ( isset($_GET['op']) )
 		
 		//PreInit these values 
 		$content['Name'] = "";
+		$content['Description'] = "";
 		$content['SourceType'] = SOURCE_DISK;
 		CreateSourceTypesList($content['SourceType']);
 		$content['MsgParserList'] = "";
@@ -132,6 +133,7 @@ if ( isset($_GET['op']) )
 
 				// Copy basic properties
 				$content['Name'] = $mysource['Name'];
+				$content['Description'] = $mysource['Description'];
 				$content['SourceType'] = $mysource['SourceType'];
 				CreateSourceTypesList($content['SourceType']);
 				$content['MsgParserList'] = $mysource['MsgParserList'];
@@ -267,6 +269,7 @@ if ( isset($_POST['op']) )
 	// Read parameters first!
 	if ( isset($_POST['id']) ) { $content['SOURCEID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SOURCEID'] = -1; }
 	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
+	if ( isset($_POST['Description']) ) { $content['Description'] = DB_RemoveBadChars($_POST['Description']); } else {$content['Description'] = ""; }
 	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
 	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
 	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
@@ -419,6 +422,7 @@ if ( isset($_POST['op']) )
 		// First create a tmp source array
 		$tmpSource['ID']			= $content['SOURCEID'];
 		$tmpSource['Name']			= $content['Name'];
+		$tmpSource['Description']	= $content['Description'];
 		$tmpSource['SourceType']	= $content['SourceType'];
 		$tmpSource['MsgParserList']	= $content['MsgParserList'];
 		$tmpSource['MsgNormalize']	= $content['MsgNormalize'];
@@ -469,8 +473,9 @@ if ( isset($_POST['op']) )
 			// Add custom search now!
 			if ( $content['SourceType'] == SOURCE_DISK ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
+						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "',
 						" . $content['MsgNormalize'] . ", 
@@ -483,8 +488,9 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
+						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "', 
 						" . $content['MsgNormalize'] . ", 
@@ -524,6 +530,7 @@ if ( isset($_POST['op']) )
 				{
 					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
 									Name = '" . $content['Name'] . "', 
+									Description = '" . $content['Description'] . "', 
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 
@@ -538,6 +545,7 @@ if ( isset($_POST['op']) )
 				{
 					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
 									Name = '" . $content['Name'] . "', 
+									Description = '" . $content['Description'] . "', 
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 

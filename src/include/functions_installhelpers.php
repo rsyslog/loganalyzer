@@ -192,8 +192,9 @@ function ConvertCustomSources()
 		// Add New Entry
 		if ( $mySource['SourceType'] == SOURCE_DISK ) 
 		{
-			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile) VALUES ( " . 
+			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile) VALUES ( " . 
 				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
+				"'" . PrepareValueForDB($mySource['Description']) . "', " . 
 				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
 				"'" . PrepareValueForDB($mySource['MsgParserList']) . "', " . 
 				" " . PrepareValueForDB($mySource['MsgNormalize']) . " , " . 
@@ -213,8 +214,9 @@ function ConvertCustomSources()
 				$mySource['DBType'] = DB_MYSQL;
 
 			// Perform the insert
-			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
+			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
 				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
+				"'" . PrepareValueForDB($mySource['Description']) . "', " . 
 				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
 				"'" . PrepareValueForDB($mySource['MsgParserList']) . "', " . 
 				" " . PrepareValueForDB($mySource['MsgNormalize']) . " , " . 
