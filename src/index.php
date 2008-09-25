@@ -850,6 +850,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					}
 					else if ( $content['uid_current'] != UID_UNKNOWN )
 						$content['main_pager_next_found'] = false;
+//echo $content['uid_next'] . "!!!";
 				}
 				// --- 
 
