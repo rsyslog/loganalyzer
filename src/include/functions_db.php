@@ -236,13 +236,23 @@ function DB_RemoveParserSpecialBadChars($myString)
 	return $returnstr;
 }
 
-function DB_RemoveBadChars($myString)
+function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL)
 {
-	// Replace with internal PHP Functions!
-	if ( !get_magic_quotes_runtime() )
-		return addslashes($myString);
+	if ( $dbEngine == DB_MSSQL ) 
+	{
+		// MSSQL needs special treatment -.-
+		return str_replace("'","''",$myString);
+	}
 	else
-		return $myString;
+	{
+		// Replace with internal PHP Functions!
+		if ( !get_magic_quotes_runtime() )
+			return addslashes($myString);
+	//		return addcslashes($myString, "'");
+		else
+			return $myString;
+	}
+
 /*
 	$returnstr = str_replace("\\","\\\\",$myString);
 	$returnstr = str_replace("'","\\'",$returnstr);

@@ -77,18 +77,6 @@ define('FILTER_TYPE_NUMBER', 1);
 define('FILTER_TYPE_DATE', 2);
 define('FILTER_TYPE_UNKNOWN', 99);
 
-// Define possible database types
-define('DB_MYSQL', 0);
-define('DB_MSSQL', 1);
-define('DB_ODBC', 2);
-define('DB_PGSQL', 3);
-define('DB_OCI', 4);
-define('DB_DB2', 5);
-define('DB_FIREBIRD', 6);
-define('DB_INFORMIX', 7);
-define('DB_SQLITE', 8);
-
-
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;
 $fields[SYSLOG_UID]['FieldCaptionID'] = 'LN_FIELDS_UID';

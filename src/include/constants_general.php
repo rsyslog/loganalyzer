@@ -87,6 +87,18 @@ define('CHARTDATA_COUNT', 'COUNT');
 define('UID_UNKNOWN', -1);
 // --- 
 
+// --- Define possible database types
+define('DB_MYSQL', 0);
+define('DB_MSSQL', 1);
+define('DB_ODBC', 2);
+define('DB_PGSQL', 3);
+define('DB_OCI', 4);
+define('DB_DB2', 5);
+define('DB_FIREBIRD', 6);
+define('DB_INFORMIX', 7);
+define('DB_SQLITE', 8);
+// --- 
+
 // --- Syslog specific defines!
 define('SYSLOG_KERN', 0);
 define('SYSLOG_USER', 1);

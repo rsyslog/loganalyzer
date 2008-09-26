@@ -734,6 +734,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
 							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_SOURCE, 'LN_FIELDS_EVENT_SOURCE', false);
+/*
 								// Set OnClick Menu for SYSLOG_EVENT_SOURCE
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 
@@ -758,28 +761,12 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
 									'IconSource' => $content['MENU_NETWORK']
 									);
+*/
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_USER ) 
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_USER
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_USER, 'LN_FIELDS_EVENT_USER', false);
 							}
 							// WebServer Type fields
 							else if ( $mycolkey == SYSLOG_WEBLOG_USER ) 
@@ -986,9 +973,9 @@ function PrepareStringForSearch($myString)
 	return str_replace($searchArray, $replaceArray, $myString);
 }
 
-function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFieldDisplayNameID, $searchOnline = false)
+function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayNameID, $searchOnline = false)
 {
-	global $content; 
+	global $content, $fields; 
 
 	// Set OnClick Menu for SYSLOG_SYSLOGTAG
 	$fieldGridItem['hasbuttons'] = true;
@@ -999,12 +986,23 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFie
 	else
 		$szEncodedFieldValue = $fieldGridItem['fieldvalue'];
 
+	// Set FieldSearchName 
+	if ( isset($fields[$FieldID]['SearchField']) )
+		$szSearchFieldName = $fields[$FieldID]['SearchField'];
+	else
+		$szSearchFieldName = $FieldID;
+
 	// Menu Option to append filter
 	if ( strlen($content['searchstr']) > 0 )
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
 			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']), 
+			'IconSource' => $content['MENU_BULLET_GREEN']
+			);
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_EXCLUDEFILTER'], $fieldGridItem['fieldvalue']), 
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
 	}
@@ -1015,12 +1013,17 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFie
 		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']), 
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
+	$fieldGridItem['buttons'][] = array( 
+		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_SHOWALLBUT'], $fieldGridItem['fieldvalue']), 
+		'IconSource' => $content['MENU_BULLET_BLUE']
+		);
 
 	// Add Online Search Button
 	if ( $searchOnline )
 	{
 		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $szSearchFieldName . '&q=' . $szEncodedFieldValue, 
+			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
 			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content[$szFieldDisplayNameID] . " '" . $fieldGridItem['fieldvalue'] . "'", 
 			'IconSource' => $content['MENU_NETWORK']
 			);
