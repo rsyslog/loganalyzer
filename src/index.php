@@ -375,30 +375,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
 								}
 
-								// Set OnClick Menu for SYSLOG_FACILITY
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+facility%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], GetFacilityDisplayName($logArray[$mycolkey]) ), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=facility%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], GetFacilityDisplayName($logArray[$mycolkey]) ), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_FACILITY . '&q=' . GetFacilityDisplayName($logArray[$mycolkey]), 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_FACILITY'] . " '" . GetFacilityDisplayName($logArray[$mycolkey]) . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_FACILITY, 'LN_FIELDS_FACILITY', true);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -416,30 +394,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
 								}
 
-								// Set OnClick Menu for SYSLOG_SEVERITY
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+severity%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], GetSeverityDisplayName($logArray[$mycolkey]) ), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=severity%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], GetSeverityDisplayName($logArray[$mycolkey]) ), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_SEVERITY . '&q=' . GetSeverityDisplayName($logArray[$mycolkey]), 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SEVERITY'] . " '" . GetSeverityDisplayName($logArray[$mycolkey]) . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_SEVERITY, 'LN_FIELDS_SEVERITY', true);
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -457,97 +413,24 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[IUT_Unknown] . '" ';
 								}
 
-								// Set OnClick Menu for SYSLOG_MESSAGETYPE
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+messagetype%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], GetMessageTypeDisplayName($logArray[$mycolkey]) ), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=messagetype%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], GetMessageTypeDisplayName($logArray[$mycolkey]) ), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_MESSAGETYPE, 'LN_FIELDS_MESSAGETYPE', false);
 							}
 							else if ( $mycolkey == SYSLOG_PROCESSID )
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_ID
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+processid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=processid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_PROCESSID, 'LN_FIELDS_PROCESSID', false);
 							}
 							/* Eventlog based fields */
 							else if ( $mycolkey == SYSLOG_EVENT_ID )
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_ID
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventid%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_EVENT_ID . '&q=' . $logArray[$mycolkey], 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTID'] . " '" . $logArray[$mycolkey] . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_ID, 'LN_FIELDS_EVENTID', true);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_CATEGORY )
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_ID
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventcategory%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventcategory%3A' . $logArray[$mycolkey] . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_CATEGORY, 'LN_FIELDS_EVENTCATEGORY', false);
 							}
 							// WebServer Type fields
 							else if ( $mycolkey == SYSLOG_WEBLOG_STATUS ) 
@@ -567,7 +450,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							if ( $mycolkey != SYSLOG_MESSAGE ) 
 							{
 								if ( $myStrCharLimit > 0 )
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . " ..." : $logArray[$mycolkey]);
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . "..." : $logArray[$mycolkey]);
 							}
 							// --- 
 
@@ -657,129 +540,29 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							}
 							else if ( $mycolkey == SYSLOG_SYSLOGTAG ) 
 							{
-								// Set OnClick Menu for SYSLOG_SYSLOGTAG
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-								
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+syslogtag%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-								
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=syslogtag%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_SYSLOGTAG . '&q=' . $logArray[$mycolkey], 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_SYSLOGTAG'] . " '" . $logArray[$mycolkey] . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_SYSLOGTAG, 'LN_FIELDS_SYSLOGTAG', true);
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
-								// Set OnClick Menu for SYSLOG_HOST
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+source%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=source%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_HOST, 'LN_FIELDS_HOST', false);
 							}
 							/* Eventlog based fields */
 							else if ( $mycolkey == SYSLOG_EVENT_LOGTYPE ) 
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_LOGTYPE
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogtype%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogtype%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_EVENT_LOGTYPE . '&q=' . $logArray[$mycolkey], 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTLOGTYPE'] . " '" . $logArray[$mycolkey] . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_LOGTYPE, 'LN_FIELDS_EVENTLOGTYPE', true);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_SOURCE
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventlogsource%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventlogsource%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . SYSLOG_EVENT_SOURCE . '&q=' . $logArray[$mycolkey], 
-									'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content['LN_FIELDS_EVENTSOURCE'] . " '" . $logArray[$mycolkey] . "'", 
-									'IconSource' => $content['MENU_NETWORK']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_SOURCE, 'LN_FIELDS_EVENTSOURCE', true);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_USER ) 
 							{
-								// Set OnClick Menu for SYSLOG_EVENT_USER
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
-
-								// Menu Option to append filter
-								if ( strlen($content['searchstr']) > 0 )
-								{
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-										'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $logArray[$mycolkey]), 
-										'IconSource' => $content['MENU_BULLET_GREEN']
-										);
-								}
-
-								// More Menu entries
-								$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-									'ButtonUrl' => '?filter=eventuser%3A%3D' . urlencode($content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue']) . '&search=Search' . $content['additional_url_sourceonly'], 
-									'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $logArray[$mycolkey]), 
-									'IconSource' => $content['MENU_BULLET_BLUE']
-									);
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_USER, 'LN_FIELDS_EVENTUSER', false);
 							}
 							// WebServer Type fields
 							else if ( $mycolkey == SYSLOG_WEBLOG_USER ) 
@@ -986,9 +769,9 @@ function PrepareStringForSearch($myString)
 	return str_replace($searchArray, $replaceArray, $myString);
 }
 
-function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFieldDisplayNameID, $searchOnline = false)
+function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayNameID, $searchOnline = false)
 {
-	global $content; 
+	global $content, $fields, $myStrCharLimit; 
 
 	// Set OnClick Menu for SYSLOG_SYSLOGTAG
 	$fieldGridItem['hasbuttons'] = true;
@@ -999,12 +782,27 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFie
 	else
 		$szEncodedFieldValue = $fieldGridItem['fieldvalue'];
 
+	// Set FieldSearchName 
+	if ( isset($fields[$FieldID]['SearchField']) )
+		$szSearchFieldName = $fields[$FieldID]['SearchField'];
+	else
+		$szSearchFieldName = $FieldID;
+
 	// Menu Option to append filter
 	if ( strlen($content['searchstr']) > 0 )
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
 			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']), 
+			'IconSource' => $content['MENU_BULLET_GREEN']
+			);
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_EXCLUDEFILTER'], $fieldGridItem['fieldvalue']), 
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
 	}
@@ -1012,7 +810,16 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFie
 	// More Menu entries
 	$fieldGridItem['buttons'][] = array( 
 		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'ButtonTarget' => '_top', 
+		'ButtonAppendUrl' => true,
 		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']), 
+		'IconSource' => $content['MENU_BULLET_BLUE']
+		);
+	$fieldGridItem['buttons'][] = array( 
+		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'ButtonTarget' => '_top', 
+		'ButtonAppendUrl' => true,
+		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_SHOWALLBUT'], $fieldGridItem['fieldvalue']), 
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
 
@@ -1020,11 +827,26 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $szSearchFieldName,  $szFie
 	if ( $searchOnline )
 	{
 		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $szSearchFieldName . '&q=' . $szEncodedFieldValue, 
+			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
 			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content[$szFieldDisplayNameID] . " '" . $fieldGridItem['fieldvalue'] . "'", 
 			'IconSource' => $content['MENU_NETWORK']
 			);
 	}
+	
+	// Search for links within the fieldcontent!
+	if ( $fieldType == FILTER_TYPE_STRING && preg_match("#([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", $fieldGridItem['rawfieldvalue'], $szLink) >= 1 )
+	{
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => $szLink[0], 
+			'ButtonTarget' => '_blank', 
+			'ButtonAppendUrl' => false,
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_VISITLINK'], strlen($szLink[0]) > $myStrCharLimit ? substr($szLink[0], 0, $myStrCharLimit) . "..." : $szLink[0] ), 
+			'IconSource' => $content['MENU_NETWORK']
+			);
+	}
+
 }
 // ---
 

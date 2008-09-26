@@ -598,21 +598,34 @@ class LogStreamDB extends LogStream {
 							switch( $myfilter[FILTER_TYPE] )
 							{
 								case FILTER_TYPE_STRING:
-									// --- Check if user wants to include or exclude!
-									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
-										$addnod = "";
-									else
-										$addnod = " NOT";
-									// ---
-
 									// --- Either make a LIKE or a equal query!
 									if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
 									{
-										$szSearchBegin = " = '";
-										$szSearchEnd = "' ";
+										// Set addnot to nothing
+										$addnod = "";
+
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+										{
+											$szSearchBegin = " = '";
+											$szSearchEnd = "' ";
+										}
+										else
+										{
+											$szSearchBegin = " <> '";
+											$szSearchEnd = "' ";
+										}
+										// ---
 									}
 									else
 									{
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addnod = "";
+										else
+											$addnod = " NOT";
+										// ---
+
 										$szSearchBegin = " LIKE '%";
 										$szSearchEnd = "%' ";
 									}
@@ -622,7 +635,13 @@ class LogStreamDB extends LogStream {
 									if ( $propertyname == SYSLOG_MESSAGE )
 										$addor = " AND ";
 									else
-										$addor = " OR ";
+									{
+										// If we exclude filters, we need to combine with AND
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addor = " OR ";
+										else
+											$addor = " AND ";
+									}
 									// ---
 									
 									// Now Create LIKE Filters
