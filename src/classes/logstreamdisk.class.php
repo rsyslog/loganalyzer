@@ -758,11 +758,13 @@ class LogStreamDisk extends LogStream {
 									// Otherwise we use OR Handling!
 									else
 									{
-										$bIsOrFilter = true; // Set isOrFilter to true 
-
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
+
+											// Set isOrFilter to true in this case
+											$bIsOrFilter = true; 
+
 											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
 											{
 												if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
@@ -774,18 +776,20 @@ class LogStreamDisk extends LogStream {
 													$bOrFilter = true;
 											}
 										}
-										// Exclude Filter
+										// Exclude Filter - handeled with AND filtering!
 										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 										{
 											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
 											{
-												if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
-													$bOrFilter = true;
+//												if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
+												if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
+													$bEval = false;
 											}
 											else
 											{
-												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-													$bOrFilter = true;
+//												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+													$bEval = false;
 											}
 										}
 										break;
