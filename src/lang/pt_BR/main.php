@@ -135,6 +135,7 @@ $content['LN_GEN_MESSAGEDETAILS'] = "Detalhes da Mensagem";
 	$content['LN_VIEW_EXCLUDEFILTER'] = "Exclude '%1' from filterset";
 	$content['LN_VIEW_FILTERFORONLY'] = "Filter for '%1' only";
 	$content['LN_VIEW_SHOWALLBUT'] = "Show all except '%1'";
+	$content['LN_VIEW_VISITLINK'] = "Open Link '%1' in new window";
 
 $content['LN_HIGHLIGHT'] = "Destacar >>";
 $content['LN_HIGHLIGHT_OFF'] = "Destacar <<";

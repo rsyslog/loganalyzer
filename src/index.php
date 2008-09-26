@@ -450,7 +450,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							if ( $mycolkey != SYSLOG_MESSAGE ) 
 							{
 								if ( $myStrCharLimit > 0 )
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . " ..." : $logArray[$mycolkey]);
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . "..." : $logArray[$mycolkey]);
 							}
 							// --- 
 
@@ -771,7 +771,7 @@ function PrepareStringForSearch($myString)
 
 function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayNameID, $searchOnline = false)
 {
-	global $content, $fields; 
+	global $content, $fields, $myStrCharLimit; 
 
 	// Set OnClick Menu for SYSLOG_SYSLOGTAG
 	$fieldGridItem['hasbuttons'] = true;
@@ -793,11 +793,15 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayN
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
 			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']), 
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
 			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_EXCLUDEFILTER'], $fieldGridItem['fieldvalue']), 
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
@@ -806,11 +810,15 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayN
 	// More Menu entries
 	$fieldGridItem['buttons'][] = array( 
 		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'ButtonTarget' => '_top', 
+		'ButtonAppendUrl' => true,
 		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']), 
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
 	$fieldGridItem['buttons'][] = array( 
 		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
+		'ButtonTarget' => '_top', 
+		'ButtonAppendUrl' => true,
 		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_SHOWALLBUT'], $fieldGridItem['fieldvalue']), 
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
@@ -820,10 +828,25 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayN
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
+			'ButtonTarget' => '_top', 
+			'ButtonAppendUrl' => true,
 			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content[$szFieldDisplayNameID] . " '" . $fieldGridItem['fieldvalue'] . "'", 
 			'IconSource' => $content['MENU_NETWORK']
 			);
 	}
+	
+	// Search for links within the fieldcontent!
+	if ( $fieldType == FILTER_TYPE_STRING && preg_match("#([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", $fieldGridItem['rawfieldvalue'], $szLink) >= 1 )
+	{
+		$fieldGridItem['buttons'][] = array( 
+			'ButtonUrl' => $szLink[0], 
+			'ButtonTarget' => '_blank', 
+			'ButtonAppendUrl' => false,
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_VISITLINK'], strlen($szLink[0]) > $myStrCharLimit ? substr($szLink[0], 0, $myStrCharLimit) . "..." : $szLink[0] ), 
+			'IconSource' => $content['MENU_NETWORK']
+			);
+	}
+
 }
 // ---
 
