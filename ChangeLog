@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.5.12 (beta), 2008-09-29
+- Fixed several SQL issues in the logstream classes when filtering 
+  was used. 
+- Enhanced all content menus in the main site, reduced coding as well.
+- Added support for URL detection within the data of string fields, these
+  links can be opened in new windows. 
+- Fixed bug when excluding more then one string filter from the 
+  same field type. 
+- Fixed wrong database version insert in install.php as well as 
+  incorrect redirect login page during install. 
+---------------------------------------------------------------------------
 Version 2.5.11 (beta), 2008-09-25
 - Fixed the "next page" button when a logstream disk source was used. 
   The "next page" button stopped working as a side effect of some
