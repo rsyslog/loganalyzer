@@ -649,9 +649,9 @@ function InitConfigurationValues()
 				// Check if user needs to be logged in
 				if ( GetConfigSetting("UserDBLoginRequired", false) )
 				{
-						// User needs to be logged in, redirect to login page
-						if ( !defined("IS_NOLOGINPAGE") )
-							RedirectToUserLogin();
+					// Redirect USER if not on loginpage or installpage!
+					if ( !defined("IS_NOLOGINPAGE") && !defined("IN_PHPLOGCON_INSTALL")  )
+						RedirectToUserLogin();
 				}
 				else if ( defined('IS_ADMINPAGE') )
 				{
