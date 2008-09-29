@@ -147,7 +147,7 @@ if ( $content['INSTALL_STEP'] == 2 )
 			if ( !is_file($content['fileperm'][$i]['FILE_NAME']) ) 
 			{
 				// Try to create an empty file
-				touch($content['fileperm'][$i]['FILE_NAME']);
+				@touch($content['fileperm'][$i]['FILE_NAME']);
 			}
 
 			if ( is_file($content['fileperm'][$i]['FILE_NAME']) ) 
