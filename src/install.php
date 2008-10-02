@@ -759,6 +759,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		ConvertCustomSearches();
 		ConvertCustomViews();
 		ConvertCustomSources();
+		ConvertCustomCharts();
 		
 		// Import General Settings in the last step!
 		ConvertGeneralSettings();
