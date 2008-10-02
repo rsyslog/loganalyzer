@@ -89,6 +89,12 @@ else if ( $content['oracle_type'] == "domain" )
 	$content['oracle_kb_type'] = "name";
 	$content['showonlinesearches'] = true;
 }
+else if ( $content['oracle_type'] == "searchstr" ) 
+{
+	$content['oracle_type_readable'] = "custom search";
+	$content['oracle_kb_type'] = "misc";
+	$content['showonlinesearches'] = false;
+}
 else
 {
 	$content['oracle_type_readable'] = "unknown type";

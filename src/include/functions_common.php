@@ -494,6 +494,18 @@ function InitRuntimeInformations()
 		$content['MaxExecutionTime'] = ini_get("max_execution_time");
 	}
 	// ---
+
+	// --- Set Database Update Warning if necessary 
+	if ( 
+			GetConfigSetting("UserDBEnabled", false) && 
+			$content['database_internalversion'] > $content['database_installedversion'] && 
+			!defined('IS_UPRGADEPAGE') 
+		)
+	{	
+		$content['dbupgrade_warning'] = true;
+		$content['WARNING_DBUPGRADE_TEXT'] = GetAndReplaceLangStr( $content['LN_WARNING_DBUPGRADE_TEXT'], $content['database_installedversion'], $content['database_internalversion'] );
+	}
+
 }
 
 function CreateDebugModes()

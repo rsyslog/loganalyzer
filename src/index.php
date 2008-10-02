@@ -119,16 +119,6 @@ $content['searchstr'] = "";
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
-// --- BEGIN CREATE TITLE
-$content['TITLE'] = InitPageTitle();
-
-// Append custom title part!
-if ( isset($content['searchstr']) && strlen($content['searchstr']) > 0 ) 
-	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr'] . "'";	// Append search
-else
-	$content['TITLE'] .= " :: All Syslogmessages";
-// --- END CREATE TITLE
-
 // --- Read and process filters from search dialog!
 if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filter']) || isset($_GET['filter'])) )
 {
@@ -189,8 +179,26 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 		// Default expand Highlight Arrea!
 		$content['EXPAND_HIGHLIGHT'] = "true";
 	}
+
+	// Enable oracle link!
+	if ( isset($content['searchstr']) && strlen($content['searchstr']) > 0 )
+	{
+		$content['enabledoraclesearchstr'] = true;
+		$content['oraclesearchlink'] = $content['BASEPATH'] . "asktheoracle.php?type=searchstr&query=" . urlencode($content['searchstr']) . "&uid=" . $content['uid_current'];
+	}
 }
 // --- 
+
+// --- BEGIN CREATE TITLE
+$content['TITLE'] = InitPageTitle();
+
+// Append custom title part!
+if ( isset($content['searchstr']) && strlen($content['searchstr']) > 0 ) 
+	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr'] . "'";	// Append search
+else
+	$content['TITLE'] .= " :: All Syslogmessages";
+// --- END CREATE TITLE
+
 
 // --- BEGIN Custom Code
 if ( isset($content['Sources'][$currentSourceID]) ) 

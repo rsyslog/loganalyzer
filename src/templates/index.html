@@ -1,6 +1,10 @@
 <!-- INCLUDE include_header.html --> 
 
 <table border="0" cellspacing="0" cellpadding="2" align="center">
+<tr>
+	<td colspan="5" class="tableBackground">
+	</td>
+</tr>
 <form action="" method="get" id="searchform" name="searchform">
 <!-- BEGIN HIDDENVARS_SOURCE -->
 <input type="hidden" name="{varname}" value="{varvalue}">
@@ -10,10 +14,10 @@
 		<B>&nbsp;{LN_SEARCH_FILTER}</B>
 	</td>
 <!-- IF EnablePredefinedSearches="true" -->
-	<td nowrap align="left" nowrap valign="top">
+	<td nowrap valign="top" class="tableBackground">
 		<div id="menu">
 		<ul>
-		  <li><img src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter" OnClick="ToggleDisplayTypeById('menu_presearches');">
+		  <li><img src="{MENU_NAV_CLOSE}" align="left" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter" OnClick="ToggleDisplayTypeById('menu_presearches');">
 			<ul class="with_border" id="menu_presearches">
 			  <li class="cellmenu1">
 			  <h2>{LN_GEN_PREDEFINEDSEARCHES}</h2>
@@ -28,9 +32,15 @@
 		</div>
 	</td>
 <!-- ENDIF EnablePredefinedSearches="true" -->
+	<td align="center" nowrap valign="top">
 	<td nowrap align="center" nowrap valign="top">
 		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr}" class="SearchFormTextbox">
 		<br>
+<!-- IF enabledoraclesearchstr="true" -->
+	<a href="{oraclesearchlink}" target="_top">
+		<img src="{MENU_HELP_BLUE}" align="left" width="16" height="16" title="{LN_GEN_MOREINFORMATION}" class="SelectSavedFilter" >
+	</a>
+<!-- ENDIF enabledoraclesearchstr="true" -->
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
 		<a href="?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}" target="_top"><input name="lucky" type="button" value="{SearchCustomButtonCaption}" class="SearchFormControl"></a>
 		<input type="button" value="{LN_SEARCH_RESET}" class="SearchFormControl" OnClick="ResetFormValues('searchform');">
@@ -45,7 +55,7 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="5">
+	<td colspan="5" class="tableBackground">
 
 	<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
 	<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">

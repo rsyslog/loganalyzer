@@ -260,6 +260,7 @@ else if ( $content['CONVERT_STEP'] == 6 )
 	ConvertCustomSearches();
 	ConvertCustomViews();
 	ConvertCustomSources();
+	ConvertCustomCharts();
 	
 	// Import General Settings in the last step!
 	ConvertGeneralSettings();
