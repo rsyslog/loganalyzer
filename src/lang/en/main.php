@@ -97,6 +97,8 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 	$content['LN_WARNING_LOGSTREAMTITLE'] = "Logstream Warning";
 	$content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'] = "While reading the logstream, the php script timeout forced me to abort at this point.<br><br> If you want to avoid this, please increase the phpLogCon script timeout in your config.php. If the user system is installed, you can do that in Admin center.";
 	$content['LN_ERROR_FILE_NOMORETIME'] = "No more time for processing left";
+	$content['LN_WARNING_DBUPGRADE'] = "Database Upgrade required";
+	$content['LN_WARNING_DBUPGRADE_TEXT'] = "The current installed database version is '%1'.<br>An update to version '%2' is available.";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";

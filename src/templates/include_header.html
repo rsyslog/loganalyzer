@@ -141,10 +141,13 @@
 <tr> 
 	<td>
 
-	<!-- IF error_installfilereminder="true" -->
-		<center>
-		<h3><br><br><font color="red">{LN_ERROR_INSTALLFILEREMINDER}</font></h3>
-		</center>
-	<!-- ENDIF error_installfilereminder="true" -->
-	
-
+	<!-- IF dbupgrade_warning="false" -->
+	<br>
+	<center>
+		<div class="table_with_border_second ErrorMsg" style="width:600px">
+			<div class="PriorityWarning">{LN_WARNING_DBUPGRADE}</div>
+			<p align="left">{WARNING_DBUPGRADE_TEXT}</p>
+			</div>
+	</center>
+	<br>
+	<!-- ENDIF dbupgrade_warning="false" -->
