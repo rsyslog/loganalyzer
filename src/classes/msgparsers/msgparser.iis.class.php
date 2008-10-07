@@ -62,6 +62,9 @@ class MsgParser_iis extends MsgParser {
 	public function ParseMsg($szMsg, &$arrArguments)
 	{
 		global $content, $fields; 
+
+		//trim the msg first to remove spaces from begin and end
+		$szMsg = trim($szMsg);
 		
 //		$iSharpPos = strpos($szMsg, "#");
 //		if ( $iSharpPos !== false && $iSharpPos == 0 )

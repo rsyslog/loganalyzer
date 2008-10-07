@@ -117,6 +117,8 @@ function InitUserSystemPhpLogCon()
 
 function CheckForInstallPhp()
 {
+	global $content;
+
 	// Check for installscript!
 	if ( file_exists($content['BASEPATH'] . "install.php") ) 
 		$strinstallmsg = '<br><br>' 

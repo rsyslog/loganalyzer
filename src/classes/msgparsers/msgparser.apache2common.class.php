@@ -3,8 +3,10 @@
 	*********************************************************************
 	* -> www.phplogcon.org <-											*
 	* -----------------------------------------------------------------	*
-	* EventLog MSG Parser is used to split EventLog fields if found 
-	* in the msg 
+	* Apache Logfile Parser used to split WebLog fields if 
+	* found in the msg. 
+	*
+	* This Parser is for the default apache "common" format!
 	*																	*
 	* All directives are explained within this file						*
 	*
@@ -45,11 +47,11 @@ require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
-class MsgParser_eventlog extends MsgParser {
+class MsgParser_apache2common extends MsgParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
-	public function MsgParser_eventlog() {
+	public function MsgParser_apache2common() {
 		return; // Nothing
 	}
 
@@ -66,18 +68,45 @@ class MsgParser_eventlog extends MsgParser {
 		//trim the msg first to remove spaces from begin and end
 		$szMsg = trim($szMsg);
 
-		// Sample (WinSyslog/EventReporter):	7035,XPVS2005\Administrator,Service Control Manager,System,[INF],0,The Adiscon EvntSLog service was successfully sent a start control.
-		// Source:								%id%,%user%,%sourceproc%,%NTEventLogType%,%severity%,%category%,%msg%%$CRLF%
-		if ( preg_match("/([0-9]{1,12}),(.*?),(.*?),(.*?),(.*?),([0-9]{1,12}),(.*?)$/", $szMsg, $out ) )
+//return ERROR_MSG_NOMATCH;
+
+		// LogFormat "%h %l %u %t \"%r\" %>s %b" common
+		// LogFormat "%{Referer}i -> %U" referer
+		// LogFormat "%{User-agent}i" agent
+		// LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+
+		// Sample (apache2):	127.0.0.1 - - [14/Sep/2008:06:50:15 +0200] "GET / HTTP/1.0" 200 19023 
+		// Sample: 65.55.211.112 - - [16/Sep/2008:13:37:47 +0200] "GET /index.php?name=News&file=article&sid=1&theme=Printer HTTP/1.1" 200 4908 
+		if ( preg_match('/(.|.*?) (.|.*?) (.|.*?) \[(.*?)\] "(.*?) (.*?) (.*?)" (.|[0-9]{1,12}) (.|[0-9]{1,12})$/', $szMsg, $out ) )
 		{
-			// Copy parsed properties!
-			$arrArguments[SYSLOG_EVENT_ID] = $out[1];
-			$arrArguments[SYSLOG_EVENT_USER] = $out[2];
-			$arrArguments[SYSLOG_EVENT_SOURCE] = $out[3];
-			$arrArguments[SYSLOG_EVENT_LOGTYPE] = $out[4];
-///			$arrArguments[SYSLOG_SEVERITY] = $out[5];
-			$arrArguments[SYSLOG_EVENT_CATEGORY] = $out[6];
-			$arrArguments[SYSLOG_MESSAGE] = $out[7];
+//			print_r ( $out );
+//			exit;
+
+			// Set generic properties
+			$arrArguments[SYSLOG_HOST] = $out[1];
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[4]);
+
+			// Set weblog specific properties!
+			$arrArguments[SYSLOG_WEBLOG_USER] = $out[3];
+			$arrArguments[SYSLOG_WEBLOG_METHOD] = $out[5];
+			if ( strpos($out[6], "?") === false ) 
+			{
+				$arrArguments[SYSLOG_WEBLOG_URL] = $out[6];
+				$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= "";
+			}
+			else
+			{
+				$arrArguments[SYSLOG_WEBLOG_URL]		= substr( $out[6], 0, strpos($out[6], "?"));
+				$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= substr( $out[6], strpos($out[6], "?")+1 );
+			}
+			
+			// Number based fields
+			$arrArguments[SYSLOG_WEBLOG_PVER] = $out[7];
+			$arrArguments[SYSLOG_WEBLOG_STATUS] = $out[8];
+			$arrArguments[SYSLOG_WEBLOG_BYTESSEND] = $out[9];
+
+			// Set msg to whole logline 
+			$arrArguments[SYSLOG_MESSAGE] = $out[0];
 
 			if ( $this->_MsgNormalize == 1 ) 
 			{
@@ -85,7 +114,7 @@ class MsgParser_eventlog extends MsgParser {
 				$szTmpMsg = "";
 
 				// Create Field Array to prepend into msg! Reverse Order here
-				$myFields = array( SYSLOG_MESSAGE, SYSLOG_EVENT_CATEGORY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_USER, SYSLOG_EVENT_ID );
+				$myFields = array( SYSLOG_WEBLOG_USER, SYSLOG_WEBLOG_PVER, SYSLOG_WEBLOG_BYTESSEND, SYSLOG_WEBLOG_STATUS, SYSLOG_WEBLOG_METHOD, SYSLOG_WEBLOG_QUERYSTRING, SYSLOG_WEBLOG_URL );
 
 				foreach ( $myFields as $myField )
 				{
@@ -101,7 +130,6 @@ class MsgParser_eventlog extends MsgParser {
 
 				// copy finished MSG back!
 				$arrArguments[SYSLOG_MESSAGE] = $szTmpMsg;
-
 			}
 		}
 		else
@@ -111,7 +139,7 @@ class MsgParser_eventlog extends MsgParser {
 		}
 		
 		// Set IUT Property if success!
-		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_NT_EventReport;
+		$arrArguments[SYSLOG_MESSAGETYPE] = IUT_WEBSERVERLOG;
 
 		// If we reached this position, return success!
 		return SUCCESS;

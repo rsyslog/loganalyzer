@@ -3,8 +3,10 @@
 	*********************************************************************
 	* -> www.phplogcon.org <-											*
 	* -----------------------------------------------------------------	*
-	* Apache Logfile Parser used to split WebLog fields if found 
-	* in the msg 
+	* Apache Logfile Parser used to split WebLog fields if 
+	* found in the msg. 
+	*
+	* This Parser is for the default apache "combined" format!
 	*																	*
 	* All directives are explained within this file						*
 	*
@@ -63,6 +65,9 @@ class MsgParser_apache2 extends MsgParser {
 	{
 		global $content, $fields; 
 
+		//trim the msg first to remove spaces from begin and end
+		$szMsg = trim($szMsg);
+
 //return ERROR_MSG_NOMATCH;
 
 		// LogFormat "%h %l %u %t \"%r\" %>s %b" common
@@ -95,7 +100,7 @@ class MsgParser_apache2 extends MsgParser {
 				$arrArguments[SYSLOG_WEBLOG_QUERYSTRING]= substr( $out[6], strpos($out[6], "?")+1 );
 			}
 
-//			$arrArguments[SYSLOG_WEBLOG_QUERYSTRING] = $out[7];
+			// Number based fields
 			$arrArguments[SYSLOG_WEBLOG_PVER] = $out[7];
 			$arrArguments[SYSLOG_WEBLOG_STATUS] = $out[8];
 			$arrArguments[SYSLOG_WEBLOG_BYTESSEND] = $out[9];

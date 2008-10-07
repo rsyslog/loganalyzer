@@ -56,7 +56,7 @@ $content['web_theme'] = "default";
 $content['user_theme'] = "default";
 $configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
 
-//ini_set('error_reporting', E_ERROR); // NO PHP ERROR'S!
+//ini_set('error_reporting', E_ALL); // DEBUG ENABLE
 // ***					*** //
 
 // --- CONTENT Vars
@@ -100,7 +100,7 @@ else
 
 // --- Set Title
 $content['TITLE'] = GetAndReplaceLangStr( $content['TITLE'], $content['INSTALL_STEP'] );
-$content['LN_INSTALL_TITLETOP'] = GetAndReplaceLangStr( $content['LN_INSTALL_TITLETOP'], $content['BUILDNUMBER'],  $content['INSTALL_STEP'] );
+$content['INSTALL_TITLETOP'] = GetAndReplaceLangStr( $content['LN_INSTALL_TITLETOP'], $content['BUILDNUMBER'],  $content['INSTALL_STEP'] );
 // --- 
 
 // --- Start Setup Processing
@@ -201,6 +201,8 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_SESSION['UserDBPref']) ) { $content['UserDBPref'] = $_SESSION['UserDBPref']; } else { $content['UserDBPref'] = "logcon_"; }
 	if ( isset($_SESSION['UserDBUser']) ) { $content['UserDBUser'] = $_SESSION['UserDBUser']; } else { $content['UserDBUser'] = "user"; }
 	if ( isset($_SESSION['UserDBPass']) ) { $content['UserDBPass'] = $_SESSION['UserDBPass']; } else { $content['UserDBPass'] = ""; }
+	if ( isset($_SESSION['UserDBLoginRequired']) ) { $content['UserDBLoginRequired'] = $_SESSION['UserDBLoginRequired']; } else { $content['UserDBLoginRequired'] = false; }
+	
 	if ( $content['UserDBEnabled'] == 1 )
 	{
 		$content['UserDBEnabled_true'] = "checked";
@@ -745,6 +747,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDCREATECFGFILE'], $content['BASEPATH'] . "config.php") );
 	
 	fwrite($handle, $filebuffer);
+	fflush($handle);
 	fclose($handle);
 	// --- 
 
