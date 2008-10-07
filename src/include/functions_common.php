@@ -266,8 +266,8 @@ function CreateChartFields( $selectedChartField)
 
 		// Add new entry to array
 		$content['CHARTFIELDS'][$myFieldID]['ID'] = $myFieldID;
-		if ( isset($content[ $myField['FieldCaptionID'] ]) )
-			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $content[ $myField['FieldCaptionID'] ];
+		if ( isset($myField['FieldCaption']) )
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myField['FieldCaption'];
 		else
 			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myFieldID;
 		

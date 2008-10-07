@@ -156,7 +156,7 @@ if ( !$content['error_occured'] )
 					else
 						$chartImageMapLinks[] = "";
 
-					$chartImageMapAlts[] =  $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . ": " . $myKey;
+					$chartImageMapAlts[] =  $fields[$content['chart_field']]['FieldCaption'] . ": " . $myKey;
 					$chartImageMapTargets[] ="_top";
 				}
 
@@ -174,12 +174,12 @@ if ( !$content['error_occured'] )
 					$graph->SetBox();					// Box around plotarea
 
 					// Set up the title for the graph
-//					$graph->title->Set('Messagecount sorted by "' . $content[ $fields[$content['chart_field']]['FieldCaptionID'] ] . '"');
+//					$graph->title->Set('Messagecount sorted by "' . $content[ $fields[$content['chart_field']]['FieldCaption'] ] . '"');
 //					$graph->title->SetFont(FF_VERDANA,FS_NORMAL,12);
 //					$graph->title->SetColor("darkred");
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
 					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
 					$graph->tabtitle->SetPos('left'); 
 					
@@ -273,7 +273,7 @@ if ( !$content['error_occured'] )
 					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
 					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
 					$graph->tabtitle->SetPos('left'); 
 
@@ -363,7 +363,7 @@ if ( !$content['error_occured'] )
 					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
 
 					// Setup the tab title
-					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $content[ $fields[$content['chart_field']]['FieldCaptionID'] ]) );
+					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
 					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
 					$graph->tabtitle->SetPos('right');
 					$graph->tabtitle->SetTabAlign('right');

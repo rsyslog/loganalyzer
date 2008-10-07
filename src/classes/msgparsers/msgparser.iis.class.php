@@ -128,10 +128,10 @@ class MsgParser_iis extends MsgParser {
 				foreach ( $myFields as $myField )
 				{
 					// Set Field Caption
-					if ( isset($content[ $fields[$myField]['FieldCaptionID'] ]) )
-						$szFieldName = $content[ $fields[$myField]['FieldCaptionID'] ];
+					if ( isset($fields[$myField]['FieldCaption']) )
+						$szFieldName = $fields[$myField]['FieldCaption'];
 					else
-						$szFieldName = $fields[$myField]['FieldCaptionID'];
+						$szFieldName = $myField;
 
 					// Append Field into msg
 					$szTmpMsg = $szFieldName . ": '" . $arrArguments[$myField] . "'\n" . $szTmpMsg;

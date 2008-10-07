@@ -172,31 +172,6 @@ $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Origem (Hostname)";
 $content['LN_FILTER_MESSAGETYPE'] = "Tipo de mensagem";
 
-// Field Captions
-$content['LN_FIELDS_DATE'] = "Data";
-$content['LN_FIELDS_FACILITY'] = "Facility";
-$content['LN_FIELDS_SEVERITY'] = "Severidade";
-$content['LN_FIELDS_HOST'] = "Host";
-$content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
-$content['LN_FIELDS_PROCESSID'] = "PID";
-$content['LN_FIELDS_MESSAGETYPE'] = "Tipo";
-$content['LN_FIELDS_UID'] = "uID";
-$content['LN_FIELDS_MESSAGE'] = "Mensagem";
-$content['LN_FIELDS_EVENTID'] = "ID do Evento";
-$content['LN_FIELDS_EVENTLOGTYPE'] = "Tipo do Evento";
-$content['LN_FIELDS_EVENTSOURCE'] = "Origem do Evento";
-$content['LN_FIELDS_EVENTCATEGORY'] = "Categoria do Evento";
-$content['LN_FIELDS_EVENTUSER'] = "Evento de Usu&acute;rio";
-	$content['LN_FIELDS_WEBLOG_USER'] = "HTTP User";
-	$content['LN_FIELDS_WEBLOG_METHOD'] = "Method";
-	$content['LN_FIELDS_WEBLOG_URL'] = "URL";
-	$content['LN_FIELDS_WEBLOG_QUERYSTRING'] = "Querystring";
-	$content['LN_FIELDS_WEBLOG_PVER'] = "Version";
-	$content['LN_FIELDS_WEBLOG_STATUS'] = "Status";
-	$content['LN_FIELDS_WEBLOG_BYTESSEND'] = "Bytes Send";
-	$content['LN_FIELDS_WEBLOG_REFERER'] = "Referer";
-	$content['LN_FIELDS_WEBLOG_USERAGENT'] = "User Agent";
-
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Servidor BD";
 $content['LN_CFG_DBPORT'] = "Porta BD";
