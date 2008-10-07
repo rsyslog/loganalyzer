@@ -1,6 +1,15 @@
 ---------------------------------------------------------------------------
 Version 2.5.13 (beta), 2008-10-07
-- 
+- Improved documentation, added general and search description. 
+- The conversion script does convert the charts now as well.
+- Added global warning which will be displayed on all pages if a 
+  database update is pending
+- Added button below searchfield which becomes visible when 
+  you run searches which links to the asktheoracle site. 
+- Fixed a race condition in the installer which could cause phpLogCon 
+  to fail at Step 8.
+- Added parser for apache2 common format. So we support apache combine 
+  and common now. 
 ---------------------------------------------------------------------------
 Version 2.5.12 (beta), 2008-09-29
 - Fixed several SQL issues in the logstream classes when filtering 
