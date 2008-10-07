@@ -321,6 +321,9 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 	// Needed to make global
 	global $CFG, $gl_root_path, $content;
 
+	// Bugfix for race conditions, clear file stats cache!
+	clearstatcache();
+
 	if ( file_exists($gl_root_path . 'config.php') && GetFileLength($gl_root_path . 'config.php') > 0 )
 	{
 		// Include the main config
@@ -359,7 +362,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 	else
 	{
 		// if handled ourselfe, we die in CheckForInstallPhp.
-		if ( $bHandleMissing == true )
+		if ( $bHandleMissing == true ) 
 		{
 			// Check for installscript!
 			CheckForInstallPhp();
