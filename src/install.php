@@ -56,7 +56,7 @@ $content['web_theme'] = "default";
 $content['user_theme'] = "default";
 $configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
 
-ini_set('error_reporting', E_ALL); // DEBUG ENABLE
+//ini_set('error_reporting', E_ALL); // DEBUG ENABLE
 // ***					*** //
 
 // --- CONTENT Vars
