@@ -334,6 +334,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		define('DB_CONFIG',			$tblPref . "config");
 		define('DB_GROUPS',			$tblPref . "groups");
 		define('DB_GROUPMEMBERS',	$tblPref . "groupmembers");
+		define('DB_FIELDS',			$tblPref . "fields");
 		define('DB_SEARCHES',		$tblPref . "searches");
 		define('DB_SOURCES',		$tblPref . "sources");
 		define('DB_USERS',			$tblPref . "users");
@@ -369,6 +370,91 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		}
 		else
 			return false;
+	}
+}
+
+/*
+*	Helper function to load configured fields from the database
+*/
+function LoadFieldsFromDatabase()
+{
+	// Needed to make global
+	global $fields, $content;
+
+	// Abort reading fields if the database version is below version 5!, because prior v5, there were no fields table
+	if ( $content['database_installedversion'] < 5 )
+		return;
+
+	// --- Preprocess fields in loop 
+	foreach ($fields as &$myField )
+	{
+		// Set Field to be internal!
+		$myField['IsInternalField'] = true;
+		$myField['FieldFromDB'] = false;
+		
+		// Set some other defaults!
+		if ( !isset($myField['Trunscate']) ) 
+			$myField['Trunscate'] = 30;
+		if ( !isset($myField['SearchOnline']) ) 
+			$myField['SearchOnline'] = false;
+		if ( !isset($myField['SearchField']) ) 
+			$myField['SearchField'] = $myField['FieldID'];
+		
+	}
+	// ---
+
+	// --- Create SQL Query
+	$sqlquery = " SELECT " . 
+				DB_FIELDS . ".FieldID, " . 
+				DB_FIELDS . ".FieldCaption, " . 
+				DB_FIELDS . ".FieldType, " . 
+				DB_FIELDS . ".FieldAlign, " . 
+				DB_FIELDS . ".SearchField, " . 
+				DB_FIELDS . ".DefaultWidth, " . 
+				DB_FIELDS . ".Trunscate, " . 
+				DB_FIELDS . ".Sortable " .
+				" FROM " . DB_FIELDS . 
+				" ORDER BY " . DB_FIELDS . ".FieldCaption";
+	// ---
+
+	// Get Searches from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+//		// Overwrite existing Charts array
+//		unset($CFG['Search']);$fields
+		
+		// Loop through all data rows 
+		foreach ($myrows as &$myField )
+		{
+			// Read and Set from db!
+			$fieldId = $myField['FieldID'];
+			$fieldDefine = $myField['FieldDefine'];
+			
+			// Set define needed in certain code places!
+			if ( !defined($fieldDefine) ) 
+			{
+				defined($fieldDefine, $fieldId);
+				$fields[$fieldId]['IsInternalField'] = false;
+			}
+			
+			// Copy values
+			$fields[$fieldId]['FieldID'] = $myField['FieldID'];
+			$fields[$fieldId]['FieldDefine'] = $myField['FieldDefine'];
+			$fields[$fieldId]['FieldCaption'] = $myField['FieldCaption'];
+			$fields[$fieldId]['FieldType'] = $myField['FieldType'];
+			$fields[$fieldId]['FieldAlign'] = $myField['FieldAlign'];
+			$fields[$fieldId]['SearchField'] = $myField['SearchField'];
+			$fields[$fieldId]['DefaultWidth'] = $myField['DefaultWidth'];
+			$fields[$fieldId]['Trunscate'] = $myField['Trunscate'];
+			$fields[$fieldId]['Sortable'] = $myField['Sortable'];
+
+			// Set FromDB to true
+			$fields[$fieldId]['FieldFromDB'] = true;
+		}
+
+		print_r ( $fields );
 	}
 }
 

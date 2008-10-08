@@ -30,12 +30,13 @@ global $content;
 // Global Stuff
 $content['LN_ADMINMENU_HOMEPAGE'] = "Back to Show Events";
 $content['LN_ADMINMENU_GENOPT'] = "General Options";
-$content['LN_ADMINMENU_SOURCEOPT'] = "Sources Options";
-$content['LN_ADMINMENU_VIEWSOPT'] = "Views Options";
-$content['LN_ADMINMENU_SEARCHOPT'] = "Search Options";
+$content['LN_ADMINMENU_SOURCEOPT'] = "Sources";
+$content['LN_ADMINMENU_VIEWSOPT'] = "Views";
+$content['LN_ADMINMENU_SEARCHOPT'] = "Searches";
 $content['LN_ADMINMENU_USEROPT'] = "User Options";
 $content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
-$content['LN_ADMINMENU_CHARTOPT'] = "Chart Options";
+$content['LN_ADMINMENU_CHARTOPT'] = "Charts";
+$content['LN_ADMINMENU_FIELDOPT'] = "Fields";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";

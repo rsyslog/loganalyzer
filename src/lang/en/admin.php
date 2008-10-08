@@ -30,12 +30,13 @@ global $content;
 // Global Stuff
 $content['LN_ADMINMENU_HOMEPAGE'] = "Back to Show Events";
 $content['LN_ADMINMENU_GENOPT'] = "General Options";
-$content['LN_ADMINMENU_SOURCEOPT'] = "Sources Options";
-$content['LN_ADMINMENU_VIEWSOPT'] = "Views Options";
-$content['LN_ADMINMENU_SEARCHOPT'] = "Search Options";
+$content['LN_ADMINMENU_SOURCEOPT'] = "Sources";
+$content['LN_ADMINMENU_VIEWSOPT'] = "Views";
+$content['LN_ADMINMENU_SEARCHOPT'] = "Searches";
 $content['LN_ADMINMENU_USEROPT'] = "User Options";
 $content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
-$content['LN_ADMINMENU_CHARTOPT'] = "Chart Options";
+$content['LN_ADMINMENU_CHARTOPT'] = "Charts";
+$content['LN_ADMINMENU_FIELDOPT'] = "Fields";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
@@ -260,5 +261,35 @@ $content['LN_CHARTS_ID'] = "ID";
 $content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
 $content['LN_CHARTS_PREVIEW'] = "Preview Chart in a new Window";
 
+// Fields Options
+$content['LN_FIELDS_CENTER'] = "Fields Options";
+$content['LN_FIELDS_EDIT'] = "Edit Field";
+$content['LN_FIELDS_DELETE'] = "Delete Field";
+$content['LN_FIELDS_ADD'] = "Add new Field";
+$content['LN_FIELDS_ID'] = "FieldID";
+$content['LN_FIELDS_NAME'] = "Display Name";
+$content['LN_FIELDS_DEFINE'] = "Internal FieldID";
+$content['LN_FIELDS_DELETE_FROMDB'] = "Delete Field from DB";
+$content['LN_FIELDS_ADDEDIT'] = "Add / Edit a Field";
+$content['LN_FIELDS_TYPE'] = "Field Type";
+$content['LN_FIELDS_ALIGN'] = "Listview Alignment";
+$content['LN_FIELDS_SEARCHONLINE'] = "Enable online search";
+$content['LN_FIELDS_DEFAULTWIDTH'] = "Rowwidth in Listview";
+$content['LN_FIELDS_ERROR_IDNOTFOUND'] = "The Field-ID could not be found in the database, or in the default constants.";
+$content['LN_FIELDS_ERROR_INVALIDID'] = "The Field with ID '%1' is not a valid Field.";
+$content['LN_FIELDS_SEARCHFIELD'] = "Used filtername";
+$content['LN_FIELDS_'] = "";
+$content['LN_FIELDS_'] = "";
+$content['LN_FIELDS_'] = "";
+$content['LN_FIELDS_'] = "";
+$content['LN_FIELDS_'] = "";
+$content['LN_FIELDS_'] = "";
+
+$content['LN_ALIGN_CENTER'] = "center";
+$content['LN_ALIGN_LEFT'] = "left";
+$content['LN_ALIGN_RIGHT'] = "right";
+$content['LN_FILTER_TYPE_STRING'] = "String";
+$content['LN_FILTER_TYPE_NUMBER'] = "Number";
+$content['LN_FILTER_TYPE_DATE'] = "Date";
 
 ?>
