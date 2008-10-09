@@ -195,7 +195,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['NewFieldType']) && isset($content['FILTERTYPES'][$_POST['NewFieldType']]) ) { $content['FieldType'] = intval($_POST['NewFieldType']); } else if ( isset($_POST['FieldType']) && isset($content['FILTERTYPES'][$_POST['FieldType']]) ) { $content['FieldType'] = intval($_POST['FieldType']); } else { $content['FieldType'] = FILTER_TYPE_STRING; }
 
 	// Checkbox fields
-	if ( isset($_POST['SearchOnline']) ) { $content['SearchOnline'] = true; } else {$content['SearchOnline'] = false; }
+	if ( isset($_POST['SearchOnline']) ) { $content['SearchOnline'] = "true"; } else { $content['SearchOnline'] = "false"; }
 //	NOT USED YET if ( isset ($_POST['Sortable']) ) { $content['Sortable'] = true; } else {$content['Sortable'] = false; }
 
 	// --- Check mandotary values
@@ -228,40 +228,25 @@ if ( isset($_POST['op']) )
 		$myrow = DB_GetSingleRow($result, true);
 		if ( !isset($myrow['FieldID']) )
 		{
-/*
-			if ( $_POST['op'] == "editfield" ) 
-			{	
-				// Show error in this case
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_FIELDS_ERROR_IDNOTFOUND'], $content['FieldID'] ); 
-			}
-			else
-*/
-			{
-				// Add custom Field now!
-				$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline) 
-				VALUES (
-						'" . $content['FieldID'] . "', 
-						'" . $content['FieldCaption'] . "',
-						'" . $content['FieldDefine'] . "',
-						'" . $content['SearchField'] . "',
-						'" . $content['FieldAlign'] . "', 
-						" . $content['DefaultWidth'] . ", 
-						" . $content['FieldType'] . ", 
-						" . $content['SearchOnline'] . " 
-						)";
-				$result = DB_Query($sqlquery);
-				DB_FreeQuery($result);
-				
-				// Do the final redirect
-				RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENADDED'], $content['FieldCaption'] ) , "fields.php" );
-			}
+			// Add custom Field now!
+			$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline) 
+			VALUES (
+					'" . $content['FieldID'] . "', 
+					'" . $content['FieldCaption'] . "',
+					'" . $content['FieldDefine'] . "',
+					'" . $content['SearchField'] . "',
+					'" . $content['FieldAlign'] . "', 
+					" . $content['DefaultWidth'] . ", 
+					" . $content['FieldType'] . ", 
+					" . $content['SearchOnline'] . " 
+					)";
+			$result = DB_Query($sqlquery);
+			DB_FreeQuery($result);
+
+			// Do the final redirect
+			RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENADDED'], $content['FieldCaption'] ) , "fields.php" );
 		}
-/*		if ( $_POST['op'] == "addnewfield" )
-		{
-		}
-		else if ( $_POST['op'] == "editfield" )
-*/
+		else
 		{
 
 			// Edit the Search Entry now!
