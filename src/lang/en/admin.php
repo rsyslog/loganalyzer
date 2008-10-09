@@ -288,11 +288,6 @@ $content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "The internal FieldID was empty. 
 $content['LN_FIELDS_HASBEENEDIT'] = "The configuration for the field '%1' has been successfully edited.";
 $content['LN_FIELDS_HASBEENADDED'] = "The configuration for the field '%1' has been successfully added.";
 $content['LN_FIELDS_'] = "";
-$content['LN_FIELDS_'] = "";
-$content['LN_FIELDS_'] = "";
-$content['LN_FIELDS_'] = "";
-$content['LN_FIELDS_'] = "";
-
 $content['LN_ALIGN_CENTER'] = "center";
 $content['LN_ALIGN_LEFT'] = "left";
 $content['LN_ALIGN_RIGHT'] = "right";

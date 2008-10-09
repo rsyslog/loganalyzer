@@ -252,4 +252,38 @@ $content['LN_CHARTS_WARNDELETESEARCH'] = "Are you sure that you want to delete t
 $content['LN_CHARTS_ERROR_DELCHART'] = "Deleting of the Chart with id '%1' failed!";
 $content['LN_CHARTS_ERROR_HASBEENDEL'] = "The Chart '%1' has been successfully deleted!";
 
+// Fields Options
+$content['LN_FIELDS_CENTER'] = "Fields Options";
+$content['LN_FIELDS_EDIT'] = "Edit Field";
+$content['LN_FIELDS_DELETE'] = "Delete Field";
+$content['LN_FIELDS_ADD'] = "Add new Field";
+$content['LN_FIELDS_ID'] = "FieldID";
+$content['LN_FIELDS_NAME'] = "Display Name";
+$content['LN_FIELDS_DEFINE'] = "Internal FieldID";
+$content['LN_FIELDS_DELETE_FROMDB'] = "Delete Field from DB";
+$content['LN_FIELDS_ADDEDIT'] = "Add / Edit a Field";
+$content['LN_FIELDS_TYPE'] = "Field Type";
+$content['LN_FIELDS_ALIGN'] = "Listview Alignment";
+$content['LN_FIELDS_SEARCHONLINE'] = "Enable online search";
+$content['LN_FIELDS_DEFAULTWIDTH'] = "Row width in Listview";
+$content['LN_FIELDS_ERROR_IDNOTFOUND'] = "The Field-ID could not be found in the database, or in the default constants.";
+$content['LN_FIELDS_ERROR_INVALIDID'] = "The Field with ID '%1' is not a valid Field.";
+$content['LN_FIELDS_SEARCHFIELD'] = "Name of Searchfilter";
+$content['LN_FIELDS_WARNDELETESEARCH'] = "Are you sure that you want to delete the Field '%1'? This cannot be undone!";
+$content['LN_FIELDS_ERROR_DELSEARCH'] = "The Field-ID could not be found in the database.";
+$content['LN_FIELDS_ERROR_HASBEENDEL'] = "The Field '%1' has been successfully deleted!";
+$content['LN_FIELDS_ERROR_FIELDCAPTIONEMPTY'] = "The field caption was empty. ";
+$content['LN_FIELDS_ERROR_FIELDIDEMPTY'] = "The field id was empty. ";
+$content['LN_FIELDS_ERROR_SEARCHFIELDEMPTY'] = "The searchfilter was empty. ";
+$content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "The internal FieldID was empty. ";
+$content['LN_FIELDS_HASBEENEDIT'] = "The configuration for the field '%1' has been successfully edited.";
+$content['LN_FIELDS_HASBEENADDED'] = "The configuration for the field '%1' has been successfully added.";
+$content['LN_FIELDS_'] = "";
+$content['LN_ALIGN_CENTER'] = "center";
+$content['LN_ALIGN_LEFT'] = "left";
+$content['LN_ALIGN_RIGHT'] = "right";
+$content['LN_FILTER_TYPE_STRING'] = "String";
+$content['LN_FILTER_TYPE_NUMBER'] = "Number";
+$content['LN_FILTER_TYPE_DATE'] = "Date";
+
 ?>

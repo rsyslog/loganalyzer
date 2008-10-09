@@ -34,21 +34,21 @@
 
 /*
 *	NEEDED FIELDS!
-
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_interface', 'SYSLOG_NET_INTERFACE', 'Interface', 0, 0, 100, 'center', 'net_interface', 0, 0);
-INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_mac_address', 'SYSLOG_NET_MAC_ADDRESS', 'Mac Address', 0, 0, 100, 'left', 'net_mac_address', 0, 0);
-INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_lastip', 'SYSLOG_NET_LASTIP', 'Last IP Address', 0, 0, 85, 'center', 'net_lastip', 1, 0);
-INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_rxrate', 'SYSLOG_NET_RXRATE', 'RX Rate', 0, 0, 50, 'center', 'net_rxrate', 0, 0);
-INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_txrate', 'SYSLOG_NET_TXRATE', 'TX Rate', 0, 0, 50, 'center', 'net_txrate', 0, 0);
+INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_mac_address', 'SYSLOG_NET_MAC_ADDRESS', 'Mac Address', 0, 0, 125, 'left', 'net_mac_address', 0, 0);
+INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_lastip', 'SYSLOG_NET_LASTIP', 'Last IP Address', 0, 0, 100, 'left', 'net_lastip', 1, 0);
+INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_rxrate', 'SYSLOG_NET_RXRATE', 'RX Rate', 0, 0, 65, 'center', 'net_rxrate', 0, 0);
+INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_txrate', 'SYSLOG_NET_TXRATE', 'TX Rate', 0, 0, 65, 'center', 'net_txrate', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_uptime', 'SYSLOG_NET_UPTIME', 'System Uptime', 0, 0, 85, 'center', 'net_uptime', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_lastactivity', 'SYSLOG_NET_LASTACTIVITY', 'Last Activity', 0, 0, 80, 'center', 'net_lastactivity', 0, 0);
-INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_signalstrength', 'SYSLOG_NET_SIGNALSTRENGTH', 'Signal strength', 0, 0, 50, 'center', 'net_signalstrength', 0, 0);
+INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_signalstrength', 'SYSLOG_NET_SIGNALSTRENGTH', 'Signal strength', 0, 0, 100, 'center', 'net_signalstrength', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_signaltonoise', 'SYSLOG_NET_SIGNALTONOISE', 'Signal to noise', 1, 0, 50, 'center', 'net_signaltonoise', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_txccq', 'SYSLOG_NET_TXCCQ', 'TX CCQ', 1, 0, 50, 'center', 'net_txccq', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_bytesrecieved', 'SYSLOG_NET_BYTESRECIEVED', 'Bytes recieved', 1, 0, 50, 'left', 'net_bytesrecieved', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_bytessend', 'SYSLOG_NET_BYTESSEND', 'Bytes send', 1, 0, 50, 'left', 'net_bytessend', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_packetsrecieved', 'SYSLOG_NET_PACKETSRECIEVED', 'Packets recieved', 1, 0, 50, 'left', 'net_packetsrecieved', 0, 0);
 INSERT INTO `logcon_fields` (`FieldID`, `FieldDefine`, `FieldCaption`, `FieldType`, `Sortable`, `DefaultWidth`, `FieldAlign`, `SearchField`, `SearchOnline`, `Trunscate`) VALUES ('net_packetssend', 'SYSLOG_NET_PACKETSSEND', 'Packets send', 1, 0, 50, 'left', 'net_packetssend', 0, 0);
+
 
 
 */
