@@ -228,6 +228,9 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 			else
 				$myColumn['ColCaption'] = $key;
 
+			// Append Internal FieldID
+			$myColumn['ColInternalID'] = $fields[$key]['FieldDefine'];
+
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
 				$myColumn['colcssclass'] = "line1";
@@ -260,6 +263,9 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 			$myField['FieldCaption'] = $myField['FieldCaption'];
 		else
 			$myField['FieldCaption'] = $key;
+
+		// Append Internal FieldID
+		$myField['FieldCaption'] .= " (" . $fields[$key]['FieldDefine'] . ")";
 	}
 	// ---
 }
@@ -547,7 +553,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$myView['COLUMNS'][$myCol]['FieldCaption'] = $fields[$myCol]['FieldCaption'];
 			else
 				$myView['COLUMNS'][$myCol]['FieldCaption'] = $myCol;
-		
+
 			if ( $iBegin )
 			{
 				$myView['COLUMNS'][$myCol]['FieldCaptionSeperator'] = "";

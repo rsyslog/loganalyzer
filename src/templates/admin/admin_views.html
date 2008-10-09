@@ -65,7 +65,7 @@
 
 <!-- IF ISEDITORNEWVIEW="true" -->
 		<form action="{BASEPATH}admin/views.php{FormUrlAddOP}" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_VIEWS_ADDEDIT}</b></td>
 			</tr>
@@ -93,16 +93,20 @@
 			<br>
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
-				<td align="center" class="cellmenu1" colspan="3"><b>{LN_VIEWS_COLUMNLIST}</b></td>
+				<td align="center" class="cellmenu1" colspan="4"><b>{LN_VIEWS_COLUMNLIST}</b></td>
 			</tr>
 			<!-- BEGIN SUBCOLUMNS -->
 			<tr>
 				<td align="left" class="cellmenu2" width="150"><b>{LN_VIEWS_COLUMN} {ZAEHLER}: </b></td>
 			
-				<td align="left" class="{colcssclass}" width="300">
+				<td align="left" class="{colcssclass}" width="200">
 					<input type="hidden" name="Columns[]" value="{ColFieldID}">
 					<b>{ColCaption}</b>
 				</td>
+				<td align="left" class="{colcssclass}" width="200">
+					<I>{ColInternalID}</I>
+				</td>
+				
 				<td align="center" class="{colcssclass}" width="150">
 					<button name="subop_moveup" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
 					<button name="subop_movedown" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
@@ -115,7 +119,7 @@
 			</tr>
 			<!-- END SUBCOLUMNS -->
 			<tr>
-				<td align="center" class="line2" colspan="3">
+				<td align="center" class="line2" colspan="4">
 
 					<select name="newcolumn" size="1" STYLE="width: 200px">
 						<!-- BEGIN FIELDS -->
