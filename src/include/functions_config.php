@@ -424,9 +424,6 @@ function LoadFieldsFromDatabase()
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
 	{
-//		// Overwrite existing Charts array
-//		unset($CFG['Search']);$fields
-		
 		// Loop through all data rows 
 		foreach ($myrows as &$myField )
 		{
