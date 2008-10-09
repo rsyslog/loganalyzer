@@ -406,11 +406,13 @@ function LoadFieldsFromDatabase()
 	// --- Create SQL Query
 	$sqlquery = " SELECT " . 
 				DB_FIELDS . ".FieldID, " . 
+				DB_FIELDS . ".FieldDefine, " . 
 				DB_FIELDS . ".FieldCaption, " . 
 				DB_FIELDS . ".FieldType, " . 
 				DB_FIELDS . ".FieldAlign, " . 
 				DB_FIELDS . ".SearchField, " . 
 				DB_FIELDS . ".DefaultWidth, " . 
+				DB_FIELDS . ".SearchOnline, " . 
 				DB_FIELDS . ".Trunscate, " . 
 				DB_FIELDS . ".Sortable " .
 				" FROM " . DB_FIELDS . 
@@ -435,7 +437,7 @@ function LoadFieldsFromDatabase()
 			// Set define needed in certain code places!
 			if ( !defined($fieldDefine) ) 
 			{
-				defined($fieldDefine, $fieldId);
+				define($fieldDefine, $fieldId);
 				$fields[$fieldId]['IsInternalField'] = false;
 			}
 			
@@ -447,6 +449,7 @@ function LoadFieldsFromDatabase()
 			$fields[$fieldId]['FieldAlign'] = $myField['FieldAlign'];
 			$fields[$fieldId]['SearchField'] = $myField['SearchField'];
 			$fields[$fieldId]['DefaultWidth'] = $myField['DefaultWidth'];
+			$fields[$fieldId]['SearchOnline'] = $myField['SearchOnline'];
 			$fields[$fieldId]['Trunscate'] = $myField['Trunscate'];
 			$fields[$fieldId]['Sortable'] = $myField['Sortable'];
 
@@ -454,7 +457,7 @@ function LoadFieldsFromDatabase()
 			$fields[$fieldId]['FieldFromDB'] = true;
 		}
 
-		print_r ( $fields );
+//		print_r ( $fields );
 	}
 }
 
