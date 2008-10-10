@@ -1407,6 +1407,74 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 }
 
 /*
+*	Helper function to get all directory from a folder
+*/
+function list_directories($directory, $failOnError = true) 
+{
+	$result = array();
+	if ( !$directoryHandler = @opendir ($directory) ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: directory \"$directory\" doesn't exist!");
+		else
+			return null;
+	}
+
+	while (false !== ($fileName = @readdir ($directoryHandler))) 
+	{
+		if	( is_dir( $directory . $fileName ) && ( $fileName != "." && $fileName != ".." ))
+			@array_push ($result, $fileName);
+	}
+
+	if ( @count ($result) === 0 ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: no directories in \"$directory\" found!");
+		else
+			return null;
+	}
+	else 
+	{
+		sort ($result);
+		return $result;
+	}
+}
+
+/*
+*	Helper function to get all files from a directory
+*/
+function list_files($directory, $failOnError = true) 
+{
+	$result = array();
+	if ( !$directoryHandler = @opendir ($directory) ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: directory \"$directory\" doesn't exist!");
+		else
+			return null;
+	}
+
+	while (false !== ($fileName = @readdir ($directoryHandler))) 
+	{
+		if	( is_file( $directory . $fileName ) && ( $fileName != "." && $fileName != ".." ))
+			@array_push ($result, $fileName);
+	}
+
+	if ( @count ($result) === 0 ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: no files in \"$directory\" found!");
+		else
+			return null;
+	}
+	else 
+	{
+		sort ($result);
+		return $result;
+	}
+}
+
+/*
 *	Helper function to get the errorCode
 */
 function GetErrorMessage($errorCode)

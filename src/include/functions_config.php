@@ -196,6 +196,83 @@ function InitSource(&$mysource)
 	}
 }
 
+
+/*
+*	This function reads and generates a list of available message parsers
+*/
+function InitMessageParsers()
+{
+	global $content, $gl_root_path;
+
+	$szDirectory = $gl_root_path . 'classes/msgparsers/'; // msgparser.' . $szParser . '.class.php';
+	$aFiles = list_files($szDirectory, true); 
+	if ( isset($aFiles) && count($aFiles) > 0 )
+	{
+		foreach( $aFiles as $myFile ) 
+		{
+			// Check if file is valid msg parser!
+			if ( preg_match("/msgparser\.(.*?)\.class\.php$/", $myFile, $out ) )
+			{
+				// Set ParserID!
+				$myParserID = $out[1]; 
+
+				// Check if parser file include exists
+				$szIncludeFile = $szDirectory . $myFile; 
+				if ( file_exists($szIncludeFile) )
+				{
+					// Try to include
+					if ( @include_once($szIncludeFile) )
+					{
+						// Set ParserClassName
+						$szParserClass = "MsgParser_" . $myParserID; 
+///						echo $szParserClass . "<br>";
+						
+						// Create Instance and get properties
+						$tmpParser = new $szParserClass(); // Create an instance
+						$szParserName = $tmpParser->_ClassName; 
+						$szParserDescription = $tmpParser->_ClassDescription;
+						$szParserHelpArticle = $tmpParser->_ClassHelpArticle;
+						
+
+						// check for required fields!
+						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
+						{
+							$bCustomFields = true;
+							$bCustomFieldList = $tmpParser->_ClassRequiredFields; 
+						}
+						else
+						{
+							$bCustomFields = false;
+							$bCustomFieldList = null;
+						}
+
+						// Add entry to msg parser list!
+						$content['PARSERS'][] = array (
+													"ID" => $myParserID, 
+													"DisplayName" => $szParserName, 
+													"Description" => $szParserDescription, 
+													"CustomFields" => $bCustomFields, 
+													"CustomFieldsList" => $bCustomFieldList, 
+													"ParserHelpArticle" => $szParserHelpArticle, 
+												);
+					}
+					else
+					{
+						// DEBUG ERROR
+					}
+				}
+				else
+				{
+					// DEBUG ERROR
+				}
+			}
+		}
+	}
+}
+
+/*
+*	Init Source configs
+*/
 function InitSourceConfigs()
 {
 	global $CFG, $content, $currentSourceID;

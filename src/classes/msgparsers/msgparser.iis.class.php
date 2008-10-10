@@ -46,7 +46,12 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 class MsgParser_iis extends MsgParser {
-//	protected $_arrProperties = null;
+
+	// Public Information properties 
+	public $_ClassName = 'Microsoft IIS Weblogs';
+	public $_ClassDescription = 'Parses the common weblog format used by the Microsoft IIS webserver.';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "http://www.monitorware.com/en/Articles/";
 
 	// Constructor
 	public function MsgParser_iis() {

@@ -69,7 +69,12 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 class MsgParser_wireless extends MsgParser {
-//	protected $_arrProperties = null;
+
+	// Public Information properties 
+	public $_ClassName = 'Custom Wireless Logfiles';
+	public $_ClassDescription = 'Custom logfile parser for wireless access points.';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "";
 
 	// Constructor
 	public function MsgParser_wireless() {

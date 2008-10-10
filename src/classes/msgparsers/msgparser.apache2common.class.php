@@ -48,7 +48,12 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 class MsgParser_apache2common extends MsgParser {
-//	protected $_arrProperties = null;
+
+	// Public Information properties 
+	public $_ClassName = 'Apache 2 Common Format';
+	public $_ClassDescription = 'Parses the common logfile format from Apache2 webservers.';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "http://www.monitorware.com/Common/en/Articles/setup_mwagent_webserverlogging_phplogcon_mysql.php";
 
 	// Constructor
 	public function MsgParser_apache2common() {

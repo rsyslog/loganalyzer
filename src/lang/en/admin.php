@@ -29,14 +29,15 @@ global $content;
 
 // Global Stuff
 $content['LN_ADMINMENU_HOMEPAGE'] = "Back to Show Events";
-$content['LN_ADMINMENU_GENOPT'] = "General Options";
+$content['LN_ADMINMENU_GENOPT'] = "Preferences";
 $content['LN_ADMINMENU_SOURCEOPT'] = "Sources";
 $content['LN_ADMINMENU_VIEWSOPT'] = "Views";
 $content['LN_ADMINMENU_SEARCHOPT'] = "Searches";
-$content['LN_ADMINMENU_USEROPT'] = "User Options";
-$content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
+$content['LN_ADMINMENU_USEROPT'] = "Users";
+$content['LN_ADMINMENU_GROUPOPT'] = "Groups";
 $content['LN_ADMINMENU_CHARTOPT'] = "Charts";
 $content['LN_ADMINMENU_FIELDOPT'] = "Fields";
+$content['LN_ADMINMENU_MSGPARSERSOPT'] = "Message Parsers";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
@@ -294,5 +295,32 @@ $content['LN_ALIGN_RIGHT'] = "right";
 $content['LN_FILTER_TYPE_STRING'] = "String";
 $content['LN_FILTER_TYPE_NUMBER'] = "Number";
 $content['LN_FILTER_TYPE_DATE'] = "Date";
+
+// Parser Options
+$content['LN_PARSERS_EDIT'] = "Edit Message Parser";
+$content['LN_PARSERS_DELETE'] = "Delete Message Parser";
+$content['LN_PARSERS_ID'] = "Parser ID";
+$content['LN_PARSERS_NAME'] = "Parser Name";
+$content['LN_PARSERS_DESCRIPTION'] = "Short Description";
+$content['LN_PARSERS_ERROR_NOPARSERS'] = "There were no valid message parsers found in your installation. ";
+$content['LN_PARSERS_HELP'] = "Help";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+$content['LN_PARSERS_'] = "";
+
 
 ?>

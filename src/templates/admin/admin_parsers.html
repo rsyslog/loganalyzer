@@ -1,0 +1,99 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_SEARCH_CENTER}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTPARSERS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_PARSERS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_PARSERS_NAME}</b></td>
+			<td align="center" width="300" class="cellmenu1"><b>{LN_PARSERS_DESCRIPTION}</b></td>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_PARSERS_HELP}</b></td>
+			<td align="center" width="125" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+		<!-- BEGIN PARSERS -->
+		<tr>
+			<td align="left" class="{cssclass}" valign="top"><b>{ID}</b></td>
+			<td align="left" class="{cssclass}" valign="top"><a href="{BASEPATH}admin/parsers.php?op=edit&id={ID}">{DisplayName}</a></td>
+			<td align="left" class="{cssclass}" valign="top">{Description}</td>
+			<td align="center" class="{cssclass}" valign="top">
+			<!-- IF ParserHelpEnabled="true" -->
+			<a href="{ParserHelpArticle}"><img src="{MENU_HELP}" width="16" title="{LN_PARSERS_HELP}"></a>
+			<!-- ENDIF ParserHelpEnabled="true" -->
+			</td>
+			<td align="center" class="{cssclass}">
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=detailsedit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_PARSERS_EDIT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_PARSERS_DELETE}"></a>
+			</td>
+		</tr>
+		<!-- END PARSERS -->
+		</table>
+<!-- ENDIF LISTPARSERS="true" -->
+
+<!-- IF ISEDITORNEWSEARCH="true" -->
+		<form action="{BASEPATH}admin/searches.php" method="post">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SEARCH_ADDEDIT}</b></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_SEARCH_NAME}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
+				<td align="right" class="line2"><input type="text" name="SearchQuery" size="55" maxlength="1024" value="{SearchQuery}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
+			</tr>
+			<!-- IF ISGROUPSAVAILABLE="true" -->
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
+				<td align="right" class="line2">
+					<select name="groupid" size="1" STYLE="width: 300px">
+						<!-- BEGIN SUBGROUPS -->
+						<option value="{mygroupid}" {group_selected}>{groupname}</option>
+						<!-- END SUBGROUPS -->
+					</select>
+				</td>
+			</tr>
+			<!-- ENDIF ISGROUPSAVAILABLE="true" -->
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{SEARCH_SENDBUTTON}">
+					<input type="hidden" name="op" value="{SEARCH_FORMACTION}">
+					<input type="hidden" name="id" value="{SEARCHID}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISEDITORNEWSEARCH="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->
