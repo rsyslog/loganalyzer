@@ -53,257 +53,237 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
 // --- BEGIN Custom Code
+
+// Firts of all init List of Parsers!
+InitMessageParsers();
+
 if ( isset($_GET['op']) )
 {
-	if ($_GET['op'] == "add") 
-	{
-		// Set Mode to add
-		$content['ISEDITORNEWSEARCH'] = "true";
-		$content['SEARCH_FORMACTION'] = "addnewsearch";
-		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_ADD'];
-		
-		//PreInit these values 
-		$content['DisplayName'] = "";
-		$content['SearchQuery'] = "";
-
-		// General stuff
-		$content['userid'] = null;
-		$content['CHECKED_ISUSERONLY'] = "";
-		$content['SEARCHID'] = "";
-		
-		// --- Check if groups are available
-		$content['SUBGROUPS'] = GetGroupsForSelectfield();
-		if ( is_array($content['SUBGROUPS']) )
-			$content['ISGROUPSAVAILABLE'] = true;
-		else
-			$content['ISGROUPSAVAILABLE'] = false;
-	}
-	else if ($_GET['op'] == "edit") 
+	if ($_GET['op'] == "details") 
 	{
 		// Set Mode to edit
-		$content['ISEDITORNEWSEARCH'] = "true";
-		$content['SEARCH_FORMACTION'] = "editsearch";
-		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_EDIT'];
+		$content['ISSHOWDETAILS'] = "true";
+//		$content['SEARCH_FORMACTION'] = "editsearch";
+//		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_EDIT'];
 
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
-
-			$sqlquery = "SELECT * " . 
-						" FROM " . DB_SEARCHES . 
-						" WHERE ID = " . $content['SEARCHID'];
-
-			$result = DB_Query($sqlquery);
-			$mysearch = DB_GetSingleRow($result, true);
-			if ( isset($mysearch['DisplayName']) )
+			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
 			{
-				$content['SEARCHID'] = $mysearch['ID'];
-				$content['DisplayName'] = $mysearch['DisplayName'];
-				$content['SearchQuery'] = $mysearch['SearchQuery'];
-				if ( $mysearch['userid'] != null )
-					$content['CHECKED_ISUSERONLY'] = "checked";
-				else
-					$content['CHECKED_ISUSERONLY'] = "";
+				// Get Reference to parser!
+				$myParser = $content['PARSERS'][ $content['ParserID'] ];
+
+				$content['DisplayName'] = $myParser['DisplayName'];
+				$content['Description'] = $myParser['Description'];
 				
-				// --- Check if groups are available
-				$content['SUBGROUPS'] = GetGroupsForSelectfield();
-				if ( is_array($content['SUBGROUPS']) )
+				if ( strlen($myParser['ParserHelpArticle']) > 0 ) 
 				{
-					// Process All Groups
-					for($i = 0; $i < count($content['SUBGROUPS']); $i++)
+					$content['EnableHelpArticle'] = true;
+					$content['ParserHelpArticle'] = $myParser['ParserHelpArticle'];
+				}
+				
+				// check for custom fields
+				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
+				{
+					// Needs custom fields!
+					$content['EnableCustomField'] = true;
+					$content['CustomFieldsList'] = $myParser['CustomFieldsList'];
+
+					foreach( $myParser['CustomFieldsList'] as $myField ) 
 					{
-						if ( $mysearch['groupid'] != null && $content['SUBGROUPS'][$i]['mygroupid'] == $mysearch['groupid'] )
-							$content['SUBGROUPS'][$i]['group_selected'] = "selected";
+						// check if field is in define list!
+						if ( !array_key_exists($myField['FieldID'], $fields) ) 
+						{
+							$content['ParserInitEnabled'] = true;
+							break;
+						}
 						else
-							$content['SUBGROUPS'][$i]['group_selected'] = "";
+						{
+							$content['ParserDeleteEnabled'] = true;
+							break;
+						}
+					}
+				}
+
+			}
+			else
+			{
+				$content['ISSHOWDETAILS'] = false;
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_IDNOTFOUND'], $content['ParserID'] );
+			}
+		}
+		else
+		{
+			$content['ISSHOWDETAILS'] = false;
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] =  $content['LN_PARSERS_ERROR_INVALIDID'];
+		}
+	}
+	else if ($_GET['op'] == "removeparser") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
+			{
+				// Get Reference to parser!
+				$myParser = $content['PARSERS'][ $content['ParserID'] ];
+
+				// --- Ask for deletion first!
+				if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+				{
+					// This will print an additional secure check which the user needs to confirm and exit the script execution.
+					PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_PARSERS_WARNREMOVE'], $myParser['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+				}
+				// ---
+
+				// Check if we have fields to delete
+				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
+				{
+					// Helper counter
+					$deletedFields = 0;
+
+					// Loop through all custom fields!
+					foreach( $myParser['CustomFieldsList'] as $myField ) 
+					{
+						// check if field is in define list!
+						if ( array_key_exists($myField['FieldID'], $fields) ) 
+						{
+							$result = DB_Query( "DELETE FROM " . DB_FIELDS . " WHERE FieldID = '" . $myField['FieldID'] . "'");
+							DB_FreeQuery($result);
+
+							// increment counter
+							$deletedFields++;
+						}
 					}
 
-					// Enable Group Selection
-					$content['ISGROUPSAVAILABLE'] = true;
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_HASBEENREMOVED'], $myParser['DisplayName'], $deletedFields ) , "parsers.php" );
 				}
 				else
-					$content['ISGROUPSAVAILABLE'] = false;
-				// ---
-			}
-			else
-			{
-				$content['ISEDITORNEWSEARCH'] = false;
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] );
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_NOFIELDS'], $content['ParserID'] );
+				}
 			}
 		}
 		else
 		{
-			$content['ISEDITORNEWSEARCH'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] =  $content['LN_SEARCH_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = $content['LN_PARSERS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "delete") 
+	else if ($_GET['op'] == "initparser") 
 	{
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
-
-			// Get UserInfo
-			$result = DB_Query("SELECT DisplayName FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] ); 
-			$myrow = DB_GetSingleRow($result, true);
-			if ( !isset($myrow['DisplayName']) )
+			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
 			{
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] ); 
-			}
+				// Get Reference to parser!
+				$myParser = $content['PARSERS'][ $content['ParserID'] ];
 
-			// --- Ask for deletion first!
-			if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
-			{
-				// This will print an additional secure check which the user needs to confirm and exit the script execution.
-				PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SEARCH_WARNDELETESEARCH'], $myrow['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
-			}
-			// ---
+				// check for custom fields
+				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
+				{
+					// Helper counter
+					$addedFields = 0;
 
-			// do the delete!
-			$result = DB_Query( "DELETE FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] );
-			if ($result == FALSE)
-			{
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_DELSEARCH'], $content['SEARCHID'] ); 
+					// Loop through all custom fields!
+					foreach( $myParser['CustomFieldsList'] as $myField ) 
+					{
+						// check if field is in define list!
+						if ( !array_key_exists($myField['FieldID'], $fields) ) 
+						{
+							// Add field into DB!
+							$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline) 
+							VALUES (
+									'" . $myField['FieldID'] . "', 
+									'" . $myField['FieldCaption'] . "',
+									'" . $myField['FieldDefine'] . "',
+									'" . $myField['SearchField'] . "',
+									'" . $myField['FieldAlign'] . "', 
+									" . $myField['DefaultWidth'] . ", 
+									" . $myField['FieldType'] . ", 
+									" . $myField['SearchOnline'] . " 
+									)";
+							$result = DB_Query($sqlquery);
+							DB_FreeQuery($result);
+
+							// increment counter
+							$addedFields++;
+						}
+					}
+
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_HASBEENADDED'], $myParser['DisplayName'], $addedFields ) , "parsers.php" );
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_NOFIELDS'], $content['ParserID'] );
+				}
 			}
 			else
-				DB_FreeQuery($result);
-
-			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_HASBEENDEL'], $myrow['DisplayName'] ) , "searches.php" );
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_IDNOTFOUND'], $content['ParserID'] );
+			}
 		}
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = $content['LN_PARSERS_ERROR_INVALIDID'];
 		}
 	}
 }
 
-if ( isset($_POST['op']) )
-{
-	if ( isset ($_POST['id']) ) { $content['SEARCHID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SEARCHID'] = -1; }
-	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
-	if ( isset ($_POST['SearchQuery']) ) { $content['SearchQuery'] = DB_RemoveBadChars($_POST['SearchQuery']); } else {$content['SearchQuery'] = ""; }
-
-	// User & Group handeled specially
-	if ( isset ($_POST['isuseronly']) ) 
-	{ 
-		$content['userid'] = $content['SESSION_USERID']; 
-		$content['groupid'] = "null"; // Either user or group not both!
-	} 
-	else 
-	{
-		$content['userid'] = "null"; 
-		if ( isset ($_POST['groupid']) && $_POST['groupid'] != -1 ) 
-			$content['groupid'] = intval($_POST['groupid']); 
-		else 
-			$content['groupid'] = "null";
-	}
-
-	// --- Check mandotary values
-	if ( $content['DisplayName'] == "" )
-	{
-		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_DISPLAYNAMEEMPTY'];
-	}
-	else if ( $content['SearchQuery'] == "" )
-	{
-		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = $content['LN_SEARCH_ERROR_SEARCHQUERYEMPTY'];
-	}
-	// --- 
-
-	if ( !isset($content['ISERROR']) ) 
-	{	
-		// Everything was alright, so we go to the next step!
-		if ( $_POST['op'] == "addnewsearch" )
-		{
-			// Add custom search now!
-			$sqlquery = "INSERT INTO " . DB_SEARCHES . " (DisplayName, SearchQuery, userid, groupid) 
-			VALUES ('" . $content['DisplayName'] . "', 
-					'" . $content['SearchQuery'] . "',
-					" . $content['userid'] . ", 
-					" . $content['groupid'] . " 
-					)";
-			$result = DB_Query($sqlquery);
-			DB_FreeQuery($result);
-			
-			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENADDED'], $content['DisplayName'] ) , "searches.php" );
-		}
-		else if ( $_POST['op'] == "editsearch" )
-		{
-			$result = DB_Query("SELECT ID FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID']);
-			$myrow = DB_GetSingleRow($result, true);
-			if ( !isset($myrow['ID']) )
-			{
-				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SEARCH_ERROR_IDNOTFOUND'], $content['SEARCHID'] ); 
-			}
-			else
-			{
-				// Edit the Search Entry now!
-				$result = DB_Query("UPDATE " . DB_SEARCHES . " SET 
-					DisplayName = '" . $content['DisplayName'] . "', 
-					SearchQuery = '" . $content['SearchQuery'] . "', 
-					userid = " . $content['userid'] . ", 
-					groupid = " . $content['groupid'] . "
-					WHERE ID = " . $content['SEARCHID']);
-				DB_FreeQuery($result);
-
-				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENEDIT'], $content['DisplayName']) , "searches.php" );
-			}
-		}
-	}
-}
-
+// Default mode!
 if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
-	// Default Mode = List Searches
-	$content['LISTPARSERS'] = "true";
-
-	// Init List of Parsers
-	InitMessageParsers();
-//	$content['PARSERS'] = $content['Search'];
-	
 	if ( isset($content['PARSERS']) ) 
 	{
-		$i = 0; // Help counter!
-		foreach ($content['PARSERS'] as &$myParsers )
-		{
-	//		$mySearch['SearchQuery_Display'] = strlen($mySearch['SearchQuery']) > 25 ? substr($mySearch['SearchQuery'], 0, 25) . " ..." : $mySearch['SearchQuery'];
+		// Default Mode = List Searches
+		$content['LISTPARSERS'] = "true";
 
-			// Allow EDIT
-	//		$mySearch['ActionsAllowed'] = true;
-			
+		$i = 0; // Help counter!
+		foreach ($content['PARSERS'] as &$myParser )
+		{
 			// Set if help link is enabled
-			if ( strlen($myParsers['ParserHelpArticle']) > 0 ) 
-				$myParsers['ParserHelpEnabled'] = true;
+			if ( strlen($myParser['ParserHelpArticle']) > 0 ) 
+				$myParser['ParserHelpEnabled'] = true;
 			else
-				$myParsers['ParserHelpEnabled'] = false;
+				$myParser['ParserHelpEnabled'] = false;
 			
 			// Find out if we need to INIT something!
-			if ( isset($myParsers['CustomFieldsList']) && count($myParsers['CustomFieldsList']) > 0 ) 
+			if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
 			{
-				// $myParsers['CustomFieldsList'];
-
-				$myParsers['ParserInitEnabled'] = true;
-			
+				foreach( $myParser['CustomFieldsList'] as $myField ) 
+				{
+					// check if field is in define list!
+					if ( !array_key_exists($myField['FieldID'], $fields) ) 
+					{
+						$myParser['ParserInitEnabled'] = true;
+						break;
+					}
+					else
+					{
+						$myParser['ParserDeleteEnabled'] = true;
+						break;
+					}
+				}
 			}
-
 
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
-				$myParsers['cssclass'] = "line1";
+				$myParser['cssclass'] = "line1";
 			else
-				$myParsers['cssclass'] = "line2";
+				$myParser['cssclass'] = "line2";
 			$i++;
 			// --- 
 		}

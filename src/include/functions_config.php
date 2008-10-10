@@ -248,14 +248,14 @@ function InitMessageParsers()
 						}
 
 						// Add entry to msg parser list!
-						$content['PARSERS'][] = array (
-													"ID" => $myParserID, 
-													"DisplayName" => $szParserName, 
-													"Description" => $szParserDescription, 
-													"CustomFields" => $bCustomFields, 
-													"CustomFieldsList" => $aCustomFieldList, 
-													"ParserHelpArticle" => $szParserHelpArticle, 
-												);
+						$content['PARSERS'][$myParserID] = array (
+														"ID" => $myParserID, 
+														"DisplayName" => $szParserName, 
+														"Description" => $szParserDescription, 
+														"CustomFields" => $bCustomFields, 
+														"CustomFieldsList" => $aCustomFieldList, 
+														"ParserHelpArticle" => $szParserHelpArticle, 
+														);
 					}
 					else
 					{
