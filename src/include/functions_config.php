@@ -238,12 +238,13 @@ function InitMessageParsers()
 						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
 						{
 							$bCustomFields = true;
-							$bCustomFieldList = $tmpParser->_ClassRequiredFields; 
+							$aCustomFieldList = $tmpParser->_ClassRequiredFields; 
+//							print_r ( $aCustomFieldList );
 						}
 						else
 						{
 							$bCustomFields = false;
-							$bCustomFieldList = null;
+							$aCustomFieldList = null;
 						}
 
 						// Add entry to msg parser list!
@@ -252,7 +253,7 @@ function InitMessageParsers()
 													"DisplayName" => $szParserName, 
 													"Description" => $szParserDescription, 
 													"CustomFields" => $bCustomFields, 
-													"CustomFieldsList" => $bCustomFieldList, 
+													"CustomFieldsList" => $aCustomFieldList, 
 													"ParserHelpArticle" => $szParserHelpArticle, 
 												);
 					}

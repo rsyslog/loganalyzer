@@ -73,8 +73,23 @@ class MsgParser_wireless extends MsgParser {
 	// Public Information properties 
 	public $_ClassName = 'Custom Wireless Logfiles';
 	public $_ClassDescription = 'Custom logfile parser for wireless access points.';
-	public $_ClassRequiredFields = null;
 	public $_ClassHelpArticle = "";
+	public $_ClassRequiredFields = array (
+			"net_bytesrecieved" => array ( "FieldID" => "net_bytesrecieved", "FieldDefine" => "SYSLOG_NET_BYTESRECIEVED", "FieldCaption" => "Bytes recieved", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_bytesrecieved", "DefaultWidth" => 50, "SearchOnline" => false, "Trunscate" => false, "Sortable" => false), 
+			"net_bytessend" => array (",  ", "FieldID" => "net_bytessend", "FieldDefine" => "SYSLOG_NET_BYTESSEND", "FieldCaption" => "Bytes send", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_bytessend", "DefaultWidth" => 50, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0 ), 
+			"net_interface" => array (",  ", "FieldID" => "net_interface", "FieldDefine" => "SYSLOG_NET_INTERFACE", "FieldCaption" => "Interface", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_interface", "DefaultWidth" => 100, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_lastactivity" => array (",  ", "FieldID" => "net_lastactivity", "FieldDefine" => "SYSLOG_NET_LASTACTIVITY", "FieldCaption" => "Last Activity", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_lastactivity", "DefaultWidth" => 80, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_lastip" => array (",  ", "FieldID" => "net_lastip", "FieldDefine" => "SYSLOG_NET_LASTIP", "FieldCaption" => "Last IP Address", "FieldType" => 0, "FieldAlign" => "left", "SearchField" => "net_lastip", "DefaultWidth" => 100, "SearchOnline" => 1, "Trunscate" => 0, "Sortable" => 0), 
+			"net_mac_address" => array (",  ", "FieldID" => "net_mac_address", "FieldDefine" => "SYSLOG_NET_MAC_ADDRESS", "FieldCaption" => "Mac Address", "FieldType" => 0, "FieldAlign" => "left", "SearchField" => "net_mac_address", "DefaultWidth" => 125, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_packetsrecieved" => array (",  ", "FieldID" => "net_packetsrecieved", "FieldDefine" => "SYSLOG_NET_PACKETSRECIEVED", "FieldCaption" => "Packets recieved", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_packetsrecieved", "DefaultWidth" => 50, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_packetssend" => array (",  ", "FieldID" => "net_packetssend", "FieldDefine" => "SYSLOG_NET_PACKETSSEND", "FieldCaption" => "Packets send", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_packetssend", "DefaultWidth" => 50, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_rxrate" => array (",  ", "FieldID" => "net_rxrate", "FieldDefine" => "SYSLOG_NET_RXRATE", "FieldCaption" => "RX Rate", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_rxrate", "DefaultWidth" => 65, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_signalstrength" => array (",  ", "FieldID" => "net_signalstrength", "FieldDefine" => "SYSLOG_NET_SIGNALSTRENGTH", "FieldCaption" => "Signal strength", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_signalstrength", "DefaultWidth" => 100, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_signaltonoise" => array (",  ", "FieldID" => "net_signaltonoise", "FieldDefine" => "SYSLOG_NET_SIGNALTONOISE", "FieldCaption" => "Signal to noise", "FieldType" => 1, "FieldAlign" => "center", "SearchField" => "net_signaltonoise", "DefaultWidth" => 50, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_uptime" => array (",  ", "FieldID" => "net_uptime", "FieldDefine" => "SYSLOG_NET_UPTIME", "FieldCaption" => "System Uptime", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_uptime", "DefaultWidth" => 85, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_txccq" => array (",  ", "FieldID" => "net_txccq", "FieldDefine" => "SYSLOG_NET_TXCCQ", "FieldCaption" => "TX CCQ", "FieldType" => 1, "FieldAlign" => "center", "SearchField" => "net_txccq", "DefaultWidth" => 50, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
+			"net_txrate" => array (",  ", "FieldID" => "net_txrate", "FieldDefine" => "SYSLOG_NET_TXRATE", "FieldCaption" => "TX Rate", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_txrate", "DefaultWidth" => 65, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0)
+		);
 
 	// Constructor
 	public function MsgParser_wireless() {

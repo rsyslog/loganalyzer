@@ -27,29 +27,35 @@
 			<td align="center" width="100" class="cellmenu1"><b>{LN_PARSERS_ID}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_PARSERS_NAME}</b></td>
 			<td align="center" width="300" class="cellmenu1"><b>{LN_PARSERS_DESCRIPTION}</b></td>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_PARSERS_HELP}</b></td>
-			<td align="center" width="125" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="125" class="cellmenu1" colspan="3" nowrap><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN PARSERS -->
 		<tr>
 			<td align="left" class="{cssclass}" valign="top"><b>{ID}</b></td>
 			<td align="left" class="{cssclass}" valign="top"><a href="{BASEPATH}admin/parsers.php?op=edit&id={ID}">{DisplayName}</a></td>
 			<td align="left" class="{cssclass}" valign="top">{Description}</td>
-			<td align="center" class="{cssclass}" valign="top">
-			<!-- IF ParserHelpEnabled="true" -->
-			<a href="{ParserHelpArticle}"><img src="{MENU_HELP}" width="16" title="{LN_PARSERS_HELP}"></a>
-			<!-- ENDIF ParserHelpEnabled="true" -->
+			<td align="center" class="{cssclass}">
+				<!-- IF ParserHelpEnabled="true" -->
+				<a href="{ParserHelpArticle}"><img src="{MENU_HELP}" width="16" title="{LN_PARSERS_HELP}"></a>
+				<!-- ENDIF ParserHelpEnabled="true" -->
 			</td>
 			<td align="center" class="{cssclass}">
-				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=detailsedit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_PARSERS_EDIT}"></a>
-				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_PARSERS_DELETE}"></a>
+				<a href="{BASEPATH}admin/parsers.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_PARSERS_INFO}"></a>
+			</td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ParserInitEnabled="true" -->
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=initparser&id={ID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_PARSERS_INIT}"></a>
+				<!-- ENDIF ParserInitEnabled="true" -->
+				<!-- IF ParserDeleteEnabled="true" -->
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=removeparser&id={ID}"><img src="{MENU_PARSER_DELETE}" width="16" title="{LN_PARSERS_REMOVE}"></a>
+				<!-- ENDIF ParserDeleteEnabled="true" -->
 			</td>
 		</tr>
 		<!-- END PARSERS -->
 		</table>
 <!-- ENDIF LISTPARSERS="true" -->
 
-<!-- IF ISEDITORNEWSEARCH="true" -->
+<!-- IF ISSHOWDETAILS="true" -->
 		<form action="{BASEPATH}admin/searches.php" method="post">
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 			<tr>
@@ -64,22 +70,6 @@
 				<td align="right" class="line2"><input type="text" name="SearchQuery" size="55" maxlength="1024" value="{SearchQuery}"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
-			</tr>
-			<!-- IF ISGROUPSAVAILABLE="true" -->
-			<tr>
-				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
-				<td align="right" class="line2">
-					<select name="groupid" size="1" STYLE="width: 300px">
-						<!-- BEGIN SUBGROUPS -->
-						<option value="{mygroupid}" {group_selected}>{groupname}</option>
-						<!-- END SUBGROUPS -->
-					</select>
-				</td>
-			</tr>
-			<!-- ENDIF ISGROUPSAVAILABLE="true" -->
-			<tr>
 				<td align="center" colspan="2">
 					<input type="submit" value="{SEARCH_SENDBUTTON}">
 					<input type="hidden" name="op" value="{SEARCH_FORMACTION}">
@@ -88,7 +78,7 @@
 			</tr>
 			</table>
 		</form>
-<!-- ENDIF ISEDITORNEWSEARCH="true" -->
+<!-- ENDIF ISSHOWDETAILS="true" -->
 
 		<br><br>
 

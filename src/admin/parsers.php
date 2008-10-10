@@ -288,6 +288,16 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$myParsers['ParserHelpEnabled'] = true;
 			else
 				$myParsers['ParserHelpEnabled'] = false;
+			
+			// Find out if we need to INIT something!
+			if ( isset($myParsers['CustomFieldsList']) && count($myParsers['CustomFieldsList']) > 0 ) 
+			{
+				// $myParsers['CustomFieldsList'];
+
+				$myParsers['ParserInitEnabled'] = true;
+			
+			}
+
 
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
