@@ -219,7 +219,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 		if ( isset($fields[$mycolkey]) )
 		{
 			$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-			$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+			$content['fields'][$mycolkey]['FieldCaption'] = $fields[$mycolkey]['FieldCaption'];
 			$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
 			$content['fields'][$mycolkey]['FieldSortable'] = $stream->IsPropertySortable($mycolkey); // $fields[$mycolkey]['Sortable'];
 			$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
@@ -384,7 +384,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								}
 
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_FACILITY, 'LN_FIELDS_FACILITY', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_FACILITY);
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
@@ -403,7 +403,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								}
 
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_SEVERITY, 'LN_FIELDS_SEVERITY', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_SEVERITY);
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
@@ -422,29 +422,34 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								}
 
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_MESSAGETYPE, 'LN_FIELDS_MESSAGETYPE', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_MESSAGETYPE);
 							}
 							else if ( $mycolkey == SYSLOG_PROCESSID )
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_PROCESSID, 'LN_FIELDS_PROCESSID', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_PROCESSID);
 							}
 							/* Eventlog based fields */
 							else if ( $mycolkey == SYSLOG_EVENT_ID )
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_ID, 'LN_FIELDS_EVENTID', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_ID);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_CATEGORY )
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_CATEGORY, 'LN_FIELDS_EVENTCATEGORY', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_CATEGORY);
 							}
 							// WebServer Type fields
 							else if ( $mycolkey == SYSLOG_WEBLOG_STATUS ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_WEBLOG_STATUS, 'LN_FIELDS_WEBLOG_STATUS', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_WEBLOG_STATUS);
+							}
+							else 
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, $mycolkey);
 							}
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
@@ -549,66 +554,70 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							else if ( $mycolkey == SYSLOG_SYSLOGTAG ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_SYSLOGTAG, 'LN_FIELDS_SYSLOGTAG', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_SYSLOGTAG);
 							}
 							else if ( $mycolkey == SYSLOG_HOST ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_HOST, 'LN_FIELDS_HOST', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_HOST);
 							}
 							/* Eventlog based fields */
 							else if ( $mycolkey == SYSLOG_EVENT_LOGTYPE ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_LOGTYPE, 'LN_FIELDS_EVENTLOGTYPE', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_LOGTYPE);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_SOURCE, 'LN_FIELDS_EVENTSOURCE', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_SOURCE);
 							}
 							else if ( $mycolkey == SYSLOG_EVENT_USER ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_USER, 'LN_FIELDS_EVENTUSER', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_USER);
 							}
 							// WebServer Type fields
 							else if ( $mycolkey == SYSLOG_WEBLOG_USER ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USER, 'LN_FIELDS_WEBLOG_USER', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USER);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_METHOD ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_METHOD, 'LN_FIELDS_WEBLOG_USERAGENT', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_METHOD);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_URL ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_URL, 'LN_FIELDS_WEBLOG_URL', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_URL);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_QUERYSTRING ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_QUERYSTRING, 'LN_FIELDS_WEBLOG_QUERYSTRING', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_QUERYSTRING);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_PVER ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_PVER, 'LN_FIELDS_WEBLOG_PVER', false);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_PVER);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_REFERER ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_REFERER, 'LN_FIELDS_WEBLOG_REFERER', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_REFERER);
 							}
 							else if ( $mycolkey == SYSLOG_WEBLOG_USERAGENT ) 
 							{
 								// Add context menu
-								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USERAGENT, 'LN_FIELDS_WEBLOG_USERAGENT', true);
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USERAGENT);
 							}
-
+							else
+							{
+								// Add context menu
+								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, $mycolkey);
+							}
 						}
 					}
 				}
@@ -777,12 +786,18 @@ function PrepareStringForSearch($myString)
 	return str_replace($searchArray, $replaceArray, $myString);
 }
 
-function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayNameID, $searchOnline = false)
+function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 {
 	global $content, $fields, $myStrCharLimit; 
 
 	// Set OnClick Menu for SYSLOG_SYSLOGTAG
 	$fieldGridItem['hasbuttons'] = true;
+	
+	// Set Field Caption
+	if ( isset($content['fields'][$FieldID]['FieldCaption']) && strlen( $content['fields'][$FieldID]['FieldCaption']) > 0 ) 
+		$szFieldDisplayName = $content['fields'][$FieldID]['FieldCaption'];
+	else
+		$szFieldDisplayName = $FieldID;
 	
 	// Set FieldSearch Value
 	if ( $fieldType == FILTER_TYPE_STRING) 
@@ -832,13 +847,13 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID,  $szFieldDisplayN
 		);
 
 	// Add Online Search Button
-	if ( $searchOnline )
+	if ( isset($fields[$FieldID]['SearchOnline']) && $fields[$FieldID]['SearchOnline'] )
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
 			'ButtonTarget' => '_top', 
 			'ButtonAppendUrl' => true,
-			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $content[$szFieldDisplayNameID] . " '" . $fieldGridItem['fieldvalue'] . "'", 
+			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $szFieldDisplayName . " '" . $fieldGridItem['fieldvalue'] . "'", 
 			'IconSource' => $content['MENU_NETWORK']
 			);
 	}

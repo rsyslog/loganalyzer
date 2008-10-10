@@ -196,6 +196,84 @@ function InitSource(&$mysource)
 	}
 }
 
+
+/*
+*	This function reads and generates a list of available message parsers
+*/
+function InitMessageParsers()
+{
+	global $content, $gl_root_path;
+
+	$szDirectory = $gl_root_path . 'classes/msgparsers/'; // msgparser.' . $szParser . '.class.php';
+	$aFiles = list_files($szDirectory, true); 
+	if ( isset($aFiles) && count($aFiles) > 0 )
+	{
+		foreach( $aFiles as $myFile ) 
+		{
+			// Check if file is valid msg parser!
+			if ( preg_match("/msgparser\.(.*?)\.class\.php$/", $myFile, $out ) )
+			{
+				// Set ParserID!
+				$myParserID = $out[1]; 
+
+				// Check if parser file include exists
+				$szIncludeFile = $szDirectory . $myFile; 
+				if ( file_exists($szIncludeFile) )
+				{
+					// Try to include
+					if ( @include_once($szIncludeFile) )
+					{
+						// Set ParserClassName
+						$szParserClass = "MsgParser_" . $myParserID; 
+///						echo $szParserClass . "<br>";
+						
+						// Create Instance and get properties
+						$tmpParser = new $szParserClass(); // Create an instance
+						$szParserName = $tmpParser->_ClassName; 
+						$szParserDescription = $tmpParser->_ClassDescription;
+						$szParserHelpArticle = $tmpParser->_ClassHelpArticle;
+						
+
+						// check for required fields!
+						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
+						{
+							$bCustomFields = true;
+							$aCustomFieldList = $tmpParser->_ClassRequiredFields; 
+//							print_r ( $aCustomFieldList );
+						}
+						else
+						{
+							$bCustomFields = false;
+							$aCustomFieldList = null;
+						}
+
+						// Add entry to msg parser list!
+						$content['PARSERS'][$myParserID] = array (
+														"ID" => $myParserID, 
+														"DisplayName" => $szParserName, 
+														"Description" => $szParserDescription, 
+														"CustomFields" => $bCustomFields, 
+														"CustomFieldsList" => $aCustomFieldList, 
+														"ParserHelpArticle" => $szParserHelpArticle, 
+														);
+					}
+					else
+					{
+						// DEBUG ERROR
+					}
+				}
+				else
+				{
+					// DEBUG ERROR
+				}
+			}
+		}
+	}
+}
+
+/*
+*	Init Source configs
+*/
 function InitSourceConfigs()
 {
 	global $CFG, $content, $currentSourceID;
@@ -334,6 +412,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		define('DB_CONFIG',			$tblPref . "config");
 		define('DB_GROUPS',			$tblPref . "groups");
 		define('DB_GROUPMEMBERS',	$tblPref . "groupmembers");
+		define('DB_FIELDS',			$tblPref . "fields");
 		define('DB_SEARCHES',		$tblPref . "searches");
 		define('DB_SOURCES',		$tblPref . "sources");
 		define('DB_USERS',			$tblPref . "users");
@@ -369,6 +448,91 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		}
 		else
 			return false;
+	}
+}
+
+/*
+*	Helper function to load configured fields from the database
+*/
+function LoadFieldsFromDatabase()
+{
+	// Needed to make global
+	global $fields, $content;
+
+	// Abort reading fields if the database version is below version 5!, because prior v5, there were no fields table
+	if ( $content['database_installedversion'] < 5 )
+		return;
+
+	// --- Preprocess fields in loop 
+	foreach ($fields as &$myField )
+	{
+		// Set Field to be internal!
+		$myField['IsInternalField'] = true;
+		$myField['FieldFromDB'] = false;
+		
+		// Set some other defaults!
+		if ( !isset($myField['Trunscate']) ) 
+			$myField['Trunscate'] = 30;
+		if ( !isset($myField['SearchOnline']) ) 
+			$myField['SearchOnline'] = false;
+		if ( !isset($myField['SearchField']) ) 
+			$myField['SearchField'] = $myField['FieldID'];
+		
+	}
+	// ---
+
+	// --- Create SQL Query
+	$sqlquery = " SELECT " . 
+				DB_FIELDS . ".FieldID, " . 
+				DB_FIELDS . ".FieldDefine, " . 
+				DB_FIELDS . ".FieldCaption, " . 
+				DB_FIELDS . ".FieldType, " . 
+				DB_FIELDS . ".FieldAlign, " . 
+				DB_FIELDS . ".SearchField, " . 
+				DB_FIELDS . ".DefaultWidth, " . 
+				DB_FIELDS . ".SearchOnline, " . 
+				DB_FIELDS . ".Trunscate, " . 
+				DB_FIELDS . ".Sortable " .
+				" FROM " . DB_FIELDS . 
+				" ORDER BY " . DB_FIELDS . ".FieldCaption";
+	// ---
+
+	// Get Searches from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows ) && count($myrows) > 0 )
+	{
+		// Loop through all data rows 
+		foreach ($myrows as &$myField )
+		{
+			// Read and Set from db!
+			$fieldId = $myField['FieldID'];
+			$fieldDefine = $myField['FieldDefine'];
+			
+			// Set define needed in certain code places!
+			if ( !defined($fieldDefine) ) 
+			{
+				define($fieldDefine, $fieldId);
+				$fields[$fieldId]['IsInternalField'] = false;
+			}
+			
+			// Copy values
+			$fields[$fieldId]['FieldID'] = $myField['FieldID'];
+			$fields[$fieldId]['FieldDefine'] = $myField['FieldDefine'];
+			$fields[$fieldId]['FieldCaption'] = $myField['FieldCaption'];
+			$fields[$fieldId]['FieldType'] = $myField['FieldType'];
+			$fields[$fieldId]['FieldAlign'] = $myField['FieldAlign'];
+			$fields[$fieldId]['SearchField'] = $myField['SearchField'];
+			$fields[$fieldId]['DefaultWidth'] = $myField['DefaultWidth'];
+			$fields[$fieldId]['SearchOnline'] = $myField['SearchOnline'];
+			$fields[$fieldId]['Trunscate'] = $myField['Trunscate'];
+			$fields[$fieldId]['Sortable'] = $myField['Sortable'];
+
+			// Set FromDB to true
+			$fields[$fieldId]['FieldFromDB'] = true;
+		}
+
+//		print_r ( $fields );
 	}
 }
 

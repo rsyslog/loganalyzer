@@ -46,7 +46,12 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 class MsgParser_iis extends MsgParser {
-//	protected $_arrProperties = null;
+
+	// Public Information properties 
+	public $_ClassName = 'Microsoft IIS Weblogs';
+	public $_ClassDescription = 'Parses the common weblog format used by the Microsoft IIS webserver.';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "http://www.monitorware.com/en/Articles/";
 
 	// Constructor
 	public function MsgParser_iis() {
@@ -128,10 +133,10 @@ class MsgParser_iis extends MsgParser {
 				foreach ( $myFields as $myField )
 				{
 					// Set Field Caption
-					if ( isset($content[ $fields[$myField]['FieldCaptionID'] ]) )
-						$szFieldName = $content[ $fields[$myField]['FieldCaptionID'] ];
+					if ( isset($fields[$myField]['FieldCaption']) )
+						$szFieldName = $fields[$myField]['FieldCaption'];
 					else
-						$szFieldName = $fields[$myField]['FieldCaptionID'];
+						$szFieldName = $myField;
 
 					// Append Field into msg
 					$szTmpMsg = $szFieldName . ": '" . $arrArguments[$myField] . "'\n" . $szTmpMsg;

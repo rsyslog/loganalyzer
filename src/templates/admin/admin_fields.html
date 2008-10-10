@@ -1,0 +1,127 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_FIELDS_CENTER}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTFIELDS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<tr>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_FIELDS_NAME}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_FIELDS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_FIELDS_DEFINE}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+		<!-- BEGIN FIELDS -->
+		<tr>
+			<td align="left" class="{cssclass}"><a href="{BASEPATH}admin/fields.php?op=edit&id={FieldID}">{FieldCaption}</a></td>
+			<td align="left" class="{cssclass}"><a href="{BASEPATH}admin/fields.php?op=edit&id={FieldID}">{FieldID}</a></td>
+			<td align="left" class="{cssclass}">{FieldDefine}</td>
+			<td align="center" class="{cssclass}">
+				&nbsp;<a href="{BASEPATH}admin/fields.php?op=edit&id={FieldID}"><img src="{MENU_EDIT}" width="16" title="{LN_FIELDS_EDIT}"></a>
+
+				<!-- IF AllowDelete="true" -->
+				&nbsp;<a href="{BASEPATH}admin/fields.php?op=delete&id={FieldID}"><img src="{DELETEIMG}" width="16" title="{LN_FIELDS_DELETE}"></a>
+				<!-- ENDIF AllowDelete="true" -->
+				<!-- IF AllowDelete!="true" -->
+				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				<!-- ENDIF AllowDelete!="true" -->
+			</td>
+		</tr>
+		<!-- END FIELDS -->
+		<tr>
+			<td align="center" colspan="5" class="line0"><b><a href="{BASEPATH}admin/fields.php?op=add"><img src="{MENU_ADD}" title="{LN_FIELDS_ADD}">&nbsp;{LN_FIELDS_ADD}</a></b></td>
+		</tr>
+		</table>
+<!-- ENDIF LISTFIELDS="true" -->
+
+<!-- IF ISEDITORNEWFIELD="true" -->
+		<form action="{BASEPATH}admin/fields.php" method="post">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_FIELDS_ADDEDIT}</b></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_FIELDS_ID}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="Newid" size="55" maxlength="64" value="{FieldID}" {DisableInternalFields}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_FIELDS_DEFINE}</b></td>
+				<td align="right" class="line2"><input type="text" name="NewFieldDefine" size="55" maxlength="255" value="{FieldDefine}"  {DisableInternalFields}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_FIELDS_NAME}</b></td>
+				<td align="right" class="line2"><input type="text" name="FieldCaption" size="55" maxlength="255" value="{FieldCaption}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_FIELDS_SEARCHFIELD}</b></td>
+				<td align="right" class="line2"><input type="text" name="SearchField" size="55" maxlength="255" value="{SearchField}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_SEARCHONLINE}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="SearchOnline" value="1" {CHECKED_SEARCHONLINE}></td>
+			</tr>
+
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_TYPE}</b></td>
+				<td align="right" class="line1">
+					<select id="FieldType" name="NewFieldType" size="1" OnChange="toggleSourceTypeVisibility('FieldType');" {DisableInternalFields}>
+						<!-- BEGIN FILTERTYPES -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END FILTERTYPES -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_ALIGN}</b></td>
+				<td align="right" class="line1">
+					<select id="FieldAlign" name="FieldAlign" size="1" OnChange="toggleSourceTypeVisibility('FieldAlign');">
+						<!-- BEGIN ALIGMENTS -->
+						<option {selected} value="{type}">{DisplayName}</option>
+						<!-- END ALIGMENTS -->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2"><b>{LN_FIELDS_DEFAULTWIDTH}</b></td>
+				<td align="right" class="line2"><input type="text" name="DefaultWidth" size="55" maxlength="255" value="{DefaultWidth}"></td>
+			</tr>
+
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{FIELD_SENDBUTTON}">
+					<input type="hidden" name="op" value="{FIELD_FORMACTION}">
+
+					<input type="hidden" name="id" value="{FieldID}">
+					<input type="hidden" name="FieldDefine" value="{FieldDefine}">
+					<input type="hidden" name="FieldType" value="{FieldType}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISEDITORNEWFIELD="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->

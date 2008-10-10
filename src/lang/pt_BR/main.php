@@ -61,7 +61,7 @@ $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 $content['LN_GEN_SELECTVIEW'] = "Vis&atilde;o";
 	$content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
-	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
+	$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous page.";
 	$content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 
 	$content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error: '%2'";
@@ -171,31 +171,6 @@ $content['LN_FILTER_MESSAGE'] = "Mensagem Syslog";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Origem (Hostname)";
 $content['LN_FILTER_MESSAGETYPE'] = "Tipo de mensagem";
-
-// Field Captions
-$content['LN_FIELDS_DATE'] = "Data";
-$content['LN_FIELDS_FACILITY'] = "Facility";
-$content['LN_FIELDS_SEVERITY'] = "Severidade";
-$content['LN_FIELDS_HOST'] = "Host";
-$content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
-$content['LN_FIELDS_PROCESSID'] = "PID";
-$content['LN_FIELDS_MESSAGETYPE'] = "Tipo";
-$content['LN_FIELDS_UID'] = "uID";
-$content['LN_FIELDS_MESSAGE'] = "Mensagem";
-$content['LN_FIELDS_EVENTID'] = "ID do Evento";
-$content['LN_FIELDS_EVENTLOGTYPE'] = "Tipo do Evento";
-$content['LN_FIELDS_EVENTSOURCE'] = "Origem do Evento";
-$content['LN_FIELDS_EVENTCATEGORY'] = "Categoria do Evento";
-$content['LN_FIELDS_EVENTUSER'] = "Evento de Usu&acute;rio";
-	$content['LN_FIELDS_WEBLOG_USER'] = "HTTP User";
-	$content['LN_FIELDS_WEBLOG_METHOD'] = "Method";
-	$content['LN_FIELDS_WEBLOG_URL'] = "URL";
-	$content['LN_FIELDS_WEBLOG_QUERYSTRING'] = "Querystring";
-	$content['LN_FIELDS_WEBLOG_PVER'] = "Version";
-	$content['LN_FIELDS_WEBLOG_STATUS'] = "Status";
-	$content['LN_FIELDS_WEBLOG_BYTESSEND'] = "Bytes Send";
-	$content['LN_FIELDS_WEBLOG_REFERER'] = "Referer";
-	$content['LN_FIELDS_WEBLOG_USERAGENT'] = "User Agent";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Servidor BD";

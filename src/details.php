@@ -110,7 +110,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 	foreach($fields as $mycolkey => $myfield)
 	{
 		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $myfield['FieldCaptionID'] ];
+		$content['fields'][$mycolkey]['FieldCaption'] = $myfield['FieldCaption'];
 		$content['fields'][$mycolkey]['FieldType'] = $myfield['FieldType'];
 		$content['fields'][$mycolkey]['DefaultWidth'] = $myfield['DefaultWidth'];
 

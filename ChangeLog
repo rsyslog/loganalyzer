@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.5.14 (beta), 2008-10-10
+- Added support for fully customizeable fields. This includes a fields 
+  admin with possibility to customize width and alignment of fields,
+  and add new custom ones. 
+- Added new table into user database to support the custom fields. This 
+  requires a database upgrade. 
+- Add admin panel for message parsers. This includes further information
+  on the parsers as well as the option to import necessary custom fields
+  for the message parsers. 
+- Overall simplified code related to field definitions and types. 
+---------------------------------------------------------------------------
 Version 2.5.13 (beta), 2008-10-07
 - Improved documentation, added general and search description. 
 - The conversion script does convert the charts now as well.

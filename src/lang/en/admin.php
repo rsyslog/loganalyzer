@@ -29,13 +29,15 @@ global $content;
 
 // Global Stuff
 $content['LN_ADMINMENU_HOMEPAGE'] = "Back to Show Events";
-$content['LN_ADMINMENU_GENOPT'] = "General Options";
-$content['LN_ADMINMENU_SOURCEOPT'] = "Sources Options";
-$content['LN_ADMINMENU_VIEWSOPT'] = "Views Options";
-$content['LN_ADMINMENU_SEARCHOPT'] = "Search Options";
-$content['LN_ADMINMENU_USEROPT'] = "User Options";
-$content['LN_ADMINMENU_GROUPOPT'] = "Group Options";
-$content['LN_ADMINMENU_CHARTOPT'] = "Chart Options";
+$content['LN_ADMINMENU_GENOPT'] = "Preferences";
+$content['LN_ADMINMENU_SOURCEOPT'] = "Sources";
+$content['LN_ADMINMENU_VIEWSOPT'] = "Views";
+$content['LN_ADMINMENU_SEARCHOPT'] = "Searches";
+$content['LN_ADMINMENU_USEROPT'] = "Users";
+$content['LN_ADMINMENU_GROUPOPT'] = "Groups";
+$content['LN_ADMINMENU_CHARTOPT'] = "Charts";
+$content['LN_ADMINMENU_FIELDOPT'] = "Fields";
+$content['LN_ADMINMENU_MSGPARSERSOPT'] = "Message Parsers";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";
@@ -259,6 +261,62 @@ $content['LN_CHARTS_HASBEENEDIT'] = "The Chart '%1' has been successfully edited
 $content['LN_CHARTS_ID'] = "ID";
 $content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
 $content['LN_CHARTS_PREVIEW'] = "Preview Chart in a new Window";
+
+// Fields Options
+$content['LN_FIELDS_CENTER'] = "Fields Options";
+$content['LN_FIELDS_EDIT'] = "Edit Field";
+$content['LN_FIELDS_DELETE'] = "Delete Field";
+$content['LN_FIELDS_ADD'] = "Add new Field";
+$content['LN_FIELDS_ID'] = "FieldID";
+$content['LN_FIELDS_NAME'] = "Display Name";
+$content['LN_FIELDS_DEFINE'] = "Internal FieldID";
+$content['LN_FIELDS_DELETE_FROMDB'] = "Delete Field from DB";
+$content['LN_FIELDS_ADDEDIT'] = "Add / Edit a Field";
+$content['LN_FIELDS_TYPE'] = "Field Type";
+$content['LN_FIELDS_ALIGN'] = "Listview Alignment";
+$content['LN_FIELDS_SEARCHONLINE'] = "Enable online search";
+$content['LN_FIELDS_DEFAULTWIDTH'] = "Row width in Listview";
+$content['LN_FIELDS_ERROR_IDNOTFOUND'] = "The Field-ID could not be found in the database, or in the default constants.";
+$content['LN_FIELDS_ERROR_INVALIDID'] = "The Field with ID '%1' is not a valid Field.";
+$content['LN_FIELDS_SEARCHFIELD'] = "Name of Searchfilter";
+$content['LN_FIELDS_WARNDELETESEARCH'] = "Are you sure that you want to delete the Field '%1'? This cannot be undone!";
+$content['LN_FIELDS_ERROR_DELSEARCH'] = "The Field-ID could not be found in the database.";
+$content['LN_FIELDS_ERROR_HASBEENDEL'] = "The Field '%1' has been successfully deleted!";
+$content['LN_FIELDS_ERROR_FIELDCAPTIONEMPTY'] = "The field caption was empty. ";
+$content['LN_FIELDS_ERROR_FIELDIDEMPTY'] = "The field id was empty. ";
+$content['LN_FIELDS_ERROR_SEARCHFIELDEMPTY'] = "The searchfilter was empty. ";
+$content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "The internal FieldID was empty. ";
+$content['LN_FIELDS_HASBEENEDIT'] = "The configuration for the field '%1' has been successfully edited.";
+$content['LN_FIELDS_HASBEENADDED'] = "The configuration for the field '%1' has been successfully added.";
+$content['LN_FIELDS_'] = "";
+$content['LN_ALIGN_CENTER'] = "center";
+$content['LN_ALIGN_LEFT'] = "left";
+$content['LN_ALIGN_RIGHT'] = "right";
+$content['LN_FILTER_TYPE_STRING'] = "String";
+$content['LN_FILTER_TYPE_NUMBER'] = "Number";
+$content['LN_FILTER_TYPE_DATE'] = "Date";
+
+// Parser Options
+$content['LN_PARSERS_EDIT'] = "Edit Message Parser";
+$content['LN_PARSERS_DELETE'] = "Delete Message Parser";
+$content['LN_PARSERS_ID'] = "Message Parser ID";
+$content['LN_PARSERS_NAME'] = "Message Parser Name";
+$content['LN_PARSERS_DESCRIPTION'] = "Message Parser Description";
+$content['LN_PARSERS_ERROR_NOPARSERS'] = "There were no valid message parsers found in your installation. ";
+$content['LN_PARSERS_HELP'] = "Help";
+$content['LN_PARSERS_HELP_CLICK'] = "Click here for more help";
+$content['LN_PARSERS_INFO'] = "Show more Information for this message parser.";
+$content['LN_PARSERS_INIT'] = "Initialize settings for this message parser.";
+$content['LN_PARSERS_REMOVE'] = "Remove settings for this message parser.";
+$content['LN_PARSERS_ERROR_IDNOTFOUND'] = "There was no message parser with ID '%1' found.";
+$content['LN_PARSERS_ERROR_INVALIDID'] = "Invalid message parser id.";
+$content['LN_PARSERS_DETAILS'] = "Details for this Parser";
+$content['LN_PARSERS_CUSTOMFIELDS'] = "The following Custom fields are needed by this Message Parser.";
+$content['LN_PARSERS_WARNREMOVE'] = "You are about to remove the custom fields needed by the '%1' Message Parser. However you can add these fields again if you change your mind.";
+$content['LN_PARSERS_ERROR_HASBEENREMOVED'] = "All settings ('%2' custom fields) for the Message Parser '%1' have been removed. ";
+$content['LN_PARSERS_ERROR_HASBEENADDED'] = "All required settings ('%2' custom fields) for the Message Parser '%1' have been added. ";
+$content['LN_PARSERS_ERROR_NOFIELDS'] = "The Message Parser '%1' does not have any custom fields to add.";
+$content['LN_PARSERS_'] = "";
 
 
 ?>

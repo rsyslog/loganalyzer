@@ -88,8 +88,8 @@ if ( isset($content['Charts']) )
 			// --- 
 
 			// --- Set display name for chart field
-			if ( isset($myChart['chart_field']) && isset($fields[$myChart['chart_field']]) && isset($content[ $fields[$myChart['chart_field']]['FieldCaptionID'] ]) ) 
-				$myChart['CHART_FIELD_DISPLAYNAME'] = $content[ $fields[$myChart['chart_field']]['FieldCaptionID'] ];
+			if ( isset($myChart['chart_field']) && isset($fields[$myChart['chart_field']]) && isset($fields[$myChart['chart_field']]['FieldCaption']) ) 
+				$myChart['CHART_FIELD_DISPLAYNAME'] = $fields[$myChart['chart_field']]['FieldCaption'];
 			else
 				$myChart['CHART_FIELD_DISPLAYNAME'] = $myChart['chart_field']; 
 			// --- 

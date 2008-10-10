@@ -235,6 +235,46 @@ function CreateSourceTypesList( $selectedSource )
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
 }
 
+function CreateFieldAlignmentList( $selectedAlignment )
+{
+	global $content;
+
+	// ALIGN_CENTER
+	$content['ALIGMENTS'][ALIGN_CENTER]['type'] = ALIGN_CENTER;
+	$content['ALIGMENTS'][ALIGN_CENTER]['DisplayName'] = $content['LN_ALIGN_CENTER'];
+	if ( $selectedAlignment == $content['ALIGMENTS'][ALIGN_CENTER]['type'] ) { $content['ALIGMENTS'][ALIGN_CENTER]['selected'] = "selected"; } else { $content['ALIGMENTS'][ALIGN_CENTER]['selected'] = ""; }
+
+	// ALIGN_LEFT
+	$content['ALIGMENTS'][ALIGN_LEFT]['type'] = ALIGN_LEFT;
+	$content['ALIGMENTS'][ALIGN_LEFT]['DisplayName'] = $content['LN_ALIGN_LEFT'];
+	if ( $selectedAlignment == $content['ALIGMENTS'][ALIGN_LEFT]['type'] ) { $content['ALIGMENTS'][ALIGN_LEFT]['selected'] = "selected"; } else { $content['ALIGMENTS'][ALIGN_LEFT]['selected'] = ""; }
+
+	// ALIGN_RIGHT
+	$content['ALIGMENTS'][ALIGN_RIGHT]['type'] = ALIGN_RIGHT;
+	$content['ALIGMENTS'][ALIGN_RIGHT]['DisplayName'] = $content['LN_ALIGN_RIGHT'];
+	if ( $selectedAlignment == $content['ALIGMENTS'][ALIGN_RIGHT]['type'] ) { $content['ALIGMENTS'][ALIGN_RIGHT]['selected'] = "selected"; } else { $content['ALIGMENTS'][ALIGN_RIGHT]['selected'] = ""; }
+}
+
+function CreateFieldTypesList( $selectedType )
+{
+	global $content;
+
+	// FILTER_TYPE_STRING
+	$content['FILTERTYPES'][FILTER_TYPE_STRING]['type'] = FILTER_TYPE_STRING;
+	$content['FILTERTYPES'][FILTER_TYPE_STRING]['DisplayName'] = $content['LN_FILTER_TYPE_STRING'];
+	if ( $selectedType == $content['FILTERTYPES'][FILTER_TYPE_STRING]['type'] ) { $content['FILTERTYPES'][FILTER_TYPE_STRING]['selected'] = "selected"; } else { $content['FILTERTYPES'][FILTER_TYPE_STRING]['selected'] = ""; }
+
+	// FILTER_TYPE_NUMBER
+	$content['FILTERTYPES'][FILTER_TYPE_NUMBER]['type'] = FILTER_TYPE_NUMBER;
+	$content['FILTERTYPES'][FILTER_TYPE_NUMBER]['DisplayName'] = $content['LN_FILTER_TYPE_NUMBER'];
+	if ( $selectedType == $content['FILTERTYPES'][FILTER_TYPE_NUMBER]['type'] ) { $content['FILTERTYPES'][FILTER_TYPE_NUMBER]['selected'] = "selected"; } else { $content['FILTERTYPES'][FILTER_TYPE_NUMBER]['selected'] = ""; }
+
+	// FILTER_TYPE_DATE
+	$content['FILTERTYPES'][FILTER_TYPE_DATE]['type'] = FILTER_TYPE_DATE;
+	$content['FILTERTYPES'][FILTER_TYPE_DATE]['DisplayName'] = $content['LN_FILTER_TYPE_DATE'];
+	if ( $selectedType == $content['FILTERTYPES'][FILTER_TYPE_DATE]['type'] ) { $content['FILTERTYPES'][FILTER_TYPE_DATE]['selected'] = "selected"; } else { $content['FILTERTYPES'][FILTER_TYPE_DATE]['selected'] = ""; }
+}
+
 function CreateChartTypesList( $selectedChart )
 {
 	global $content;
@@ -266,8 +306,8 @@ function CreateChartFields( $selectedChartField)
 
 		// Add new entry to array
 		$content['CHARTFIELDS'][$myFieldID]['ID'] = $myFieldID;
-		if ( isset($content[ $myField['FieldCaptionID'] ]) )
-			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $content[ $myField['FieldCaptionID'] ];
+		if ( isset($myField['FieldCaption']) )
+			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myField['FieldCaption'];
 		else
 			$content['CHARTFIELDS'][$myFieldID]['DisplayName'] = $myFieldID;
 		
@@ -578,6 +618,12 @@ function InitFrontEndVariables()
 	$content['MENU_CHART_BARSVERT'] = $content['BASEPATH'] . "images/icons/column-chart.png";
 	$content['MENU_CHART_BARSHORI'] = $content['BASEPATH'] . "images/icons/column-chart-hori.png";
 	$content['MENU_CHART_PREVIEW'] = $content['BASEPATH'] . "images/icons/pie-chart_view.png";
+	$content['MENU_FIELDS'] = $content['BASEPATH'] . "images/icons/tables.png";
+	$content['MENU_DELETE_FROMDB'] = $content['BASEPATH'] . "images/icons/data_delete.png";
+	$content['MENU_DELETE_FROMDB_DISABLED'] = $content['BASEPATH'] . "images/icons/data_delete_disabled.png";
+	$content['MENU_INFORMATION'] = $content['BASEPATH'] . "images/icons/information2.png";
+	$content['MENU_PARSER_DELETE'] = $content['BASEPATH'] . "images/icons/gear_delete.png";
+	$content['MENU_PARSER_INIT'] = $content['BASEPATH'] . "images/icons/gear_new.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -673,6 +719,9 @@ function InitConfigurationValues()
 					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
 				}
 			}
+
+			// Load field definitions from DB, very first thing todo!
+			LoadFieldsFromDatabase();
 
 			// Load Configured Searches 
 			LoadSearchesFromDatabase();
@@ -1358,6 +1407,74 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 		return $CFG[$szSettingName];
 	else
 		return $szDefaultValue;
+}
+
+/*
+*	Helper function to get all directory from a folder
+*/
+function list_directories($directory, $failOnError = true) 
+{
+	$result = array();
+	if ( !$directoryHandler = @opendir ($directory) ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: directory \"$directory\" doesn't exist!");
+		else
+			return null;
+	}
+
+	while (false !== ($fileName = @readdir ($directoryHandler))) 
+	{
+		if	( is_dir( $directory . $fileName ) && ( $fileName != "." && $fileName != ".." ))
+			@array_push ($result, $fileName);
+	}
+
+	if ( @count ($result) === 0 ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: no directories in \"$directory\" found!");
+		else
+			return null;
+	}
+	else 
+	{
+		sort ($result);
+		return $result;
+	}
+}
+
+/*
+*	Helper function to get all files from a directory
+*/
+function list_files($directory, $failOnError = true) 
+{
+	$result = array();
+	if ( !$directoryHandler = @opendir ($directory) ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: directory \"$directory\" doesn't exist!");
+		else
+			return null;
+	}
+
+	while (false !== ($fileName = @readdir ($directoryHandler))) 
+	{
+		if	( is_file( $directory . $fileName ) && ( $fileName != "." && $fileName != ".." ))
+			@array_push ($result, $fileName);
+	}
+
+	if ( @count ($result) === 0 ) 
+	{
+		if ( $failOnError ) 
+			DieWithFriendlyErrorMsg( "list_directories: no files in \"$directory\" found!");
+		else
+			return null;
+	}
+	else 
+	{
+		sort ($result);
+		return $result;
+	}
 }
 
 /*

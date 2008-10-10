@@ -45,7 +45,14 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 
 
 abstract class MsgParser{
+	// Public configuration properties
 	public $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
+	
+	// Public Information properties 
+	public $_ClassName = 'Default Messageparser';
+	public $_ClassDescription = 'This is a placeholder for the message parser description!';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "http://www.monitorware.com/en/Articles/";
 
 	/**
 	* ParseLine

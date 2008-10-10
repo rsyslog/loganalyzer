@@ -223,10 +223,13 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 		foreach ($content['SUBCOLUMNS'] as $key => &$myColumn )
 		{
 			// Set Fieldcaption
-			if ( isset($fields[$key]) && isset($content[ $fields[$key]['FieldCaptionID'] ]) )
-				$myColumn['ColCaption'] = $content[ $fields[$key]['FieldCaptionID'] ];
+			if ( isset($fields[$key]) && isset($fields[$key]['FieldCaption']) )
+				$myColumn['ColCaption'] = $fields[$key]['FieldCaption'];
 			else
 				$myColumn['ColCaption'] = $key;
+
+			// Append Internal FieldID
+			$myColumn['ColInternalID'] = $fields[$key]['FieldDefine'];
 
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
@@ -256,10 +259,13 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 	foreach ($content['FIELDS'] as $key => &$myField )
 	{
 		// Set Fieldcaption
-		if ( isset($content[ $myField['FieldCaptionID'] ]) )
-			$myField['FieldCaption'] = $content[ $myField['FieldCaptionID'] ];
+		if ( isset($myField['FieldCaption']) )
+			$myField['FieldCaption'] = $myField['FieldCaption'];
 		else
 			$myField['FieldCaption'] = $key;
+
+		// Append Internal FieldID
+		$myField['FieldCaption'] .= " (" . $fields[$key]['FieldDefine'] . ")";
 	}
 	// ---
 }
@@ -311,8 +317,8 @@ if ( isset($_POST['op']) )
 					$content['SUBCOLUMNS'][$szColId]['ColFieldID'] = $szColId;
 
 					// Set Fieldcaption
-					if ( isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
-						$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
+					if ( isset($fields[$szColId]['FieldCaption']) )
+						$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $fields[$szColId]['FieldCaption'];
 					else
 						$content['SUBCOLUMNS'][$szColId]['ColCaption'] = $szColId;
 
@@ -338,8 +344,8 @@ if ( isset($_POST['op']) )
 			$content['FIELDS'][$szColId] = $szColId;
 
 			// Set Fieldcaption
-			if ( isset($fields[$szColId]) && isset($content[ $fields[$szColId]['FieldCaptionID'] ]) )
-				$content['FIELDS'][$szColId]['FieldCaption'] = $content[ $fields[$szColId]['FieldCaptionID'] ];
+			if ( isset($fields[$szColId]) && isset($fields[$szColId]['FieldCaption']) )
+				$content['FIELDS'][$szColId]['FieldCaption'] = $fields[$szColId]['FieldCaption'];
 			else
 				$content['FIELDS'][$szColId]['FieldCaption'] = $szColId;
 		}
@@ -543,11 +549,11 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		foreach ($myView['Columns'] as $myCol )
 		{
 			// Get Fieldcaption
-			if ( isset($fields[$myCol]) && isset($content[ $fields[$myCol]['FieldCaptionID'] ]) )
-				$myView['COLUMNS'][$myCol]['FieldCaption'] = $content[ $fields[$myCol]['FieldCaptionID'] ];
+			if ( isset($fields[$myCol]) && isset($fields[$myCol]['FieldCaption']) )
+				$myView['COLUMNS'][$myCol]['FieldCaption'] = $fields[$myCol]['FieldCaption'];
 			else
 				$myView['COLUMNS'][$myCol]['FieldCaption'] = $myCol;
-		
+
 			if ( $iBegin )
 			{
 				$myView['COLUMNS'][$myCol]['FieldCaptionSeperator'] = "";

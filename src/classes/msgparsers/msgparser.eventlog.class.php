@@ -46,7 +46,12 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 class MsgParser_eventlog extends MsgParser {
-//	protected $_arrProperties = null;
+
+	// Public Information properties 
+	public $_ClassName = 'Adiscon Eventlog Format';
+	public $_ClassDescription = 'This is a parser for a special format which can be created with Adiscon Eventreporter or MonitorWare Agent.';
+	public $_ClassRequiredFields = null;
+	public $_ClassHelpArticle = "http://www.monitorware.com/en/Articles/";
 
 	// Constructor
 	public function MsgParser_eventlog() {
@@ -90,10 +95,10 @@ class MsgParser_eventlog extends MsgParser {
 				foreach ( $myFields as $myField )
 				{
 					// Set Field Caption
-					if ( isset($content[ $fields[$myField]['FieldCaptionID'] ]) )
-						$szFieldName = $content[ $fields[$myField]['FieldCaptionID'] ];
+					if ( isset($fields[$myField]['FieldCaption']) )
+						$szFieldName = $fields[$myField]['FieldCaption'];
 					else
-						$szFieldName = $fields[$myField]['FieldCaptionID'];
+						$szFieldName = $myField;
 
 					// Append Field into msg
 					$szTmpMsg = $szFieldName . ": '" . $arrArguments[$myField] . "'\n" . $szTmpMsg;

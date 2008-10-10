@@ -264,6 +264,8 @@ abstract class LogStream {
 	*/
 	private function ParseFilters($szFilters)
 	{
+		global $fields;
+
 		if ( isset($szFilters) && strlen($szFilters) > 0 )
 		{
 			$tmpEntries = explode(" ", $szFilters);
@@ -589,9 +591,44 @@ abstract class LogStream {
 							break;
 						/* END WebLog based fields */
 						default:
-							$tmpFilterType = FILTER_TYPE_UNKNOWN;
-							break;
-							// Unknown filter
+							// Custom Field, try to guess field!
+
+							if ( isset($fields[$tmpArray[FILTER_TMP_KEY]]) && isset($fields[$tmpArray[FILTER_TMP_KEY]]['SearchField']) )
+							{
+								$tmpKeyName = $tmpArray[FILTER_TMP_KEY]; 
+								$tmpFilterType = $fields[$tmpKeyName]['FieldType'];
+								
+								// Handle numeric fields!
+								if ( $tmpFilterType == FILTER_TYPE_NUMBER )
+								{
+									// --- Extra numeric Check 
+									if ( isset($tmpValues) ) 
+									{
+										foreach( $tmpValues as $mykey => $szValue ) 
+										{
+											if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
+												$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
+											else
+												$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
+										}
+									}
+									else
+									{
+										// First set Filter Mode
+										$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+
+										if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
+											$tmpArray[FILTER_TMP_VALUE] = "";
+									}
+									// --- 
+								}
+								// Nothing to do actually!
+//								else if ( $tmpFilterType == FILTER_TYPE_STRING )
+							}
+							else
+								// Unknown filter
+								$tmpFilterType = FILTER_TYPE_UNKNOWN;
+						//done!
 					}
 
 					// Ignore if unknown filter!

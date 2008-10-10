@@ -131,34 +131,6 @@ foreach( $content['Sources'] as $mySource )
 	// Add to help Link array!
 	$content['HelpLinks'][] = $myHelpLink;
 }
-
-/*
-if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
-{
-	// Obtain and get the Config Object
-	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
-
-	// Create LogStream Object 
-	$stream = $stream_config->LogStreamFactory($stream_config);
-//	$stream->SetFilter($content['searchstr']);
-
-	// --- Init the fields we need
-	foreach($fields as $mycolkey => $myfield)
-	{
-		$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-		$content['fields'][$mycolkey]['FieldCaption'] = $content[ $myfield['FieldCaptionID'] ];
-		$content['fields'][$mycolkey]['FieldType'] = $myfield['FieldType'];
-		$content['fields'][$mycolkey]['DefaultWidth'] = $myfield['DefaultWidth'];
-
-		// Append to columns array
-		$content['AllColumns'][] = $mycolkey;
-	}
-	// --- 
-
-	// Close file!
-	$stream->Close();
-}
-*/
 // --- 
 
 // --- BEGIN CREATE TITLE

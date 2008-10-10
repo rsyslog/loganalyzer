@@ -146,7 +146,7 @@ if ( !$content['error_occured'] )
 			if ( isset($fields[$mycolkey]) )
 			{
 				$content['fields'][$mycolkey]['FieldID'] = $mycolkey;
-				$content['fields'][$mycolkey]['FieldCaption'] = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+				$content['fields'][$mycolkey]['FieldCaption'] = $fields[$mycolkey]['FieldCaption'];
 				$content['fields'][$mycolkey]['FieldType'] = $fields[$mycolkey]['FieldType'];
 				$content['fields'][$mycolkey]['DefaultWidth'] = $fields[$mycolkey]['DefaultWidth'];
 			}
@@ -344,7 +344,7 @@ else
 					$szOutputContent .= ",";  
 
 				// Append column name
-				$szOutputContent .= $content[ $fields[$mycolkey]['FieldCaptionID'] ];
+				$szOutputContent .= $fields[$mycolkey]['FieldCaption'];
 			}
 		}
 		
@@ -392,11 +392,6 @@ else
 			// --- Process columns
 			foreach($mySyslogMessage as $myColkey => $mySyslogField)
 			{
-
-//				if ( isset($content[ $fields[$mycolkey]['FieldCaptionID'] ]) ) 
-//					$szNodeTitle = $content[ $fields[$mycolkey]['FieldCaptionID'] ];
-//				else
-
 				// Append field content | first run htmlentities,tnen utf8 encoding!!
 				$szXmlLine .= "\t\t<" . $myColkey . ">" . utf8_encode( htmlentities($mySyslogField['fieldvalue']) ) . "</" . $myColkey . ">\n";
 			}

@@ -1,0 +1,114 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_ADMINMENU_MSGPARSERSOPT}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTPARSERS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_PARSERS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_PARSERS_NAME}</b></td>
+			<td align="center" width="300" class="cellmenu1"><b>{LN_PARSERS_DESCRIPTION}</b></td>
+			<td align="center" width="125" class="cellmenu1" colspan="3" nowrap><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+		<!-- BEGIN PARSERS -->
+		<tr>
+			<td align="left" class="{cssclass}" valign="top"><b>{ID}</b></td>
+			<td align="left" class="{cssclass}" valign="top"><a href="{BASEPATH}admin/parsers.php?op=details&id={ID}">{DisplayName}</a></td>
+			<td align="left" class="{cssclass}" valign="top">{Description}</td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ParserHelpEnabled="true" -->
+				<a href="{ParserHelpArticle}"><img src="{MENU_HELP}" width="16" title="{LN_PARSERS_HELP}"></a>
+				<!-- ENDIF ParserHelpEnabled="true" -->
+			</td>
+			<td align="center" class="{cssclass}">
+				<a href="{BASEPATH}admin/parsers.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_PARSERS_INFO}"></a>
+			</td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ParserInitEnabled="true" -->
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=initparser&id={ID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_PARSERS_INIT}"></a>
+				<!-- ENDIF ParserInitEnabled="true" -->
+				<!-- IF ParserDeleteEnabled="true" -->
+				&nbsp;<a href="{BASEPATH}admin/parsers.php?op=removeparser&id={ID}"><img src="{MENU_PARSER_DELETE}" width="16" title="{LN_PARSERS_REMOVE}"></a>
+				<!-- ENDIF ParserDeleteEnabled="true" -->
+			</td>
+		</tr>
+		<!-- END PARSERS -->
+		</table>
+<!-- ENDIF LISTPARSERS="true" -->
+
+<!-- IF ISSHOWDETAILS="true" -->
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<tr>
+			<td align="center" class="cellmenu1" colspan="2"><b>{LN_PARSERS_DETAILS}</b></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="250"><b>{LN_PARSERS_ID}</b></td>
+			<td align="left" class="line1" width="350">{ParserID}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_PARSERS_NAME}</b></td>
+			<td align="left" class="line2">{DisplayName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_PARSERS_DESCRIPTION}</b></td>
+			<td align="left" class="line1">{Description}</td>
+		</tr>
+		<!-- IF EnableCustomField="true" -->
+		<tr>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_PARSERS_CUSTOMFIELDS}</b></td>
+			<td align="left" class="line1">
+				<!-- BEGIN CustomFieldsList -->
+				<br><B>{FieldCaption}</B> ({FieldDefine})
+				<!-- END CustomFieldsList -->
+				<br><br>
+			</td>
+		</tr>
+		<!-- ENDIF EnableCustomField="true" -->
+		<!-- IF EnableHelpArticle="true" -->
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_PARSERS_HELP}</b></td>
+			<td align="center" class="line2"><a href="{ParserHelpArticle}">{LN_PARSERS_HELP_CLICK}</a></td>
+		</tr>
+		<!-- ENDIF EnableHelpArticle="true" -->
+		<tr>
+			<td align="center" class="tableBackground" colspan="2">
+				<!-- IF ParserInitEnabled="true" -->
+				<a href="{BASEPATH}admin/parsers.php?op=initparser&id={ParserID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_PARSERS_INIT}"> {LN_PARSERS_INIT}</a>
+				<!-- ENDIF ParserInitEnabled="true" -->
+				<!-- IF ParserDeleteEnabled="true" -->
+				<a href="{BASEPATH}admin/parsers.php?op=removeparser&id={ParserID}"><img src="{MENU_PARSER_DELETE}" width="16" title="{LN_PARSERS_REMOVE}"> {LN_PARSERS_REMOVE}</a>
+				<!-- ENDIF ParserDeleteEnabled="true" -->
+			</td>
+		</tr>
+		</table>
+
+		<br><br>
+		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+<!-- ENDIF ISSHOWDETAILS="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->

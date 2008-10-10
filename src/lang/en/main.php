@@ -58,7 +58,7 @@ $content['LN_GEN_DB_INFORMIX'] = "IBM Informix Dynamic Server";
 $content['LN_GEN_DB_SQLITE'] = "SQLite 2";
 $content['LN_GEN_SELECTVIEW'] = "Select View";
 $content['LN_GEN_CRITERROR_UNKNOWNTYPE'] = "The source type '%1' is not supported by phpLogCon yet. This is a critical error, please fix your configuration.";
-$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous site.";
+$content['LN_GEN_ERRORRETURNPREV'] = "Click here to return to the previous page.";
 $content['LN_GEN_ERRORDETAILS'] = "Error Details:";
 $content['LN_SOURCES_ERROR_WITHINSOURCE'] = "The source '%1' checking returned with an error:<br>%2";
 $content['LN_SOURCES_ERROR_EXTRAMSG'] = "Extra Error Details:<br>%1";
@@ -169,31 +169,6 @@ $content['LN_FILTER_MESSAGE'] = "Syslog Message";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Source (Hostname)";
 $content['LN_FILTER_MESSAGETYPE'] = "Message Type";
-
-// Field Captions
-$content['LN_FIELDS_DATE'] = "Date";
-$content['LN_FIELDS_FACILITY'] = "Facility";
-$content['LN_FIELDS_SEVERITY'] = "Severity";
-$content['LN_FIELDS_HOST'] = "Host";
-$content['LN_FIELDS_SYSLOGTAG'] = "Syslogtag";
-$content['LN_FIELDS_PROCESSID'] = "ProcessID";
-$content['LN_FIELDS_MESSAGETYPE'] = "Messagetype";
-$content['LN_FIELDS_UID'] = "uID";
-$content['LN_FIELDS_MESSAGE'] = "Message";
-$content['LN_FIELDS_EVENTID'] = "Event ID";
-$content['LN_FIELDS_EVENTLOGTYPE'] = "Eventlog Type";
-$content['LN_FIELDS_EVENTSOURCE'] = "Event Source";
-$content['LN_FIELDS_EVENTCATEGORY'] = "Event Category";
-$content['LN_FIELDS_EVENTUSER'] = "Event User";
-$content['LN_FIELDS_WEBLOG_USER'] = "HTTP User";
-$content['LN_FIELDS_WEBLOG_METHOD'] = "Method";
-$content['LN_FIELDS_WEBLOG_URL'] = "URL";
-$content['LN_FIELDS_WEBLOG_QUERYSTRING'] = "Querystring";
-$content['LN_FIELDS_WEBLOG_PVER'] = "Version";
-$content['LN_FIELDS_WEBLOG_STATUS'] = "Status";
-$content['LN_FIELDS_WEBLOG_BYTESSEND'] = "Bytes Send";
-$content['LN_FIELDS_WEBLOG_REFERER'] = "Referer";
-$content['LN_FIELDS_WEBLOG_USERAGENT'] = "User Agent";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Database Host";

@@ -1,0 +1,19 @@
+-- New Database Structure Updates
+
+CREATE TABLE `logcon_fields` (
+  `FieldID` varchar(64) NOT NULL,
+  `FieldDefine` varchar(64) NOT NULL,
+  `FieldCaption` varchar(255) NOT NULL,
+  `FieldType` int(11) NOT NULL,
+  `Sortable` tinyint(1) NOT NULL,
+  `DefaultWidth` int(11) NOT NULL,
+  `FieldAlign` varchar(32) NOT NULL,
+  `SearchField` varchar(64) NOT NULL,
+  `SearchOnline` tinyint(1) NOT NULL,
+  `Trunscate` int(11) NOT NULL,
+  PRIMARY KEY  (`FieldID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='This table stores custom fields';
+
+-- Insert data
+
+-- Updated Data
