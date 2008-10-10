@@ -287,4 +287,26 @@ $content['LN_FILTER_TYPE_STRING'] = "String";
 $content['LN_FILTER_TYPE_NUMBER'] = "Number";
 $content['LN_FILTER_TYPE_DATE'] = "Date";
 
+// Parser Options
+$content['LN_PARSERS_EDIT'] = "Edit Message Parser";
+$content['LN_PARSERS_DELETE'] = "Delete Message Parser";
+$content['LN_PARSERS_ID'] = "Message Parser ID";
+$content['LN_PARSERS_NAME'] = "Message Parser Name";
+$content['LN_PARSERS_DESCRIPTION'] = "Message Parser Description";
+$content['LN_PARSERS_ERROR_NOPARSERS'] = "There were no valid message parsers found in your installation. ";
+$content['LN_PARSERS_HELP'] = "Help";
+$content['LN_PARSERS_HELP_CLICK'] = "Click here for more help";
+$content['LN_PARSERS_INFO'] = "Show more Information for this message parser.";
+$content['LN_PARSERS_INIT'] = "Initialize settings for this message parser.";
+$content['LN_PARSERS_REMOVE'] = "Remove settings for this message parser.";
+$content['LN_PARSERS_ERROR_IDNOTFOUND'] = "There was no message parser with ID '%1' found.";
+$content['LN_PARSERS_ERROR_INVALIDID'] = "Invalid message parser id.";
+$content['LN_PARSERS_DETAILS'] = "Details for this Parser";
+$content['LN_PARSERS_CUSTOMFIELDS'] = "The following Custom fields are needed by this Message Parser.";
+$content['LN_PARSERS_WARNREMOVE'] = "You are about to remove the custom fields needed by the '%1' Message Parser. However you can add these fields again if you change your mind.";
+$content['LN_PARSERS_ERROR_HASBEENREMOVED'] = "All settings ('%2' custom fields) for the Message Parser '%1' have been removed. ";
+$content['LN_PARSERS_ERROR_HASBEENADDED'] = "All required settings ('%2' custom fields) for the Message Parser '%1' have been added. ";
+$content['LN_PARSERS_ERROR_NOFIELDS'] = "The Message Parser '%1' does not have any custom fields to add.";
+$content['LN_PARSERS_'] = "";
+
 ?>

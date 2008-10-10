@@ -317,9 +317,6 @@ $content['LN_PARSERS_ERROR_HASBEENREMOVED'] = "All settings ('%2' custom fields)
 $content['LN_PARSERS_ERROR_HASBEENADDED'] = "All required settings ('%2' custom fields) for the Message Parser '%1' have been added. ";
 $content['LN_PARSERS_ERROR_NOFIELDS'] = "The Message Parser '%1' does not have any custom fields to add.";
 $content['LN_PARSERS_'] = "";
-$content['LN_PARSERS_'] = "";
-$content['LN_PARSERS_'] = "";
-$content['LN_PARSERS_'] = "";
 
 
 ?>
