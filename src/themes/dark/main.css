@@ -69,7 +69,10 @@ a.contextlink:hover
 	font-weight: bold;
 	font-size: 11px; 
 
-    BACKGROUND-COLOR: #1C1014;
+    background-color: #1C1014;
+    background-image: url(images/bg_3.png);
+    background-repeat: repeat-x;
+
 	COLOR: #E5F377;
 	border: 1px solid;
 	border-color: #58363E #2C1B1F #2C1B1F #58363E;
@@ -97,7 +100,10 @@ A.title:hover
 	font-size: 10px; 
 	font-weight: bold;
 
-    BACKGROUND-COLOR: #301B22;
+    background-color: #1C1014;
+    background-image: url(images/bg_4.png);
+    background-repeat: repeat-x;
+
 	COLOR: #E5F377;
 	height: 18px;
 	text-align:center;
@@ -339,15 +345,28 @@ font
 	border-color: #353A3F #050A0F #050A0F #353A3F; 
 
 	text-indent:5px;
-
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
 
+	background-color: #103B65;
+    background-image: url(images/bg_1.png);
+    background-repeat: repeat-x;
+
 	color: #FFFCE5;
+}
+.cellmenu1_naked
+{
+	border:1px ridge;
+	border-color: #353A3F #050A0F #050A0F #353A3F; 
+
+	text-indent:5px;
+	font-family: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFCE5;
+
 	background-color: #103B65;
 }
-.cellmenu1:hover 
+.cellmenu1:hover, .cellmenu1_naked:hover
 { 
 	color: #FFFF33;
 	text-decoration: none;
@@ -370,15 +389,27 @@ A.cellmenu1_link:hover
 	border-color: #7777AA #12161A #12161A #7777AA;
 
 	text-indent:5px;
-
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
-
 	color: #FFFCE5;
+
+	background-color: #053841;
+    background-image: url(images/bg_2.png);
+    background-repeat: repeat-x;
+}
+.cellmenu2_naked
+{
+	border:1px ridge;
+	border-color: #7777AA #12161A #12161A #7777AA;
+
+	text-indent:5px;
+	font: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFCE5;
+
 	background-color: #053841;
 }
-.cellmenu2:hover 
+.cellmenu2:hover, .cellmenu2_naked:hover
 { 
 	color: #FFFF33;
 	text-decoration: none;
