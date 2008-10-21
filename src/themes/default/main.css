@@ -1,10 +1,10 @@
 /* Generell Tag Classes */
 BODY
 {
-    BACKGROUND-COLOR: #f9f9f9;
-    COLOR: #000000;
-    FONT-FAMILY: ARIAL;
-    FONT-SIZE: 8pt;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	color: #000000 
+    background-color: #f9f9f9;
 
 	scrollbar-face-color: #DEE3E7;
 	scrollbar-highlight-color: #FFFFFF;
@@ -15,37 +15,43 @@ BODY
 	scrollbar-darkshadow-color: #98AAB1
 }
 
-TD { font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #000000 }
+TD 
+{ 
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px; 
+	color: #000000 
+}
 
 /* Default Link Classes */
 a:link,a:active,a:visited,a.postlink
 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight:bold;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration:none;
+
 	background-color: transparent;
 	color:#38140E;
-	text-decoration:none;
 }
 a:hover
 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight:bold;
-	color:#FF0000;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color:#CC0000;
 }
 /*---*/
 
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight:bold;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	background-color: transparent;
 	color:#3814BB;
 	text-decoration:underline;
 }
 a.contextlink:hover
 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	color:#3844FF;
 	text-decoration:none;
@@ -60,7 +66,10 @@ img
 /* Title Classes */
 .title 
 {
-	FONT: bold 11px Verdana, Arial, Helvetica, sans-serif; 
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+
     BACKGROUND-COLOR: #D2C598;
 	COLOR: #032D5D;
 	border: 1px solid;
@@ -71,19 +80,24 @@ img
 }
 A.title, A.title:active, A.title:visited 
 {
-	FONT: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+
 	COLOR: #ED9D10;
 	TEXT-DECORATION: none;
 }
 A.title:hover 
 {
-	FONT: bold 11px Verdana, Arial, Helvetica, sans-serif;
 	COLOR: #982D00; 
 	TEXT-DECORATION: none;
 }
 .titleSecond
 {
-	FONT: bold 10px Verdana, Arial, Helvetica, sans-serif; 
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight:bold;
+
     BACKGROUND-COLOR: #E3D2AE;
 	COLOR: #1A3745;
 	height: 18px;
@@ -95,8 +109,8 @@ A.title:hover
 /* Default Font Classes */
 font
 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 8pt;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
 }
 
 /* Table / Border Classes */
@@ -158,8 +172,7 @@ font
 /* Cells for listening */
 .line0
 {
-/*	height: 16px;*/
-	font-size: 8pt;
+	font-size: 10px;
 	color: #000000;
 	background-color: #DDDDDD;
 }
@@ -170,8 +183,7 @@ font
 
 .line1
 {
-/*	height: 16px;*/
-	font-size: 8pt;
+	font-size: 10px;
 	color: #000000;
 	background-color: #EEEEEE;
 }
@@ -182,8 +194,7 @@ font
 
 .line2
 {
-/*	height: 16px;*/
-	font-size: 8pt;
+	font-size: 10px;
 	color: #000000;
 	background-color: #F5F5F5;
 }
@@ -193,19 +204,19 @@ font
 }
 .tableBackground
 {
-	font-size: 8pt;
+	font-size: 10px;
 	color: #000000;
 	background-color: #F5F5F5;
 }
 
 .lineColouredWhite, .lineColouredWhite:hover, a.lineColouredWhite
 {
-	font-size: 8pt;
+	font-size: 10px;
 	color: #FFFFFF;
 }
 .lineColouredBlack, .lineColouredBlack:hover, a.lineColouredBlack
 {
-	font-size: 8pt;
+	font-size: 10px;
 	color: #000000;
 }
 
@@ -315,12 +326,14 @@ font
 /* Cell Columns */
 .cellmenu1
 {
-/*	height: 16px; */
 	border:1px ridge;
 	border-color: #79AABE #09506C #09506C #79AABE;
 
-	text-indent:5px;
-	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+	text-indent:0px;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight:bold;
+
 	color: #FFFFFF;
 	background-color: #6C8E9C;
 }
@@ -342,12 +355,14 @@ A.cellmenu1_link:hover
 
 .cellmenu2
 {
-/*	height: 15px; */
 	border:1px inset;
 	border-color: #79AABE #09506C #09506C #79AABE;
 
-	text-indent:5px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	text-indent:0px;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight:bold;
+
 	color: #393327;
 	background-color: #B8D4E0;
 }
