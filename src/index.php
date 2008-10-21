@@ -625,14 +625,14 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 				// Increment Counter
 				$counter++;
-			} while ($counter < $content['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+			} while ($counter < $content['CurrentViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 //print_r ( $content['syslogmessages'] );
 
 			// Move below processing - Read First and LAST UID's before start reading the stream!
 			$content['uid_last'] = $stream->GetLastPageUID();
 			$content['uid_first'] = $stream->GetFirstPageUID();
 
-			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['ViewEntriesPerPage'] )
+			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['CurrentViewEntriesPerPage'] )
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;

@@ -393,7 +393,7 @@ function CreatePagesizesList()
 	$content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Selected"] = "selected";
 
 	// The content variable will now contain the user selected oaging size
-	$content["ViewEntriesPerPage"] = $content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Value"];
+	$content["CurrentViewEntriesPerPage"] = $content['pagesizes'][ $_SESSION['PAGESIZE_ID'] ]["Value"];
 }
 
 function CreateReloadTimesList()

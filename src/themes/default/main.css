@@ -12,7 +12,7 @@ BODY
 	scrollbar-3dlight-color: #D1D7DC;
 	scrollbar-arrow-color:  #006699;
 	scrollbar-track-color: #EFEFEF;
-	scrollbar-darkshadow-color: #98AAB1
+	scrollbar-darkshadow-color: #98AAB1;
 }
 
 TD 
@@ -70,8 +70,11 @@ img
 	font-size: 11px;
 	font-weight:bold;
 
-    BACKGROUND-COLOR: #D2C598;
-	COLOR: #032D5D;
+    background-color: #C6B097;
+    background-image: url(images/bg_3.png);
+    background-repeat: repeat-x;
+	color: #032D5D;
+
 	border: 1px solid;
 	border-color: #ACBED6 #3B679B #3B679B #ACBED6;
 	height: 20px;
@@ -98,8 +101,11 @@ A.title:hover
 	font-size: 10px;
 	font-weight:bold;
 
-    BACKGROUND-COLOR: #E3D2AE;
-	COLOR: #1A3745;
+    background-color: #E3D2AE;
+    background-image: url(images/bg_4.png);
+    background-repeat: repeat-x;
+	color: #1A3745;
+
 	height: 18px;
 	text-align:center;
 	vertical-align:middle;
@@ -334,10 +340,26 @@ font
 	font-size: 10px; 
 	font-weight:bold;
 
+	background-color: #2E79A0;
+    background-image: url(images/bg_1.png);
+    background-repeat: repeat-x;
+
 	color: #FFFFFF;
-	background-color: #6C8E9C;
 }
-.cellmenu1:hover 
+.cellmenu1_naked
+{
+	border:1px ridge;
+	border-color: #79AABE #09506C #09506C #79AABE;
+	background-color: #2E79A0;
+
+	text-indent:0px;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight:bold;
+
+	color: #FFFFFF;
+}
+.cellmenu1:hover .cellmenu1_naked:hover
 { 
 	color: #FFFF99;
 	text-decoration: none;
@@ -363,10 +385,25 @@ A.cellmenu1_link:hover
 	font-size: 10px; 
 	font-weight:bold;
 
+	background-color: #9FDAF1;
+    background-image: url(images/bg_2.png);
+    background-repeat: repeat-x;
 	color: #393327;
-	background-color: #B8D4E0;
 }
-.cellmenu2:hover 
+.cellmenu2_naked
+{
+	text-indent:0px;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight:bold;
+
+	color: #393327;
+	border:1px inset;
+	border-color: #79AABE #09506C #09506C #79AABE;
+	background-color: #9FDAF1;
+}
+
+.cellmenu2:hover, .cellmenu2_naked:hover
 { 
 	color: #A31D32;
 	text-decoration: none;
@@ -375,7 +412,10 @@ A.cellmenu1_link:hover
 /* Usefull Text Classes */
 .ErrorMsg 
 {
-	font: bold 12px Verdana, Arial, Helvetica, sans-serif; 
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px; 
+	font-weight: bold;
+
 	COLOR: #FF0000;
 }
 .PriorityEmergency
@@ -448,7 +488,11 @@ select, input, button, textarea
 {
 	background-color: #E8E7E2; 
 	color:#000000; 
-	font:bold 10px Verdana,Arial,Helvetica,sans-serif;
+
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight: bold;
+
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
@@ -459,7 +503,11 @@ select, input, button, textarea
 	margin: 2px;
 	background-color: #E8E7E2; 
 	color:#000000; 
-	font:bold 10px Verdana,Arial,Helvetica,sans-serif;
+
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight: bold;
+
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
@@ -470,14 +518,21 @@ select, input, button, textarea
 	margin: 2px;
 	background-color: #E8E7E2; 
 	color:#000000; 
-	font:10px Verdana,Arial,Helvetica,sans-serif;
+
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight: bold;
+
 	border: 1px solid;
 	border-color: #233B51 #124A7C #124A7C #233B51; 
 }
 
 .highlighted 
 { 
-	font: bold 8pt Arial,Helvetica,sans-serif;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px; 
+	font-weight: bold;
+
 	color: #BB0000 
 }
 
