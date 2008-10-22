@@ -800,10 +800,16 @@ function InitConfigurationValues()
 	// --- Handle HTML Injection stuff
 	if ( strlen(GetConfigSetting("InjectHtmlHeader", false)) > 0 ) 
 		$content['EXTRA_HTMLHEAD'] .= $CFG['InjectHtmlHeader'];
+	else
+		$content['InjectHtmlHeader'] = ""; // Init Option
 	if ( strlen(GetConfigSetting("InjectBodyHeader", false)) > 0 ) 
 		$content['EXTRA_HEADER'] .= $CFG['InjectBodyHeader'];
+	else
+		$content['InjectBodyHeader'] = ""; // Init Option
 	if ( strlen(GetConfigSetting("InjectBodyFooter", false)) > 0 ) 
 		$content['EXTRA_FOOTER'] .= $CFG['InjectBodyFooter'];
+	else
+		$content['InjectBodyFooter'] = ""; // Init Option
 	// --- 
 
 	// Init main langauge file now!
