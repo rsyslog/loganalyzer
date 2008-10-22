@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 2.5.15 (beta), 2008-10-22
+- Corrected the check for magic_quotes_gpc which is important when saving 
+  configuration values are saved into the UserDB. This also fixes a 
+  problem of duplicating backslahes when using \ or ' in string fields. 
+- Fixed a minor bug of handling and saving the ViewEntriesPerPage option. 
+- Added Option to inject custom html code into the header and footer.  
+- Added Help Links into the message parser admin panel. 
+- Cleaned up and enhanced the default and dark theme. 
+- Improved documentation
+---------------------------------------------------------------------------
 Version 2.5.14 (beta), 2008-10-10
 - Added support for fully customizeable fields. This includes a fields 
   admin with possibility to customize width and alignment of fields,
