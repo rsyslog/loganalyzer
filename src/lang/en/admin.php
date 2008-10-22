@@ -92,6 +92,9 @@ $content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
 $content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
 $content['LN_GEN_POPUPMENUTIMEOUT'] = "Popupmenu Timeout in milli seconds";
 $content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
+$content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&gt; area.";
+$content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
+$content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

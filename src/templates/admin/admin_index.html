@@ -11,7 +11,7 @@
 	<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" align="center">
 	<tr>
 		<td colspan="2" class="line1">&nbsp;</td>
-		<td align="center" class="cellmenu1" width="50%" nowrap rowspan="2" valign="middle">
+		<td align="center" class="cellmenu1_naked" width="50%" nowrap rowspan="2" valign="middle">
 <!-- IF ENABLEUSEROPTIONS="true" -->
 		<a href="?op=enableuserops&value=0" class="cellmenu1_link">{LN_GEN_DISABLEUSEROPTIONS}</a>
 		<br><img src="{MENU_USEROPTIONS}" align="left" width="16" height="16" vspace="0">
@@ -107,7 +107,6 @@
 		</td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
-
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_PREPENDTITLE}</b></td>
@@ -245,12 +244,25 @@
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEBUGUSERLOGIN}</b></td>
-		<td align="right" class="line1" colspan="2"><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="right" class="line2" colspan="2"><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEBUGTOSYSLOG}</b></td>
-		<td align="right" class="line2" colspan="2"><input type="checkbox" name="MiscDebugToSyslog" value="yes" {MiscDebugToSyslog_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="right" class="line1" colspan="2"><input type="checkbox" name="MiscDebugToSyslog" value="yes" {MiscDebugToSyslog_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>
+	<tr>
+		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTHTMLHEADER}</b></td>
+		<td align="right" class="line2" colspan="2"><textarea name="InjectHtmlHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL}>{InjectHtmlHeader}</textarea></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTBODYHEADER}</b></td>
+		<td align="right" class="line2" colspan="2"><textarea name="InjectBodyHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL}>{InjectBodyHeader}</textarea></td>
+	</tr>
+	<tr>
+		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTBODYFOOTER}</b></td>
+		<td align="right" class="line2" colspan="2"><textarea name="InjectBodyFooter" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL}>{InjectBodyFooter}</textarea></td>
+	</tr>
+	<tr>
 	<tr>
 		<td align="center" colspan="3">
 			<input type="submit" value="{LN_ADMIN_SEND}">

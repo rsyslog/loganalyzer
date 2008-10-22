@@ -107,6 +107,11 @@ $content['ORACLE_HELP_TEXT'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_TE
 $content['ORACLE_WHOIS'] = GetAndReplaceLangStr( $content['LN_ORACLE_WHOIS'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
 $content['WhoisUrl'] = "http://kb.monitorware.com/kbsearch.php?sa=whois&oid=" . $content['oracle_kb_type'] . "&origin=phplogcon&q=" . urlencode($content['oracle_query']); 
 
+// Set Field Captions!
+$content['LN_FIELDS_MESSAGE'] = $fields[SYSLOG_MESSAGE]['FieldCaption'];
+$content['LN_FIELDS_HOST'] = $fields[SYSLOG_HOST]['FieldCaption'];
+
+
 // Enable help links!
 $content['helplinksenabled'] = true;
 
