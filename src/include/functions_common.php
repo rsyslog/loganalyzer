@@ -75,6 +75,9 @@ $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
+$content['EXTRA_HTMLHEAD'] = "";
+$content['EXTRA_HEADER'] = "";
+$content['EXTRA_FOOTER'] = "";
 $content['CURRENTURL'] = "";
 // --- 
 
@@ -685,8 +688,14 @@ function InitConfigurationValues()
 				{
 					for($i = 0; $i < count($rows); $i++)
 					{
-						$CFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
-						$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
+						// Obtain the right value
+						if ( isset($rows[$i]['propvalue_text']) && strlen($rows[$i]['propvalue_text']) > 0 )
+							$myValue = $rows[$i]['propvalue_text'];
+						else
+							$myValue = $rows[$i]['propvalue'];
+
+						$CFG[ $rows[$i]['propname'] ] = $myValue;
+						$content[ $rows[$i]['propname'] ] = $myValue;
 					}
 				}
 			}
@@ -777,7 +786,7 @@ function InitConfigurationValues()
 			$_SESSION['AUTORELOAD_ID'] = 0;
 	}
 
-	// Theme Handling
+	// --- Theme Handling
 	if ( !isset($content['web_theme']) ) { $content['web_theme'] = GetConfigSetting("ViewDefaultTheme", "default", CFGLEVEL_USER); }
 	if ( isset($_SESSION['CUSTOM_THEME']) && VerifyTheme($_SESSION['CUSTOM_THEME']) )
 		$content['user_theme'] = $_SESSION['CUSTOM_THEME'];
@@ -786,6 +795,16 @@ function InitConfigurationValues()
 
 	// Init Theme About Info ^^
 	InitThemeAbout($content['user_theme']);
+	// ---
+
+	// --- Handle HTML Injection stuff
+	if ( strlen(GetConfigSetting("InjectHtmlHeader", false)) > 0 ) 
+		$content['EXTRA_HTMLHEAD'] .= $CFG['InjectHtmlHeader'];
+	if ( strlen(GetConfigSetting("InjectBodyHeader", false)) > 0 ) 
+		$content['EXTRA_HEADER'] .= $CFG['InjectBodyHeader'];
+	if ( strlen(GetConfigSetting("InjectBodyFooter", false)) > 0 ) 
+		$content['EXTRA_FOOTER'] .= $CFG['InjectBodyFooter'];
+	// --- 
 
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
@@ -1349,6 +1368,11 @@ function SaveGeneralSettingsIntoDB()
 	WriteConfigValue( "DebugUserLogin", true );
 	WriteConfigValue( "MiscDebugToSyslog", true );
 	WriteConfigValue( "MiscMaxExecutionTime", true );
+
+	// Custom HTML Code 
+	WriteConfigValue( "InjectHtmlHeader", true );
+	WriteConfigValue( "InjectBodyHeader", true );
+	WriteConfigValue( "InjectBodyFooter", true );
 }
 
 function SaveUserGeneralSettingsIntoDB()

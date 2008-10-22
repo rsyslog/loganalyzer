@@ -45,7 +45,7 @@ $errdesc = "";
 $errno = 0;
 
 // --- Current Database Version, this is important for automated database Updates!
-$content['database_internalversion'] = "5";	// Whenever incremented, a database upgrade is needed
+$content['database_internalversion'] = "6";	// Whenever incremented, a database upgrade is needed
 $content['database_installedversion'] = "0";	// 0 is default which means Prior Versioning Database
 // --- 
 
@@ -361,13 +361,19 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		if ( !isset($rows) )
 		{
 			// New Entry
-			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+			if ( strlen($szDbValue) < 255 ) 
+				$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+			else
+				$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue_text, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
 			DB_FreeQuery($result);
 		}
 		else
 		{
 			// Update Entry
-			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+			if ( strlen($szDbValue) < 255 ) 
+				$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "', propvalue_text = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+			else
+				$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue_text = '" . $szDbValue . "', propvalue = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 			DB_FreeQuery($result);
 		}
 	}

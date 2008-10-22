@@ -150,6 +150,10 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = $_POST['SearchCustomButtonCaption']; }
 			if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = $_POST['SearchCustomButtonSearch']; }
 
+			if ( isset ($_POST['InjectHtmlHeader']) ) { $content['InjectHtmlHeader'] = $_POST['InjectHtmlHeader']; }
+			if ( isset ($_POST['InjectBodyHeader']) ) { $content['InjectBodyHeader'] = $_POST['InjectBodyHeader']; }
+			if ( isset ($_POST['InjectBodyFooter']) ) { $content['InjectBodyFooter'] = $_POST['InjectBodyFooter']; }
+
 			// Save configuration variables now
 			SaveGeneralSettingsIntoDB();
 		}

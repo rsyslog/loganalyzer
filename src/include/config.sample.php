@@ -85,6 +85,12 @@ $CFG['TreatNotFoundFiltersAsTrue'] = 0;		// If you filter / search for messages,
 $CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout value for popup menus in milliseconds. (those menus which popup when you click on the value of a field.
 // ---
 
+// --- Custom HTML Code 
+$CFG['InjectHtmlHeader'] = "";				// Use this variable to inject custom html into the html <head> area!
+$CFG['InjectBodyHeader'] = "";				// Use this variable to inject custom html into the begin of the <body> area!
+$CFG['InjectBodyFooter'] = "";				// Use this variable to inject custom html into the end of the <body> area!
+// ---
+
 // --- Define which fields you want to see 
 //$CFG['ShowMessage'] = true;					// If enabled, the Message column will be appended to the columns list.
 //Eventlog based fields: $CFG['Columns'] = array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, /*SYSLOG_EVENT_CATEGORY, */SYSLOG_EVENT_ID, SYSLOG_MESSAGE );
