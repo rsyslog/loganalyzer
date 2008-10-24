@@ -71,7 +71,7 @@ else
 }
 
 if ( isset($_GET['msg']) )
-	$content['SZMSG'] = urldecode($_GET['msg']);
+	$content['SZMSG'] = DB_StripSlahes($_GET['msg']);
 else
 	$content['SZMSG'] = $content["LN_ADMIN_UNKNOWNSTATE"]; 
 

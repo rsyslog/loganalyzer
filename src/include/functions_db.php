@@ -266,7 +266,7 @@ function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL)
 function DB_StripSlahes($myString)
 {
 	// Replace with internal PHP Functions!
-	if ( !get_magic_quotes_gpc() )
+	if ( get_magic_quotes_gpc() )
 		return stripslashes($myString);
 	else
 		return $myString;
