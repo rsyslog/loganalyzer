@@ -239,17 +239,18 @@ function DB_RemoveParserSpecialBadChars($myString)
 	return $returnstr;
 }
 
-function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL)
+function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL, $bForceStripSlahes = false)
 {
 	if ( $dbEngine == DB_MSSQL ) 
 	{
+//TODO STRIP SLASHES ?!
 		// MSSQL needs special treatment -.-
 		return str_replace("'","''",$myString);
 	}
 	else
 	{
 		// Replace with internal PHP Functions!
-		if ( !get_magic_quotes_gpc() )
+		if ( !get_magic_quotes_gpc() || $bForceStripSlahes )
 			return addslashes($myString);
 	//		return addcslashes($myString, "'");
 		else
@@ -322,17 +323,13 @@ function DB_Exec($query)
 		return false; 
 } 
 
-function PrepareValueForDB($szValue)
+function PrepareValueForDB($szValue, $bForceStripSlahes = false)
 {
-//echo	"<br>" . $szValue . "<br>!" . preg_match("/[^\\\\]['\\\\][^'\\\\]/e", $szValue, $matches) . "<br>";
-	// Copy value for DB and check for BadDB Chars!
-//	if ( preg_match("/(?<!\\\\)\'|\\\\\\\\/x", $szValue) ) /* OLD /(?<!\\\\)\'|(?<!\\\\)\\\\/e */
-		return DB_RemoveBadChars($szValue);
-//	else
-//		return $szValue;
+	// Wrapper for this function
+	return DB_RemoveBadChars($szValue, null, $bForceStripSlahes);
 }
 
-function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false)
+function WriteConfigValue($szPropName, $is_global = true, $userid = false, $groupid = false, $bForceStripSlahes = false)
 {
 	global $content;
 
@@ -346,7 +343,7 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		if ( isset($content[$szPropName]) )
 		{
 			// Copy value for DB and check for BadDB Chars!
-			$szDbValue = PrepareValueForDB( $content[$szPropName] );
+			$szDbValue = PrepareValueForDB( $content[$szPropName], $bForceStripSlahes );
 		}
 		else
 		{
@@ -387,7 +384,7 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		if ( isset($USERCFG[$szPropName]) )
 		{
 			// Copy value for DB and check for BadDB Chars!
-			$szDbValue = PrepareValueForDB( $USERCFG[$szPropName] );
+			$szDbValue = PrepareValueForDB( $USERCFG[$szPropName], $bForceStripSlahes );
 		}
 		else
 		{

@@ -280,7 +280,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENADDED'], $content['Name'] ) , "charts.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENADDED'], DB_StripSlahes($content['Name']) ) , "charts.php" );
 		}
 		else if ( $_POST['op'] == "editchart" )
 		{
@@ -309,7 +309,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENEDIT'], $content['Name']) , "charts.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_CHARTS_HASBEENEDIT'], DB_StripSlahes($content['Name']) ) , "charts.php" );
 			}
 		}
 	}

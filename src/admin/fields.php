@@ -249,7 +249,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENADDED'], $content['FieldCaption'] ) , "fields.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENADDED'], DB_StripSlahes($content['FieldCaption']) ) , "fields.php" );
 		}
 		else
 		{
@@ -267,7 +267,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 
 			// Done redirect!
-			RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENEDIT'], $content['FieldCaption']) , "fields.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_FIELDS_HASBEENEDIT'], DB_StripSlahes($content['FieldCaption']) ) , "fields.php" );
 		}
 	}
 }

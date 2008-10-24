@@ -322,7 +322,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 				
 				// Do the final redirect
-				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_HASBEENADDED'], $content['groupname'] ) , "groups.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_HASBEENADDED'], DB_StripSlahes($content['groupname']) ) , "groups.php" );
 			}
 		}
 		else if ( $_POST['op'] == "editgroup" )
@@ -344,7 +344,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_ERROR_HASBEENEDIT'], $content['groupname']) , "groups.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_ERROR_HASBEENEDIT'], DB_StripSlahes($content['groupname']) ) , "groups.php" );
 			}
 		}
 		else if ( $_POST['op'] == "adduser" )

@@ -211,7 +211,7 @@ else if ( $content['CONVERT_STEP'] == 4 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = DB_StripSlahes( urldecode($_GET['errormsg']) );
 	}
 }
 else if ( $content['CONVERT_STEP'] == 5 )

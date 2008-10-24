@@ -84,7 +84,7 @@ function ConvertGeneralSettings()
 	global $content; 
 
 	// Only call the same function as in admin index!
-	SaveGeneralSettingsIntoDB();
+	SaveGeneralSettingsIntoDB(true);
 }
 
 /*

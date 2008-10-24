@@ -512,7 +512,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], $content['Name'] ) , "sources.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], DB_StripSlahes($content['Name']) ) , "sources.php" );
 		}
 		else if ( $_POST['op'] == "editsource" )
 		{
@@ -567,7 +567,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], $content['Name']) , "sources.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], DB_StripSlahes($content['Name']) ) , "sources.php" );
 			}
 		}
 	}

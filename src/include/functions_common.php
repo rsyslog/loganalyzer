@@ -1347,44 +1347,44 @@ function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 	exit;
 }
 
-function SaveGeneralSettingsIntoDB()
+function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 {
-	WriteConfigValue( "ViewDefaultLanguage", true );
-	WriteConfigValue( "ViewDefaultTheme", true );
+	WriteConfigValue( "ViewDefaultLanguage", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewDefaultTheme", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "ViewUseTodayYesterday", true );
-	WriteConfigValue( "ViewEnableDetailPopups", true );
-	WriteConfigValue( "EnableIPAddressResolve", true );
-	WriteConfigValue( "MiscShowDebugMsg", true );
-	WriteConfigValue( "MiscShowDebugGridCounter", true );
-	WriteConfigValue( "MiscShowPageRenderStats", true );
-	WriteConfigValue( "MiscEnableGzipCompression", true );
-	WriteConfigValue( "SuppressDuplicatedMessages", true );
-	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true );
+	WriteConfigValue( "ViewUseTodayYesterday", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEnableDetailPopups", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "EnableIPAddressResolve", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowDebugMsg", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowDebugGridCounter", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowPageRenderStats", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscEnableGzipCompression", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SuppressDuplicatedMessages", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "ViewMessageCharacterLimit", true );
-	WriteConfigValue( "ViewStringCharacterLimit", true );
-	WriteConfigValue( "ViewEntriesPerPage", true );
-	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
-	WriteConfigValue( "PopupMenuTimeout", true );
+	WriteConfigValue( "ViewMessageCharacterLimit", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewStringCharacterLimit", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEntriesPerPage", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "PopupMenuTimeout", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "PrependTitle", true );
-	WriteConfigValue( "SearchCustomButtonCaption", true );
-	WriteConfigValue( "SearchCustomButtonSearch", true );
+	WriteConfigValue( "PrependTitle", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SearchCustomButtonCaption", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SearchCustomButtonSearch", true, null, null,$bForceStripSlahes );
 	
 	// Extra Fields
-	WriteConfigValue( "DefaultViewsID", true );
-	WriteConfigValue( "DefaultSourceID", true );
+	WriteConfigValue( "DefaultViewsID", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "DefaultSourceID", true, null, null,$bForceStripSlahes );
 	
 	// GLOBAL ONLY
-	WriteConfigValue( "DebugUserLogin", true );
-	WriteConfigValue( "MiscDebugToSyslog", true );
-	WriteConfigValue( "MiscMaxExecutionTime", true );
+	WriteConfigValue( "DebugUserLogin", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscDebugToSyslog", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscMaxExecutionTime", true, null, null,$bForceStripSlahes );
 
 	// Custom HTML Code 
-	WriteConfigValue( "InjectHtmlHeader", true );
-	WriteConfigValue( "InjectBodyHeader", true );
-	WriteConfigValue( "InjectBodyFooter", true );
+	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InjectBodyHeader", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InjectBodyFooter", true, null, null ,$bForceStripSlahes );
 }
 
 function SaveUserGeneralSettingsIntoDB()
