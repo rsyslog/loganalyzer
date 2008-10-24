@@ -216,6 +216,9 @@ function DB_PrintError($MyErrorMsg, $DieOrNot)
 	$errdesc = mysql_error();
 	$errno = mysql_errno();
 
+	// Define global variable so we know an error has occured!
+	define('PHPLOGCON_INERROR', true);
+
 	$errormsg="Database error: $MyErrorMsg $linesep";
 	$errormsg.="mysql error: $errdesc $linesep";
 	$errormsg.="mysql error number: $errno $linesep";

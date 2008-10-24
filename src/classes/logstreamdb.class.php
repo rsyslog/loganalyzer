@@ -118,7 +118,8 @@ class LogStreamDB extends LogStream {
 	*/
 	public function Close()
 	{
-		mysql_close($this->_dbhandle);
+		if ($this->_dbhandle) 
+			mysql_close($this->_dbhandle);
 		return SUCCESS;
 	}
 
@@ -131,7 +132,8 @@ class LogStreamDB extends LogStream {
 		// Try to connect to the database
 		if ( $this->_dbhandle == null ) 
 		{
-			$this->_dbhandle = @mysql_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword);
+			// Forces to open a new link in all cases!
+			$this->_dbhandle = @mysql_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword, true);
 			if (!$this->_dbhandle) 
 			{
 				if ( isset($php_errormsg) )

@@ -99,6 +99,7 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 	$content['LN_ERROR_FILE_NOMORETIME'] = "No more time for processing left";
 	$content['LN_WARNING_DBUPGRADE'] = "Database Upgrade required";
 	$content['LN_WARNING_DBUPGRADE_TEXT'] = "The current installed database version is '%1'.<br>An update to version '%2' is available.";
+	$content['LN_ERROR_REDIRECTABORTED'] = 'Automatic redirect to the <a href="%1">page</a> was aborted, as an internal error occured. Please see the error details above and contact our support forums if you need assistance.';
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";

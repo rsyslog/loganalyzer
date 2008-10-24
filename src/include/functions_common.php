@@ -892,14 +892,14 @@ function DieWithErrorMsg( $szerrmsg )
 	echo 
 		"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
 		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 		"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
 		"<H3>Critical Error occured</H3>" . 
 		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\">" . 
+		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\"><br>" . 
 		$szerrmsg . 
-		"</td></tr></table>" . 
+		"<br><br></td></tr></table>" . 
 		"</body></html>";
 	exit;
 }
@@ -910,14 +910,14 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	echo 
 		"<html><title>phpLogCon :: Error occured</title><head>" . 
 		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 		"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
 		"<H3>Error occured</H3>" . 
 		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\">" . 
+		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\"><br>" . 
 		$szerrmsg . 
-		"</td></tr></table>" . 
+		"<br><br></td></tr></table>" . 
 		"</body></html>";
 	exit;
 }
@@ -1005,6 +1005,12 @@ function RedirectPage( $newpage )
 
 function RedirectResult( $szMsg, $newpage )
 {
+	global $content;
+
+	if ( defined('PHPLOGCON_INERROR') )
+		DieWithErrorMsg( GetAndReplaceLangStr($content["LN_ERROR_REDIRECTABORTED"], $newpage) );
+
+	// Perform redirect!
 	header("Location: result.php?msg=" . urlencode($szMsg) . "&redir=" . urlencode($newpage));
 	exit;
 }
@@ -1505,6 +1511,22 @@ function list_files($directory, $failOnError = true)
 		sort ($result);
 		return $result;
 	}
+}
+
+/*
+*	Helper function to flush html output to avoid redirects if errors happen!
+*/
+function FlushHtmlOutput()
+{
+	global $RUNMODE;
+	
+	// not needed in console mode
+	if ( $RUNMODE == RUNMODE_COMMANDLINE )
+		return;
+
+	//Flush php output
+	@flush();
+	@ob_flush();
 }
 
 /*
