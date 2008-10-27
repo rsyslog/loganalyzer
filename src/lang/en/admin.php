@@ -227,6 +227,7 @@ $content['LN_SOURCES_WARNDELETESEARCH'] = "Are you sure that you want to delete 
 $content['LN_SOURCES_ERROR_DELSOURCE'] = "Deleting of the Source with id '%1' failed!";
 $content['LN_SOURCES_ERROR_HASBEENDEL'] = "The Source '%1' has been successfully deleted!";
 $content['LN_SOURCES_DESCRIPTION'] = "Source Description (Optional)";
+$content['LN_SOURCES_ERROR_INVALIDVALUE'] = "Invalid value for the paramater '%1'.";
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";

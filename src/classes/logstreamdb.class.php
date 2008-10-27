@@ -878,7 +878,7 @@ class LogStreamDB extends LogStream {
 
 		// Get SQL Statement
 		$szSql = $this->CreateSQLStatement($uID);
-		
+
 		// Append LIMIT clause
 		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
 //echo $szSql . "<br>";

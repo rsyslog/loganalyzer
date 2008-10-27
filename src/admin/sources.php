@@ -102,6 +102,7 @@ if ( isset($_GET['op']) )
 		$content['SourceDBEnableRowCounting'] = "false";
 		$content['SourceDBEnableRowCounting_true'] = "";
 		$content['SourceDBEnableRowCounting_false'] = "checked";
+		$content['SourceDBRecordsPerQuery'] = "100";
 
 		// General stuff
 		$content['userid'] = null;
@@ -188,6 +189,8 @@ if ( isset($_GET['op']) )
 					$content['SourceDBEnableRowCounting_true'] = "";
 					$content['SourceDBEnableRowCounting_false'] = "checked";
 				}
+				$content['SourceDBRecordsPerQuery'] = $mysource['DBRecordsPerQuery'];
+				
 
 				if ( $mysource['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
@@ -302,6 +305,7 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['SourceDBServer']) ) { $content['SourceDBServer'] = DB_RemoveBadChars($_POST['SourceDBServer']); }
 			if ( isset($_POST['SourceDBTableName']) ) { $content['SourceDBTableName'] = DB_RemoveBadChars($_POST['SourceDBTableName']); }
 			if ( isset($_POST['SourceDBUser']) ) { $content['SourceDBUser'] = DB_RemoveBadChars($_POST['SourceDBUser']); }
+			if ( isset($_POST['SourceDBRecordsPerQuery']) ) { $content['SourceDBRecordsPerQuery'] = DB_RemoveBadChars($_POST['SourceDBRecordsPerQuery']); }
 			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
 			if ( isset($_POST['SourceDBEnableRowCounting']) ) {	$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']); }
 			// Extra Check for this property
@@ -417,6 +421,11 @@ if ( isset($_POST['op']) )
 				$content['ISERROR'] = true;
 				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBUSER'] );
 			}
+			else if ( !is_numeric($content['SourceDBRecordsPerQuery']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDVALUE'], $content['LN_CFG_DBRECORDSPERQUERY'] );
+			}
 		}
 		else
 		{
@@ -453,7 +462,8 @@ if ( isset($_POST['op']) )
 			$tmpSource['DBTableName']	= $content['SourceDBTableName'];
 			$tmpSource['DBUser']		= $content['SourceDBUser'];
 			$tmpSource['DBPassword']	= $content['SourceDBPassword'];
-			$tmpSource['DBEnableRowCounting'] = $content['SourceDBEnableRowCounting'];
+			$tmpSource['DBEnableRowCounting']	= $content['SourceDBEnableRowCounting'];
+			$tmpSource['DBRecordsPerQuery']		= $content['SourceDBRecordsPerQuery'];
 			$tmpSource['userid']		= $content['userid'];
 			$tmpSource['groupid']		= $content['groupid'];
 		}
@@ -500,7 +510,7 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, SourceDBRecordsPerQuery, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
@@ -516,6 +526,7 @@ if ( isset($_POST['op']) )
 						'" . $content['SourceDBPassword'] . "',
 						'" . $content['SourceDBTableName'] . "',
 						" . $content['SourceDBEnableRowCounting'] . ",
+						" . $content['SourceDBRecordsPerQuery'] . ",
 						" . $content['userid'] . ", 
 						" . $content['groupid'] . " 
 						)";
@@ -573,6 +584,7 @@ if ( isset($_POST['op']) )
 									DBPassword = '" . $content['SourceDBPassword'] . "', 
 									DBTableName = '" . $content['SourceDBTableName'] . "', 
 									DBEnableRowCounting = " . $content['SourceDBEnableRowCounting'] . ", 
+									DBRecordsPerQuery = " . $content['SourceDBRecordsPerQuery'] . ", 
 									userid = " . $content['userid'] . ", 
 									groupid = " . $content['groupid'] . "
 									WHERE ID = " . $content['SOURCEID'];

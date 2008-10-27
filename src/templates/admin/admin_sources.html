@@ -17,14 +17,16 @@
 			showvisibility("HiddenDatabaseTypeOptions");
 			hidevisibility("HiddenDiskTypeOptions");
 
-			hidevisibility("HiddenDBTypesOptions");
+			showvisibility("HiddenMYSQLSourceOptions");
+			hidevisibility("HiddenPDOSourceOptions");
 		}
 		else if (myfield.value == 3)
 		{
 			showvisibility("HiddenDatabaseTypeOptions");
 			hidevisibility("HiddenDiskTypeOptions");
 
-			showvisibility("HiddenDBTypesOptions");
+			showvisibility("HiddenPDOSourceOptions");
+			hidevisibility("HiddenMYSQLSourceOptions");
 		}
 	}
 </script>
@@ -136,7 +138,7 @@
 				<td align="right" class="line1"><input type="checkbox" name="MsgNormalize" value="1" {CHECKED_ISNORMALIZEMSG}></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SKIPUNPARSEABLE}</b></td>
+				<td align="left" class="cellmenu2_naked"><b>{LN_CFG_SKIPUNPARSEABLE}</b></td>
 				<td align="right" class="line1"><input type="checkbox" name="MsgSkipUnparseable" value="1" {CHECKED_ISSKIPUNPARSEABLE}></td>
 			</tr>
 
@@ -184,7 +186,7 @@
 			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
 			</table>
 
-			<div id="HiddenDBTypesOptions" class="ShownContent">
+			<div id="HiddenPDOSourceOptions" class="ShownContent">
 			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 			<tr>
 				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
@@ -229,6 +231,15 @@
 				<td align="right" class="line1" width="100%">
 					<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
 				</td>
+			</tr>
+			</table>
+			</div>
+
+			<div id="HiddenMYSQLSourceOptions" class="ShownContent">
+			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<tr>
+				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBRECORDSPERQUERY}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQuery}"></td>
 			</tr>
 			</table>
 			</div>

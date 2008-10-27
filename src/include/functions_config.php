@@ -159,6 +159,7 @@ function InitSource(&$mysource)
 			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
 			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
 			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+			if ( isset($mysource['DBRecordsPerQuery']) ) { $mysource['ObjRef']->RecordsPerQuery = $mysource['DBRecordsPerQuery']; }
 		}
 		else if ( $mysource['SourceType'] == SOURCE_PDO )
 		{
