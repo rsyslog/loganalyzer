@@ -260,7 +260,7 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = urldecode($_GET['errormsg']);
+		$content['errormsg'] = urldecode( DB_StripSlahes($_GET['errormsg']) );
 	}
 }
 else if ( $content['INSTALL_STEP'] == 4 )
@@ -461,7 +461,7 @@ else if ( $content['INSTALL_STEP'] == 6 )
 		if ( isset($_GET['errormsg']) )
 		{
 			$content['iserror'] = "true";
-			$content['errormsg'] = urldecode($_GET['errormsg']);
+			$content['errormsg'] = urldecode( DB_StripSlahes($_GET['errormsg']) );
 		}
 	}
 	else // NO Database means NO user management, so next step!
@@ -553,7 +553,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = urldecode($_GET['errormsg']);
+		$content['errormsg'] = urldecode( DB_StripSlahes($_GET['errormsg']) );
 	}
 }
 else if ( $content['INSTALL_STEP'] == 8 )

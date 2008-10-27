@@ -162,7 +162,7 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	}
 
 	// Append INSERT Statement for Config Table to set the Database Version ^^!
-	$mycommands[count($mycommands)] = "INSERT INTO `" . GetConfigSetting("UserDBPref") . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', " . $content['database_internalversion'] . ")";
+	$mycommands[count($mycommands)] = "INSERT INTO `" . GetConfigSetting("UserDBPref") . "config` (`propname`, `propvalue`, `is_global`) VALUES ('database_installedversion', '" . $content['database_internalversion'] . "', 1)";
 
 	// --- Now execute all commands
 	ini_set('error_reporting', E_WARNING); // Enable Warnings!
@@ -211,7 +211,7 @@ else if ( $content['CONVERT_STEP'] == 4 )
 	if ( isset($_GET['errormsg']) )
 	{
 		$content['iserror'] = "true";
-		$content['errormsg'] = DB_RemoveBadChars( urldecode($_GET['errormsg']) );
+		$content['errormsg'] = DB_StripSlahes( urldecode($_GET['errormsg']) );
 	}
 }
 else if ( $content['CONVERT_STEP'] == 5 )

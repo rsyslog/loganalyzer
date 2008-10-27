@@ -892,14 +892,14 @@ function DieWithErrorMsg( $szerrmsg )
 	echo 
 		"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
 		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 		"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
 		"<H3>Critical Error occured</H3>" . 
 		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\">" . 
+		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\"><br>" . 
 		$szerrmsg . 
-		"</td></tr></table>" . 
+		"<br><br></td></tr></table>" . 
 		"</body></html>";
 	exit;
 }
@@ -910,14 +910,14 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	echo 
 		"<html><title>phpLogCon :: Error occured</title><head>" . 
 		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\"><tr>". 
+		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 		"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
 		"<H3>Error occured</H3>" . 
 		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\">" . 
+		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+		"<td class=\"tableBackground\" align=\"left\"><br>" . 
 		$szerrmsg . 
-		"</td></tr></table>" . 
+		"<br><br></td></tr></table>" . 
 		"</body></html>";
 	exit;
 }
@@ -1005,6 +1005,12 @@ function RedirectPage( $newpage )
 
 function RedirectResult( $szMsg, $newpage )
 {
+	global $content;
+
+	if ( defined('PHPLOGCON_INERROR') )
+		DieWithErrorMsg( GetAndReplaceLangStr($content["LN_ERROR_REDIRECTABORTED"], $newpage) );
+
+	// Perform redirect!
 	header("Location: result.php?msg=" . urlencode($szMsg) . "&redir=" . urlencode($newpage));
 	exit;
 }
@@ -1341,44 +1347,44 @@ function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 	exit;
 }
 
-function SaveGeneralSettingsIntoDB()
+function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 {
-	WriteConfigValue( "ViewDefaultLanguage", true );
-	WriteConfigValue( "ViewDefaultTheme", true );
+	WriteConfigValue( "ViewDefaultLanguage", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewDefaultTheme", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "ViewUseTodayYesterday", true );
-	WriteConfigValue( "ViewEnableDetailPopups", true );
-	WriteConfigValue( "EnableIPAddressResolve", true );
-	WriteConfigValue( "MiscShowDebugMsg", true );
-	WriteConfigValue( "MiscShowDebugGridCounter", true );
-	WriteConfigValue( "MiscShowPageRenderStats", true );
-	WriteConfigValue( "MiscEnableGzipCompression", true );
-	WriteConfigValue( "SuppressDuplicatedMessages", true );
-	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true );
+	WriteConfigValue( "ViewUseTodayYesterday", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEnableDetailPopups", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "EnableIPAddressResolve", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowDebugMsg", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowDebugGridCounter", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscShowPageRenderStats", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscEnableGzipCompression", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SuppressDuplicatedMessages", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "ViewMessageCharacterLimit", true );
-	WriteConfigValue( "ViewStringCharacterLimit", true );
-	WriteConfigValue( "ViewEntriesPerPage", true );
-	WriteConfigValue( "ViewEnableAutoReloadSeconds", true );
-	WriteConfigValue( "PopupMenuTimeout", true );
+	WriteConfigValue( "ViewMessageCharacterLimit", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewStringCharacterLimit", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEntriesPerPage", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewEnableAutoReloadSeconds", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "PopupMenuTimeout", true, null, null,$bForceStripSlahes );
 
-	WriteConfigValue( "PrependTitle", true );
-	WriteConfigValue( "SearchCustomButtonCaption", true );
-	WriteConfigValue( "SearchCustomButtonSearch", true );
+	WriteConfigValue( "PrependTitle", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SearchCustomButtonCaption", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SearchCustomButtonSearch", true, null, null,$bForceStripSlahes );
 	
 	// Extra Fields
-	WriteConfigValue( "DefaultViewsID", true );
-	WriteConfigValue( "DefaultSourceID", true );
+	WriteConfigValue( "DefaultViewsID", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "DefaultSourceID", true, null, null,$bForceStripSlahes );
 	
 	// GLOBAL ONLY
-	WriteConfigValue( "DebugUserLogin", true );
-	WriteConfigValue( "MiscDebugToSyslog", true );
-	WriteConfigValue( "MiscMaxExecutionTime", true );
+	WriteConfigValue( "DebugUserLogin", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscDebugToSyslog", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "MiscMaxExecutionTime", true, null, null,$bForceStripSlahes );
 
 	// Custom HTML Code 
-	WriteConfigValue( "InjectHtmlHeader", true );
-	WriteConfigValue( "InjectBodyHeader", true );
-	WriteConfigValue( "InjectBodyFooter", true );
+	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InjectBodyHeader", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InjectBodyFooter", true, null, null ,$bForceStripSlahes );
 }
 
 function SaveUserGeneralSettingsIntoDB()
@@ -1505,6 +1511,22 @@ function list_files($directory, $failOnError = true)
 		sort ($result);
 		return $result;
 	}
+}
+
+/*
+*	Helper function to flush html output to avoid redirects if errors happen!
+*/
+function FlushHtmlOutput()
+{
+	global $RUNMODE;
+	
+	// not needed in console mode
+	if ( $RUNMODE == RUNMODE_COMMANDLINE )
+		return;
+
+	//Flush php output
+	@flush();
+	@ob_flush();
 }
 
 /*

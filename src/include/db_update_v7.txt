@@ -1,0 +1,7 @@
+-- New Database Structure Updates
+ALTER TABLE `logcon_sources` ADD `MsgSkipUnparseable` BOOL NOT NULL DEFAULT '0' AFTER `MsgNormalize` ;
+ALTER TABLE `logcon_sources` ADD `DBRecordsPerQuery` INT NOT NULL DEFAULT '100' AFTER `DBEnableRowCounting` ;
+
+-- Insert data
+
+-- Updated Data

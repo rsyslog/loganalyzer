@@ -275,7 +275,7 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 if ( isset($_POST['op']) )
 {
 	if ( isset ($_POST['id']) ) { $content['VIEWID'] = DB_RemoveBadChars($_POST['id']); } else {$content['VIEWID'] = ""; }
-	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
+	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_StripSlahes($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
 
 	// User & Group handeled specially
 	if ( isset ($_POST['isuseronly']) ) 
@@ -315,6 +315,9 @@ if ( isset($_POST['op']) )
 				{
 					// Add New entry into columnlist
 					$content['SUBCOLUMNS'][$szColId]['ColFieldID'] = $szColId;
+
+					// Set Internal FieldID
+					$content['SUBCOLUMNS'][$szColId]['ColInternalID'] = $fields[$szColId]['FieldDefine'];
 
 					// Set Fieldcaption
 					if ( isset($fields[$szColId]['FieldCaption']) )
@@ -411,6 +414,9 @@ if ( isset($_POST['op']) )
 		}
 		else // Now SUBOP means normal processing!
 		{
+			// Now we convert fr DB insert!
+			$content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']);
+
 			// Everything was alright, so we go to the next step!
 			if ( $_POST['op'] == "addnewview" )
 			{
@@ -437,7 +443,7 @@ if ( isset($_POST['op']) )
 					DB_FreeQuery($result);
 					
 					// Do the final redirect
-					RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENADDED'], $content['DisplayName'] ) , "views.php" );
+					RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENADDED'], DB_StripSlahes($content['DisplayName']) ) , "views.php" );
 				}
 				else
 				{
@@ -447,6 +453,9 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $_POST['op'] == "editview" )
 			{
+				// Now we convert fr DB insert!
+				$content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']);
+
 				$result = DB_Query("SELECT ID FROM " . DB_VIEWS . " WHERE ID = " . $content['VIEWID']);
 				$myrow = DB_GetSingleRow($result, true);
 				if ( !isset($myrow['ID']) )
@@ -480,7 +489,7 @@ if ( isset($_POST['op']) )
 						DB_FreeQuery($result);
 
 						// Done redirect!
-						RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENEDIT'], $content['DisplayName']) , "views.php" );
+						RedirectResult( GetAndReplaceLangStr( $content['LN_VIEWS_HASBEENEDIT'], DB_StripSlahes($content['DisplayName']) ) , "views.php" );
 					}
 					else
 					{

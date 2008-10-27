@@ -235,7 +235,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 			
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENADDED'], $content['DisplayName'] ) , "searches.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENADDED'], DB_StripSlahes($content['DisplayName']) ) , "searches.php" );
 		}
 		else if ( $_POST['op'] == "editsearch" )
 		{
@@ -258,7 +258,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENEDIT'], $content['DisplayName']) , "searches.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_SEARCH_HASBEENEDIT'], DB_StripSlahes($content['DisplayName']) ) , "searches.php" );
 			}
 		}
 	}

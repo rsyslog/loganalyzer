@@ -53,7 +53,8 @@ abstract class LogStreamConfig {
 	protected $_msgParserList = null;		// Contains a string list of configure msg parsers
 	protected $_msgParserObjList = null;	// Contains an object reference list to the msg parsers
 	protected $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
-	
+	public $_SkipUnparseable = 0;			// If set to one, all unparseable message will be ignored! This of course only applies if a msg parser is used
+
 	// Constructor prototype 
 	public abstract function LogStreamFactory($o);
 	
@@ -77,6 +78,17 @@ abstract class LogStreamConfig {
 				$this->_msgParserObjList[] = $NewParser;			// Append NewParser to Parser array
 			}
 		}
+	}
+
+	/*
+	* Helper function to init Parserlist
+	*/
+	public function SetSkipUnparseable( $nNewVal )
+	{
+		if ( $nNewVal == 0 ) 
+			$this->_SkipUnparseable = 0;
+		else
+			$this->_SkipUnparseable = 1;
 	}
 
 	/*
@@ -147,6 +159,10 @@ abstract class LogStreamConfig {
 				$ret = $myMsgParser->ParseMsg($szMsg, $arrArguments);
 				if ( $ret == SUCCESS || $ret == ERROR_MSG_SKIPMESSAGE )
 					return $ret;
+					
+				// Extra check, if user wants to, we SKIP the message!
+				if ( $this->_SkipUnparseable == 1 && $ret == ERROR_MSG_NOMATCH )
+					return ERROR_MSG_SKIPMESSAGE;
 			}
 		}
 

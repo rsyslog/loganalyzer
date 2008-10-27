@@ -36,6 +36,7 @@ class MsgParser_wireless extends MsgParser {
 	public $_ClassDescription = 'Custom logfile parser for wireless access points.';
 	public $_ClassHelpArticle = "";
 	public $_ClassRequiredFields = array (
+			"net_host" => array (",  ", "FieldID" => "net_host", "FieldDefine" => "SYSLOG_NET_HOST", "FieldCaption" => "Hostname", "FieldType" => 0, "FieldAlign" => "left", "SearchField" => "net_host", "DefaultWidth" => 100, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
 			"net_bytesrecieved" => array ( "FieldID" => "net_bytesrecieved", "FieldDefine" => "SYSLOG_NET_BYTESRECIEVED", "FieldCaption" => "Bytes recieved", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_bytesrecieved", "DefaultWidth" => 80, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
 			"net_bytessend" => array (",  ", "FieldID" => "net_bytessend", "FieldDefine" => "SYSLOG_NET_BYTESSEND", "FieldCaption" => "Bytes send", "FieldType" => 1, "FieldAlign" => "left", "SearchField" => "net_bytessend", "DefaultWidth" => 80, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0 ), 
 			"net_interface" => array (",  ", "FieldID" => "net_interface", "FieldDefine" => "SYSLOG_NET_INTERFACE", "FieldCaption" => "Interface", "FieldType" => 0, "FieldAlign" => "center", "SearchField" => "net_interface", "DefaultWidth" => 75, "SearchOnline" => 0, "Trunscate" => 0, "Sortable" => 0), 
@@ -72,10 +73,71 @@ class MsgParser_wireless extends MsgParser {
 
 		//trim the msg first to remove spaces from begin and end
 		$szMsg = trim($szMsg);
-//return ERROR_MSG_NOMATCH;
 
 		// Sample:	Oct 14 21:05:52 script,info INICIO; Madrid-arturosoria ;wlan1 ;00:1F:3A:66:70:09 ;192.168.10.117 ;24Mbps ;36Mbps ;15:50:56 ;00:00:00.080 ;-80dBm@1Mbps ;21 ;78 ;43351,126437 ;2959,377
-		if ( preg_match('/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?),(.*?) (.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?)$/', $szMsg, $out) )
+		if ( preg_match('/(.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?)$/', $szMsg, $out) )
+		{
+			$arrArguments[SYSLOG_NET_HOST] = trim($out[1]);
+
+			// Set wlan log specific properties!
+			$arrArguments[SYSLOG_NET_INTERFACE]		= trim($out[2]);
+			$arrArguments[SYSLOG_NET_MAC_ADDRESS]	= trim($out[3]);
+			$arrArguments[SYSLOG_NET_LASTIP]		= trim($out[4]);
+			$arrArguments[SYSLOG_NET_RXRATE]		= trim($out[5]);
+			$arrArguments[SYSLOG_NET_TXRATE]		= trim($out[6]);
+			$arrArguments[SYSLOG_NET_UPTIME]		= trim($out[7]);
+			$arrArguments[SYSLOG_NET_LASTACTIVITY]	= trim($out[8]);
+			$arrArguments[SYSLOG_NET_SIGNALSTRENGTH]= trim($out[9]);
+
+			// Number based fields
+			$arrArguments[SYSLOG_NET_SIGNALTONOISE] = trim($out[10]);
+			$arrArguments[SYSLOG_NET_TXCCQ]			= trim($out[11]);
+
+			// Set msg to whole logline 
+			$arrArguments[SYSLOG_MESSAGE]			= trim($out[0]);
+			
+			// Get additional parameters!
+			if ( preg_match('/(.|.*?[0-9]{1,12}.*?),(.|.*?[0-9]{1,12}.*?);(.|.*?[0-9]{1,12}.*?),(.|.*?[0-9]{1,12}.*?)$/', $out[12], $out2) )
+			{
+				$arrArguments[SYSLOG_NET_BYTESRECIEVED]		= trim($out2[1]);
+				$arrArguments[SYSLOG_NET_BYTESSEND]			= trim($out2[2]);
+				$arrArguments[SYSLOG_NET_PACKETSRECIEVED]	= trim($out2[3]);
+				$arrArguments[SYSLOG_NET_PACKETSSEND]		= trim($out2[4]);
+			}
+			else
+			{
+				$arrArguments[SYSLOG_NET_BYTESRECIEVED] = "";
+				$arrArguments[SYSLOG_NET_BYTESSEND] = "";
+				$arrArguments[SYSLOG_NET_PACKETSRECIEVED] = "";
+				$arrArguments[SYSLOG_NET_PACKETSSEND] = "";
+			}
+
+			if ( $this->_MsgNormalize == 1 ) 
+			{
+				//Init tmp msg
+				$szTmpMsg = "";
+
+				// Create Field Array to prepend into msg! Reverse Order here
+				$myFields = array( SYSLOG_NET_PACKETSSEND, SYSLOG_NET_PACKETSRECIEVED, SYSLOG_NET_BYTESSEND, SYSLOG_NET_BYTESRECIEVED, SYSLOG_NET_TXCCQ, SYSLOG_NET_SIGNALTONOISE, SYSLOG_NET_UPTIME, SYSLOG_NET_SIGNALSTRENGTH, SYSLOG_NET_LASTACTIVITY, SYSLOG_NET_TXRATE, SYSLOG_NET_RXRATE, SYSLOG_NET_LASTIP, SYSLOG_NET_MAC_ADDRESS, SYSLOG_NET_INTERFACE, SYSLOG_HOST );
+
+				foreach ( $myFields as $myField )
+				{
+					// Set Field Caption
+					if ( isset($fields[$myField]['FieldCaption']) )
+						$szFieldName = $fields[$myField]['FieldCaption'];
+					else
+						$szFieldName = $myField;
+
+					// Append Field into msg
+					$szTmpMsg = $szFieldName . ": '" . $arrArguments[$myField] . "'\n" . $szTmpMsg;
+				}
+
+				// copy finished MSG back!
+				$arrArguments[SYSLOG_MESSAGE] = $szTmpMsg;
+			}
+		}
+		// Sample:	Madrid-arturosoria ;wlan1 ;00:1F:3A:66:70:09 ;192.168.10.117 ;24Mbps ;36Mbps ;15:50:56 ;00:00:00.080 ;-80dBm@1Mbps ;21 ;78 ;43351,126437 ;2959,377
+		else if ( preg_match('/(...)(?:.|..)([0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}) (.*?),(.*?) (.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?);(.|.*?)$/', $szMsg, $out) )
 		{
 
 //print_r ( $out );
@@ -83,33 +145,32 @@ class MsgParser_wireless extends MsgParser {
 
 			// Set generic properties
 			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1] . " " . $out[2]);
-			$arrArguments[SYSLOG_HOST] = $out[6];
-//			$arrArguments[SYSLOG_DATE] = GetEventTime($out[4]);
+			$arrArguments[SYSLOG_NET_HOST]			= trim($out[6]);
 
 			// Set wlan log specific properties!
-			$arrArguments[SYSLOG_NET_INTERFACE] = trim($out[7]);
-			$arrArguments[SYSLOG_NET_MAC_ADDRESS] = trim($out[8]);
-			$arrArguments[SYSLOG_NET_LASTIP] = trim($out[9]);
-			$arrArguments[SYSLOG_NET_RXRATE] = trim($out[10]);
-			$arrArguments[SYSLOG_NET_TXRATE] = trim($out[11]);
-			$arrArguments[SYSLOG_NET_UPTIME] = trim($out[12]);
-			$arrArguments[SYSLOG_NET_LASTACTIVITY] = trim($out[13]);
-			$arrArguments[SYSLOG_NET_SIGNALSTRENGTH] = trim($out[14]);
+			$arrArguments[SYSLOG_NET_INTERFACE]		= trim($out[7]);
+			$arrArguments[SYSLOG_NET_MAC_ADDRESS]	= trim($out[8]);
+			$arrArguments[SYSLOG_NET_LASTIP]		= trim($out[9]);
+			$arrArguments[SYSLOG_NET_RXRATE]		= trim($out[10]);
+			$arrArguments[SYSLOG_NET_TXRATE]		= trim($out[11]);
+			$arrArguments[SYSLOG_NET_UPTIME]		= trim($out[12]);
+			$arrArguments[SYSLOG_NET_LASTACTIVITY]	= trim($out[13]);
+			$arrArguments[SYSLOG_NET_SIGNALSTRENGTH]= trim($out[14]);
 
 			// Number based fields
-			$arrArguments[SYSLOG_NET_SIGNALTONOISE] = $out[15];
-			$arrArguments[SYSLOG_NET_TXCCQ] = $out[16];
+			$arrArguments[SYSLOG_NET_SIGNALTONOISE] = trim($out[15]);
+			$arrArguments[SYSLOG_NET_TXCCQ]			= trim($out[16]);
 
 			// Set msg to whole logline 
-			$arrArguments[SYSLOG_MESSAGE] = $out[0];
+			$arrArguments[SYSLOG_MESSAGE]			= trim($out[0]);
 			
 			// Get additional parameters!
 			if ( preg_match('/(.|.*?[0-9]{1,12}.*?),(.|.*?[0-9]{1,12}.*?);(.|.*?[0-9]{1,12}.*?),(.|.*?[0-9]{1,12}.*?)$/', $out[17], $out2) )
 			{
-				$arrArguments[SYSLOG_NET_BYTESRECIEVED] = $out2[1];
-				$arrArguments[SYSLOG_NET_BYTESSEND] = $out2[2];
-				$arrArguments[SYSLOG_NET_PACKETSRECIEVED] = $out2[3];
-				$arrArguments[SYSLOG_NET_PACKETSSEND] = $out2[4];
+				$arrArguments[SYSLOG_NET_BYTESRECIEVED]		= trim($out2[1]);
+				$arrArguments[SYSLOG_NET_BYTESSEND]			= trim($out2[2]);
+				$arrArguments[SYSLOG_NET_PACKETSRECIEVED]	= trim($out2[3]);
+				$arrArguments[SYSLOG_NET_PACKETSSEND]		= trim($out2[4]);
 			}
 			else
 			{

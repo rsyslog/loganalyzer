@@ -267,7 +267,17 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				}
 			}
 		}
-		else
+		else if ( $ret == ERROR_MSG_SKIPMESSAGE )
+		{
+			do
+			{
+				// Skip until we find a suitable entry
+				$ret = $stream->ReadNext($uID, $logArray);
+			} while ($ret == ERROR_MSG_SKIPMESSAGE);
+		}
+		
+		// check for error return state!
+		if ( $ret != SUCCESS )
 		{
 			// This will disable to Main SyslogView and show an error message
 			$content['syslogmessagesenabled'] = "false";
@@ -625,7 +635,14 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 				// Increment Counter
 				$counter++;
-			} while ($counter < $content['CurrentViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+				
+				// --- Extra Loop to get the next entry!
+				do
+				{
+					$ret = $stream->ReadNext($uID, $logArray);
+				} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+				// --- 
+			} while ( $counter < $content['CurrentViewEntriesPerPage'] && ($ret == SUCCESS) );
 //print_r ( $content['syslogmessages'] );
 
 			// Move below processing - Read First and LAST UID's before start reading the stream!

@@ -70,7 +70,9 @@ if ( isset($_GET['op']) )
 		CreateSourceTypesList($content['SourceType']);
 		$content['MsgParserList'] = "";
 		$content['MsgNormalize'] = 0;
+		$content['MsgSkipUnparseable'] = 0;
 		$content['CHECKED_ISNORMALIZEMSG'] = "";
+		$content['CHECKED_ISSKIPUNPARSEABLE'] = "";
 
 		// Init View List!
 		$content['SourceViewID'] = 'SYSLOG';
@@ -100,6 +102,7 @@ if ( isset($_GET['op']) )
 		$content['SourceDBEnableRowCounting'] = "false";
 		$content['SourceDBEnableRowCounting_true'] = "";
 		$content['SourceDBEnableRowCounting_false'] = "checked";
+		$content['SourceDBRecordsPerQuery'] = "100";
 
 		// General stuff
 		$content['userid'] = null;
@@ -143,6 +146,13 @@ if ( isset($_GET['op']) )
 				else
 					$content['CHECKED_ISNORMALIZEMSG'] = "";
 
+				$content['MsgSkipUnparseable'] = $mysource['MsgSkipUnparseable'];
+				if ( $mysource['MsgSkipUnparseable'] == 1 )
+					$content['CHECKED_ISSKIPUNPARSEABLE'] = "checked";
+				else
+					$content['CHECKED_ISSKIPUNPARSEABLE'] = "";
+				
+
 				// Init View List!
 				$content['SourceViewID'] = $mysource['ViewID'];
 				$content['VIEWS'] = $content['Views'];
@@ -179,6 +189,8 @@ if ( isset($_GET['op']) )
 					$content['SourceDBEnableRowCounting_true'] = "";
 					$content['SourceDBEnableRowCounting_false'] = "checked";
 				}
+				$content['SourceDBRecordsPerQuery'] = $mysource['DBRecordsPerQuery'];
+				
 
 				if ( $mysource['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
@@ -273,6 +285,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
 	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
 	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
+	if ( isset($_POST['MsgSkipUnparseable']) ) { $content['MsgSkipUnparseable'] = intval(DB_RemoveBadChars($_POST['MsgSkipUnparseable'])); } else {$content['MsgSkipUnparseable'] = 0; }
 	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
 
 	if ( isset($content['SourceType']) )
@@ -292,6 +305,7 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['SourceDBServer']) ) { $content['SourceDBServer'] = DB_RemoveBadChars($_POST['SourceDBServer']); }
 			if ( isset($_POST['SourceDBTableName']) ) { $content['SourceDBTableName'] = DB_RemoveBadChars($_POST['SourceDBTableName']); }
 			if ( isset($_POST['SourceDBUser']) ) { $content['SourceDBUser'] = DB_RemoveBadChars($_POST['SourceDBUser']); }
+			if ( isset($_POST['SourceDBRecordsPerQuery']) ) { $content['SourceDBRecordsPerQuery'] = DB_RemoveBadChars($_POST['SourceDBRecordsPerQuery']); }
 			if ( isset($_POST['SourceDBPassword']) ) { $content['SourceDBPassword'] = DB_RemoveBadChars($_POST['SourceDBPassword']); } else {$content['SourceDBPassword'] = ""; }
 			if ( isset($_POST['SourceDBEnableRowCounting']) ) {	$content['SourceDBEnableRowCounting'] = DB_RemoveBadChars($_POST['SourceDBEnableRowCounting']); }
 			// Extra Check for this property
@@ -407,6 +421,11 @@ if ( isset($_POST['op']) )
 				$content['ISERROR'] = true;
 				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_MISSINGPARAM'], $content['LN_CFG_DBUSER'] );
 			}
+			else if ( !is_numeric($content['SourceDBRecordsPerQuery']) )
+			{ 
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDVALUE'], $content['LN_CFG_DBRECORDSPERQUERY'] );
+			}
 		}
 		else
 		{
@@ -420,13 +439,14 @@ if ( isset($_POST['op']) )
 		include($gl_root_path . 'classes/logstream.class.php');
 
 		// First create a tmp source array
-		$tmpSource['ID']			= $content['SOURCEID'];
-		$tmpSource['Name']			= $content['Name'];
-		$tmpSource['Description']	= $content['Description'];
-		$tmpSource['SourceType']	= $content['SourceType'];
-		$tmpSource['MsgParserList']	= $content['MsgParserList'];
-		$tmpSource['MsgNormalize']	= $content['MsgNormalize'];
-		$tmpSource['ViewID']		= $content['SourceViewID'];
+		$tmpSource['ID']				= $content['SOURCEID'];
+		$tmpSource['Name']				= $content['Name'];
+		$tmpSource['Description']		= $content['Description'];
+		$tmpSource['SourceType']		= $content['SourceType'];
+		$tmpSource['MsgParserList']		= $content['MsgParserList'];
+		$tmpSource['MsgNormalize']		= $content['MsgNormalize'];
+		$tmpSource['MsgSkipUnparseable']= $content['MsgSkipUnparseable'];
+		$tmpSource['ViewID']			= $content['SourceViewID'];
 		if ( $tmpSource['SourceType'] == SOURCE_DISK ) 
 		{
 			$tmpSource['LogLineType']	= $content['SourceLogLineType'];
@@ -442,7 +462,8 @@ if ( isset($_POST['op']) )
 			$tmpSource['DBTableName']	= $content['SourceDBTableName'];
 			$tmpSource['DBUser']		= $content['SourceDBUser'];
 			$tmpSource['DBPassword']	= $content['SourceDBPassword'];
-			$tmpSource['DBEnableRowCounting'] = $content['SourceDBEnableRowCounting'];
+			$tmpSource['DBEnableRowCounting']	= $content['SourceDBEnableRowCounting'];
+			$tmpSource['DBRecordsPerQuery']		= $content['SourceDBRecordsPerQuery'];
 			$tmpSource['userid']		= $content['userid'];
 			$tmpSource['groupid']		= $content['groupid'];
 		}
@@ -473,12 +494,13 @@ if ( isset($_POST['op']) )
 			// Add custom search now!
 			if ( $content['SourceType'] == SOURCE_DISK ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, LogLineType, DiskFile, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "',
 						" . $content['MsgNormalize'] . ", 
+						" . $content['MsgSkipUnparseable'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceLogLineType'] . "',
 						'" . $content['SourceDiskFile'] . "',
@@ -488,12 +510,13 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, SourceDBRecordsPerQuery, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "', 
 						" . $content['MsgNormalize'] . ", 
+						" . $content['MsgSkipUnparseable'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceDBTableType'] . "',
 						" . $content['SourceDBType'] . ",
@@ -503,6 +526,7 @@ if ( isset($_POST['op']) )
 						'" . $content['SourceDBPassword'] . "',
 						'" . $content['SourceDBTableName'] . "',
 						" . $content['SourceDBEnableRowCounting'] . ",
+						" . $content['SourceDBRecordsPerQuery'] . ",
 						" . $content['userid'] . ", 
 						" . $content['groupid'] . " 
 						)";
@@ -512,7 +536,7 @@ if ( isset($_POST['op']) )
 			DB_FreeQuery($result);
 
 			// Do the final redirect
-			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], $content['Name'] ) , "sources.php" );
+			RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCE_HASBEENADDED'], DB_StripSlahes($content['Name']) ) , "sources.php" );
 		}
 		else if ( $_POST['op'] == "editsource" )
 		{
@@ -534,6 +558,7 @@ if ( isset($_POST['op']) )
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 
+									MsgSkipUnparseable = " . $content['MsgSkipUnparseable'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									LogLineType = '" . $content['SourceLogLineType'] . "', 
 									DiskFile = '" . $content['SourceDiskFile'] . "', 
@@ -549,6 +574,7 @@ if ( isset($_POST['op']) )
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 
+									MsgSkipUnparseable = " . $content['MsgSkipUnparseable'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									DBTableType = '" . $content['SourceDBTableType'] . "', 
 									DBType = " . $content['SourceDBType'] . ", 
@@ -558,6 +584,7 @@ if ( isset($_POST['op']) )
 									DBPassword = '" . $content['SourceDBPassword'] . "', 
 									DBTableName = '" . $content['SourceDBTableName'] . "', 
 									DBEnableRowCounting = " . $content['SourceDBEnableRowCounting'] . ", 
+									DBRecordsPerQuery = " . $content['SourceDBRecordsPerQuery'] . ", 
 									userid = " . $content['userid'] . ", 
 									groupid = " . $content['groupid'] . "
 									WHERE ID = " . $content['SOURCEID'];
@@ -567,7 +594,7 @@ if ( isset($_POST['op']) )
 				DB_FreeQuery($result);
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], $content['Name']) , "sources.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENEDIT'], DB_StripSlahes($content['Name']) ) , "sources.php" );
 			}
 		}
 	}

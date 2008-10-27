@@ -272,7 +272,7 @@ if ( isset($_POST['op']) )
 					DB_FreeQuery($result);
 					
 					// Do the final redirect
-					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENADDED'], $content['USERNAME'] ) , "users.php" );
+					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENADDED'], DB_StripSlahes($content['USERNAME']) ) , "users.php" );
 				}
 			}
 		}
@@ -322,7 +322,7 @@ if ( isset($_POST['op']) )
 				}
 
 				// Done redirect!
-				RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENEDIT'], $content['USERNAME']) , "users.php" );
+				RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENEDIT'], DB_StripSlahes($content['USERNAME']) ) , "users.php" );
 			}
 		}
 	}
