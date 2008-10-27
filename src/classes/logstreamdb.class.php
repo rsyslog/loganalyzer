@@ -210,67 +210,85 @@ class LogStreamDB extends LogStream {
 	public function ReadNext(&$uID, &$arrProperitesOut, $bParseMessage = true)
 	{
 		// Helpers needed for DB Mapping
+		global $content, $gl_starttime;
 		global $dbmapping, $fields;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		// define $ret
 		$ret = SUCCESS;
 
-		// No buffer? then read from DB!
-		if ( $this->bufferedRecords == null )
-			$ret = $this->ReadNextRecordsFromDB($uID);
-		else
+		do
 		{
-			if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
-			{
-				// We need to load new records, so clear the old ones first!
-				$this->ResetBufferedRecords();
-
-				// Set new Record start, will be used in the SQL Statement!
-				$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
-				
-				// Now read new ones
+			// No buffer? then read from DB!
+			if ( $this->bufferedRecords == null )
 				$ret = $this->ReadNextRecordsFromDB($uID);
-
-				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
-					$ret = ERROR_NOMORERECORDS;
-			}
-		}
-
-		if ( $ret == SUCCESS )
-		{
-			// Init and set variables
-			foreach ( $this->_arrProperties as $property ) 
+			else
 			{
-				// Check if mapping exists
-				if ( isset($dbmapping[$szTableType][$property]) )
+				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 				{
-					// Copy property if available!
-					$dbfieldname = $dbmapping[$szTableType][$property];
-					if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
+					// We need to load new records, so clear the old ones first!
+					$this->ResetBufferedRecords();
+
+					// Set new Record start, will be used in the SQL Statement!
+					$this->_currentRecordStart = $this->_currentRecordNum; // + 1;
+					
+					// Now read new ones
+					$ret = $this->ReadNextRecordsFromDB($uID);
+
+					if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
+						$ret = ERROR_NOMORERECORDS;
+				}
+			}
+			if ( $ret == SUCCESS )
+			{
+				// Init and set variables
+				foreach ( $this->_arrProperties as $property ) 
+				{
+					// Check if mapping exists
+					if ( isset($dbmapping[$szTableType][$property]) )
 					{
-						if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
-							$arrProperitesOut[$property] = GetEventTime( $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname] );
+						// Copy property if available!
+						$dbfieldname = $dbmapping[$szTableType][$property];
+						if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
+						{
+							if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
+								$arrProperitesOut[$property] = GetEventTime( $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname] );
+							else
+								$arrProperitesOut[$property] = $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname];
+						}
 						else
-							$arrProperitesOut[$property] = $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname];
+							$arrProperitesOut[$property] = '';
 					}
 					else
 						$arrProperitesOut[$property] = '';
 				}
-				else
-					$arrProperitesOut[$property] = '';
+
+				// Run optional Message Parsers now
+				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
+					$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+
+				// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
+				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
+				
+				// Increment $_currentRecordNum
+				$this->_currentRecordNum++;
 			}
 
-			// Run optional Message Parsers now
-			if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
-				$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+			// Check how long we are running. If only two seconds of execution time are left, we abort further reading!
+			$scriptruntime = intval(microtime_float() - $gl_starttime);
+			if ( $scriptruntime > ($content['MaxExecutionTime']-2) )
+			{
+				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
+				$content['logstream_warning'] = "false";
+				$content['logstream_warning_details'] = $content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'];
+				$content['logstream_warning_code'] = ERROR_FILE_NOMORETIME;
+				
+				// Return error code 
+				return ERROR_FILE_NOMORETIME;
+			}
 
-			// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
-			$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
-			
-			// Increment $_currentRecordNum
-			$this->_currentRecordNum++;
-		}
+		// This additional filter check will take care on dynamic fields from the message parser!
+		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
 
 		// reached here means return result!
 		return $ret;
