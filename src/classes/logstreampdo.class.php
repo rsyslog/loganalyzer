@@ -297,7 +297,13 @@ class LogStreamPDO extends LogStream {
 
 				// Run optional Message Parsers now
 				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
-					$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				{
+					$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+
+					// Check if we have to skip the message!
+					if ( $retParser == ERROR_MSG_SKIPMESSAGE )
+						$ret = $retParser;
+				}
 
 				// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
 				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];

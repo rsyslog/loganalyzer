@@ -247,7 +247,7 @@ class LogStreamDisk extends LogStream {
 				// Check if we have to skip the message!
 				if ( $retParser == ERROR_MSG_SKIPMESSAGE )
 					$ret = $retParser;
-
+				
 				// Set uID to the PropertiesOut!
 				$arrProperitesOut[SYSLOG_UID] = $uID;
 			}

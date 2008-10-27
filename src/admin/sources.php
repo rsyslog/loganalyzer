@@ -70,7 +70,9 @@ if ( isset($_GET['op']) )
 		CreateSourceTypesList($content['SourceType']);
 		$content['MsgParserList'] = "";
 		$content['MsgNormalize'] = 0;
+		$content['MsgSkipUnparseable'] = 0;
 		$content['CHECKED_ISNORMALIZEMSG'] = "";
+		$content['CHECKED_ISSKIPUNPARSEABLE'] = "";
 
 		// Init View List!
 		$content['SourceViewID'] = 'SYSLOG';
@@ -142,6 +144,13 @@ if ( isset($_GET['op']) )
 					$content['CHECKED_ISNORMALIZEMSG'] = "checked";
 				else
 					$content['CHECKED_ISNORMALIZEMSG'] = "";
+
+				$content['MsgSkipUnparseable'] = $mysource['MsgSkipUnparseable'];
+				if ( $mysource['MsgSkipUnparseable'] == 1 )
+					$content['CHECKED_ISSKIPUNPARSEABLE'] = "checked";
+				else
+					$content['CHECKED_ISSKIPUNPARSEABLE'] = "";
+				
 
 				// Init View List!
 				$content['SourceViewID'] = $mysource['ViewID'];
@@ -273,6 +282,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
 	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
 	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
+	if ( isset($_POST['MsgSkipUnparseable']) ) { $content['MsgSkipUnparseable'] = intval(DB_RemoveBadChars($_POST['MsgSkipUnparseable'])); } else {$content['MsgSkipUnparseable'] = 0; }
 	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
 
 	if ( isset($content['SourceType']) )
@@ -420,13 +430,14 @@ if ( isset($_POST['op']) )
 		include($gl_root_path . 'classes/logstream.class.php');
 
 		// First create a tmp source array
-		$tmpSource['ID']			= $content['SOURCEID'];
-		$tmpSource['Name']			= $content['Name'];
-		$tmpSource['Description']	= $content['Description'];
-		$tmpSource['SourceType']	= $content['SourceType'];
-		$tmpSource['MsgParserList']	= $content['MsgParserList'];
-		$tmpSource['MsgNormalize']	= $content['MsgNormalize'];
-		$tmpSource['ViewID']		= $content['SourceViewID'];
+		$tmpSource['ID']				= $content['SOURCEID'];
+		$tmpSource['Name']				= $content['Name'];
+		$tmpSource['Description']		= $content['Description'];
+		$tmpSource['SourceType']		= $content['SourceType'];
+		$tmpSource['MsgParserList']		= $content['MsgParserList'];
+		$tmpSource['MsgNormalize']		= $content['MsgNormalize'];
+		$tmpSource['MsgSkipUnparseable']= $content['MsgSkipUnparseable'];
+		$tmpSource['ViewID']			= $content['SourceViewID'];
 		if ( $tmpSource['SourceType'] == SOURCE_DISK ) 
 		{
 			$tmpSource['LogLineType']	= $content['SourceLogLineType'];
@@ -473,12 +484,13 @@ if ( isset($_POST['op']) )
 			// Add custom search now!
 			if ( $content['SourceType'] == SOURCE_DISK ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, LogLineType, DiskFile, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "',
 						" . $content['MsgNormalize'] . ", 
+						" . $content['MsgSkipUnparseable'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceLogLineType'] . "',
 						'" . $content['SourceDiskFile'] . "',
@@ -488,12 +500,13 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
 						'" . $content['MsgParserList'] . "', 
 						" . $content['MsgNormalize'] . ", 
+						" . $content['MsgSkipUnparseable'] . ", 
 						'" . $content['SourceViewID'] . "',
 						'" . $content['SourceDBTableType'] . "',
 						" . $content['SourceDBType'] . ",
@@ -534,6 +547,7 @@ if ( isset($_POST['op']) )
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 
+									MsgSkipUnparseable = " . $content['MsgSkipUnparseable'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									LogLineType = '" . $content['SourceLogLineType'] . "', 
 									DiskFile = '" . $content['SourceDiskFile'] . "', 
@@ -549,6 +563,7 @@ if ( isset($_POST['op']) )
 									SourceType = " . $content['SourceType'] . ", 
 									MsgParserList = '" . $content['MsgParserList'] . "', 
 									MsgNormalize = " . $content['MsgNormalize'] . ", 
+									MsgSkipUnparseable = " . $content['MsgSkipUnparseable'] . ", 
 									ViewID = '" . $content['SourceViewID'] . "', 
 									DBTableType = '" . $content['SourceDBTableType'] . "', 
 									DBType = " . $content['SourceDBType'] . ", 

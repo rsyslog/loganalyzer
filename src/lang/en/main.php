@@ -194,6 +194,7 @@ $content['LN_CFG_VIEW'] = "Select View";
 $content['LN_CFG_DBUSERLOGINREQUIRED'] = "Require user to be logged in";
 $content['LN_CFG_MSGPARSERS'] = "Message Parsers (comma seperated)";
 $content['LN_CFG_NORMALIZEMSG'] = "Normalize Message within Parsers";
+$content['LN_CFG_SKIPUNPARSEABLE'] = "Skip unparseable messages (Only works if msgparsers are configured!)";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";

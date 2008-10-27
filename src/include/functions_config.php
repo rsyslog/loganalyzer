@@ -80,6 +80,12 @@ function InitSource(&$mysource)
 			$content['Sources'][$iSourceID]['MsgNormalize'] = 0;
 		}
 
+		if ( !isset($mysource['MsgSkipUnparseable']) )
+		{
+			$CFG['Sources'][$iSourceID]['MsgSkipUnparseable'] = 0;
+			$content['Sources'][$iSourceID]['MsgSkipUnparseable'] = 0;
+		}
+
 		if ( !isset($mysource['Description']) )
 		{
 			$CFG['Sources'][$iSourceID]['Description'] = "";
@@ -185,6 +191,7 @@ function InitSource(&$mysource)
 		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
 		$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
 		$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
+		$mysource['ObjRef']->SetSkipUnparseable( $mysource['MsgSkipUnparseable'] );
 
 		// Set default SourceID here!
 		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 

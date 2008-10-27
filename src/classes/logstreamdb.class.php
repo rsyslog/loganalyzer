@@ -235,10 +235,12 @@ class LogStreamDB extends LogStream {
 					// Now read new ones
 					$ret = $this->ReadNextRecordsFromDB($uID);
 
+					// Check if we found more records
 					if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 						$ret = ERROR_NOMORERECORDS;
 				}
 			}
+
 			if ( $ret == SUCCESS )
 			{
 				// Init and set variables
@@ -265,7 +267,13 @@ class LogStreamDB extends LogStream {
 
 				// Run optional Message Parsers now
 				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
-					$this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+				{
+					$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
+
+					// Check if we have to skip the message!
+					if ( $retParser == ERROR_MSG_SKIPMESSAGE )
+						$ret = $retParser;
+				}
 
 				// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
 				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
@@ -340,24 +348,33 @@ class LogStreamDB extends LogStream {
 
 					while( $bFound == false && $this->ReadNextIDsFromDB() == SUCCESS )
 					{
-						foreach ( $this->bufferedRecords as $myRecord )
+						if ( isset($this->bufferedRecords) ) 
 						{
-							if ( $myRecord[$uidfieldname] == $uID )
+							foreach ( $this->bufferedRecords as $myRecord )
 							{
-								$bFound = true;
-								$ret = SUCCESS;
-								break; // Break foreach loop!
+								if ( $myRecord[$uidfieldname] == $uID )
+								{
+									$bFound = true;
+									$ret = SUCCESS;
+									break; // Break foreach loop!
+								}
+								else
+								{
+									$tmpuID = $myRecord[$uidfieldname];
+									// Only Increment $_currentRecordNum
+									$this->_currentRecordNum++;
+								}
+								
+								// Increment our Pagenumber if needed!
+								if ( $this->_currentRecordNum % $this->_logStreamConfigObj->_pageCount == 0 ) 
+									$this->_currentPageNumber++;
 							}
-							else
-							{
-								$tmpuID = $myRecord[$uidfieldname];
-								// Only Increment $_currentRecordNum
-								$this->_currentRecordNum++;
-							}
-							
-							// Increment our Pagenumber if needed!
-							if ( $this->_currentRecordNum % $this->_logStreamConfigObj->_pageCount == 0 ) 
-								$this->_currentPageNumber++;
+						}
+						else
+						{
+							// Return error code in this case!
+							$this->ResetBufferedRecords();
+							$ret = ERROR_NOMORERECORDS;
 						}
 						
 						if ( $this->_currentPageNumber > 1 && $this->_readDirection == EnumReadDirection::Forward) 
