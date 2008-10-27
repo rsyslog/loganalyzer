@@ -1,4 +1,33 @@
 ---------------------------------------------------------------------------
+Version 2.5.16 (beta), 2008-10-27
+- Fixed a problem when adding a mysql logstream source. Due a problem of 
+  how php mysql_connect function handels second conenctions, the Verify 
+  of a newly added logstream source could cause the first database
+  connection to be overwritten. The following error is, that the wrong
+  database was used for the UserDB after the new logstream was verified.
+- Added a check into the redirect function to STOP redirecting if an 
+  error happens in the UserDB.
+- Fixed minor issues handling form input which happened when 
+  magic_quotes_gpc was enabled. 
+- Fixed a bug in the convert.php script which inserted the wrong 
+  database version number. This caused phpLogCon to force an database 
+  upgrade which is not needed at all.
+- Added dummy db update scripts, so the db upgrade script won't fail 
+  in future. This is for the case when the db version is not correctly 
+  or missing in the user database.
+- Added support to filter for dynamic fields within the logstream 
+  database sources. This was not possible yet. The filtering also has a 
+  secure end timer, which avoids that the timelimit hits the script.
+- Added support to suppress unparseable messages when using msgparsers.
+  This enhances useability if you have mixed data sources, and want to
+  filter out unparseable messages.
+- Added new setting for MYSQL logstream sources to control the amount 
+  of data per query. This value can be used to tweak the MYSQL 
+  performance. For example when filtering for fields which are generated 
+  by a message parser, highering the value does improve the database 
+  performance. The default value is 100, and should only be changed if 
+  you know what you are doing. 
+---------------------------------------------------------------------------
 Version 2.5.15 (beta), 2008-10-22
 - Corrected the check for magic_quotes_gpc which is important when saving 
   configuration values are saved into the UserDB. This also fixes a 
