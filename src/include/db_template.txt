@@ -9,9 +9,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- 
 
 DROP TABLE IF EXISTS `logcon_config`;
-CREATE TABLE IF NOT EXISTS `logcon_config` (
+CREATE TABLE `logcon_config` (
   `propname` varchar(32) NOT NULL,
   `propvalue` varchar(255) NOT NULL,
+  `propvalue_text` text NOT NULL,
   `is_global` tinyint(1) NOT NULL,
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL
@@ -67,6 +68,7 @@ CREATE TABLE `logcon_sources` (
   `SourceType` tinyint(4) NOT NULL,
   `MsgParserList` varchar(255) NOT NULL,
   `MsgNormalize` tinyint(1) NOT NULL default '0',
+  `MsgSkipUnparseable` tinyint(1) NOT NULL default '0',
   `ViewID` varchar(64) NOT NULL,
   `LogLineType` varchar(64) default NULL,
   `DiskFile` varchar(255) default NULL,
@@ -78,6 +80,7 @@ CREATE TABLE `logcon_sources` (
   `DBPassword` varchar(255) default NULL,
   `DBTableName` varchar(64) default NULL,
   `DBEnableRowCounting` tinyint(1) default NULL,
+  `DBRecordsPerQuery` int(11) NOT NULL default '100',
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
