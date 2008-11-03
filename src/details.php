@@ -168,94 +168,107 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			$counter = 0;
 			foreach($content['fields'] as $mycolkey => $myfield)
 			{
-//				// Default copy value into array!
-//				$content['fields'][$mycolkey]['FieldValue'] = $logArray[$mycolkey];
-
-				// --- Set CSS Class
-				if ( $counter % 2 == 0 )
-					$content['fields'][$mycolkey]['cssclass'] = "line1";
-				else
-					$content['fields'][$mycolkey]['cssclass'] = "line2";
-				// --- 
-
-				// Set defaults
-				$content['fields'][$mycolkey]['fieldbgcolor'] = "";
-				$content['fields'][$mycolkey]['hasdetails'] = "false";
-
-				if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
+				if ( isset($logArray[$mycolkey]) && ( is_array($logArray[$mycolkey]) || (is_string($logArray[$mycolkey]) && strlen($logArray[$mycolkey]) > 0)) )
 				{
-					$content['fields'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
-					// TODO: Show more!
-				}
-				else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_NUMBER )
-				{
-					$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+					$content['fields'][$mycolkey]['fieldenabled'] = true;
 
-					// Special style classes and colours for SYSLOG_FACILITY
-					if ( $mycolkey == SYSLOG_FACILITY )
-					{
-						if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
-						{
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[ $logArray[SYSLOG_FACILITY] ] . '" ';
-							$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
+	//				// Default copy value into array!
+	//				$content['fields'][$mycolkey]['FieldValue'] = $logArray[$mycolkey];
 
-							// Set Human readable Facility!
-							$content['fields'][$mycolkey]['fieldvalue'] = GetFacilityDisplayName( $logArray[$mycolkey] );
-						}
-						else
-						{
-							// Use default colour!
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
-						}
-					}
-					else if ( $mycolkey == SYSLOG_SEVERITY )
-					{
-						if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
-						{
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[ $logArray[SYSLOG_SEVERITY] ] . '" ';
-							$content['fields'][$mycolkey]['cssclass'] = "lineColouredWhite";
+					// --- Set CSS Class
+					if ( $counter % 2 == 0 )
+						$content['fields'][$mycolkey]['cssclass'] = "line1";
+					else
+						$content['fields'][$mycolkey]['cssclass'] = "line2";
 
-							// Set Human readable Facility!
-							$content['fields'][$mycolkey]['fieldvalue'] = GetSeverityDisplayName( $logArray[$mycolkey] );
-						}
-						else
-						{
-							// Use default colour!
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
-						}
-					}
-					else if ( $mycolkey == SYSLOG_MESSAGETYPE )
-					{
-						if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
-						{
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[ $logArray[SYSLOG_MESSAGETYPE] ] . '" ';
-							$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
-
-							// Set Human readable Facility!
-							$content['fields'][$mycolkey]['fieldvalue'] = GetMessageTypeDisplayName( $logArray[$mycolkey] );
-						}
-						else
-						{
-							// Use default colour!
-							$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[IUT_Unknown] . '" ';
-						}
-						
-					}
-				}
-				else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
-				{
-					if ( $mycolkey == SYSLOG_MESSAGE )
-						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
-					else	// kindly copy!
-						$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( $logArray[$mycolkey] );
-
-					// --- HOOK here to add context links!
-					AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
+					if ( $mycolkey == SYSLOG_MESSAGE)
+						$content['fields'][$mycolkey]['menucssclass'] = "cellmenu1_naked";
+					else
+						$content['fields'][$mycolkey]['menucssclass'] = "cellmenu1";
 					// --- 
-				}
 
-				// Increment helpcounter
-				$counter++;
+					// Set defaults
+					$content['fields'][$mycolkey]['fieldbgcolor'] = "";
+					$content['fields'][$mycolkey]['hasdetails'] = "false";
+
+					if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
+					{
+						$content['fields'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
+						// TODO: Show more!
+					}
+					else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_NUMBER )
+					{
+						$content['fields'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];
+
+						// Special style classes and colours for SYSLOG_FACILITY
+						if ( $mycolkey == SYSLOG_FACILITY )
+						{
+							if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+							{
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[ $logArray[SYSLOG_FACILITY] ] . '" ';
+								$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
+
+								// Set Human readable Facility!
+								$content['fields'][$mycolkey]['fieldvalue'] = GetFacilityDisplayName( $logArray[$mycolkey] );
+							}
+							else
+							{
+								// Use default colour!
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[SYSLOG_LOCAL0] . '" ';
+							}
+						}
+						else if ( $mycolkey == SYSLOG_SEVERITY )
+						{
+							if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+							{
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[ $logArray[SYSLOG_SEVERITY] ] . '" ';
+								$content['fields'][$mycolkey]['cssclass'] = "lineColouredWhite";
+
+								// Set Human readable Facility!
+								$content['fields'][$mycolkey]['fieldvalue'] = GetSeverityDisplayName( $logArray[$mycolkey] );
+							}
+							else
+							{
+								// Use default colour!
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[SYSLOG_INFO] . '" ';
+							}
+						}
+						else if ( $mycolkey == SYSLOG_MESSAGETYPE )
+						{
+							if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
+							{
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[ $logArray[SYSLOG_MESSAGETYPE] ] . '" ';
+								$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
+
+								// Set Human readable Facility!
+								$content['fields'][$mycolkey]['fieldvalue'] = GetMessageTypeDisplayName( $logArray[$mycolkey] );
+							}
+							else
+							{
+								// Use default colour!
+								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[IUT_Unknown] . '" ';
+							}
+							
+						}
+					}
+					else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
+					{
+						if ( $mycolkey == SYSLOG_MESSAGE )
+							$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
+						else	// kindly copy!
+							$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( $logArray[$mycolkey] );
+
+						// --- HOOK here to add context links!
+						AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
+						// --- 
+					}
+
+					// Increment helpcounter
+					$counter++;
+				}
+				else
+					$content['fields'][$mycolkey]['fieldenabled'] = false;
+
 			}
 
 //print_r ( $content['fields'] );
