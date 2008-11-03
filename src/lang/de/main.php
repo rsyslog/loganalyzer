@@ -103,6 +103,10 @@ $content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.
 $content['LN_MENU_SEARCH'] = "Suchen";
 	$content['LN_MENU_SHOWEVENTS'] = "Show Events";
 $content['LN_MENU_HELP'] = "Hilfe";
+	$content['LN_MENU_DOC'] = "Documentation";
+	$content['LN_MENU_FORUM'] = "Support Forum";
+	$content['LN_MENU_WIKI'] = "phpLogCon Wiki";
+	$content['LN_MENU_PROSERVICES'] = "Professional Services";
 	$content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
 $content['LN_MENU_LOGIN'] = "Login";
 	$content['LN_MENU_ADMINCENTER'] = "Admin Center";
@@ -111,6 +115,7 @@ $content['LN_MENU_LOGOFF'] = "Logoff";
 	$content['LN_MENU_MAXVIEW'] = "Maximize View";
 	$content['LN_MENU_NORMALVIEW'] = "Normalize View";
 	$content['LN_MENU_STATISTICS'] = "Statistics";
+	$content['LN_MENU_CLICKTOEXPANDMENU'] = "Click the icon to show the menu";
 
 
 // Index Site

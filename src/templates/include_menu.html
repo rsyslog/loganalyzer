@@ -1,14 +1,25 @@
-<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 	<td class="topmenu1begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_GREEN}" width="16" height="16" vspace="0"></td>
 	<td class="topmenu1" nowrap align="center" width="75"><a class="topmenu1_link" href="{BASEPATH}search.php" target="_top"><img align="left" src="{MENU_SEARCH}" width="16" height="16" vspace="0">{LN_MENU_SEARCH}</a></td>
 	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="{BASEPATH}index.php?{additional_url}" target="_top"><img align="left" src="{MENU_HOMEPAGE}" width="16" height="16" vspace="0">{LN_MENU_SHOWEVENTS}</a></td>
 	<td class="topmenu1" nowrap align="center" width="90"><a class="topmenu1_link" href="{BASEPATH}statistics.php" target="_top"><img align="left" src="{MENU_CHARTS}" width="16" height="16" vspace="0">{LN_MENU_STATISTICS}</a></td>
-<!--	<td class="topmenu1" nowrap align="center" width="125"><a class="topmenu1_link" href="" target="_top">Show SysLogTags</a></td>-->
-<!--	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="" target="_top">User Options</a></td>-->
-<!--	<td class="topmenu1" nowrap align="center" width="125"><a class="topmenu1_link" href="" target="_top">Database Options</a></td>-->
-<!--	<td class="topmenu1" nowrap align="center" width="100"><a class="topmenu1_link" href="?" target="_top">Refresh</a></td>-->
-	<td class="topmenu1" nowrap align="center" width="60"><a class="topmenu1_link" href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_HELP}" width="16" height="16" vspace="0">{LN_MENU_HELP}</a></td>
+	<td class="topmenu1" nowrap align="left" width="60" nowrap>
+		<img align="left" src="{MENU_HELP}" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" OnClick="ToggleDisplayTypeById('menu_help');" OnMouseOver="HoverPopupMenuHelp(event, this, '{LN_MENU_HELP}', '{LN_MENU_CLICKTOEXPANDMENU}');" OnMouseOut="FinishPopupWindowMenu();">		
+		<div id="menu"><ul>
+		  <li class="topmenu1_link">
+			<a class="topmenu1_link" href="{PHPLOGCON_HELPLINK}" target="phplogcon_help">{LN_MENU_HELP}</a>
+
+			<ul id="menu_help" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_help');">
+				<li class="topmenu2"><a class="topmenu2_link" href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0">{LN_MENU_DOC}</a></li>
+				<li class="topmenu2"><a class="topmenu2_link" href="http://kb.monitorware.com/phplogcon-f39.html" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0">{LN_MENU_FORUM}</a></li>
+				<li class="topmenu2"><a class="topmenu2_link" href="http://wiki.rsyslog.com/index.php/PhpLogCon_FAQ" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0">{LN_MENU_WIKI}</a></li>
+				<li class="topmenu2"><a class="topmenu2_link" href="http://www.phplogcon.org/doc-professional_services.html" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0">{LN_MENU_PROSERVICES}</a></li>
+			</ul>
+
+		  </li>
+		</ul></div>
+	</td>
 	<td class="topmenu1" nowrap align="center" width="200"><a class="topmenu1_link" href="http://kb.monitorware.com/search.php" target="_blank"><img align="left" src="{MENU_KB}" width="16" height="16" vspace="0">{LN_MENU_SEARCHINKB}</a></td>
 <!-- IF UserDBEnabled="true" -->
 	<!-- IF SESSION_LOGGEDIN!="true" -->

@@ -3,7 +3,7 @@ BODY
 {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
-	color: #000000 
+	color: #000000;
     background-color: #f9f9f9;
 
 	scrollbar-face-color: #DEE3E7;
@@ -229,7 +229,7 @@ font
 /* TOP Menu Classes */
 .topmenu1begin
 {
-	height: 20px;
+	height: 16px;
 	border:0px;
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
@@ -238,7 +238,7 @@ font
 }
 .topmenu1
 {
-	height: 20px;
+	height: 16px;
 	border:1px ridge;
 	border-color: #79AABE #09506C #79AABE #79AABE;
 	padding: 2px 2px 0px 2px;
@@ -256,32 +256,23 @@ font
 	background-color: #6A88B8;
 	text-decoration: none;
 }
-.topmenu1_link, A.topmenu1_link
-{
-	color: #FFDD22;
-}
-.topmenu1_link:hover, A.topmenu1_link:hover 
-{
-	color: #FFFF99;
-	text-decoration: none;
-}
 .topmenuend
 {
-	height: 20px;
+	height: 16px;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #4E6485;
 }
 .topmenuextra
 {
-	height: 20px;
+	height: 16px;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #B8D4E0;
 }
 .topmenu2begin
 {
-	height: 20px;
+	height: 16px;
 	border:0px;
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
@@ -290,7 +281,7 @@ font
 }
 .topmenu2
 {
-	height: 20px;
+	height: 16px;
 	border:1px ridge;
 	border-color: #BDEEFF #79AABE #09506C #09506C;
 	padding: 2px 2px 0px 2px;
@@ -319,12 +310,65 @@ font
 }
 .topmenu2end
 {
-	height: 20px;
+	height: 16px;
 	border:1px inset;
 	border-color: #BDEEFF #79AABE #09506C #09506C;
 	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #7A92A6;
+}
+.topmenu3begin
+{
+	height: 16px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #D4DAE3;
+}
+.topmenu3
+{
+	height: 16px;
+	border:1px ridge;
+	border-color: #BDEEFF #79AABE #09506C #09506C;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	font: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #D4DAE3;
+}
+.topmenu3:hover 
+{ 
+	color: #FFFF99;
+	border:1px inset;
+	border-color: #BDEEFF #79AABE #09506C #09506C;
+	background-color: #ACCBFD;
+	text-decoration: none;
+}
+.topmenu3end
+{
+	height: 16px;
+	font: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #D4DAE3;
+}
+.topmenu1_link, a.topmenu1_link, a.topmenu1_link:visited, .topmenu2_link, a.topmenu2_link, a.topmenu2_link:visited, .topmenu3_link, a.topmenu3_link, a.topmenu3_link:visited 
+{
+	vertical-align: middle;
+	height: 16px;
+
+	color: #FFDD22;
+	font-weight:bold;
+	text-decoration: none;
+}
+.topmenu1_link:hover, .topmenu2_link:hover, .topmenu3_link:hover
+{
+	vertical-align: middle;
+
+	color: #FFFF99;
+	font-weight:bold;
+	text-decoration: none;
 }
 
 
