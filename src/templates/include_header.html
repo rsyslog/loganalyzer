@@ -5,6 +5,7 @@
 	{EXTRA_METATAGS}
 	<link rel="stylesheet" href="{BASEPATH}css/defaults.css" type="text/css">
 	<link rel="stylesheet" href="{BASEPATH}themes/{user_theme}/main.css" type="text/css">
+	<link rel="stylesheet" href="{BASEPATH}css/menu.css" type="text/css">
 	{EXTRA_STYLESHEET}
 	<script type='text/javascript'>
 		var defaultMenuTimeout = {PopupMenuTimeout};
@@ -136,6 +137,13 @@
 		<!-- INCLUDE admin/admin_menu.html -->
 	<!-- ENDIF IS_ADMINPAGE="true" -->
 	</td>
+</tr>
+</table>
+
+<table class="popupdetails with_border" id="popupdetails" OnMouseOver="HoveringPopup(event,this);" OnMouseOut="FinishHoveringPopup(event,this);" OnMouseMove="disableEventPropagation();" cellpadding="2" cellspacing="0" border="0">
+<tr><td width="100%" class="cellmenu1" id="popuptitle" align="center" nowrap>&nbsp;</td></tr>
+<tr>
+	<td width="100%" class="popupcontent" id="popupcontent">&nbsp;</td>
 </tr>
 </table>
 

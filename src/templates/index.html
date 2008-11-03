@@ -22,7 +22,7 @@
 			  <li class="cellmenu1">
 			  <h2>{LN_GEN_PREDEFINEDSEARCHES}</h2>
 			<!-- BEGIN Search -->
-			  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_presearches');">
+			  <li class="topmenu3" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_presearches');">
 			  <a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a>
 			  </li>
 			<!-- END Search -->
@@ -262,17 +262,24 @@
 	<!-- ENDIF MiscShowDebugGridCounter="1" -->
 
 	<!-- BEGIN values -->
-	<td align="{FieldAlign}" class="{fieldcssclass}" {fieldbgcolor} valign="top" {isnowrap}>
-		
+	<td align="{FieldAlign}" class="{fieldcssclass} gridline" {fieldbgcolor} valign="top" {isnowrap}>
+
 		<!-- IF hasbuttons="true" -->
-			<div id="menu">
+			
+			<!-- IF hasdropdownbutton="true" -->
+			<div style="position: relative;">
+			<img class="inlinebutton" src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
+			</div>
+			<!-- ENDIF hasdropdownbutton="true" -->
+
+			<div id="menu" style="position: absolute;">
 			<ul>
 			  <li>
 				<ul class="with_border" id="menu_{FieldColumn}_{uid}">
 				  <li class="cellmenu1" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
 				  <h2>{LN_GEN_AVAILABLESEARCHES}</h2>
 				<!-- BEGIN buttons -->
-				  <li class="{cssclass}" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
+				  <li class="topmenu3" OnMouseMove="ToggleDisplayEnhanceTimeOut('menu_{FieldColumn}_{uid}');">
 				  <img align="left" src="{IconSource}" width="16" height="16" vspace="2"><a href="{ButtonUrl}<!-- IF ButtonAppendUrl="true" -->{additional_url_sourceonly}<!-- ENDIF ButtonAppendUrl="true" -->" target="{ButtonTarget}" OnClick="ToggleDisplayOffTypeById('menu_{FieldColumn}_{uid}');">{DisplayName}</a>
 				  </li>
 				<!-- END buttons -->
@@ -280,10 +287,6 @@
 			  </li>
 			</ul>
 			</div>
-
-			<!-- IF hasdropdownbutton="true" -->
-			<img align="left" vspace="0" hspace="2" src="{MENU_NAV_CLOSE}" width="16" height="16" border="0" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
-			<!-- ENDIF hasdropdownbutton="true" -->
 		<!-- ENDIF hasbuttons="true" -->
 
 		<!-- IF ismessagefield="true" -->
@@ -304,7 +307,6 @@
 			<!-- IF ismessagefield="true" -->
 			<a href="{detaillink}{additional_url_sourceonly}" class="syslogdetails" target="_top">{fieldvalue}</a>
 			<!-- ENDIF ismessagefield="true" -->
-
 		<!-- ENDIF hasdetails="false" -->
 
 		<!-- IF hasdetails="true" -->
@@ -314,7 +316,7 @@
 			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
 			<!-- BEGIN messagesdetails -->
 			<tr>
-				<td width="150" nowrap class="cellmenu2">{detailfieldtitle}</td>
+				<td width="150" nowrap class="cellmenu2_naked">{detailfieldtitle}</td>
 				<td width="100%" class="{detailscssclass}">{detailfieldvalue}</td>
 			</tr>
 			<!-- END messagesdetails -->

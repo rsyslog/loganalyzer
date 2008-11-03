@@ -1,6 +1,13 @@
-/* 
-Helper Javascript Constants
-*/
+/* Detect Browser Version */
+var szBrowserApp = "MOZILLA"; // Default!
+if (/MSIE (\d+\.\d+);/.test(navigator.userAgent))
+{
+	if (!/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) 
+	{
+		// Set browser to Internet Explorer
+		szBrowserApp = "IEXPLORER";
+	}
+}
 
 /*
 Helper Javascript functions
@@ -29,6 +36,9 @@ function NewWindow(Location, WindowName,X_width,Y_height,Option) {
 		windowReference.opener = self;
 
 }
+
+// helper array to keep track of the timeouts!
+var runningTimeouts = new Array();
 
 /*
 *	Helper function to show and hide a div area
@@ -159,9 +169,6 @@ function toggleFormareaVisibility(FormFieldName, FirstHiddenArea, SecondHiddenAr
 	}
 }
 
-// helper array to keep track of the timeouts!
-var runningTimeouts = new Array();
-// MOVED INTO HEADER var defaultMenuTimeout = 3000;
 /*
 * Toggle display type from NONE to BLOCK
 */ 
@@ -205,11 +212,15 @@ function ToggleDisplayClearTimeout(ObjID)
 
 function ToggleDisplayEnhanceTimeOut(ObjID)
 {
-	// First clear timeout
-	ToggleDisplayClearTimeout(ObjID);
+	// Only perform if timeout exists!
+	if (runningTimeouts[ObjID] != null)
+	{
+		// First clear timeout
+		ToggleDisplayClearTimeout(ObjID);
 
-	// Set new  timeout
-	ToggleDisplaySetTimeout(ObjID);
+		// Set new  timeout
+		ToggleDisplaySetTimeout(ObjID);
+	}
 }
 
 /*
@@ -293,5 +304,93 @@ function GoToPopupTarget(myTarget, parentObj)
 	else /* Close Popup */
 	{
 		FinishPopupWindow(parentObj);
+	}
+}
+
+
+function FinishPopupWindowMenu()
+{
+	// Change CSS Class
+	var obj = document.getElementById('popupdetails');
+	if (obj != null)
+	{
+		obj.className='popupdetails with_border';
+	}
+}
+
+function movePopupWindowMenu(myEvent, ObjName, parentObj)
+{
+	var obj = document.getElementById(ObjName);
+	
+//	var PopupContentWidth = 0;
+//	var middle = PopupContentWidth / 2;
+	var middle = -10;
+
+	if (myPopupHovering == false && obj != null && parentObj != null)
+	{
+		// Different mouse position capturing in IE!
+		if (szBrowserApp == "IEXPLORER")
+		{
+			obj.style.top = (event.y+document.body.scrollTop + 10) + 'px';
+		}
+		else
+		{
+			obj.style.top = (myEvent.pageY + 20) + 'px';
+		}
+		obj.style.left = (myEvent.clientX - middle) + 'px';
+	}
+}
+
+function HoverPopup( myObjRef, myPopupTitle, HoverContent, OptionalImage )
+{
+	// Change CSS Class
+	var obj = document.getElementById('popupdetails');
+	obj.className='popupdetails_popup with_border';
+
+	if ( myObjRef != null)
+	{
+		myObjRef.src = OptionalImage; 
+		// "{BASEPATH}images/player/" + myTeam + "/hover/" + ImageBaseName + ".png";
+	}
+
+	// Set title
+	var obj = document.getElementById("popuptitle");
+	obj.innerHTML = myPopupTitle;
+
+	// Set Content
+	var obj = document.getElementById("popupcontent");
+	obj.innerHTML = HoverContent;
+}
+
+
+function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
+{
+	if (szBrowserApp !== "IEXPLORER")
+	{
+		// Don't need helper here!
+		return; 
+	}
+
+	// Change CSS Class
+	var objPopup = document.getElementById('popupdetails');
+	objPopup.className='popupdetails_popup with_border';
+
+	// Set title
+	var obj = document.getElementById("popuptitle");
+	obj.innerHTML = myPopupTitle;
+
+	// Set Content
+	obj = document.getElementById("popupcontent");
+	obj.innerHTML = HoverContent;
+
+//	var PopupContentWidth = 0;
+//	var middle = PopupContentWidth / 2;
+	var middle = -5;
+
+	if (myPopupHovering == false && parentObj != null)
+	{
+		// Different mouse position capturing in IE!
+		objPopup.style.top = (event.y+document.body.scrollTop - 50) + 'px';
+		objPopup.style.left = (myEvent.clientX - middle) + 'px';
 	}
 }

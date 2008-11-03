@@ -54,7 +54,6 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 
 // --- Define Extra Stylesheet!
 $content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
-$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
 // --- 
 
 // --- CONTENT Vars
@@ -556,6 +555,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdropdownbutton'] = true;
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
 										'ButtonUrl' => '?uid=' . $uID, 
+										'ButtonTarget' => '_top', 
+										'ButtonAppendUrl' => true,
 										'DisplayName' => $content['LN_VIEW_MESSAGECENTERED'], 
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);

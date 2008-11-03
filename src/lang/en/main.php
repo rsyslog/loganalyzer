@@ -105,6 +105,10 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 $content['LN_MENU_SEARCH'] = "Search";
 $content['LN_MENU_SHOWEVENTS'] = "Show Events";
 $content['LN_MENU_HELP'] = "Help";
+	$content['LN_MENU_DOC'] = "Documentation";
+	$content['LN_MENU_FORUM'] = "Support Forum";
+	$content['LN_MENU_WIKI'] = "phpLogCon Wiki";
+	$content['LN_MENU_PROSERVICES'] = "Professional Services";
 $content['LN_MENU_SEARCHINKB'] = "Search in Knowledge Base";
 $content['LN_MENU_LOGIN'] = "Login";
 $content['LN_MENU_ADMINCENTER'] = "Admin Center";
@@ -113,6 +117,8 @@ $content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 $content['LN_MENU_MAXVIEW'] = "Maximize View";
 $content['LN_MENU_NORMALVIEW'] = "Normalize View";
 	$content['LN_MENU_STATISTICS'] = "Statistics";
+	$content['LN_MENU_CLICKTOEXPANDMENU'] = "Click the icon to show the menu";
+
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your phpLogCon main directory!";

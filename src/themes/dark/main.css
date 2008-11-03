@@ -3,8 +3,8 @@ BODY
 {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
-	background-color: #000000;
 	color: #F3F3F1; 
+	background-color: #000000;
 
 	scrollbar-face-color: #475059;
 	scrollbar-highlight-color: #b8c2cc;
@@ -257,15 +257,6 @@ font
 	background-color: #492D2B;
 	text-decoration: none;
 }
-.topmenu1_link, A.topmenu1_link
-{
-	color: #FFDD22;
-}
-.topmenu1_link:hover, A.topmenu1_link:hover 
-{
-	color: #FFFF99;
-	text-decoration: none;
-}
 .topmenuend
 {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -335,6 +326,60 @@ font
 
 	color: #FFFFFF;
 	background-color: #49221F;
+}
+.topmenu3begin
+{
+	height: 16px;
+	border:0px;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	background-color: #3F68AA;
+}
+.topmenu3
+{
+	height: 16px;
+	border:1px ridge;
+	border-color: #09506C #557986 #09506C #09506C;
+	padding: 2px 2px 0px 2px;
+	vertical-align: middle;
+
+	font: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #3F68AA;
+}
+.topmenu3:hover 
+{ 
+	color: #FFFF99;
+	border:1px inset;
+	border-color: #09506C #557986 #09506C #09506C;
+	background-color: #294572;
+	text-decoration: none;
+}
+.topmenu3end
+{
+	height: 16px;
+	font: 10px Arial, Verdana, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #3F68AA;
+}
+
+.topmenu1_link, a.topmenu1_link, a.topmenu1_link:visited, .topmenu2_link, a.topmenu2_link, a.topmenu2_link:visited, .topmenu3_link, a.topmenu3_link, a.topmenu3_link:visited 
+{
+	vertical-align: middle;
+	height: 16px;
+
+	color: #FFDD22;
+	font-weight:bold;
+	text-decoration: none;
+}
+.topmenu1_link:hover, .topmenu2_link:hover, .topmenu3_link:hover
+{
+	vertical-align: middle;
+
+	color: #FFFF99;
+	font-weight:bold;
+	text-decoration: none;
 }
 
 /* Cell Columns */
