@@ -663,11 +663,17 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		{
 			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_DB"];
 			$mySource['SourcesTypeText'] = $content["LN_SOURCES_DB"];
+			
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
 		}
 		else if ( $mySource['SourceType'] == SOURCE_PDO )
 		{
 			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_PDO"];
 			$mySource['SourcesTypeText'] = $content["LN_SOURCES_PDO"];
+
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
 		}
 		// ---
 

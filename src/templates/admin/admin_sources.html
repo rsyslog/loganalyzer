@@ -58,8 +58,8 @@
 			<td align="center" width="50" class="cellmenu1"><b>{LN_SOURCES_ID}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_SOURCES_NAME}</b></td>
 			<td align="center" width="150" class="cellmenu1"><b>{LN_SOURCES_TYPE}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SOURCES_ASSIGNTO}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="175" class="cellmenu1"><b>{LN_SOURCES_ASSIGNTO}</b></td>
+			<td align="center" width="175" class="cellmenu1" colspan="2"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN SOURCES -->
 		<tr>
@@ -85,10 +85,17 @@
 				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
 				<!-- ENDIF ActionsAllowed!="true" -->
 			</td>
+
+			<td align="center" class="{cssclass}">
+				<!-- IF IsDatabaseSource="true" -->
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=dbstats&id={ID}"><img src="{MENU_CHARTS}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_DBSTATS}');" OnMouseOut="FinishPopupWindowMenu();"></a>
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=cleardata&id={ID}"><img src="{MENU_TRASH}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_CLEARDATA}');" OnMouseOut="FinishPopupWindowMenu();"></a>
+				<!-- ENDIF IsDatabaseSource="true" -->
+			</td>
 		</tr>
 		<!-- END SOURCES -->
 		<tr>
-			<td align="center" colspan="5" class="line0"><b><a href="{BASEPATH}admin/sources.php?op=add"><img src="{MENU_ADD}" title="{LN_SOURCES_ADD}">&nbsp;{LN_SOURCES_ADD}</a></b></td>
+			<td align="center" colspan="6" class="line0"><b><a href="{BASEPATH}admin/sources.php?op=add"><img src="{MENU_ADD}" title="{LN_SOURCES_ADD}">&nbsp;{LN_SOURCES_ADD}</a></b></td>
 		</tr>
 		</table>
 <!-- ENDIF LISTSOURCES="true" -->

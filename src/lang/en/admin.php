@@ -51,6 +51,9 @@ $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
 $content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
+$content['LN_ADMIN_POPUPHELP'] = "Details on this function";
+$content['LN_ADMIN_DBSTATS'] = "Show database statistics.";
+$content['LN_ADMIN_CLEARDATA'] = "If you need to remove old data records, use this function.";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";

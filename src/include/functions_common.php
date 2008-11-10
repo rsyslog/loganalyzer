@@ -627,6 +627,8 @@ function InitFrontEndVariables()
 	$content['MENU_INFORMATION'] = $content['BASEPATH'] . "images/icons/information2.png";
 	$content['MENU_PARSER_DELETE'] = $content['BASEPATH'] . "images/icons/gear_delete.png";
 	$content['MENU_PARSER_INIT'] = $content['BASEPATH'] . "images/icons/gear_new.png";
+	$content['MENU_RECYCLE'] = $content['BASEPATH'] . "images/icons/recycle.png";
+	$content['MENU_TRASH'] = $content['BASEPATH'] . "images/icons/garbage_empty.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
