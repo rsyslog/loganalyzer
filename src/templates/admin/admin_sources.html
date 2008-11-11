@@ -100,8 +100,90 @@
 		</table>
 <!-- ENDIF LISTSOURCES="true" -->
 
-<!-- IF ISSTATS="true" -->
+<!-- IF ISCLEARDATA="true" -->
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<tr>
+			<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DETAILS}</b></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="200"><b>{LN_SOURCES_ID}</b></td>
+			<td align="left" class="line1" width="400">{SOURCEID}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
+			<td align="left" class="line2">{DisplayName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_SOURCES_TYPE}</b></td>
+			<td align="left" class="line1">{SourceTypeName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_SOURCES_ROWCOUNT}</b></td>
+			<td align="left" class="line1">{ROWCOUNT}</td>
+		</tr>
+		</table>
+		<br />
 
+		<form action="{BASEPATH}admin/sources.php?op=cleardata&id={SOURCEID}" method="post">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" nowrap colspan="2"><B>{LN_SOURCES_CLEARDATA}</B></td>
+			</tr>
+			<tr>
+				<td class="titleSecond" colspan="2"><blockquote>{LN_SOURCES_CLEAR_HELPTEXT}</blockquote></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2_naked" width="200" valign="top"><b>{LN_SOURCES_CLEAROPTIONS}</b></td>
+				<td align="left" class="line1" width="400">
+					<br>
+					<input type="radio" name="subop" value="all">&nbsp;&nbsp;<b>{LN_SOURCES_CLEARALL}</b><br>
+					
+					<!-- IF DELETE_ALLOWDETAIL="true" -->
+					<input type="radio" name="subop" value="since">&nbsp;&nbsp;<b>{LN_SOURCES_CLEARSINCE}</b>
+					<select name="olderthan" size="1">
+						<!-- BEGIN OLDERTHAN -->
+						<option {selected} value="{OlderThanSeconds}">{OlderThanDisplayName}</option>
+						<!-- END OLDERTHAN -->
+					</select>
+					<br>
+
+					<input type="radio" name="subop" value="date">&nbsp;&nbsp;<b>{LN_SOURCES_CLEARDATE}</b>
+					<select name="olderdate_year" size="1">
+						<!-- BEGIN olderdate_years -->
+						<option {selected} value="{value}">{value}</option>
+						<!-- END olderdate_years -->
+					</select>
+					 - 
+					<select name="olderdate_from_month" size="1">
+						<!-- BEGIN olderdate_months -->
+						<option {selected} value="{value}">{value}</option>
+						<!-- END olderdate_months -->
+					</select>
+					 - 
+					<select name="olderdate_from_day" size="1">
+						<!-- BEGIN olderdate_days -->
+						<option {selected} value="{value}">{value}</option>
+						<!-- END olderdate_days -->
+					</select>
+					<br>
+					
+					<br>
+					<!-- ENDIF DELETE_ALLOWDETAIL="true" -->
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{LN_SOURCES_CLEARDATA_SEND}">
+				</td>
+			</tr>
+			</table>
+		</form>
+
+		<br><br>
+		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+<!-- ENDIF ISCLEARDATA="true" -->
+
+<!-- IF ISSTATS="true" -->
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DETAILS}</b></td>

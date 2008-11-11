@@ -219,6 +219,11 @@ abstract class LogStream {
 	public abstract function GetLogStreamStats();
 
 
+	/**
+	* This returns just the count of records of the main data source
+	*/
+	public abstract function GetLogStreamTotalRowCount();
+
 	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/

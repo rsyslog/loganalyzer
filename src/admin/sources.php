@@ -290,9 +290,57 @@ if ( isset($_GET['op']) )
 		}
 		else
 		{
+			// Include LogStream facility
+			include($gl_root_path . 'classes/logstream.class.php');
+			
+			// --- Init the source
+			$tmpSource = $content['Sources'][ $content['SOURCEID'] ];
 
+			// Copy some default properties
+			$content['DisplayName'] = $tmpSource['Name'];
+			$content['SourceType'] = $tmpSource['SourceType'];
+			CreateSourceTypesList($content['SourceType']);
+			$content['SourceTypeName'] = $content['SOURCETYPES'][ $content['SourceType'] ]['DisplayName'];
 
+			// Fix Filename manually for FILE LOGSTREAM!
+			if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+			{
+				// Create LogStream Object 
+				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+				$res = $stream->Verify();
+				if ( $res != SUCCESS ) 
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+					if ( isset($extraErrorDescription) )
+						$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+				}
+				else
+				{
+					// Display Stats
+					$content['ISCLEARDATA'] = true;
 
+					// Gather Database Stats
+					$content['ROWCOUNT'] = $stream->GetLogStreamTotalRowCount();
+					if ( isset($content['ROWCOUNT']) )
+					{
+						// Allow Deleting by Date
+						$content['DELETE_ALLOWDETAIL'] = true;
+
+						// Create Lists
+						CreateOlderThanList( 3600 );
+						CreateOlderDateFields();
+
+					}
+					else 
+						$content['ROWCOUNT'] = "Unknown";
+				}
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOCLEARSUPPORT'], $content['SOURCEID'] ); 
+			}
 		}
 	}
 	else if ($_GET['op'] == "dbstats") 
@@ -347,6 +395,7 @@ if ( isset($_GET['op']) )
 				$content['STATS'] = $stream->GetLogStreamStats();
 				if ( isset($content['STATS']) )
 				{
+					// Display Stats
 					$content['ISSTATS'] = true;
 
 					foreach( $content['STATS'] as &$myStats )
@@ -791,6 +840,65 @@ function ReadMsgParserList()
 {
 	global $gl_root_path, $content; 
 }
+
+/*
+* Helper function to create a OlderThan Listbox
+*/
+function CreateOlderThanList( $nDefaultSeconds )
+{
+	global $content; 
+
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 minute", 'OlderThanSeconds' => 60 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "5 minutes", 'OlderThanSeconds' => 300 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "15 minutes", 'OlderThanSeconds' => 900 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "30 minutes", 'OlderThanSeconds' => 1800 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 hour", 'OlderThanSeconds' => 3600 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "12 hours", 'OlderThanSeconds' => 43200 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 day", 'OlderThanSeconds' => 86400 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "7 days", 'OlderThanSeconds' => 604800 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "31 days", 'OlderThanSeconds' => 2678400 );
+
+	foreach ( $content['OLDERTHAN'] as &$myTime ) 
+	{
+		if ( $nDefaultSeconds == $myTime['OlderThanSeconds'] ) 
+			$myTime['selected'] = "selected";
+		else 
+			$myTime['selected'] = "";
+	}
+}
+
+/*
+* Helper function to create a OlderThan Listbox
+*/
+function CreateOlderDateFields()
+{
+	global $content; 
+
+	$currentTime = time();
+	$currentDay = date("d", $currentTime);
+	$currentMonth = date("m", $currentTime);
+	$currentYear = date("Y", $currentTime);
+
+	// Init Year, month and day array!
+	for ( $i = $currentYear-5; $i <= $currentYear+5; $i++ )
+	{
+		$content['olderdate_years'][$i]['value'] = $i;
+		if ( $i == $currentYear ) { $content['olderdate_years'][$i]['selected'] = "selected"; } else { $content['olderdate_years'][$i]['selected'] = ""; }
+	}
+	for ( $i = 1; $i <= 12; $i++ )
+	{
+		$content['olderdate_months'][$i]['value'] = $i;
+		if ( $i == $currentMonth ) { $content['olderdate_months'][$i]['selected'] = "selected"; } else { $content['olderdate_months'][$i]['selected'] = ""; }
+	}
+	for ( $i = 1; $i <= 31; $i++ )
+	{
+		$content['olderdate_days'][$i]['value'] = $i;
+		if ( $i == $currentDay ) { $content['olderdate_days'][$i]['selected'] = "selected"; } else { $content['olderdate_days'][$i]['selected'] = ""; }
+	}
+
+
+}
+
 // --- END Custom Code
 
 // --- BEGIN CREATE TITLE

@@ -237,7 +237,15 @@ $content['LN_SOURCES_STATSVALUE'] = "Value";
 $content['LN_SOURCES_DETAILS'] = "Details for this logstream source";
 $content['LN_SOURCES_STATSDETAILS'] = "Statistic details for this logstream source";
 $content['LN_SOURCES_ERROR_NOSTATSDATA'] = "Could not find or obtain any stats related information for this logstream source.";
-
+$content['LN_SOURCES_ERROR_NOCLEARSUPPORT'] = "This logstream source does not support deleting data.";
+$content['LN_SOURCES_ROWCOUNT'] = "Total Rowcount";
+$content['LN_SOURCES_CLEARDATA'] = "The following database maintenance Options are available";
+$content['LN_SOURCES_CLEAROPTIONS'] = "Select how you want to clear data.";
+$content['LN_SOURCES_CLEARALL'] = "Clear (Delete) all data.";
+$content['LN_SOURCES_CLEAR_HELPTEXT'] = "Attention! Be carefull with deleting data, any action performed here can not be undone!";
+$content['LN_SOURCES_CLEARSINCE'] = "Clear all data older than ... ";
+$content['LN_SOURCES_CLEARDATE'] = "Clear all data which is older than ... ";
+$content['LN_SOURCES_CLEARDATA_SEND'] = "Clear selected data range";
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";

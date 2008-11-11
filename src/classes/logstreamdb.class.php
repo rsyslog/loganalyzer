@@ -598,6 +598,44 @@ class LogStreamDB extends LogStream {
 
 
 	/**
+	* Implementation of GetLogStreamTotalRowCount 
+	*
+	* Returns the total amount of rows in the main datatable
+	*/
+	public function GetLogStreamTotalRowCount()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Set default rowcount
+		$rowcount = null;
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			// SHOW TABLE STATUS FROM
+			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			if ($myQuery)
+			{
+				// Obtain RowCount!
+				$myRow		= mysql_fetch_row($myQuery); 
+				$rowcount = $myRow[0];
+
+				// Free query now
+				mysql_free_result ($myQuery); 
+
+				// Increment for the Footer Stats 
+				$querycount++;
+			}
+		}
+
+		//return result
+		return $rowcount; 
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the native MYSQL Logstream, the database will do most of the work
