@@ -100,6 +100,57 @@
 		</table>
 <!-- ENDIF LISTSOURCES="true" -->
 
+<!-- IF ISSTATS="true" -->
+
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<tr>
+			<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DETAILS}</b></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="200"><b>{LN_SOURCES_ID}</b></td>
+			<td align="left" class="line1" width="300">{SOURCEID}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
+			<td align="left" class="line2">{DisplayName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_SOURCES_TYPE}</b></td>
+			<td align="left" class="line1">{SourceTypeName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
+			<td align="left" class="line1">{Description}</td>
+		</tr>
+		</table>
+		<br />
+
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<tr>
+			<td class="cellmenu1" nowrap><B>{LN_SOURCES_STATSDETAILS}</B></td>
+		</tr>
+		</table>
+
+		<!-- BEGIN STATS -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<tr>
+			<td align="center" width="200" class="cellmenu2"><b>{LN_SOURCES_STATSNAME}</b></td>
+			<td align="center" width="300" class="cellmenu2"><b>{LN_SOURCES_STATSVALUE}</b></td>
+		</tr>
+		<!-- BEGIN STATSDATA -->
+		<tr>
+			<td align="left" width="200" class="{cssclass}"><b>{StatsDisplayName}</b></td>
+			<td align="left" width="300" class="{cssclass}">{StatsValue}</td>
+		</tr>
+		<!-- END STATSDATA -->
+		</table>
+		<!-- END STATS -->
+
+		<br><br>
+		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+			
+<!-- ENDIF ISSTATS="true" -->
+
 <!-- IF ISEDITORNEWSOURCE="true" -->
 		<form action="{BASEPATH}admin/sources.php" method="post">
 			

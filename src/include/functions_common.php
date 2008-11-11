@@ -72,6 +72,7 @@ $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 
 // PreInit overall user variables
+$content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
@@ -814,6 +815,13 @@ function InitConfigurationValues()
 		$content['InjectBodyFooter'] = ""; // Init Option
 	// --- 
 
+	// --- Handle Optional Logo URL!
+	if ( strlen(GetConfigSetting("PhplogconLogoUrl", false)) > 0 ) 
+		$content['EXTRA_PHPLOGCON_LOGO'] = $CFG['PhplogconLogoUrl'];
+	else
+		$content['PhplogconLogoUrl'] = ""; // Init Option
+	// --- 
+
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
@@ -1387,6 +1395,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "InjectBodyHeader", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "InjectBodyFooter", true, null, null ,$bForceStripSlahes );
+	WriteConfigValue( "PhplogconLogoUrl", true, null, null ,$bForceStripSlahes );
 }
 
 function SaveUserGeneralSettingsIntoDB()
@@ -1514,6 +1523,36 @@ function list_files($directory, $failOnError = true)
 		return $result;
 	}
 }
+
+
+/*
+*	Helper function to prepend the current global root path if necessary!
+*/
+function CheckAndPrependRootPath( $szFileName)
+{
+	global $gl_root_path;
+
+	// Get plain filename for testing!
+	$szNewFileName = $szFileName;
+
+	// Take as it is if rootpath!
+	if (
+			( ($pos = strpos($szFileName, "/")) !== FALSE && $pos == 0) ||
+			( ($pos = strpos($szFileName, "\\\\")) !== FALSE && $pos == 0) ||
+			( ($pos = strpos($szFileName, ":\\")) !== FALSE ) ||
+			( ($pos = strpos($szFileName, ":/")) !== FALSE )
+		)
+	{
+		// Nothing really todo
+		true;
+	}
+	else // prepend basepath!
+		$szNewFileName = $gl_root_path . $szFileName;
+
+	// return result
+	return $szNewFileName; 
+}
+
 
 /*
 *	Helper function to flush html output to avoid redirects if errors happen!

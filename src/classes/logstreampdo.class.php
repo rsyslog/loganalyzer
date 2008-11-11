@@ -535,6 +535,55 @@ class LogStreamPDO extends LogStream {
 	}
 
 	/**
+	* Implementation of GetLogStreamStats 
+	*
+	* Returns an Array og logstream statsdata 
+	*	Count of Data Items
+	*	Total Filesize
+	*/
+	public function GetLogStreamStats()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			$tableName = $this->_logStreamConfigObj->DBTableName;
+
+			// SHOW TABLE STATUS FROM
+			$stats = NULL;
+			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$myQuery = $this->_dbhandle->query($szSql);
+			if ( $myQuery ) 
+			{
+				// Set tablename!
+				$tableName = $this->_logStreamConfigObj->DBTableName;
+				$myStats[]	= array( 'StatsDisplayName' => 'TableName', 'StatsValue' => $tableName );
+
+				// obtain first and only row
+				$myRow		= $myQuery->fetchColumn();
+				$myStats[]	= array( 'StatsDisplayName' => 'Rows', 'StatsValue' => $myRow );
+				$stats[]['STATSDATA'] = $myStats;
+
+				// Free query now
+				$myQuery->closeCursor();
+
+
+
+				// Increment for the Footer Stats 
+				$querycount++;
+			}
+			
+			// return results!
+			return $stats;
+		}
+		else
+			return null;
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the PDO DB Logstream, the database will do most of the work

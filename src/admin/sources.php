@@ -238,7 +238,7 @@ if ( isset($_GET['op']) )
 			//PreInit these values 
 			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
 
-			// Get UserInfo
+			// Get SourceInfo
 			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
 			$myrow = DB_GetSingleRow($result, true);
 			if ( !isset($myrow['Name']) )
@@ -272,6 +272,107 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
+		}
+	}
+	else if ($_GET['op'] == "cleardata") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+		}
+
+		// Check If source is available
+		if ( !isset($content['Sources'][ $content['SOURCEID'] ]) )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+		}
+		else
+		{
+
+
+
+		}
+	}
+	else if ($_GET['op'] == "dbstats") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+		}
+
+		// Check If source is available
+		if ( !isset($content['Sources'][ $content['SOURCEID'] ]) )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+		}
+		else
+		{
+			// Include LogStream facility
+			include($gl_root_path . 'classes/logstream.class.php');
+			
+			// --- Init the source
+			$tmpSource = $content['Sources'][ $content['SOURCEID'] ];
+
+			// Copy some default properties
+			$content['DisplayName'] = $tmpSource['Name'];
+			$content['Description'] = $tmpSource['Description'];
+			$content['SourceType'] = $tmpSource['SourceType'];
+			CreateSourceTypesList($content['SourceType']);
+			$content['SourceTypeName'] = $content['SOURCETYPES'][ $content['SourceType'] ]['DisplayName'];
+
+			// Fix Filename manually for FILE LOGSTREAM!
+			if ( $content['SourceType'] == SOURCE_DISK ) 
+			{
+				$tmpSource['DiskFile'] = CheckAndPrependRootPath(DB_StripSlahes($tmpSource['DiskFile']));
+				$tmpSource['ObjRef']->FileName = $tmpSource['DiskFile'];
+			}
+
+			// Create LogStream Object 
+			$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+			$res = $stream->Verify();
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			else
+			{
+				// Gather Database Stats
+				$content['STATS'] = $stream->GetLogStreamStats();
+				if ( isset($content['STATS']) )
+				{
+					$content['ISSTATS'] = true;
+
+					foreach( $content['STATS'] as &$myStats )
+					{
+						$i = 0;
+						foreach( $myStats['STATSDATA'] as &$myStatsData )
+						{
+							// --- Set CSS Class
+							if ( $i % 2 == 0 )
+								$myStatsData['cssclass'] = "line1";
+							else
+								$myStatsData['cssclass'] = "line2";
+							$i++;
+							// --- 
+						}
+					}
+
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOSTATSDATA'], $content['SOURCEID'] ); 
+				}
+//				print_r ( $content['STATS'] );
+			}
+			// ---
 		}
 	}
 }
@@ -364,8 +465,8 @@ if ( isset($_POST['op']) )
 			else 
 			{
 				// Get plain filename for testing!
-				$content['SourceDiskFileTesting'] = DB_StripSlahes($content['SourceDiskFile']);
-
+				$content['SourceDiskFileTesting'] = CheckAndPrependRootPath(DB_StripSlahes($content['SourceDiskFile']));
+				/*
 				// Take as it is if rootpath!
 				if (
 						( ($pos = strpos($content['SourceDiskFileTesting'], "/")) !== FALSE && $pos == 0) ||
@@ -379,13 +480,7 @@ if ( isset($_POST['op']) )
 				}
 				else // prepend basepath!
 					$content['SourceDiskFileTesting'] = $gl_root_path . $content['SourceDiskFileTesting'];
-/*
-				if ( !is_file($content['SourceDiskFileTesting']) )
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $szFileName );
-				}
-*/
+				*/
 			}
 		}
 		// DB Params

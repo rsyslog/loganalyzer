@@ -98,6 +98,7 @@ $content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
 $content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&gt; area.";
 $content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
+$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional phpLogCon Logo URL. Leave empty to use the default one.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
@@ -231,6 +232,12 @@ $content['LN_SOURCES_ERROR_DELSOURCE'] = "Deleting of the Source with id '%1' fa
 $content['LN_SOURCES_ERROR_HASBEENDEL'] = "The Source '%1' has been successfully deleted!";
 $content['LN_SOURCES_DESCRIPTION'] = "Source Description (Optional)";
 $content['LN_SOURCES_ERROR_INVALIDVALUE'] = "Invalid value for the paramater '%1'.";
+$content['LN_SOURCES_STATSNAME'] = "Name";
+$content['LN_SOURCES_STATSVALUE'] = "Value";
+$content['LN_SOURCES_DETAILS'] = "Details for this logstream source";
+$content['LN_SOURCES_STATSDETAILS'] = "Statistic details for this logstream source";
+$content['LN_SOURCES_ERROR_NOSTATSDATA'] = "Could not find or obtain any stats related information for this logstream source.";
+
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";

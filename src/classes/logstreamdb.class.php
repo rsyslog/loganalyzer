@@ -539,6 +539,65 @@ class LogStreamDB extends LogStream {
 	}
 
 	/**
+	* Implementation of GetLogStreamStats 
+	*
+	* Returns an Array og logstream statsdata 
+	*	Count of Data Items
+	*	Total Filesize
+	*/
+	public function GetLogStreamStats()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			// Obtain Stats data for this table!
+			$szSql = "SHOW TABLE STATUS FROM " .  $this->_logStreamConfigObj->DBName; 
+			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			if ($myQuery)
+			{
+				// Loop through results
+				while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+				{
+					// Set tablename!
+					$tableName = $myRow['Name'];
+					$myStats = null;
+					$myStats[]			= array( 'StatsDisplayName' => 'Table name', 'StatsValue' => $tableName );
+
+					// copy usefull statsdata
+					if ( isset($myRow['Engine']) ) 
+						$myStats[]		= array( 'StatsDisplayName' => 'Table engine', 'StatsValue' => $myRow['Engine'] );
+					if ( isset($myRow['Rows']) ) 
+						$myStats[]		= array( 'StatsDisplayName' => 'Rowcount', 'StatsValue' => $myRow['Rows'] );
+					
+					if ( isset($myRow['Data_length']) ) 
+						$myStats[]		= array( 'StatsDisplayName' => 'Table filesize (bytes)', 'StatsValue' => $myRow['Data_length'] );
+					if ( isset($myRow['Collation']) ) 
+						$myStats[]		= array( 'StatsDisplayName' => 'Collation', 'StatsValue' => $myRow['Collation'] );
+					if ( isset($myRow['Comment']) ) 
+						$myStats[]		= array( 'StatsDisplayName' => 'Comment', 'StatsValue' => $myRow['Comment'] );
+
+					$stats[]['STATSDATA'] = $myStats;
+				}
+
+				// Free query now
+				mysql_free_result ($myQuery); 
+
+				// Increment for the Footer Stats 
+				$querycount++;
+			}
+			
+			// return results!
+			return $stats;
+		}
+		else
+			return null;
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the native MYSQL Logstream, the database will do most of the work

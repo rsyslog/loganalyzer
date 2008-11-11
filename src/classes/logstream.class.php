@@ -212,6 +212,13 @@ abstract class LogStream {
 	*/
 	public abstract function IsPropertySortable($myProperty);
 
+
+	/**
+	* This returns an Array of useful statsdata for this logstream source
+	*/
+	public abstract function GetLogStreamStats();
+
+
 	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/
