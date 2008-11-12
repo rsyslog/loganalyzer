@@ -83,6 +83,7 @@ $CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline message
 $CFG['SuppressDuplicatedMessages'] = 0;		// If enabled, duplicated messages will be suppressed in the main display. 
 $CFG['TreatNotFoundFiltersAsTrue'] = 0;		// If you filter / search for messages, and the fields you are filtering for is not found, the filter result is treaten as TRUE! 
 $CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout value for popup menus in milliseconds. (those menus which popup when you click on the value of a field.
+$CFG['PhplogconLogoUrl'] = "";				// Put an Url to a custom toplogo you want to use.
 // ---
 
 // --- Custom HTML Code 

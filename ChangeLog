@@ -1,5 +1,12 @@
 ---------------------------------------------------------------------------
 Version 2.5.17 (beta), 2008-11-03
+- Added logstream statistic and maintenance option which are accessable 
+  in the sources admin panel. You can view overall stats of database
+  logstreams, and cleanup data based on the date field. 
+- Added option to use a custom phpLogCon logo in the header. 
+  The logo url can be configured in the admin panel
+---------------------------------------------------------------------------
+Version 2.5.17 (beta), 2008-11-03
 - Fixed default database template, updates for DB Version 6 and 7 were
   missing. 
 - Added expandable submenu for help into the top menu. Also fixed some 
