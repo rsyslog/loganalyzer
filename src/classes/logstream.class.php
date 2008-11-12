@@ -224,6 +224,13 @@ abstract class LogStream {
 	*/
 	public abstract function GetLogStreamTotalRowCount();
 
+
+	/**
+	* Helper function to cleanup all logdata which is older then the nDateTimeStamp!
+	*/
+	public abstract function CleanupLogdataByDate( $nDateTimeStamp );
+
+
 	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/

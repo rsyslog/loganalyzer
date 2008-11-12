@@ -636,6 +636,45 @@ class LogStreamDB extends LogStream {
 
 
 	/**
+	* Implementation of the CleanupLogdataByDate function! Returns affected rows!
+	*/
+	public function CleanupLogdataByDate( $nDateTimeStamp )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Set default rowcount
+		$rowcount = null;
+
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			// Create WHERE attachment
+			if ( $nDateTimeStamp > 0 ) 
+				$szWhere = " WHERE UNIX_TIMESTAMP(" . $dbmapping[$szTableType][SYSLOG_DATE] . ") < " . $nDateTimeStamp; 
+			else
+				$szWhere = "";
+
+			// DELETE DATA NOW!
+			$szSql = "DELETE FROM " .  $this->_logStreamConfigObj->DBTableName . $szWhere; 
+			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			if ($myQuery)
+			{
+				// Get affected rows and return!
+				$rowcount = mysql_affected_rows();
+
+				// Free query now
+				mysql_free_result ($myQuery); 
+			}
+		}
+
+		//return affected rows
+		return $rowcount; 
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the native MYSQL Logstream, the database will do most of the work

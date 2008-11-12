@@ -324,12 +324,64 @@ if ( isset($_GET['op']) )
 					$content['ROWCOUNT'] = $stream->GetLogStreamTotalRowCount();
 					if ( isset($content['ROWCOUNT']) )
 					{
-						// Allow Deleting by Date
-						$content['DELETE_ALLOWDETAIL'] = true;
+						// Check for suboperations
+						if ( isset($_POST['subop']) )
+						{
+							if		( $_POST['subop'] == "all" ) 
+							{
+								$timestamp = 0;
+							}
+							else if ( $_POST['subop'] == "since" && isset($_POST['olderthan']) ) 
+							{
+								// Take current time and subtract Seconds
+								$nSecondsSubtract = $_POST['olderthan'];
+								$timestamp = time() - $nSecondsSubtract;
+							}
+							else if ( $_POST['subop'] == "date" && isset($_POST['olderdate_year']) && isset($_POST['olderdate_month']) && isset($_POST['olderdate_day']) ) 
+							{
+								// Generate Timestamp
+								$timestamp = mktime( 0, 0, 0, intval($_POST['olderdate_month']), intval($_POST['olderdate_day']), intval($_POST['olderdate_year']) );
+							}
+							// Continue with delete only inif wherequery is set!
+							if ( isset($timestamp) ) 
+							{
+								// --- Ask for deletion first!
+								if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+								{
+									// This will print an additional secure check which the user needs to confirm and exit the script execution.
+									PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETEDATA'], $content['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+								}
+								// ---
 
-						// Create Lists
-						CreateOlderThanList( 3600 );
-						CreateOlderDateFields();
+								// Now perform the data cleanup!
+								$content['affectedrows'] = $stream->CleanupLogdataByDate($timestamp);
+
+								if ( !isset($content['affectedrows']) )
+								{
+									$content['ISERROR'] = true;
+									$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELDATA'], $content['SOURCEID'] ); 
+								}
+								else
+								{
+									// Do the final redirect
+									RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENDELDATA'], $content['DisplayName'], $content['affectedrows'] ) , "sources.php" );
+								}
+							}
+							else
+							{
+								$content['ISERROR'] = true;
+								$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDCLEANUP'], $content['DisplayName'] ); 
+							}
+						}
+						else
+						{
+							// Allow Deleting by Date
+							$content['DELETE_ALLOWDETAIL'] = true;
+
+							// Create Lists
+							CreateOlderThanList( 3600 );
+							CreateOlderDateFields();
+						}
 
 					}
 					else 

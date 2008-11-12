@@ -569,8 +569,6 @@ class LogStreamPDO extends LogStream {
 				// Free query now
 				$myQuery->closeCursor();
 
-
-
 				// Increment for the Footer Stats 
 				$querycount++;
 			}
@@ -580,6 +578,82 @@ class LogStreamPDO extends LogStream {
 		}
 		else
 			return null;
+	}
+
+
+	/**
+	* Implementation of GetLogStreamTotalRowCount 
+	*
+	* Returns the total amount of rows in the main datatable
+	*/
+	public function GetLogStreamTotalRowCount()
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Set default rowcount
+		$rowcount = null;
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			// Get Total Rowcount
+			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$myQuery = $this->_dbhandle->query($szSql);
+			if ( $myQuery ) 
+			{
+				// Obtain RowCount!
+				$myRow		= $myQuery->fetchColumn();
+				$rowcount = $myRow;
+
+				// Free query now
+				$myQuery->closeCursor();
+
+				// Increment for the Footer Stats 
+				$querycount++;
+			}
+		}
+
+		//return result
+		return $rowcount; 
+	}
+
+
+	/**
+	* Implementation of the CleanupLogdataByDate function! Returns affected rows!
+	*/
+	public function CleanupLogdataByDate( $nDateTimeStamp )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Set default rowcount
+		$rowcount = null;
+
+		// Perform if Connection is true!
+		if ( $this->_dbhandle != null ) 
+		{
+			// Create WHERE attachment
+			if ( $nDateTimeStamp > 0 ) 
+				$szWhere = " WHERE " . $dbmapping[$szTableType][SYSLOG_DATE] . " < '" . date('Y-m-d H:i:s', $nDateTimeStamp) . "'"; 
+			else
+				$szWhere = "";
+
+			// DELETE DATA NOW!
+			$szSql = "DELETE FROM " .  $this->_logStreamConfigObj->DBTableName . $szWhere; 
+			$myQuery = $this->_dbhandle->query($szSql);
+			if ( $myQuery ) 
+			{
+				// Get affected rows and return!
+				$rowcount = $myQuery->rowCount();
+
+				// Free query now
+				$myQuery->closeCursor();
+			}
+		}
+
+		//return affected rows
+		return $rowcount; 
 	}
 
 

@@ -246,6 +246,10 @@ $content['LN_SOURCES_CLEAR_HELPTEXT'] = "Attention! Be carefull with deleting da
 $content['LN_SOURCES_CLEARSINCE'] = "Clear all data older than ... ";
 $content['LN_SOURCES_CLEARDATE'] = "Clear all data which is older than ... ";
 $content['LN_SOURCES_CLEARDATA_SEND'] = "Clear selected data range";
+$content['LN_SOURCES_ERROR_INVALIDCLEANUP'] = "Invalid Data Cleanup type";
+$content['LN_SOURCES_WARNDELETEDATA'] = "Are you sure that you want to clear logdata in the '%1' source? This cannot be undone!";
+$content['LN_SOURCES_ERROR_DELDATA'] = "Could not delete data in the '%1' source";
+$content['LN_SOURCES_HASBEENDELDATA'] = "Successfully deleted data from the '%1' source, '%2' rows were affected. ";
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";
