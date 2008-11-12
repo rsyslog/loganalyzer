@@ -72,6 +72,7 @@ $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 
 // PreInit overall user variables
+$content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
 $content['EXTRA_METATAGS'] = "";
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
@@ -627,6 +628,8 @@ function InitFrontEndVariables()
 	$content['MENU_INFORMATION'] = $content['BASEPATH'] . "images/icons/information2.png";
 	$content['MENU_PARSER_DELETE'] = $content['BASEPATH'] . "images/icons/gear_delete.png";
 	$content['MENU_PARSER_INIT'] = $content['BASEPATH'] . "images/icons/gear_new.png";
+	$content['MENU_RECYCLE'] = $content['BASEPATH'] . "images/icons/recycle.png";
+	$content['MENU_TRASH'] = $content['BASEPATH'] . "images/icons/garbage_empty.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -810,6 +813,13 @@ function InitConfigurationValues()
 		$content['EXTRA_FOOTER'] .= $CFG['InjectBodyFooter'];
 	else
 		$content['InjectBodyFooter'] = ""; // Init Option
+	// --- 
+
+	// --- Handle Optional Logo URL!
+	if ( strlen(GetConfigSetting("PhplogconLogoUrl", false)) > 0 ) 
+		$content['EXTRA_PHPLOGCON_LOGO'] = $CFG['PhplogconLogoUrl'];
+	else
+		$content['PhplogconLogoUrl'] = ""; // Init Option
 	// --- 
 
 	// Init main langauge file now!
@@ -1385,6 +1395,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "InjectBodyHeader", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "InjectBodyFooter", true, null, null ,$bForceStripSlahes );
+	WriteConfigValue( "PhplogconLogoUrl", true, null, null ,$bForceStripSlahes );
 }
 
 function SaveUserGeneralSettingsIntoDB()
@@ -1512,6 +1523,36 @@ function list_files($directory, $failOnError = true)
 		return $result;
 	}
 }
+
+
+/*
+*	Helper function to prepend the current global root path if necessary!
+*/
+function CheckAndPrependRootPath( $szFileName)
+{
+	global $gl_root_path;
+
+	// Get plain filename for testing!
+	$szNewFileName = $szFileName;
+
+	// Take as it is if rootpath!
+	if (
+			( ($pos = strpos($szFileName, "/")) !== FALSE && $pos == 0) ||
+			( ($pos = strpos($szFileName, "\\\\")) !== FALSE && $pos == 0) ||
+			( ($pos = strpos($szFileName, ":\\")) !== FALSE ) ||
+			( ($pos = strpos($szFileName, ":/")) !== FALSE )
+		)
+	{
+		// Nothing really todo
+		true;
+	}
+	else // prepend basepath!
+		$szNewFileName = $gl_root_path . $szFileName;
+
+	// return result
+	return $szNewFileName; 
+}
+
 
 /*
 *	Helper function to flush html output to avoid redirects if errors happen!

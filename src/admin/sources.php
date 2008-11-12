@@ -238,7 +238,7 @@ if ( isset($_GET['op']) )
 			//PreInit these values 
 			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
 
-			// Get UserInfo
+			// Get SourceInfo
 			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
 			$myrow = DB_GetSingleRow($result, true);
 			if ( !isset($myrow['Name']) )
@@ -272,6 +272,208 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = $content['LN_SOURCES_ERROR_INVALIDORNOTFOUNDID'];
+		}
+	}
+	else if ($_GET['op'] == "cleardata") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+		}
+
+		// Check If source is available
+		if ( !isset($content['Sources'][ $content['SOURCEID'] ]) )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+		}
+		else
+		{
+			// Include LogStream facility
+			include($gl_root_path . 'classes/logstream.class.php');
+			
+			// --- Init the source
+			$tmpSource = $content['Sources'][ $content['SOURCEID'] ];
+
+			// Copy some default properties
+			$content['DisplayName'] = $tmpSource['Name'];
+			$content['SourceType'] = $tmpSource['SourceType'];
+			CreateSourceTypesList($content['SourceType']);
+			$content['SourceTypeName'] = $content['SOURCETYPES'][ $content['SourceType'] ]['DisplayName'];
+
+			// Fix Filename manually for FILE LOGSTREAM!
+			if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+			{
+				// Create LogStream Object 
+				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+				$res = $stream->Verify();
+				if ( $res != SUCCESS ) 
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+					if ( isset($extraErrorDescription) )
+						$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+				}
+				else
+				{
+					// Display Stats
+					$content['ISCLEARDATA'] = true;
+
+					// Gather Database Stats
+					$content['ROWCOUNT'] = $stream->GetLogStreamTotalRowCount();
+					if ( isset($content['ROWCOUNT']) )
+					{
+						// Check for suboperations
+						if ( isset($_POST['subop']) )
+						{
+							if		( $_POST['subop'] == "all" ) 
+							{
+								$timestamp = 0;
+							}
+							else if ( $_POST['subop'] == "since" && isset($_POST['olderthan']) ) 
+							{
+								// Take current time and subtract Seconds
+								$nSecondsSubtract = $_POST['olderthan'];
+								$timestamp = time() - $nSecondsSubtract;
+							}
+							else if ( $_POST['subop'] == "date" && isset($_POST['olderdate_year']) && isset($_POST['olderdate_month']) && isset($_POST['olderdate_day']) ) 
+							{
+								// Generate Timestamp
+								$timestamp = mktime( 0, 0, 0, intval($_POST['olderdate_month']), intval($_POST['olderdate_day']), intval($_POST['olderdate_year']) );
+							}
+							// Continue with delete only inif wherequery is set!
+							if ( isset($timestamp) ) 
+							{
+								// --- Ask for deletion first!
+								if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+								{
+									// This will print an additional secure check which the user needs to confirm and exit the script execution.
+									PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETEDATA'], $content['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+								}
+								// ---
+
+								// Now perform the data cleanup!
+								$content['affectedrows'] = $stream->CleanupLogdataByDate($timestamp);
+
+								if ( !isset($content['affectedrows']) )
+								{
+									$content['ISERROR'] = true;
+									$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELDATA'], $content['SOURCEID'] ); 
+								}
+								else
+								{
+									// Do the final redirect
+									RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENDELDATA'], $content['DisplayName'], $content['affectedrows'] ) , "sources.php" );
+								}
+							}
+							else
+							{
+								$content['ISERROR'] = true;
+								$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDCLEANUP'], $content['DisplayName'] ); 
+							}
+						}
+						else
+						{
+							// Allow Deleting by Date
+							$content['DELETE_ALLOWDETAIL'] = true;
+
+							// Create Lists
+							CreateOlderThanList( 3600 );
+							CreateOlderDateFields();
+						}
+
+					}
+					else 
+						$content['ROWCOUNT'] = "Unknown";
+				}
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOCLEARSUPPORT'], $content['SOURCEID'] ); 
+			}
+		}
+	}
+	else if ($_GET['op'] == "dbstats") 
+	{
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+		}
+
+		// Check If source is available
+		if ( !isset($content['Sources'][ $content['SOURCEID'] ]) )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_IDNOTFOUND'], $content['SOURCEID'] ); 
+		}
+		else
+		{
+			// Include LogStream facility
+			include($gl_root_path . 'classes/logstream.class.php');
+			
+			// --- Init the source
+			$tmpSource = $content['Sources'][ $content['SOURCEID'] ];
+
+			// Copy some default properties
+			$content['DisplayName'] = $tmpSource['Name'];
+			$content['Description'] = $tmpSource['Description'];
+			$content['SourceType'] = $tmpSource['SourceType'];
+			CreateSourceTypesList($content['SourceType']);
+			$content['SourceTypeName'] = $content['SOURCETYPES'][ $content['SourceType'] ]['DisplayName'];
+
+			// Fix Filename manually for FILE LOGSTREAM!
+			if ( $content['SourceType'] == SOURCE_DISK ) 
+			{
+				$tmpSource['DiskFile'] = CheckAndPrependRootPath(DB_StripSlahes($tmpSource['DiskFile']));
+				$tmpSource['ObjRef']->FileName = $tmpSource['DiskFile'];
+			}
+
+			// Create LogStream Object 
+			$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+			$res = $stream->Verify();
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			else
+			{
+				// Gather Database Stats
+				$content['STATS'] = $stream->GetLogStreamStats();
+				if ( isset($content['STATS']) )
+				{
+					// Display Stats
+					$content['ISSTATS'] = true;
+
+					foreach( $content['STATS'] as &$myStats )
+					{
+						$i = 0;
+						foreach( $myStats['STATSDATA'] as &$myStatsData )
+						{
+							// --- Set CSS Class
+							if ( $i % 2 == 0 )
+								$myStatsData['cssclass'] = "line1";
+							else
+								$myStatsData['cssclass'] = "line2";
+							$i++;
+							// --- 
+						}
+					}
+
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOSTATSDATA'], $content['SOURCEID'] ); 
+				}
+//				print_r ( $content['STATS'] );
+			}
+			// ---
 		}
 	}
 }
@@ -364,8 +566,8 @@ if ( isset($_POST['op']) )
 			else 
 			{
 				// Get plain filename for testing!
-				$content['SourceDiskFileTesting'] = DB_StripSlahes($content['SourceDiskFile']);
-
+				$content['SourceDiskFileTesting'] = CheckAndPrependRootPath(DB_StripSlahes($content['SourceDiskFile']));
+				/*
 				// Take as it is if rootpath!
 				if (
 						( ($pos = strpos($content['SourceDiskFileTesting'], "/")) !== FALSE && $pos == 0) ||
@@ -379,13 +581,7 @@ if ( isset($_POST['op']) )
 				}
 				else // prepend basepath!
 					$content['SourceDiskFileTesting'] = $gl_root_path . $content['SourceDiskFileTesting'];
-/*
-				if ( !is_file($content['SourceDiskFileTesting']) )
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOTAVALIDFILE'], $szFileName );
-				}
-*/
+				*/
 			}
 		}
 		// DB Params
@@ -663,11 +859,17 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		{
 			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_DB"];
 			$mySource['SourcesTypeText'] = $content["LN_SOURCES_DB"];
+			
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
 		}
 		else if ( $mySource['SourceType'] == SOURCE_PDO )
 		{
 			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_PDO"];
 			$mySource['SourcesTypeText'] = $content["LN_SOURCES_PDO"];
+
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
 		}
 		// ---
 
@@ -690,6 +892,65 @@ function ReadMsgParserList()
 {
 	global $gl_root_path, $content; 
 }
+
+/*
+* Helper function to create a OlderThan Listbox
+*/
+function CreateOlderThanList( $nDefaultSeconds )
+{
+	global $content; 
+
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 minute", 'OlderThanSeconds' => 60 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "5 minutes", 'OlderThanSeconds' => 300 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "15 minutes", 'OlderThanSeconds' => 900 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "30 minutes", 'OlderThanSeconds' => 1800 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 hour", 'OlderThanSeconds' => 3600 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "12 hours", 'OlderThanSeconds' => 43200 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "1 day", 'OlderThanSeconds' => 86400 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "7 days", 'OlderThanSeconds' => 604800 );
+	$content['OLDERTHAN'][] = array( 'OlderThanDisplayName' => "31 days", 'OlderThanSeconds' => 2678400 );
+
+	foreach ( $content['OLDERTHAN'] as &$myTime ) 
+	{
+		if ( $nDefaultSeconds == $myTime['OlderThanSeconds'] ) 
+			$myTime['selected'] = "selected";
+		else 
+			$myTime['selected'] = "";
+	}
+}
+
+/*
+* Helper function to create a OlderThan Listbox
+*/
+function CreateOlderDateFields()
+{
+	global $content; 
+
+	$currentTime = time();
+	$currentDay = date("d", $currentTime);
+	$currentMonth = date("m", $currentTime);
+	$currentYear = date("Y", $currentTime);
+
+	// Init Year, month and day array!
+	for ( $i = $currentYear-5; $i <= $currentYear+5; $i++ )
+	{
+		$content['olderdate_years'][$i]['value'] = $i;
+		if ( $i == $currentYear ) { $content['olderdate_years'][$i]['selected'] = "selected"; } else { $content['olderdate_years'][$i]['selected'] = ""; }
+	}
+	for ( $i = 1; $i <= 12; $i++ )
+	{
+		$content['olderdate_months'][$i]['value'] = $i;
+		if ( $i == $currentMonth ) { $content['olderdate_months'][$i]['selected'] = "selected"; } else { $content['olderdate_months'][$i]['selected'] = ""; }
+	}
+	for ( $i = 1; $i <= 31; $i++ )
+	{
+		$content['olderdate_days'][$i]['value'] = $i;
+		if ( $i == $currentDay ) { $content['olderdate_days'][$i]['selected'] = "selected"; } else { $content['olderdate_days'][$i]['selected'] = ""; }
+	}
+
+
+}
+
 // --- END Custom Code
 
 // --- BEGIN CREATE TITLE

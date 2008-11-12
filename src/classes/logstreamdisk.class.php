@@ -599,6 +599,52 @@ class LogStreamDisk extends LogStream {
 	}
 
 	/**
+	* Implementation of GetLogStreamStats 
+	*
+	* Returns an Array og logstream statsdata 
+	*	Count of Data Items
+	*	Total Filesize
+	*/
+	public function GetLogStreamStats()
+	{
+		// Get some file data!
+
+/*
+			// return results!
+			return $stats;
+		}
+		else
+*/
+		// NOT IMPLEMENTED YET!
+		return null;
+	}
+
+
+	/**
+	* Implementation of GetLogStreamTotalRowCount 
+	*
+	* not implemented yet!
+	*/
+	public function GetLogStreamTotalRowCount()
+	{
+		//not implemented
+		return null; 
+	}
+
+
+	/**
+	* Implementation of the CleanupLogdataByDate
+	*
+	* not implemented yet!
+	*/
+	public function CleanupLogdataByDate( $nDateTimeStamp )
+	{
+		//not implemented
+		return null; 
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* For now, the disk source needs to loop through the whole file 

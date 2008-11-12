@@ -212,6 +212,25 @@ abstract class LogStream {
 	*/
 	public abstract function IsPropertySortable($myProperty);
 
+
+	/**
+	* This returns an Array of useful statsdata for this logstream source
+	*/
+	public abstract function GetLogStreamStats();
+
+
+	/**
+	* This returns just the count of records of the main data source
+	*/
+	public abstract function GetLogStreamTotalRowCount();
+
+
+	/**
+	* Helper function to cleanup all logdata which is older then the nDateTimeStamp!
+	*/
+	public abstract function CleanupLogdataByDate( $nDateTimeStamp );
+
+
 	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/

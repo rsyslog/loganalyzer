@@ -362,10 +362,35 @@ function HoverPopup( myObjRef, myPopupTitle, HoverContent, OptionalImage )
 	obj.innerHTML = HoverContent;
 }
 
+function HoverPopupHelp( myEvent, parentObj, myPopupTitle, HoverContent )
+{
+	// Change CSS Class
+	var objPopup = document.getElementById('popupdetails');
+	objPopup.className='popupdetails_popup with_border';
+
+	// Set title
+	var obj = document.getElementById("popuptitle");
+	obj.innerHTML = myPopupTitle;
+
+	// Set Content
+	obj = document.getElementById("popupcontent");
+	obj.innerHTML = HoverContent;
+
+//	var PopupContentWidth = 0;
+///	var middle = PopupContentWidth / 2;
+	var middle = -5;
+
+	if (myPopupHovering == false && parentObj != null)
+	{
+		// Different mouse position capturing in IE!
+		objPopup.style.top = (event.y+document.body.scrollTop + 24) + 'px';
+		objPopup.style.left = (myEvent.clientX - middle) + 'px';
+	}
+}
 
 function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 {
-	if (szBrowserApp !== "IEXPLORER")
+	if (szBrowserApp !== "IEXPLORER" )
 	{
 		// Don't need helper here!
 		return; 

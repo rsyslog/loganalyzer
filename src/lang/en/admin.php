@@ -51,6 +51,9 @@ $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";
 $content['LN_GEN_GROUPONLY_LONG'] = "For this group <br>(Only available to the selected group)";
 $content['LN_GEN_GROUPONLYNAME'] = "Group '%1'";
+$content['LN_ADMIN_POPUPHELP'] = "Details on this function";
+$content['LN_ADMIN_DBSTATS'] = "Show database statistics.";
+$content['LN_ADMIN_CLEARDATA'] = "If you need to remove old data records, use this function.";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";
@@ -95,6 +98,7 @@ $content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
 $content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&gt; area.";
 $content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
+$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional phpLogCon Logo URL. Leave empty to use the default one.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
@@ -228,6 +232,24 @@ $content['LN_SOURCES_ERROR_DELSOURCE'] = "Deleting of the Source with id '%1' fa
 $content['LN_SOURCES_ERROR_HASBEENDEL'] = "The Source '%1' has been successfully deleted!";
 $content['LN_SOURCES_DESCRIPTION'] = "Source Description (Optional)";
 $content['LN_SOURCES_ERROR_INVALIDVALUE'] = "Invalid value for the paramater '%1'.";
+$content['LN_SOURCES_STATSNAME'] = "Name";
+$content['LN_SOURCES_STATSVALUE'] = "Value";
+$content['LN_SOURCES_DETAILS'] = "Details for this logstream source";
+$content['LN_SOURCES_STATSDETAILS'] = "Statistic details for this logstream source";
+$content['LN_SOURCES_ERROR_NOSTATSDATA'] = "Could not find or obtain any stats related information for this logstream source.";
+$content['LN_SOURCES_ERROR_NOCLEARSUPPORT'] = "This logstream source does not support deleting data.";
+$content['LN_SOURCES_ROWCOUNT'] = "Total Rowcount";
+$content['LN_SOURCES_CLEARDATA'] = "The following database maintenance Options are available";
+$content['LN_SOURCES_CLEAROPTIONS'] = "Select how you want to clear data.";
+$content['LN_SOURCES_CLEARALL'] = "Clear (Delete) all data.";
+$content['LN_SOURCES_CLEAR_HELPTEXT'] = "Attention! Be carefull with deleting data, any action performed here can not be undone!";
+$content['LN_SOURCES_CLEARSINCE'] = "Clear all data older than ... ";
+$content['LN_SOURCES_CLEARDATE'] = "Clear all data which is older than ... ";
+$content['LN_SOURCES_CLEARDATA_SEND'] = "Clear selected data range";
+$content['LN_SOURCES_ERROR_INVALIDCLEANUP'] = "Invalid Data Cleanup type";
+$content['LN_SOURCES_WARNDELETEDATA'] = "Are you sure that you want to clear logdata in the '%1' source? This cannot be undone!";
+$content['LN_SOURCES_ERROR_DELDATA'] = "Could not delete data in the '%1' source";
+$content['LN_SOURCES_HASBEENDELDATA'] = "Successfully deleted data from the '%1' source, '%2' rows were affected. ";
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";
