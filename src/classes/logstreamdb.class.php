@@ -664,8 +664,8 @@ class LogStreamDB extends LogStream {
 				// Get affected rows and return!
 				$rowcount = mysql_affected_rows();
 
-				// Free query now
-				mysql_free_result ($myQuery); 
+				// Free result not needed here!
+				//mysql_free_result ($myQuery); 
 			}
 		}
 
