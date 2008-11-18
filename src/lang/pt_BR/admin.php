@@ -331,4 +331,18 @@ $content['LN_PARSERS_ERROR_HASBEENADDED'] = "All required settings ('%2' custom 
 $content['LN_PARSERS_ERROR_NOFIELDS'] = "The Message Parser '%1' does not have any custom fields to add.";
 $content['LN_PARSERS_'] = "";
 
+// Command Line stuff
+$content['LN_CMD_NOOP'] = "Operation parameter is missing";
+$content['LN_CMD_NOLOGSTREAM'] = "The logstream source parameter is missing";
+$content['LN_CMD_LOGSTREAMNOTFOUND'] = "Logstream Source with ID '%1' could not be found in the Database!";
+$content['LN_CMD_COULDNOTGETROWCOUNT'] = "Could not obtain rowcount from logstream source '%1'";
+$content['LN_CMD_SUBPARAM1MISSING'] = "Subparameter 1 is missing, it should be set to 'all', 'since' or 'date'. For more details see the documentation.";
+$content['LN_CMD_WRONGSUBOPORMISSING'] = "Either the sub-operation is wrong, or another parameter is missing";
+$content['LN_CMD_FAILEDTOCLEANDATA'] = "Failed to cleandata for the logstream '%1'.";
+$content['LN_CMD_CLEANINGDATAFOR'] = "Cleaning data for logstream source '%1'.";
+$content['LN_CMD_ROWSFOUND'] = "Successfully connected and found '%1' rows in the logstream source.";
+$content['LN_CMD_DELETINGOLDERTHEN'] = "Performing deletion of data entries older then '%1'.";
+$content['LN_CMD_DELETEDROWS'] = "Successfully Deleted '%1' rows in the logstream source.'";
+$content['LN_CMD_'] = "";
+
 ?>

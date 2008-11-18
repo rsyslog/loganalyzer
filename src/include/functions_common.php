@@ -484,9 +484,14 @@ function InitPhpDebugMode()
 function CheckAndSetRunMode()
 {
 	global $content, $RUNMODE;
+	
 	// Set to command line mode if argv is set! 
-	if ( !isset($_SERVER["GATEWAY_INTERFACE"]) )
+	if ( !isset($_SERVER["SERVER_SOFTWARE"]) )
 		$RUNMODE = RUNMODE_COMMANDLINE;
+	
+	// Check if we require the command line mode!
+	if ( defined("IN_PHPLOGCON_COMMANDLINE") && $RUNMODE != RUNMODE_COMMANDLINE ) 
+		DieWithErrorMsg( "This PHP Script cannot be run within the webserver process, it designed to run over command line." );
 	
 	// Obtain max_execution_time
 	$content['MaxExecutionTime'] = ini_get("max_execution_time");
@@ -722,7 +727,10 @@ function InitConfigurationValues()
 				if ( GetConfigSetting("UserDBLoginRequired", false) )
 				{
 					// Redirect USER if not on loginpage or installpage!
-					if ( !defined("IS_NOLOGINPAGE") && !defined("IN_PHPLOGCON_INSTALL")  )
+					if (	!defined("IS_NOLOGINPAGE") && 
+							!defined("IN_PHPLOGCON_INSTALL") &&
+							!defined("IN_PHPLOGCON_COMMANDLINE")  
+						)
 						RedirectToUserLogin();
 				}
 				else if ( defined('IS_ADMINPAGE') )
@@ -898,37 +906,62 @@ function CheckUrlOrIP($ip)
 
 function DieWithErrorMsg( $szerrmsg )
 {
-	global $gl_root_path, $content;
-	echo 
-		"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
-		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
-		"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
-		"<H3>Critical Error occured</H3>" . 
-		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\"><br>" . 
-		$szerrmsg . 
-		"<br><br></td></tr></table>" . 
-		"</body></html>";
+	global $RUNMODE, $content, $gl_root_path;
+	if		( $RUNMODE == RUNMODE_COMMANDLINE )
+	{
+		print("\n\n\tCritical Error occured\t-\tErrordetails:\n");
+		print("\t" . $szerrmsg . "\n\n");
+		print("\tTerminating now!\n");
+	}
+	else if	( $RUNMODE == RUNMODE_WEBSERVER )
+	{
+		print( 
+			"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
+			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
+			"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
+			"<H3>Critical Error occured</H3>" . 
+			"</td></tr>" . 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			$szerrmsg . 
+			"<br><br></td></tr></table>" . 
+			"</body></html>"
+		);
+	}
+
+	// Abort further execution
 	exit;
 }
 
 function DieWithFriendlyErrorMsg( $szerrmsg )
 {
-	global $gl_root_path, $content;
-	echo 
-		"<html><title>phpLogCon :: Error occured</title><head>" . 
-		"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
-		"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
-		"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
-		"<H3>Error occured</H3>" . 
-		"</td></tr>" . 
-		"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
-		"<td class=\"tableBackground\" align=\"left\"><br>" . 
-		$szerrmsg . 
-		"<br><br></td></tr></table>" . 
-		"</body></html>";
+	global $RUNMODE, $content, $gl_root_path;
+	if		( $RUNMODE == RUNMODE_COMMANDLINE )
+	{
+		print("\n\n\t\tError occured\n");
+		print("\t\tErrordetails:\t" . $szerrmsg . "\n");
+		print("\t\tTerminating now!\n");
+	}
+	else if	( $RUNMODE == RUNMODE_WEBSERVER )
+	{
+
+		print( 
+			"<html><title>phpLogCon :: Error occured</title><head>" . 
+			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
+			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
+			"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
+			"<H3>Error occured</H3>" . 
+			"</td></tr>" . 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			$szerrmsg . 
+			"<br><br></td></tr></table>" . 
+			"</body></html>"
+		);
+	}
+
+	// Abort further execution
 	exit;
 }
 
@@ -1316,8 +1349,7 @@ function StartPHPSession()
 	if ( $RUNMODE == RUNMODE_WEBSERVER )
 	{
 		// This will start the session
-		if (session_id() == "")
-			session_start();
+		@session_start();
 
 		if ( !isset($_SESSION['SESSION_STARTED']) )
 			$_SESSION['SESSION_STARTED'] = "true";

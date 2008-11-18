@@ -706,7 +706,7 @@ if ( isset($_POST['op']) )
 			}
 			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
 			{
-				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, SourceDBRecordsPerQuery, userid, groupid) 
+				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, DBRecordsPerQuery, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
 						'" . $content['Description'] . "',
 						" . $content['SourceType'] . ", 
