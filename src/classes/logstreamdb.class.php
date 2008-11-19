@@ -1035,6 +1035,11 @@ class LogStreamDB extends LogStream {
 			$iBegin++;
 		}
 
+		// --- Check if results were found
+		if ( $iBegin == $this->_currentRecordNum )
+			return ERROR_NOMORERECORDS;
+		// --- 
+
 		// Free Query ressources
 		mysql_free_result ($myquery); 
 
