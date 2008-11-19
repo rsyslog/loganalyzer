@@ -1065,6 +1065,11 @@ class LogStreamPDO extends LogStream {
 			$iCount++;
 		}
 
+		// --- Check if results were found
+		if ( $iBegin == $this->_currentRecordNum )
+			return ERROR_NOMORERECORDS;
+		// --- 
+
 		// return success state if reached this point!
 		return SUCCESS;
 	}
