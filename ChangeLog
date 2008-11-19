@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------
+Version 2.5.20 (beta), 2008-11-19
+- Fixed a performance issue in the logstream db and pdo drivers when 
+  using filters. This bug could cause script timeouts when using complex
+  filters. 
+---------------------------------------------------------------------------
 Version 2.5.19 (beta), 2008-11-18
 - Added a new "cron" folder which contains a maintenance.php script. 
   This script can be used on command line level for database maintenance. 
