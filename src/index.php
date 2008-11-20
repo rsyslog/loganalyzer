@@ -330,6 +330,13 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							// Set last mgr
 							$szLastMessage = $logArray[SYSLOG_MESSAGE];
 
+							// --- Extra Loop to get the next entry!
+							do
+							{
+								$ret = $stream->ReadNext($uID, $logArray);
+							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+							// --- 
+
 							// Skip entry
 							continue;
 						}
