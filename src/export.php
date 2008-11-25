@@ -87,6 +87,7 @@ if (
 		$content['error_details'] = $content['LN_GEN_ERROR_PDFMISSINGEXTENSION'];
 	}
 */
+
 }
 else
 {

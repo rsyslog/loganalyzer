@@ -1,8 +1,15 @@
 ---------------------------------------------------------------------------
+Version 2.5.21 (beta), 2008-11-24
+- Fixed an infinite search loop which occured of the option 
+  "Suppress Duplicated Messages was enabled". This caused the index page 
+  to timeout once a duplicated message was hit. 
+- Fixed that filters were ignored when exporting results to cvs/xml
+---------------------------------------------------------------------------
 Version 2.5.20 (beta), 2008-11-19
 - Fixed a performance issue in the logstream db and pdo drivers when 
   using filters. This bug could cause script timeouts when using complex
   filters. 
+- Added default .htaccess to prevent webserver access on cron folder
 ---------------------------------------------------------------------------
 Version 2.5.19 (beta), 2008-11-18
 - Added a new "cron" folder which contains a maintenance.php script. 

@@ -40,9 +40,6 @@ include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
 include($gl_root_path . 'include/functions_filters.php');
 
-// Init Langauge first!
-// IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
-
 // Include LogStream facility
 include($gl_root_path . 'classes/logstream.class.php');
 
@@ -329,6 +326,13 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						{
 							// Set last mgr
 							$szLastMessage = $logArray[SYSLOG_MESSAGE];
+
+							// --- Extra Loop to get the next entry!
+							do
+							{
+								$ret = $stream->ReadNext($uID, $logArray);
+							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+							// --- 
 
 							// Skip entry
 							continue;
