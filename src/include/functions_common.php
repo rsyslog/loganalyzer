@@ -1071,7 +1071,15 @@ function GetEventTime($szTimStr)
 	if ( preg_match("/(...) ([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
 		// RFC 3164 typical timestamp
-		$eventtime[EVTIME_TIMESTAMP] = mktime($out[3], $out[4], $out[5], GetMonthFromString($out[1]), $out[2]);
+		$eventtime[EVTIME_TIMESTAMP] = mktime($out[3], $out[4], $out[5], GetMonthFromString($out[1]), $out[2], date("Y") );
+		
+		// If the current time is 
+		if ( $eventtime[EVTIME_TIMESTAMP] > time() ) 
+		{
+			// rare case on new year only!
+			$eventtime[EVTIME_TIMESTAMP] = mktime($out[3], $out[4], $out[5], GetMonthFromString($out[1]), $out[2], date("Y")-1 );
+		}
+
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 

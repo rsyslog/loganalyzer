@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 2.5.22 (beta), 2008-12-10
+- Added workaround for year detection for RFC 3164 like timestamps. 
+  This also resolves issues of the syslog date detection on new year. 
+- Fixed a notice error in chartgenerator, only visible if debug 
+  options were enabled.
+---------------------------------------------------------------------------
 Version 2.5.21 (beta), 2008-11-24
 - Fixed an infinite search loop which occured of the option 
   "Suppress Duplicated Messages was enabled". This caused the index page 
