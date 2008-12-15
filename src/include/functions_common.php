@@ -1180,7 +1180,7 @@ function GetMonthFromString($szMonth)
 			return 10;
 		case "Nov":
 			return 11;
-		case "Dez":
+		case "Dec":
 			return 12;
 	}
 }
