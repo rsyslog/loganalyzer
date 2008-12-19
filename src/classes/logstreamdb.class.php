@@ -432,6 +432,10 @@ class LogStreamDB extends LogStream {
 	{
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		
+		// Only perform query if row counting is enabled!
+		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
+			return $this->_firstPageUID;
 
 		$szSql = "SELECT MAX(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
@@ -460,6 +464,10 @@ class LogStreamDB extends LogStream {
 	{
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Only perform query if row counting is enabled!
+		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
+			return $this->_lastPageUID;
 
 		$szSql = "SELECT MIN(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
@@ -1096,6 +1104,9 @@ class LogStreamDB extends LogStream {
 
 		// Append precreated where clause
 		$sqlString .= $this->_SQLwhereClause;
+
+		// Output SQL Query into DEBUG
+//		OutputDebugMessage( "CreateSQLStatement result: " . $sqlString );
 
 		// Append ORDER clause
 		if ( $this->_readDirection == EnumReadDirection::Forward )
