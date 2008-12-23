@@ -521,7 +521,7 @@ function InitRuntimeInformations()
 	global $gl_root_path, $content;
 
 	// Enable GZIP Compression if enabled!
-	if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
+	if ( isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false && GetConfigSetting("MiscEnableGzipCompression", 1, CFGLEVEL_USER) == 1 ) 
 	{
 		// This starts gzip compression!
 		ob_start("ob_gzhandler");
@@ -1180,7 +1180,7 @@ function GetMonthFromString($szMonth)
 			return 10;
 		case "Nov":
 			return 11;
-		case "Dez":
+		case "Dec":
 			return 12;
 	}
 }

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------
+Version 2.5.23 (beta), 2008-12-23
+- Fixed typo in textual month detection, which caused date detection 
+  problems in december month only.
+- Fixed missing include of debug functions in maintenance.php
+- Added some performance tweaks into mysql db driver, which will make 
+  searching for strings within messages faster.
+---------------------------------------------------------------------------
 Version 2.5.22 (beta), 2008-12-10
 - Added workaround for year detection for RFC 3164 like timestamps. 
   This also resolves issues of the syslog date detection on new year. 

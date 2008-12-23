@@ -36,7 +36,8 @@ define('IN_PHPLOGCON', true);
 $gl_root_path = './../';
 
 // Now include necessary include files!
-include($gl_root_path . 'include/functions_common.php');
+include_once($gl_root_path . 'include/functions_common.php');
+include_once($gl_root_path . 'include/functions_debugoutput.php');
 
 // Set commandline mode for the script
 define('IN_PHPLOGCON_COMMANDLINE', true);
