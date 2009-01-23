@@ -156,11 +156,11 @@ function CleanData($optParam1, $optParam2, $optParam3, $optParam4)
 	*	cleandata		=	If you want to clear data from a logstream source, you can use the operation type. 
 	*						Be carefull using this option, any deletion process cannot be undone!
 	*						Sample 1: Delete all data in the logstream with id 2
-	*							php maintenance.php cleardata 2 all
+	*							php maintenance.php cleandata 2 all
 	*						Sample 2: Delete all data older then 60 seconds in the logstream with id 2
-	*							php maintenance.php cleardata 2 olderthan 60
+	*							php maintenance.php cleandata 2 olderthan 60
 	*						Sample 3: Delete all data before 2008-11-18 in the logstream with id 2
-	*							php maintenance.php cleardata 2 date 11 18 2008 
+	*							php maintenance.php cleandata 2 date 11 18 2008 
 	*
 	*/
 
