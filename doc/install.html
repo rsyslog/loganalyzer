@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+<H1>HOWTO install phpLogCon</H1>
+<P><BR><BR>
+</P>
+<H2>Abstract</H2>
+<P><I><B>In this paper, I describe how to install <A HREF="http://www.phplogcon.com/">phpLogCon</A>.</B>
+It is intentionally a brief step-by-step guide, targeted to those who
+want to quickly get it up and running. For more elaborate
+information, please consult the rest of the <A HREF="manual.html">manual
+set</A>.</I></P>
+<H2>Steps To Do</H2>
+<H3>To install phpLogCon, you need:</H3>
+<UL>
+	<LI>Apache or IIS Webserver
+	<LI>PHP5
+</UL>
+<P>Optionally, you may need:</P>
+<UL>
+	<LI>MySQL Database</P>
+</UL>
+<P>For obvious reasons, you also
+need some syslog data. Any standard syslogd will do. From a feature
+and stability point of view, we recommend either one of these (which
+we also wrote ;) ):</P>
+<UL>
+	<LI><a href="http://www.winsyslog.com/">WinSyslog</a> (for the Windows platform)
+	<LI> <a href="http://www.rsyslog.com">rsyslog</a> (for the Linux/Unix platform)
+</UL>
+<P>Both of them are also capable
+of writing to databases. Rsyslog is a drop-in replacement for stock
+syslogd and also *is* the stock  syslogd on some platforms (e.g.
+Fedora 8 and above).</P>
+<H3>Step 1 - Download Software</H3>
+<P>For obvious reasons, you need to download phpLogCon. Here, I
+assume that you use a distribution tarball. 
+</P>
+<P>Load the most recent build from
+<A HREF="http://www.phplogcon.com/downloads">http://www.phplogcon.com/downloads</A>.
+Extract the software with &quot;tar xzf -nameOfDownloadSet-&quot;.
+This will create a new subdirectory phpLogCon-version in the current
+working directory. CD into that. 
+</P>
+<H3>Step 2 
+</H3>
+<P>Upload all files from the phplogcon/src/ folder to you webserver.
+The other files are not needed on the webserver. 
+</P>
+<H3>Step 3 
+</H3>
+<P>If your webserver has write access to the phplogcon folder, you
+can skip the following step: 
+</P>
+<P>     
+</P>
+<P>	Upload the scripts configure.sh and secure.sh from the contrib
+folder to your webserver, into 	the same folder where you uploaded
+the other phplogcon files into. Then set the execution 	flag to them
+(chmod +x configure.sh secure.sh).          
+</P>
+<P>	Now run ./configure.sh, this will create a blank config.php, and
+will also set write access to 	everyone to it.         
+</P>
+<P>         	You can of course do this manually if you want. 
+</P>
+<H3>Step 4 
+</H3>
+<P>Now open your phplogcon installation in your favourite webbrowser,
+you will see an error, and you will be pointed to the installation
+script. The install script will guide you through the phplogcon
+installation, just follow the instructions.</P>
+<H3>Step 4.1</H3>
+<P>Prerequisites Beginning of installation / welcome site. This is
+the first page of the installation. It just tells you, that before
+installing, some file permission have to be checked. Simply click
+&quot;Next&quot; to start the process.</P>
+<H3>Step 4.2</H3>
+<P>Verify the file permissions Here you will see, if the config.php
+can be written or not. If it cannot be written, you have to repeat
+the complete Step 2.</P>
+<H3>Step 4.3</H3>
+<P>Basic Configuration</P>
+<P>You can set several basic options here. 
+</P>
+<UL>
+	<LI><P>Number of syslog messages per page = 50 (default)</P>
+	<P>This is the number of syslog messages displayed on each page. You
+	can increase the value (makes phpLogCon slower) or decrease the
+	value (makes it faster).    
+	</P>
+</UL>
+<UL>
+	<LI>Message character limit for the main view = 80 (default)
+	<br>Set the number of characters per message which will be shown in
+	the last column of the main view. Full messages can be reviewed by
+	hovering the mouse over it. <b>Many folks prefer to use a setting
+	of "0", which means complete messages will be displayed</b><
+	<LI>Show message details popup (default yes) = yes (default). Note that many
+	people find the popups intrusive and prefer to disable them. Use "no" in this
+	case.
+</UL>
+<H3>Step 4.4</H3>
+<P>Not implemented yet, some real magic may happen here at a later stage ;-) - for
+now, just skip it.</P>
+<H3>Step 4.5</H3>
+<P>Create the first source for syslog messages. This is the most
+important step. Here, you will configure your first data source,
+which holds all your syslog data.</P>
+<P>Mainly, you have to choose a &quot;Name of the Source&quot; and a
+&quot;Source Type&quot;. The name will be displayed later in a
+drop-down menu with which you choose your active syslog source. The 	
+      &quot;Source Type&quot; can be a file, a MySQL database or the
+PHP PDO which supports different database types like mssql,
+PostgreSQL, odbc, oracle or even ibm db2.</P>
+<H6>If you choose the diskfile, you have to provide
+the following information:</H6>
+<UL>
+	<LI><P>Logline Type = Syslog / Rsyslog (default) or Adiscon
+	WinSyslog</P>
+	<P>This tells phpLogCon, how the lines look like. This is necessary
+	for show the log messages properly.</P>
+</UL>
+<UL>
+	<LI><P>Syslog File = /var/log/syslog (default)</P>
+	<P>This is the position of the logfile in your file system. 
+	</P>
+</UL>
+<H6>If you choose MySQL native as data source,
+following information is needed:</H6>
+<UL>
+	<LI>Table Type = monitorware (default)</P>
+	<P>This is the table layout. Currently, you can use &quot;monitorware&quot;
+	or &quot;syslogng&quot;. For more details see &quot;Note on MySQL
+	Databases&quot; below.</P>
+</UL>
+<UL>
+	<LI><P>Database Host = localhost (default)</P>
+	<P>This is the host, where the database is located. By default this
+	is localhost. You can specify any other host if necessary.</P>
+</UL>
+<UL>
+	<LI><P>Database Name = phplogcon (default)</P>
+	<P>The name of the database you want to use.</P>
+</UL>
+<UL>
+	<LI><P>Database Tablename = systemevents (default)</P>
+	<P>This is the name of the table in which the data is stored. The
+	default tablename corresponds to the tables created with the
+	MonitorWare Line of products.</P>
+</UL>
+<UL>
+	<LI><P>Database User = user (default)</P>
+	<P>The username for the database.</P>
+</UL>
+<UL>
+	<LI><P>Database Password = not set by default</P>
+	<P>The password for the username.</P>
+</UL>
+<UL>
+	<LI><P>Enable Row Counting = No (default)</P>
+	<P>If configured to &quot;Yes&quot;, the amount of rows in the table
+	will be counted with every query, giving you the total records for
+	your search, though having a lot of impact on your system when using
+	      a very large database. If configured to &quot;No&quot;, the
+	rows will not be counted, providing you a lot more performance.	    
+		</P>
+</UL>
+<H6>If you choose Database (PDO), the following has
+to be defined:</H6>
+<UL>
+	<LI><P>Database Storage Engine = MySQL Server (default)</P>
+	<P>Choose the engine of the database you are using. These databases
+	are supported: MySQL Server, Microsoft SQL Server, ODBC Database
+	Connection, PostgreSQL, Oracle Call Interface, IBM       DB2,
+	Firebird/Interbase 6, IBM Informix Dynamic Server, SQLite 2.</P>
+</UL>
+<UL>
+	<LI><P>Table Type = monitorware (default)</P>
+	<P>This is the table layout. Currently, you can use &quot;monitorware&quot;
+	or &quot;syslogng&quot;. For more details see &quot;Note on MySQL
+	Databases&quot; below.</P>
+</UL>
+<UL>
+	<LI><P>Database Host = localhost (default)</P>
+	<P>This is the host, where the database is located. By default this
+	is localhost. You can specify any other host if necessary.</P>
+</UL>
+<UL>
+	<LI><P>Database Name = phplogcon (default)</P>
+	<P>The name of the database you want to use.</P>
+</UL>
+<UL>
+	<LI><P>Database Tablename = systemevents (default)</P>
+	<P>This is the name of the table in which the data is stored. The
+	default tablename corresponds to the tables created with the
+	MonitorWare Line of products.</P>
+</UL>
+<UL>
+	<LI><P>Database User = user (default)</P>
+	<P>The username for the database.</P>
+</UL>
+<UL>
+	<LI><P>Database Password = not set by default</P>
+	<P>The password for the username.</P>
+</UL>
+<UL>
+	<LI><P>Enable Row Counting = No (default)</P>
+	<P>If configured to &quot;Yes&quot;, the amount of rows in the table
+	will be counted with every query, giving you the total records for
+	your search, though having a lot of impact on your system when using
+	a very large database. If configured to &quot;No&quot;, the rows
+	will not be counted, providing you a lot more performance.	      
+	</P>
+</UL>
+<H3>Step 4.6</H3>
+<P>Finish :)</P>
+<H3>Step 5</H3>
+<P>If everything went right, you should see syslog messages already
+in your phplogcon installation. You can now remove the install.php
+script now. 
+</P>
+<H2>Note on Accesing Files</H2>
+<P>In most environments the webserver has only access to the web
+directory. If you want to read files e.g. from /var/log/ you have to
+grant the necessary permisson to your webserver.</P>
+<P>Of course, you always need to make sure that the user the web
+server runs under also has the correct file permissions. Be careful
+when doing this, you may create a security vulnerability by granting
+too much to too many users.</P>
+<H2>Note on MySQL Databases</H2>
+<P>phpLogCon does support using a MySQL database as syslog source.
+PhpLogCon supports Adiscon's MonitorWare database schema. The schema
+used by php-syslog-ng is also partly supported. That schema, however,
+is somewhat inefficient in that it stores facility and severity codes
+as textual values. We do not currently convert these values back to
+their native format and consequently facility and severity can not be
+taken from a php-syslog-ng database.</P>
+<H3>Copyright</H3>
+<P>This documentation is part of the <A HREF="http://www.phplogcon.org/">phpLogCon</A>
+project.<BR>Copyright &copy; 2008 by 
+<A HREF="http://www.adiscon.com/">Adiscon</A>.
+Released under the GNU GPL version 1.2 or higher.</FONT></P>
+</BODY>
+</HTML>
