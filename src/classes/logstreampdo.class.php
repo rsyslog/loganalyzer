@@ -972,43 +972,38 @@ class LogStreamPDO extends LogStream {
 	{
 		global $querycount;
 		
-		// create query if necessary!
-//		if ( $this->_myDBQuery == null )
+		// Get SQL Statement
+		$szSql = $this->CreateSQLStatement($uID);
+
+		// --- Append LIMIT if supported by the driver! Why the hell do we still have no unified solution for this crap in the sql language?!
+		if			( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+			$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+		else if		( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+			$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+		// ---
+
+		// Perform Database Query
+		$this->_myDBQuery = $this->_dbhandle->query($szSql);
+		if ( !$this->_myDBQuery ) 
 		{
-			// Get SQL Statement
-			$szSql = $this->CreateSQLStatement($uID);
-
-			// --- Append LIMIT if supported by the driver! Why the hell do we still have no unified solution for this crap in the sql language?!
-			if			( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
-//				$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
-			else if		( $this->_logStreamConfigObj->DBType == DB_PGSQL )
-				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
-//				$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery . " OFFSET " . $this->_currentRecordStart;
-//			echo $szSql . "<br>";
-			// ---
-
-			// Perform Database Query
-			$this->_myDBQuery = $this->_dbhandle->query($szSql);
-			if ( !$this->_myDBQuery ) 
-			{
-				$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
-				return ERROR_DB_QUERYFAILED;
-			}
-			else
-			{
-				// Skip one entry in this case
-				if ( $this->_currentRecordStart > 0 ) 
-				{
-					// Throw away 
-					$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
-				}
-
-			}
-
-			// Increment for the Footer Stats 
-			$querycount++;
+			$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
+			return ERROR_DB_QUERYFAILED;
 		}
+		else
+		{
+			// Skip one entry in this case
+			if ( $this->_currentRecordStart > 0 ) 
+			{
+				// Throw away 
+				$myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC);
+			}
+		}
+
+		// Increment for the Footer Stats 
+		$querycount++;
+
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
 
 		// return success state if reached this point!
 		return SUCCESS;
@@ -1036,20 +1031,18 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function ReadNextRecordsFromDB($uID)
 	{
+		global $querycount;
+
 		// Clear SQL Query first!
 		$this->DestroyMainSQLQuery();
 
-		// Create query if necessary
-//		if ( $this->_myDBQuery == null )
-		{
-			// return error if there was one!
-			if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
-				return $res;
+		// return error if there was one!
+		if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
+			return $res;
 
-			// return specially with NO RECORDS when 0 records are returned! Otherwise it will be -1
-			if ( $this->_myDBQuery->rowCount() == 0 )
-				return ERROR_NOMORERECORDS;
-		}
+		// return specially with NO RECORDS when 0 records are returned! Otherwise it will be -1
+		if ( $this->_myDBQuery->rowCount() == 0 )
+			return ERROR_NOMORERECORDS;
 
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
@@ -1075,6 +1068,9 @@ class LogStreamPDO extends LogStream {
 		if ( $iBegin == $this->_currentRecordNum )
 			return ERROR_NOMORERECORDS;
 		// --- 
+
+		// Increment for the Footer Stats 
+		$querycount++;
 
 		// return success state if reached this point!
 		return SUCCESS;

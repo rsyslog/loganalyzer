@@ -642,6 +642,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$counter++;
 				
 				// --- Extra Loop to get the next entry!
+
+				// temporary store the current last $uID
+				$lastUid = $uID;
+
 				do
 				{
 					$ret = $stream->ReadNext($uID, $logArray);
@@ -659,6 +663,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
 				
+/*
 				// temporary store the current last $uID
 				$lastUid = $uID;
 
@@ -675,6 +680,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 //echo $content['uid_next'] . "!!!";
 				}
 				// --- 
+*/
 
 /*
 				// --- Handle uid_previous page button 
@@ -748,8 +754,19 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				}
 				else
 				{
-					$content['main_pager_last_found'] = true;
-					$content['main_pager_next_found'] = true;
+					// If last error code was nomorerecords, there are no more pages
+					if ( $ret == ERROR_NOMORERECORDS ) 
+					{
+						$content['main_pager_last_found'] = false;
+						$content['main_pager_next_found'] = false;
+					}
+					else
+					{
+						// Set NEXT uid
+						$content['uid_next'] = $uID;
+						$content['main_pager_last_found'] = true;
+						$content['main_pager_next_found'] = true;
+					}
 				}
 				// --- 
 
