@@ -712,7 +712,10 @@ class LogStreamPDO extends LogStream {
 				return ERROR_DB_QUERYFAILED;
 
 			if ( $this->_myDBQuery->rowCount() == 0 )
+			{
+				$this->_myDBQuery = null;
 				return ERROR_NOMORERECORDS;
+			}
 
 			// Initialize Array variable
 			$aResult = array();
@@ -727,6 +730,9 @@ class LogStreamPDO extends LogStream {
 					$iCount++;
 				}
 			}
+
+			// Delete handle
+			$this->_myDBQuery = null;
 
 			// return finished array
 			if ( count($aResult) > 0 )

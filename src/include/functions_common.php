@@ -1031,12 +1031,23 @@ function IncludeLanguageFile( $langfile )
 {
 	global $LANG, $LANG_EN; 
 
-	if ( file_exists( $langfile ) )
-		include( $langfile );
+	// If english is not selected, we load ENGLISH first - then overwrite with configured language
+	if ( $LANG != "en" ) 
+		$langengfile = str_replace( $LANG, $LANG_EN, $langfile );
 	else
+		$langengfile = $langfile;
+	if ( file_exists($langengfile) )
+		include( $langengfile );
+	else
+		DieWithErrorMsg( "FATAL Error initialzing sublanguage system. Please make sure that all files have been uploaded correctly." );
+	
+	// If nto english, load the additional translations
+	if ( $LANG != "en" ) 
 	{
-		$langfile = str_replace( $LANG, $LANG_EN, $langfile );
-		include( $langfile );
+		if ( file_exists( $langfile ) )
+			include( $langfile );
+		else
+			OutputDebugMessage("FATAL Error reading the configured language $LANG. Please make sure that all files have been uploaded correctly.", DEBUG_ERROR);
 	}
 }
 
