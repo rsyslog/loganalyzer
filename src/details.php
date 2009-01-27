@@ -64,6 +64,8 @@ else
 $content['uid_fromgetrequest'] = $content['uid_current'];
 
 // Init Pager variables
+$content['uid_previous'] = UID_UNKNOWN;
+$content['uid_next'] = UID_UNKNOWN;
 $content['uid_first'] = UID_UNKNOWN;
 $content['uid_last'] = UID_UNKNOWN;
 $content['main_pagerenabled'] = false;
@@ -71,11 +73,13 @@ $content['main_pager_first_found'] = false;
 $content['main_pager_previous_found'] = false;
 $content['main_pager_next_found'] = false;
 $content['main_pager_last_found'] = false;
+// --- 
 
-// Set Default reading direction 
+// --- If set read direction property!
+
+// Set direction default
 $content['read_direction'] = EnumReadDirection::Backward;
 
-// If set read direction property!
 if ( isset($_GET['direction']) )
 {
 	if ( $_GET['direction'] == "next" ) 
@@ -88,11 +92,24 @@ if ( isset($_GET['direction']) )
 		$content['skiprecords'] = 1;
 		$content['read_direction'] = EnumReadDirection::Forward;
 	}
+	else if ( $_GET['direction'] == "desc" )
+	{
+		$content['read_direction'] = EnumReadDirection::Forward;
+	}
 }
+
+// Read filter property in
+	if		( isset($_POST['filter']) )
+		$myfilter = $_POST['filter'];
+	else if ( isset($_GET['filter']) )
+		$myfilter = $_GET['filter'];
+	else 
+		$myfilter = "";
+// ---
 
 // Init Sorting variables
 $content['sorting'] = "";
-$content['searchstr'] = "";
+$content['searchstr'] = $myfilter;
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
@@ -104,7 +121,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
-//	$stream->SetFilter($content['searchstr']);
+	$stream->SetFilter($content['searchstr']);
 
 	// --- Init the fields we need
 	foreach($fields as $mycolkey => $myfield)
@@ -122,7 +139,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 	$res = $stream->Open( $content['AllColumns'], true );
 	if ( $res == SUCCESS ) 
 	{
-		// TODO Implement ORDER
+		// Set Read direction
 		$stream->SetReadDirection($content['read_direction']);
 		
 		// Set current ID and init Counter
@@ -279,54 +296,92 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
-/*
+
 				// --- Handle uid_first page button 
-				if ( $content['uid_fromgetrequest'] == $content['uid_first'] ) 
+				if ( $content['uid_fromgetrequest'] == $content['uid_first'] && $content['read_direction'] != EnumReadDirection::Forward ) 
 					$content['main_pager_first_found'] = false;
 				else
 				{
 					// Probe next item !
 					$ret = $stream->ReadNext($uID, $tmpArray);
-					if ( $ret == SUCCESS )
-						$content['main_pager_first_found'] = true;
+
+					if ( $content['read_direction'] == EnumReadDirection::Backward )
+					{
+						if ( $content['uid_fromgetrequest'] != UID_UNKNOWN )
+							$content['main_pager_first_found'] = true;
+						else
+							$content['main_pager_first_found'] = false;
+					}
 					else
-						$content['main_pager_first_found'] = false;
+					{
+						if ( $ret == SUCCESS && $uID != $content['uid_fromgetrequest'])
+							$content['main_pager_first_found'] = true;
+						else
+							$content['main_pager_first_found'] = false;
+					}
 				}
 				// --- 
-*/
+
+				// --- Handle uid_last page button 
+				if ( $content['uid_fromgetrequest'] == $content['uid_last'] && $content['read_direction'] != EnumReadDirection::Backward ) 
+					$content['main_pager_last_found'] = false;
+				else
+				{
+					// Probe next item !
+					$ret = $stream->ReadNext($uID, $tmpArray);
+
+					if ( $content['read_direction'] == EnumReadDirection::Forward )
+					{
+						if ( $ret != SUCCESS || $uID != $content['uid_current'] )
+							$content['main_pager_last_found'] = true;
+						else
+							$content['main_pager_last_found'] = false;
+					}
+					else
+					{
+						if ( $ret == SUCCESS && $uID != $content['uid_current'] )
+							$content['main_pager_last_found'] = true;
+						else
+							$content['main_pager_last_found'] = false;
+					}
+
+//echo $content['uid_fromgetrequest'] . "!<br>";
+//echo $uID . "!" . $ret . "<br>";
+//echo $content['uid_current'] ."==".  $content['uid_last'] . "<br>";
+
+				}
+				// --- 
+
 				// --- Handle uid_last page button 
 				// Option the last UID from the stream!
-				$content['uid_last'] = $stream->GetLastPageUID();
-				$content['uid_first'] = $stream->GetFirstPageUID();
+//				$content['uid_last'] = $stream->GetLastPageUID();
+//				$content['uid_first'] = $stream->GetFirstPageUID();
 
-				// --- Handle uid_first page button 
-				if ( $content['uid_current'] == $content['uid_first'] ) 
+				// --- Handle uid_first and uid_previousbutton
+				if ( $content['uid_current'] == $content['uid_first'] || !$content['main_pager_first_found'] ) 
+				{
 					$content['main_pager_first_found'] = false;
+					$content['main_pager_previous_found'] = false;
+				}
 				else
+				{
 					$content['main_pager_first_found'] = true;
+					$content['main_pager_previous_found'] = true;
+				}
 				// ---
 
-
-				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
-				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
-					$content['main_pager_last_found'] = true;
-				else
-					$content['main_pager_last_found'] = false;
-				// --- 
-				
-				// --- Handle uid_next page button 
-				if ( $content['uid_current'] != $content['uid_last'] )
-					$content['main_pager_next_found'] = true;
-				else
+				// --- Handle uid_next and uid_last button 
+				if ( /*$content['uid_current'] == $content['uid_last'] ||*/ !$content['main_pager_last_found'] ) 
+				{
 					$content['main_pager_next_found'] = false;
-				// --- 
-
-				// --- Handle uid_previous page button 
-				if ( $content['main_pager_first_found'] == true && $content['uid_current'] != $content['uid_first'] )
-					$content['main_pager_previous_found'] = true;
+					$content['main_pager_last_found'] = false;
+				}
 				else
-					$content['main_pager_previous_found'] = false;
-				// --- 
+				{
+					$content['main_pager_next_found'] = true;
+					$content['main_pager_last_found'] = true;
+				}
+				// ---
 			}
 			else	// Disable pager in this case!
 				$content['main_pagerenabled'] = false;

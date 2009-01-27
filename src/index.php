@@ -99,7 +99,7 @@ else
 $content['EXPORT_ENABLED'] = true;
 
 // Init Pager variables
-// $content['uid_previous'] = UID_UNKNOWN;
+$content['uid_previous'] = UID_UNKNOWN;
 $content['uid_next'] = UID_UNKNOWN;
 $content['uid_first'] = UID_UNKNOWN;
 $content['uid_last'] = UID_UNKNOWN;
@@ -642,6 +642,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$counter++;
 				
 				// --- Extra Loop to get the next entry!
+
+				// temporary store the current last $uID
+				$lastUid = $uID;
+
 				do
 				{
 					$ret = $stream->ReadNext($uID, $logArray);
@@ -651,14 +655,15 @@ if ( isset($content['Sources'][$currentSourceID]) )
 //print_r ( $content['syslogmessages'] );
 
 			// Move below processing - Read First and LAST UID's before start reading the stream!
-			$content['uid_last'] = $stream->GetLastPageUID();
-			$content['uid_first'] = $stream->GetFirstPageUID();
+//			$content['uid_last'] = $stream->GetLastPageUID();
+///			$content['uid_first'] = $stream->GetFirstPageUID();
 
 			if ( $content['main_recordcount'] == -1 || $content['main_recordcount'] > $content['CurrentViewEntriesPerPage'] )
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
 				
+/*
 				// temporary store the current last $uID
 				$lastUid = $uID;
 
@@ -675,7 +680,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 //echo $content['uid_next'] . "!!!";
 				}
 				// --- 
+*/
 
+/*
 				// --- Handle uid_previous page button 
 				if ( $content['uid_current'] != UID_UNKNOWN )
 				{
@@ -700,9 +707,71 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					$content['main_pager_previous_found'] = false;
 				//echo $content['uid_previous'];
 				// --- 
-				
-				// --- Handle uid_last page button 
+*/
+
+				// --- Handle uid_previous page button 
+				if ( $content['read_direction'] == EnumReadDirection::Forward )
+				{
+					if ( $ret == SUCCESS ) 
+					{
+						// Try to read the next one!
+						$ret = $stream->ReadNext($uID, $tmp);
+						if ( $ret == SUCCESS ) 
+							$content['main_pager_previous_found'] = true;
+						else
+							$content['main_pager_previous_found'] = false;
+					}
+					else
+						$content['main_pager_previous_found'] = false;
+				}
+				else
+				{
+					if ( $content['uid_current'] == $content['uid_previous'] ) 
+						$content['main_pager_previous_found'] = false;
+					else
+						$content['main_pager_previous_found'] = true;
+				}
+
+
+				// --- 
+
+				// --- Handle uid_last and uid_next page button 
+				if ( $content['read_direction'] == EnumReadDirection::Forward )
+				{
+					if ( $content['uid_current'] == $content['uid_last'] ) 
+					{
+						$content['main_pager_last_found'] = false;
+						$content['main_pager_next_found'] = false;
+					}
+					else
+					{
+						$content['main_pager_last_found'] = true;
+						$content['main_pager_next_found'] = true;
+					}
+
+					// Restore uid_current if necessary
+					$content['uid_current'] = $lastUid;
+				}
+				else
+				{
+					// If last error code was nomorerecords, there are no more pages
+					if ( $ret == ERROR_NOMORERECORDS ) 
+					{
+						$content['main_pager_last_found'] = false;
+						$content['main_pager_next_found'] = false;
+					}
+					else
+					{
+						// Set NEXT uid
+						$content['uid_next'] = $uID;
+						$content['main_pager_last_found'] = true;
+						$content['main_pager_next_found'] = true;
+					}
+				}
+				// --- 
+
 //!!!!!!!!
+/*
 				// if we found a last uid, and if it is not the current one (which means we already are on the last page ;)!
 				if ( $content['uid_last'] != -1 && $content['uid_last'] != $content['uid_current'])
 					$content['main_pager_last_found'] = true;
@@ -723,8 +792,23 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					// As we went back, we need to change the currend uid to the latest read one
 					$content['uid_current'] = $lastUid;
 				}
+*/
 				// --- 
 				
+				// --- Handle uid_first page button 
+				if ( $content['uid_current'] == $content['uid_first'] ) 
+				{
+					$content['main_pager_first_found'] = false;
+					$content['main_pager_previous_found'] = false; // If there is no FIRST, there is no going back!
+				}
+				else if ( !$content['main_pager_previous_found'] )
+					$content['main_pager_first_found'] = false;
+				else
+					$content['main_pager_first_found'] = true;
+				// --- 
+
+//				$content['uid_first']
+/*
 				// --- Handle uid_first page button 
 				if (	$content['main_pager_previous_found'] == false || 
 						$content['uid_current'] == UID_UNKNOWN || 
@@ -736,6 +820,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				else
 					$content['main_pager_first_found'] = true;
 				// --- 
+*/
 			}
 			else	// Disable pager in this case!
 				$content['main_pagerenabled'] = false;

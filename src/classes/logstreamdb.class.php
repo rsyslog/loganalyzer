@@ -61,6 +61,7 @@ class LogStreamDB extends LogStream {
 	private $_currentPageNumber = 0;
 
 	private $_SQLwhereClause = "";
+	private $_myDBQuery = null;
 
 	// Constructor
 	public function LogStreamDB($streamConfigObj) {
@@ -120,6 +121,7 @@ class LogStreamDB extends LogStream {
 	{
 		if ($this->_dbhandle) 
 			mysql_close($this->_dbhandle);
+		$this->_dbhandle = null;
 		return SUCCESS;
 	}
 
@@ -241,7 +243,7 @@ class LogStreamDB extends LogStream {
 				}
 			}
 
-			if ( $ret == SUCCESS )
+			if ( $ret == SUCCESS && $this->_arrProperties != null )
 			{
 				// Init and set variables
 				foreach ( $this->_arrProperties as $property ) 
@@ -313,7 +315,7 @@ class LogStreamDB extends LogStream {
 		switch ($mode) 
 		{ 
 			case EnumSeek::UID:
-				if ( $uID == UID_UNKNOWN ) // set uID to first ID!
+//				if ( $uID == UID_UNKNOWN ) // set uID to first ID!
 				{
 					// No buffer? then read from DB!
 					if ( $this->bufferedRecords == null )
@@ -325,7 +327,7 @@ class LogStreamDB extends LogStream {
 						$uID = $this->bufferedRecords[ $this->_currentRecordNum ];
 					}
 				}
-				else
+/*				else
 				{
 					// Obtain fieldname for uID
 					global $dbmapping;
@@ -398,6 +400,7 @@ class LogStreamDB extends LogStream {
 					// Delete buffered records, then they will be read automatically in ReadNext()
 					$this->ResetBufferedRecords();
 				}
+				*/
 				break;
 		}
 
@@ -963,11 +966,11 @@ class LogStreamDB extends LogStream {
 			return SUCCESS;
 	}
 
-
 	/*
 	*	This function only reads the uID values from the database. Using this method, 
 	*	it will be much faster to find the starting uID point we need when paging is used.
 	*/
+/* OBSELETE CODE
 	private function ReadNextIDsFromDB()
 	{
 		global $querycount;
@@ -1012,6 +1015,24 @@ class LogStreamDB extends LogStream {
 		// return success state if reached this point!
 		return SUCCESS;
 	}
+*/
+
+	/*
+	*	Destroy the SQL QUery!
+	*/
+	private function DestroyMainSQLQuery()
+	{
+		// create query if necessary!
+		if ( $this->_myDBQuery != null )
+		{
+			// Free Query ressources
+			mysql_free_result ($this->_myDBQuery); 
+			$this->_myDBQuery = null;
+		}
+
+		// return success state if reached this point!
+		return SUCCESS;
+	}
 
 	/*
 	*	This helper function will read the next records into the buffer. 
@@ -1020,25 +1041,24 @@ class LogStreamDB extends LogStream {
 	{
 		global $querycount;
 
-		// Get SQL Statement
-		$szSql = $this->CreateSQLStatement($uID);
+		// Clear SQL Query first!
+		$this->DestroyMainSQLQuery();
+
+		// return error if there was one!
+		if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
+			return $res;
 
 		// Append LIMIT clause
-		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
-//echo $szSql . "<br>";
-
-		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
-		if ( !$myquery ) 
-		{
-			$this->PrintDebugError("Invalid SQL: ".$szSql);
-			return ERROR_DB_QUERYFAILED;
-		}
+//		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
 		
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		while ($myRow = mysql_fetch_array($this->_myDBQuery,  MYSQL_ASSOC))
 		{
+			// Check if result was successfull!
+			if ( $myRow === FALSE || !$myRow  )
+				break;
+
 			$this->bufferedRecords[$iBegin] = $myRow;
 			$iBegin++;
 		}
@@ -1049,7 +1069,7 @@ class LogStreamDB extends LogStream {
 		// --- 
 
 		// Free Query ressources
-		mysql_free_result ($myquery); 
+//		mysql_free_result ($myquery); 
 
 		// Only obtain count if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
@@ -1063,6 +1083,47 @@ class LogStreamDB extends LogStream {
 		// Increment for the Footer Stats 
 		$querycount++;
 		
+		// return success state if reached this point!
+		return SUCCESS;
+	}
+
+	/*
+	*	Create the SQL QUery!
+	*/
+	private function CreateMainSQLQuery($uID)
+	{
+		global $querycount;
+		
+		// Get SQL Statement
+		$szSql = $this->CreateSQLStatement($uID);
+
+		// --- Append LIMIT 
+		$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+		// ---
+
+		// Perform Database Query
+		$this->_myDBQuery = mysql_query($szSql, $this->_dbhandle);
+		if ( !$this->_myDBQuery ) 
+		{
+			$this->PrintDebugError("Invalid SQL: ".$szSql);
+			return ERROR_DB_QUERYFAILED;
+		}
+		else
+		{
+			// Skip one entry in this case
+			if ( $this->_currentRecordStart > 0 ) 
+			{
+				// Throw away 
+				$myRow = mysql_fetch_array($this->_myDBQuery,  MYSQL_ASSOC);
+			}
+		}
+
+		// Increment for the Footer Stats 
+		$querycount++;
+		
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+
 		// return success state if reached this point!
 		return SUCCESS;
 	}
@@ -1105,8 +1166,19 @@ class LogStreamDB extends LogStream {
 		// Append precreated where clause
 		$sqlString .= $this->_SQLwhereClause;
 
-		// Output SQL Query into DEBUG
-//		OutputDebugMessage( "CreateSQLStatement result: " . $sqlString );
+		// Append UID QUERY!
+		if ( $uID != -1 )
+		{
+			if ( $this->_readDirection == EnumReadDirection::Forward )
+				$myOperator = ">=";
+			else
+				$myOperator = "<=";
+
+			if ( strlen($this->_SQLwhereClause) > 0 )
+				$sqlString .= " AND " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+			else
+				$sqlString .= " WHERE " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+		}
 
 		// Append ORDER clause
 		if ( $this->_readDirection == EnumReadDirection::Forward )
