@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------
+Version 2.5.24 (beta), 2009-01-27
+- Added italian language files, translated by Luigi Rosa
+- Improved loading of language files, to avoid display error's if 
+  translation is incomplete.
+- Enhanced database performance of MYSQL and PDO logstream source drivers.
+  Searching and paging through results is much faster on larger 
+  databases now.
+- Enhanced Pager performance on index and detail page.
+- Hardened db logstream classes against invalid parameters.
+- Added missing include file for debug functions
+- Debug Messages are now printed well formated below the site content 
+- Improved Documentation
+---------------------------------------------------------------------------
 Version 2.5.23 (beta), 2008-12-23
 - Fixed typo in textual month detection, which caused date detection 
   problems in december month only.
