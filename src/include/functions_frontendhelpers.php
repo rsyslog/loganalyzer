@@ -234,13 +234,17 @@ function GetFormatedDate($evttimearray)
 
 function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 {
+	global $content;
+
 	// Check if we should print the Error!
 	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 	{
-		print("<table width=\"600\" align=\"center\" class=\"with_border\">");
-		print("<tr><td valign='top'><B>Debugmessage:</B> </td>");
-		print("<td>" . $szDbg . "</td></tr>");
-		print("</table><br>");
+		$content['DEBUGMSG'][] = array( 
+			"DBGLEVEL" => $szDbgLevel, 
+			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
+			"DBGLEVELBG" => GetDebugBgColor($szDbgLevel), 
+			"DBGMSG" =>	"$szDbg"
+			);
 	}
 
 	// Check if the user wants to syslog the error!
@@ -249,6 +253,63 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
 	}
 }
+
+function GetDebugBgColor( $szDebugMode )
+{
+	global $severity_colors;
+
+	switch ( $szDebugMode )
+	{
+		case DEBUG_ULTRADEBUG:
+			$szReturn = $severity_colors[SYSLOG_DEBUG];
+			break;
+		case DEBUG_DEBUG:
+			$szReturn = $severity_colors[SYSLOG_INFO];
+			break;
+		case DEBUG_INFO:
+			$szReturn = $severity_colors[SYSLOG_NOTICE];
+			break;
+		case DEBUG_WARN:
+			$szReturn = $severity_colors[SYSLOG_WARNING];
+			break;
+		case DEBUG_ERROR:
+			$szReturn = $severity_colors[SYSLOG_ERR];
+			break;
+		default: 
+			$szReturn = $severity_colors[SYSLOG_NOTICE];
+	}
+	
+	// Return string result
+	return $szReturn;
+}
+
+function GetDebugModeString( $szDebugMode )
+{
+	switch ( $szDebugMode )
+	{
+		case DEBUG_ULTRADEBUG:
+			$szReturn = STR_DEBUG_ULTRADEBUG;
+			break;
+		case DEBUG_DEBUG:
+			$szReturn = STR_DEBUG_DEBUG;
+			break;
+		case DEBUG_INFO:
+			$szReturn = STR_DEBUG_INFO;
+			break;
+		case DEBUG_WARN:
+			$szReturn = STR_DEBUG_WARN;
+			break;
+		case DEBUG_ERROR:
+			$szReturn = STR_DEBUG_ERROR;
+			break;
+		default: 
+			$szReturn = STR_DEBUG_INFO;
+	}
+	
+	// Return string result
+	return $szReturn;
+}
+
 
 function GetPriorityFromDebugLevel( $DebugLevel ) 
 {

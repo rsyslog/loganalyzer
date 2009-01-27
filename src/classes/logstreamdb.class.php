@@ -121,6 +121,7 @@ class LogStreamDB extends LogStream {
 	{
 		if ($this->_dbhandle) 
 			mysql_close($this->_dbhandle);
+		$this->_dbhandle = null;
 		return SUCCESS;
 	}
 
@@ -242,7 +243,7 @@ class LogStreamDB extends LogStream {
 				}
 			}
 
-			if ( $ret == SUCCESS )
+			if ( $ret == SUCCESS && $this->_arrProperties != null )
 			{
 				// Init and set variables
 				foreach ( $this->_arrProperties as $property ) 

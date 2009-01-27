@@ -271,7 +271,7 @@ class LogStreamPDO extends LogStream {
 				}
 			}
 
-			if ( $ret == SUCCESS )
+			if ( $ret == SUCCESS && $this->_arrProperties != null )
 			{
 				// Init and set variables
 				foreach ( $this->_arrProperties as $property ) 

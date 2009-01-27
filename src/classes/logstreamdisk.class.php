@@ -288,8 +288,11 @@ class LogStreamDisk extends LogStream {
 		
 		// Init variables dynamically
 		$line = '';
-		foreach ( $this->_arrProperties as $property ) 
-			$arrProperitesOut[$property] = '';
+		if ( $this->_arrProperties != null )
+		{
+			foreach ( $this->_arrProperties as $property ) 
+				$arrProperitesOut[$property] = '';
+		}
 
 		do {
 			$pos = -1;
