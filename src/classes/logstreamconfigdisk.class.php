@@ -39,10 +39,11 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 class LogStreamConfigDisk extends LogStreamConfig {
+	// Public properties
 	public $FileName = '';
 	public $LineParserType = "syslog"; // Default = Syslog!
 	public $_lineParser = null;
-
+	
 	public function LogStreamFactory($o) 
 	{
 		// An instance is created, then include the logstreamdisk class as well!
@@ -78,6 +79,51 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		else
 			DieWithErrorMsg("Couldn't locate LineParser include file '" . $strIncludeFile . "'");
 	}
+
+	/*
+	* Helper function to Set the FileName property
+	*/
+	public function SetFileName( $szNewVal )
+	{
+		// Replace dynamic variables if necessary
+		if ( strpos($szNewVal, "%") !== false )
+		{
+			OutputDebugMessage("LogStreamConfigDisk|SetFileName: Filename before replacing: " . $szNewVal, DEBUG_DEBUG);
+			
+			// Create search and replace array
+			$search = array ( 
+						"%y", /* Year with two digits (e.g. 2002 becomes "02") */
+						"%Y", /* Year with 4 digits */
+						"%m", /* Month with two digits (e.g. March becomes "03") */
+						"%M", /* Minute with two digits */
+						"%d", /* Day of month with two digits (e.g. March, 1st becomes "01") */
+						"%h", /* Hour as two digits */
+						"%S", /* Seconds as two digits. It is hardly believed that this ever be used in reality.    */
+						"%w", /* Weekday as one digit. 0 means Sunday, 1 Monday and so on. */
+						"%W", /* Weekday as three-character string. Possible values are "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat". */
+						);
+			$replace = array (
+						date("y"),
+						date("Y"), 
+						date("m"), 
+						date("i"), 
+						date("d"), 
+						date("H"), 
+						date("s"), 
+						date("w"), 
+						date("D"), 
+						);
+			
+			// Do the replacing
+			$szNewVal = str_replace( $search, $replace, $szNewVal );
+
+			OutputDebugMessage("LogStreamConfigDisk|SetFileName: Filename after replacing: " . $szNewVal, DEBUG_DEBUG);
+		}
+
+		// Set Filename Property!
+		$this->FileName = $szNewVal;
+	}
+
 
 }
 ?>
