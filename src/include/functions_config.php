@@ -129,7 +129,7 @@ function InitSource(&$mysource)
 			// Perform necessary include
 			require_once($gl_root_path . 'classes/logstreamconfigdisk.class.php');
 			$mysource['ObjRef'] = new LogStreamConfigDisk();
-			$mysource['ObjRef']->FileName = $mysource['DiskFile'];
+			$mysource['ObjRef']->SetFileName( $mysource['DiskFile'] );
 			$mysource['ObjRef']->LineParserType = $mysource['LogLineType'];
 		}
 		else if ( $mysource['SourceType'] == SOURCE_DB )
