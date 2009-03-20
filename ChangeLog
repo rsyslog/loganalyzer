@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 2.6.0 (v2-stable), 2009-03-20
+- Merged beta branch into v2-stable branch.
+---------------------------------------------------------------------------
 Version 2.5.24 (beta), 2009-01-27
 - Added italian language files, translated by Luigi Rosa
 - Improved loading of language files, to avoid display error's if 
