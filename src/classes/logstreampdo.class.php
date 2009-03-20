@@ -1057,7 +1057,8 @@ class LogStreamPDO extends LogStream {
 			if ( $myRow === FALSE || !$myRow  )
 				break;
 
-			$this->bufferedRecords[$iBegin] = $myRow;
+			// Keys will be converted into lowercase!
+			$this->bufferedRecords[$iBegin] = array_change_key_case($myRow);
 			$iBegin++;
 
 			// Increment counter
