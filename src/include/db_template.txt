@@ -11,8 +11,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `logcon_config`;
 CREATE TABLE `logcon_config` (
   `propname` varchar(32) NOT NULL,
-  `propvalue` varchar(255) NOT NULL,
-  `propvalue_text` text NOT NULL,
+  `propvalue` varchar(255) NULL,
+  `propvalue_text` text NULL,
   `is_global` tinyint(1) NOT NULL,
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL
