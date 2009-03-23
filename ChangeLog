@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 2.6.1 (v2-stable), 2009-03-23
+- Fixed an issue with case sensitive fieldnames in db and pdo logstream.
+  This issue could cause unexpected results depending on how fieldnames
+  were returned by the database layer. Now, all fieldnames and array keys
+  are automatically converted into lowercase. 
+- Fixed minor database template definition issues with the logcon_config 
+  table, the propvalue and propvalue_text field can be NULL now.
+---------------------------------------------------------------------------
 Version 2.6.0 (v2-stable), 2009-03-20
 - Merged beta branch into v2-stable branch.
 ---------------------------------------------------------------------------
