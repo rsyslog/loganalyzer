@@ -147,9 +147,9 @@ $content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
 	$content['LN_VIEW_SHOWALLBUT'] = "Show all except '%1'";
 	$content['LN_VIEW_VISITLINK'] = "Open Link '%1' in new window";
 
-$content['LN_HIGHLIGHT'] = "Hightlight >>";
-$content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
-$content['LN_HIGHLIGHT_WORDS'] = "Hightlight words comma separated";
+$content['LN_HIGHLIGHT'] = "Highlight >>";
+$content['LN_HIGHLIGHT_OFF'] = "Highlight <<";
+$content['LN_HIGHLIGHT_WORDS'] = "Highlight words comma separated";
 
 $content['LN_AUTORELOAD'] = "Set auto reload";
 $content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
