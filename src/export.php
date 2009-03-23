@@ -282,7 +282,7 @@ if ( !$content['error_occured'] )
 
 					// Increment Counter
 					$counter++;
-				} while ($counter < $content['ViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+				} while ($counter < $content['CurrentViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
