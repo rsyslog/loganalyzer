@@ -801,6 +801,18 @@ class LogStreamDB extends LogStream {
 										}
 										// ---
 									}
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX )
+									{
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addnod = "";
+										else
+											$addnod = " NOT";
+										// ---
+
+										$szSearchBegin = " REGEXP '";
+										$szSearchEnd = "' ";
+									}
 									else
 									{
 										// --- Check if user wants to include or exclude!

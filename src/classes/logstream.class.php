@@ -1005,6 +1005,15 @@ abstract class LogStream {
 			$myBits |= FILTER_MODE_SEARCHFULL;
 		}
 
+		// If Filter is a REGEX match!				
+		$pos = strpos($szValue, "~");
+		if ( $pos !== false && $pos == 0 )
+		{
+			//trunscate -
+			$szValue = substr( $szValue, 1);
+			$myBits |= FILTER_MODE_SEARCHREGEX;
+		}
+
 		// return result 
 		return $myBits;
 	}

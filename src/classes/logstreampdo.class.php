@@ -800,6 +800,48 @@ class LogStreamPDO extends LogStream {
 										}
 										// ---
 									}
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX )
+									{
+										//REGEXP Supported by MYSQL
+										if		( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+										{
+											// --- Check if user wants to include or exclude!
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+												$addnod = " ";
+											else
+												$addnod = " NOT";
+											// ---
+
+											$szSearchBegin = "REGEXP '";
+											$szSearchEnd = "' ";
+										}
+										//REGEXP Supported by POSTGRESQL
+										else if	( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+										{
+											// --- Check if user wants to include or exclude!
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+												$addnod = " ";
+											else
+												$addnod = " !";
+											// ---
+
+											$szSearchBegin = "~* '";
+											$szSearchEnd = "' ";
+										}
+										else	//Fallback use LIKE
+										{	
+											// --- Check if user wants to include or exclude!
+											if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+												$addnod = " ";
+											else
+												$addnod = " NOT";
+											// ---
+
+											// Database Layer does not support REGEXP
+											$szSearchBegin = "LIKE '%";
+											$szSearchEnd = "%' ";
+										}
+									}
 									else
 									{
 										// --- Check if user wants to include or exclude!

@@ -67,6 +67,7 @@ define('FILTER_MODE', 'filtermode');
 define('FILTER_MODE_INCLUDE', 1);
 define('FILTER_MODE_EXCLUDE', 2);
 define('FILTER_MODE_SEARCHFULL', 4);
+define('FILTER_MODE_SEARCHREGEX', 8);
 
 // --- Init Facility LIST
 $content['filter_facility_list'][] = array( "ID" => SYSLOG_KERN, "DisplayName" => "KERN", "selected" => "" );
