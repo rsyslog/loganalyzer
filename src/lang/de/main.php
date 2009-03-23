@@ -144,9 +144,9 @@ $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
 	$content['LN_VIEW_SHOWALLBUT'] = "Show all except '%1'";
 	$content['LN_VIEW_VISITLINK'] = "Open Link '%1' in new window";
 
-$content['LN_HIGHLIGHT'] = "Hightlight >>";
-$content['LN_HIGHLIGHT_OFF'] = "Hightlight <<";
-$content['LN_HIGHLIGHT_WORDS'] = "Hightlight-W&ouml;rter durch ein  Komma voneinander trennen";
+$content['LN_HIGHLIGHT'] = "Highlight >>";
+$content['LN_HIGHLIGHT_OFF'] = "Highlight <<";
+$content['LN_HIGHLIGHT_WORDS'] = "Highlight-W&ouml;rter durch ein  Komma voneinander trennen";
 
 $content['LN_AUTORELOAD'] = "Set auto reload";
 $content['LN_AUTORELOAD_DISABLED'] = "Auto reload disabled";
