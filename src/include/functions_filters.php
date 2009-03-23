@@ -182,7 +182,7 @@ function InitFilterHelpers()
 	if ( isset($_SESSION['filter_messagetype']) ) 
 		$filters['filter_messagetype'] = intval($_SESSION['filter_messagetype']);
 	else
-		$filters['filter_messagetype'] = array ( IUT_Syslog, IUT_NT_EventReport, IUT_File_Monitor );
+		$filters['filter_messagetype'] = array ( IUT_Syslog, IUT_NT_EventReport, IUT_File_Monitor, IUT_WEBSERVERLOG );
 
 	$iCount = count($content['filter_messagetype_list']);
 	for ( $i = 0; $i < $iCount; $i++ )

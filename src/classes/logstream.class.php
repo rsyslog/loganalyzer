@@ -292,9 +292,6 @@ abstract class LogStream {
 		// Process all filters
 		if ( $this->_filters != null )
 		{
-			// Evaluation default for now is true
-			$bEval = true;
-
 			// Loop through set properties
 			foreach( $arrProperitesOut as $propertyname => $propertyvalue )
 			{
@@ -305,6 +302,13 @@ abstract class LogStream {
 						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
+					// Evaluation default is true
+					$bEval = true;
+
+					// Default for numeric filters is false!
+					if ( isset($this->_filters[$propertyname][0]) && $this->_filters[$propertyname][0][FILTER_TYPE] == FILTER_TYPE_NUMBER )
+						$bEval = false;
+
 					// Extra var needed for number checks!
 					$bIsOrFilter = false; // If enabled we need to check for numbereval later
 					$bOrFilter = false;
@@ -462,12 +466,17 @@ abstract class LogStream {
 								// TODO!
 								break;
 						}
+
+						// If was number filter, we apply it the evaluation.
+						if ( $bIsOrFilter && $bOrFilter) 
+						{
+							// Fixed binary comparison to | instead of &!
+							$bEval |= $bOrFilter;
+	//echo "!" . $bOrFilter . "-" . $bEval . "!<br>";
+						}
 					}
 					
-					// If was number filter, we apply it the evaluation.
-					if ( $bIsOrFilter ) 
-						$bEval &= $bOrFilter;
-
+					// Check if evaluation was successfull
 					if ( !$bEval ) 
 					{
 						// unmatching filter, reset property array
@@ -477,6 +486,7 @@ abstract class LogStream {
 						// return error!
 						return ERROR_FILTER_NOT_MATCH;
 					}
+
 				}
 			}
 			
@@ -612,11 +622,13 @@ abstract class LogStream {
 									}
 								}
 
+/* OBSELETE CODE 
 								foreach( $tmpValues as $mykey => $szValue ) 
 								{
 									// First set Filter Mode
 									$tmpValues[$mykey][FILTER_TMP_MODE] = $this->SetFilterIncludeMode($szValue);
 								}
+*/
 							}
 							else
 							{
