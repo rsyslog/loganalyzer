@@ -1005,7 +1005,7 @@ class LogStreamPDO extends LogStream {
 		$this->_myDBQuery = $this->_dbhandle->query($szSql);
 		if ( !$this->_myDBQuery ) 
 		{
-			$this->PrintDebugError( "Invalid SQL: ".$szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
+			$this->PrintDebugError( "Invalid SQL: " . $szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
 			return ERROR_DB_QUERYFAILED;
 		}
 		else
@@ -1187,16 +1187,14 @@ class LogStreamPDO extends LogStream {
 			$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
 			$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();
 
-			$errormsg ="<table width=\"600\" align=\"center\" class=\"with_border\"><tr><td>";
-			$errormsg.="<center><H3><font color='red'>Error: " . $szErrorMsg . "</font></H3><br></center>";
+			$errormsg ="<font color='red'>Error: " . $szErrorMsg . "</font></H3><br>";
 			$errormsg.="<B>Errordetails:</B><br>";
 			$errormsg.="Detail Error: $errdesc <br>";
 			$errormsg.="Error Code: $errno <br>";
 			$errormsg.="Date: ".date("d.m.Y @ H:i"). "<br>";
-			$errormsg.="</td></tr></table>";
 			
 			//Output!
-			print( $errormsg );
+			OutputDebugMessage("LogStreamPDO|CreateMainSQLQuery: $errormsg", DEBUG_ERROR);
 		}
 	}
 	
