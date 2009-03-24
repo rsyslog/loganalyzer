@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.6.2 (v2-stable), 2009-03-24
+- Fixed minor spelling errors in language files (BugID #115)
+- Fixed number of records exported when using the export (BugID #110). 
+- Added missing filter selection for message type filter on search page.
+- Fixed Filtering issues when using multiple filters on the same field.
+  Numeric based filters will now work as expected again (BugID #108).
+- Fixed table detection method in PDO LogStream.
+- Added support to parse date only values like "2009-03-24".
+---------------------------------------------------------------------------
 Version 2.6.1 (v2-stable), 2009-03-23
 - Fixed an issue with case sensitive fieldnames in db and pdo logstream.
   This issue could cause unexpected results depending on how fieldnames
