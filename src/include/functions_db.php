@@ -229,7 +229,7 @@ function DB_PrintError($MyErrorMsg, $DieOrNot)
 	if ($DieOrNot == true)
 		DieWithErrorMsg( "$linesep" . $errormsg );
 	else
-		echo $errormsg;
+		OutputDebugMessage("DB_PrintError: $errormsg", DEBUG_ERROR);
 }
 
 function DB_RemoveParserSpecialBadChars($myString)
