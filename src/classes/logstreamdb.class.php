@@ -1237,7 +1237,7 @@ class LogStreamDB extends LogStream {
 			$errormsg.="Referer: ".getenv("HTTP_REFERER"). "<br>";
 			
 			//Output!
-			print( $errormsg );
+			OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: $errormsg", DEBUG_ERROR);
 		}
 	}
 	
