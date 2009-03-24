@@ -139,6 +139,8 @@ class LogStreamPDO extends LogStream {
 	* @return integer Error state
 	*/
 	public function Verify() {
+		global $content, $dbmapping;
+
 		// Create DSN String
 		$myDBDriver = $this->_logStreamConfigObj->GetPDODatabaseType();
 		$myDsn = $this->_logStreamConfigObj->CreateConnectDSN();
@@ -150,7 +152,7 @@ class LogStreamPDO extends LogStream {
 			{
 				global $extraErrorDescription;
 				$extraErrorDescription = "PDO Database Driver not loaded: " . $myDBDriver . "<br>Please check your php configuration extensions";
-				// $this->PrintDebugError($extraErrorDescription);
+//				OutputDebugMessage("LogStreamPDO|Verify: $extraErrorDescription", DEBUG_ERROR);
 
 				// return error code
 				return ERROR_DB_INVALIDDBDRIVER;
@@ -165,17 +167,33 @@ class LogStreamPDO extends LogStream {
 			catch (PDOException $e) 
 			{
 				global $extraErrorDescription;
-				$extraErrorDescription = "PDO Database Connection failed: " . $e->getMessage() . "<br>DSN: " . $myDsn;
-				// $this->PrintDebugError($extraErrorDescription);
+				$extraErrorDescription = "PDO Database Connection failed: " . $e->getMessage(); 
+				
+				// Append extra data if admin user
+				if ( isset($content['SESSION_ISADMIN']) && $content['SESSION_ISADMIN'] ) 
+					$extraErrorDescription .=  "<br>AdminDebug - DSN: " . $myDsn;
+				
+				// Debug Output
+//				OutputDebugMessage("LogStreamPDO|Verify: $extraErrorDescription", DEBUG_ERROR);
 
 				// return error code
 				return ERROR_DB_CONNECTFAILED;
 			}
 
+			// Check if Table Mapping exists
+			if ( !isset($dbmapping[$this->_logStreamConfigObj->DBTableType]) ) 
+			{	
+				// Return error
+				return ERROR_DB_INVALIDDBMAPPING;
+			}
+			
+			// Check if table exists
 			try 
 			{
 				// This is one way to check if the table exists! But I don't really like it tbh -.-
-				$tmpStmnt = $this->_dbhandle->prepare("SELECT ID FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE ID=1");
+				$szIdField = $dbmapping[$this->_logStreamConfigObj->DBTableType][SYSLOG_UID];
+				$szTestQuery = "SELECT MAX(" . $szIdField . ") FROM " . $this->_logStreamConfigObj->DBTableName;
+				$tmpStmnt = $this->_dbhandle->prepare( $szTestQuery );
 				$tmpStmnt->execute();
 				$colcount = $tmpStmnt->columnCount();
 				if ( $colcount <= 0 )
@@ -185,6 +203,7 @@ class LogStreamPDO extends LogStream {
 			{
 				global $extraErrorDescription;
 				$extraErrorDescription = "Could not find table: " . $e->getMessage();
+//				OutputDebugMessage("LogStreamPDO|Verify: $extraErrorDescription", DEBUG_ERROR);
 
 				// return error code
 				return ERROR_DB_TABLENOTFOUND;

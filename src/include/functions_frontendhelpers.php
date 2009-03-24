@@ -232,28 +232,6 @@ function GetFormatedDate($evttimearray)
 	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
-function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
-{
-	global $content;
-
-	// Check if we should print the Error!
-	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
-	{
-		$content['DEBUGMSG'][] = array( 
-			"DBGLEVEL" => $szDbgLevel, 
-			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
-			"DBGLEVELBG" => GetDebugBgColor($szDbgLevel), 
-			"DBGMSG" =>	"$szDbg"
-			);
-	}
-
-	// Check if the user wants to syslog the error!
-	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
-	{
-		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
-	}
-}
-
 function GetDebugBgColor( $szDebugMode )
 {
 	global $severity_colors;

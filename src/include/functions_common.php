@@ -1146,6 +1146,14 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // > WTF TODO! > $out[7]
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
+	// Sample: 2008-02-19
+	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})/", $szTimStr, $out ) )
+	{
+		// RFC 3164 typical timestamp
+		$eventtime[EVTIME_TIMESTAMP] = mktime(0, 0, 0, $out[2], $out[3], $out[1]);
+		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
 	else
 	{
 		$eventtime[EVTIME_TIMESTAMP] = 0;
@@ -1158,6 +1166,31 @@ function GetEventTime($szTimStr)
 
 	// return result!
 	return $eventtime;
+}
+
+/*
+*	Helper function to output debug messages
+*/
+function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
+{
+	global $content;
+
+	// Check if we should print the Error!
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
+	{
+		$content['DEBUGMSG'][] = array( 
+			"DBGLEVEL" => $szDbgLevel, 
+			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
+			"DBGLEVELBG" => GetDebugBgColor($szDbgLevel), 
+			"DBGMSG" =>	"$szDbg"
+			);
+	}
+
+	// Check if the user wants to syslog the error!
+	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
+	{
+		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+	}
 }
 
 /*
