@@ -190,9 +190,13 @@ function InitSource(&$mysource)
 
 		// Set generic configuration options
 		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
-		$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
-		$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
-		$mysource['ObjRef']->SetSkipUnparseable( $mysource['MsgSkipUnparseable'] );
+
+		if ( isset($mysource['MsgParserList']) ) 
+			$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
+		if ( isset($mysource['MsgNormalize']) )
+			$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
+		if ( isset($mysource['MsgSkipUnparseable']) )
+			$mysource['ObjRef']->SetSkipUnparseable( $mysource['MsgSkipUnparseable'] );
 
 		// Set default SourceID here!
 		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
