@@ -311,7 +311,7 @@ abstract class LogStream {
 					{
 						if ( 
 								($myfilter[FILTER_TYPE] == FILTER_TYPE_NUMBER) ||
-								($myfilter[FILTER_TYPE] == FILTER_TYPE_STRING && $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+								($myfilter[FILTER_TYPE] == FILTER_TYPE_STRING && $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE && $propertyname != SYSLOG_MESSAGE)
 							)
 						{
 							$bEval = false;
