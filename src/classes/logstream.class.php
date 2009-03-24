@@ -289,6 +289,9 @@ abstract class LogStream {
 		if ( $myResults >= ERROR ) 
 			return SUCCESS;
 		
+		// Evaluation default is true
+		$bFinalEval = true;
+
 		// Process all filters
 		if ( $this->_filters != null )
 		{
@@ -302,18 +305,27 @@ abstract class LogStream {
 						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
-					// Evaluation default is true
-					$bEval = true;
 
-					// Default for numeric filters is false!
-					if ( isset($this->_filters[$propertyname][0]) && $this->_filters[$propertyname][0][FILTER_TYPE] == FILTER_TYPE_NUMBER )
-						$bEval = false;
+					// Perform first loop to determine the bEval Default
+					foreach( $this->_filters[$propertyname] as $myfilter ) 
+					{
+						if ( 
+								($myfilter[FILTER_TYPE] == FILTER_TYPE_NUMBER) ||
+								($myfilter[FILTER_TYPE] == FILTER_TYPE_STRING && $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+							)
+						{
+							$bEval = false;
+							break;	// IF found one INCLUDE or NUMERIC filter, the default has to be false!
+						}
+						else
+							$bEval = true;
+					}
 
 					// Extra var needed for number checks!
 					$bIsOrFilter = false; // If enabled we need to check for numbereval later
 					$bOrFilter = false;
 
-					// Found something to filter, so do it!
+					// Perform second loop through all filters, to perform filtering
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
 						switch( $myfilter[FILTER_TYPE] )
@@ -344,7 +356,6 @@ abstract class LogStream {
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
-
 											// Set isOrFilter to true in this case
 											$bIsOrFilter = true; 
 
@@ -364,13 +375,11 @@ abstract class LogStream {
 										{
 											if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
 											{
-//												if ( strtolower($propertyvalue) != strtolower($myfilter[FILTER_VALUE]) ) 
 												if ( strtolower($propertyvalue) == strtolower($myfilter[FILTER_VALUE]) ) 
 													$bEval = false;
 											}
 											else
 											{
-//												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
 												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
 													$bEval = false;
 											}
@@ -468,26 +477,32 @@ abstract class LogStream {
 						}
 
 						// If was number filter, we apply it the evaluation.
-						if ( $bIsOrFilter && $bOrFilter) 
+						if ( $bIsOrFilter ) // && $bOrFilter ) 
 						{
 							// Fixed binary comparison to | instead of &!
 							$bEval |= $bOrFilter;
 	//echo "!" . $bOrFilter . "-" . $bEval . "!<br>";
 						}
+//						else
+//							$bEval &= $bOrFilter;
+
 					}
 					
-					// Check if evaluation was successfull
-					if ( !$bEval ) 
-					{
-						// unmatching filter, reset property array
-						foreach ( $this->_arrProperties as $property ) 
-							$arrProperitesOut[$property] = '';
-
-						// return error!
-						return ERROR_FILTER_NOT_MATCH;
-					}
-
+					// Combine filters with AND
+					$bFinalEval &= $bEval;
 				}
+
+			}
+
+			// Check if evaluation was successfull
+			if ( !$bFinalEval ) 
+			{
+				// unmatching filter, reset property array
+				foreach ( $this->_arrProperties as $property ) 
+					$arrProperitesOut[$property] = '';
+
+				// return error!
+				return ERROR_FILTER_NOT_MATCH;
 			}
 			
 			// Reached this point means filters did match!
