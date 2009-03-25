@@ -332,8 +332,7 @@ function CreateDBMappingsList( $selectedDBTableType )
 	foreach ( $dbmapping as $mykey => $myMapping )
 	{
 		$content['DBMAPPINGS'][$mykey]['type'] = $mykey;
-		$content['DBMAPPINGS'][$mykey]['DisplayName'] = $mykey;
-		
+		if ( isset($myMapping['DisplayName']) ) {$content['DBMAPPINGS'][$mykey]['DisplayName'] = $myMapping['DisplayName']; } else { $content['DBMAPPINGS'][$mykey]['DisplayName'] = $mykey; }
 		if ( $selectedDBTableType == $mykey ) { $content['DBMAPPINGS'][$mykey]['selected'] = "selected"; } else { $content['DBMAPPINGS'][$mykey]['selected'] = ""; }
 	}
 }
@@ -770,6 +769,9 @@ function InitConfigurationValues()
 
 			// Load Configured Views
 			LoadViewsFromDatabase();
+
+			// Load Configured Mappings
+			LoadDBMappingsFromDatabase();
 
 			// Load Configured Sources
 			LoadSourcesFromDatabase();

@@ -37,6 +37,7 @@ $content['LN_ADMINMENU_USEROPT'] = "Users";
 $content['LN_ADMINMENU_GROUPOPT'] = "Groups";
 $content['LN_ADMINMENU_CHARTOPT'] = "Charts";
 $content['LN_ADMINMENU_FIELDOPT'] = "Fields";
+	$content['LN_ADMINMENU_DBMAPPINGOPT'] = "DBMappings";
 $content['LN_ADMINMENU_MSGPARSERSOPT'] = "Message Parsers";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
@@ -201,8 +202,34 @@ $content['LN_VIEWS_COLUMN'] = "Column";
 $content['LN_VIEWS_COLUMN_REMOVE'] = "Remove Column";
 $content['LN_VIEWS_HASBEENADDED'] = "The Custom View '%1' has been successfully added.";
 $content['LN_VIEWS_ERROR_NOCOLUMNS'] = "You need to add at least one column in order to add a new Custom View.";
-$content['LN_VIEWS_HASBEENEDIT'] = "The Custom Search '%1' has been successfully edited.";
+$content['LN_VIEWS_HASBEENEDIT'] = "The Custom View '%1' has been successfully edited.";
 $content['LN_VIEWS_'] = "";
+
+// Custom DBMappings center
+$content['LN_DBMP_CENTER'] = "Database Field Mappings Options";
+$content['LN_DBMP_ID'] = "ID";
+$content['LN_DBMP_NAME'] = "Database Mappingname";
+$content['LN_DBMP_DBMAPPINGS'] = "Database Mappings";
+$content['LN_DBMP_ADD'] = "Add new Database Mapping";
+$content['LN_DBMP_EDIT'] = "Edit Database Mapping";
+$content['LN_DBMP_ERROR_IDNOTFOUND'] = "A Database Mapping with ID '%1' could not be found.";
+$content['LN_DBMP_ERROR_INVALIDID'] = "The Database Mapping with ID '%1' is not a valid Database Mapping.";
+$content['LN_DBMP_WARNDELETEMAPPING'] = "Are you sure that you want to delete the Database Mapping '%1'? This cannot be undone!";
+$content['LN_DBMP_ERROR_DELSEARCH'] = "Deleting of the Database Mapping with id '%1' failed!";
+$content['LN_DBMP_ERROR_HASBEENDEL'] = "The Database Mapping '%1' has been successfully deleted!";
+$content['LN_DBMP_ADDEDIT'] = "Add / Edit Database Mapping";
+$content['LN_DBMP_DBMAPPINGSLIST'] = "Configured Mappings";
+$content['LN_DBMP_ADDMAPPING'] = "Add Field Mapping into list";
+$content['LN_DBMP_ERROR_DISPLAYNAMEEMPTY'] = "The DisplayName cannot be empty.";
+$content['LN_DBMP_MAPPING'] = "Mapping";
+$content['LN_DBMP_MAPPING_REMOVE'] = "Remove Mapping";
+$content['LN_DBMP_MAPPING_EDIT'] = "Edit Mapping";
+$content['LN_DBMP_HASBEENADDED'] = "The Custom Database Mapping '%1' has been successfully added.";
+$content['LN_DBMP_ERROR_NOCOLUMNS'] = "You need to add at least one column in order to add a new Custom Database Mapping.";
+$content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
+$content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
+$content['LN_DBMP_ERROR_MISSINGFIELDNAME'] = "Missing mapping for the '%1' field.";
+
 
 // Custom Sources center
 $content['LN_SOURCES_CENTER'] = "Sources Options";

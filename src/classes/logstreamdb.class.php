@@ -249,10 +249,10 @@ class LogStreamDB extends LogStream {
 				foreach ( $this->_arrProperties as $property ) 
 				{
 					// Check if mapping exists
-					if ( isset($dbmapping[$szTableType][$property]) )
+					if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$property]) )
 					{
 						// Copy property if available!
-						$dbfieldname = $dbmapping[$szTableType][$property];
+						$dbfieldname = $dbmapping[$szTableType]['DBMAPPINGS'][$property];
 						if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
 						{
 							if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
@@ -278,7 +278,7 @@ class LogStreamDB extends LogStream {
 				}
 
 				// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
-				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
+				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID]];
 				
 				// Increment $_currentRecordNum
 				$this->_currentRecordNum++;
@@ -440,7 +440,7 @@ class LogStreamDB extends LogStream {
 		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
 			return $this->_firstPageUID;
 
-		$szSql = "SELECT MAX(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -472,7 +472,7 @@ class LogStreamDB extends LogStream {
 		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
 			return $this->_lastPageUID;
 
-		$szSql = "SELECT MIN(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -625,7 +625,7 @@ class LogStreamDB extends LogStream {
 		if ( $this->_dbhandle != null ) 
 		{
 			// SHOW TABLE STATUS FROM
-			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
 			{
@@ -663,7 +663,7 @@ class LogStreamDB extends LogStream {
 		{
 			// Create WHERE attachment
 			if ( $nDateTimeStamp > 0 ) 
-				$szWhere = " WHERE UNIX_TIMESTAMP(" . $dbmapping[$szTableType][SYSLOG_DATE] . ") < " . $nDateTimeStamp; 
+				$szWhere = " WHERE UNIX_TIMESTAMP(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") < " . $nDateTimeStamp; 
 			else
 				$szWhere = "";
 
@@ -699,10 +699,10 @@ class LogStreamDB extends LogStream {
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		if ( isset($dbmapping[$szTableType][$szFieldId]) )
+		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
 		{
 			// Set DB Field name first!
-			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
 			$myDBQueryFieldName = $myDBFieldName;
 			$mySelectFieldName = $myDBFieldName;
 			
@@ -777,7 +777,7 @@ class LogStreamDB extends LogStream {
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
 						// Only perform if database mapping is available for this filter!
-						if ( isset($dbmapping[$szTableType][$propertyname]) ) 
+						if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]) ) 
 						{
 							switch( $myfilter[FILTER_TYPE] )
 							{
@@ -842,11 +842,11 @@ class LogStreamDB extends LogStream {
 									
 									// Now Create LIKE Filters
 									if ( isset($tmpfilters[$propertyname]) ) 
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
 									else
 									{
 										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
 									}
 									break;
 								case FILTER_TYPE_NUMBER:
@@ -860,7 +860,7 @@ class LogStreamDB extends LogStream {
 										else
 										{
 											$tmpfilters[$szArrayKey][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
+											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
 										}
 									}
 									else
@@ -871,7 +871,7 @@ class LogStreamDB extends LogStream {
 										else
 										{
 											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
+											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE]);
 										}
 									}
 									// ---
@@ -908,19 +908,19 @@ class LogStreamDB extends LogStream {
 										}
 										
 										// Append filter
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
 									}
 									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
 									{
 										// Obtain Event struct for the time!
 										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
 									}
 									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
 									{
 										// Obtain Event struct for the time!
 										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
 									}
 
 									break;
@@ -1154,9 +1154,9 @@ class LogStreamDB extends LogStream {
 		
 		// Create Basic SQL String
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting ) // with SQL_CALC_FOUND_ROWS
-			$sqlString = "SELECT SQL_CALC_FOUND_ROWS " . $dbmapping[$szTableType][SYSLOG_UID];
+			$sqlString = "SELECT SQL_CALC_FOUND_ROWS " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID];
 		else													// without row calc
-			$sqlString = "SELECT " . $dbmapping[$szTableType][SYSLOG_UID];
+			$sqlString = "SELECT " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID];
 		
 		// Append fields if needed
 		if ( $includeFields && $this->_arrProperties != null ) 
@@ -1165,10 +1165,10 @@ class LogStreamDB extends LogStream {
 			foreach ( $this->_arrProperties as $myproperty ) 
 			{	
 				// SYSLOG_UID already added!
-				if ( $myproperty != SYSLOG_UID && isset($dbmapping[$szTableType][$myproperty]) )
+				if ( $myproperty != SYSLOG_UID && isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) )
 				{
 					// Append field!
-					$sqlString .= ", " . $dbmapping[$szTableType][$myproperty];
+					$sqlString .= ", " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty];
 				}
 			}
 		}
@@ -1188,16 +1188,16 @@ class LogStreamDB extends LogStream {
 				$myOperator = "<=";
 
 			if ( strlen($this->_SQLwhereClause) > 0 )
-				$sqlString .= " AND " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+				$sqlString .= " AND " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
 			else
-				$sqlString .= " WHERE " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+				$sqlString .= " WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
 		}
 
 		// Append ORDER clause
 		if ( $this->_readDirection == EnumReadDirection::Forward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType][$szSortColumn];
+			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn];
 		else if ( $this->_readDirection == EnumReadDirection::Backward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType][$szSortColumn] . " DESC";
+			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn] . " DESC";
 
 		// return SQL result string:
 		return $sqlString;
