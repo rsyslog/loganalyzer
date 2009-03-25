@@ -401,7 +401,13 @@
 				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 				<tr>
 					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
-					<td align="right" class="line0" width="100%"><input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"></td>
+					<td align="right" class="line0" width="100%">
+						<select name="SourceDBTableType" size="1">
+							<!-- BEGIN DBMAPPINGS -->
+							<option {selected} value="{type}">{DisplayName}</option>
+							<!-- END DBMAPPINGS -->
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>

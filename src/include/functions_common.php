@@ -320,6 +320,25 @@ function CreateChartFields( $selectedChartField)
 	}
 }
 
+
+/*
+*	Helper function to generate a dbmappings list
+*/
+function CreateDBMappingsList( $selectedDBTableType )
+{
+	global $content, $dbmapping;
+
+	// Process all mappings
+	foreach ( $dbmapping as $mykey => $myMapping )
+	{
+		$content['DBMAPPINGS'][$mykey]['type'] = $mykey;
+		$content['DBMAPPINGS'][$mykey]['DisplayName'] = $mykey;
+		
+		if ( $selectedDBTableType == $mykey ) { $content['DBMAPPINGS'][$mykey]['selected'] = "selected"; } else { $content['DBMAPPINGS'][$mykey]['selected'] = ""; }
+	}
+}
+
+
 function CreateDBTypesList( $selectedDBType )
 {
 	global $content;

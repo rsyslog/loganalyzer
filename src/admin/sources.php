@@ -93,8 +93,10 @@ if ( isset($_GET['op']) )
 		// SOURCE_DB specific
 		$content['SourceDBType'] = DB_MYSQL;
 		CreateDBTypesList($content['SourceDBType']);
-		$content['SourceDBName'] = "phplogcon";
 		$content['SourceDBTableType'] = "monitorware";
+		CreateDBMappingsList($content['SourceDBTableType']);
+
+		$content['SourceDBName'] = "phplogcon";
 		$content['SourceDBServer'] = "localhost";
 		$content['SourceDBTableName'] = "systemevents";
 		$content['SourceDBUser'] = "user";
@@ -172,8 +174,10 @@ if ( isset($_GET['op']) )
 				// SOURCE_DB specific
 				$content['SourceDBType'] = $mysource['DBType'];
 				CreateDBTypesList($content['SourceDBType']);
-				$content['SourceDBName'] = $mysource['DBName'];
 				$content['SourceDBTableType'] = $mysource['DBTableType'];
+				CreateDBMappingsList($content['SourceDBTableType']);
+
+				$content['SourceDBName'] = $mysource['DBName'];
 				$content['SourceDBServer'] = $mysource['DBServer'];
 				$content['SourceDBTableName'] = $mysource['DBTableName'];
 				$content['SourceDBUser'] = $mysource['DBUser'];

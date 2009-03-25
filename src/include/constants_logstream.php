@@ -317,8 +317,8 @@ $dbmapping['syslogng'][SYSLOG_UID] = "seq";
 $dbmapping['syslogng'][SYSLOG_DATE] = "datetime";
 $dbmapping['syslogng'][SYSLOG_HOST] = "host";
 $dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
-//TODO $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
-//TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
+//NOT POSSIBLE YET $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
+//NOT POSSIBLE YET $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority";
 $dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
 $dbmapping['syslogng'][SYSLOG_PROCESSID] = "program";
 
