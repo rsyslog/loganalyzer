@@ -1,0 +1,133 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p>{ERROR_MSG}</p>
+		</div>
+	<br><br>
+	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_DBMP_CENTER}</B></td>
+</tr>
+	<tr>
+		<td align="center" class="line2">
+		<br><br>
+
+<!-- IF LISTDBMAPPINGS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<tr>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_DBMP_ID}</b></td>
+			<td align="center" width="150" class="cellmenu1"><b>{LN_DBMP_NAME}</b></td>
+			<td align="center" width="275" class="cellmenu1"><b>{LN_DBMP_DBMAPPINGS}</b></td>
+			<td align="center" width="125" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+		</tr>
+		<!-- BEGIN DBMP -->
+		<tr>
+			<td align="center" class="{cssclass}"><b>{ID}</b></td>
+			<td align="left" class="{cssclass}">
+			<!-- IF ActionsAllowed="true" -->
+			<a href="{BASEPATH}admin/dbmappings.php?op=edit&id={ID}">{DisplayName}</a>
+			<!-- ENDIF ActionsAllowed="true" -->
+			<!-- IF ActionsAllowed!="true" -->
+			<b>{DisplayName}</b>
+			<!-- ENDIF ActionsAllowed!="true" -->
+			</td>
+			<td align="left" class="{cssclass}">
+			<!-- BEGIN MYMAPPINGS -->{CaptionSeperator}{FieldCaption} => {FieldMapping}<!-- END MYMAPPINGS -->
+			</td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ActionsAllowed="true" -->
+				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_DBMP_EDIT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_DBMP_DELETE}"></a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
+				<!-- ENDIF ActionsAllowed!="true" -->
+			</td>
+		</tr>
+		<!-- END DBMP -->
+		<tr>
+			<td align="center" colspan="5" class="line0"><b><a href="{BASEPATH}admin/dbmappings.php?op=add"><img src="{MENU_ADD}" title="{LN_DBMP_ADD}">&nbsp;{LN_DBMP_ADD}</a></b></td>
+		</tr>
+		</table>
+<!-- ENDIF LISTDBMAPPINGS="true" -->
+
+<!-- IF ISEDITORNEWDBMP="true" -->
+		<form action="{BASEPATH}admin/dbmappings.php{FormUrlAddOP}" method="post">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_DBMP_ADDEDIT}</b></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_DBMP_NAME}</b></td>
+				<td align="right" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+			</tr>
+			</table>
+			<br>
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="4"><b>{LN_DBMP_DBMAPPINGSLIST}</b></td>
+			</tr>
+			<!-- BEGIN SUBMAPPINGS -->
+			<tr>
+				<td align="left" class="cellmenu2" width="150"><b>{LN_DBMP_MAPPING} {ZAEHLER}: </b></td>
+			
+				<td align="left" class="{colcssclass}" width="200">
+					<input type="hidden" name="Mappings[]" value="{MappingFieldID}">
+					<b>{MappingCaption} (<I>{MappingInternalID}</I>)</b>
+				</td>
+				<td align="left" class="{colcssclass}" width="200">
+					<input type="text" name="{MappingFieldID}" size="32" maxlength="255" value="{MappingDbFieldName}">
+				</td>
+				
+				<td align="center" class="{colcssclass}" width="150">
+					<button name="subop_edit" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_DBMP_MAPPING_EDIT}"></button>
+					<button name="subop_moveup" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_MOVEUP}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_DBMP_MAPPING_REMOVE}"></button>
+					<button name="subop_movedown" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_MOVEDOWN}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_DBMP_MAPPING_REMOVE}"></button>
+					<button name="subop_delete" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_DBMP_MAPPING_REMOVE}"></button>
+				</td>
+			</tr>
+			<!-- END SUBMAPPINGS -->
+			<tr>
+				<td align="center" class="line2" colspan="4">
+
+					<select name="newmapping" size="1" STYLE="width: 200px">
+						<!-- BEGIN FIELDS -->
+						<option value="{FieldID}" {group_selected}>{FieldCaption}</option>
+						<!-- END FIELDS -->
+					</select>
+					<input type="submit" name="subop" value="{LN_DBMP_ADDMAPPING}">
+				</td>
+			</tr>
+			</table>
+			<br>
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" colspan="2" class="line0">
+					<br>
+					<input type="submit" value="{DBMP_SENDBUTTON}">
+					<input type="hidden" name="op" value="{DBMP_FORMACTION}">
+					<input type="hidden" name="id" value="{DBMPID}">
+					<br><br>
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISEDITORNEWDBMP="true" -->
+
+		<br><br>
+
+		</td>
+	</tr>
+</table>
+
+<!-- INCLUDE include_footer.html -->

@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `logcon_charts` (
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains all configured charts' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='This table contains all configured charts' AUTO_INCREMENT=1 ;
 
 -- Insert data
 INSERT INTO `logcon_charts` (`ID`, `DisplayName`, `chart_enabled`, `chart_type`, `chart_width`, `chart_field`, `maxrecords`, `showpercent`, `userid`, `groupid`) VALUES (1, 'Top Hosts', 1, 3, 400, 'FROMHOST', 10, 0, NULL, NULL);

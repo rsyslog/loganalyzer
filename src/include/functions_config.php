@@ -430,6 +430,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		define('DB_USERS',			$tblPref . "users");
 		define('DB_VIEWS',			$tblPref . "views");
 		define('DB_CHARTS',			$tblPref . "charts");
+		define('DB_MAPPINGS',		$tblPref . "dbmappings");
 
 		// Legacy support for old columns definition format!
 		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )
@@ -462,6 +463,73 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 			return false;
 	}
 }
+
+
+/*
+*	Helper function to load configured dbmappings from the database
+*/
+function LoadDBMappingsFromDatabase()
+{
+	// Needed to make global
+	global $dbmapping, $content, $fields;
+
+	// Abort reading fields if the database version is below version 8!, because prior v8, there were no dbmappings table
+	if ( $content['database_installedversion'] < 8 )
+		return;
+
+	// --- Preprocess fields in loop 
+	foreach ($dbmapping as &$myMapping )
+	{
+		// Set Field to be internal!
+		$myMapping['IsInternalMapping'] = true;
+		$myMapping['MappingFromDB'] = false;
+	}
+	// ---
+
+	// --- Create SQL Query
+	$sqlquery = " SELECT " . 
+				DB_MAPPINGS . ".ID, " . 
+				DB_MAPPINGS . ".DisplayName, " . 
+				DB_MAPPINGS . ".Mappings " . 
+				" FROM " . DB_MAPPINGS . 
+				" ORDER BY " . DB_MAPPINGS . ".DisplayName";
+
+	// Get Views from DB now!
+	$result = DB_Query($sqlquery);
+	$myrows = DB_GetAllRows($result, true);
+	if ( isset($myrows) && count($myrows) > 0 )
+	{
+		// Unpack the Columns and append to Views Array
+		foreach ($myrows as &$myMappings)
+		{
+			// Split into array
+			$tmpMappings = explode( ",", $myMappings['Mappings'] );
+			
+			//Loop through mappings
+			foreach ($tmpMappings as &$myMapping )
+			{
+				// Split subvalues
+				$tmpMapping = explode( "=>", $myMapping );
+
+				// check if field is valid
+				$fieldId = trim($tmpMapping[0]);
+				if ( isset($fields[$fieldId]) ) 
+				{
+					// Assign mappings
+					$myMappings['DBMAPPINGS'][$fieldId] = trim($tmpMapping[1]);
+				}
+			}
+
+			// Add Mapping to array
+			$dbmapping[ $myMappings['ID'] ] = $myMappings;
+
+			// Set FromDB to true
+			$dbmapping[ $myMappings['ID'] ]['MappingFromDB'] = true;
+		}
+	}
+	// ---
+}
+
 
 /*
 *	Helper function to load configured fields from the database

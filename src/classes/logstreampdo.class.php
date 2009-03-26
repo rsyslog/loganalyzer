@@ -191,7 +191,7 @@ class LogStreamPDO extends LogStream {
 			try 
 			{
 				// This is one way to check if the table exists! But I don't really like it tbh -.-
-				$szIdField = $dbmapping[$this->_logStreamConfigObj->DBTableType][SYSLOG_UID];
+				$szIdField = $dbmapping[$this->_logStreamConfigObj->DBTableType]['DBMAPPINGS'][SYSLOG_UID];
 				$szTestQuery = "SELECT MAX(" . $szIdField . ") FROM " . $this->_logStreamConfigObj->DBTableName;
 				$tmpStmnt = $this->_dbhandle->prepare( $szTestQuery );
 				$tmpStmnt->execute();
@@ -296,10 +296,10 @@ class LogStreamPDO extends LogStream {
 				foreach ( $this->_arrProperties as $property ) 
 				{
 					// Check if mapping exists
-					if ( isset($dbmapping[$szTableType][$property]) )
+					if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$property]) )
 					{
 						// Copy property if available!
-						$dbfieldname = $dbmapping[$szTableType][$property];
+						$dbfieldname = $dbmapping[$szTableType]['DBMAPPINGS'][$property];
 						if ( isset($this->bufferedRecords[$this->_currentRecordNum][$dbfieldname]) ) 
 						{
 							if ( isset($fields[$property]['FieldType']) && $fields[$property]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
@@ -325,7 +325,7 @@ class LogStreamPDO extends LogStream {
 				}
 
 				// Set uID to the PropertiesOut! //DEBUG -> $this->_currentRecordNum;
-				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType][SYSLOG_UID]];
+				$uID = $arrProperitesOut[SYSLOG_UID] = $this->bufferedRecords[$this->_currentRecordNum][$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID]];
 
 				// Increment $_currentRecordNum
 				$this->_currentRecordNum++;
@@ -474,7 +474,7 @@ class LogStreamPDO extends LogStream {
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		$szSql = "SELECT MAX(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ( $myQuery ) 
 		{
@@ -504,7 +504,7 @@ class LogStreamPDO extends LogStream {
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		$szSql = "SELECT MIN(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ( $myQuery ) 
 		{
@@ -572,7 +572,7 @@ class LogStreamPDO extends LogStream {
 
 			// SHOW TABLE STATUS FROM
 			$stats = NULL;
-			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
 			$myQuery = $this->_dbhandle->query($szSql);
 			if ( $myQuery ) 
 			{
@@ -617,7 +617,7 @@ class LogStreamPDO extends LogStream {
 		if ( $this->_dbhandle != null ) 
 		{
 			// Get Total Rowcount
-			$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
 			$myQuery = $this->_dbhandle->query($szSql);
 			if ( $myQuery ) 
 			{
@@ -654,7 +654,7 @@ class LogStreamPDO extends LogStream {
 		{
 			// Create WHERE attachment
 			if ( $nDateTimeStamp > 0 ) 
-				$szWhere = " WHERE " . $dbmapping[$szTableType][SYSLOG_DATE] . " < '" . date('Y-m-d H:i:s', $nDateTimeStamp) . "'"; 
+				$szWhere = " WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " < '" . date('Y-m-d H:i:s', $nDateTimeStamp) . "'"; 
 			else
 				$szWhere = "";
 
@@ -690,10 +690,10 @@ class LogStreamPDO extends LogStream {
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		if ( isset($dbmapping[$szTableType][$szFieldId]) )
+		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
 		{
 			// Set DB Field name first!
-			$myDBFieldName = $dbmapping[$szTableType][$szFieldId];
+			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
 			$myDBQueryFieldName = $myDBFieldName;
 			$mySelectFieldName = $myDBFieldName;
 
@@ -795,7 +795,7 @@ class LogStreamPDO extends LogStream {
 					foreach( $this->_filters[$propertyname] as $myfilter ) 
 					{
 						// Only perform if database mapping is available for this filter!
-						if ( isset($dbmapping[$szTableType][$propertyname]) ) 
+						if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]) ) 
 						{
 							switch( $myfilter[FILTER_TYPE] )
 							{
@@ -890,11 +890,11 @@ class LogStreamPDO extends LogStream {
 									
 									// Not create LIKE Filters
 									if ( isset($tmpfilters[$propertyname]) ) 
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType) . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType) . $szSearchEnd;
 									else
 									{
 										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType) . $szSearchEnd;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType) . $szSearchEnd;
 									}
 									break;
 								case FILTER_TYPE_NUMBER:
@@ -908,7 +908,7 @@ class LogStreamPDO extends LogStream {
 										else
 										{
 											$tmpfilters[$szArrayKey][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType);
+											$tmpfilters[$szArrayKey][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " NOT IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType);
 										}
 									}
 									else
@@ -919,7 +919,7 @@ class LogStreamPDO extends LogStream {
 										else
 										{
 											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_NUMBER;
-											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType);
+											$tmpfilters[$propertyname][FILTER_VALUE] = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " IN (" . DB_RemoveBadChars($myfilter[FILTER_VALUE], $this->_logStreamConfigObj->DBType);
 										}
 									}
 									// ---
@@ -956,19 +956,19 @@ class LogStreamPDO extends LogStream {
 										}
 										
 										// Append filter
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
 									}
 									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
 									{
 										// Obtain Event struct for the time!
 										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
 									}
 									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
 									{
 										// Obtain Event struct for the time!
 										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
 									}
 
 									break;
@@ -1153,7 +1153,7 @@ class LogStreamPDO extends LogStream {
 //		if ( $this->_logStreamConfigObj->DBEnableRowCounting ) // with SQL_CALC_FOUND_ROWS
 //			$sqlString = "SELECT SQL_CALC_FOUND_ROWS " . $dbmapping[$szTableType][SYSLOG_UID];
 //		else													// without row calc
-			$sqlString = "SELECT " . $dbmapping[$szTableType][SYSLOG_UID];
+			$sqlString = "SELECT " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID];
 		
 		// Append fields if needed
 		if ( $includeFields && $this->_arrProperties != null ) 
@@ -1162,10 +1162,10 @@ class LogStreamPDO extends LogStream {
 			foreach ( $this->_arrProperties as $myproperty ) 
 			{	
 				// SYSLOG_UID already added!
-				if ( $myproperty != SYSLOG_UID && isset($dbmapping[$szTableType][$myproperty]) )
+				if ( $myproperty != SYSLOG_UID && isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) )
 				{
 					// Append field!
-					$sqlString .= ", " . $dbmapping[$szTableType][$myproperty];
+					$sqlString .= ", " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty];
 				}
 			}
 		}
@@ -1185,16 +1185,16 @@ class LogStreamPDO extends LogStream {
 				$myOperator = "<=";
 
 			if ( strlen($this->_SQLwhereClause) > 0 )
-				$sqlString .= " AND " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+				$sqlString .= " AND " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
 			else
-				$sqlString .= " WHERE " . $dbmapping[$szTableType][SYSLOG_UID] . " $myOperator $uID";
+				$sqlString .= " WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
 		}
 
 		// Append ORDER clause
 		if ( $this->_readDirection == EnumReadDirection::Forward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType][$szSortColumn];
+			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn];
 		else if ( $this->_readDirection == EnumReadDirection::Backward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType][$szSortColumn] . " DESC";
+			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn] . " DESC";
 
 //echo $sqlString;
 //exit;
@@ -1263,7 +1263,7 @@ class LogStreamPDO extends LogStream {
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		// Create Statement and perform query!
-		$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{

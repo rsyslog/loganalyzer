@@ -299,33 +299,37 @@ $fields[SYSLOG_MESSAGE]['SearchOnline'] = false;
 // --- 
 
 // --- Define default Database field mappings!
-$dbmapping['monitorware'][SYSLOG_UID] = "ID";
-$dbmapping['monitorware'][SYSLOG_DATE] = "DeviceReportedTime";
-$dbmapping['monitorware'][SYSLOG_HOST] = "FromHost";
-$dbmapping['monitorware'][SYSLOG_MESSAGETYPE] = "InfoUnitID";
-$dbmapping['monitorware'][SYSLOG_MESSAGE] = "Message";
-$dbmapping['monitorware'][SYSLOG_FACILITY] = "Facility";
-$dbmapping['monitorware'][SYSLOG_SEVERITY] = "Priority";
-$dbmapping['monitorware'][SYSLOG_SYSLOGTAG] = "SysLogTag";
-$dbmapping['monitorware'][SYSLOG_EVENT_ID] = "EventID";
-$dbmapping['monitorware'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
-$dbmapping['monitorware'][SYSLOG_EVENT_SOURCE] = "EventSource";
-$dbmapping['monitorware'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
-$dbmapping['monitorware'][SYSLOG_EVENT_USER] = "EventUser";
+$dbmapping['monitorware']['ID'] = "monitorware";
+$dbmapping['monitorware']['DisplayName'] = "MonitorWare";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_UID] = "ID";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_DATE] = "DeviceReportedTime";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_HOST] = "FromHost";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_MESSAGETYPE] = "InfoUnitID";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_MESSAGE] = "Message";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_FACILITY] = "Facility";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_SEVERITY] = "Priority";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "SysLogTag";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_ID] = "EventID";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_SOURCE] = "EventSource";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_USER] = "EventUser";
 
-$dbmapping['syslogng'][SYSLOG_UID] = "seq";
-$dbmapping['syslogng'][SYSLOG_DATE] = "datetime";
-$dbmapping['syslogng'][SYSLOG_HOST] = "host";
-$dbmapping['syslogng'][SYSLOG_MESSAGE] = "msg";
-//TODO $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
-//TODO $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority"
-$dbmapping['syslogng'][SYSLOG_SYSLOGTAG] = "tag";
-$dbmapping['syslogng'][SYSLOG_PROCESSID] = "program";
+$dbmapping['syslogng']['ID'] = "syslogng";
+$dbmapping['syslogng']['DisplayName'] = "SyslogNG";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_UID] = "seq";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_DATE] = "datetime";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_HOST] = "host";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_MESSAGE] = "msg";
+//NOT POSSIBLE YET $dbmapping['syslogng'][SYSLOG_FACILITY] = "Facility";
+//NOT POSSIBLE YET $dbmapping['syslogng'][SYSLOG_SEVERITY] = "Priority";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "tag";
+$dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_PROCESSID] = "program";
 
 // Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 
 foreach( $dbmapping as &$myMapping ) 
 {
-	foreach( $myMapping as &$myField ) 
+	foreach( $myMapping['DBMAPPINGS'] as &$myField ) 
 		$myField = strtolower($myField);
 }
 

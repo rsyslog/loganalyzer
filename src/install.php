@@ -531,8 +531,10 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	// SOURCE_DB specific
 	if ( isset($_SESSION['SourceDBType']) ) { $content['SourceDBType'] = $_SESSION['SourceDBType']; } else { $content['SourceDBType'] = DB_MYSQL; }
 	CreateDBTypesList($content['SourceDBType']);
-	if ( isset($_SESSION['SourceDBName']) ) { $content['SourceDBName'] = $_SESSION['SourceDBName']; } else { $content['SourceDBName'] = "phplogcon"; }
 	if ( isset($_SESSION['SourceDBTableType']) ) { $content['SourceDBTableType'] = $_SESSION['SourceDBTableType']; } else { $content['SourceDBTableType'] = "monitorware"; }
+	CreateDBMappingsList($content['SourceDBTableType']);
+
+	if ( isset($_SESSION['SourceDBName']) ) { $content['SourceDBName'] = $_SESSION['SourceDBName']; } else { $content['SourceDBName'] = "phplogcon"; }
 	if ( isset($_SESSION['SourceDBServer']) ) { $content['SourceDBServer'] = $_SESSION['SourceDBServer']; } else { $content['SourceDBServer'] = "localhost"; }
 	if ( isset($_SESSION['SourceDBTableName']) ) { $content['SourceDBTableName'] = $_SESSION['SourceDBTableName']; } else { $content['SourceDBTableName'] = "systemevents"; }
 	if ( isset($_SESSION['SourceDBUser']) ) { $content['SourceDBUser'] = $_SESSION['SourceDBUser']; } else { $content['SourceDBUser'] = "user"; }

@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 2.7.0 (beta), 2009-03-26
+- Added support for dynamic filenames in disk logstream by using 
+  replacement characters. See the doc for details. 
+- Added support for using REGEXP on supported logstream sources. Currently 
+  MYSQL and PostGRESQL are supported due the native support of REGEXP. To 
+  use REGEXP in searches, prepend the search phrase with the ~ character.
+- Added support for configuring and administrating custom database 
+  mappings in the Admin Center. This makes it easier to 
+  support custom table layouts. 
+---------------------------------------------------------------------------
 Version 2.6.2 (v2-stable), 2009-03-24
 - Fixed minor spelling errors in language files (BugID #115)
 - Fixed number of records exported when using the export (BugID #110). 
