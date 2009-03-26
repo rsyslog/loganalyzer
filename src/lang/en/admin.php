@@ -37,7 +37,7 @@ $content['LN_ADMINMENU_USEROPT'] = "Users";
 $content['LN_ADMINMENU_GROUPOPT'] = "Groups";
 $content['LN_ADMINMENU_CHARTOPT'] = "Charts";
 $content['LN_ADMINMENU_FIELDOPT'] = "Fields";
-	$content['LN_ADMINMENU_DBMAPPINGOPT'] = "DBMappings";
+$content['LN_ADMINMENU_DBMAPPINGOPT'] = "DBMappings";
 $content['LN_ADMINMENU_MSGPARSERSOPT'] = "Message Parsers";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
@@ -229,7 +229,6 @@ $content['LN_DBMP_ERROR_NOCOLUMNS'] = "You need to add at least one column in or
 $content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
 $content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
 $content['LN_DBMP_ERROR_MISSINGFIELDNAME'] = "Missing mapping for the '%1' field.";
-
 
 // Custom Sources center
 $content['LN_SOURCES_CENTER'] = "Sources Options";
