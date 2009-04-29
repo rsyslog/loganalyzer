@@ -382,7 +382,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							// Special style classes and colours for SYSLOG_FACILITY
 							if ( $mycolkey == SYSLOG_FACILITY )
 							{
-								if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+//								if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+								if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[ $logArray[SYSLOG_FACILITY] ] . '" ';
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "lineColouredBlack";
@@ -401,7 +402,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							}
 							else if ( $mycolkey == SYSLOG_SEVERITY )
 							{
-								if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+//								if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+								if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[ $logArray[SYSLOG_SEVERITY] ] . '" ';
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "lineColouredWhite";
@@ -420,7 +422,8 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							}
 							else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 							{
-								if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
+//								if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
+								if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[ $logArray[SYSLOG_MESSAGETYPE] ] . '" ';
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "lineColouredBlack";
