@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 2.6.3 (v2-stable), 2009-04-29
+- Fixed a bug that caused fields like syslog facily, severity or 
+  messagetype to be shown numeric instead of readable 
+  coloured replacements. 
+- Fixed a bug in the detail page which could cause numeric fields 
+  to be missing. 
+- Added support for debug output in the data cleanup routine of 
+  mysql and pdo logstreams. This will help troubleshooting.
+---------------------------------------------------------------------------
 Version 2.6.2 (v2-stable), 2009-03-24
 - Fixed minor spelling errors in language files (BugID #115)
 - Fixed number of records exported when using the export (BugID #110). 
