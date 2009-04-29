@@ -669,6 +669,11 @@ class LogStreamPDO extends LogStream {
 				// Free query now
 				$myQuery->closeCursor();
 			}
+			else
+			{
+				// error occured, output DEBUG message
+				$this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
+			}
 		}
 
 		//return affected rows
@@ -1182,20 +1187,15 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
-		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
-		{
-			$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
-			$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();
+		$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
+		$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();
 
-			$errormsg ="<font color='red'>Error: " . $szErrorMsg . "</font></H3><br>";
-			$errormsg.="<B>Errordetails:</B><br>";
-			$errormsg.="Detail Error: $errdesc <br>";
-			$errormsg.="Error Code: $errno <br>";
-			$errormsg.="Date: ".date("d.m.Y @ H:i"). "<br>";
-			
-			//Output!
-			OutputDebugMessage("LogStreamPDO|CreateMainSQLQuery: $errormsg", DEBUG_ERROR);
-		}
+		$errormsg="$szErrorMsg <br>";
+		$errormsg.="Detail error: $errdesc <br>";
+		$errormsg.="Error Code: $errno <br>";
+
+		//Output!
+		OutputDebugMessage("LogStreamPDO|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
 	
 	/*

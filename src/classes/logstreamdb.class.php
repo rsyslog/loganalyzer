@@ -657,7 +657,6 @@ class LogStreamDB extends LogStream {
 		// Set default rowcount
 		$rowcount = null;
 
-
 		// Perform if Connection is true!
 		if ( $this->_dbhandle != null ) 
 		{
@@ -677,6 +676,11 @@ class LogStreamDB extends LogStream {
 
 				// Free result not needed here!
 				//mysql_free_result ($myQuery); 
+			}
+			else
+			{
+				// error occured, output DEBUG message
+				$this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
 			}
 		}
 
@@ -1212,21 +1216,15 @@ class LogStreamDB extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
-		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
-		{
-			$errdesc = mysql_error();
-			$errno = mysql_errno();
+		$errdesc = mysql_error();
+		$errno = mysql_errno();
 
-			$errormsg="Database error: $szErrorMsg <br>";
-			$errormsg.="mysql error: $errdesc <br>";
-			$errormsg.="mysql error number: $errno <br>";
-			$errormsg.="Date: ".date("d.m.Y @ H:i"). "<br>";
-			$errormsg.="Script: ".getenv("REQUEST_URI"). "<br>";
-			$errormsg.="Referer: ".getenv("HTTP_REFERER"). "<br>";
-			
-			//Output!
-			OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: $errormsg", DEBUG_ERROR);
-		}
+		$errormsg="$szErrorMsg <br>";
+		$errormsg.="Detail error: $errdesc <br>";
+		$errormsg.="Error Code: $errno <br>";
+		
+		//Output!
+		OutputDebugMessage("LogStreamDB|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
 	
 	/*
