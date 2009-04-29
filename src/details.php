@@ -185,7 +185,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			$counter = 0;
 			foreach($content['fields'] as $mycolkey => $myfield)
 			{
-				if ( isset($logArray[$mycolkey]) && ( is_array($logArray[$mycolkey]) || (is_string($logArray[$mycolkey]) && strlen($logArray[$mycolkey]) > 0)) )
+				if ( isset($logArray[$mycolkey]) && ( is_array($logArray[$mycolkey]) || (is_string($logArray[$mycolkey]) && strlen($logArray[$mycolkey]) > 0)) || (is_numeric($logArray[$mycolkey])) )
 				{
 					$content['fields'][$mycolkey]['fieldenabled'] = true;
 
@@ -220,7 +220,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						// Special style classes and colours for SYSLOG_FACILITY
 						if ( $mycolkey == SYSLOG_FACILITY )
 						{
-							if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+//							if ( isset($logArray[$mycolkey][SYSLOG_FACILITY]) && strlen($logArray[$mycolkey][SYSLOG_FACILITY]) > 0)
+							if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 							{
 								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $facility_colors[ $logArray[SYSLOG_FACILITY] ] . '" ';
 								$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
@@ -236,7 +237,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						}
 						else if ( $mycolkey == SYSLOG_SEVERITY )
 						{
-							if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+//							if ( isset($logArray[$mycolkey][SYSLOG_SEVERITY]) && strlen($logArray[$mycolkey][SYSLOG_SEVERITY]) > 0)
+							if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 							{
 								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $severity_colors[ $logArray[SYSLOG_SEVERITY] ] . '" ';
 								$content['fields'][$mycolkey]['cssclass'] = "lineColouredWhite";
@@ -252,7 +254,8 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						}
 						else if ( $mycolkey == SYSLOG_MESSAGETYPE )
 						{
-							if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
+//							if ( isset($logArray[$mycolkey][SYSLOG_MESSAGETYPE]) )
+							if ( isset($logArray[$mycolkey]) && is_numeric($logArray[$mycolkey]) )
 							{
 								$content['fields'][$mycolkey]['fieldbgcolor'] = 'bgcolor="' . $msgtype_colors[ $logArray[SYSLOG_MESSAGETYPE] ] . '" ';
 								$content['fields'][$mycolkey]['cssclass'] = "lineColouredBlack";
