@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 2.7.1 (beta), 2009-05-06
+- Merged bugfixes from 2.6.3 stable into beta branch 
+---------------------------------------------------------------------------
 Version 2.6.3 (v2-stable), 2009-04-29
 - Fixed a bug that caused fields like syslog facily, severity or 
   messagetype to be shown numeric instead of readable 
