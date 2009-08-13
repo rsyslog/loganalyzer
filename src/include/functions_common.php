@@ -515,7 +515,8 @@ function CheckAndSetRunMode()
 	$content['MaxExecutionTime'] = ini_get("max_execution_time");
 
 	// Define and Inits Syslog variables now!
-	define_syslog_variables();
+	// DEPRECIATED! define_syslog_variables();
+	// Syslog Constants are defined by default anyway!
 	openlog("phpLogCon", LOG_PID, LOG_USER);
 	
 	// --- Check necessary PHP Extensions!
