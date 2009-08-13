@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.6.3";
+$content['BUILDNUMBER'] = "2.6.4";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
@@ -497,7 +497,8 @@ function CheckAndSetRunMode()
 	$content['MaxExecutionTime'] = ini_get("max_execution_time");
 
 	// Define and Inits Syslog variables now!
-	define_syslog_variables();
+	// DEPRECIATED! define_syslog_variables();
+	// Syslog Constants are defined by default anyway!
 	openlog("phpLogCon", LOG_PID, LOG_USER);
 	
 	// --- Check necessary PHP Extensions!
