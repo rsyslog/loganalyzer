@@ -391,7 +391,8 @@ else if ( $content['INSTALL_STEP'] == 5 )
 		$totaldbdefs = str_replace( "`logcon_", "`" . $_SESSION["UserDBPref"], $totaldbdefs );
 		
 		// Now split by sql command
-		$mycommands = split( ";\n", $totaldbdefs );
+//		$mycommands = split( ";\n", $totaldbdefs ); DEPRECEATED CALL!
+		$mycommands = preg_split('/;\n/', $totaldbdefs, -1, PREG_SPLIT_NO_EMPTY);
 		
 //		// check for different linefeed
 //		if ( count($mycommands) <= 1 )
