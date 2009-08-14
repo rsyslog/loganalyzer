@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 2.6.4 (v2-stable), 2009-08-14
+- Removed unneeded call for define_syslog_variables, which is 
+  depreceated in php 5.3 and will be removed in php6
+- Replaced SPLIT call in install.php with preg_split because SPLIT 
+  is a depreceated function and will proberly be removed in php6
+- Updated jpgraph classes to version 3.0.2 which also removes some
+  issues with depreaced functions in php 5.3 
+---------------------------------------------------------------------------
 Version 2.7.1 (beta), 2009-05-06
 - Merged bugfixes from 2.6.3 stable into beta branch 
 ---------------------------------------------------------------------------
