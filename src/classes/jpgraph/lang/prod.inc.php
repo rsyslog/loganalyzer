@@ -1,10 +1,10 @@
 <?php
 /*=======================================================================
 // File: 	PROD.INC.PHP
-// Description: Special localization file with the same error messages 
+// Description: Special localization file with the same error messages
 //              for all errors.
 // Created: 	2006-02-18
-// Ver:		$Id: prod.inc.php 993 2008-03-30 21:17:41Z ljp $
+// Ver:		$Id: prod.inc.php 1709 2009-07-30 08:00:08Z ljp $
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -19,7 +19,7 @@ $_jpg_messages = array(
 /*
 ** Headers already sent error. This is formatted as HTML different since this will be sent back directly as text
 */
-10  => array('<table border=1><tr><td><font color=darkred size=4><b>JpGraph Error:</b> 
+10  => array('<table border=1><tr><td><font color=darkred size=4><b>JpGraph Error:</b>
 HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at line <b>%d</b>.</font></td></tr><tr><td><b>Explanation:</b><br>HTTP headers have already been sent back to the browser indicating the data as text before the library got a chance to send it\'s image HTTP header to this browser. This makes it impossible for the library to send back image data to the browser (since that would be interpretated as text by the browser and show up as junk text).<p>Most likely you have some text in your script before the call to <i>Graph::Stroke()</i>. If this texts gets sent back to the browser the browser will assume that all data is plain text. Look for any text, even spaces and newlines, that might have been sent back to the browser. <p>For example it is a common mistake to leave a blank line before the opening "<b>&lt;?php</b>".</td></tr></table>',2),
 
 
@@ -275,6 +275,8 @@ HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at 
 25127 => array(DEFAULT_ERROR_MESSAGE.'25127',0),
 25128 => array(DEFAULT_ERROR_MESSAGE.'25128',0),
 25129 => array(DEFAULT_ERROR_MESSAGE.'25129',0),
+25130 => array(DEFAULT_ERROR_MESSAGE.'25130',0),
+25500 => array(DEFAULT_ERROR_MESSAGE.'25500',0),
 24003 => array(DEFAULT_ERROR_MESSAGE.'24003',0),
 24004 => array(DEFAULT_ERROR_MESSAGE.'24004',0),
 24005 => array(DEFAULT_ERROR_MESSAGE.'24005',0),
@@ -320,6 +322,7 @@ HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at 
 1009 => array(DEFAULT_ERROR_MESSAGE.'1009',0),
 1010 => array(DEFAULT_ERROR_MESSAGE.'1010',0),
 1011 => array(DEFAULT_ERROR_MESSAGE.'1011',0),
+26000 => array(DEFAULT_ERROR_MESSAGE.'26000',0),
 26001 => array(DEFAULT_ERROR_MESSAGE.'26001',0),
 26002 => array(DEFAULT_ERROR_MESSAGE.'26002',0),
 26003 => array(DEFAULT_ERROR_MESSAGE.'26003',0),
@@ -352,6 +355,23 @@ HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at 
 27013 => array(DEFAULT_ERROR_MESSAGE.'27013',0),
 27014 => array(DEFAULT_ERROR_MESSAGE.'27014',0),
 27015 => array(DEFAULT_ERROR_MESSAGE.'27015',0),
+
+28001 => array(DEFAULT_ERROR_MESSAGE.'28001',0),
+28002 => array(DEFAULT_ERROR_MESSAGE.'28002',0),
+28003 => array(DEFAULT_ERROR_MESSAGE.'28003',0),
+28004 => array(DEFAULT_ERROR_MESSAGE.'28004',0),
+28005 => array(DEFAULT_ERROR_MESSAGE.'28005',0),
+28006 => array(DEFAULT_ERROR_MESSAGE.'28006',0),
+28007 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+
+29201 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29202 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29203 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29204 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29205 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29206 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+29207 => array(DEFAULT_ERROR_MESSAGE.'28007',0),
+
 );
 
 ?>
