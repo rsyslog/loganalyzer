@@ -82,6 +82,11 @@ define('ALIGN_CENTER', 'center');
 define('ALIGN_LEFT', 'left');
 define('ALIGN_RIGHT', 'right');
 
+// Defines for Report output types
+define('REPORT_OUTPUT_HTML', 'html');
+define('REPORT_OUTPUT_PDF', 'pdf');
+
+
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;
 $fields[SYSLOG_UID]['FieldDefine'] = 'SYSLOG_UID';
