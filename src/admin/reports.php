@@ -5,7 +5,7 @@
 	* -----------------------------------------------------------------
 	* Search Admin File											
 	*																	
-	* -> Helps administrating message parsers
+	* -> Helps administrating report modules 
 	*																	
 	* All directives are explained within this file
 	*
@@ -69,23 +69,24 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
-			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
+			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
-				$myParser = $content['PARSERS'][ $content['ParserID'] ];
+				$myReport = $content['REPORTS'][ $content['ReportID'] ];
 
-				$content['DisplayName'] = $myParser['DisplayName'];
-				$content['Description'] = $myParser['Description'];
+				$content['DisplayName'] = $myReport['DisplayName'];
+				$content['Description'] = $myReport['Description'];
 				
-				if ( strlen($myParser['ParserHelpArticle']) > 0 ) 
+				if ( strlen($myReport['ReportHelpArticle']) > 0 ) 
 				{
 					$content['EnableHelpArticle'] = true;
-					$content['ParserHelpArticle'] = $myParser['ParserHelpArticle'];
+					$content['ReportHelpArticle'] = $myReport['ReportHelpArticle'];
 				}
 				
+				/*
 				// check for custom fields
-				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
+				if ( isset($myReport['CustomFieldsList']) && count($myReport['CustomFieldsList']) > 0 ) 
 				{
 					// Needs custom fields!
 					$content['EnableCustomField'] = true;
@@ -106,13 +107,14 @@ if ( isset($_GET['op']) )
 						}
 					}
 				}
+				*/
 
 			}
 			else
 			{
 				$content['ISSHOWDETAILS'] = false;
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_IDNOTFOUND'], $content['ParserID'] );
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
 			}
 		}
 		else
@@ -246,20 +248,21 @@ if ( isset($_GET['op']) )
 // Default mode!
 if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
-	if ( isset($content['PARSERS']) ) 
+	if ( isset($content['REPORTS']) ) 
 	{
 		// Default Mode = List Searches
-		$content['LISTPARSERS'] = "true";
+		$content['LISTREPORTS'] = "true";
 
 		$i = 0; // Help counter!
-		foreach ($content['PARSERS'] as &$myParser )
+		foreach ($content['REPORTS'] as &$myReport )
 		{
 			// Set if help link is enabled
-			if ( strlen($myParser['ParserHelpArticle']) > 0 ) 
-				$myParser['ParserHelpEnabled'] = true;
+			if ( strlen($myReport['ReportHelpArticle']) > 0 ) 
+				$myReport['ReportHelpEnabled'] = true;
 			else
-				$myParser['ParserHelpEnabled'] = false;
+				$myReport['ReportHelpEnabled'] = false;
 			
+			/*
 			// Find out if we need to INIT something!
 			if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
 			{
@@ -278,28 +281,29 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 					}
 				}
 			}
+			*/
 
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
-				$myParser['cssclass'] = "line1";
+				$myReport['cssclass'] = "line1";
 			else
-				$myParser['cssclass'] = "line2";
+				$myReport['cssclass'] = "line2";
 			$i++;
 			// --- 
 		}
 	}
 	else
 	{
-		$content['LISTPARSERS'] = "false";
+		$content['LISTREPORTS'] = "false";
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = $content['LN_PARSERS_ERROR_NOPARSERS']; 
+		$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_NOREPORTS']; 
 	}
 }
 // --- END Custom Code
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
-$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_MSGPARSERSOPT'];
+$content['TITLE'] .= " :: " . $content['LN_ADMINMENU_REEPORTSOPT'];
 // --- END CREATE TITLE
 
 // --- Parsen and Output

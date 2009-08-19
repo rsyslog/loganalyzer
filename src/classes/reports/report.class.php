@@ -49,7 +49,8 @@ abstract class Report {
 	public $_reportVersion = 1;						// Internally Version of the ReportEngine
 	public $_reportID = "report.syslog.base.class";	// ID for the report, needs to be unique!
 	public $_reportTitle = "Base Report Class";		// Display name for the report
-	public $_reportDescription = "This is the base class for all reports"
+	public $_reportDescription = "This is the base class for all reports";
+	public $_reportHelpArticle = "http://";
 
 	// Configuration Properties
 	protected $_filterString = "";

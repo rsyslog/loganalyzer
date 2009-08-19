@@ -385,4 +385,26 @@ $content['LN_CMD_DELETINGOLDERTHEN'] = "Performing deletion of data entries olde
 $content['LN_CMD_DELETEDROWS'] = "Successfully Deleted '%1' rows in the logstream source.'";
 $content['LN_CMD_'] = "";
 
+// Report Options
+$content['LN_REPORTS_EDIT'] = "Edit Report";
+$content['LN_REPORTS_DELETE'] = "Remove Report";
+$content['LN_REPORTS_ID'] = "Report ID";
+$content['LN_REPORTS_NAME'] = "Report Name";
+$content['LN_REPORTS_DESCRIPTION'] = "Report Description";
+$content['LN_REPORTS_ERROR_NOREPORTS'] = "There were no valid reports found in your installation.";
+$content['LN_REPORTS_HELP'] = "Help";
+$content['LN_REPORTS_HELP_CLICK'] = "Click here for more help";
+$content['LN_REPORTS_INFO'] = "Show more Information for this report module.";
+$content['LN_REPORTS_INIT'] = "Initialize settings for this report module.";
+$content['LN_REPORTS_REMOVE'] = "Remove settings for this report module.";
+$content['LN_REPORTS_ERROR_IDNOTFOUND'] = "There was no report with ID '%1' found.";
+$content['LN_REPORTS_ERROR_INVALIDID'] = "Invalid report id.";
+$content['LN_REPORTS_DETAILS'] = "Details for this report";
+$content['LN_REPORTS_WARNREMOVE'] = "You are about to remove the custom settings needed by the '%1' report. However you can add these settings again if you change your mind.";
+$content['LN_REPORTS_ERROR_HASBEENREMOVED'] = "All settings for the report '%1' have been removed.";
+$content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the report '%1' have been added.";
+$content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
+$content['LN_REPORTS_'] = "";
+
+
 ?>
