@@ -1202,6 +1202,9 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 	// Check if we should print the Error!
 	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
 	{
+		// Also enable the template helper variable here!
+		$content['SHOWDEBUGMSG'] = true;
+
 		$content['DEBUGMSG'][] = array( 
 			"DBGLEVEL" => $szDbgLevel, 
 			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
