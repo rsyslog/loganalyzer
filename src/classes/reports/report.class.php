@@ -47,7 +47,7 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 abstract class Report {
 	// Common Properties
 	public $_reportVersion = 1;						// Internally Version of the ReportEngine
-	public $_reportID = "report.adiscon.base.class";// ID for the report, needs to be unique!
+	public $_reportID = "report.syslog.base.class";	// ID for the report, needs to be unique!
 	public $_reportTitle = "Base Report Class";		// Display name for the report
 	public $_reportDescription = "This is the base class for all reports"
 

@@ -39,6 +39,7 @@ $content['LN_ADMINMENU_CHARTOPT'] = "Charts";
 $content['LN_ADMINMENU_FIELDOPT'] = "Fields";
 $content['LN_ADMINMENU_DBMAPPINGOPT'] = "DBMappings";
 $content['LN_ADMINMENU_MSGPARSERSOPT'] = "Message Parsers";
+$content['LN_ADMINMENU_REEPORTSOPT'] = "Report Modules";
 $content['LN_ADMIN_CENTER'] = "Admin center";
 $content['LN_ADMIN_UNKNOWNSTATE'] = "Unknown State";
 $content['LN_ADMIN_ERROR_NOTALLOWED'] = "You are not allowed to access this page with your user level.";

@@ -233,7 +233,7 @@ function InitMessageParsers()
 				if ( file_exists($szIncludeFile) )
 				{
 					// Try to include
-					if ( @include_once($szIncludeFile) )
+					if ( @include_once($szIncludeFile) !== false )
 					{
 						// Set ParserClassName
 						$szParserClass = "MsgParser_" . $myParserID; 
@@ -272,7 +272,87 @@ function InitMessageParsers()
 					else
 					{
 						// DEBUG ERROR
+						OutputDebugMessage("FATAL Error in InitMessageParsers while including report file '" . $szIncludeFile . "' with error: '" . $php_errormsg . "'", DEBUG_ERROR);
 					}
+				}
+				else
+				{
+					// DEBUG ERROR
+				}
+			}
+		}
+	}
+}
+
+/*
+*	This function generates a list of available reports modules and custom reports
+*/
+function InitReportModules()
+{
+	global $content, $gl_root_path;
+
+	$szDirectory = $gl_root_path . 'classes/reports/'; 
+	$aFiles = list_files($szDirectory, true); 
+	if ( isset($aFiles) && count($aFiles) > 0 )
+	{
+		foreach( $aFiles as $myFile ) 
+		{
+			// Check if file is valid msg parser!
+			if ( preg_match("/report\.(.*?)\.(.*?)\.class\.php$/", $myFile, $out ) )
+			{
+				// Set ParserID!
+				$myReportCat = $out[1]; 
+				$myReportID = $out[2]; 
+
+
+				// Check if parser file include exists
+				$szIncludeFile = $szDirectory . $myFile; 
+				if ( file_exists($szIncludeFile) )
+				{
+					// Try to include
+					if ( @include_once($szIncludeFile) !== false )
+					{
+						// Set ParserClassName
+						$szReportClass = "Report_" . $myReportID; 
+						echo $szReportClass . "!<br>";
+						exit;
+						
+						// Create Instance and get properties
+						$tmpParser = new $szParserClass(); // Create an instance
+						$szParserName = $tmpParser->_ClassName; 
+						$szParserDescription = $tmpParser->_ClassDescription;
+						$szParserHelpArticle = $tmpParser->_ClassHelpArticle;
+						
+
+						// check for required fields!
+						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
+						{
+							$bCustomFields = true;
+							$aCustomFieldList = $tmpParser->_ClassRequiredFields; 
+//							print_r ( $aCustomFieldList );
+						}
+						else
+						{
+							$bCustomFields = false;
+							$aCustomFieldList = null;
+						}
+
+						// Add entry to msg parser list!
+						$content['PARSERS'][$myParserID] = array (
+														"ID" => $myParserID, 
+														"DisplayName" => $szParserName, 
+														"Description" => $szParserDescription, 
+														"CustomFields" => $bCustomFields, 
+														"CustomFieldsList" => $aCustomFieldList, 
+														"ParserHelpArticle" => $szParserHelpArticle, 
+														);
+					}
+					else
+					{
+						// DEBUG ERROR
+						OutputDebugMessage("FATAL Error in InitReportModules while including report file '" . $szIncludeFile . "' with error: '" . $php_errormsg . "'", DEBUG_ERROR);
+					}
+
 				}
 				else
 				{

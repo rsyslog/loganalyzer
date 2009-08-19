@@ -45,10 +45,10 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'include/constants_errors.php');
 // --- 
 
-class ReportMonilog extends Report {
+class Report_monilog extends Report {
 	// Common Properties
 	public $_reportVersion = 1;								// Internally Version of the ReportEngine
-	public $_reportID = "report.adiscon.monilog.class";		// ID for the report, needs to be unique!
+	public $_reportID = "report.eventlog.monilog.class";	// ID for the report, needs to be unique!
 	public $_reportTitle = "EventLog Summary Report";		// Display name for the report
 	public $_reportDescription = "This is a EventLog Summary Report based on Monilog"
 
@@ -65,7 +65,7 @@ class ReportMonilog extends Report {
 */
 
 	// Constructor
-	public function ReportMonilog() {
+	public function Report_monilog() {
 //		$this->_logStreamConfigObj = $streamConfigObj;
 		
 
