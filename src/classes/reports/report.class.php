@@ -51,6 +51,8 @@ abstract class Report {
 	public $_reportTitle = "Base Report Class";		// Display name for the report
 	public $_reportDescription = "This is the base class for all reports";
 	public $_reportHelpArticle = "http://";
+	public $_reportNeedsInit = false;				// True means that this report needs additional init stuff
+	public $_reportInitialized = false;				// True means report is installed
 
 	// Configuration Properties
 	protected $_filterString = "";
@@ -91,6 +93,19 @@ abstract class Report {
 	* Will return -1 on failure!
 	*/
 	public abstract function verifyDataSource();
+
+
+	/**
+	* This function inits data for the report
+	*/
+	public abstract function InitReport();
+
+
+	/**
+	* This function removes data for the report
+	*/
+	public abstract function RemoveReport();
+
 
 	/**
 	*	Helper function using the template parser to create the report

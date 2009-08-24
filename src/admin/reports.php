@@ -84,30 +84,23 @@ if ( isset($_GET['op']) )
 					$content['ReportHelpArticle'] = $myReport['ReportHelpArticle'];
 				}
 				
-				/*
 				// check for custom fields
-				if ( isset($myReport['CustomFieldsList']) && count($myReport['CustomFieldsList']) > 0 ) 
+				if ( $myReport['NeedsInit'] ) // && count($myReport['CustomFieldsList']) > 0 ) 
 				{
 					// Needs custom fields!
-					$content['EnableCustomField'] = true;
-					$content['CustomFieldsList'] = $myParser['CustomFieldsList'];
+					$content['EnableNeedsInit'] = true;
 
-					foreach( $myParser['CustomFieldsList'] as $myField ) 
+					if ( $myReport['Initialized'] ) 
 					{
-						// check if field is in define list!
-						if ( !array_key_exists($myField['FieldID'], $fields) ) 
-						{
-							$content['ParserInitEnabled'] = true;
-							break;
-						}
-						else
-						{
-							$content['ParserDeleteEnabled'] = true;
-							break;
-						}
+						$content['InitEnabled'] = false;
+						$content['DeleteEnabled'] = true;
+					}
+					else
+					{
+						$content['InitEnabled'] = true;
+						$content['DeleteEnabled'] = false;
 					}
 				}
-				*/
 
 			}
 			else
@@ -261,27 +254,24 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$myReport['ReportHelpEnabled'] = true;
 			else
 				$myReport['ReportHelpEnabled'] = false;
-			
-			/*
-			// Find out if we need to INIT something!
-			if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
+
+			// check for custom fields
+			if ( $myReport['NeedsInit'] ) // && count($myReport['CustomFieldsList']) > 0 ) 
 			{
-				foreach( $myParser['CustomFieldsList'] as $myField ) 
+				// Needs custom fields!
+				$myReport['EnableNeedsInit'] = true;
+
+				if ( $myReport['Initialized'] ) 
 				{
-					// check if field is in define list!
-					if ( !array_key_exists($myField['FieldID'], $fields) ) 
-					{
-						$myParser['ParserInitEnabled'] = true;
-						break;
-					}
-					else
-					{
-						$myParser['ParserDeleteEnabled'] = true;
-						break;
-					}
+					$myReport['InitEnabled'] = false;
+					$myReport['DeleteEnabled'] = true;
+				}
+				else
+				{
+					$myReport['InitEnabled'] = true;
+					$myReport['DeleteEnabled'] = false;
 				}
 			}
-			*/
 
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )

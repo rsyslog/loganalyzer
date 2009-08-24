@@ -321,6 +321,10 @@ function InitReportModules()
 						$szReportDescription = $tmpReport->_reportDescription;
 						$szReportVersion= $tmpReport->_reportVersion;
 						$szReportHelpArticle = $tmpReport->_reportHelpArticle;
+						$bNeedsInit = $tmpReport->_reportNeedsInit;
+						$bInitialized = $tmpReport->_reportInitialized;
+						
+						
 
 /*
 						// check for required fields!
@@ -344,6 +348,8 @@ function InitReportModules()
 														"Description" => $szReportDescription, 
 														"ReportVersion" => $szReportVersion, 
 														"ReportHelpArticle" => $szReportHelpArticle, 
+														"NeedsInit" => $bNeedsInit, 
+														"Initialized" => $bInitialized, 
 //														"CustomFields" => $bCustomFields, 
 //														"CustomFieldsList" => $aCustomFieldList, 
 														);

@@ -52,6 +52,8 @@ class Report_monilog extends Report {
 	public $_reportTitle = "EventLog Summary Report";		// Display name for the report
 	public $_reportDescription = "This is a EventLog Summary Report based on Monilog";
 	public $_reportHelpArticle = "";
+	public $_reportNeedsInit = true;						// True means that this report needs additional init stuff
+	public $_reportInitialized = false;						// True means report is installed
 
 /*	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
@@ -135,6 +137,27 @@ class Report_monilog extends Report {
 		return SUCCESS;
 	}
 	
+
+	/**
+	* InitReport, empty
+	*
+	*/
+	public function InitReport()
+	{
+		// Nothing todo
+		return SUCCESS;
+	}
+
+
+	/**
+	* RemoveReport, empty
+	*
+	*/
+	public function RemoveReport()
+	{
+		// Nothing todo
+		return SUCCESS;
+	}
 
 
 	/**
