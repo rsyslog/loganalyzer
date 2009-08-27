@@ -358,7 +358,7 @@ function InitReportModules()
 						{
 							// --- Create SQL Query
 							$sqlquery = " SELECT " . 
-										DB_SAVEDREPORTS . ".ID, " . 
+										DB_SAVEDREPORTS . ".ID as SavedReportID, " . 
 										DB_SAVEDREPORTS . ".sourceid, " . 
 										DB_SAVEDREPORTS . ".customTitle, " . 
 										DB_SAVEDREPORTS . ".customComment, " . 
@@ -376,13 +376,16 @@ function InitReportModules()
 							$myrows = DB_GetAllRows($result, true);
 							if ( isset($myrows) && count($myrows) > 0 )
 							{
+								// Set to true!
+								$content['REPORTS'][$myReportID]['HASSAVEDREPORTS'] = true;
+
 								// Add all savedreports
 								foreach ($myrows as &$mySavedReport)
 								{
 									// TODO: Perform whatever needs to be performed 
 
 									// Add saved report into global array
-									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['ID'] ] = $mySavedReport; 
+									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['SavedReportID'] ] = $mySavedReport; 
 								}
 							}
 

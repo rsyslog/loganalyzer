@@ -35,6 +35,8 @@
 			<td align="left" class="{cssclass}" valign="top"><a href="{BASEPATH}admin/reports.php?op=details&id={ID}">{DisplayName}</a></td>
 			<td align="left" class="{cssclass}" valign="top">{Description}</td>
 			<td align="center" class="{cssclass}">
+				<a href="{BASEPATH}admin/reports.php?op=addsavedreport&id={ID}"><img src="{MENU_ADD}" width="16" title="{LN_REPORTS_ADDSAVEDREPORT}"></a>&nbsp;
+
 				<!-- IF ReportHelpEnabled="true" -->
 				<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
 				<!-- ENDIF ReportHelpEnabled="true" -->
@@ -49,6 +51,20 @@
 				<!-- ENDIF EnableNeedsInit="true" -->
 			</td>
 		</tr>
+		<!-- IF GROUPMEMBERS="true" -->
+		<tr>
+			<td align="center" colspan="2" class="cellmenu2_naked">{LN_REPORTS_SAVEDREPORTS}</td>
+			<td align="left" colspan="2" class="line0">
+		<!-- BEGIN SAVEDREPORTS -->
+
+			<img src="{MENU_REPORTS}" width="16">
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={SavedReportID}">{customTitle}</a>
+
+		<!-- END SAVEDREPORTS -->
+			</td>
+		</tr>
+		<!-- ENDIF GROUPMEMBERS="true" -->
+
 		<!-- END REPORTS -->
 		</table>
 <!-- ENDIF LISTREPORTS="true" -->

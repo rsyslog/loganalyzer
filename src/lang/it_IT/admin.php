@@ -405,6 +405,7 @@ $content['LN_REPORTS_ERROR_HASBEENREMOVED'] = "All settings for the report '%1' 
 $content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the report '%1' have been added.";
 $content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
 $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'] = "The report '%1' does not need to be removed or initialized.";
+$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport";
 $content['LN_REPORTS_'] = "";
 
 ?>
