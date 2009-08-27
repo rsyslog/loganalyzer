@@ -27,7 +27,7 @@
 			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
 			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
-			<td align="center" width="125" class="cellmenu1" colspan="3" nowrap><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN REPORTS -->
 		<tr>
@@ -36,13 +36,9 @@
 			<td align="left" class="{cssclass}" valign="top">{Description}</td>
 			<td align="center" class="{cssclass}">
 				<!-- IF ReportHelpEnabled="true" -->
-				<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>
+				<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
 				<!-- ENDIF ReportHelpEnabled="true" -->
-			</td>
-			<td align="center" class="{cssclass}">
 				<a href="{BASEPATH}admin/reports.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_REPORTS_INFO}"></a>
-			</td>
-			<td align="center" class="{cssclass}">
 				<!-- IF EnableNeedsInit="true" -->
 					<!-- IF InitEnabled="true" -->
 					&nbsp;<a href="{BASEPATH}admin/reports.php?op=initreport&id={ID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_REPORTS_INIT}"></a>

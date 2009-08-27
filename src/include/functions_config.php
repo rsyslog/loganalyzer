@@ -324,8 +324,6 @@ function InitReportModules()
 						$bNeedsInit = $tmpReport->_reportNeedsInit;
 						$bInitialized = $tmpReport->_reportInitialized;
 						
-						
-
 /*
 						// check for required fields!
 						if ( $tmpReport->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
@@ -350,11 +348,46 @@ function InitReportModules()
 														"ReportHelpArticle" => $szReportHelpArticle, 
 														"NeedsInit" => $bNeedsInit, 
 														"Initialized" => $bInitialized, 
+														"ObjRef" => $tmpReport, 
 //														"CustomFields" => $bCustomFields, 
 //														"CustomFieldsList" => $aCustomFieldList, 
 														);
 
+						// --- Now Search and populate savedReports | but only if DB Version is 9 or higher.
+						if ( $content['database_installedversion'] >= 9 )
+						{
+							// --- Create SQL Query
+							$sqlquery = " SELECT " . 
+										DB_SAVEDREPORTS . ".ID, " . 
+										DB_SAVEDREPORTS . ".sourceid, " . 
+										DB_SAVEDREPORTS . ".customTitle, " . 
+										DB_SAVEDREPORTS . ".customComment, " . 
+										DB_SAVEDREPORTS . ".filterString, " . 
+										DB_SAVEDREPORTS . ".customFilters, " . 
+										DB_SAVEDREPORTS . ".outputFormat, " . 
+										DB_SAVEDREPORTS . ".outputTarget, " . 
+										DB_SAVEDREPORTS . ".scheduleSettings " . 
+										" FROM " . DB_SAVEDREPORTS . 
+										" WHERE " . DB_SAVEDREPORTS . ".reportid = '" . $myReportID . "' " .  
+										" ORDER BY " . DB_SAVEDREPORTS . ".customTitle";
 
+							// Get Views from DB now!
+							$result = DB_Query($sqlquery);
+							$myrows = DB_GetAllRows($result, true);
+							if ( isset($myrows) && count($myrows) > 0 )
+							{
+								// Add all savedreports
+								foreach ($myrows as &$mySavedReport)
+								{
+									// TODO: Perform whatever needs to be performed 
+
+									// Add saved report into global array
+									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['ID'] ] = $mySavedReport; 
+								}
+							}
+
+						}
+						// ---
 					}
 					else
 					{
@@ -524,6 +557,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 		define('DB_VIEWS',			$tblPref . "views");
 		define('DB_CHARTS',			$tblPref . "charts");
 		define('DB_MAPPINGS',		$tblPref . "dbmappings");
+		define('DB_SAVEDREPORTS',	$tblPref . "savedreports");
 
 		// Legacy support for old columns definition format!
 		if ( isset($CFG['Columns']) && is_array($CFG['Columns']) )

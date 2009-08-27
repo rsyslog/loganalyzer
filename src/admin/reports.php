@@ -63,8 +63,6 @@ if ( isset($_GET['op']) )
 	{
 		// Set Mode to edit
 		$content['ISSHOWDETAILS'] = "true";
-//		$content['SEARCH_FORMACTION'] = "editsearch";
-//		$content['SEARCH_SENDBUTTON'] = $content['LN_SEARCH_EDIT'];
 
 		if ( isset($_GET['id']) )
 		{
@@ -114,29 +112,37 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISSHOWDETAILS'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] =  $content['LN_PARSERS_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] =  $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "removeparser") 
+	else if ($_GET['op'] == "removereport") 
 	{
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
-			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
+			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
-				$myParser = $content['PARSERS'][ $content['ParserID'] ];
+				$myReport = $content['REPORTS'][ $content['ReportID'] ];
+
+				if ( !$myReport["NeedsInit"] ) 
+				{
+					// Do the final redirect
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'], $myReport['DisplayName'] ) , "reports.php" );
+				}
 
 				// --- Ask for deletion first!
 				if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
 				{
 					// This will print an additional secure check which the user needs to confirm and exit the script execution.
-					PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_PARSERS_WARNREMOVE'], $myParser['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+					PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_REPORTS_WARNREMOVE'], $myReport['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
 				}
 				// ---
 
-				// Check if we have fields to delete
+				// TODO WHATEVER
+
+/*				// Check if we have fields to delete
 				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
 				{
 					// Helper counter
@@ -164,25 +170,30 @@ if ( isset($_GET['op']) )
 					$content['ISERROR'] = true;
 					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_NOFIELDS'], $content['ParserID'] );
 				}
+				*/
+
 			}
 		}
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_PARSERS_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "initparser") 
+	else if ($_GET['op'] == "initreport") 
 	{
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
-			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
+			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
-				$myParser = $content['PARSERS'][ $content['ParserID'] ];
+				$myParser = $content['REPORTS'][ $content['ReportID'] ];
 
+				// TODO WHATEVER
+				
+				/*
 				// check for custom fields
 				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
 				{
@@ -223,17 +234,18 @@ if ( isset($_GET['op']) )
 					$content['ISERROR'] = true;
 					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_NOFIELDS'], $content['ParserID'] );
 				}
+				*/
 			}
 			else
 			{
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_PARSERS_ERROR_IDNOTFOUND'], $content['ParserID'] );
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
 			}
 		}
 		else
 		{
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = $content['LN_PARSERS_ERROR_INVALIDID'];
+			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
 }
