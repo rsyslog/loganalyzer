@@ -102,6 +102,8 @@ $content['LN_ERROR_NORECORDS'] = "Sem mensagens encontradas.";
 	$content['LN_WARNING_DBUPGRADE'] = "Database Upgrade required";
 	$content['LN_WARNING_DBUPGRADE_TEXT'] = "The current installed database version is '%1'.<br>An update to version '%2' is available.";
 	$content['LN_ERROR_REDIRECTABORTED'] = 'Automatic redirect to the <a href="%1">page</a> was aborted, as an internal error occured. Please see the error details above and contact our support forums if you need assistance.';
+	$content['LN_GEN_REPORT_OUTPUT_HTML'] = "HTML Format";
+	$content['LN_GEN_REPORT_OUTPUT_PDF'] = "PDF Format";
 
 // Topmenu Entries
 	$content['LN_MENU_SEARCH'] = "Search";

@@ -397,6 +397,21 @@ function CreateDBTypesList( $selectedDBType )
 	if ( $selectedDBType == $content['DBTYPES'][DB_SQLITE]['type'] ) { $content['DBTYPES'][DB_SQLITE]['selected'] = "selected"; } else { $content['DB_ODBC'][DB_SQLITE]['selected'] = ""; }
 }
 
+function CreateOutputformatList( $selectedOutputformat )
+{
+	global $content;
+
+	// REPORT_OUTPUT_HTML
+	$content['OUTPUTFORMATS'][REPORT_OUTPUT_HTML]['formatid'] = REPORT_OUTPUT_HTML;
+	$content['OUTPUTFORMATS'][REPORT_OUTPUT_HTML]['formatdisplayname'] = $content['LN_GEN_REPORT_OUTPUT_HTML'];
+	if ( $selectedOutputformat == $content['OUTPUTFORMATS'][REPORT_OUTPUT_HTML]['formatid'] ) { $content['OUTPUTFORMATS'][REPORT_OUTPUT_HTML]['formatselected'] = "selected"; } else { $content['OUTPUTFORMATS'][REPORT_OUTPUT_HTML]['formatselected'] = ""; }
+
+	// REPORT_OUTPUT_PDF
+	$content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatid'] = REPORT_OUTPUT_PDF;
+	$content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatdisplayname'] = $content['LN_GEN_REPORT_OUTPUT_PDF'];
+	if ( $selectedOutputformat == $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatid'] ) { $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatselected'] = "selected"; } else { $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatselected'] = ""; }
+}
+
 function CreatePagesizesList()
 {
 	global $content;

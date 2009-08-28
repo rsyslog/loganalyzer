@@ -110,6 +110,47 @@
 		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
 <!-- ENDIF ISSHOWDETAILS="true" -->
 
+<!-- IF ISADDSAVEDREPORT="true" -->
+		<form action="{BASEPATH}admin/reports.php" method="post">
+			<input type="hidden" name="id" value="{ReportID}">
+			<input type="hidden" name="op" value="addsavedreport">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<tr>
+				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
+				<td align="right" class="line0" width="100%"><input type="text" name="report_customtitle" size="40" maxlength="255" value="{customTitle}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
+				<td align="right" class="line0" width="100%"><input type="text" name="report_customcomment" size="40" maxlength="255" value="{customComment}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>
+				<td align="right" class="line0" width="100%"><input type="text" name="report_filterString" size="40" maxlength="255" value="{filterString}"></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTFORMAT}</b></td>
+				<td align="right" class="line0" width="100%">
+					<select name="outputFormat" size="1" STYLE="width: 190px">
+						<!-- BEGIN OUTPUTFORMATS -->
+						<option value="{formatid}" {formatselected}>{formatdisplayname}</option>
+						<!-- END OUTPUTFORMATS -->
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="{REPORT_SENDBUTTON}">
+					<input type="hidden" name="op" value="{REPORT_FORMACTION}">
+				</td>
+			</tr>
+			</table>
+		</form>
+<!-- ENDIF ISADDSAVEDREPORT="true" -->
+
 		<br><br>
 
 		</td>

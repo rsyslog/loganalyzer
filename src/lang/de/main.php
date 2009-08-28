@@ -100,6 +100,8 @@ $content['LN_ERROR_NORECORDS'] = "Es wurden keine syslog-Eintr&auml;ge gefunden.
 	$content['LN_ERROR_REDIRECTABORTED'] = 'Automatic redirect to the <a href="%1">page</a> was aborted, as an internal error occured. Please see the error details above and contact our support forums if you need assistance.';
 	$content['LN_DEBUGLEVEL'] = "Debug Level";
 	$content['LN_DEBUGMESSAGE'] = "Debug Message";
+	$content['LN_GEN_REPORT_OUTPUT_HTML'] = "HTML Format";
+	$content['LN_GEN_REPORT_OUTPUT_PDF'] = "PDF Format";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Suchen";

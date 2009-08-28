@@ -406,6 +406,10 @@ $content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the repor
 $content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
 $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'] = "The report '%1' does not need to be removed or initialized.";
 $content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport";
+$content['LN_REPORTS_CUSTOMTITLE'] = "Report Title";
+$content['LN_REPORTS_CUSTOMCOMMENT'] = "Comment / Description";
+$content['LN_REPORTS_FILTERSTRING'] = "Filterstring";
+$content['LN_REPORTS_OUTPUTFORMAT'] = "Outputformat";
 $content['LN_REPORTS_'] = "";
 
 ?>

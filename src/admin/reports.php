@@ -248,6 +248,46 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
+	else if ($_GET['op'] == "addsavedreport") 
+	{
+		// Set Mode to edit
+//		$content['ISSHOWDETAILS'] = "true";
+		$content['ISADDSAVEDREPORT'] = "true";
+		$content['REPORT_FORMACTION'] = "addsavedreport";
+		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
+
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
+			{
+				// Get Reference to parser!
+				$myReport = $content['REPORTS'][ $content['ReportID'] ];
+				
+				// Set Report properties
+				$content['DisplayName'] = $myReport['DisplayName'];
+				$content['Description'] = $myReport['Description'];
+				
+				// Set defaults for report
+				$content['customTitle'] = $myReport['DisplayName'];
+				$content['customComment'] = "";
+				$content['filterString'] = ""; 
+				$content['customFilters'] = ""; 
+				
+				$content['outputFormat'] = REPORT_OUTPUT_HTML; 
+				CreateOutputformatList( $content['outputFormat'] );
+
+				$content['outputTarget'] = ""; 
+				$content['scheduleSettings'] = ""; 
+			}
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
+		}
+	}
 }
 
 // Default mode!
