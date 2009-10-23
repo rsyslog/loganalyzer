@@ -228,7 +228,6 @@ $content['LN_DBMP_MAPPING_EDIT'] = "Edit Mapping";
 $content['LN_DBMP_HASBEENADDED'] = "The Custom Database Mapping '%1' has been successfully added.";
 $content['LN_DBMP_ERROR_NOCOLUMNS'] = "You need to add at least one column in order to add a new Custom Database Mapping.";
 $content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
-$content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
 $content['LN_DBMP_ERROR_MISSINGFIELDNAME'] = "Missing mapping for the '%1' field.";
 
 // Custom Sources center
@@ -405,12 +404,21 @@ $content['LN_REPORTS_ERROR_HASBEENREMOVED'] = "All settings for the report '%1' 
 $content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the report '%1' have been added.";
 $content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
 $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'] = "The report '%1' does not need to be removed or initialized.";
-$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport";
+$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport from Type";
+$content['LN_REPORTS_EDITSAVEDREPORT'] = "Edit Savedreport";
+$content['LN_REPORTS_REMOVESAVEDREPORT'] = "Remove Savedreport";
 $content['LN_REPORTS_CUSTOMTITLE'] = "Report Title";
 $content['LN_REPORTS_CUSTOMCOMMENT'] = "Comment / Description";
 $content['LN_REPORTS_FILTERSTRING'] = "Filterstring";
 $content['LN_REPORTS_OUTPUTFORMAT'] = "Outputformat";
-$content['LN_REPORTS_'] = "";
+$content['LN_REPORTS_HASBEENADDED'] = "The Savedreport '%1' has been successfully added.";
+$content['LN_REPORTS_HASBEENEDIT'] = "The Savedreport '%1' has been successfully edited.";
+$content['LN_REPORTS_SOURCEID'] = "Logstream source";
+$content['LN_REPORTS_ERROR_IDNOTFOUND'] = "There was no savedreport with ID '%1' found.";
+$content['LN_REPORTS_ERROR_INVALIDID'] = "Invalid savedreport id.";
+$content['LN_REPORTS_SAVEDREPORTS'] = "Saved reports";
+$content['LN_REPORTS_RUNNOW'] = "Run saved report now!";
+
 
 $content['LN_REPORTS_'] = "";
 

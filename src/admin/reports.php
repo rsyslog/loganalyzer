@@ -57,6 +57,7 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // Firts of all init List of Parsers!
 InitReportModules();
 
+// Handle GET requests
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "details") 
@@ -141,7 +142,6 @@ if ( isset($_GET['op']) )
 				// ---
 
 				// TODO WHATEVER
-
 /*				// Check if we have fields to delete
 				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
 				{
@@ -192,7 +192,6 @@ if ( isset($_GET['op']) )
 				$myParser = $content['REPORTS'][ $content['ReportID'] ];
 
 				// TODO WHATEVER
-				
 				/*
 				// check for custom fields
 				if ( isset($myParser['CustomFieldsList']) && count($myParser['CustomFieldsList']) > 0 ) 
@@ -274,12 +273,27 @@ if ( isset($_GET['op']) )
 				$content['customComment'] = "";
 				$content['filterString'] = ""; 
 				$content['customFilters'] = ""; 
+
+				// Copy Sources array for further modifications
+				global $currentSourceID;
+				$content['SOURCES'] = $content['Sources'];
+				foreach ($content['SOURCES'] as &$mySource )
+				{
+					$mySource['SourceID'] = $mySource['ID'];
+					if ( $mySource['ID'] == $currentSourceID ) 
+						$mySource['sourceselected'] = "selected";
+					else
+						$mySource['sourceselected'] = "";
+				}
 				
+				// Create Outputlist
 				$content['outputFormat'] = REPORT_OUTPUT_HTML; 
 				CreateOutputformatList( $content['outputFormat'] );
-
-				$content['outputTarget'] = ""; 
-				$content['scheduleSettings'] = ""; 
+				
+				// Other settings ... TODO!
+				$content['customFilters'] = "";
+				$content['outputTarget'] = "";
+				$content['scheduleSettings'] = "";
 			}
 		}
 		else
@@ -287,6 +301,119 @@ if ( isset($_GET['op']) )
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
+	}
+	else if ($_GET['op'] == "editsavedreport") 
+	{
+	}
+	else if ($_GET['op'] == "removesavedreport") 
+	{
+	}
+}
+
+// Handle POST requests
+if ( isset($_POST['op']) )
+{
+	// Get ReportID!
+	if ( isset($_POST['id']) ) { $content['ReportID'] = DB_RemoveBadChars($_POST['id']); } else {$content['ReportID'] = ""; }
+
+	// Only Continue if reportid is valud!
+	if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
+	{
+		// Get Reference to parser!
+		$myReport = $content['REPORTS'][ $content['ReportID'] ];
+
+		// Read parameters
+		if ( isset($_POST['SourceID']) ) { $content['SourceID'] = DB_RemoveBadChars($_POST['SourceID']); }
+		if ( isset($_POST['report_customtitle']) ) { $content['customTitle'] = DB_RemoveBadChars($_POST['report_customtitle']); } else {$content['report_customtitle'] = ""; }
+		if ( isset($_POST['report_customcomment']) ) { $content['customComment'] = DB_RemoveBadChars($_POST['report_customcomment']); } else {$content['report_customcomment'] = ""; }
+		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
+		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
+		
+		// TODO!
+		// customFilters, outputTarget, scheduleSettings
+		$content['customFilters'] = "";
+		$content['outputTarget'] = "";
+		$content['scheduleSettings'] = "";
+
+		// --- Check mandotary values
+		if ( $content['customTitle'] == "" )
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_REPORTS_CUSTOMTITLE'] );
+		}
+		else if ( !isset($content['SourceID']) ) 
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_REPORTS_SOURCEID'] );
+		}
+		else if ( !isset($content['outputFormat']) ) 
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_REPORTS_OUTPUTFORMAT'] );
+		}
+		// --- 
+
+		// --- Now ADD/EDIT do the processing!
+		if ( !isset($content['ISERROR']) ) 
+		{	
+			// Everything was alright, so we go to the next step!
+			if ( $_POST['op'] == "addsavedreport" )
+			{
+				// Add custom search now!
+				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, scheduleSettings) 
+				VALUES ('" . $content['ReportID'] . "', 
+						" . $content['SourceID'] . ", 
+						'" . $content['customTitle'] . "', 
+						'" . $content['customComment'] . "', 
+						'" . $content['filterString'] . "', 
+						'" . $content['customFilters'] . "', 
+						'" . $content['outputFormat'] . "', 
+						'" . $content['outputTarget'] . "', 
+						'" . $content['scheduleSettings'] . "'
+						)";
+
+				$result = DB_Query($sqlquery);
+				DB_FreeQuery($result);
+
+				// Do the final redirect
+				RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+			}
+			else if ( $_POST['op'] == "editsavedreport" )
+			{
+				$result = DB_Query("SELECT ID FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID']);
+				$myrow = DB_GetSingleRow($result, true);
+				if ( !isset($myrow['ID']) )
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['SavedReportID'] ); 
+				}
+				else
+				{
+					$sqlquery =	"UPDATE " . DB_SAVEDREPORTS . " SET 
+									sourceid = " . $content['sourceid'] . ", 
+									customTitle = '" . $content['customTitle'] . "', 
+									customComment = '" . $content['customComment'] . "', 
+									filterString = '" . $content['filterString'] . "', 
+									customFilters = '" . $content['customFilters'] . "', 
+									outputFormat = '" . $content['outputFormat'] . "', 
+									outputTarget = '" . $content['outputTarget'] . "', 
+									scheduleSettings = '" . $content['scheduleSettings'] . "' 
+									WHERE ID = " . $content['SavedReportID'];
+
+					$result = DB_Query($sqlquery);
+					DB_FreeQuery($result);
+
+					// Done redirect!
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+				}
+			}
+
+		}
+	}
+	else
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] ); 
 	}
 }
 
@@ -332,6 +459,26 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$myReport['cssclass'] = "line2";
 			$i++;
 			// --- 
+
+			// --- Check for saved reports!
+			if ( $myReport['SAVEDREPORTS'] && count($myReport['SAVEDREPORTS']) > 0 )
+			{
+				$myReport['HASSAVEDREPORTS'] = "true";
+				$myReport['SavedReportRowSpan'] = ( count($myReport['SAVEDREPORTS']) + 1);
+
+				foreach ($myReport['SAVEDREPORTS']  as &$mySavedReport )
+				{
+					// --- Set CSS Class
+					if ( $i % 2 == 0 )
+						$mySavedReport['srcssclass'] = "line1";
+					else
+						$mySavedReport['srcssclass'] = "line2";
+					$i++;
+					// --- 
+				}
+				
+			}
+			
 		}
 	}
 	else
