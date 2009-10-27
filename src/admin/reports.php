@@ -249,7 +249,7 @@ if ( isset($_GET['op']) )
 	}
 	else if ($_GET['op'] == "addsavedreport") 
 	{
-		// Set Mode to edit
+		// Set Mode to add
 //		$content['ISSHOWDETAILS'] = "true";
 		$content['ISADDSAVEDREPORT'] = "true";
 		$content['REPORT_FORMACTION'] = "addsavedreport";
@@ -269,6 +269,7 @@ if ( isset($_GET['op']) )
 				$content['Description'] = $myReport['Description'];
 				
 				// Set defaults for report
+				$content['SavedReportID'] = "";
 				$content['customTitle'] = $myReport['DisplayName'];
 				$content['customComment'] = "";
 				$content['filterString'] = ""; 
@@ -295,6 +296,11 @@ if ( isset($_GET['op']) )
 				$content['outputTarget'] = "";
 				$content['scheduleSettings'] = "";
 			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
+			}
 		}
 		else
 		{
@@ -304,9 +310,116 @@ if ( isset($_GET['op']) )
 	}
 	else if ($_GET['op'] == "editsavedreport") 
 	{
+		// Set Mode to add
+		$content['ISADDSAVEDREPORT'] = "true";
+		$content['REPORT_FORMACTION'] = "editsavedreport";
+		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_EDITSAVEDREPORT'];
+
+		if ( isset($_GET['id']) )
+		{
+			//PreInit these values 
+			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
+			{
+				// Get Reference to report!
+				$myReport = $content['REPORTS'][ $content['ReportID'] ];
+
+				// Now Get data from saved report!
+				$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
+
+				if ( isset($myReport['SAVEDREPORTS'][$content['SavedReportID']]) ) 
+				{
+					// Get Reference to savedreport!
+					$mySavedReport = $myReport['SAVEDREPORTS'][$content['SavedReportID']];
+
+					// Set Report properties
+					$content['DisplayName'] = $myReport['DisplayName'];
+					$content['Description'] = $myReport['Description'];
+					
+					// Set defaults for Savedreport
+					$content['customTitle'] = $mySavedReport['customTitle'];
+					$content['customComment'] = $mySavedReport['customComment'];
+					$content['filterString'] = $mySavedReport['filterString'];
+					$content['customFilters'] = $mySavedReport['customFilters'];
+
+					// Copy Sources array for further modifications
+					$content['SOURCES'] = $content['Sources'];
+					foreach ($content['SOURCES'] as &$mySource )
+					{
+						$mySource['SourceID'] = $mySource['ID'];
+						if ( $mySource['ID'] == $mySavedReport['sourceid'] ) 
+							$mySource['sourceselected'] = "selected";
+						else
+							$mySource['sourceselected'] = "";
+					}
+					
+					// Create Outputlist
+					$content['outputFormat'] = $mySavedReport['outputFormat']; 
+					CreateOutputformatList( $content['outputFormat'] );
+					
+					// Other settings ... TODO!
+					$content['customFilters'] = "";
+					$content['outputTarget'] = "";
+					$content['scheduleSettings'] = "";
+				}
+				else
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDSAVEDREPORTID'];
+				}
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
+			}
+		}
 	}
 	else if ($_GET['op'] == "removesavedreport") 
 	{
+		// Get SavedReportID!
+		if ( isset($_GET['savedreportid']) )
+		{
+			//PreInit these values 
+			$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
+
+			// Get GroupInfo
+			$result = DB_Query("SELECT customTitle FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID'] ); 
+			$myrow = DB_GetSingleRow($result, true);
+			if ( !isset($myrow['customTitle']) )
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_SAVEDREPORTIDNOTFOUND'], $content['SavedReportID'] ); 
+			}
+			else
+			{
+				// --- Ask for deletion first!
+				if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+				{
+					// This will print an additional secure check which the user needs to confirm and exit the script execution.
+					PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_REPORTS_WARNDELETESAVEDREPORT'], $myrow['customTitle'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+				}
+				// ---
+
+				// do the delete!
+				$result = DB_Query( "DELETE FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID'] );
+				if ($result == FALSE)
+				{
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_DELSAVEDREPORT'], $content['SavedReportID'] ); 
+				}
+				else
+					DB_FreeQuery($result);
+
+				// Do the final redirect
+				RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_HASBEENDEL'], $myrow['customTitle'] ) , "reports.php" );
+			}
+		}
+		else
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDSAVEDREPORTID'];
+		}
 	}
 }
 
@@ -316,11 +429,15 @@ if ( isset($_POST['op']) )
 	// Get ReportID!
 	if ( isset($_POST['id']) ) { $content['ReportID'] = DB_RemoveBadChars($_POST['id']); } else {$content['ReportID'] = ""; }
 
+
 	// Only Continue if reportid is valud!
 	if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 	{
 		// Get Reference to parser!
 		$myReport = $content['REPORTS'][ $content['ReportID'] ];
+
+		// Get SavedReportID!
+		if ( isset($_POST['savedreportid']) ) { $content['SavedReportID'] = DB_RemoveBadChars($_POST['savedreportid']); } else {$content['SavedReportID'] = ""; }
 
 		// Read parameters
 		if ( isset($_POST['SourceID']) ) { $content['SourceID'] = DB_RemoveBadChars($_POST['SourceID']); }
@@ -385,12 +502,12 @@ if ( isset($_POST['op']) )
 				if ( !isset($myrow['ID']) )
 				{
 					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['SavedReportID'] ); 
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_SAVEDREPORTIDNOTFOUND'], $content['SavedReportID'] ); 
 				}
 				else
 				{
 					$sqlquery =	"UPDATE " . DB_SAVEDREPORTS . " SET 
-									sourceid = " . $content['sourceid'] . ", 
+									sourceid = " . $content['SourceID'] . ", 
 									customTitle = '" . $content['customTitle'] . "', 
 									customComment = '" . $content['customComment'] . "', 
 									filterString = '" . $content['filterString'] . "', 
