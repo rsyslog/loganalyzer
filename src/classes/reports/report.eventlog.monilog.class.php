@@ -47,13 +47,14 @@ require_once($gl_root_path . 'classes/reports/report.class.php');
 
 class Report_monilog extends Report {
 	// Common Properties
-	public $_reportVersion = 1;								// Internally Version of the ReportEngine
-	public $_reportID = "report.eventlog.monilog.class";	// ID for the report, needs to be unique!
-	public $_reportTitle = "EventLog Summary Report";		// Display name for the report
+	public $_reportVersion = 1;									// Internally Version of the ReportEngine
+	public $_reportID = "report.eventlog.monilog.class";		// ID for the report, needs to be unique!
+	public $_reportFileBasicName = "report.eventlog.monilog";	// Basic Filename for reportfiles
+	public $_reportTitle = "EventLog Summary Report";			// Display name for the report
 	public $_reportDescription = "This is a EventLog Summary Report based on Monilog";
 	public $_reportHelpArticle = "";
-	public $_reportNeedsInit = false;						// True means that this report needs additional init stuff
-	public $_reportInitialized = false;						// True means report is installed
+	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
+	public $_reportInitialized = false;							// True means report is installed
 
 /*	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
@@ -69,7 +70,6 @@ class Report_monilog extends Report {
 	// Constructor
 	public function Report_monilog() {
 //		$this->_logStreamConfigObj = $streamConfigObj;
-		
 
 		// Fill fields we need for this report
 		$this->_arrProperties[] = SYSLOG_UID;

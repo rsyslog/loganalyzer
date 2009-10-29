@@ -115,6 +115,29 @@
 		<!-- ENDIF EnableNeedsInit="true" -->
 		</table>
 
+		<!-- IF HASSAVEDREPORTS="true" -->
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<tr>
+			<td align="center" colspan="2" class="cellmenu2" valign="top">{LN_REPORTS_SAVEDREPORTS}</td>
+		</tr>
+		<!-- BEGIN SAVEDREPORTS -->
+		<tr>
+			<td align="left" class="{srcssclass}">
+			<img src="{MENU_REPORTS}" width="16">
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
+			</td>
+			<td align="center" class="{srcssclass}">
+				&nbsp;<a href="{BASEPATH}todo.php?op=runreport&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+				&nbsp;<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}"><img src="{MENU_EDIT}" width="16" title="{LN_REPORTS_EDITSAVEDREPORT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/reports.php?op=removesavedreport&savedreportid={SavedReportID}"><img src="{MENU_DELETE}" width="16" title="{LN_REPORTS_REMOVESAVEDREPORT}"></a>
+
+			</td>
+		</tr>
+		<!-- END SAVEDREPORTS -->
+		</table>
+		<!-- ENDIF HASSAVEDREPORTS="true" -->
+
+
 		<br><br>
 		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
 <!-- ENDIF ISSHOWDETAILS="true" -->
@@ -130,20 +153,20 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
-				<td align="right" class="line0" width="100%"><input type="text" name="report_customtitle" size="40" maxlength="255" value="{customTitle}"></td>
+				<td align="right" class="line1" width="100%"><input type="text" name="report_customtitle" size="40" maxlength="255" value="{customTitle}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
-				<td align="right" class="line0" width="100%"><input type="text" name="report_customcomment" size="40" maxlength="255" value="{customComment}"></td>
+				<td align="right" class="line2" width="100%"><input type="text" name="report_customcomment" size="40" maxlength="255" value="{customComment}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>
-				<td align="right" class="line0" width="100%"><input type="text" name="report_filterString" size="40" maxlength="255" value="{filterString}"></td>
+				<td align="right" class="line1" width="100%"><input type="text" name="report_filterString" size="40" maxlength="255" value="{filterString}"></td>
 			</tr>
 			
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
-				<td align="right" class="line0" width="100%">
+				<td align="right" class="line2" width="100%">
 					<select name="SourceID" size="1" STYLE="width: 190px">
 						<!-- BEGIN SOURCES -->
 						<option value="{SourceID}" {sourceselected}>{Name}</option>
@@ -153,7 +176,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTFORMAT}</b></td>
-				<td align="right" class="line0" width="100%">
+				<td align="right" class="line1" width="100%">
 					<select name="outputFormat" size="1" STYLE="width: 190px">
 						<!-- BEGIN OUTPUTFORMATS -->
 						<option value="{formatid}" {formatselected}>{formatdisplayname}</option>
@@ -170,6 +193,9 @@
 			</tr>
 			</table>
 		</form>
+
+		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+		<br><br>
 <!-- ENDIF ISADDSAVEDREPORT="true" -->
 
 		<br><br>

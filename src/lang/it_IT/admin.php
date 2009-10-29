@@ -405,11 +405,23 @@ $content['LN_REPORTS_ERROR_HASBEENREMOVED'] = "All settings for the report '%1' 
 $content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the report '%1' have been added.";
 $content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
 $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'] = "The report '%1' does not need to be removed or initialized.";
-$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport";
+$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport from Type";
+$content['LN_REPORTS_EDITSAVEDREPORT'] = "Edit Savedreport";
+$content['LN_REPORTS_REMOVESAVEDREPORT'] = "Remove Savedreport";
 $content['LN_REPORTS_CUSTOMTITLE'] = "Report Title";
 $content['LN_REPORTS_CUSTOMCOMMENT'] = "Comment / Description";
 $content['LN_REPORTS_FILTERSTRING'] = "Filterstring";
 $content['LN_REPORTS_OUTPUTFORMAT'] = "Outputformat";
+$content['LN_REPORTS_HASBEENADDED'] = "The Savedreport '%1' has been successfully added.";
+$content['LN_REPORTS_HASBEENEDIT'] = "The Savedreport '%1' has been successfully edited.";
+$content['LN_REPORTS_SOURCEID'] = "Logstream source";
+$content['LN_REPORTS_ERROR_SAVEDREPORTIDNOTFOUND'] = "There was no savedreport with ID '%1' found.";
+$content['LN_REPORTS_ERROR_INVALIDSAVEDREPORTID'] = "Invalid savedreport id.";
+$content['LN_REPORTS_SAVEDREPORTS'] = "Saved reports";
+$content['LN_REPORTS_RUNNOW'] = "Run saved report now!";
+$content['LN_REPORTS_WARNDELETESAVEDREPORT'] = "Are you sure that you want to delete the savedreport '%1'?";
+$content['LN_REPORTS_ERROR_DELSAVEDREPORT'] = "Deleting of the savedreport with id '%1' failed!";
+$content['LN_REPORTS_ERROR_HASBEENDEL'] = "The savedreport '%1' has been successfully deleted!";
 $content['LN_REPORTS_'] = "";
 
 ?>

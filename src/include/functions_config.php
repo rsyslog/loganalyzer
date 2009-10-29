@@ -342,6 +342,7 @@ function InitReportModules()
 						// Add entry to report modules list!
 						$content['REPORTS'][$myReportID] = array (
 														"ID" => $myReportID, 
+														"Category" => $myReportCat, 
 														"DisplayName" => $szReportName, 
 														"Description" => $szReportDescription, 
 														"ReportVersion" => $szReportVersion, 

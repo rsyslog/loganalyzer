@@ -101,6 +101,27 @@ if ( isset($_GET['op']) )
 					}
 				}
 
+				// --- Check for saved reports!
+				if ( isset($myReport['SAVEDREPORTS']) && count($myReport['SAVEDREPORTS']) > 0 )
+				{
+					$content['HASSAVEDREPORTS'] = "true";
+					$content['SavedReportRowSpan'] = ( count($myReport['SAVEDREPORTS']) + 1);
+					$content['SAVEDREPORTS'] = $myReport['SAVEDREPORTS'];
+
+					$i = 0; // Help counter!
+					foreach ($content['SAVEDREPORTS']  as &$mySavedReport )
+					{
+						// --- Set CSS Class
+						if ( $i % 2 == 0 )
+							$mySavedReport['srcssclass'] = "line1";
+						else
+							$mySavedReport['srcssclass'] = "line2";
+						$i++;
+						// --- 
+					}
+				}
+				// ---
+
 			}
 			else
 			{
@@ -578,24 +599,24 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			// --- 
 
 			// --- Check for saved reports!
-			if ( $myReport['SAVEDREPORTS'] && count($myReport['SAVEDREPORTS']) > 0 )
+			if ( isset($myReport['SAVEDREPORTS']) && count($myReport['SAVEDREPORTS']) > 0 )
 			{
 				$myReport['HASSAVEDREPORTS'] = "true";
 				$myReport['SavedReportRowSpan'] = ( count($myReport['SAVEDREPORTS']) + 1);
 
+				$j = 0; // Help counter!
 				foreach ($myReport['SAVEDREPORTS']  as &$mySavedReport )
 				{
 					// --- Set CSS Class
-					if ( $i % 2 == 0 )
+					if ( $j % 2 == 0 )
 						$mySavedReport['srcssclass'] = "line1";
 					else
 						$mySavedReport['srcssclass'] = "line2";
 					$i++;
 					// --- 
 				}
-				
 			}
-			
+			// ---
 		}
 	}
 	else

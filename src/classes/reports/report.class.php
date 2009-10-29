@@ -46,9 +46,10 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 
 abstract class Report {
 	// Common Properties
-	public $_reportVersion = 1;						// Internally Version of the ReportEngine
-	public $_reportID = "report.syslog.base.class";	// ID for the report, needs to be unique!
-	public $_reportTitle = "Base Report Class";		// Display name for the report
+	public $_reportVersion = 1;								// Internally Version of the ReportEngine
+	public $_reportID = "report.syslog.base.class";			// ID for the report, needs to be unique! - Format report.Category.ReportID.class
+	public $_reportFileBasicName = "report.syslog.base";	// Basic Filename for reportfiles
+	public $_reportTitle = "Base Report Class";				// Display name for the report
 	public $_reportDescription = "This is the base class for all reports";
 	public $_reportHelpArticle = "http://";
 	public $_reportNeedsInit = false;				// True means that this report needs additional init stuff
@@ -105,6 +106,29 @@ abstract class Report {
 	* This function removes data for the report
 	*/
 	public abstract function RemoveReport();
+
+
+	/**
+	* This function checks if we have a valid template for the selected output
+	* Will return error code on failure!
+	*/
+	public function validateOutputTemplate( $szOutputID )
+	{
+		global $content, $gl_root_path;
+		$szDirectory = $gl_root_path . 'classes/reports/'; 
+		$szIncludeFile = $szDirectory . $this->_reportFileBasicName . "." . $szOutputID; 
+
+		if ( file_exists($szIncludeFile) )
+		{
+			// Success!
+			return SUCCESS;
+		}
+		else
+		{
+			// Template file not found!
+			return ERROR_FILE_NOT_FOUND;
+		}
+	}
 
 
 	/**
