@@ -43,6 +43,10 @@ require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
+// Include LogStream facility
+include_once($gl_root_path . 'classes/logstream.class.php');
+
+
 
 abstract class Report {
 	// Common Properties
@@ -55,10 +59,15 @@ abstract class Report {
 	public $_reportNeedsInit = false;				// True means that this report needs additional init stuff
 	public $_reportInitialized = false;				// True means report is installed
 
-	// Configuration Properties
+	// SavedReport Configuration Properties
+	protected $_customTitle = "";
+	protected $_customComment = "";
 	protected $_filterString = "";
-	protected $_advancedOptionsXml = ""; 
-	protected $_outputType = REPORT_OUTPUT_HTML;	// Default HTML Output
+	protected $_customFilters = ""; 
+	protected $_outputFormat = REPORT_OUTPUT_HTML;	// Default HTML Output
+	protected $_outputTarget = "";
+	protected $_scheduleSettings = "";
+	
 	protected $_mySourceID = ""; 
 	protected $_arrProperties = null;				// List of properties we need for the main logstream query!
 
@@ -150,13 +159,31 @@ abstract class Report {
 	/*
 	* Helper function to set the OutputType 
 	*/
-	public function SetOutputType($newOutputType)
+	public function SetOutputFormat($newOutputType)
 	{
 		// Set new Outputtype
-		$this->_outputType = $newOutputType; 
+		$this->_outputFormat = $newOutputType; 
 
 		// Set Filebasename
-		$this->_baseFileName = $this->_reportID . ".template." . $this->_outputType;
+		$this->_baseFileName = $this->_reportID . ".template." . $this->_outputFormat;
+	}
+
+	/*
+	* Helper function to set the OutputTarget
+	*/
+	public function SetOutputTarget($newOutputTarget)
+	{
+		// Set new OutputTarget
+		$this->_outputTarget = $newOutputTarget; 
+	}
+
+	/*
+	* Helper function to set the Scheduled Settings
+	*/
+	public function SetScheduleSettings($newScheduleSettings)
+	{
+		// Set new ScheduleSettings
+		$this->_scheduleSettings = $newScheduleSettings; 
 	}
 
 	/*
@@ -171,11 +198,30 @@ abstract class Report {
 	/*
 	* Helper function to set the FilterString 
 	*/
-	public function SetAdvancedOptions($newAdvancedOptions)
+	public function SetCustomFilters($newAdvancedOptions)
 	{
 		// Set new Outputtype
-		$this->_advancedOptionsXml = $newAdvancedOptions; 
+		$this->_customFilters = $newAdvancedOptions; 
 	}
+
+	/*
+	* Helper function to set the FilterString 
+	*/
+	public function SetCustomTitle($newCustomTitle)
+	{
+		// Set new Custom Title
+		$this->_customTitle = $newCustomTitle; 
+	}
+
+	/*
+	* Helper function to set the FilterString 
+	*/
+	public function SetCustomComment($newCustomComment)
+	{
+		// Set new Custom Comment
+		$this->_customComment = $newCustomComment; 
+	}
+	
 
 	/*
 	* Helper function to set the FilterString 
@@ -194,13 +240,28 @@ abstract class Report {
 		}
 	}
 
-
 	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
 	{
 		$this->SetOutputType( REPORT_OUTPUT_HTML ); 
+	}
+
+	/*
+	*	Helper function to set settings from savedreport!
+	*/
+	public function InitFromSavedReport( $mySavedReport )
+	{
+		// Copy settings from saved report!
+		$this->SetSourceID( $mySavedReport["sourceid"] );
+		$this->SetCustomTitle( $mySavedReport["customTitle"] );
+		$this->SetCustomComment( $mySavedReport["customComment"] );
+		$this->SetFilterString( $mySavedReport["filterString"] );
+		$this->SetCustomFilters( $mySavedReport["customFilters"] );
+		$this->SetOutputFormat( $mySavedReport["outputFormat"] );
+		$this->SetOutputTarget( $mySavedReport["outputTarget"] );
+		$this->SetScheduleSettings(	$mySavedReport["scheduleSettings"] );
 	}
 
 	

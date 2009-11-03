@@ -121,10 +121,21 @@ class Report_monilog extends Report {
 	*/
 	public function verifyDataSource()
 	{
+		global $content; 
+
 		if ( $this->_streamCfgObj == null ) 
 		{
-			// Obtain and get the Config Object
-			$this->_streamCfgObj = $content['Sources'][$this->_mySourceID]['ObjRef'];
+			if ( isset($content['Sources'][$this->_mySourceID]['ObjRef']) )
+			{
+				// Obtain and get the Config Object
+				$this->_streamCfgObj = $content['Sources'][$this->_mySourceID]['ObjRef'];
+
+				// Fix Filename manually for FILE LOGSTREAM!
+				if ( $content['Sources'][$this->_mySourceID]['SourceType'] == SOURCE_DISK ) 
+					$this->_streamCfgObj->FileName = CheckAndPrependRootPath(DB_StripSlahes($content['Sources'][$this->_mySourceID]['DiskFile']));
+			}
+			else
+				return ERROR_SOURCENOTFOUND;
 		}
 
 		if ( $this->_streamObj == null ) 
@@ -133,8 +144,9 @@ class Report_monilog extends Report {
 			$this->_streamObj = $this->_streamCfgObj ->LogStreamFactory($this->_streamCfgObj);
 		}
 
-		// Success!
-		return SUCCESS;
+		// Check datasource and return result
+		$res = $this->_streamObj->Verify();
+		return $res;
 	}
 	
 

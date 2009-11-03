@@ -116,6 +116,7 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error state
 	*/
 	public function Verify() {
+
 		// Check if file exists!
 		if(!file_exists($this->_logStreamConfigObj->FileName)) {
 			return ERROR_FILE_NOT_FOUND;

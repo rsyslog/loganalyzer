@@ -1672,8 +1672,14 @@ function CheckAndPrependRootPath( $szFileName)
 		// Nothing really todo
 		true;
 	}
-	else // prepend basepath!
-		$szNewFileName = $gl_root_path . $szFileName;
+	else 
+	{	
+		// replace ./ with gl_root_path in this case
+		if ( ($pos = strpos($szFileName, "./")) !== FALSE ) 
+			$szNewFileName = str_replace( "./", $gl_root_path, $szFileName );
+		else // prepend basepath!
+			$szNewFileName = $gl_root_path . $szFileName;
+	}
 
 	// return result
 	return $szNewFileName; 

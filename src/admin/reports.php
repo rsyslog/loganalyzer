@@ -491,6 +491,37 @@ if ( isset($_POST['op']) )
 		}
 		// --- 
 
+
+		// --- Now Verify Report Source!
+		// Create tmpSavedReport!
+		$tmpSavedReport["SavedReportID"] = $content['customFilters'];
+		$tmpSavedReport["sourceid"] = $content['SourceID'];
+		$tmpSavedReport["customTitle"] = $content['customTitle'];
+		$tmpSavedReport["customComment"] = $content['customComment'];
+		$tmpSavedReport["filterString"] = $content['filterString'];
+		$tmpSavedReport["customFilters"] = $content['customFilters'];
+		$tmpSavedReport["outputFormat"] = $content['outputFormat'];
+		$tmpSavedReport["outputTarget"] = $content['outputTarget'];
+		$tmpSavedReport["scheduleSettings"] = $content['scheduleSettings'];
+
+		// Get Objectreference to report
+		$myReportObj = $myReport["ObjRef"];
+
+		// Set SavedReport Settings!
+		$myReportObj->InitFromSavedReport($tmpSavedReport);
+
+		// Perform check
+		$res = $myReportObj->verifyDataSource();
+		if ( $res != SUCCESS ) 
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_ERRORCHECKINGSOURCE'], GetAndReplaceLangStr( GetErrorMessage($res), $content['SourceID']) );
+			if ( isset($extraErrorDescription) )
+				$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+		}
+		// ---
+
+
 		// --- Now ADD/EDIT do the processing!
 		if ( !isset($content['ISERROR']) ) 
 		{	

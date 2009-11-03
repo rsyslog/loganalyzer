@@ -133,7 +133,7 @@ if ( !$content['error_occured'] )
 		// Create LogStream Object 
 		$stream = $stream_config->LogStreamFactory($stream_config);
 		
-		// Set Columns we want to open!				
+		// Set Columns we want to open!
 		$content['ChartColumns'][] = SYSLOG_UID;
 		$content['ChartColumns'][] = $content['chart_field'];
 		$res = $stream->Open( $content['ChartColumns'], true );
