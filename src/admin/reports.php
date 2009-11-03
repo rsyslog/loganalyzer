@@ -54,7 +54,7 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 
 // --- BEGIN Custom Code
 
-// Firts of all init List of Parsers!
+// Firts of all init List of Reports!
 InitReportModules();
 
 // Handle GET requests

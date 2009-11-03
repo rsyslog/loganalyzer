@@ -95,13 +95,30 @@ class Report_monilog extends Report {
 	*/
 	public function startDataProcessing()
 	{
+		global $content; 
+
 		// Verify Datasource first!
 		if ( $this->verifyDataSource() == SUCCESS ) 
 		{
 			$res = $stream->Open( $this->_arrProperties, true );
 			if ( $res == SUCCESS )
 			{
-				// report logic
+				// --- Report logic starts here
+
+				// Step 1: Gather Summaries 
+				// Obtain data from the logstream!
+				$reportData = $stream->GetCountSortedByField( SYSLOG_SEVERITY, FILTER_TYPE_INT, 10 );
+
+print_r ( $reportData );
+exit;
+
+				// If data is valid, we have an array!
+				if ( is_array($reportData) && count($reportData) > 0 )
+				{
+				}
+
+
+				// ---
 
 			}
 
