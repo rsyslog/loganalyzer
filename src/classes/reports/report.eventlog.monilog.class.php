@@ -100,14 +100,15 @@ class Report_monilog extends Report {
 		// Verify Datasource first!
 		if ( $this->verifyDataSource() == SUCCESS ) 
 		{
-			$res = $stream->Open( $this->_arrProperties, true );
+			$res = $this->_streamObj->Open( $this->_arrProperties, true );
 			if ( $res == SUCCESS )
 			{
 				// --- Report logic starts here
 
 				// Step 1: Gather Summaries 
 				// Obtain data from the logstream!
-				$reportData = $stream->GetCountSortedByField( SYSLOG_SEVERITY, FILTER_TYPE_INT, 10 );
+				$reportData = $this->_streamObj->GetCountSortedByField( SYSLOG_SEVERITY, FILTER_TYPE_NUMBER, 10 );
+echo "wtf"; 
 
 print_r ( $reportData );
 exit;
@@ -158,7 +159,7 @@ exit;
 		if ( $this->_streamObj == null ) 
 		{
 			// Create LogStream Object 
-			$this->_streamObj = $this->_streamCfgObj ->LogStreamFactory($this->_streamCfgObj);
+			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
 		}
 
 		// Check datasource and return result
