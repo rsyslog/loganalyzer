@@ -335,6 +335,7 @@ $content['LN_ORACLE_ONLINESEARCH'] = "Online Search";
 $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 
 	$content['LN_GEN_ERROR_INVALIDOP'] = "Invalid or missing operation type";
+	$content['LN_GEN_ERROR_INVALIDREPORTID'] = "Invalid or missing report id";
 	$content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'] = "Invalid or missing savedreport id";
 
 

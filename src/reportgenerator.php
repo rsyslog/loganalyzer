@@ -61,6 +61,14 @@ else
 	$content['error_details'] = $content['LN_GEN_ERROR_INVALIDOP'];
 }
 
+if ( isset($_GET['reportid']) ) 
+	$content['reportid'] = DB_RemoveBadChars($_GET['reportid']);
+else
+{
+	$content['error_occured'] = "error";
+	$content['error_details'] = $content['LN_GEN_ERROR_INVALIDREPORTID'];
+}
+
 if ( isset($_GET['savedreportid']) ) 
 {
 	// read and verify value
@@ -139,6 +147,69 @@ $content['TITLE'] = InitPageTitle();
 // Get data and print on the image!
 if ( !$content['error_occured'] )
 {
+	// Check if report exists
+	if ( isset($content['REPORTS'][ $content['reportid'] ]) )
+	{
+		// Get Reference to parser!
+		$myReport = $content['REPORTS'][ $content['reportid'] ];
+
+		// Now check if the saved report is available
+		if ( isset($myReport['SAVEDREPORTS']) && count($myReport['SAVEDREPORTS']) > 0 )
+		{
+			// Init SavedReport reference
+			$mySavedReport = null; 
+
+			// Saved reports available, search for our one!
+			foreach ($myReport['SAVEDREPORTS']  as &$tmpSavedReport )
+			{
+				if ( $tmpSavedReport['SavedReportID'] == $content['savedreportid'] ) 
+				{
+					// Copy reference and break loop
+					$mySavedReport = $tmpSavedReport; 
+					break;
+				}
+			}
+
+			// Found reference to saved report, no process
+			if ( $mySavedReport != null ) 
+			{
+				// Get Objectreference to report
+				$myReportObj = $myReport["ObjRef"];
+
+				// Set SavedReport Settings!
+				$myReportObj->InitFromSavedReport($mySavedReport);
+
+				// Perform check
+				$res = $myReportObj->verifyDataSource();
+				if ( $res != SUCCESS ) 
+				{
+					$content['error_occured'] = true;
+					$content['error_details'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_ERRORCHECKINGSOURCE'], GetAndReplaceLangStr( GetErrorMessage($res), $mySavedReport['sourceid']) );
+					if ( isset($extraErrorDescription) )
+						$content['error_details'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+				}
+				else
+				{
+					// Call processing part now!
+
+
+				}
+			}
+			else
+			{
+				$content['error_occured'] = true;
+				$content['error_details'] = $content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'];
+			}
+		}
+
+	}
+	else
+	{
+		$content['error_occured'] = true;
+		$content['error_details'] = $content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'];
+	}
+
+
 	if ( isset($content['Sources'][$currentSourceID]) ) 
 	{
 		// Obtain and get the Config Object
@@ -466,31 +537,20 @@ if ( !$content['error_occured'] )
 	}
 }
 
+// Output error if occured
 if ( $content['error_occured'] )
 {
-	// Use JpGraph to display errors!
-	$myError = new JpGraphErrObjectImg();
-	$myError->SetTitle($content['LN_GEN_ERRORDETAILS']);
-	$myError->Raise($content['error_details'], true);
+	InitTemplateParser();
+	$page -> parser($content, "reportgenerator.html");
+	$page -> output(); 
 	exit;
-
-/*	// QUICK AND DIRTY!
-	$myImage = imagecreatetruecolor( $content['chart_width'], $content['chart_width']);
-	
-	$text_color = imagecolorallocate($myImage, 255, 0, 0);
-	imagestring($myImage, 3, 10, 10, $content['LN_GEN_ERRORDETAILS'], $text_color);
-	imagestring($myImage, 3, 10, 25, $content['error_details'], $text_color);
-
-	header ("Content-type: image/png");
-	imagepng($myImage);		// Outputs the image to the browser
-	imagedestroy($myImage); // Clean Image resource
-*/
 }
-// --- 
+else
+{
 
-// --- Output the image
-//$graph->Stroke();
-$graph->StrokeCSIM( basename(__FILE__), '', 0); 
+
+
+}
 // --- 
 
 ?>
