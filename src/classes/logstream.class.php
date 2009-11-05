@@ -202,6 +202,13 @@ abstract class LogStream {
 	*/
 	public abstract function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit);
 
+	/**
+	* This functions is used by reports to consolidate data
+	*
+	* @return integer Error stat
+	*/
+	public abstract function ConsolidateDataByField($szFieldId, $nRecordLimit);
+
 	
 	/**
 	* Gets a property and checks if the class is able to sort the records

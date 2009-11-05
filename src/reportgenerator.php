@@ -203,7 +203,7 @@ if ( !$content['error_occured'] )
 					}
 					else
 					{
-						// Perform report output 
+						// Perform report output
 						InitTemplateParser();
 						echo $myReportObj->_baseFileName; 
 						exit;

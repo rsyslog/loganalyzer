@@ -690,6 +690,78 @@ class LogStreamDB extends LogStream {
 
 
 	/**
+	* Implementation of ConsolidateDataByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateDataByField($szFieldId, $nRecordLimit)
+	{
+		global $content, $dbmapping, $fields;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
+		{
+			// Get FieldType 
+			$nFieldType = $fields[$szFieldId]['FieldType'];
+
+			// Set DB Field name first!
+			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
+			$myDBQueryFieldName = $myDBFieldName;
+			$mySelectFieldName = $myDBFieldName;
+			
+			// Special handling for date fields
+			if ( $nFieldType == FILTER_TYPE_DATE )
+			{
+				// Helper variable for the select statement
+				$mySelectFieldName = $mySelectFieldName . "Grouped";
+				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+			}
+
+			// Create SQL String now!
+			$szSql =	"SELECT " . 
+						$myDBQueryFieldName . ", " . 
+						"count(" . $myDBFieldName . ") as TotalCount " . 
+						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" GROUP BY " . $mySelectFieldName . 
+						" ORDER BY TotalCount DESC" . 
+						" LIMIT " . $nRecordLimit;
+
+			// Perform Database Query
+			$myquery = mysql_query($szSql, $this->_dbhandle);
+			if ( !$myquery ) 
+				return ERROR_DB_QUERYFAILED;
+			
+			// Initialize Array variable
+			$aResult = array();
+
+			// read data records
+			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+			{
+				$aResult[ $myRow[$mySelectFieldName] ] = $myRow;
+			}
+//				$aResult[] = $myRow;
+//				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
+
+			// return finished array
+			if ( count($aResult) > 0 )
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+		{
+			// return error code, field mapping not found
+			return ERROR_DB_DBFIELDNOTFOUND;
+		}
+	}
+
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the native MYSQL Logstream, the database will do most of the work

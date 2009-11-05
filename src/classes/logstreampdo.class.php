@@ -682,6 +682,101 @@ class LogStreamPDO extends LogStream {
 
 
 	/**
+	* Implementation of ConsolidateDataByField 
+	*
+	* In the PDO DB Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateDataByField($szFieldId, $nRecordLimit)
+	{
+		global $content, $dbmapping;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
+		{
+			// Get FieldType 
+			$nFieldType = $fields[$szFieldId]['FieldType'];
+
+			// Set DB Field name first!
+			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
+			$myDBQueryFieldName = $myDBFieldName;
+			$mySelectFieldName = $myDBFieldName;
+
+			// Special handling for date fields
+			if ( $nFieldType == FILTER_TYPE_DATE )
+			{
+				if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+						$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				{
+					// Helper variable for the select statement
+					$mySelectFieldName = $mySelectFieldName . "grouped";
+					$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+				}
+				else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
+				{
+					// TODO FIND A WAY FOR MSSQL!
+				}
+			}
+
+			// Create SQL String now!
+			$szSql =	"SELECT " . 
+						$myDBQueryFieldName . ", " . 
+						"count(" . $myDBFieldName . ") as totalcount " . 
+						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" GROUP BY " . $mySelectFieldName . 
+						" ORDER BY totalcount DESC"; 
+			// Append LIMIT in this case!
+			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+							$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szSql .= " LIMIT " . $nRecordLimit; 
+
+			// Perform Database Query
+			$this->_myDBQuery = $this->_dbhandle->query($szSql);
+			if ( !$this->_myDBQuery ) 
+				return ERROR_DB_QUERYFAILED;
+
+			if ( $this->_myDBQuery->rowCount() == 0 )
+			{
+				$this->_myDBQuery = null;
+				return ERROR_NOMORERECORDS;
+			}
+
+			// Initialize Array variable
+			$aResult = array();
+
+			// read data records
+			$iCount = 0;
+			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
+			{
+				if ( isset($myRow[$mySelectFieldName]) )
+				{
+					$aResult[] = $myRow;
+//					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
+					$iCount++;
+				}
+			}
+
+			// Delete handle
+			$this->_myDBQuery = null;
+
+			// return finished array
+			if ( count($aResult) > 0 )
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+		{
+			// return error code, field mapping not found
+			return ERROR_DB_DBFIELDNOTFOUND;
+		}
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* In the PDO DB Logstream, the database will do most of the work
