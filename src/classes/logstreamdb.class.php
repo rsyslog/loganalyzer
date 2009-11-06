@@ -696,67 +696,124 @@ class LogStreamDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szFieldId, $nRecordLimit)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
 	{
 		global $content, $dbmapping, $fields;
 
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		
+		// Check if fields are available 
+		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
+			return ERROR_DB_DBFIELDNOTFOUND;
 
-		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+
+		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
+			$szSortingOrder = "DESC"; 
+		else
+			$szSortingOrder = "ASC"; 
+		// --- 
+
+		// --- Set DB Field names
+		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
+		$myDBGroupByFieldName = $myDBConsFieldName;
+		
+		// Check which fields to include
+		if ( $aIncludeCustomFields != null ) 
 		{
-			// Get FieldType 
-			$nFieldType = $fields[$szFieldId]['FieldType'];
-
-			// Set DB Field name first!
-			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
-			$myDBQueryFieldName = $myDBFieldName;
-			$mySelectFieldName = $myDBFieldName;
-			
-			// Special handling for date fields
-			if ( $nFieldType == FILTER_TYPE_DATE )
+			$myDBQueryFields = "";
+			foreach ( $aIncludeCustomFields as $myFieldName ) 
 			{
-				// Helper variable for the select statement
-				$mySelectFieldName = $mySelectFieldName . "Grouped";
-				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 			}
-
-			// Create SQL String now!
-			$szSql =	"SELECT " . 
-						$myDBQueryFieldName . ", " . 
-						"count(" . $myDBFieldName . ") as TotalCount " . 
-						" FROM " . $this->_logStreamConfigObj->DBTableName . 
-						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY TotalCount DESC" . 
-						" LIMIT " . $nRecordLimit;
-
-			// Perform Database Query
-			$myquery = mysql_query($szSql, $this->_dbhandle);
-			if ( !$myquery ) 
-				return ERROR_DB_QUERYFAILED;
 			
-			// Initialize Array variable
-			$aResult = array();
-
-			// read data records
-			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+			// Append Sortingfield
+			if ( !in_array($szConsFieldId, $aIncludeCustomFields) )
+				$myDBQueryFields .= $myDBConsFieldName . ", ";
+		}
+		else if ( $bIncludeLogStreamFields ) 
+		{
+			$myDBQueryFields = "";
+			foreach ( $this->_arrProperties as $myFieldName ) 
 			{
-				$aResult[ $myRow[$mySelectFieldName] ] = $myRow;
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 			}
+		}
+		else // Only Include ConsolidateField
+			$myDBQueryFields = $myDBConsFieldName . ", ";
+
+
+
+		if ( $szConsFieldId == $szSortFieldId ) 
+			$myDBSortedFieldName = "ConsolidatedField"; 
+		else
+			$myDBSortedFieldName = $szSortFieldId; 
+		// --- 
+		
+		// Special handling for date fields
+		if ( $nConsFieldType == FILTER_TYPE_DATE )
+		{
+			// Helper variable for the select statement
+			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
+		}
+
+		// Create SQL String now!
+		$szSql =	"SELECT " . 
+					$myDBQueryFields .  
+					"count(" . $myDBConsFieldName . ") as ConsolidatedField " . 
+					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					" GROUP BY " . $myDBGroupByFieldName . 
+					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
+					" LIMIT " . $nRecordLimit;
+
+		// Perform Database Query
+		$myquery = mysql_query($szSql, $this->_dbhandle);
+		if ( !$myquery ) 
+			return ERROR_DB_QUERYFAILED;
+		
+		// Initialize Array variable
+		$aResult = array();
+
+		// read data records
+		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		{
+			// Create new row
+			$aNewRow = array();
+
+			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			{
+				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
+					$aNewRow[$szConsFieldId] = $myFieldValue;
+				else
+					$aNewRow[$myFieldName] = $myFieldValue;
+
+//				if ( in_array($myFieldName, $this->_arrProperties) ) 
+//					echo "!!"; 
+//print_r ( $this->_arrProperties ); 
+//				echo $myFieldName;
+//				exit;
+			}
+			
+			// Add new row to result
+			$aResult[] = $aNewRow;
+
+//			$aResult[ $myRow[$myDBGroupByFieldName] ] = $myRow;
+		}
 //				$aResult[] = $myRow;
 //				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
 
-			// return finished array
-			if ( count($aResult) > 0 )
-				return $aResult;
-			else
-				return ERROR_NOMORERECORDS;
-		}
+		// return finished array
+		if ( count($aResult) > 0 )
+			return $aResult;
 		else
-		{
-			// return error code, field mapping not found
-			return ERROR_DB_DBFIELDNOTFOUND;
-		}
+			return ERROR_NOMORERECORDS;
+
+
 	}
 
 

@@ -688,7 +688,7 @@ class LogStreamPDO extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szFieldId, $nRecordLimit)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false)
 	{
 		global $content, $dbmapping;
 

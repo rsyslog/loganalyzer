@@ -107,14 +107,14 @@ class Report_monilog extends Report {
 
 				// Step 1: Gather Summaries 
 				// Obtain data from the logstream!
-				$reportData = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 10 );
+				$reportData = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 10, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
 
 				// If data is valid, we have an array!
 				if ( is_array($reportData) && count($reportData) > 0 )
 				{
 					foreach ($reportData as &$tmpReportData )
 					{
-						$tmpReportData['DisplayName'] = GetFacilityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
+						$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
 					}
 				}
 

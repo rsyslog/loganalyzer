@@ -207,7 +207,7 @@ abstract class LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public abstract function ConsolidateDataByField($szFieldId, $nRecordLimit);
+	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false);
 
 	
 	/**

@@ -86,6 +86,9 @@ define('ALIGN_RIGHT', 'right');
 define('REPORT_OUTPUT_HTML', 'html');
 define('REPORT_OUTPUT_PDF', 'pdf');
 
+// Defines for sorting
+define('SORTING_ORDER_ASC', 'asc');
+define('SORTING_ORDER_DESC', 'desc');
 
 // --- Predefine fields array!
 $fields[SYSLOG_UID]['FieldID'] = SYSLOG_UID;
