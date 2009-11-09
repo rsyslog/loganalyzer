@@ -690,6 +690,102 @@ class LogStreamDB extends LogStream {
 
 
 	/**
+	* Implementation of ConsolidateItemListByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder)
+	{
+		global $content, $dbmapping, $fields;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		
+		// Check if fields are available 
+		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
+			return ERROR_DB_DBFIELDNOTFOUND;
+
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+
+		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
+			$szSortingOrder = "DESC"; 
+		else
+			$szSortingOrder = "ASC"; 
+		// --- 
+
+		// --- Set DB Field names
+		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
+		$myDBGroupByFieldName = $myDBConsFieldName;
+		$myDBQueryFields = $myDBConsFieldName . ", ";
+
+		// Set Sorted Field
+		if ( $szConsFieldId == $szSortFieldId ) 
+			$myDBSortedFieldName = "ItemCount"; 
+		else
+			$myDBSortedFieldName = $szSortFieldId; 
+		// --- 
+		
+		// Special handling for date fields
+		if ( $nConsFieldType == FILTER_TYPE_DATE )
+		{
+			// Helper variable for the select statement
+			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
+		}
+
+		// Set Limit String
+		if ( $nRecordLimit > 0 ) 
+			$szLimitSql = " LIMIT " . $nRecordLimit;
+		else
+			$szLimitSql = "";
+
+		// Create SQL String now!
+		$szSql =	"SELECT " . 
+					$myDBQueryFields .  
+					"count(" . $myDBConsFieldName . ") as ItemCount " . 
+					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					" GROUP BY " . $myDBGroupByFieldName . 
+					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
+					$szLimitSql ;
+
+		// Perform Database Query
+		$myquery = mysql_query($szSql, $this->_dbhandle);
+		if ( !$myquery ) 
+			return ERROR_DB_QUERYFAILED;
+		
+		// Initialize Array variable
+		$aResult = array();
+
+		// read data records
+		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		{
+			// Create new row
+			$aNewRow = array();
+
+			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			{
+				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
+					$aNewRow[$szConsFieldId] = $myFieldValue;
+				else
+					$aNewRow[$myFieldName] = $myFieldValue;
+			}
+			
+			// Add new row to result
+			$aResult[] = $aNewRow;
+		}
+
+		// return finished array
+		if ( count($aResult) > 0 )
+			return $aResult;
+		else
+			return ERROR_NOMORERECORDS;
+	}
+
+
+	/**
 	* Implementation of ConsolidateDataByField 
 	*
 	* In the native MYSQL Logstream, the database will do most of the work
@@ -749,7 +845,7 @@ class LogStreamDB extends LogStream {
 
 
 		if ( $szConsFieldId == $szSortFieldId ) 
-			$myDBSortedFieldName = "ConsolidatedField"; 
+			$myDBSortedFieldName = "ItemCount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
@@ -762,14 +858,20 @@ class LogStreamDB extends LogStream {
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
 
+		// Set Limit String
+		if ( $nRecordLimit > 0 ) 
+			$szLimitSql = " LIMIT " . $nRecordLimit;
+		else
+			$szLimitSql = "";
+
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
-					"count(" . $myDBConsFieldName . ") as ConsolidatedField " . 
+					"count(" . $myDBConsFieldName . ") as ItemCount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
-					" LIMIT " . $nRecordLimit;
+					$szLimitSql ;
 
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);
@@ -812,10 +914,7 @@ class LogStreamDB extends LogStream {
 			return $aResult;
 		else
 			return ERROR_NOMORERECORDS;
-
-
 	}
-
 
 
 	/**

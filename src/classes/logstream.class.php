@@ -209,7 +209,15 @@ abstract class LogStream {
 	*/
 	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false);
 
-	
+
+	/**
+	* This functions is used by reports to consolidate data
+	*
+	* @return integer Error stat
+	*/
+	public abstract function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder);
+
+
 	/**
 	* Gets a property and checks if the class is able to sort the records
 	* by this property. 

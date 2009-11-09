@@ -95,11 +95,12 @@ class Report_monilog extends Report {
 	*/
 	public function startDataProcessing()
 	{
-		global $content; 
+		global $content, $severity_colors; 
 
 		// Verify Datasource first!
 		if ( $this->verifyDataSource() == SUCCESS ) 
 		{
+			// Test opening the stream
 			$res = $this->_streamObj->Open( $this->_arrProperties, true );
 			if ( $res == SUCCESS )
 			{
@@ -107,19 +108,37 @@ class Report_monilog extends Report {
 
 				// Step 1: Gather Summaries 
 				// Obtain data from the logstream!
-				$reportData = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 10, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
+				$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 10, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
 
 				// If data is valid, we have an array!
-				if ( is_array($reportData) && count($reportData) > 0 )
+				if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
 				{
-					foreach ($reportData as &$tmpReportData )
+					foreach ($content["report_summary"] as &$tmpReportData )
 					{
 						$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
+						$tmpReportData['bgcolor'] = $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
 					}
 				}
 
+				// Get List of hosts
+				$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, 20, SYSLOG_HOST, SORTING_ORDER_DESC );
 
-print_r ( $reportData );
+				// This function will consolidate the Events based per Host!
+				$this->ConsolidateEventsPerHost();
+
+/*				// If data is valid, we have an array!
+				if ( is_array($content["report_computers"]) && count($content["report_computers"]) > 0 )
+				{
+					foreach ($content["report_computers"] as &$tmpReportComputer )
+					{
+						$tmpReportComputer['report_events'] = $this->_streamObj->ConsolidateDataByField( SYSLOG_MESSAGE, 100, SYSLOG_MESSAGE, SORTING_ORDER_DESC, null, false );
+
+						print_r ( $tmpReportComputer['report_events'] );
+					}
+				}
+*/
+
+print_r ( $content["report_computers"] );
 exit;
 
 				// ---
@@ -204,7 +223,38 @@ exit;
 	}
 
 
-	// Private functions...
+	// --- Private functions...
+
+
+	/**
+	*	Helper function to consolidate events 
+	*/
+	private function ConsolidateEventsPerHost()
+	{
+		// Create array with columns we need for analysis
+		$reportFields[] = SYSLOG_UID;
+		$reportFields[] = SYSLOG_DATE;
+		$reportFields[] = SYSLOG_HOST;
+		$reportFields[] = SYSLOG_SEVERITY;
+		$reportFields[] = SYSLOG_EVENT_ID;
+		$reportFields[] = SYSLOG_EVENT_SOURCE;
+		$reportFields[] = SYSLOG_MESSAGE;
+		
+		// Set Filter string
+		$this->_streamObj->SetFilter( $this->_filterString );
+
+		// Now open the stream for data processing
+		$res = $this->_streamObj->Open( $reportFields, true );
+		if ( $res == SUCCESS )
+		{
+
+
+
+		}
+
+		// Work done!
+		return SUCCESS;
+	}
 /*
 	private function ResetBuffer() {
 		$this->_bEOS = false;
