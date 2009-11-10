@@ -56,6 +56,9 @@ class Report_monilog extends Report {
 	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
 	public $_reportInitialized = false;							// True means report is installed
 
+	// Advanced Report Options
+	private $_maxHosts = 20;									// Threshold for maximum hosts to analyse!
+	private $_maxEventsPerHost = 100;							// Threshold for maximum amount of events to analyse per host
 /*	private $_currentOffset = -1;
 	private $_currentStartPos = -1;
 	private $_fp = null;
@@ -75,14 +78,14 @@ class Report_monilog extends Report {
 		$this->_arrProperties[] = SYSLOG_UID;
 		$this->_arrProperties[] = SYSLOG_DATE;
 		$this->_arrProperties[] = SYSLOG_HOST;
-		$this->_arrProperties[] = SYSLOG_MESSAGETYPE;
-		$this->_arrProperties[] = SYSLOG_FACILITY;
+//		$this->_arrProperties[] = SYSLOG_MESSAGETYPE;
+//		$this->_arrProperties[] = SYSLOG_FACILITY;
 		$this->_arrProperties[] = SYSLOG_SEVERITY;
 		$this->_arrProperties[] = SYSLOG_EVENT_ID;
-		$this->_arrProperties[] = SYSLOG_EVENT_LOGTYPE;
+//		$this->_arrProperties[] = SYSLOG_EVENT_LOGTYPE;
 		$this->_arrProperties[] = SYSLOG_EVENT_SOURCE;
-		$this->_arrProperties[] = SYSLOG_EVENT_CATEGORY;
-		$this->_arrProperties[] = SYSLOG_EVENT_USER;
+//		$this->_arrProperties[] = SYSLOG_EVENT_CATEGORY;
+//		$this->_arrProperties[] = SYSLOG_EVENT_USER;
 		$this->_arrProperties[] = SYSLOG_MESSAGE;
 
 	}
@@ -101,14 +104,14 @@ class Report_monilog extends Report {
 		if ( $this->verifyDataSource() == SUCCESS ) 
 		{
 			// Test opening the stream
-			$res = $this->_streamObj->Open( $this->_arrProperties, true );
-			if ( $res == SUCCESS )
+//			$res = $this->_streamObj->Open( $this->_arrProperties, true );
+//			if ( $res == SUCCESS )
 			{
 				// --- Report logic starts here
 
 				// Step 1: Gather Summaries 
 				// Obtain data from the logstream!
-				$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 10, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
+				$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 0, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
 
 				// If data is valid, we have an array!
 				if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
@@ -121,28 +124,16 @@ class Report_monilog extends Report {
 				}
 
 				// Get List of hosts
-				$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, 20, SYSLOG_HOST, SORTING_ORDER_DESC );
+				$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
+
+				// Create plain hosts list for Consolidate function
+				foreach ( $content["report_computers"] as $tmpComputer ) 
+					$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
 
 				// This function will consolidate the Events based per Host!
-				$this->ConsolidateEventsPerHost();
-
-/*				// If data is valid, we have an array!
-				if ( is_array($content["report_computers"]) && count($content["report_computers"]) > 0 )
-				{
-					foreach ($content["report_computers"] as &$tmpReportComputer )
-					{
-						$tmpReportComputer['report_events'] = $this->_streamObj->ConsolidateDataByField( SYSLOG_MESSAGE, 100, SYSLOG_MESSAGE, SORTING_ORDER_DESC, null, false );
-
-						print_r ( $tmpReportComputer['report_events'] );
-					}
-				}
-*/
-
-print_r ( $content["report_computers"] );
-exit;
+				$this->ConsolidateEventsPerHost($arrHosts);
 
 				// ---
-
 			}
 
 		}
@@ -151,44 +142,6 @@ exit;
 		return SUCCESS;
 	}
 
-
-	/**
-	* verifyDataSource, verifies if data is accessable and 
-	* contains what we need
-	*
-	* @param arrProperties array in: Properties wish list.
-	* @return integer Error stat
-	*/
-	public function verifyDataSource()
-	{
-		global $content; 
-
-		if ( $this->_streamCfgObj == null ) 
-		{
-			if ( isset($content['Sources'][$this->_mySourceID]['ObjRef']) )
-			{
-				// Obtain and get the Config Object
-				$this->_streamCfgObj = $content['Sources'][$this->_mySourceID]['ObjRef'];
-
-				// Fix Filename manually for FILE LOGSTREAM!
-				if ( $content['Sources'][$this->_mySourceID]['SourceType'] == SOURCE_DISK ) 
-					$this->_streamCfgObj->FileName = CheckAndPrependRootPath(DB_StripSlahes($content['Sources'][$this->_mySourceID]['DiskFile']));
-			}
-			else
-				return ERROR_SOURCENOTFOUND;
-		}
-
-		if ( $this->_streamObj == null ) 
-		{
-			// Create LogStream Object 
-			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
-		}
-
-		// Check datasource and return result
-		$res = $this->_streamObj->Verify();
-		return $res;
-	}
-	
 
 	/**
 	* InitReport, empty
@@ -229,27 +182,91 @@ exit;
 	/**
 	*	Helper function to consolidate events 
 	*/
-	private function ConsolidateEventsPerHost()
+	private function ConsolidateEventsPerHost( $arrHosts )
 	{
-		// Create array with columns we need for analysis
-		$reportFields[] = SYSLOG_UID;
-		$reportFields[] = SYSLOG_DATE;
-		$reportFields[] = SYSLOG_HOST;
-		$reportFields[] = SYSLOG_SEVERITY;
-		$reportFields[] = SYSLOG_EVENT_ID;
-		$reportFields[] = SYSLOG_EVENT_SOURCE;
-		$reportFields[] = SYSLOG_MESSAGE;
+		global $content; 
 		
 		// Set Filter string
 		$this->_streamObj->SetFilter( $this->_filterString );
 
 		// Now open the stream for data processing
-		$res = $this->_streamObj->Open( $reportFields, true );
+		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
+			// Set reading direction
+			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
 
+			// Init uid helper
+			$uID = UID_UNKNOWN;
+			
+			// Start reading data
+			$ret = $this->_streamObj->Read($uID, $logArray);
+			
+			// Found first data record
+			if ( $ret == SUCCESS )
+			{
+				do
+				{
+					// Check if Event from host is in our hosts array
+					if ( in_array($logArray[SYSLOG_HOST], $arrHosts) ) 
+					{
+						// Calc crc32 from message, we use this as index
+						$strChecksum = crc32( $logArray[SYSLOG_MESSAGE] ); 
 
+						// Check if entry exists in result array
+						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]) ) 
+						{
+							// Increment counter and set First/Last Event date
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['ItemCount']++; 
+							
+							// Set FirstEvent date if necessary!
+							if ( $logArray[SYSLOG_DATE] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
 
+							// Set LastEvent date if necessary!
+							if ( $logArray[SYSLOG_DATE] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+						}
+						else
+						{
+							// Set Basic data entries
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_EVENT_ID] = $logArray[SYSLOG_EVENT_ID]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_EVENT_SOURCE] = $logArray[SYSLOG_EVENT_SOURCE]; 
+
+							// Set Counter and First/Last Event date
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['ItemCount'] = 1; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+//GetFormatedDate
+						}
+
+					}
+					
+					// Get next data record
+					$ret = $this->_streamObj->ReadNext($uID, $logArray);
+
+				} while ( $ret == SUCCESS );
+
+				// Start Postprocessing
+				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
+				{
+					// First use callback function to sort array
+					uasort($tmpConsolidatedComputer, "MultiSortArrayByItemCountDesc");
+					
+					// Remove entries according to _maxEventsPerHost
+					if ( count($tmpConsolidatedComputer) > $this->_maxEventsPerHost )
+					{
+						do
+						{
+							array_pop($tmpConsolidatedComputer);
+						} while ( count($tmpConsolidatedComputer) > $this->_maxEventsPerHost ); 
+					}
+				}
+
+			}
+			else
+				return $ret;
 		}
 
 		// Work done!
@@ -263,8 +280,34 @@ exit;
 		$this->_p_buffer = -1;
 	}
 */
-
-
 }
+
+
+	/**
+	*	Helper function for multisorting multidimensional arrays
+	*/
+	function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
+	{
+		// Do not sort in this case
+		if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+			return 0;
+		
+		// Move up or down
+		return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
+	}
+
+	/**
+	*	Helper function for multisorting multidimensional arrays
+	*/
+	function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
+	{
+		// Do not sort in this case
+		if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+			return 0;
+		
+		// Move up or down
+		return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
+	}
+
 
 ?>

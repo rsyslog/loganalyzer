@@ -649,6 +649,35 @@ class LogStreamDisk extends LogStream {
 
 
 	/**
+	* Implementation of ConsolidateItemListByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder)
+	{
+		global $content, $dbmapping, $fields;
+
+// TODO!
+	}
+
+	/**
+	* Implementation of ConsolidateDataByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
+	{
+		global $content, $dbmapping, $fields;
+
+// TODO!
+	}
+
+
+	/**
 	* Implementation of GetCountSortedByField 
 	*
 	* For now, the disk source needs to loop through the whole file 

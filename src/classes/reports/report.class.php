@@ -99,13 +99,6 @@ abstract class Report {
 
 
 	/**
-	* This functions check if the data source is valid 
-	* Will return -1 on failure!
-	*/
-	public abstract function verifyDataSource();
-
-
-	/**
 	* This function inits data for the report
 	*/
 	public abstract function InitReport();
@@ -115,6 +108,44 @@ abstract class Report {
 	* This function removes data for the report
 	*/
 	public abstract function RemoveReport();
+
+
+	/**
+	* verifyDataSource, verifies if data is accessable and 
+	* contains what we need
+	*
+	* @param arrProperties array in: Properties wish list.
+	* @return integer Error stat
+	*/
+	public function verifyDataSource()
+	{
+		global $content; 
+
+		if ( $this->_streamCfgObj == null ) 
+		{
+			if ( isset($content['Sources'][$this->_mySourceID]['ObjRef']) )
+			{
+				// Obtain and get the Config Object
+				$this->_streamCfgObj = $content['Sources'][$this->_mySourceID]['ObjRef'];
+
+				// Fix Filename manually for FILE LOGSTREAM!
+				if ( $content['Sources'][$this->_mySourceID]['SourceType'] == SOURCE_DISK ) 
+					$this->_streamCfgObj->FileName = CheckAndPrependRootPath(DB_StripSlahes($content['Sources'][$this->_mySourceID]['DiskFile']));
+			}
+			else
+				return ERROR_SOURCENOTFOUND;
+		}
+
+		if ( $this->_streamObj == null ) 
+		{
+			// Create LogStream Object 
+			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
+		}
+
+		// Check datasource and return result
+		$res = $this->_streamObj->Verify();
+		return $res;
+	}
 
 
 	/**
