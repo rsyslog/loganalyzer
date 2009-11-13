@@ -37,6 +37,7 @@ $gl_root_path = './../';
 
 // Now include necessary include files!
 include_once($gl_root_path . 'include/functions_common.php');
+include_once($gl_root_path . 'include/functions_frontendhelpers.php');
 //include_once($gl_root_path . 'include/functions_debugoutput.php');
 
 // Set commandline mode for the script
