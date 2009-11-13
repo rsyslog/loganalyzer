@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{report_title}</title>
+
+	<link rel="stylesheet" href="{BASEPATH}css/defaults.css" type="text/css">
+	<link rel="stylesheet" href="{BASEPATH}themes/{user_theme}/main.css" type="text/css">
+	<link rel="stylesheet" href="{BASEPATH}css/menu.css" type="text/css">
+
+</head>
+<body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td class="title" width="100%" nowrap><B>{report_title}</B></td>
+	</td>
+</tr>
+<tr>
+	<td class="titleSecond" width="100%" align="left">{report_comment}</td>
+</tr>
+</table>
+
+<br/><br/>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td class="title" width="100%" nowrap><B>{report_summary}</B></td>
+	</td>
+</tr>
+<tr>
+	<td class="tableBackground" width="100%" align="left">
+	
+	<table width="200" cellpadding="0" cellspacing="1" border="0" align="left" class="with_border_alternate">
+	<tr>
+		<td class="cellmenu1" colspan="2" align="center">{report_event_summary}</td>
+	</tr>
+	<!-- BEGIN report_summary -->
+	<tr>
+		<td class="cellmenu2">{DisplayName}</td>
+		<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{ItemCount}</b></td>
+	</tr>
+	<!-- END report_summary -->
+	</table>
+
+	<table width="600" cellpadding="0" cellspacing="1" border="0" align="right" class="with_border_alternate">
+	<tr>
+		<td class="cellmenu1" colspan="2" align="center">{report_computer_summary}</td>
+	</tr>
+	<tr>
+		<td class="line1">
+	<!-- BEGIN report_computers -->
+		<a href="#{FROMHOST}">{FROMHOST}</a>({ItemCount}), 
+	<!-- END report_computers -->
+		</td>
+	</tr>
+	</table>
+	
+	</td>
+</tr>
+</table>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td class="title" width="100%" nowrap><B>{report_consolidation}</B></td>
+	</td>
+</tr>
+</table>
+
+
+<!-- BEGIN report_consdata -->
+	<br/><br/>
+	<h3><a name="{FROMHOST}">{FROMHOST}</a></h3>
+
+	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
+	<tr>
+		<td class="cellmenu1" align="center" width="50">{report_number}</td>
+		<td class="cellmenu1" align="center" width="100">{report_firstevent}</td>
+		<td class="cellmenu1" align="center" width="100">{report_lastevent}</td>
+		<td class="cellmenu1" align="center" width="150">{report_process}</td>
+		<td class="cellmenu1" align="center" width="100">{report_severity}</td>
+		<td class="cellmenu1" align="center" width="80">{report_eventid}</td>
+		<td class="cellmenu1" align="center" width="100%">{report_description}</td>
+		<td class="cellmenu1" align="center" width="50">{report_count}</td>
+	</tr>
+	<!-- BEGIN cons_events -->
+	<tr>
+		<td class="line1" valign="top">{ZAEHLER}</td>
+		<td class="line1" valign="top">{FirstEvent_Date}</td>
+		<td class="line1" valign="top">{LastEvent_date}</td>
+		<td class="line1" valign="top">{sourceproc}</td>
+		<td class="line1" valign="top">{syslogseverity}</td>
+		<td class="line1" valign="top">{id}</td>
+		<td class="line1" valign="top">{msg}</td>
+		<!-- IF ItemCount > 10 -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="red"><b>{ItemCount}</b></td>
+		<!-- ENDIF ItemCount > 10 -->
+		<!-- IF ItemCount < 10 -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{ItemCount}</b></td>
+		<!-- ENDIF ItemCount < 10 -->
+		
+	</tr>
+
+	<!-- END cons_events -->
+	</table>
+
+<!-- END report_consdata -->
+
+</body> 
+</html>

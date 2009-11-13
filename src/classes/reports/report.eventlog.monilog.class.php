@@ -103,39 +103,50 @@ class Report_monilog extends Report {
 		// Verify Datasource first!
 		if ( $this->verifyDataSource() == SUCCESS ) 
 		{
-			// Test opening the stream
-//			$res = $this->_streamObj->Open( $this->_arrProperties, true );
-//			if ( $res == SUCCESS )
+			// Get Settings and set to global content variable 
+			$content["report_title"] = $this->GetCustomTitle();
+			$content["report_comment"] = $this->GetCustomComment();
+
+			// --- Report logic starts here
+
+			// Step 1: Gather Summaries 
+			// Obtain data from the logstream!
+			$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 0, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
+
+			// If data is valid, we have an array!
+			if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
 			{
-				// --- Report logic starts here
+				// Count Total Events
+				$iTotalEvents = 0;
 
-				// Step 1: Gather Summaries 
-				// Obtain data from the logstream!
-				$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 0, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
-
-				// If data is valid, we have an array!
-				if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
+				foreach ($content["report_summary"] as &$tmpReportData )
 				{
-					foreach ($content["report_summary"] as &$tmpReportData )
-					{
-						$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
-						$tmpReportData['bgcolor'] = $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
-					}
+					$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
+					$tmpReportData['bgcolor'] = $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
+
+					$iTotalEvents += $tmpReportData['ItemCount']; 
 				}
 
-				// Get List of hosts
-				$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
+				// Prepent Item with totalevents count
+				$totalItem['DisplayName'] = "Total Events"; 
+				$totalItem['bgcolor'] = "999999";
+				$totalItem['ItemCount'] = $iTotalEvents; 
 
-				// Create plain hosts list for Consolidate function
-				foreach ( $content["report_computers"] as $tmpComputer ) 
-					$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
-
-				// This function will consolidate the Events based per Host!
-				$this->ConsolidateEventsPerHost($arrHosts);
-
-				// ---
+				// Prepent to array
+				array_unshift( $content["report_summary"], $totalItem );
 			}
 
+			// Get List of hosts
+			$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
+
+			// Create plain hosts list for Consolidate function
+			foreach ( $content["report_computers"] as $tmpComputer ) 
+				$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
+
+			// This function will consolidate the Events based per Host!
+			$this->ConsolidateEventsPerHost($arrHosts);
+
+			// ---
 		}
 		
 		// Return success!
@@ -210,34 +221,41 @@ class Report_monilog extends Report {
 					// Check if Event from host is in our hosts array
 					if ( in_array($logArray[SYSLOG_HOST], $arrHosts) ) 
 					{
+						// Set Host Item Basics if not set yet
+						if ( !isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST]) )
+						{
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST] = $logArray[SYSLOG_HOST]; 
+						}
+
 						// Calc crc32 from message, we use this as index
 						$strChecksum = crc32( $logArray[SYSLOG_MESSAGE] ); 
 
 						// Check if entry exists in result array
-						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]) ) 
+						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]) ) 
 						{
 							// Increment counter and set First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['ItemCount']++; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount']++; 
 							
 							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
 
 							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
 							// Set Basic data entries
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_EVENT_ID] = $logArray[SYSLOG_EVENT_ID]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ][SYSLOG_EVENT_SOURCE] = $logArray[SYSLOG_EVENT_SOURCE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_EVENT_ID] = $logArray[SYSLOG_EVENT_ID]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_EVENT_SOURCE] = $logArray[SYSLOG_EVENT_SOURCE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
 
 							// Set Counter and First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount'] = 1; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
 //GetFormatedDate
 						}
 
@@ -252,15 +270,15 @@ class Report_monilog extends Report {
 				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
 				{
 					// First use callback function to sort array
-					uasort($tmpConsolidatedComputer, "MultiSortArrayByItemCountDesc");
+					uasort($tmpConsolidatedComputer['cons_events'], "MultiSortArrayByItemCountDesc");
 					
 					// Remove entries according to _maxEventsPerHost
-					if ( count($tmpConsolidatedComputer) > $this->_maxEventsPerHost )
+					if ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost )
 					{
 						do
 						{
-							array_pop($tmpConsolidatedComputer);
-						} while ( count($tmpConsolidatedComputer) > $this->_maxEventsPerHost ); 
+							array_pop($tmpConsolidatedComputer['cons_events']);
+						} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
 					}
 				}
 

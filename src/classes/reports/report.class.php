@@ -196,7 +196,7 @@ abstract class Report {
 		$this->_outputFormat = $newOutputType; 
 
 		// Set Filebasename
-		$this->_baseFileName = $this->_reportID . ".template." . $this->_outputFormat;
+		$this->_baseFileName = $this->_reportFileBasicName . ".template." . $this->_outputFormat;
 	}
 
 	/*
@@ -272,6 +272,33 @@ abstract class Report {
 	}
 
 	/*
+	* Helper function to return the BaseFileName
+	*/
+	public function GetBaseFileName()
+	{
+		// return Filebasename
+		return $this->_baseFileName; 
+	}
+
+	/*
+	* Helper function to return the CustomTitle
+	*/
+	public function GetCustomTitle()
+	{
+		// return Filebasename
+		return $this->_customTitle; 
+	}
+
+	/*
+	* Helper function to return the CustomComment
+	*/
+	public function GetCustomComment()
+	{
+		// return Filebasename
+		return $this->_customComment; 
+	}
+
+	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
@@ -284,6 +311,8 @@ abstract class Report {
 	*/
 	public function InitFromSavedReport( $mySavedReport )
 	{
+		global $content; 
+
 		// Copy settings from saved report!
 		$this->SetSourceID( $mySavedReport["sourceid"] );
 		$this->SetCustomTitle( $mySavedReport["customTitle"] );

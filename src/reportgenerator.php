@@ -203,14 +203,19 @@ if ( !$content['error_occured'] )
 					}
 					else
 					{
-						// Perform report output
-						InitTemplateParser();
-						echo $myReportObj->_baseFileName; 
-						exit;
+						// --- Perform report output
 
-						$page -> parser($content, "reportgenerator.html");
+						// Init template Parser
+						$page = new Template();
+						$page -> set_path ( $gl_root_path . 'classes/reports/' );
+
+						// Parse template
+						$page -> parser($content, $myReportObj->GetBaseFileName());
+
+						// Output to browser 
 						$page -> output(); 
 
+						// --- 
 					}
 				}
 			}
