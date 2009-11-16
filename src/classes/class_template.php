@@ -237,6 +237,29 @@ function template_parser_sub($template,  $values)
 		}
 	}
 	
+	if (preg_match_all( '<!-- IF ([a-zA-Z0-9_]+)([!<>]+)([^"]*) -->',  $template,  $matches,  PREG_SET_ORDER) )
+	{
+//			echo $matches[0][1];
+//			echo $matches[0][2];
+//			echo $matches[0][3];
+//			exit;
+		
+		foreach ($matches as $block) {
+			$blockname  =  $block[1];
+			$cmp    =  $block[2];
+			$blockvalue  =  $block[3];
+			if ( ($cmp == '>' && @$values[$blockname] > $blockvalue) || ($cmp == '<' && @$values[$blockname] < $blockvalue) )
+			{
+				$template  =  str_replace( "<!-- IF $blockname$cmp$blockvalue -->",  "",  $template );
+				$template  =  str_replace( "<!-- ENDIF $blockname$cmp$blockvalue -->",  "",  $template );
+			}
+			else if ($blockend  =  strpos( $template,  "<!-- ENDIF $blockname$cmp$blockvalue -->"))
+			{
+				$blockbeg  =  strpos($template,  "<!-- IF $blockname$cmp$blockvalue -->");
+				$template  =  substr($template,  0,  $blockbeg)  .  substr($template,  $blockend + 18 + strlen($blockname) + strlen($blockvalue) + strlen($cmp));
+			}
+		}
+	}
 	
 	
 	return $template;

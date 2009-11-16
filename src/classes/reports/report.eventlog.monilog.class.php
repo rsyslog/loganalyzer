@@ -145,7 +145,6 @@ class Report_monilog extends Report {
 
 			// This function will consolidate the Events based per Host!
 			$this->ConsolidateEventsPerHost($arrHosts);
-
 			// ---
 		}
 		
@@ -237,12 +236,12 @@ class Report_monilog extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount']++; 
 							
 							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
 
 							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
 						}
 						else
 						{
@@ -254,8 +253,8 @@ class Report_monilog extends Report {
 
 							// Set Counter and First/Last Event date
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_date'] = $logArray[SYSLOG_DATE];
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
 //GetFormatedDate
 						}
 
