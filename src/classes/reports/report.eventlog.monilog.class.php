@@ -236,12 +236,12 @@ class Report_monilog extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount']++; 
 							
 							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
 
 							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
@@ -253,9 +253,8 @@ class Report_monilog extends Report {
 
 							// Set Counter and First/Last Event date
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP];
-//GetFormatedDate
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
 						}
 
 					}
@@ -279,6 +278,17 @@ class Report_monilog extends Report {
 							array_pop($tmpConsolidatedComputer['cons_events']);
 						} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
 					}
+
+
+					// PostProcess Events!
+					foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 
+					{
+						$tmpMyEvent['FirstEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstEvent_Date'] );
+						$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastEvent_Date'] );
+						$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+					}
+
+
 				}
 
 			}

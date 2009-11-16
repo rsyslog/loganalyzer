@@ -1066,7 +1066,7 @@ function VerifyLanguage( $mylang )
 		return false;
 }
 
-function IncludeLanguageFile( $langfile ) 
+function IncludeLanguageFile( $langfile, $failOnError = true ) 
 {
 	global $LANG, $LANG_EN; 
 
@@ -1078,7 +1078,12 @@ function IncludeLanguageFile( $langfile )
 	if ( file_exists($langengfile) )
 		include( $langengfile );
 	else
-		DieWithErrorMsg( "FATAL Error initialzing sublanguage system. Please make sure that all files have been uploaded correctly." );
+	{
+		if ( $failOnError ) 
+			DieWithErrorMsg( "FATAL Error initialzing sublanguage system. Please make sure that all files have been uploaded correctly." );
+		else
+			return false; 
+	}
 	
 	// If nto english, load the additional translations
 	if ( $LANG != "en" ) 
@@ -1086,7 +1091,12 @@ function IncludeLanguageFile( $langfile )
 		if ( file_exists( $langfile ) )
 			include( $langfile );
 		else
-			OutputDebugMessage("FATAL Error reading the configured language $LANG. Please make sure that all files have been uploaded correctly.", DEBUG_ERROR);
+		{
+			if ( $failOnError ) 
+				OutputDebugMessage("FATAL Error reading the configured language $LANG. Please make sure that all files have been uploaded correctly.", DEBUG_ERROR);
+			else
+				return false; 
+		}
 	}
 }
 

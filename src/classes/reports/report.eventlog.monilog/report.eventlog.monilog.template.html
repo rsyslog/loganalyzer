@@ -3,9 +3,12 @@
 <head>
 	<title>{report_title}</title>
 
+	<style type="text/css">
+	<-- INCLUDE ../../css/defaults.css --> 
+	</style>
+
 	<link rel="stylesheet" href="{BASEPATH}css/defaults.css" type="text/css">
 	<link rel="stylesheet" href="{BASEPATH}themes/{user_theme}/main.css" type="text/css">
-	<link rel="stylesheet" href="{BASEPATH}css/menu.css" type="text/css">
 
 </head>
 <body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
@@ -24,7 +27,7 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td class="title" width="100%" nowrap><B>{report_summary}</B></td>
+	<td class="title" width="100%" nowrap><B>{ln_report_summary}</B></td>
 	</td>
 </tr>
 <tr>
@@ -32,7 +35,7 @@
 	
 	<table width="200" cellpadding="0" cellspacing="1" border="0" align="left" class="with_border_alternate">
 	<tr>
-		<td class="cellmenu1" colspan="2" align="center">{report_event_summary}</td>
+		<td class="cellmenu1" colspan="2" align="center">{ln_report_event_summary}</td>
 	</tr>
 	<!-- BEGIN report_summary -->
 	<tr>
@@ -44,7 +47,7 @@
 
 	<table width="600" cellpadding="0" cellspacing="1" border="0" align="right" class="with_border_alternate">
 	<tr>
-		<td class="cellmenu1" colspan="2" align="center">{report_computer_summary}</td>
+		<td class="cellmenu1" colspan="2" align="center">{ln_report_computer_summary}</td>
 	</tr>
 	<tr>
 		<td class="line1">
@@ -61,7 +64,7 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td class="title" width="100%" nowrap><B>{report_consolidation}</B></td>
+	<td class="title" width="100%" nowrap><B>{ln_report_consolidation}</B></td>
 	</td>
 </tr>
 </table>
@@ -73,26 +76,26 @@
 
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
-		<td class="cellmenu1" align="center" width="50">{report_number}</td>
-		<td class="cellmenu1" align="center" width="100">{report_firstevent}</td>
-		<td class="cellmenu1" align="center" width="100">{report_lastevent}</td>
-		<td class="cellmenu1" align="center" width="150">{report_process}</td>
-		<td class="cellmenu1" align="center" width="100">{report_severity}</td>
-		<td class="cellmenu1" align="center" width="80">{report_eventid}</td>
-		<td class="cellmenu1" align="center" width="100%">{report_description}</td>
-		<td class="cellmenu1" align="center" width="50">{report_count}</td>
+		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_number}</td>
+		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_firstevent}</td>
+		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_lastevent}</td>
+		<td class="cellmenu1" align="center" width="150" nowrap>{ln_report_process}</td>
+		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_severity}</td>
+		<td class="cellmenu1" align="center" width="80" nowrap>{ln_report_eventid}</td>
+		<td class="cellmenu1" align="center" width="100%" nowrap>{ln_report_description}</td>
+		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 	</tr>
 	<!-- BEGIN cons_events -->
 	<tr>
-		<td class="line1" valign="top">{ZAEHLER}</td>
-		<td class="line1" valign="top">{FirstEvent_Date}</td>
-		<td class="line1" valign="top">{LastEvent_Date}</td>
-		<td class="line1" valign="top">{sourceproc}</td>
-		<td class="line1" valign="top">{syslogseverity}</td>
-		<td class="line1" valign="top">{id}</td>
-		<td class="line1" valign="top">{msg}</td>
+		<td class="line1" valign="top" align="center">{ZAEHLER}</td>
+		<td class="line1" valign="top" align="center">{FirstEvent_Date_Formatted}</td>
+		<td class="line1" valign="top" align="center">{LastEvent_Date_Formatted}</td>
+		<td class="line1" valign="top" align="center">{sourceproc}</td>
+		<td class="line1" valign="top" align="center">{syslogseverity_text}</td>
+		<td class="line1" valign="top" align="center">{id}</td>
+		<td class="line1" valign="top" align="left">{msg}</td>
 		<!-- IF ItemCount>10 -->
-			<td class="lineColouredWhite" valign="top" align="right" bgcolor="red"><b>{ItemCount}</b></td>
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{ItemCount}</b></td>
 		<!-- ENDIF ItemCount>10 -->
 		<!-- IF ItemCount<11 -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{ItemCount}</b></td>
