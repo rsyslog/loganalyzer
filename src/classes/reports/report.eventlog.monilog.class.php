@@ -100,9 +100,17 @@ class Report_monilog extends Report {
 	{
 		global $content, $severity_colors; 
 
-		// Verify Datasource first!
-		if ( $this->verifyDataSource() == SUCCESS ) 
+		// Set Filter string
+		$this->_streamObj->SetFilter( $this->_filterString );
+
+		// Need to Open stream first!
+		$res = $this->_streamObj->Open( $this->_arrProperties, true );
+		if ( $res == SUCCESS )
 		{
+//
+//		// Verify Datasource first!
+//		if ( $this->verifyDataSource() == SUCCESS ) 
+//		{
 			// Get Settings and set to global content variable 
 			$content["report_title"] = $this->GetCustomTitle();
 			$content["report_comment"] = $this->GetCustomComment();
@@ -147,6 +155,8 @@ class Report_monilog extends Report {
 			$this->ConsolidateEventsPerHost($arrHosts);
 			// ---
 		}
+		else
+			return $ret;
 		
 		// Return success!
 		return SUCCESS;
@@ -197,7 +207,7 @@ class Report_monilog extends Report {
 		global $content; 
 		
 		// Set Filter string
-		$this->_streamObj->SetFilter( $this->_filterString );
+//		$this->_streamObj->SetFilter( $this->_filterString );
 
 		// Now open the stream for data processing
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );

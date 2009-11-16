@@ -668,11 +668,20 @@ class LogStreamDB extends LogStream {
 		else
 			$szLimitSql = "";
 
+		// Create SQL Where Clause!
+		if ( $this->_SQLwhereClause == "" ) 
+		{
+			$res = $this->CreateSQLWhereClause();
+			if ( $res != SUCCESS ) 
+				return $res;
+		}
+
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
 					"count(" . $myDBConsFieldName . ") as ItemCount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
@@ -724,7 +733,7 @@ class LogStreamDB extends LogStream {
 
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		
+
 		// Check if fields are available 
 		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
 			return ERROR_DB_DBFIELDNOTFOUND;
@@ -790,11 +799,20 @@ class LogStreamDB extends LogStream {
 		else
 			$szLimitSql = "";
 
+		// Create SQL Where Clause!
+		if ( $this->_SQLwhereClause == "" ) 
+		{
+			$res = $this->CreateSQLWhereClause();
+			if ( $res != SUCCESS ) 
+				return $res;
+		}
+
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
 					"count(" . $myDBConsFieldName . ") as ItemCount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
@@ -1294,6 +1312,8 @@ class LogStreamDB extends LogStream {
 		
 		// Output Debug Informations
 		OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+
+//print ("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql);
 
 		// return success state if reached this point!
 		return SUCCESS;
