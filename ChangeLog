@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 2.7.3 (beta), 2009-11-17
+- Merged bugfixes and changes from 2.6.5 stable into beta branch 
+---------------------------------------------------------------------------
+Version 2.6.5 (v2-stable), 2009-11-17
+- Fixed wrong include in maintenance.php which caused the script to fail
+---------------------------------------------------------------------------
 Version 2.7.2 (beta), 2009-08-17
 - Merged bugfixes and changes from 2.6.4 stable into beta branch 
 ---------------------------------------------------------------------------
