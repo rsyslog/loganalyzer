@@ -682,97 +682,289 @@ class LogStreamPDO extends LogStream {
 
 
 	/**
+	* Implementation of ConsolidateItemListByField 
+	*
+	* In the native MYSQL Logstream, the database will do most of the work
+	*
+	* @return integer Error stat
+	*/
+	public function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder)
+	{
+		global $content, $dbmapping, $fields;
+
+		// Copy helper variables, this is just for better readability
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		
+		// Check if fields are available 
+		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
+			return ERROR_DB_DBFIELDNOTFOUND;
+
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+
+		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
+			$szSortingOrder = "DESC"; 
+		else
+			$szSortingOrder = "ASC"; 
+		// --- 
+
+		// --- Set DB Field names
+		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
+		$myDBGroupByFieldName = $myDBConsFieldName;
+		$myDBQueryFields = $myDBConsFieldName . ", ";
+
+		// Set Sorted Field
+		if ( $szConsFieldId == $szSortFieldId ) 
+			$myDBSortedFieldName = "ItemCount"; 
+		else
+			$myDBSortedFieldName = $szSortFieldId; 
+		// --- 
+		
+		// Special handling for date fields
+		if ( $nConsFieldType == FILTER_TYPE_DATE )
+		{
+			if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+					$this->_logStreamConfigObj->DBType == DB_PGSQL )
+			{
+				// Helper variable for the select statement
+				$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+				$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
+			}
+			else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
+			{
+				// TODO FIND A WAY FOR MSSQL!
+			}
+		}
+
+		// Set Limit String
+		if ( $nRecordLimit > 0 ) 
+		{
+			// Append LIMIT in this case!
+			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+							$this->_logStreamConfigObj->DBType == DB_PGSQL )
+				$szLimitSql = " LIMIT " . $nRecordLimit;
+			else
+				$szLimitSql = "";
+			// TODO FIND A WAY FOR MSSQL!
+		}
+		else
+			$szLimitSql = "";
+
+		// Create SQL Where Clause!
+		if ( $this->_SQLwhereClause == "" ) 
+		{
+			$res = $this->CreateSQLWhereClause();
+			if ( $res != SUCCESS ) 
+				return $res;
+		}
+
+		// Create SQL String now!
+		$szSql =	"SELECT " . 
+					$myDBQueryFields .  
+					"count(" . $myDBConsFieldName . ") as ItemCount " . 
+					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					$this->_SQLwhereClause . 
+					" GROUP BY " . $myDBGroupByFieldName . 
+					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
+					$szLimitSql ;
+
+		// Perform Database Query
+		$this->_myDBQuery = $this->_dbhandle->query($szSql);
+		if ( !$this->_myDBQuery ) 
+			return ERROR_DB_QUERYFAILED;
+
+		if ( $this->_myDBQuery->rowCount() == 0 )
+		{
+			$this->_myDBQuery = null;
+			return ERROR_NOMORERECORDS;
+		}
+
+		// Initialize Array variable
+		$aResult = array();
+
+		// Init Helper counter
+		$iCount = 0;
+
+		// read data records
+		while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
+		{
+			// Create new row
+			$aNewRow = array();
+
+			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			{
+				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
+					$aNewRow[$szConsFieldId] = $myFieldValue;
+				else
+					$aNewRow[$myFieldName] = $myFieldValue;
+			}
+
+			// Increment Counter
+			$iCount++;
+
+			// Add new row to result
+			$aResult[] = $aNewRow;
+		}
+
+		// Delete handle
+		$this->_myDBQuery = null;
+
+		// return finished array
+		if ( count($aResult) > 0 )
+			return $aResult;
+		else
+			return ERROR_NOMORERECORDS;
+	}
+
+
+	/**
 	* Implementation of ConsolidateDataByField 
 	*
 	* In the PDO DB Logstream, the database will do most of the work
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
 	{
-		global $content, $dbmapping;
+		global $content, $dbmapping, $fields;;
 
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId]) )
+		// Check if fields are available 
+		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
+			return ERROR_DB_DBFIELDNOTFOUND;
+
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+
+		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
+			$szSortingOrder = "DESC"; 
+		else
+			$szSortingOrder = "ASC"; 
+		// --- 
+
+		// --- Set DB Field names
+		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
+		$myDBGroupByFieldName = $myDBConsFieldName;
+
+		// Check which fields to include
+		if ( $aIncludeCustomFields != null ) 
 		{
-			// Get FieldType 
-			$nFieldType = $fields[$szFieldId]['FieldType'];
-
-			// Set DB Field name first!
-			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
-			$myDBQueryFieldName = $myDBFieldName;
-			$mySelectFieldName = $myDBFieldName;
-
-			// Special handling for date fields
-			if ( $nFieldType == FILTER_TYPE_DATE )
+			$myDBQueryFields = "";
+			foreach ( $aIncludeCustomFields as $myFieldName ) 
 			{
-				if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
-						$this->_logStreamConfigObj->DBType == DB_PGSQL )
-				{
-					// Helper variable for the select statement
-					$mySelectFieldName = $mySelectFieldName . "grouped";
-					$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
-				}
-				else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
-				{
-					// TODO FIND A WAY FOR MSSQL!
-				}
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 			}
+			
+			// Append Sortingfield
+			if ( !in_array($szConsFieldId, $aIncludeCustomFields) )
+				$myDBQueryFields .= $myDBConsFieldName . ", ";
+		}
+		else if ( $bIncludeLogStreamFields ) 
+		{
+			$myDBQueryFields = "";
+			foreach ( $this->_arrProperties as $myFieldName ) 
+			{
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
+			}
+		}
+		else // Only Include ConsolidateField
+			$myDBQueryFields = $myDBConsFieldName . ", ";
 
-			// Create SQL String now!
-			$szSql =	"SELECT " . 
-						$myDBQueryFieldName . ", " . 
-						"count(" . $myDBFieldName . ") as totalcount " . 
-						" FROM " . $this->_logStreamConfigObj->DBTableName . 
-						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY totalcount DESC"; 
+		if ( $szConsFieldId == $szSortFieldId ) 
+			$myDBSortedFieldName = "ItemCount"; 
+		else
+			$myDBSortedFieldName = $szSortFieldId; 
+		// --- 
+
+		// Special handling for date fields
+		if ( $nConsFieldType == FILTER_TYPE_DATE )
+		{
+			if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
+					$this->_logStreamConfigObj->DBType == DB_PGSQL )
+			{
+				// Helper variable for the select statement
+				$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+				$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
+			}
+			else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
+			{
+				// TODO FIND A WAY FOR MSSQL!
+			}
+		}
+
+		// Set Limit String
+		if ( $nRecordLimit > 0 ) 
+		{
 			// Append LIMIT in this case!
 			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
 							$this->_logStreamConfigObj->DBType == DB_PGSQL )
-				$szSql .= " LIMIT " . $nRecordLimit; 
-
-			// Perform Database Query
-			$this->_myDBQuery = $this->_dbhandle->query($szSql);
-			if ( !$this->_myDBQuery ) 
-				return ERROR_DB_QUERYFAILED;
-
-			if ( $this->_myDBQuery->rowCount() == 0 )
-			{
-				$this->_myDBQuery = null;
-				return ERROR_NOMORERECORDS;
-			}
-
-			// Initialize Array variable
-			$aResult = array();
-
-			// read data records
-			$iCount = 0;
-			while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && $iCount < $nRecordLimit)
-			{
-				if ( isset($myRow[$mySelectFieldName]) )
-				{
-					$aResult[] = $myRow;
-//					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
-					$iCount++;
-				}
-			}
-
-			// Delete handle
-			$this->_myDBQuery = null;
-
-			// return finished array
-			if ( count($aResult) > 0 )
-				return $aResult;
+				$szLimitSql = " LIMIT " . $nRecordLimit;
 			else
-				return ERROR_NOMORERECORDS;
+				$szLimitSql = "";
+			// TODO FIND A WAY FOR MSSQL!
 		}
 		else
+			$szLimitSql = "";
+
+		// Create SQL String now!
+		$szSql =	"SELECT " . 
+					$myDBQueryFields .  
+					"count(" . $myDBConsFieldName . ") as ItemCount " . 
+					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					$this->_SQLwhereClause . 
+					" GROUP BY " . $myDBGroupByFieldName . 
+					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
+					$szLimitSql ;
+
+		// Perform Database Query
+		$this->_myDBQuery = $this->_dbhandle->query($szSql);
+		if ( !$this->_myDBQuery ) 
+			return ERROR_DB_QUERYFAILED;
+
+		if ( $this->_myDBQuery->rowCount() == 0 )
 		{
-			// return error code, field mapping not found
-			return ERROR_DB_DBFIELDNOTFOUND;
+			$this->_myDBQuery = null;
+			return ERROR_NOMORERECORDS;
 		}
+
+		// Initialize Array variable
+		$aResult = array();
+
+		// read data records
+		$iCount = 0;
+
+		while ( ($myRow = $this->_myDBQuery->fetch(PDO::FETCH_ASSOC)) && ($nRecordLimit == 0 || $iCount < $nRecordLimit) )
+		{
+			// Create new row
+			$aNewRow = array();
+
+			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			{
+				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
+					$aNewRow[$szConsFieldId] = $myFieldValue;
+				else
+					$aNewRow[$myFieldName] = $myFieldValue;
+			}
+
+			// Add new row to result
+			$aResult[] = $aNewRow;
+
+			// Increment Counter
+			$iCount++;
+		}
+
+		// Delete handle
+		$this->_myDBQuery = null;
+
+		// return finished array
+		if ( count($aResult) > 0 )
+			return $aResult;
+		else
+			return ERROR_NOMORERECORDS;
 	}
 
 

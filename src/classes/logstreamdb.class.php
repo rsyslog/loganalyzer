@@ -412,36 +412,6 @@ class LogStreamDB extends LogStream {
 			// Increment for the Footer Stats 
 			$querycount++;
 		}
-//echo $szSql . "<br>" . $this->_lastPageUID;
-//exit;
-
-/* OLD CODE
-		// Obtain last UID of renough records are available!
-		if ( $this->_totalRecordCount > $this->_logStreamConfigObj->_pageCount ) 
-		{
-			// Get SQL Statement without properties
-			$szSql = $this->CreateSQLStatement(-1, false);
-			
-			$limitbegin = $this->_totalRecordCount - $this->_logStreamConfigObj->_pageCount;
-
-			// Append LIMIT clause
-			$szSql .= " LIMIT " . $limitbegin . ", 1";
-
-			// Perform Database Query
-			if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
-			{
-				// obtain first and only row
-				$myRow = mysql_fetch_row($myQuery);
-				$this->_lastPageUID = $myRow[0];
-
-				// Free query now
-				mysql_free_result ($myQuery); 
-			}
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-*/
 		
 		// Return result!
 		return $this->_lastPageUID;
@@ -533,7 +503,6 @@ class LogStreamDB extends LogStream {
 			return null;
 	}
 
-
 	/**
 	* Implementation of GetLogStreamTotalRowCount 
 	*
@@ -570,7 +539,6 @@ class LogStreamDB extends LogStream {
 		//return result
 		return $rowcount; 
 	}
-
 
 	/**
 	* Implementation of the CleanupLogdataByDate function! Returns affected rows!
@@ -613,7 +581,6 @@ class LogStreamDB extends LogStream {
 		//return affected rows
 		return $rowcount; 
 	}
-
 
 	/**
 	* Implementation of ConsolidateItemListByField 
@@ -777,8 +744,6 @@ class LogStreamDB extends LogStream {
 		else // Only Include ConsolidateField
 			$myDBQueryFields = $myDBConsFieldName . ", ";
 
-
-
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "ItemCount"; 
 		else
@@ -837,21 +802,11 @@ class LogStreamDB extends LogStream {
 					$aNewRow[$szConsFieldId] = $myFieldValue;
 				else
 					$aNewRow[$myFieldName] = $myFieldValue;
-
-//				if ( in_array($myFieldName, $this->_arrProperties) ) 
-//					echo "!!"; 
-//print_r ( $this->_arrProperties ); 
-//				echo $myFieldName;
-//				exit;
 			}
 			
 			// Add new row to result
 			$aResult[] = $aNewRow;
-
-//			$aResult[ $myRow[$myDBGroupByFieldName] ] = $myRow;
 		}
-//				$aResult[] = $myRow;
-//				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
 
 		// return finished array
 		if ( count($aResult) > 0 )
@@ -1155,57 +1110,6 @@ class LogStreamDB extends LogStream {
 	}
 
 	/*
-	*	This function only reads the uID values from the database. Using this method, 
-	*	it will be much faster to find the starting uID point we need when paging is used.
-	*/
-/* OBSELETE CODE
-	private function ReadNextIDsFromDB()
-	{
-		global $querycount;
-
-		// Get SQL Statement without properties
-		$szSql = $this->CreateSQLStatement(-1, false);
-
-		// Append LIMIT clause
-		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->IDsPerQuery;
-
-		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
-		if ( !$myquery ) 
-		{
-			$this->PrintDebugError("Invalid SQL: ".$szSql);
-			return ERROR_DB_QUERYFAILED;
-		}
-
-		// Copy rows into the buffer!
-		$iBegin = $this->_currentRecordNum;
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
-		{
-			$this->bufferedRecords[$iBegin] = $myRow;
-			$iBegin++;
-		}
-
-		// Free Query ressources
-		mysql_free_result ($myquery); 
-
-		// Only obtain count if enabled and not done before
-		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
-		{
-			$this->_totalRecordCount = $this->GetRowCountFromTable();
-
-			if ( $this->_totalRecordCount <= 0 )
-				return ERROR_NOMORERECORDS;
-		}
-
-		// Increment for the Footer Stats 
-		$querycount++;
-		
-		// return success state if reached this point!
-		return SUCCESS;
-	}
-*/
-
-	/*
 	*	Destroy the SQL QUery!
 	*/
 	private function DestroyMainSQLQuery()
@@ -1312,8 +1216,6 @@ class LogStreamDB extends LogStream {
 		
 		// Output Debug Informations
 		OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
-
-//print ("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql);
 
 		// return success state if reached this point!
 		return SUCCESS;

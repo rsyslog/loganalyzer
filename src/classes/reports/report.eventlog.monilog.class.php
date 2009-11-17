@@ -222,9 +222,6 @@ class Report_monilog extends Report {
 	private function ConsolidateEventsPerHost( $arrHosts )
 	{
 		global $content; 
-		
-		// Set Filter string
-//		$this->_streamObj->SetFilter( $this->_filterString );
 
 		// Now open the stream for data processing
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
@@ -288,7 +285,6 @@ class Report_monilog extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
 						}
-
 					}
 					
 					// Get next data record
@@ -319,10 +315,7 @@ class Report_monilog extends Report {
 						$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastEvent_Date'] );
 						$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
 					}
-
-
 				}
-
 			}
 			else
 				return $ret;
@@ -331,42 +324,35 @@ class Report_monilog extends Report {
 		// Work done!
 		return SUCCESS;
 	}
-/*
-	private function ResetBuffer() {
-		$this->_bEOS = false;
-		$this->_buffer = false;
-		$this->_buffer_length = 0;
-		$this->_p_buffer = -1;
-	}
-*/
 }
 
+// --- Static helper function!
 
-	/**
-	*	Helper function for multisorting multidimensional arrays
-	*/
-	function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
-	{
-		// Do not sort in this case
-		if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
-			return 0;
-		
-		// Move up or down
-		return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
-	}
+/**
+*	Helper function for multisorting multidimensional arrays
+*/
+function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
+{
+	// Do not sort in this case
+	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+		return 0;
+	
+	// Move up or down
+	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
+}
 
-	/**
-	*	Helper function for multisorting multidimensional arrays
-	*/
-	function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
-	{
-		// Do not sort in this case
-		if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
-			return 0;
-		
-		// Move up or down
-		return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
-	}
-
+/**
+*	Helper function for multisorting multidimensional arrays
+*/
+function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
+{
+	// Do not sort in this case
+	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+		return 0;
+	
+	// Move up or down
+	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
+}
+// --- 
 
 ?>
