@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 2.6.5 (v2-stable), 2009-11-17
+- Fixed wrong include in maintenance.php which caused the script to fail
+---------------------------------------------------------------------------
 Version 2.6.4 (v2-stable), 2009-08-14
 - Removed unneeded call for define_syslog_variables, which is 
   depreceated in php 5.3 and will be removed in php6
