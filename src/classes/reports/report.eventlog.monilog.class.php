@@ -151,6 +151,8 @@ class Report_monilog extends Report {
 				// Prepent to array
 				array_unshift( $content["report_summary"], $totalItem );
 			}
+			else
+				return ERROR_REPORT_NODATA; 
 
 			// Get List of hosts
 			$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
@@ -159,9 +161,14 @@ class Report_monilog extends Report {
 			$nowtime = microtime_float();
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s, ";
 
-			// Create plain hosts list for Consolidate function
-			foreach ( $content["report_computers"] as $tmpComputer ) 
-				$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
+			if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
+			{
+				// Create plain hosts list for Consolidate function
+				foreach ( $content["report_computers"] as $tmpComputer ) 
+					$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
+			}
+			else
+				return ERROR_REPORT_NODATA; 
 
 			// This function will consolidate the Events based per Host!
 			$this->ConsolidateEventsPerHost($arrHosts);
@@ -169,7 +176,6 @@ class Report_monilog extends Report {
 			// TimeStats
 			$nowtime = microtime_float();
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
-
 			// ---
 		}
 		else

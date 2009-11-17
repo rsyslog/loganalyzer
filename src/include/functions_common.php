@@ -1763,6 +1763,9 @@ function GetErrorMessage($errorCode)
 		case ERROR_SOURCENOTFOUND:
 			return $content['LN_GEN_ERROR_SOURCENOTFOUND'];
 
+		case ERROR_REPORT_NODATA:
+			return $content['LN_GEN_ERROR_REPORT_NODATA'];
+
 		default:
 			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );
 	}
