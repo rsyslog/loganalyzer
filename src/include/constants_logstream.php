@@ -69,6 +69,10 @@ define('SYSLOG_WEBLOG_STATUS', 'http_status');
 define('SYSLOG_WEBLOG_BYTESSEND', 'http_bytessend');
 define('SYSLOG_WEBLOG_REFERER', 'http_referer');
 define('SYSLOG_WEBLOG_USERAGENT', 'http_useragent');
+
+// Other fields
+define('MISC_SYSTEMID', 'misc_systenid');
+define('MISC_CHECKSUM', 'misc_checksum');
 // ---
 
 // Define possible FIELD Types
@@ -294,6 +298,26 @@ $fields[SYSLOG_WEBLOG_USERAGENT]['FieldAlign'] = "left";
 $fields[SYSLOG_WEBLOG_USERAGENT]['SearchField'] = SYSLOG_WEBLOG_USERAGENT;
 $fields[SYSLOG_WEBLOG_USERAGENT]['SearchOnline'] = true; 
 
+// Misc fields
+$fields[MISC_SYSTEMID]['FieldID'] = MISC_SYSTEMID;
+$fields[MISC_SYSTEMID]['FieldDefine'] = 'MISC_SYSTEMID';
+$fields[MISC_SYSTEMID]['FieldCaption'] = 'SystemID';
+$fields[MISC_SYSTEMID]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[MISC_SYSTEMID]['Sortable'] = false;
+$fields[MISC_SYSTEMID]['DefaultWidth'] = "50";
+$fields[MISC_SYSTEMID]['FieldAlign'] = "center";
+$fields[MISC_SYSTEMID]['SearchField'] = MISC_SYSTEMID;
+$fields[MISC_SYSTEMID]['SearchOnline'] = false; 
+$fields[MISC_CHECKSUM]['FieldID'] = MISC_CHECKSUM;
+$fields[MISC_CHECKSUM]['FieldDefine'] = 'MISC_CHECKSUM';
+$fields[MISC_CHECKSUM]['FieldCaption'] = 'Checksum';
+$fields[MISC_CHECKSUM]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[MISC_CHECKSUM]['Sortable'] = false;
+$fields[MISC_CHECKSUM]['DefaultWidth'] = "50";
+$fields[MISC_CHECKSUM]['FieldAlign'] = "center";
+$fields[MISC_CHECKSUM]['SearchField'] = MISC_CHECKSUM;
+$fields[MISC_CHECKSUM]['SearchOnline'] = false; 
+
 // Message is the last element, this order is important for the Detail page for now!
 $fields[SYSLOG_MESSAGE]['FieldID'] = SYSLOG_MESSAGE;
 $fields[SYSLOG_MESSAGE]['FieldDefine'] = 'SYSLOG_MESSAGE';
@@ -322,6 +346,8 @@ $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_SOURCE] = "EventSource";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_CATEGORY] = "EventCategory";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_USER] = "EventUser";
+$dbmapping['monitorware']['DBMAPPINGS'][MISC_SYSTEMID] = "SystemID";
+$dbmapping['monitorware']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
 
 $dbmapping['syslogng']['ID'] = "syslogng";
 $dbmapping['syslogng']['DisplayName'] = "SyslogNG";

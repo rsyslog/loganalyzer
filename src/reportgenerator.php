@@ -218,7 +218,6 @@ if ( !$content['error_occured'] )
 
 						// Output to browser 
 						$page -> output(); 
-
 						// --- 
 					}
 				}
@@ -229,7 +228,6 @@ if ( !$content['error_occured'] )
 				$content['error_details'] = $content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'];
 			}
 		}
-
 	}
 	else
 	{

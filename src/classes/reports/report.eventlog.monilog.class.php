@@ -87,6 +87,7 @@ class Report_monilog extends Report {
 //		$this->_arrProperties[] = SYSLOG_EVENT_CATEGORY;
 //		$this->_arrProperties[] = SYSLOG_EVENT_USER;
 		$this->_arrProperties[] = SYSLOG_MESSAGE;
+		$this->_arrProperties[] = MISC_CHECKSUM;
 
 	}
 
@@ -98,7 +99,7 @@ class Report_monilog extends Report {
 	*/
 	public function startDataProcessing()
 	{
-		global $content, $severity_colors; 
+		global $content, $severity_colors, $gl_starttime; 
 
 		// Set Filter string
 		$this->_streamObj->SetFilter( $this->_filterString );
@@ -114,12 +115,19 @@ class Report_monilog extends Report {
 			// Get Settings and set to global content variable 
 			$content["report_title"] = $this->GetCustomTitle();
 			$content["report_comment"] = $this->GetCustomComment();
+			$content["report_version"] = $this->GetReportVersion();
 
 			// --- Report logic starts here
+			$content["report_rendertime"] = "";
+			
 
 			// Step 1: Gather Summaries 
 			// Obtain data from the logstream!
 			$content["report_summary"] = $this->_streamObj->ConsolidateDataByField( SYSLOG_SEVERITY, 0, SYSLOG_SEVERITY, SORTING_ORDER_DESC, null, false );
+
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s, ";
 
 			// If data is valid, we have an array!
 			if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
@@ -147,12 +155,21 @@ class Report_monilog extends Report {
 			// Get List of hosts
 			$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
 
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s, ";
+
 			// Create plain hosts list for Consolidate function
 			foreach ( $content["report_computers"] as $tmpComputer ) 
 				$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
 
 			// This function will consolidate the Events based per Host!
 			$this->ConsolidateEventsPerHost($arrHosts);
+
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+
 			// ---
 		}
 		else
@@ -236,8 +253,13 @@ class Report_monilog extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST] = $logArray[SYSLOG_HOST]; 
 						}
 
-						// Calc crc32 from message, we use this as index
-						$strChecksum = crc32( $logArray[SYSLOG_MESSAGE] ); 
+						// Calc checksum
+						if ( !isset($logArray[MISC_CHECKSUM]) || $logArray[MISC_CHECKSUM] == 0 ) 
+						{
+							// Calc crc32 from message, we use this as index
+							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); 
+							$strChecksum = $logArray[MISC_CHECKSUM];
+						}
 
 						// Check if entry exists in result array
 						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]) ) 

@@ -299,6 +299,15 @@ abstract class Report {
 	}
 
 	/*
+	* Helper function to return the ReportVersion
+	*/
+	public function GetReportVersion()
+	{
+		// return Filebasename
+		return $this->_reportVersion; 
+	}
+
+	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
