@@ -1771,4 +1771,34 @@ function GetErrorMessage($errorCode)
 	}
 }
 
+
+// --- Static Sorter helper function!
+/**
+*	Helper function for multisorting multidimensional arrays
+*/
+function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
+{
+	// Do not sort in this case
+	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+		return 0;
+	
+	// Move up or down
+	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
+}
+
+/**
+*	Helper function for multisorting multidimensional arrays
+*/
+function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
+{
+	// Do not sort in this case
+	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+		return 0;
+	
+	// Move up or down
+	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
+}
+// --- 
+
+
 ?>

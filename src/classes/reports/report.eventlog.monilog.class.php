@@ -161,7 +161,7 @@ class Report_monilog extends Report {
 			$nowtime = microtime_float();
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s, ";
 
-			if ( is_array($content["report_summary"]) && count($content["report_summary"]) > 0 )
+			if ( is_array($content["report_computers"]) && count($content["report_computers"]) > 0 )
 			{
 				// Create plain hosts list for Consolidate function
 				foreach ( $content["report_computers"] as $tmpComputer ) 
@@ -238,7 +238,10 @@ class Report_monilog extends Report {
 
 			// Init uid helper
 			$uID = UID_UNKNOWN;
-			
+
+			// Set reading direction
+			$this->_streamObj->Sseek($uID, EnumSeek::EOS, 0);
+
 			// Start reading data
 			$ret = $this->_streamObj->Read($uID, $logArray);
 			
@@ -295,7 +298,6 @@ class Report_monilog extends Report {
 					
 					// Get next data record
 					$ret = $this->_streamObj->ReadNext($uID, $logArray);
-
 				} while ( $ret == SUCCESS );
 
 				// Start Postprocessing
@@ -331,34 +333,5 @@ class Report_monilog extends Report {
 		return SUCCESS;
 	}
 }
-
-// --- Static helper function!
-
-/**
-*	Helper function for multisorting multidimensional arrays
-*/
-function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
-{
-	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
-		return 0;
-	
-	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
-}
-
-/**
-*	Helper function for multisorting multidimensional arrays
-*/
-function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
-{
-	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
-		return 0;
-	
-	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
-}
-// --- 
 
 ?>

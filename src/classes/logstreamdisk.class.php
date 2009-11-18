@@ -657,9 +657,81 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder)
 	{
-		global $content, $dbmapping, $fields;
+		global $content, $fields;
 
-// TODO!
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+		// --- 
+
+		// We loop through all loglines! this may take a while!
+		$uID = UID_UNKNOWN;
+		$ret = $this->Read($uID, $logArray);
+		if ( $ret == SUCCESS )
+		{
+			// Initialize Array variable
+			$aResult = array();
+			
+			// Loop through messages
+			do
+			{
+				if ( isset($logArray[$szConsFieldId]) )
+				{
+					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
+					{
+						// Convert to FULL Day Date for now!
+						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+					}
+					else // Just copy the value!
+						$myFieldData = $logArray[$szConsFieldId];
+
+					if ( isset($aResult[ $myFieldData ]) )
+						$aResult[ $myFieldData ]['ItemCount']++;
+					else
+					{
+						// Initialize entry if we haven't exceeded the RecordLImit yet!
+						if ( $nRecordLimit == 0 || count($aResult) < ($nRecordLimit-1) ) // -1 because the last entry will become all others 
+						{
+							// Init entry
+							$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
+							$aResult[ $myFieldData ]['ItemCount'] = 1;
+						}
+						else
+						{
+							// Count record to others 
+							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount']++;
+							else
+								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount'] = 1;
+						}
+					}
+				}
+			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
+
+			// Use callback function to sort array
+			if ( $nSortingOrder == SORTING_ORDER_DESC )
+				uasort($aResult, "MultiSortArrayByItemCountDesc");
+			else
+				uasort($aResult, "MultiSortArrayByItemCountAsc");
+
+			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+			{
+				// This will move the "Others" Element to the last position!
+				$arrEntryCopy = $aResult[ $content['LN_STATS_OTHERS'] ];
+				unset($aResult[ $content['LN_STATS_OTHERS'] ]);
+				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
+			}
+
+			// Needed to reset file position!
+			$this->Sseek($uID, EnumSeek::BOS, 0);
+
+			// finally return result!
+			if ( count($aResult) > 0 ) 
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+			return $ret;
 	}
 
 	/**
@@ -671,9 +743,93 @@ class LogStreamDisk extends LogStream {
 	*/
 	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
 	{
-		global $content, $dbmapping, $fields;
+		global $content, $fields;
 
-// TODO!
+		// --- Set Options 
+		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
+		// --- 
+
+		// We loop through all loglines! this may take a while!
+		$uID = UID_UNKNOWN;
+		$ret = $this->Read($uID, $logArray);
+		if ( $ret == SUCCESS )
+		{
+			// Initialize Array variable
+			$aResult = array();
+			
+			// Loop through messages
+			do
+			{
+				if ( isset($logArray[$szConsFieldId]) )
+				{
+					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
+					{
+						// Convert to FULL Day Date for now!
+						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+					}
+					else // Just copy the value!
+						$myFieldData = $logArray[$szConsFieldId];
+
+					if ( isset($aResult[ $myFieldData ]) )
+						$aResult[ $myFieldData ]['ItemCount']++;
+					else
+					{
+						// Initialize entry if we haven't exceeded the RecordLImit yet!
+						if ( $nRecordLimit == 0 || count($aResult) < ($nRecordLimit-1) ) // -1 because the last entry will become all others 
+						{
+							// Init entry
+							if ( $bIncludeLogStreamFields ) 
+								$aResult[ $myFieldData ] = $logArray;
+							else if ( $aIncludeCustomFields != null ) 
+							{
+								foreach ( $aIncludeCustomFields as $myFieldName ) 
+								{
+									if ( $logArray[$myFieldName] ) 
+										$aResult[ $myFieldData ][$myFieldName] = $logArray[$myFieldName]; 
+								}
+							}
+							else
+								$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
+
+							$aResult[ $myFieldData ]['ItemCount'] = 1;
+						}
+						else
+						{
+							// Count record to others 
+							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount']++;
+							else
+								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount'] = 1;
+						}
+					}
+				}
+			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
+
+			// Use callback function to sort array
+			if ( $nSortingOrder == SORTING_ORDER_DESC )
+				uasort($aResult, "MultiSortArrayByItemCountDesc");
+			else
+				uasort($aResult, "MultiSortArrayByItemCountAsc");
+
+			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
+			{
+				// This will move the "Others" Element to the last position!
+				$arrEntryCopy = $aResult[ $content['LN_STATS_OTHERS'] ];
+				unset($aResult[ $content['LN_STATS_OTHERS'] ]);
+				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
+			}
+
+			// Needed to reset file position!
+			$this->Sseek($uID, EnumSeek::BOS, 0);
+
+			// finally return result!
+			if ( count($aResult) > 0 ) 
+				return $aResult;
+			else
+				return ERROR_NOMORERECORDS;
+		}
+		else
+			return $ret;
 	}
 
 
@@ -777,6 +933,5 @@ class LogStreamDisk extends LogStream {
 		$this->_buffer_length = 0;
 		$this->_p_buffer = -1;
 	}
-
 }
 ?>
