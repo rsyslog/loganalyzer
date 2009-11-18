@@ -233,18 +233,24 @@ class Report_monilog extends Report {
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
+
 			// Set reading direction
-			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
+//			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
 
 			// Init uid helper
 			$uID = UID_UNKNOWN;
 
-			// Set reading direction
-			$this->_streamObj->Sseek($uID, EnumSeek::EOS, 0);
+			// Set position to BEGIN of FILE
+			$this->_streamObj->Sseek($uID, EnumSeek::BOS, 0);
 
 			// Start reading data
 			$ret = $this->_streamObj->Read($uID, $logArray);
 			
+// TimeStats
+global $gl_starttime; 
+$nowtime = microtime_float();
+$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+
 			// Found first data record
 			if ( $ret == SUCCESS )
 			{
@@ -265,6 +271,8 @@ class Report_monilog extends Report {
 							// Calc crc32 from message, we use this as index
 							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); 
 							$strChecksum = $logArray[MISC_CHECKSUM];
+
+							// TODO, save calculated Checksum into DB!
 						}
 
 						// Check if entry exists in result array
@@ -295,10 +303,14 @@ class Report_monilog extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
 						}
 					}
-					
+
 					// Get next data record
 					$ret = $this->_streamObj->ReadNext($uID, $logArray);
 				} while ( $ret == SUCCESS );
+
+// TimeStats
+$nowtime = microtime_float();
+$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 				// Start Postprocessing
 				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
@@ -309,12 +321,32 @@ class Report_monilog extends Report {
 					// Remove entries according to _maxEventsPerHost
 					if ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost )
 					{
+						$iDropCount = 0;
+
 						do
 						{
 							array_pop($tmpConsolidatedComputer['cons_events']);
+							$iDropCount++; 
 						} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
+						
+						// Append a dummy entry which shows count of all other events
+						if ( $iDropCount > 0 ) 
+						{
+							$lastEntry[SYSLOG_SEVERITY] = 5; 
+							$lastEntry[SYSLOG_EVENT_ID] = "-"; 
+							$lastEntry[SYSLOG_EVENT_SOURCE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+							$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+							$lastEntry['ItemCount'] = $iDropCount; 
+							$lastEntry['FirstEvent_Date'] = "-"; 
+							$lastEntry['LastEvent_Date'] = "-";
+
+							$tmpConsolidatedComputer['cons_events'][] = $lastEntry; 
+						}
 					}
 
+// TimeStats
+$nowtime = microtime_float();
+$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 					// PostProcess Events!
 					foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 

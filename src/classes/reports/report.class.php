@@ -130,7 +130,7 @@ abstract class Report {
 
 				// Fix Filename manually for FILE LOGSTREAM!
 				if ( $content['Sources'][$this->_mySourceID]['SourceType'] == SOURCE_DISK ) 
-					$this->_streamCfgObj->FileName = CheckAndPrependRootPath(DB_StripSlahes($content['Sources'][$this->_mySourceID]['DiskFile']));
+					$this->_streamCfgObj->FileName = CheckAndPrependRootPath( $content['Sources'][$this->_mySourceID]['DiskFile'] );
 			}
 			else
 				return ERROR_SOURCENOTFOUND;

@@ -339,5 +339,10 @@ $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 	$content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'] = "Invalid or missing savedreport id";
 	$content['LN_GEN_ERROR_REPORTGENFAILED'] = "Failed generating report '%1' with the following error reason: %2";
 	$content['LN_GEN_ERROR_WHILEREPORTGEN'] = "Error occured while generating report"; 
+	$content['LN_GEN_ERROR_REPORT_NODATA'] = "No data found for report generation"; 
+	$content['LN_GEN_ALL_OTHER_EVENTS'] = "All other events";
+	$content['LN_REPORT_FOOTER_ENDERED'] = "Report rendered in:";
+	
+
 
 ?>

@@ -665,6 +665,10 @@ class LogStreamDisk extends LogStream {
 
 		// We loop through all loglines! this may take a while!
 		$uID = UID_UNKNOWN;
+
+		// Needed to reset file position!
+		$this->Sseek($uID, EnumSeek::BOS, 0);
+
 		$ret = $this->Read($uID, $logArray);
 		if ( $ret == SUCCESS )
 		{
@@ -721,9 +725,6 @@ class LogStreamDisk extends LogStream {
 				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
 			}
 
-			// Needed to reset file position!
-			$this->Sseek($uID, EnumSeek::BOS, 0);
-
 			// finally return result!
 			if ( count($aResult) > 0 ) 
 				return $aResult;
@@ -751,6 +752,10 @@ class LogStreamDisk extends LogStream {
 
 		// We loop through all loglines! this may take a while!
 		$uID = UID_UNKNOWN;
+
+		// Needed to reset file position!
+		$this->Sseek($uID, EnumSeek::BOS, 0);
+
 		$ret = $this->Read($uID, $logArray);
 		if ( $ret == SUCCESS )
 		{
@@ -818,9 +823,6 @@ class LogStreamDisk extends LogStream {
 				unset($aResult[ $content['LN_STATS_OTHERS'] ]);
 				$aResult[ $content['LN_STATS_OTHERS'] ] = $arrEntryCopy;
 			}
-
-			// Needed to reset file position!
-			$this->Sseek($uID, EnumSeek::BOS, 0);
 
 			// finally return result!
 			if ( count($aResult) > 0 ) 
