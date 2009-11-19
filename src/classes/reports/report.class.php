@@ -271,6 +271,128 @@ abstract class Report {
 		}
 	}
 
+
+	/*
+	* Helper function to set the FilterString 
+	*/
+	public function SetCommonContentVariables()
+	{
+		global $content, $fields; 
+
+		$content["report_title"] = $this->GetCustomTitle();
+		$content["report_comment"] = $this->GetCustomComment();
+		$content["report_version"] = $this->GetReportVersion();
+
+		// Create array for readable filters display
+		$myFilters = $this->_streamObj->ReturnFiltersArray(); 
+		if ( $myFilters != null ) 
+		{
+			// Enable display of filters
+			$content["report_filters_enabled"] = true;
+
+			foreach ( $myFilters as $myFieldID => $myFieldFilters ) 
+			{
+				// Init Filterstring entry
+				$aNewDisplayFilter = array();
+				$aNewDisplayFilter['FilterDisplay'] = "";
+				$aNewDisplayFilter['FieldID'] = $myFieldID; 
+				if ( isset($fields[$myFieldID]['FieldCaption']) ) 
+					$aNewDisplayFilter['FilterCaption'] = $fields[$myFieldID]['FieldCaption']; 
+				else
+					$aNewDisplayFilter['FilterCaption'] = $myFieldID; 
+
+
+
+				foreach ( $myFieldFilters as $tmpFilter ) 
+				{
+					// Date field means special handling!
+					if ( $myFieldID == SYSLOG_DATE ) 
+					{
+						// Set Filtertype Display
+						$aNewDisplayFilter['FilterType'] = $content['LN_REPORT_FILTERTYPE_DATE'];
+
+						// Append Datefilter to Title
+	//					$content["report_title"] .=  
+
+						if ( $tmpFilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+						{
+							$aNewDisplayFilter['FilterDisplay'] = $content['LN_FILTER_DATELASTX'] . " "; 
+							switch ( $tmpFilter[FILTER_VALUE] ) 
+							{
+								case DATE_LASTX_HOUR: 
+									$aNewDisplayFilter['FilterDisplay'] .= "'" . $content['LN_DATE_LASTX_HOUR'] . "'"; 
+									break;
+								case DATE_LASTX_12HOURS: 
+									$aNewDisplayFilter['FilterDisplay'] .= "'" . $content['LN_DATE_LASTX_12HOURS'] . "'"; 
+									break;
+								case DATE_LASTX_24HOURS: 
+									$aNewDisplayFilter['FilterDisplay'] .= "'" . $content['LN_DATE_LASTX_24HOURS'] . "'"; 
+									break;
+								case DATE_LASTX_7DAYS: 
+									$aNewDisplayFilter['FilterDisplay'] .= "'" . $content['LN_DATE_LASTX_7DAYS'] . "'"; 
+									break;
+								case DATE_LASTX_31DAYS: 
+									$aNewDisplayFilter['FilterDisplay'] .= "'" . $content['LN_DATE_LASTX_31DAYS'] . "'"; 
+									break;
+							}
+						}
+						else if ( $tmpFilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
+							$aNewDisplayFilter['FilterDisplay'] = $content["LN_FILTER_DATEFROM"] . " " . GetFormatedDate( $tmpFilter[FILTER_VALUE] );
+						else if ( $tmpFilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+							$aNewDisplayFilter['FilterDisplay'] = $content["LN_FILTER_DATETO"] . " " . GetFormatedDate( $tmpFilter[FILTER_VALUE] );
+						
+						// Add to title!
+						$content["report_title"] .= " - " . $aNewDisplayFilter['FilterDisplay']; 
+					}
+					else if ( $tmpFilter[FILTER_TYPE] == FILTER_TYPE_STRING ) 
+					{
+						// Set Filtertype Display
+						$aNewDisplayFilter['FilterType'] = $content['LN_REPORT_FILTERTYPE_STRING'];
+						
+						// Set Filterdisplay
+						$aNewDisplayFilter['FilterDisplay'] .= $aNewDisplayFilter['FilterCaption'] . " "; 
+						if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+						{
+							if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+								$aNewDisplayFilter['FilterDisplay'] .= "equals '" . $tmpFilter[FILTER_VALUE] . "'"; 
+							else
+								$aNewDisplayFilter['FilterDisplay'] .= "contains '" . $tmpFilter[FILTER_VALUE] . "'"; 
+						}
+						else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+						{
+							if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
+								$aNewDisplayFilter['FilterDisplay'] .= "does not equal '" . $tmpFilter[FILTER_VALUE] . "'"; 
+							else
+								$aNewDisplayFilter['FilterDisplay'] .= "does not contain '" . $tmpFilter[FILTER_VALUE] . "'"; 
+						}
+					}
+					else if (  $tmpFilter[FILTER_TYPE] == FILTER_TYPE_NUMBER ) 
+					{
+						// Set Filtertype Display
+						$aNewDisplayFilter['FilterType'] = $content['LN_REPORT_FILTERTYPE_NUMBER'];
+
+						// Set Filterdisplay
+						$aNewDisplayFilter['FilterDisplay'] .= $aNewDisplayFilter['FilterCaption'] . " "; 
+						if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
+							$aNewDisplayFilter['FilterDisplay'] .= "== " . $tmpFilter[FILTER_VALUE]; 
+						else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+							$aNewDisplayFilter['FilterDisplay'] .= "!= " . $tmpFilter[FILTER_VALUE]; 
+					}
+
+					// Add to display filter array
+					if ( strlen($aNewDisplayFilter['FilterDisplay']) > 0 ) 
+						$content["report_filters"][] = $aNewDisplayFilter; 
+				}
+			}
+		}
+		else
+		{
+			// Disable display of filters
+			$content["report_filters_enabled"] = false;
+		}
+	}
+
+
 	/*
 	* Helper function to return the BaseFileName
 	*/

@@ -341,8 +341,11 @@ $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 	$content['LN_GEN_ERROR_WHILEREPORTGEN'] = "Error occured while generating report"; 
 	$content['LN_GEN_ERROR_REPORT_NODATA'] = "No data found for report generation"; 
 	$content['LN_GEN_ALL_OTHER_EVENTS'] = "All other events";
-	$content['LN_REPORT_FOOTER_ENDERED'] = "Report rendered in:";
-	
+	$content['LN_REPORT_FOOTER_ENDERED'] = "Report rendered in";
+	$content['LN_REPORT_FILTERS'] = "List of used filters";
+	$content['LN_REPORT_FILTERTYPE_DATE'] = "Date";
+	$content['LN_REPORT_FILTERTYPE_NUMBER'] = "Number";
+	$content['LN_REPORT_FILTERTYPE_STRING'] = "String";
 
 
 ?>

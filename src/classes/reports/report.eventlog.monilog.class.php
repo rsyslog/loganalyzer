@@ -112,14 +112,11 @@ class Report_monilog extends Report {
 //		// Verify Datasource first!
 //		if ( $this->verifyDataSource() == SUCCESS ) 
 //		{
-			// Get Settings and set to global content variable 
-			$content["report_title"] = $this->GetCustomTitle();
-			$content["report_comment"] = $this->GetCustomComment();
-			$content["report_version"] = $this->GetReportVersion();
+			// Set to common content variables
+			$this->SetCommonContentVariables();
 
 			// --- Report logic starts here
 			$content["report_rendertime"] = "";
-			
 
 			// Step 1: Gather Summaries 
 			// Obtain data from the logstream!

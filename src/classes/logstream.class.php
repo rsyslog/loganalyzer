@@ -527,6 +527,15 @@ abstract class LogStream {
 			return SUCCESS;
 	}
 
+	/**
+	*	Helper function to obtain internal Filters Array
+	*/
+	public function ReturnFiltersArray()
+	{	
+		return $this->_filters; 
+	}
+
+
 	/*
 	* --- PIRVATE HELPERS!
 	*/
