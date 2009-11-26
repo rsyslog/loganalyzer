@@ -147,27 +147,75 @@
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
 			<input type="hidden" name="op" value="addsavedreport">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="800" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
-				<td align="right" class="line1" width="100%"><input type="text" name="report_customtitle" size="40" maxlength="255" value="{customTitle}"></td>
+				<td align="center" class="line1" width="100%"><input type="text" name="report_customtitle" size="80" maxlength="255" value="{customTitle}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
-				<td align="right" class="line2" width="100%"><input type="text" name="report_customcomment" size="40" maxlength="255" value="{customComment}"></td>
+				<td align="center" class="line2" width="100%"><input type="text" name="report_customcomment" size="80" maxlength="255" value="{customComment}"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>
-				<td align="right" class="line1" width="100%"><input type="text" name="report_filterString" size="40" maxlength="255" value="{filterString}"></td>
+				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap rowspan="2"><b>{LN_REPORTS_FILTERSTRING}</b></td>
+				<td align="center" class="line1" width="100%"><input type="text" name="report_filterString" size="80" maxlength="255" value="{filterString}"></td>
 			</tr>
-			
+			<tr>
+				<td align="center" class="line1" width="100%">
+
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="550" class="with_border_alternate">
+				<tr>
+					<td align="center" class="cellmenu1" colspan="4"><b>{LN_REPORTS_FILTERLIST}</b></td>
+				</tr>
+				<!-- BEGIN SUBFILTERS -->
+				<tr>
+					<td align="left" class="{colcssclass}" width="200">
+						<input type="hidden" name="Filters[]" value="{FilterFieldID}">
+						<b>{FilterFieldName} (<I>{FilterFieldID}</I>)</b>
+					</td>
+					<td align="left" class="{colcssclass}" width="100">
+						<select name="newcomparison_{ZAEHLER}" size="1" STYLE="width: 100px">
+							<!-- BEGIN Comparisons -->
+							<option value="{ComparisonBit}" {cp_selected}>{ComparisonCaption}</option>
+							<!-- END Comparisons -->
+						</select>
+					</td>
+					<td align="left" class="{colcssclass}" width="200">
+						<input type="text" name="FilterValue_{ZAEHLER}" size="32" maxlength="255" value="{FilterValue}">
+					</td>
+					
+					<td align="center" class="{colcssclass}" width="50">
+						<button name="subop_edit" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_REPORTS_FILTER_EDIT}"></button>
+<!--						
+						<button name="subop_moveup" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_MOVEUP}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_REPORTS_FILTER_MOVEUP}"></button>
+						<button name="subop_movedown" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_MOVEDOWN}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_REPORTS_FILTER_MOVEDOWN}"></button>
+-->
+						<button name="subop_delete" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_REPORTS_FILTER_REMOVE}"></button>
+					</td>
+				</tr>
+				<!-- END SUBFILTERS -->
+				<tr>
+					<td align="center" class="line2" colspan="4">
+
+						<select name="newfilter" size="1" STYLE="width: 200px">
+							<!-- BEGIN FIELDS -->
+							<option value="{FieldID}" {group_selected}>{FieldCaption}</option>
+							<!-- END FIELDS -->
+						</select>
+						<input type="submit" name="subop" value="{LN_REPORTS_ADDFILTER}">
+					</td>
+				</tr>
+				</table>
+
+				</td>
+			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
-				<td align="right" class="line2" width="100%">
-					<select name="SourceID" size="1" STYLE="width: 190px">
+				<td align="center" class="line2" width="100%">
+					<select name="SourceID" size="1" STYLE="width: 415px">
 						<!-- BEGIN SOURCES -->
 						<option value="{SourceID}" {sourceselected}>{Name}</option>
 						<!-- END SOURCES -->
@@ -176,8 +224,8 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTFORMAT}</b></td>
-				<td align="right" class="line1" width="100%">
-					<select name="outputFormat" size="1" STYLE="width: 190px">
+				<td align="center" class="line1" width="100%">
+					<select name="outputFormat" size="1" STYLE="width: 415px">
 						<!-- BEGIN OUTPUTFORMATS -->
 						<option value="{formatid}" {formatselected}>{formatdisplayname}</option>
 						<!-- END OUTPUTFORMATS -->

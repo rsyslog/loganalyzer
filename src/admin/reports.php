@@ -303,7 +303,10 @@ if ( isset($_GET['op']) )
 				{
 					$mySource['SourceID'] = $mySource['ID'];
 					if ( $mySource['ID'] == $currentSourceID ) 
+					{
+						$content['SourceID'] = $currentSourceID; 
 						$mySource['sourceselected'] = "selected";
+					}
 					else
 						$mySource['sourceselected'] = "";
 				}
@@ -369,7 +372,10 @@ if ( isset($_GET['op']) )
 					{
 						$mySource['SourceID'] = $mySource['ID'];
 						if ( $mySource['ID'] == $mySavedReport['sourceid'] ) 
+						{
 							$mySource['sourceselected'] = "selected";
+							$content['SourceID'] = $mySavedReport['sourceid']; 
+						}
 						else
 							$mySource['sourceselected'] = "";
 					}
@@ -443,6 +449,170 @@ if ( isset($_GET['op']) )
 		}
 	}
 }
+
+
+// --- Additional work regarding FilterDisplay todo for the edit view
+if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
+{
+	//	echo $content['SourceID'];
+	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
+	{
+		// Obtain and get the Config Object
+		$stream_config = $content['Sources'][$content['SourceID']]['ObjRef']; 
+
+		// Create LogStream Object 
+		$stream = $stream_config->LogStreamFactory($stream_config);
+		$stream->SetFilter( $content['filterString'] );
+		
+		// Copy filter array
+		$AllFilters = $stream->ReturnFiltersArray(); 
+//		print_r( $stream->ReturnFiltersArray() ); 
+	}
+
+	// If Filters are send using POST we use them, otherwise we try to use from the view itself, if available
+	if ( isset($_POST['Filters']) )
+	{
+		$AllFilters = $_POST['Filters'];
+	}
+	else if ( isset($AllFilters) )
+	{
+		//$AllFilters = $content['AllFilters'];
+		foreach( $AllFilters as $tmpFieldId=>$tmpFieldFilters ) 
+		{
+			foreach( $tmpFieldFilters as $tmpFilter ) 
+			{
+				// Create new row
+				$aNewFilter = array();
+
+				$aNewFilter['FilterFieldID'] = $tmpFieldId; 
+				$aNewFilter['FilterType'] = $tmpFilter[FILTER_TYPE]; 
+				$aNewFilter['FilterValue'] = $tmpFilter[FILTER_VALUE]; 
+				if ( isset($tmpFilter[FILTER_DATEMODE]) ) 
+					$aNewFilter['FilterDateMode'] = $tmpFilter[FILTER_DATEMODE]; 
+				if ( isset($tmpFilter[FILTER_MODE]) ) 
+					$aNewFilter['FilterMode'] = $tmpFilter[FILTER_MODE]; 
+
+//				$aNewFilter['FilterInternalID' => 1, 
+//				$aNewFilter['FilterCaption' => "1", 
+
+				// Add to filters array
+				$content['SUBFILTERS'][] = $aNewFilter; 
+			}
+		}
+	}
+	
+	// Init Comparison Arrays
+	$ComparisonsNumber[] = array (	'ComparisonBit' => FILTER_MODE_INCLUDE, 
+									'ComparisonCaption' => "=", 
+									); 
+	$ComparisonsNumber[] = array (	'ComparisonBit' => FILTER_MODE_EXCLUDE, 
+									'ComparisonCaption' => "!=", 
+									); 
+
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE, 
+							'ComparisonCaption' => "contains", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_EXCLUDE, 
+							'ComparisonCaption' => "does not contain", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL, 
+							'ComparisonCaption' => "equals", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX, 
+							'ComparisonCaption' => "matches regular expression", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL, 
+							'ComparisonCaption' => "does not equal", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX, 
+							'ComparisonCaption' => "does not matches regular expression", 
+							); 
+	
+	$ComparisonsDate[] = array ('ComparisonBit' => DATEMODE_LASTX, 
+								'ComparisonCaption' => "last", 
+								); 
+	$ComparisonsDate[] = array ('ComparisonBit' => DATEMODE_RANGE_FROM, 
+								'ComparisonCaption' => "From", 
+								); 
+	$ComparisonsDate[] = array ('ComparisonBit' => DATEMODE_RANGE_TO, 
+								'ComparisonCaption' => "To", 
+								); 
+
+
+
+	// Prepare Filters for display
+	if ( isset($content['SUBFILTERS']) )
+	{
+		$i = 0; // Help counter!
+		foreach( $content['SUBFILTERS'] as &$tmpFilter ) 
+		{
+			// Set Field Displayname
+			if ( isset($fields[ $tmpFilter['FilterFieldID'] ]['FieldCaption']) ) 
+				$tmpFilter['FilterFieldName'] = $fields[ $tmpFilter['FilterFieldID'] ]['FieldCaption'];
+			else
+				$tmpFilter['FilterFieldName'] = $tmpFilter['FilterFieldID']; 
+
+			// --- Set CSS Class
+			if ( $i % 2 == 0 )
+				$tmpFilter['colcssclass'] = "line1";
+			else
+				$tmpFilter['colcssclass'] = "line2";
+			$i++;
+			// --- 
+
+			if ( $tmpFilter['FilterType'] == FILTER_TYPE_STRING ) 
+				$tmpFilter['Comparisons'] = $ComparisonsString; 
+			else if ( $tmpFilter['FilterType'] == FILTER_TYPE_NUMBER ) 
+				$tmpFilter['Comparisons'] = $ComparisonsNumber; 
+			else if ( $tmpFilter['FilterType'] == FILTER_TYPE_DATE ) 
+				$tmpFilter['Comparisons'] = $ComparisonsDate; 
+			
+			// Set right checkbox item
+			foreach( $tmpFilter['Comparisons'] as &$tmpComparisons ) 
+			{
+				if ( $tmpFilter['FilterType'] == FILTER_TYPE_DATE ) 
+				{
+					if ( $tmpComparisons['ComparisonBit'] == $tmpFilter['FilterDateMode'] ) 
+						$tmpComparisons['cp_selected'] = "selected"; 
+					else
+						$tmpComparisons['cp_selected'] = ""; 
+				}
+				else
+				{
+					if ( $tmpComparisons['ComparisonBit'] == $tmpFilter['FilterMode'] ) 
+						$tmpComparisons['cp_selected'] = "selected"; 
+					else
+						$tmpComparisons['cp_selected'] = ""; 
+				}
+			}
+
+		}
+
+
+		print_r( $content['SUBFILTERS'] ); 
+	}
+
+	// --- Copy fields data array
+	$content['FIELDS'] = $fields; 
+
+	// set fieldcaption
+	foreach ($content['FIELDS'] as $key => &$myField )
+	{
+		// Set Fieldcaption
+		if ( isset($myField['FieldCaption']) )
+			$myField['FieldCaption'] = $myField['FieldCaption'];
+		else
+			$myField['FieldCaption'] = $key;
+
+		// Append Internal FieldID
+		$myField['FieldCaption'] .= " (" . $fields[$key]['FieldDefine'] . ")";
+	}
+	// ---
+
+
+
+}
+
 
 // Handle POST requests
 if ( isset($_POST['op']) )
