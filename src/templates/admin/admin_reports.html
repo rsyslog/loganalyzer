@@ -143,10 +143,10 @@
 <!-- ENDIF ISSHOWDETAILS="true" -->
 
 <!-- IF ISADDSAVEDREPORT="true" -->
-		<form action="{BASEPATH}admin/reports.php" method="post">
+		<form action="{BASEPATH}admin/reports.php{FormUrlAddOP}" method="post">
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
-			<input type="hidden" name="op" value="addsavedreport">
+<!--			<input type="hidden" name="op" value="addsavedreport">-->
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="800" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
@@ -177,14 +177,14 @@
 						<b>{FilterFieldName} (<I>{FilterFieldID}</I>)</b>
 					</td>
 					<td align="left" class="{colcssclass}" width="100">
-						<select name="newcomparison_{ZAEHLER}" size="1" STYLE="width: 100px">
+						<select name="newcomparison_{ROWCNT}" size="1" STYLE="width: 100px">
 							<!-- BEGIN Comparisons -->
 							<option value="{ComparisonBit}" {cp_selected}>{ComparisonCaption}</option>
 							<!-- END Comparisons -->
 						</select>
 					</td>
 					<td align="left" class="{colcssclass}" width="200">
-						<input type="text" name="FilterValue_{ZAEHLER}" size="32" maxlength="255" value="{FilterValue}">
+						<input type="text" name="FilterValue_{ROWCNT}" size="32" maxlength="255" value="{FilterValue}">
 					</td>
 					
 					<td align="center" class="{colcssclass}" width="50">
@@ -235,8 +235,7 @@
 			
 			<tr>
 				<td align="center" colspan="2">
-					<input type="submit" value="{REPORT_SENDBUTTON}">
-					<input type="hidden" name="op" value="{REPORT_FORMACTION}">
+					<button name="op" type="submit" value="{REPORT_FORMACTION}" title="{REPORT_SENDBUTTON}">{REPORT_SENDBUTTON}</button>
 				</td>
 			</tr>
 			</table>

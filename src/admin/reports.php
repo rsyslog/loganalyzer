@@ -275,6 +275,7 @@ if ( isset($_GET['op']) )
 		$content['ISADDSAVEDREPORT'] = "true";
 		$content['REPORT_FORMACTION'] = "addsavedreport";
 		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
+		$content['FormUrlAddOP'] = "?op=addsavedreport&id=" . $content['ReportID'];
 
 		if ( isset($_GET['id']) )
 		{
@@ -355,6 +356,9 @@ if ( isset($_GET['op']) )
 				{
 					// Get Reference to savedreport!
 					$mySavedReport = $myReport['SAVEDREPORTS'][$content['SavedReportID']];
+					
+					// Subform helper
+					$content['FormUrlAddOP'] = "?op=editsavedreport&id=" . $content['ReportID'] . "&savedreportid=" . $content['SavedReportID'];
 
 					// Set Report properties
 					$content['DisplayName'] = $myReport['DisplayName'];
@@ -454,6 +458,143 @@ if ( isset($_GET['op']) )
 // --- Additional work regarding FilterDisplay todo for the edit view
 if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 {
+
+//echo "subop_edit";
+//exit;
+
+// If Filters are send using POST we read them and create a FilterSting!
+	if ( isset($_POST['Filters']) )
+	{
+//echo "datefrom:2005-01-01T00:00:00 dateto:2008-6-07T11:59:59 severity:=WARNING eventlogsource:=WinMgmt<br>";
+		
+		// Get Filter array
+		$AllFilters = $_POST['Filters'];
+		
+		// Loop through filters and build filterstring!
+		$i = 0;
+		$szFilterString = ""; 
+		foreach( $AllFilters as $tmpFilterID )
+		{
+			// Get Comparison Bit
+			if ( isset($_POST['newcomparison_' . $i]) ) 
+				$tmpComparison = DB_RemoveBadChars($_POST['newcomparison_' . $i]); 
+			else
+				$tmpComparison = 0; // Default bit
+
+			// Get FilterValue
+			if ( isset($_POST['FilterValue_' . $i]) ) 
+				$tmpFilterValue = DB_RemoveBadChars($_POST['FilterValue_' . $i]); 
+			else
+				$tmpFilterValue = ""; // Default value
+
+			// Get Filtertype from FilterID
+			if ( isset($fields[$tmpFilterID]) ) 
+			{
+				// Append to Filterstring
+				$tmpField = $fields[ $tmpFilterID ]; 
+
+				if ( $tmpField['FieldType'] == FILTER_TYPE_DATE ) 
+				{
+					// Append comparison
+					switch ( $tmpComparison ) 
+					{
+						case 4:		// DATEMODE_RANGE_FROM
+							$szFilterString .= "datefrom:"; 
+							break; 
+						case 5:		// DATEMODE_RANGE_TO
+							$szFilterString .= "dateto:"; 
+							break; 
+						case 3:		// DATEMODE_LASTX
+							$szFilterString .= "datelastx:"; 
+							break; 
+					}
+
+					// Append field value
+					$szFilterString .= $tmpFilterValue; 
+				}
+				else if ( $tmpField['FieldType'] == FILTER_TYPE_NUMBER ) 
+				{
+					// Append Fieldname
+					$szFilterString .= $tmpField['SearchField']; 
+
+					// Append comparison
+					switch ( $tmpComparison ) 
+					{
+						case 1:		// FILTER_MODE_INCLUDE
+							$szFilterString .= ":="; 
+							break; 
+						case 2:		// FILTER_MODE_EXCLUDE
+							$szFilterString .= ":-="; 
+							break; 
+					}
+					
+					if ( $tmpFilterID == SYSLOG_SEVERITY ) 
+					{
+						// Append field value
+						$szFilterString .= GetSeverityDisplayName($tmpFilterValue); 
+					}
+					else if ( $tmpFilterID == SYSLOG_FACILITY ) 
+					{
+						// Append field value
+						$szFilterString .= GetFacilityDisplayName($tmpFilterValue); 
+					}
+					else
+					{
+						// Append field value
+						$szFilterString .= $tmpFilterValue; 
+					}
+				}
+				else if ( $tmpField['FieldType'] == FILTER_TYPE_STRING ) 
+				{
+					// Append Fieldname
+					$szFilterString .= $tmpField['SearchField']; 
+
+					// Append comparison
+					switch ( $tmpComparison ) 
+					{
+						case 1:		// FILTER_MODE_INCLUDE
+							$szFilterString .= ":"; 
+							break; 
+						case 2:		// FILTER_MODE_EXCLUDE
+							$szFilterString .= ":-"; 
+							break; 
+						case 5:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL
+							$szFilterString .= ":="; 
+							break; 
+						case 6:		// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL
+							$szFilterString .= ":-="; 
+							break; 
+						case 9:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX
+							$szFilterString .= ":~"; 
+							break; 
+						case 10:	// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX
+							$szFilterString .= ":-~"; 
+							break; 
+					}
+
+					// Append field value
+					$szFilterString .= $tmpFilterValue; 
+				}
+
+				
+				// Append trailing space
+				$szFilterString .= " "; 
+
+
+			}
+
+			//Increment Helpcounter
+			$i++;
+		}
+
+//		echo $content['filterString'] . "<br>";
+//		echo $szFilterString . "<br>"; 
+//		print_r ( $AllFilters ); 
+		
+		// Copy Final Filterstring
+		$content['filterString'] = $szFilterString; 
+	}
+
 	//	echo $content['SourceID'];
 	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
 	{
@@ -467,14 +608,11 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 		// Copy filter array
 		$AllFilters = $stream->ReturnFiltersArray(); 
 //		print_r( $stream->ReturnFiltersArray() ); 
+
+
 	}
 
-	// If Filters are send using POST we use them, otherwise we try to use from the view itself, if available
-	if ( isset($_POST['Filters']) )
-	{
-		$AllFilters = $_POST['Filters'];
-	}
-	else if ( isset($AllFilters) )
+	if ( isset($AllFilters) )
 	{
 		//$AllFilters = $content['AllFilters'];
 		foreach( $AllFilters as $tmpFieldId=>$tmpFieldFilters ) 
@@ -518,11 +656,11 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL, 
 							'ComparisonCaption' => "equals", 
 							); 
-	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX, 
-							'ComparisonCaption' => "matches regular expression", 
-							); 
 	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL, 
 							'ComparisonCaption' => "does not equal", 
+							); 
+	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX, 
+							'ComparisonCaption' => "matches regular expression", 
 							); 
 	$ComparisonsString[] = array ('ComparisonBit' => FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX, 
 							'ComparisonCaption' => "does not matches regular expression", 
@@ -537,7 +675,6 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	$ComparisonsDate[] = array ('ComparisonBit' => DATEMODE_RANGE_TO, 
 								'ComparisonCaption' => "To", 
 								); 
-
 
 
 	// Prepare Filters for display
@@ -608,8 +745,6 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 		$myField['FieldCaption'] .= " (" . $fields[$key]['FieldDefine'] . ")";
 	}
 	// ---
-
-
 
 }
 
