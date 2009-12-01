@@ -458,142 +458,198 @@ if ( isset($_GET['op']) )
 // --- Additional work regarding FilterDisplay todo for the edit view
 if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 {
+	// If Filters are send using POST we read them and create a FilterSting!
 
-//echo "subop_edit";
-//exit;
-
-// If Filters are send using POST we read them and create a FilterSting!
-	if ( isset($_POST['Filters']) )
+	// Init Filterstring variable
+	$szFilterString = ""; 
+	
+	if ( (strlen($content['filterString']) > 0 && isset($_POST['filterString'])) && $content['filterString'] != $_POST['filterString'] ) 
 	{
-//echo "datefrom:2005-01-01T00:00:00 dateto:2008-6-07T11:59:59 severity:=WARNING eventlogsource:=WinMgmt<br>";
-		
-		// Get Filter array
-		$AllFilters = $_POST['Filters'];
-		
-		// Loop through filters and build filterstring!
-		$i = 0;
-		$szFilterString = ""; 
-		foreach( $AllFilters as $tmpFilterID )
+		// Overwrite filterString from form data instead of filter array!
+	}
+	else
+	{
+		// Process POST data!
+		if ( isset($_POST['Filters']) )
 		{
-			// Get Comparison Bit
-			if ( isset($_POST['newcomparison_' . $i]) ) 
-				$tmpComparison = DB_RemoveBadChars($_POST['newcomparison_' . $i]); 
-			else
-				$tmpComparison = 0; // Default bit
-
-			// Get FilterValue
-			if ( isset($_POST['FilterValue_' . $i]) ) 
-				$tmpFilterValue = DB_RemoveBadChars($_POST['FilterValue_' . $i]); 
-			else
-				$tmpFilterValue = ""; // Default value
-
-			// Get Filtertype from FilterID
-			if ( isset($fields[$tmpFilterID]) ) 
+			
+			// Get Filter array
+			$AllFilters = $_POST['Filters'];
+			
+			// Loop through filters and build filterstring!
+			$i = 0;
+			foreach( $AllFilters as $tmpFilterID )
 			{
-				// Append to Filterstring
-				$tmpField = $fields[ $tmpFilterID ]; 
-
-				if ( $tmpField['FieldType'] == FILTER_TYPE_DATE ) 
+				if ( isset($_POST['subop_delete']) && $_POST['subop_delete'] == $i )
 				{
-					// Append comparison
-					switch ( $tmpComparison ) 
-					{
-						case 4:		// DATEMODE_RANGE_FROM
-							$szFilterString .= "datefrom:"; 
-							break; 
-						case 5:		// DATEMODE_RANGE_TO
-							$szFilterString .= "dateto:"; 
-							break; 
-						case 3:		// DATEMODE_LASTX
-							$szFilterString .= "datelastx:"; 
-							break; 
-					}
-
-					// Append field value
-					$szFilterString .= $tmpFilterValue; 
+					// Do nothing, user wants this filter to be deleted!
 				}
-				else if ( $tmpField['FieldType'] == FILTER_TYPE_NUMBER ) 
+				else
 				{
-					// Append Fieldname
-					$szFilterString .= $tmpField['SearchField']; 
+					// Get Comparison Bit
+					if ( isset($_POST['newcomparison_' . $i]) ) 
+						$tmpComparison = DB_RemoveBadChars($_POST['newcomparison_' . $i]); 
+					else
+						$tmpComparison = 0; // Default bit
 
-					// Append comparison
-					switch ( $tmpComparison ) 
+					// Get FilterValue
+					if ( isset($_POST['FilterValue_' . $i]) ) 
+						$tmpFilterValue = DB_RemoveBadChars($_POST['FilterValue_' . $i]); 
+					else
+						$tmpFilterValue = ""; // Default value
+
+					// Get Filtertype from FilterID
+					if ( isset($fields[$tmpFilterID]) ) 
 					{
-						case 1:		// FILTER_MODE_INCLUDE
-							$szFilterString .= ":="; 
-							break; 
-						case 2:		// FILTER_MODE_EXCLUDE
-							$szFilterString .= ":-="; 
-							break; 
+						// Append to Filterstring
+						$tmpField = $fields[ $tmpFilterID ]; 
+
+						if ( $tmpField['FieldType'] == FILTER_TYPE_DATE ) 
+						{
+							// Append comparison
+							switch ( $tmpComparison ) 
+							{
+								case 4:		// DATEMODE_RANGE_FROM
+									$szFilterString .= "datefrom:"; 
+									break; 
+								case 5:		// DATEMODE_RANGE_TO
+									$szFilterString .= "dateto:"; 
+									break; 
+								case 3:		// DATEMODE_LASTX
+									$szFilterString .= "datelastx:"; 
+									break; 
+							}
+
+							// Append field value
+							$szFilterString .= $tmpFilterValue; 
+						}
+						else if ( $tmpField['FieldType'] == FILTER_TYPE_NUMBER ) 
+						{
+							// Append Fieldname
+							$szFilterString .= $tmpField['SearchField']; 
+
+							// Append comparison
+							switch ( $tmpComparison ) 
+							{
+								case 1:		// FILTER_MODE_INCLUDE
+									$szFilterString .= ":="; 
+									break; 
+								case 2:		// FILTER_MODE_EXCLUDE
+									$szFilterString .= ":-="; 
+									break; 
+							}
+							
+							if ( $tmpFilterID == SYSLOG_SEVERITY ) 
+							{
+								// Append field value
+								$szFilterString .= GetSeverityDisplayName($tmpFilterValue); 
+							}
+							else if ( $tmpFilterID == SYSLOG_FACILITY ) 
+							{
+								// Append field value
+								$szFilterString .= GetFacilityDisplayName($tmpFilterValue); 
+							}
+							else
+							{
+								// Append field value
+								$szFilterString .= $tmpFilterValue; 
+							}
+						}
+						else if ( $tmpField['FieldType'] == FILTER_TYPE_STRING ) 
+						{
+							// Append Fieldname
+							$szFilterString .= $tmpField['SearchField']; 
+
+							// Append comparison
+							switch ( $tmpComparison ) 
+							{
+								case 1:		// FILTER_MODE_INCLUDE
+									$szFilterString .= ":"; 
+									break; 
+								case 2:		// FILTER_MODE_EXCLUDE
+									$szFilterString .= ":-"; 
+									break; 
+								case 5:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL
+									$szFilterString .= ":="; 
+									break; 
+								case 6:		// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL
+									$szFilterString .= ":-="; 
+									break; 
+								case 9:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX
+									$szFilterString .= ":~"; 
+									break; 
+								case 10:	// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX
+									$szFilterString .= ":-~"; 
+									break; 
+							}
+
+							// Append field value
+							$szFilterString .= $tmpFilterValue; 
+						}
+
+						// Append trailing space
+						$szFilterString .= " "; 
 					}
-					
-					if ( $tmpFilterID == SYSLOG_SEVERITY ) 
+				}
+
+				//Increment Helpcounter
+				$i++;
+			}
+
+	//		echo $content['filterString'] . "<br>";
+	//		echo $szFilterString . "<br>"; 
+	//		print_r ( $AllFilters ); 
+		}
+	}
+	
+	// Add new filter if wanted
+	if ( isset($_POST['subop']) )
+	{
+		if ( $_POST['subop'] == $content['LN_REPORTS_ADDFILTER'] && isset($_POST['newfilter']) ) 
+		{
+			if ( isset($fields[ $_POST['newfilter'] ]) ) 
+			{
+				// Get Field Info
+				$myNewField = $fields[ $_POST['newfilter'] ]; 
+
+				if ( $myNewField['FieldType'] == FILTER_TYPE_DATE ) 
+				{
+					$szFilterString .= "datelastx:" . DATE_LASTX_24HOURS; 
+				}
+				else if ( $myNewField['FieldType'] == FILTER_TYPE_NUMBER ) 
+				{
+					// Append sample filter
+					$szFilterString .= $myNewField['SearchField']. ":="; 
+
+					if ( $myNewField['FieldID'] == SYSLOG_SEVERITY ) 
 					{
 						// Append field value
-						$szFilterString .= GetSeverityDisplayName($tmpFilterValue); 
+						$szFilterString .= GetSeverityDisplayName(SYSLOG_NOTICE); 
 					}
-					else if ( $tmpFilterID == SYSLOG_FACILITY ) 
+					else if ( $myNewField['FieldID'] == SYSLOG_FACILITY ) 
 					{
 						// Append field value
-						$szFilterString .= GetFacilityDisplayName($tmpFilterValue); 
+						$szFilterString .= GetFacilityDisplayName(SYSLOG_LOCAL0); 
 					}
 					else
 					{
-						// Append field value
-						$szFilterString .= $tmpFilterValue; 
+						// Append sample value
+						$szFilterString .= "1"; 
 					}
 				}
-				else if ( $tmpField['FieldType'] == FILTER_TYPE_STRING ) 
+				else if ( $myNewField['FieldType'] == FILTER_TYPE_STRING ) 
 				{
-					// Append Fieldname
-					$szFilterString .= $tmpField['SearchField']; 
-
-					// Append comparison
-					switch ( $tmpComparison ) 
-					{
-						case 1:		// FILTER_MODE_INCLUDE
-							$szFilterString .= ":"; 
-							break; 
-						case 2:		// FILTER_MODE_EXCLUDE
-							$szFilterString .= ":-"; 
-							break; 
-						case 5:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL
-							$szFilterString .= ":="; 
-							break; 
-						case 6:		// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL
-							$szFilterString .= ":-="; 
-							break; 
-						case 9:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX
-							$szFilterString .= ":~"; 
-							break; 
-						case 10:	// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX
-							$szFilterString .= ":-~"; 
-							break; 
-					}
-
-					// Append field value
-					$szFilterString .= $tmpFilterValue; 
+					// Append sample filter
+					$szFilterString .= $myNewField['SearchField']. ":sample"; 
 				}
-
-				
-				// Append trailing space
-				$szFilterString .= " "; 
-
-
 			}
-
-			//Increment Helpcounter
-			$i++;
+			// Append to Filterstring
 		}
-
-//		echo $content['filterString'] . "<br>";
-//		echo $szFilterString . "<br>"; 
-//		print_r ( $AllFilters ); 
-		
-		// Copy Final Filterstring
-		$content['filterString'] = $szFilterString; 
 	}
+
+	// Copy Final Filterstring if necessary
+	if ( strlen($szFilterString) > 0 ) 
+		$content['filterString'] = $szFilterString; 
 
 	//	echo $content['SourceID'];
 	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
@@ -608,8 +664,6 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 		// Copy filter array
 		$AllFilters = $stream->ReturnFiltersArray(); 
 //		print_r( $stream->ReturnFiltersArray() ); 
-
-
 	}
 
 	if ( isset($AllFilters) )
@@ -724,9 +778,7 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 			}
 
 		}
-
-
-		print_r( $content['SUBFILTERS'] ); 
+//		print_r( $content['SUBFILTERS'] ); 
 	}
 
 	// --- Copy fields data array
