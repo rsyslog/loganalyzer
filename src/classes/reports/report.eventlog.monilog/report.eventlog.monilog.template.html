@@ -113,12 +113,12 @@
 		<td class="line1" valign="top" align="center">{syslogseverity_text}</td>
 		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=id&q={id}" target="_blank">{id}</a></td>
 		<td class="line1" valign="top" align="left">{msg}</td>
-		<!-- IF ItemCount>10 -->
+		<!-- IF ItemCount>=$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{ItemCount}</b></td>
-		<!-- ENDIF ItemCount>10 -->
-		<!-- IF ItemCount<11 -->
+		<!-- ENDIF ItemCount>=$_colorThreshold -->
+		<!-- IF ItemCount<$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{ItemCount}</b></td>
-		<!-- ENDIF ItemCount<11 -->
+		<!-- ENDIF ItemCount<$_colorThreshold -->
 		
 	</tr>
 

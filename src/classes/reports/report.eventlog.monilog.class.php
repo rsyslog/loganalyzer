@@ -59,16 +59,7 @@ class Report_monilog extends Report {
 	// Advanced Report Options
 	private $_maxHosts = 20;									// Threshold for maximum hosts to analyse!
 	private $_maxEventsPerHost = 100;							// Threshold for maximum amount of events to analyse per host
-/*	private $_currentOffset = -1;
-	private $_currentStartPos = -1;
-	private $_fp = null;
-	private $_bEOS = false;
-
-	const _BUFFER_length = 8192;
-	private $_buffer = false;
-	private $_buffer_length = 0;
-	private $_p_buffer = -1;
-*/
+	private $_colorThreshold = 10;								// Threshold for coloured display of Eventcounter
 
 	// Constructor
 	public function Report_monilog() {
@@ -89,6 +80,36 @@ class Report_monilog extends Report {
 		$this->_arrProperties[] = SYSLOG_MESSAGE;
 		$this->_arrProperties[] = MISC_CHECKSUM;
 
+		// Init Customfilters Array
+		$this->_arrCustomFilters['_maxHosts'] = array (	'InternalID'	=> '_maxHosts', 
+														'DisplayLangID'	=> 'ln_report_maxHosts_displayname', 
+														'DescriptLangID'=> 'ln_report_maxHosts_description', 
+														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
+														'DefaultValue'	=> 20, 
+														'MinValue'		=> 0,
+														'MaxValue'		=> 0,
+												); 
+		$this->_arrCustomFilters['_maxEventsPerHost'] = 
+												array (	'InternalID'	=> '_maxEventsPerHost', 
+														'DisplayLangID'	=> 'ln_report_maxEventsPerHost_displayname', 
+														'DescriptLangID'=> 'ln_report_maxEventsPerHost_description', 
+														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
+														'DefaultValue'	=> 100, 
+														'MinValue'		=> 0,
+														'MaxValue'		=> 0,
+												); 
+		$this->_arrCustomFilters['_colorThreshold'] = 
+												array (	'InternalID'	=> '_colorThreshold', 
+														'DisplayLangID'	=> 'ln_report_colorThreshold_displayname', 
+														'DescriptLangID'=> 'ln_report_colorThreshold_description', 
+														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
+														'DefaultValue'	=> 10, 
+														'MinValue'		=> 0,
+														'MaxValue'		=> 0,
+												); 
+
+		
+
 	}
 
 	/**
@@ -108,12 +129,11 @@ class Report_monilog extends Report {
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
-//
-//		// Verify Datasource first!
-//		if ( $this->verifyDataSource() == SUCCESS ) 
-//		{
 			// Set to common content variables
 			$this->SetCommonContentVariables();
+
+			// Set report specific content variables
+			$content["_colorThreshold"] = $this->_colorThreshold;
 
 			// --- Report logic starts here
 			$content["report_rendertime"] = "";

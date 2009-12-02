@@ -295,7 +295,10 @@ if ( isset($_GET['op']) )
 				$content['customTitle'] = $myReport['DisplayName'];
 				$content['customComment'] = "";
 				$content['filterString'] = ""; 
-				$content['customFilters'] = ""; 
+				
+				// Init Custom Filters
+				InitCustomFilterDefinitions($myReport, "");
+//				$content['customFilters'] = ""; 
 
 				// Copy Sources array for further modifications
 				global $currentSourceID;
@@ -368,7 +371,10 @@ if ( isset($_GET['op']) )
 					$content['customTitle'] = $mySavedReport['customTitle'];
 					$content['customComment'] = $mySavedReport['customComment'];
 					$content['filterString'] = $mySavedReport['filterString'];
-					$content['customFilters'] = $mySavedReport['customFilters'];
+
+					// Init Custom Filters
+					InitCustomFilterDefinitions($myReport, $mySavedReport['customFilters']);
+//					$content['customFilters'] = $mySavedReport['customFilters'];
 
 					// Copy Sources array for further modifications
 					$content['SOURCES'] = $content['Sources'];
@@ -1026,5 +1032,50 @@ InitTemplateParser();
 $page -> parser($content, "admin/admin_reports.html");
 $page -> output(); 
 // --- 
+
+// --- BEGIN Helper functions 
+
+function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
+{
+	global $content; 
+
+	// Get Objectreference to report
+	$myReportObj = $myReport["ObjRef"];
+
+	// Get Array of Custom filter Defs
+	$customFilterDefs = $myReportObj->GetCustomFiltersDefs();
+
+	// Include Custom language file if available
+	$myReportObj->InitReportLanguageFile( $myReportObj->GetReportIncludePath() ); 
+
+	// Loop through filters
+	$i = 0; // Help counter!
+	foreach( $customFilterDefs as $filterID => $tmpCustomFilter ) 
+	{
+		// TODO Check if value is available in $CustomFilterValues
+		$szDefaultValue = $tmpCustomFilter['DefaultValue']; 
+
+		// TODO Check MIN and MAX value!
+
+		// --- Set CSS Class
+		if ( $i % 2 == 0 )
+			$szColcssclass = "line1";
+		else
+			$szColcssclass = "line2";
+		$i++;
+		// --- 
+
+		$content['CUSTOMFILTERS'][] = array (
+										'fieldname'			=> $filterID, 
+										'fieldcaption'		=> $content[ $tmpCustomFilter['DisplayLangID'] ],
+										'fielddescription'	=> $content[ $tmpCustomFilter['DescriptLangID'] ],
+										'filtertype'		=> $tmpCustomFilter['filtertype'], 
+										'fieldvalue'		=> $szDefaultValue, 
+										'colcssclass'		=> $szColcssclass, 
+									);
+	}
+}
+
+// --- END Helper functions 
 
 ?>

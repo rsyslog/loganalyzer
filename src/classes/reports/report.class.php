@@ -62,8 +62,9 @@ abstract class Report {
 	// SavedReport Configuration Properties
 	protected $_customTitle = "";
 	protected $_customComment = "";
-	protected $_filterString = "";
-	protected $_customFilters = ""; 
+	protected $_filterString = "";					// Filterstring like used in the search view
+	protected $_arrCustomFilters = null;			// Array contains list of available custom filters, used for admin interface!
+	protected $_customFilters = "";					// Xml Filterstring containing values for the custom filters
 	protected $_outputFormat = REPORT_OUTPUT_HTML;	// Default HTML Output
 	protected $_outputTarget = "";
 	protected $_scheduleSettings = "";
@@ -233,6 +234,9 @@ abstract class Report {
 	{
 		// Set new Outputtype
 		$this->_customFilters = $newAdvancedOptions; 
+
+		echo "TODO SetCustomFilters"; 
+		exit;
 	}
 
 	/*
@@ -430,6 +434,14 @@ abstract class Report {
 	}
 
 	/*
+	*	Helper function to return the custom filter definitions
+	*/
+	public function GetCustomFiltersDefs()
+	{
+		return $this->_arrCustomFilters; 
+	}
+
+	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
@@ -455,6 +467,26 @@ abstract class Report {
 		$this->SetScheduleSettings(	$mySavedReport["scheduleSettings"] );
 	}
 
-	
+
+	/*
+	*	Helper function to get the report include path 
+	*/
+	public function GetReportIncludePath()
+	{
+		global $gl_root_path; 
+		return $gl_root_path . 'classes/reports/' . $this->_reportFileBasicName . "/"; 
+	}
+
+	/*
+	*	Helper function to init custom language strings from report!
+	*/
+	public function InitReportLanguageFile($szReportIncludePath)
+	{
+		// Include Custom language file if available
+		IncludeLanguageFile( $szReportIncludePath . $this->_reportFileBasicName . ".lang.en.php" ); 
+
+	}
+
+
 }
 ?>

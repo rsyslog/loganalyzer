@@ -204,10 +204,15 @@ if ( !$content['error_occured'] )
 					else
 					{
 						// --- Perform report output
-						$reportIncludePath = $gl_root_path . 'classes/reports/' . $myReportObj->_reportFileBasicName . "/"; 
-						
+
+						// Init IncludePath
+						$reportIncludePath = $myReportObj->GetReportIncludePath(); 
+
 						// Include Custom language file if available
-						IncludeLanguageFile( $reportIncludePath . $myReportObj->_reportFileBasicName . ".lang.en.php" ); 
+						$myReportObj->InitReportLanguageFile($reportIncludePath); 
+						
+//						$reportIncludePath = $gl_root_path . 'classes/reports/' . $myReportObj->_reportFileBasicName . "/"; 
+//						IncludeLanguageFile( $reportIncludePath . $myReportObj->_reportFileBasicName . ".lang.en.php" ); 
 
 						// Init template Parser
 						$page = new Template();

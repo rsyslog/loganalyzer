@@ -190,10 +190,6 @@
 					
 					<td align="center" class="{colcssclass}" width="50">
 						<button name="subop_edit" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_REPORTS_FILTER_EDIT}"></button>
-<!--						
-						<button name="subop_moveup" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_MOVEUP}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_REPORTS_FILTER_MOVEUP}"></button>
-						<button name="subop_movedown" type="submit" value="{FilterFieldID}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_MOVEDOWN}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_REPORTS_FILTER_MOVEDOWN}"></button>
--->
 						<button name="subop_delete" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_REPORTS_FILTER_REMOVE}"></button>
 					</td>
 				</tr>
@@ -213,6 +209,31 @@
 
 				</td>
 			</tr>
+
+			<tr>
+				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_REPORTS_ADVANCEDFILTERS}</b></td>
+				<td align="left" class="line1" width="100%">
+
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="550" class="with_border_alternate">
+				<tr>
+					<td align="center" class="cellmenu1" colspan="4"><b>{LN_REPORTS_ADVANCEDFILTERLIST}</b></td>
+				</tr>
+				<!-- BEGIN CUSTOMFILTERS -->
+				<tr>
+					<td align="left" class="{colcssclass}" width="350">
+						<b>{fieldcaption}</b><br/>(<I>{fielddescription}</I>)
+					</td>
+					<td align="left" class="{colcssclass}" width="200">
+						<input type="text" name="fieldname" size="40" maxlength="255" value="{fieldvalue}">
+					</td>
+				</tr>
+				<!-- END CUSTOMFILTERS -->
+				</table>
+
+				</td>
+			</tr>
+
+			
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
 				<td align="left" class="line2" width="100%">
