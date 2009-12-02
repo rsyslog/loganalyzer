@@ -235,8 +235,8 @@ abstract class Report {
 		// Set new Outputtype
 		$this->_customFilters = $newAdvancedOptions; 
 
-		echo "TODO SetCustomFilters"; 
-		exit;
+//		echo "TODO SetCustomFilters"; 
+//		exit;
 	}
 
 	/*

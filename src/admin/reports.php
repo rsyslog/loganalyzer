@@ -395,7 +395,7 @@ if ( isset($_GET['op']) )
 					CreateOutputformatList( $content['outputFormat'] );
 					
 					// Other settings ... TODO!
-					$content['customFilters'] = "";
+//					$content['customFilters'] = "";
 					$content['outputTarget'] = "";
 					$content['scheduleSettings'] = "";
 				}
@@ -829,10 +829,29 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['report_customcomment']) ) { $content['customComment'] = DB_RemoveBadChars($_POST['report_customcomment']); } else {$content['report_customcomment'] = ""; }
 		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
+
+		// Read Custom Filters
+		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
+		{
+			// Set fieldvalue if available from POST data
+			if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) { $tmpCustomFilter['fieldvalue'] = DB_RemoveBadChars($_POST[ $tmpCustomFilter['fieldname'] ]); }
+		}
 		
+		// Read done, now build "customFilters" string!
+		$content['customFilters'] = "";
+		foreach ( $content['CUSTOMFILTERS'] as $tmpCustomFilter ) 
+		{
+			// Append comma if necessary
+			if (strlen($content['customFilters']) > 0) 
+				$content['customFilters'] .= ", "; 
+
+			// Append customFilter!
+			$content['customFilters'] .= $tmpCustomFilter['fieldname'] . "=>" . $tmpCustomFilter['fieldvalue']; 
+		}
+
 		// TODO!
 		// customFilters, outputTarget, scheduleSettings
-		$content['customFilters'] = "";
+//		$content['customFilters'] = "";
 		$content['outputTarget'] = "";
 		$content['scheduleSettings'] = "";
 
@@ -857,7 +876,7 @@ if ( isset($_POST['op']) )
 
 		// --- Now Verify Report Source!
 		// Create tmpSavedReport!
-		$tmpSavedReport["SavedReportID"] = $content['customFilters'];
+		$tmpSavedReport["SavedReportID"] = 0;
 		$tmpSavedReport["sourceid"] = $content['SourceID'];
 		$tmpSavedReport["customTitle"] = $content['customTitle'];
 		$tmpSavedReport["customComment"] = $content['customComment'];
@@ -1048,12 +1067,32 @@ function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 	// Include Custom language file if available
 	$myReportObj->InitReportLanguageFile( $myReportObj->GetReportIncludePath() ); 
 
+	// Parse and Split CustomFilterValues
+	if ( strlen($CustomFilterValues) > 0 ) 
+	{
+		$tmpFilterValues = explode( ",", $CustomFilterValues );
+	
+		//Loop through mappings
+		foreach ($tmpFilterValues as &$myFilterValue )
+		{
+			// Split subvalues
+			$tmpArray = explode( "=>", $myFilterValue );
+			
+			// Set into temporary array
+			$tmpfilterid = trim($tmpArray[0]);
+			$myFilterValues[$tmpfilterid] =  trim($tmpArray[1]);
+		}
+	}
+
 	// Loop through filters
 	$i = 0; // Help counter!
 	foreach( $customFilterDefs as $filterID => $tmpCustomFilter ) 
 	{
-		// TODO Check if value is available in $CustomFilterValues
-		$szDefaultValue = $tmpCustomFilter['DefaultValue']; 
+		// Check if value is available in $CustomFilterValues
+		if ( isset($myFilterValues[$filterID]) ) 
+			$szDefaultValue = $myFilterValues[$filterID]; 
+		else
+			$szDefaultValue = $tmpCustomFilter['DefaultValue']; 
 
 		// TODO Check MIN and MAX value!
 
@@ -1065,6 +1104,7 @@ function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 		$i++;
 		// --- 
 
+		// Add to Display Array of custom filters!
 		$content['CUSTOMFILTERS'][] = array (
 										'fieldname'			=> $filterID, 
 										'fieldcaption'		=> $content[ $tmpCustomFilter['DisplayLangID'] ],
