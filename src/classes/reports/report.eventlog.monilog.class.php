@@ -86,8 +86,8 @@ class Report_monilog extends Report {
 														'DescriptLangID'=> 'ln_report_maxHosts_description', 
 														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
 														'DefaultValue'	=> 20, 
-														'MinValue'		=> 0,
-														'MaxValue'		=> 0,
+														'MinValue'		=> 1,
+/*														'MaxValue'		=> 0,*/
 												); 
 		$this->_arrCustomFilters['_maxEventsPerHost'] = 
 												array (	'InternalID'	=> '_maxEventsPerHost', 
@@ -95,8 +95,8 @@ class Report_monilog extends Report {
 														'DescriptLangID'=> 'ln_report_maxEventsPerHost_description', 
 														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
 														'DefaultValue'	=> 100, 
-														'MinValue'		=> 0,
-														'MaxValue'		=> 0,
+														'MinValue'		=> 1,
+/*														'MaxValue'		=> 0,*/
 												); 
 		$this->_arrCustomFilters['_colorThreshold'] = 
 												array (	'InternalID'	=> '_colorThreshold', 
@@ -104,8 +104,8 @@ class Report_monilog extends Report {
 														'DescriptLangID'=> 'ln_report_colorThreshold_description', 
 														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
 														'DefaultValue'	=> 10, 
-														'MinValue'		=> 0,
-														'MaxValue'		=> 0,
+														'MinValue'		=> 1,
+/*														'MaxValue'		=> 0,*/
 												); 
 
 		
@@ -234,6 +234,59 @@ class Report_monilog extends Report {
 		// This is a free report!
 		return SUCCESS;
 	}
+
+	/**
+	* Init advanced settings from _customFilters string
+	*/
+	public function InitAdvancedSettings()
+	{
+		// Parse and Split _customFilters
+		if ( strlen($this->_customFilters) > 0 ) 
+		{
+			// First of all split by comma
+			$tmpFilterValues = explode( ",", $this->_customFilters );
+		
+			//Loop through mappings
+			foreach ($tmpFilterValues as &$myFilterValue )
+			{
+				// Split subvalues
+				$tmpArray = explode( "=>", $myFilterValue );
+				
+				// Set into temporary array
+				$tmpfilterid = trim($tmpArray[0]);
+				
+				// Set advanced property
+				if ( isset($this->_arrCustomFilters[$tmpfilterid]) ) 
+				{
+					// Copy New value first!
+					$szNewVal = trim($tmpArray[1]);
+
+					// Negated logic
+					if ( 
+							$this->_arrCustomFilters[$tmpfilterid][FILTER_TYPE] == FILTER_TYPE_NUMBER && 
+							!(isset($this->_arrCustomFilters[$tmpfilterid]['MinValue']) && intval($szNewVal) < $this->_arrCustomFilters[$tmpfilterid]['MinValue']) && 
+							!(isset($this->_arrCustomFilters[$tmpfilterid]['MaxValue']) && intval($szNewVal) >= $this->_arrCustomFilters[$tmpfilterid]['MaxValue']) 
+						) 
+					{
+						if ( $tmpfilterid == '_maxHosts' ) 
+							$_maxHosts = $nNewVal; 
+						else if ( $tmpfilterid == '_maxEventsPerHost' ) 
+							$_maxEventsPerHost = $nNewVal; 
+						else if ( $tmpfilterid == '_colorThreshold' ) 
+							$_colorThreshold = $nNewVal; 
+					}
+					else
+					{
+						// Write to debuglog
+						OutputDebugMessage("Failed setting advanced report option property '" . $tmpfilterid . "', value not in value range!", DEBUG_ERROR);
+					}
+				}
+			}
+		}
+
+
+	}
+
 
 
 	// --- Private functions...

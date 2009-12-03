@@ -112,6 +112,11 @@ abstract class Report {
 
 
 	/**
+	* This function will init advanced settings from _customFilters string
+	*/
+	public abstract function InitAdvancedSettings();
+
+	/**
 	* verifyDataSource, verifies if data is accessable and 
 	* contains what we need
 	*
@@ -234,6 +239,9 @@ abstract class Report {
 	{
 		// Set new Outputtype
 		$this->_customFilters = $newAdvancedOptions; 
+
+		// Call report function to init advanced settings!
+		$this->InitAdvancedSettings();
 
 //		echo "TODO SetCustomFilters"; 
 //		exit;
