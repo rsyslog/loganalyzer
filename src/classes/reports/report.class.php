@@ -203,6 +203,10 @@ abstract class Report {
 
 		// Set Filebasename
 		$this->_baseFileName = $this->_reportFileBasicName . ".template." . $this->_outputFormat;
+
+		// Set to HTML Template if is missing!
+		if ( !is_file($this->_baseFileName) )
+			$this->_baseFileName = $this->_reportFileBasicName . ".template." . REPORT_OUTPUT_HTML;
 	}
 
 	/*
@@ -495,6 +499,33 @@ abstract class Report {
 
 	}
 
+
+	/*
+	*	This function outputs the report to the browser in the desired format!
+	*/
+	public function OutputReport($szOutputBuffer)
+	{
+		global $gl_root_path; 
+
+		// Simple HTML Output!
+		if ( $this->_outputFormat == REPORT_OUTPUT_HTML ) 
+		{
+			// HTML Header
+			echo $szOutputBuffer; 
+		}
+		else if ( $this->_outputFormat == REPORT_OUTPUT_PDF ) 
+		{	
+			// Convert into PDF!
+			include_once($gl_root_path . 'classes/html2fpdf/html2fpdf.php');
+
+			$pdf=new HTML2FPDF('landscape');
+			$pdf->AddPage();
+			$pdf->SetFontSize(14);
+			$pdf->WriteHTML( $szOutputBuffer );
+//			Header('Content-Type: application/pdf');
+			$pdf->Output('', 'I'); // Output to STANDARD Input!
+		}
+	}
 
 }
 ?>

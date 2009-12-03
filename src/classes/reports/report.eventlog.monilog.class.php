@@ -162,7 +162,7 @@ class Report_monilog extends Report {
 
 				// Prepent Item with totalevents count
 				$totalItem['DisplayName'] = "Total Events"; 
-				$totalItem['bgcolor'] = "999999";
+				$totalItem['bgcolor'] = "#999999";
 				$totalItem['ItemCount'] = $iTotalEvents; 
 
 				// Prepent to array
@@ -269,11 +269,11 @@ class Report_monilog extends Report {
 						) 
 					{
 						if ( $tmpfilterid == '_maxHosts' ) 
-							$_maxHosts = $nNewVal; 
+							$this->_maxHosts = intval($szNewVal); 
 						else if ( $tmpfilterid == '_maxEventsPerHost' ) 
-							$_maxEventsPerHost = $nNewVal; 
+							$this->_maxEventsPerHost = intval($szNewVal); 
 						else if ( $tmpfilterid == '_colorThreshold' ) 
-							$_colorThreshold = $nNewVal; 
+							$this->_colorThreshold = intval($szNewVal); 
 					}
 					else
 					{

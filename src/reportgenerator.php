@@ -211,9 +211,6 @@ if ( !$content['error_occured'] )
 						// Include Custom language file if available
 						$myReportObj->InitReportLanguageFile($reportIncludePath); 
 						
-//						$reportIncludePath = $gl_root_path . 'classes/reports/' . $myReportObj->_reportFileBasicName . "/"; 
-//						IncludeLanguageFile( $reportIncludePath . $myReportObj->_reportFileBasicName . ".lang.en.php" ); 
-
 						// Init template Parser
 						$page = new Template();
 						$page -> set_path ( $reportIncludePath );
@@ -222,7 +219,8 @@ if ( !$content['error_occured'] )
 						$page -> parser($content, $myReportObj->GetBaseFileName());
 
 						// Output to browser 
-						$page -> output(); 
+						$myReportObj->OutputReport( $page ->result() );
+						//$page->output(); 
 						// --- 
 					}
 				}
@@ -252,5 +250,6 @@ if ( $content['error_occured'] )
 	$page -> output(); 
 }
 // --- 
+
 
 ?>

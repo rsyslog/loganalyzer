@@ -830,6 +830,7 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
 
+
 		// Read Custom Filters
 		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
 		{
@@ -839,7 +840,7 @@ if ( isset($_POST['op']) )
 		
 		// Read done, now build "customFilters" string!
 		$content['customFilters'] = "";
-		foreach ( $content['CUSTOMFILTERS'] as $tmpCustomFilter ) 
+		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
 		{
 			// Append comma if necessary
 			if (strlen($content['customFilters']) > 0) 
