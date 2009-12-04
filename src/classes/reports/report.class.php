@@ -201,11 +201,14 @@ abstract class Report {
 		// Set new Outputtype
 		$this->_outputFormat = $newOutputType; 
 
+		// Get include path 
+		$szIncludePath = $this->GetReportIncludePath();
+
 		// Set Filebasename
 		$this->_baseFileName = $this->_reportFileBasicName . ".template." . $this->_outputFormat;
 
 		// Set to HTML Template if is missing!
-		if ( !is_file($this->_baseFileName) )
+		if ( !is_file( $szIncludePath . $this->_baseFileName) )
 			$this->_baseFileName = $this->_reportFileBasicName . ".template." . REPORT_OUTPUT_HTML;
 	}
 
@@ -496,7 +499,6 @@ abstract class Report {
 	{
 		// Include Custom language file if available
 		IncludeLanguageFile( $szReportIncludePath . $this->_reportFileBasicName . ".lang.en.php" ); 
-
 	}
 
 
@@ -518,9 +520,11 @@ abstract class Report {
 			// Convert into PDF!
 			include_once($gl_root_path . 'classes/html2fpdf/html2fpdf.php');
 
-			$pdf=new HTML2FPDF('landscape');
+//			$pdf=new HTML2FPDF('landscape');
+			$pdf=new HTML2FPDF();
+			$pdf->UseCss(true);
 			$pdf->AddPage();
-			$pdf->SetFontSize(14);
+//			$pdf->SetFontSize(12);
 			$pdf->WriteHTML( $szOutputBuffer );
 //			Header('Content-Type: application/pdf');
 			$pdf->Output('', 'I'); // Output to STANDARD Input!

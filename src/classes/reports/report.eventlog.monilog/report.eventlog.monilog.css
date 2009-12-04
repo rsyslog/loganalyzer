@@ -176,7 +176,7 @@ font
 /* Cells for listening */
 .line0
 {
-	font-size: 10px;
+	font-size: 7pt;
 	color: #000000;
 	background-color: #DDDDDD;
 }
@@ -187,7 +187,7 @@ font
 
 .line1
 {
-	font-size: 10px;
+	font-size: 7pt;
 	color: #000000;
 	background-color: #EEEEEE;
 }
@@ -198,7 +198,7 @@ font
 
 .line2
 {
-	font-size: 10px;
+	font-size: 7pt;
 	color: #000000;
 	background-color: #F5F5F5;
 }

@@ -191,7 +191,13 @@ class Template {
 				{
 					// FIXED BY ANDRE | Do not convert OBJECTS into strings!
 					if ( !is_object($k) && !is_object($v) ) 
-						$template  =  str_replace('{'.$k.'}',  "$v",  $template);
+					{
+						// Replace normal variables
+						$template = str_replace('{'.$k.'}',  "$v",  $template);
+
+						// Replace variables with options, use Callback function!
+						$template = preg_replace( '/{'.$k.':(.*?):(.*?)}/ie', 'InsertTemplateVariable("$v", "\\1", "\\2")', $template );
+					}
 				}
 			}
 		}
@@ -294,7 +300,30 @@ class Template {
 		// return processed template	
 		return $template;
 	}
-
-
 }
+
+function InsertTemplateVariable($szValue, $szOperation, $szOption)
+{
+	// Set Default
+	$szResult = $szValue; 
+
+	switch ( $szOperation ) 
+	{
+		case "trunscate": 
+			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
+				$szResult = substr($szValue, 0, $szOption) . " ..."; 
+			break;
+		case "forcelinebreak": 
+			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
+				$szResult = wordwrap($szValue, $szOption, "<br>", true); 
+			break;
+		default: 
+			// Nothing
+			break;
+	}
+
+	// return result
+	return $szResult; 
+}
+
 ?>
