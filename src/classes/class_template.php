@@ -317,6 +317,10 @@ function InsertTemplateVariable($szValue, $szOperation, $szOption)
 			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
 				$szResult = wordwrap($szValue, $szOption, "<br>", true); 
 			break;
+		case "wordwrap": 
+			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
+				$szResult = wordwrap($szValue, $szOption, " ", true); 
+			break;
 		default: 
 			// Nothing
 			break;

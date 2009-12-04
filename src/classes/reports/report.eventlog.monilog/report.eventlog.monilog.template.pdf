@@ -69,8 +69,8 @@
 		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_number}</td>
 		<td class="cellmenu1" align="left" width="100" nowrap>{ln_report_firstevent}</td>
 		<td class="cellmenu1" align="left" width="100" nowrap>{ln_report_lastevent}</td>
-		<td class="cellmenu1" align="left" width="50" nowrap>{ln_report_process}</td>
-		<td class="cellmenu1" align="left" width="100" nowrap>{ln_report_severity}</td>
+		<td class="cellmenu1" align="left" width="100" nowrap>{ln_report_process}</td>
+		<td class="cellmenu1" align="left" width="50" nowrap>{ln_report_severity}</td>
 		<td class="cellmenu1" align="left" width="50" nowrap>{ln_report_eventid}</td>
 		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 	</tr>
@@ -91,7 +91,7 @@
 	</tr>
 	<tr>
 		<td class="cellmenu1" align="center" valign="top" nowrap colspan="2" width="200">{ln_report_description}</td>
-		<td class="cellmenu1" align="left" nowrap colspan="4">{msg:forcelinebreak:40}</td>
+		<td class="cellmenu1" align="left" nowrap colspan="4">{msg:wordwrap:32}</td>
 	</tr>
 	<!-- END cons_events -->
 	</table>
