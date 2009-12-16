@@ -10,8 +10,7 @@ CREATE TABLE `logcon_savedreports` (
 `outputFormat` VARCHAR( 64 ) NOT NULL ,
 `outputTarget` TEXT NOT NULL ,
 `scheduleSettings` TEXT NOT NULL 
-) ENGINE = innodb COMMENT = 'Table to store saved reports';
-
+) ENGINE=MyISAM COMMENT = 'Table to store saved reports';
 -- Insert data
 
 -- Updated Data

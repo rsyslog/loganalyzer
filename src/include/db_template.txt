@@ -163,3 +163,19 @@ CREATE TABLE `logcon_dbmappings` (
   `Mappings` varchar(1024) NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- 
+-- Table structure for table `logcon_savedreports`
+-- 
+CREATE TABLE `logcon_savedreports` (
+`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`reportid` VARCHAR( 255 ) NOT NULL ,
+`sourceid` INT NOT NULL ,
+`customTitle` VARCHAR( 255 ) NOT NULL ,
+`customComment` TEXT NOT NULL ,
+`filterString` TEXT NOT NULL ,
+`customFilters` TEXT NOT NULL ,
+`outputFormat` VARCHAR( 64 ) NOT NULL ,
+`outputTarget` TEXT NOT NULL ,
+`scheduleSettings` TEXT NOT NULL 
+) ENGINE=MyISAM COMMENT = 'Table to store saved reports';
