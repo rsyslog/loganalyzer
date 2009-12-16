@@ -270,17 +270,18 @@ if ( isset($_GET['op']) )
 	}
 	else if ($_GET['op'] == "addsavedreport") 
 	{
-		// Set Mode to add
-//		$content['ISSHOWDETAILS'] = "true";
-		$content['ISADDSAVEDREPORT'] = "true";
-		$content['REPORT_FORMACTION'] = "addsavedreport";
-		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
-		$content['FormUrlAddOP'] = "?op=addsavedreport&id=" . $content['ReportID'];
-
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
 			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+
+			// Init Form variables 
+			$content['ISADDSAVEDREPORT'] = "true";
+			$content['REPORT_FORMACTION'] = "addsavedreport";
+			$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
+			$content['FormUrlAddOP'] = "?op=addsavedreport&id=" . $content['ReportID'];
+			
+			// Check if report exists
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
