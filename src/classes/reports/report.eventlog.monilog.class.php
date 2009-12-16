@@ -69,7 +69,7 @@ class Report_monilog extends Report {
 		$this->_arrProperties[] = SYSLOG_UID;
 		$this->_arrProperties[] = SYSLOG_DATE;
 		$this->_arrProperties[] = SYSLOG_HOST;
-//		$this->_arrProperties[] = SYSLOG_MESSAGETYPE;
+		$this->_arrProperties[] = SYSLOG_MESSAGETYPE;
 //		$this->_arrProperties[] = SYSLOG_FACILITY;
 		$this->_arrProperties[] = SYSLOG_SEVERITY;
 		$this->_arrProperties[] = SYSLOG_EVENT_ID;
@@ -120,10 +120,13 @@ class Report_monilog extends Report {
 	*/
 	public function startDataProcessing()
 	{
-		global $content, $severity_colors, $gl_starttime; 
+		global $content, $severity_colors, $gl_starttime, $fields; 
+
+		// Create Filter string, append filter for EventLog Type msgs!
+		$szFilters = $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_NT_EventReport; 
 
 		// Set Filter string
-		$this->_streamObj->SetFilter( $this->_filterString );
+		$this->_streamObj->SetFilter( $szFilters );
 
 		// Need to Open stream first!
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
@@ -297,13 +300,12 @@ class Report_monilog extends Report {
 	*/
 	private function ConsolidateEventsPerHost( $arrHosts )
 	{
-		global $content; 
+		global $content, $gl_starttime; 
 
 		// Now open the stream for data processing
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
-
 			// Set reading direction
 //			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
 
@@ -316,10 +318,9 @@ class Report_monilog extends Report {
 			// Start reading data
 			$ret = $this->_streamObj->Read($uID, $logArray);
 			
-// TimeStats
-global $gl_starttime; 
-$nowtime = microtime_float();
-$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 			// Found first data record
 			if ( $ret == SUCCESS )
@@ -378,9 +379,9 @@ $content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.',
 					$ret = $this->_streamObj->ReadNext($uID, $logArray);
 				} while ( $ret == SUCCESS );
 
-// TimeStats
-$nowtime = microtime_float();
-$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+				// TimeStats
+				$nowtime = microtime_float();
+				$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 				// Start Postprocessing
 				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
@@ -414,9 +415,9 @@ $content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.',
 						}
 					}
 
-// TimeStats
-$nowtime = microtime_float();
-$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+					// TimeStats
+					$nowtime = microtime_float();
+					$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 					// PostProcess Events!
 					foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 
