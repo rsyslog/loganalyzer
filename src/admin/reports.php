@@ -320,9 +320,13 @@ if ( isset($_GET['op']) )
 				$content['outputFormat'] = REPORT_OUTPUT_HTML; 
 				CreateOutputformatList( $content['outputFormat'] );
 				
+				// Create Outputtargetlist
+				$content['outputTarget'] = REPORT_TARGET_STDOUT; 
+				CreateOutputtargetList( $content['outputTarget'] );
+
 				// Other settings ... TODO!
-				$content['customFilters'] = "";
-				$content['outputTarget'] = "";
+//				$content['customFilters'] = "";
+//				$content['outputTarget'] = "";
 				$content['scheduleSettings'] = "";
 			}
 			else
@@ -394,10 +398,14 @@ if ( isset($_GET['op']) )
 					// Create Outputlist
 					$content['outputFormat'] = $mySavedReport['outputFormat']; 
 					CreateOutputformatList( $content['outputFormat'] );
+
+					// Create Outputtargetlist
+					$content['outputTarget'] = $mySavedReport['outputFormat']; 
+					CreateOutputtargetList( $content['outputTarget'] );
 					
 					// Other settings ... TODO!
 //					$content['customFilters'] = "";
-					$content['outputTarget'] = "";
+//					$content['outputTarget'] = "";
 					$content['scheduleSettings'] = "";
 				}
 				else
@@ -830,7 +838,7 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['report_customcomment']) ) { $content['customComment'] = DB_RemoveBadChars($_POST['report_customcomment']); } else {$content['report_customcomment'] = ""; }
 		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
-
+		if ( isset($_POST['outputTarget']) ) { $content['outputTarget'] = DB_RemoveBadChars($_POST['outputTarget']); }
 
 		// Read Custom Filters
 		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
@@ -854,7 +862,7 @@ if ( isset($_POST['op']) )
 		// TODO!
 		// customFilters, outputTarget, scheduleSettings
 //		$content['customFilters'] = "";
-		$content['outputTarget'] = "";
+//		$content['outputTarget'] = "";
 		$content['scheduleSettings'] = "";
 
 		// --- Check mandotary values

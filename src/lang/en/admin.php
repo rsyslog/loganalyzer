@@ -411,6 +411,7 @@ $content['LN_REPORTS_CUSTOMTITLE'] = "Report Title";
 $content['LN_REPORTS_CUSTOMCOMMENT'] = "Comment / Description";
 $content['LN_REPORTS_FILTERSTRING'] = "Filterstring";
 $content['LN_REPORTS_OUTPUTFORMAT'] = "Outputformat";
+$content['LN_REPORTS_OUTPUTTARGET'] = "Outputtarget";
 $content['LN_REPORTS_HASBEENADDED'] = "The Savedreport '%1' has been successfully added.";
 $content['LN_REPORTS_HASBEENEDIT'] = "The Savedreport '%1' has been successfully edited.";
 $content['LN_REPORTS_SOURCEID'] = "Logstream source";

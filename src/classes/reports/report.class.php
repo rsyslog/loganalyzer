@@ -66,7 +66,8 @@ abstract class Report {
 	protected $_arrCustomFilters = null;			// Array contains list of available custom filters, used for admin interface!
 	protected $_customFilters = "";					// Xml Filterstring containing values for the custom filters
 	protected $_outputFormat = REPORT_OUTPUT_HTML;	// Default HTML Output
-	protected $_outputTarget = "";
+	protected $_outputTarget = REPORT_TARGET_STDOUT;// Default is stdout
+	protected $_arrOutputTargetDetails = null;		// Array containing helper settings for the output Target
 	protected $_scheduleSettings = "";
 	
 	protected $_mySourceID = ""; 
@@ -217,8 +218,33 @@ abstract class Report {
 	*/
 	public function SetOutputTarget($newOutputTarget)
 	{
-		// Set new OutputTarget
-		$this->_outputTarget = $newOutputTarget; 
+		// Only set if valid string
+		if ( strlen($newOutputTarget) > 0 ) 
+		{
+			// First of all split by comma
+			$tmpValues = explode( ",", $newOutputTarget );
+
+			//Loop through mappings
+			foreach ($tmpValues as &$myValue )
+			{
+				// Split subvalues
+				$tmpArray = explode( "=>", $myValue );
+
+				// Get tmp fieldID
+				$tmpFieldID = trim($tmpArray[0]);
+
+				if ( $tmpFieldID == REPORT_TARGET_TYPE ) 
+				{
+					// Set new OutputTarget
+					$this->_outputTarget = trim($tmpArray[1]); 
+				}
+				else
+				{
+					// Set into Details Array
+					$this->_arrOutputTargetDetails[$tmpFieldID] == trim($tmpArray[1]);
+				}
+			}
+		}
 	}
 
 	/*

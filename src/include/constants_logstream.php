@@ -90,6 +90,15 @@ define('ALIGN_RIGHT', 'right');
 define('REPORT_OUTPUT_HTML', 'html');
 define('REPORT_OUTPUT_PDF', 'pdf');
 
+// Defines for Report output targets
+define('REPORT_TARGET_STDOUT', 'stdout');
+define('REPORT_TARGET_FILE', 'file');
+define('REPORT_TARGET_EMAIL', 'mail');
+
+// Further helper defines for output targets
+define('REPORT_TARGET_TYPE', 'type');
+define('REPORT_TARGET_FILENAME', 'filename');
+
 // Defines for sorting
 define('SORTING_ORDER_ASC', 'asc');
 define('SORTING_ORDER_DESC', 'desc');

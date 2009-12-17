@@ -412,6 +412,26 @@ function CreateOutputformatList( $selectedOutputformat )
 	if ( $selectedOutputformat == $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatid'] ) { $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatselected'] = "selected"; } else { $content['OUTPUTFORMATS'][REPORT_OUTPUT_PDF]['formatselected'] = ""; }
 }
 
+function CreateOutputtargetList( $selectedOutputtarget )
+{
+	global $content;
+
+	// REPORT_TARGET_STDOUT
+	$content['OUTPUTTARGETS'][REPORT_TARGET_STDOUT]['targetid'] = REPORT_TARGET_STDOUT;
+	$content['OUTPUTTARGETS'][REPORT_TARGET_STDOUT]['targetdisplayname'] = $content['LN_GEN_REPORT_TARGET_STDOUT'];
+	if ( $selectedOutputtarget == $content['OUTPUTTARGETS'][REPORT_TARGET_STDOUT]['targetid'] ) { $content['OUTPUTTARGETS'][REPORT_TARGET_STDOUT]['targetselected'] = "selected"; } else { $content['OUTPUTTARGETS'][REPORT_TARGET_STDOUT]['targetselected'] = ""; }
+
+	// REPORT_TARGET_FILE
+	$content['OUTPUTTARGETS'][REPORT_TARGET_FILE]['targetid'] = REPORT_TARGET_FILE;
+	$content['OUTPUTTARGETS'][REPORT_TARGET_FILE]['targetdisplayname'] = $content['LN_GEN_REPORT_TARGET_FILE'];
+	if ( $selectedOutputtarget == $content['OUTPUTTARGETS'][REPORT_TARGET_FILE]['targetid'] ) { $content['OUTPUTTARGETS'][REPORT_TARGET_FILE]['targetselected'] = "selected"; } else { $content['OUTPUTTARGETS'][REPORT_TARGET_FILE]['targetselected'] = ""; }
+
+//	// REPORT_TARGET_EMAIL
+//	$content['OUTPUTTARGETS'][REPORT_TARGET_EMAIL]['targetid'] = REPORT_TARGET_EMAIL;
+//	$content['OUTPUTTARGETS'][REPORT_TARGET_EMAIL]['targetdisplayname'] = $content['LN_GEN_REPORT_TARGET_EMAIL'];
+//	if ( $selectedOutputtarget == $content['OUTPUTTARGETS'][REPORT_TARGET_EMAIL]['targetid'] ) { $content['OUTPUTTARGETS'][REPORT_TARGET_EMAIL]['targetselected'] = "selected"; } else { $content['OUTPUTTARGETS'][REPORT_TARGET_EMAIL]['targetselected'] = ""; }
+}
+
 function CreatePagesizesList()
 {
 	global $content;

@@ -286,15 +286,11 @@ class Report_monilog extends Report {
 				}
 			}
 		}
-
-
 	}
 
 
 
 	// --- Private functions...
-
-
 	/**
 	*	Helper function to consolidate events 
 	*/
