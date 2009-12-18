@@ -37,6 +37,23 @@ function NewWindow(Location, WindowName,X_width,Y_height,Option) {
 
 }
 
+/*
+*	Helper function for form scripting
+*/
+function toggleformelement(ElementNameToggle, isEnabled)
+{
+	var myFormElement = document.getElementById(ElementNameToggle);
+	if ( isEnabled )
+	{
+		myFormElement.disabled = false;
+	}
+	else
+	{
+		myFormElement.disabled = true;
+	}
+}
+
+
 // helper array to keep track of the timeouts!
 var runningTimeouts = new Array();
 

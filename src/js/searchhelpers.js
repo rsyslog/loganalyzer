@@ -59,23 +59,6 @@ function toggleDatefiltervisibility(FormName)
 }
 
 /*
-*	Helper function
-*/
-function toggleformelement(ElementNameToggle, isEnabled)
-{
-	var myFormElement = document.getElementById(ElementNameToggle);
-	if ( isEnabled )
-	{
-		myFormElement.disabled = false;
-	}
-	else
-	{
-		myFormElement.disabled = true;
-	}
-}
-
-
-/*
 *	Helper function to add a date filter into the search field
 */
 function CalculateSearchPreview(szSearchFormName, szPreviewArea)

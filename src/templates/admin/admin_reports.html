@@ -143,11 +143,40 @@
 <!-- ENDIF ISSHOWDETAILS="true" -->
 
 <!-- IF ISADDSAVEDREPORT="true" -->
-		<form action="{BASEPATH}admin/reports.php{FormUrlAddOP}" method="post">
+		<script type='text/javascript'>
+		/* 
+		Helper Javascript Constants
+		*/
+		const REPORT_TARGET_STDOUT = 'stdout', REPORT_TARGET_FILE = 'file', REPORT_TARGET_EMAIL = 'mail';
+		/*
+		*	Helper function to show and hide areas of the filterview
+		*/
+		function toggleOutputtargetvisibility(FormName)
+		{
+			var myform = document.getElementById(FormName);
+			if (myform.elements['outputTarget'].value == REPORT_TARGET_STDOUT)
+			{
+				hidevisibility('HiddenOutputFormatFile');
+				toggleformelement('outputFormat_filename', false);
+			}
+			else if (myform.elements['outputTarget'].value == REPORT_TARGET_FILE)
+			{
+				togglevisibility('HiddenOutputFormatFile');
+				toggleformelement('outputFormat_filename', true);
+			}
+			else if (myform.elements['outputTarget'].value == REPORT_TARGET_EMAIL)
+			{
+				hidevisibility('HiddenOutputFormatFile');
+				toggleformelement('outputFormat_filename', false);
+			}
+		}
+		</script>
+
+		<form action="{BASEPATH}admin/reports.php{FormUrlAddOP}" method="post" id="savedreportform">
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
 <!--			<input type="hidden" name="op" value="addsavedreport">-->
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
 			</tr>
@@ -209,7 +238,6 @@
 
 				</td>
 			</tr>
-
 			<tr>
 				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_REPORTS_ADVANCEDFILTERS}</b></td>
 				<td align="left" class="line1" width="100%">
@@ -232,8 +260,6 @@
 
 				</td>
 			</tr>
-
-			
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
 				<td align="left" class="line2" width="100%">
@@ -257,14 +283,27 @@
 			<tr>
 				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTTARGET}</b></td>
 				<td align="left" class="line1" width="100%">
-					<select name="outputTarget" size="1" STYLE="width: 415px">
+					<select name="outputTarget" size="1" STYLE="width: 415px" OnChange="toggleOutputtargetvisibility('savedreportform');">
 						<!-- BEGIN OUTPUTTARGETS -->
-						<option value="{formatid}" {targetselected}>{targetdisplayname}</option>
+						<option value="{targetid}" {targetselected}>{targetdisplayname}</option>
 						<!-- END OUTPUTTARGETS -->
 					</select>
 				</td>
 			</tr>
-			
+			</table>
+
+			<div id="HiddenOutputFormatFile" class="HiddenContent">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+			<tr>
+				<td align="left" class="cellmenu2" width="150" valign="top" nowrap><b>{LN_REPORTS_OUTPUTTARGET_FILE}</b></td>
+				<td align="left" class="line1" width="100%">
+					<input type="text" name="outputFormat_filename" size="80" maxlength="1024" value="{outputFormat_filename}">
+				</td>
+			</tr>
+			</table>
+			</div>
+
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
 			<tr>
 				<td align="center" colspan="2">
 					<button name="op" type="submit" value="{REPORT_FORMACTION}" title="{REPORT_SENDBUTTON}">{REPORT_SENDBUTTON}</button>
@@ -272,6 +311,11 @@
 			</tr>
 			</table>
 		</form>
+
+		<script language="javascript">
+			// Manually perform initial Javascript Calls
+			toggleOutputtargetvisibility('savedreportform');
+		</script>
 
 		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
 		<br><br>
