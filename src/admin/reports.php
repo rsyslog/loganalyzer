@@ -323,6 +323,9 @@ if ( isset($_GET['op']) )
 				// Create Outputtargetlist
 				$content['outputTarget'] = REPORT_TARGET_STDOUT; 
 				CreateOutputtargetList( $content['outputTarget'] );
+				
+				// Init other outputTarget properties
+				$content['outputTarget_filename'] = "";
 
 				// Other settings ... TODO!
 //				$content['customFilters'] = "";
@@ -400,8 +403,12 @@ if ( isset($_GET['op']) )
 					CreateOutputformatList( $content['outputFormat'] );
 
 					// Create Outputtargetlist
-					$content['outputTarget'] = $mySavedReport['outputFormat']; 
+					$content['outputTarget'] = $mySavedReport['outputTarget']; 
 					CreateOutputtargetList( $content['outputTarget'] );
+
+					// Init other outputTarget properties
+					$content['outputTarget_filename'] = "";
+					InitOutputtargetDefinitions($myReport, $mySavedReport['outputTargetDetails']);
 					
 					// Other settings ... TODO!
 //					$content['customFilters'] = "";
@@ -839,6 +846,7 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
 		if ( isset($_POST['outputTarget']) ) { $content['outputTarget'] = DB_RemoveBadChars($_POST['outputTarget']); }
+		if ( isset($_POST['outputTarget_filename']) ) { $content['outputTarget_filename'] = DB_RemoveBadChars($_POST['outputTarget_filename']); }
 
 		// Read Custom Filters
 		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
@@ -881,6 +889,11 @@ if ( isset($_POST['op']) )
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_REPORTS_OUTPUTFORMAT'] );
 		}
+		else if ( !isset($content['outputTarget']) ) 
+		{
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_MISSINGPARAM'], $content['LN_REPORTS_OUTPUTTARGET'] );
+		}
 		// --- 
 
 
@@ -895,6 +908,10 @@ if ( isset($_POST['op']) )
 		$tmpSavedReport["outputFormat"] = $content['outputFormat'];
 		$tmpSavedReport["outputTarget"] = $content['outputTarget'];
 		$tmpSavedReport["scheduleSettings"] = $content['scheduleSettings'];
+		$tmpSavedReport["outputTargetDetails"] = ""; // Init Value
+		if ( isset($content['outputTarget_filename']) ) 
+			$tmpSavedReport["outputTargetDetails"] .= "filename=>" . $content['outputTarget_filename'] . ",";
+		$content["outputTargetDetails"] = $tmpSavedReport["outputTargetDetails"]; // Copy into content var
 
 		// Get Objectreference to report
 		$myReportObj = $myReport["ObjRef"];
@@ -921,7 +938,7 @@ if ( isset($_POST['op']) )
 			if ( $_POST['op'] == "addsavedreport" )
 			{
 				// Add custom search now!
-				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, scheduleSettings) 
+				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, outputTargetDetails, scheduleSettings) 
 				VALUES ('" . $content['ReportID'] . "', 
 						" . $content['SourceID'] . ", 
 						'" . $content['customTitle'] . "', 
@@ -930,6 +947,7 @@ if ( isset($_POST['op']) )
 						'" . $content['customFilters'] . "', 
 						'" . $content['outputFormat'] . "', 
 						'" . $content['outputTarget'] . "', 
+						'" . $content['outputTargetDetails'] . "', 
 						'" . $content['scheduleSettings'] . "'
 						)";
 
@@ -958,6 +976,7 @@ if ( isset($_POST['op']) )
 									customFilters = '" . $content['customFilters'] . "', 
 									outputFormat = '" . $content['outputFormat'] . "', 
 									outputTarget = '" . $content['outputTarget'] . "', 
+									outputTargetDetails = '" . $content['outputTargetDetails'] . "', 
 									scheduleSettings = '" . $content['scheduleSettings'] . "' 
 									WHERE ID = " . $content['SavedReportID'];
 
@@ -1062,8 +1081,9 @@ $page -> parser($content, "admin/admin_reports.html");
 $page -> output(); 
 // --- 
 
+// --- 
 // --- BEGIN Helper functions 
-
+// --- 
 function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 {
 	global $content; 
@@ -1123,6 +1143,32 @@ function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 										'fieldvalue'		=> $szDefaultValue, 
 										'colcssclass'		=> $szColcssclass, 
 									);
+	}
+}
+
+
+function InitOutputtargetDefinitions($myReport, $outputTargetDetails)
+{
+	global $content; 
+
+	// Get Objectreference to report
+	$myReportObj = $myReport["ObjRef"];
+	
+	// Init Detail variables manually
+	$myReportObj->SetOutputTargetDetails($outputTargetDetails);
+
+	// Get Array of Custom filter Defs
+	$outputTargetArray = $myReportObj->GetOutputTargetDetails();
+
+	if ( isset($outputTargetArray) && count($outputTargetArray) > 0 )
+	{
+		// Loop through Detail Properties
+		$i = 0; // Help counter!
+		foreach( $outputTargetArray as $propertyID => $propertyValue ) 
+		{
+			// Set property Value by ID
+			$content['outputTarget_' . $propertyID] = $propertyValue;
+		}
 	}
 }
 

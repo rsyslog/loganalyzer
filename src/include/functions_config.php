@@ -367,6 +367,7 @@ function InitReportModules()
 										DB_SAVEDREPORTS . ".customFilters, " . 
 										DB_SAVEDREPORTS . ".outputFormat, " . 
 										DB_SAVEDREPORTS . ".outputTarget, " . 
+										DB_SAVEDREPORTS . ".outputTargetDetails, " . 
 										DB_SAVEDREPORTS . ".scheduleSettings " . 
 										" FROM " . DB_SAVEDREPORTS . 
 										" WHERE " . DB_SAVEDREPORTS . ".reportid = '" . $myReportID . "' " .  

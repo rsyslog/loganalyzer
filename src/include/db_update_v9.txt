@@ -1,15 +1,16 @@
 -- New Database Structure Updates
 CREATE TABLE `logcon_savedreports` (
-`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`reportid` VARCHAR( 255 ) NOT NULL ,
-`sourceid` INT NOT NULL ,
-`customTitle` VARCHAR( 255 ) NOT NULL ,
-`customComment` TEXT NOT NULL ,
-`filterString` TEXT NOT NULL ,
-`customFilters` TEXT NOT NULL ,
-`outputFormat` VARCHAR( 64 ) NOT NULL ,
-`outputTarget` TEXT NOT NULL ,
-`scheduleSettings` TEXT NOT NULL 
+  `ID` int(11) NOT NULL auto_increment,
+  `reportid` varchar(255) NOT NULL,
+  `sourceid` int(11) NOT NULL,
+  `customTitle` varchar(255) NOT NULL,
+  `customComment` text NOT NULL,
+  `filterString` text NOT NULL,
+  `customFilters` text NOT NULL,
+  `outputFormat` varchar(64) NOT NULL,
+  `outputTarget` varchar(64) NOT NULL,
+  `outputTargetDetails` text NOT NULL,
+  `scheduleSettings` text NOT NULL,
 ) ENGINE=MyISAM COMMENT = 'Table to store saved reports';
 -- Insert data
 

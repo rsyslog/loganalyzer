@@ -218,30 +218,36 @@ abstract class Report {
 	*/
 	public function SetOutputTarget($newOutputTarget)
 	{
+		// TODO: Check if Outputtarget EXISTS!
+
+		// Set new OutputTarget
+		$this->_outputTarget = $newOutputTarget; 
+	}
+
+	/*
+	* Helper function to set the OutputTarget
+	*/
+	public function SetOutputTargetDetails($newOutputTargetDetailsStr)
+	{
 		// Only set if valid string
-		if ( strlen($newOutputTarget) > 0 ) 
+		if ( strlen($newOutputTargetDetailsStr) > 0 ) 
 		{
 			// First of all split by comma
-			$tmpValues = explode( ",", $newOutputTarget );
+			$tmpValues = explode( ",", $newOutputTargetDetailsStr );
 
 			//Loop through mappings
 			foreach ($tmpValues as &$myValue )
 			{
-				// Split subvalues
-				$tmpArray = explode( "=>", $myValue );
-
-				// Get tmp fieldID
-				$tmpFieldID = trim($tmpArray[0]);
-
-				if ( $tmpFieldID == REPORT_TARGET_TYPE ) 
+				if ( strlen(trim($myValue)) > 0 ) 
 				{
-					// Set new OutputTarget
-					$this->_outputTarget = trim($tmpArray[1]); 
-				}
-				else
-				{
+					// Split subvalues
+					$tmpArray = explode( "=>", $myValue );
+
+					// Get tmp fieldID
+					$tmpFieldID = trim($tmpArray[0]);
+
 					// Set into Details Array
-					$this->_arrOutputTargetDetails[$tmpFieldID] == trim($tmpArray[1]);
+					$this->_arrOutputTargetDetails[$tmpFieldID] = trim($tmpArray[1]);
 				}
 			}
 		}
@@ -483,6 +489,14 @@ abstract class Report {
 	}
 
 	/*
+	*	Helper function to return the array of OutputTarget details 
+	*/
+	public function GetOutputTargetDetails()
+	{
+		return $this->_arrOutputTargetDetails; 
+	}
+
+	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
@@ -505,6 +519,7 @@ abstract class Report {
 		$this->SetCustomFilters( $mySavedReport["customFilters"] );
 		$this->SetOutputFormat( $mySavedReport["outputFormat"] );
 		$this->SetOutputTarget( $mySavedReport["outputTarget"] );
+		$this->SetOutputTargetDetails( $mySavedReport["outputTargetDetails"] );
 		$this->SetScheduleSettings(	$mySavedReport["scheduleSettings"] );
 	}
 
