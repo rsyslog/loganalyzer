@@ -497,6 +497,15 @@ abstract class Report {
 	}
 
 	/*
+	* Helper function to return the OutputTarget
+	*/
+	public function GetOutputTarget()
+	{
+		// return OutputTarget
+		return $this->_outputTarget; 
+	}
+
+	/*
 	* Helper function to trigger initialisation 
 	*/
 	public function RunBasicInits()
@@ -546,15 +555,18 @@ abstract class Report {
 	/*
 	*	This function outputs the report to the browser in the desired format!
 	*/
-	public function OutputReport($szOutputBuffer)
+	public function OutputReport($szOutputBuffer, &$szErrorStr)
 	{
 		global $gl_root_path; 
+
+		// Helper variable, init with buffer
+		$szFinalOutput = $szOutputBuffer;
+		$res = SUCCESS; 
 
 		// Simple HTML Output!
 		if ( $this->_outputFormat == REPORT_OUTPUT_HTML ) 
 		{
-			// HTML Header
-			echo $szOutputBuffer; 
+			// do nothing
 		}
 		else if ( $this->_outputFormat == REPORT_OUTPUT_PDF ) 
 		{	
@@ -568,8 +580,51 @@ abstract class Report {
 //			$pdf->SetFontSize(12);
 			$pdf->WriteHTML( $szOutputBuffer );
 //			Header('Content-Type: application/pdf');
-			$pdf->Output('', 'I'); // Output to STANDARD Input!
+			$szFinalOutput = $pdf->Output('', 'S'); // Output to STANDARD Input!
 		}
+
+		// Simple HTML Output!
+		if ( $this->_outputTarget == REPORT_TARGET_STDOUT ) 
+		{
+			// Kindly output to browser
+			echo $szFinalOutput; 
+			$res = SUCCESS; 
+		}
+		else if ( $this->_outputTarget == REPORT_TARGET_FILE ) 
+		{
+			// Get Filename first
+			if ( isset($this->_arrOutputTargetDetails['filename']) )
+			{
+				// Get Filename property 
+				$szFilename = $this->_arrOutputTargetDetails['filename']; 
+
+				// Create file and Write Report into it!
+				$handle = @fopen($szFilename, "w");
+				if ( $handle === false ) 
+				{
+					$szErrorStr = "Could not create '" . $szFilename . "'!"; 
+					$res = ERROR; 
+				}
+				else
+				{
+					fwrite($handle, $szFinalOutput);
+					fflush($handle);
+					fclose($handle);
+					
+					// For result
+					$szErrorStr = "Results were saved into '" . $szFilename . "'"; 
+					$res = SUCCESS; 
+				}
+			}
+			else
+			{
+				$szErrorStr = "The parameter 'filename' was missing."; 
+				$res = ERROR; 
+			}
+		}
+
+		// return result
+		return $res; 
 	}
 
 }

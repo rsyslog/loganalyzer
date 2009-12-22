@@ -348,6 +348,8 @@ $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 	$content['LN_REPORT_FILTERTYPE_DATE'] = "Date";
 	$content['LN_REPORT_FILTERTYPE_NUMBER'] = "Number";
 	$content['LN_REPORT_FILTERTYPE_STRING'] = "String";
-
+	$content['LN_GEN_SUCCESS_WHILEREPORTGEN'] = "Report was successfully generated";
+	$content['LN_GEN_ERROR_REPORTFAILEDTOGENERATE'] = "Failed to generate report, error details: %1";
+	$content['LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS'] = "Successfully generated report: %1";
 
 ?>

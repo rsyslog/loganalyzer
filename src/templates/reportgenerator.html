@@ -8,6 +8,7 @@
 <body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
 
 <br><br>
+<!-- IF error_occured="true" -->
 <table width="600" align="center" class="with_border_alternate ErrorMsg" cellpadding="2">
 <tr>
 	<td class="PriorityError" align="center" colspan="2">
@@ -22,6 +23,23 @@
 	</td>
 </tr>
 </table>
+<!-- ENDIF error_occured="true" -->
+<!-- IF report_success="true" -->
+<table width="600" align="center" class="with_border_alternate ErrorMsg" cellpadding="2">
+<tr>
+	<td class="PriorityInfo" align="center" colspan="2">
+	<H3>{LN_GEN_SUCCESS_WHILEREPORTGEN}</H3>
+	</td>
+</tr>
+<tr><td class="cellmenu1_naked" align="left">{LN_GEN_MESSAGEDETAILS}</td>
+<td class="tableBackground" align="left">
+	<br>
+	{error_details}
+	<br><br>
+	</td>
+</tr>
+</table>
+<!-- ENDIF report_success="true" -->
 
 </body>
 </html>

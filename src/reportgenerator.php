@@ -55,6 +55,7 @@ InitReportModules();
 
 // --- READ CONTENT Vars
 $content['error_occured'] = false;
+$content['report_success'] = false;
 
 if ( isset($_GET['op']) ) 
 	$content['op'] = DB_RemoveBadChars($_GET['op']);
@@ -82,63 +83,6 @@ else
 	$content['error_occured'] = "error";
 	$content['error_details'] = $content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'];
 }
-
-/*
-if ( isset($_GET['width']) ) 
-{
-	$content['chart_width'] = intval($_GET['width']);
-	
-	// Limit Chart Size for now
-	if		( $content['chart_width'] < 100 ) 
-		$content['chart_width'] = 100;
-	else if	( $content['chart_width'] > 1000 ) 
-		$content['chart_width'] = 1000;
-}
-else
-	$content['chart_width'] = 100;
-
-if ( isset($_GET['byfield']) )
-{
-	if ( isset($fields[ $_GET['byfield'] ]) )
-	{
-		$content['chart_field'] = $_GET['byfield'];
-		$content['chart_fieldtype'] = $fields[ $content['chart_field'] ]['FieldType'];
-	}
-	else
-	{
-		$content['error_occured'] = true;
-		$content['error_details'] = $content['LN_GEN_ERROR_INVALIDFIELD'];
-	}
-}
-else
-{
-	$content['error_occured'] = true;
-	$content['error_details'] = $content['LN_GEN_ERROR_MISSINGCHARTFIELD'];
-}
-
-if ( isset($_GET['maxrecords']) ) 
-{
-	// read and verify value
-	$content['maxrecords'] = intval($_GET['maxrecords']);
-	if ( $content['maxrecords'] < 2 || $content['maxrecords'] > 100 ) 
-		$content['maxrecords'] = 10;
-}
-else
-	$content['maxrecords'] = 10;
-
-if ( isset($_GET['showpercent']) ) 
-{
-	// read and verify value
-	$content['showpercent'] = intval($_GET['showpercent']);
-	if ( $content['showpercent'] >= 1 ) 
-		$content['showpercent'] = 1;
-	else
-		$content['showpercent'] = 0;
-}
-else
-	$content['showpercent'] = 0;
-*/
-
 // ---
 
 // --- BEGIN CREATE TITLE
@@ -218,9 +162,20 @@ if ( !$content['error_occured'] )
 						// Parse template
 						$page -> parser($content, $myReportObj->GetBaseFileName());
 
-						// Output to browser 
-						$myReportObj->OutputReport( $page ->result() );
-						//$page->output(); 
+						// Output the result
+						$res = $myReportObj->OutputReport( $page ->result(), $szErrorStr );
+						if ( $res == SUCCESS && $myReportObj->GetOutputTarget() != REPORT_TARGET_STDOUT ) 
+						{
+							// Output wasn't STDOUT, so we need to display what happened to the user
+							$content['report_success'] = true;
+							$content['error_details'] = GetAndReplaceLangStr($content["LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS"], $szErrorStr); 
+						}
+						else if ( $res == ERROR ) 
+						{
+							// Output failed, display what happened to the user
+							$content['error_occured'] = true;
+							$content['error_details'] = GetAndReplaceLangStr($content["LN_GEN_ERROR_REPORTFAILEDTOGENERATE"], $szErrorStr); 
+						}
 						// --- 
 					}
 				}
@@ -240,11 +195,14 @@ if ( !$content['error_occured'] )
 }
 
 // Output error if necessary
-if ( $content['error_occured'] )
+if ( $content['error_occured'] || $content['report_success'] )
 {
-//	$content['TITLE'] = InitPageTitle();
-	$content['TITLE'] .= " :: " . $content['LN_GEN_ERROR_WHILEREPORTGEN'];
+	if ( $content['error_occured'] ) 
+		$content['TITLE'] .= " :: " . $content['LN_GEN_ERROR_WHILEREPORTGEN'];
+	else
+		$content['TITLE'] .= " :: " . $content['LN_GEN_SUCCESS_WHILEREPORTGEN'];
 
+	// Create template Parser and output results
 	InitTemplateParser();
 	$page -> parser($content, "reportgenerator.html");
 	$page -> output(); 
