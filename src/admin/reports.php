@@ -328,7 +328,7 @@ if ( isset($_GET['op']) )
 				$content['outputTarget_filename'] = "";
 				
 				// Create visible CronCommand
-				$content['cronCommand'] = CreateCronCommand( null );
+				$content['cronCommand'] = CreateCronCommand( $content['ReportID'] );
 
 				// Other settings ... TODO!
 //				$content['customFilters'] = "";
@@ -414,7 +414,7 @@ if ( isset($_GET['op']) )
 					InitOutputtargetDefinitions($myReport, $mySavedReport['outputTargetDetails']);
 					
 					// Create visible CronCommand
-					$content['cronCommand'] = CreateCronCommand( $mySavedReport );
+					$content['cronCommand'] = CreateCronCommand( $content['ReportID'], $content['SavedReportID'] );
 
 					// Other settings ... TODO!
 //					$content['customFilters'] = "";
@@ -1178,28 +1178,39 @@ function InitOutputtargetDefinitions($myReport, $outputTargetDetails)
 	}
 }
 
-function CreateCronCommand( $mySavedReport )
+function CreateCronCommand( $myReportID, $mySavedReportID = null )
 {
-	global $content; 
+	global $content, $gl_root_path; 
 
-	//echo $_SERVER['SERVER_SOFTWARE'];
-	$pos = strpos( strtoupper($_SERVER['SERVER_SOFTWARE']), "WIN32");
-	if ($pos !== false) 
-	{	
-		// Running on Windows
-		$phpCmd = "C:/php/php.exe"; 
-	} 
-	else 
+	if ( isset($mySavedReportID) ) 
 	{
-		// Running on LINUX
-		$phpCmd = "/usr/bin/php"; 
+		$pos = strpos( strtoupper($_SERVER['SERVER_SOFTWARE']), "WIN32");
+		if ($pos !== false) 
+		{	
+			// Running on Windows
+			$phpCmd = PHP_BINDIR . "\\php.exe"; 
+			$phpScript = realpath($gl_root_path) . "cron\\cmdreportgen.php";
+		} 
+		else 
+		{
+			// Running on LINUX
+			$phpCmd = PHP_BINDIR . "/php"; 
+			$phpScript = realpath($gl_root_path) . "cron/cmdreportgen.php";
+		}
+		
+		// Enable display of report command
+		$content['enableCronCommand'] = true;
+		$szCommand = $phpCmd . " " . $phpScript . " runreport " . $myReportID . " " . $mySavedReportID;
+	}
+	else
+	{
+		// Disable display of report command
+		$content['enableCronCommand'] = false;
+		$szCommand = "";
 	}
 
-	$content['enableCronCommand'] = false;
-
-	$szresult = "";
- 
-	return $szresult; 
+	// return result 
+	return $szCommand; 
 }
 
 // --- END Helper functions 

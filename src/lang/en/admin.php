@@ -436,6 +436,7 @@ $content['LN_REPORTS_ADVANCEDFILTERS'] = "Advanced filters";
 $content['LN_REPORTS_ADVANCEDFILTERLIST'] = "List of advanced report filters";
 $content['LN_REPORTS_OUTPUTTARGET_DETAILS'] = "Outputtarget Options";
 $content['LN_REPORTS_OUTPUTTARGET_FILE'] = "Output Path and Filename";
+$content['LN_REPORTS_CRONCMD'] = "Local Report command";
 $content['LN_REPORTS_'] = "";
 $content['LN_REPORTS_'] = "";
 $content['LN_REPORTS_'] = "";
