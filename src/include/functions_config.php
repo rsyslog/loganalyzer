@@ -384,7 +384,9 @@ function InitReportModules()
 								// Add all savedreports
 								foreach ($myrows as &$mySavedReport)
 								{
-									// TODO: Perform whatever needs to be performed 
+									// Set default properties if not set!
+									if (!isset($mySavedReport['outputTarget']) || strlen($mySavedReport['outputTarget']) <= 0 )
+										$mySavedReport['outputTarget'] = REPORT_TARGET_STDOUT; 
 
 									// Add saved report into global array
 									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['SavedReportID'] ] = $mySavedReport; 

@@ -98,7 +98,7 @@ if ( !$content['error_occured'] )
 	// Check if report exists
 	if ( isset($content['REPORTS'][ $content['reportid'] ]) )
 	{
-		// Get Reference to parser!
+		// Get Reference to report!
 		$myReport = $content['REPORTS'][ $content['reportid'] ];
 
 		// Now check if the saved report is available
