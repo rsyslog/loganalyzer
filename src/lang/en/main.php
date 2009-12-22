@@ -352,4 +352,11 @@ $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 	$content['LN_GEN_ERROR_REPORTFAILEDTOGENERATE'] = "Failed to generate report, error details: %1";
 	$content['LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS'] = "Successfully generated report: %1";
 
+	$content['LN_CMD_RUNREPORT'] = "Generating saved report '%1'";
+	$content['LN_CMD_REPORTIDNOTFOUND'] = "Invalid Report ID '%1'";
+	$content['LN_CMD_SAVEDREPORTIDNOTFOUND'] = "Invalid SavedReport ID '%1'";
+	$content['LN_CMD_NOREPORTID'] = "Missing Report ID";
+	$content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
+
+
 ?>

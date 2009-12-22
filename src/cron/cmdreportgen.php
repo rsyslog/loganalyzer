@@ -161,7 +161,7 @@ function RunReport()
 
 		// Check if exists
 		if ( !isset($content['REPORTS'][ $content['reportid'] ]) )
-			DieWithErrorMsg( GetAndReplaceLangStr($content["LN_CMD_LOGSTREAMNOTFOUND"], $content['reportid']) );
+			DieWithErrorMsg( GetAndReplaceLangStr($content["LN_CMD_REPORTIDNOTFOUND"], $content['reportid']) );
 
 		// Get Reference to report!
 		$myReport = $content['REPORTS'][ $content['reportid'] ];
@@ -177,7 +177,7 @@ function RunReport()
 
 		// Check if exists
 		if ( !isset($myReport['SAVEDREPORTS'][ $content['savedreportid'] ]) )
-			DieWithErrorMsg( GetAndReplaceLangStr($content["LN_CMD_LOGSTREAMNOTFOUND"], $content['savedreportid']) );
+			DieWithErrorMsg( GetAndReplaceLangStr($content["LN_CMD_SAVEDREPORTIDNOTFOUND"], $content['savedreportid']) );
 	}
 	else
 		DieWithErrorMsg( $content["LN_CMD_NOSAVEDREPORTID"] );

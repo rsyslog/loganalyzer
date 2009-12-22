@@ -304,6 +304,12 @@
 			</div>
 
 			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+			<!-- IF enableCronCommand="true" -->
+			<tr>
+				<td align="left" class="cellmenu2_naked" width="150" nowrap><b>{LN_REPORTS_CRONCMD}</b></td>
+				<td align="left" class="line2" width="100%"><input readonly type="text" size="100" maxlength="255" value="{cronCommand}"></td>
+			</tr>
+			<!-- ENDIF enableCronCommand="true" -->
 			<tr>
 				<td align="center" colspan="2">
 					<button name="op" type="submit" value="{REPORT_FORMACTION}" title="{REPORT_SENDBUTTON}">{REPORT_SENDBUTTON}</button>

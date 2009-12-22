@@ -326,11 +326,14 @@ if ( isset($_GET['op']) )
 				
 				// Init other outputTarget properties
 				$content['outputTarget_filename'] = "";
+				
+				// Create visible CronCommand
+				$content['cronCommand'] = CreateCronCommand( null );
 
 				// Other settings ... TODO!
 //				$content['customFilters'] = "";
 //				$content['outputTarget'] = "";
-				$content['scheduleSettings'] = "";
+//				$content['scheduleSettings'] = "";
 			}
 			else
 			{
@@ -410,6 +413,9 @@ if ( isset($_GET['op']) )
 					$content['outputTarget_filename'] = "";
 					InitOutputtargetDefinitions($myReport, $mySavedReport['outputTargetDetails']);
 					
+					// Create visible CronCommand
+					$content['cronCommand'] = CreateCronCommand( $mySavedReport );
+
 					// Other settings ... TODO!
 //					$content['customFilters'] = "";
 //					$content['outputTarget'] = "";
@@ -1170,6 +1176,30 @@ function InitOutputtargetDefinitions($myReport, $outputTargetDetails)
 			$content['outputTarget_' . $propertyID] = $propertyValue;
 		}
 	}
+}
+
+function CreateCronCommand( $mySavedReport )
+{
+	global $content; 
+
+	//echo $_SERVER['SERVER_SOFTWARE'];
+	$pos = strpos( strtoupper($_SERVER['SERVER_SOFTWARE']), "WIN32");
+	if ($pos !== false) 
+	{	
+		// Running on Windows
+		$phpCmd = "C:/php/php.exe"; 
+	} 
+	else 
+	{
+		// Running on LINUX
+		$phpCmd = "/usr/bin/php"; 
+	}
+
+	$content['enableCronCommand'] = false;
+
+	$szresult = "";
+ 
+	return $szresult; 
 }
 
 // --- END Helper functions 
