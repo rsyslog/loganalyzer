@@ -35,6 +35,31 @@
 define('IN_PHPLOGCON', true);
 $gl_root_path = './../';
 
+// --- IMPORTANT, read the script filename from argv! 
+// Operation argv
+if ( isset($_SERVER["argv"][0]) )
+	$myscriptname = $_SERVER["argv"][0];
+else
+	die( "Error, this script can only be run from the command prompt." );
+
+// Extract OS!
+$pos = strpos( strtoupper(PHP_OS), "WIN");
+if ($pos !== false)	// Running on Windows
+{	
+	// Extract Global root path from scriptname
+	$gl_root_path = substr( $myscriptname, 0, strrpos($myscriptname, "\\")+1 ); 
+	$gl_root_path = str_replace("\\", "/", $gl_root_path); 
+} 
+else 				// Running on LINUX
+{
+	// Extract Global root path from scriptname
+	$gl_root_path = substr( $myscriptname, 0, strrpos($myscriptname, "/")+1 ); 
+}
+
+// Remove cron folder as well!
+$gl_root_path = str_replace("cron/", "", $gl_root_path); 
+// ---
+
 // Now include necessary include files!
 include_once($gl_root_path . 'include/functions_common.php');
 include_once($gl_root_path . 'include/functions_frontendhelpers.php');
@@ -92,7 +117,7 @@ function RunReport()
 		// Call processing part now!
 		$res = $myReportObj->startDataProcessing();
 		if ( $res != SUCCESS ) 
-			DieWithErrorMsg( GetAndReplaceLangStr( $content['LN_GEN_ERROR_REPORTGENFAILED'], $mySavedReport['customTitle'], GetErrorMessage($res) );
+			DieWithErrorMsg( GetAndReplaceLangStr($content['LN_GEN_ERROR_REPORTGENFAILED'], $mySavedReport['customTitle'], GetErrorMessage($res)) );
 		else
 		{
 			// --- Perform report output

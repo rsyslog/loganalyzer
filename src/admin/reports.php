@@ -1184,7 +1184,7 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 
 	if ( isset($mySavedReportID) ) 
 	{
-		$pos = strpos( strtoupper($_SERVER['SERVER_SOFTWARE']), "WIN32");
+		$pos = strpos( strtoupper(PHP_OS), "WIN");
 		if ($pos !== false) 
 		{	
 			// Running on Windows
