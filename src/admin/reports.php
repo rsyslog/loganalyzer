@@ -495,6 +495,44 @@ if ( isset($_GET['op']) )
 			$j = 0; // Help counter!
 			foreach ($content['ONLINEREPORTS']  as &$myOnlineReport )
 			{
+				// Split reportID
+				preg_match("/report\.(.*?)\.(.*?)\.class$/", $myOnlineReport['reportid'], $out );
+				$myOnlineReport['reportcat'] = $out[1]; 
+				$myOnlineReport['reportid'] = $out[2]; 
+
+				// Set Installed Flag!
+				$myOnlineReport['installed'] = false;
+				foreach($content['REPORTS'] as $myReport)
+				{
+					// check if already installed!
+					if ( $myOnlineReport['reportid'] == $myReport['ID'] ) 
+						$myOnlineReport['installed'] = true;
+				}
+
+				// --- Set Icon!
+				if ( $myOnlineReport['installed'] ) 
+				{
+					$myOnlineReport['installed_icon'] = $content['MENU_CHECKED']; 
+					$myOnlineReport['installed_text'] = $content['LN_REPORTS_INSTALLED']; 
+				}
+				else
+				{
+					$myOnlineReport['installed_icon'] = $content['MENU_DELETE']; 
+					$myOnlineReport['installed_text'] = $content['LN_REPORTS_NOTINSTALLED']; 
+				}
+				// --- 
+
+				// --- Set Helper links
+				if ( $myOnlineReport['reporthelparticle'] == "-" ) 
+				{
+				}
+				else
+				{
+
+				}
+
+				// ---
+
 				// --- Set CSS Class
 				if ( $j % 2 == 0 )
 					$myOnlineReport['cssclass'] = "line1";

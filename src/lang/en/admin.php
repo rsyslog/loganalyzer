@@ -440,11 +440,13 @@ $content['LN_REPORTS_CRONCMD'] = "Local Report command";
 $content['LN_REPORTMENU_LIST'] = "List installed Reports";
 $content['LN_REPORTMENU_ONLINELIST'] = "All Available Reports";
 $content['LN_REPORTS_LINKS'] = "Related Links";
+$content['LN_REPORTS_INSTALLED'] = "Installed";
+$content['LN_REPORTS_NOTINSTALLED'] = "Not installed";
+$content['LN_REPORTS_DOWNLOAD'] = "Download Link";
+$content['LN_REPORTS_SAMPLELINK'] = "Report Sample";
 $content['LN_REPORTS_'] = "";
 $content['LN_REPORTS_'] = "";
 $content['LN_REPORTS_'] = "";
 $content['LN_REPORTS_'] = "";
-
-
 
 ?>

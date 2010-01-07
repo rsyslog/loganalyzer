@@ -694,6 +694,7 @@ function InitFrontEndVariables()
 	$content['MENU_NETDOWNLOAD'] = $content['BASEPATH'] . "images/icons/download.png";
 	$content['MENU_DOCUMENTLIST'] = $content['BASEPATH'] . "images/icons/documents.png";
 	$content['MENU_WINDOWLIST'] = $content['BASEPATH'] . "images/icons/windows.png";
+	$content['MENU_CHECKED'] = $content['BASEPATH'] . "images/icons/check.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
