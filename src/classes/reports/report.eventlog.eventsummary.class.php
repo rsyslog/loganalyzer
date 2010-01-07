@@ -5,7 +5,7 @@
 	* -----------------------------------------------------------------	*
 	* Some constants													*
 	*																	*
-	* Monilog Report is a basic report for EventLog and Syslog data
+	* Eventsummary Report is a basic report for EventLog
 	*
 	* \version 1.0.0 Init Version
 	*																	*
@@ -45,13 +45,13 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'classes/reports/report.class.php');
 // --- 
 
-class Report_monilog extends Report {
+class Report_eventsummary extends Report {
 	// Common Properties
-	public $_reportVersion = 1;									// Internally Version of the ReportEngine
-	public $_reportID = "report.eventlog.monilog.class";		// ID for the report, needs to be unique!
-	public $_reportFileBasicName = "report.eventlog.monilog";	// Basic Filename for reportfiles
-	public $_reportTitle = "EventLog Summary Report";			// Display name for the report
-	public $_reportDescription = "This is a EventLog Summary Report based on Monilog";
+	public $_reportVersion = 1;										// Internally Version of the ReportEngine
+	public $_reportID = "report.eventlog.eventsummary.class";		// ID for the report, needs to be unique!
+	public $_reportFileBasicName = "report.eventlog.eventsummary";	// Basic Filename for reportfiles
+	public $_reportTitle = "EventLog Summary Report";				// Display name for the report
+	public $_reportDescription = "This is a EventLog Summary Report";
 	public $_reportHelpArticle = "";
 	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
 	public $_reportInitialized = false;							// True means report is installed
@@ -62,7 +62,7 @@ class Report_monilog extends Report {
 	private $_colorThreshold = 10;								// Threshold for coloured display of Eventcounter
 
 	// Constructor
-	public function Report_monilog() {
+	public function Report_eventsummary() {
 //		$this->_logStreamConfigObj = $streamConfigObj;
 
 		// Fill fields we need for this report

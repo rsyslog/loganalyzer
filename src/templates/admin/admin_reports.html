@@ -15,11 +15,20 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
 <tr>
-	<td colspan="3" class="title" nowrap><B>{LN_ADMINMENU_REEPORTSOPT}</B></td>
+	<td colspan="3" class="title" nowrap><B>{LN_ADMINMENU_REEPORTSOPT}{OPTIONAL_TITLE}</B></td>
 </tr>
 	<tr>
 		<td align="center" class="line2">
 		<br><br>
+
+		<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
+			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_LIST}</a></td>
+			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=onlinelist" target="_top"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
+			<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+		</tr>
+		</table>
 
 <!-- IF LISTREPORTS="true" -->
 		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
@@ -71,34 +80,67 @@
 			</td>
 		</tr>
 		<!-- END SAVEDREPORTS -->
-
 		<!-- ENDIF HASSAVEDREPORTS="true" -->
 
 		<!-- END REPORTS -->
 		</table>
 <!-- ENDIF LISTREPORTS="true" -->
 
-<!-- IF ISSHOWDETAILS="true" -->
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+<!-- IF LISTONLINEREPORTS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
 		<tr>
-			<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_DETAILS}</b></td>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
+		</tr>
+		<!-- BEGIN ONLINEREPORTS -->
+		<tr>
+			<td align="left" class="{cssclass}" valign="top"><b>{reportid}</b></td>
+			<td align="left" class="{cssclass}" valign="top"><a href="{BASEPATH}admin/reports.php?op=details&id={ID}">{reportname}</a></td>
+			<td align="left" class="{cssclass}" valign="top">{reportdescription}</td>
+			<td align="center" class="{cssclass}">
+				<a href="{BASEPATH}admin/reports.php?op=addsavedreport&id={ID}"><img src="{MENU_ADD}" width="16" title="{LN_REPORTS_ADDSAVEDREPORT}"></a>&nbsp;
+
+				<!-- IF ReportHelpEnabled="true" -->
+				<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
+				<!-- ENDIF ReportHelpEnabled="true" -->
+				<a href="{BASEPATH}admin/reports.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_REPORTS_INFO}"></a>
+				<!-- IF EnableNeedsInit="true" -->
+					<!-- IF InitEnabled="true" -->
+					&nbsp;<a href="{BASEPATH}admin/reports.php?op=initreport&id={ID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_REPORTS_INIT}"></a>
+					<!-- ENDIF InitEnabled="true" -->
+					<!-- IF DeleteEnabled="true" -->
+					&nbsp;<a href="{BASEPATH}admin/reports.php?op=removereport&id={ID}"><img src="{MENU_PARSER_DELETE}" width="16" title="{LN_REPORTS_REMOVE}"></a>
+					<!-- ENDIF DeleteEnabled="true" -->
+				<!-- ENDIF EnableNeedsInit="true" -->
+			</td>
+		</tr>
+		<!-- END ONLINEREPORTS -->
+		</table>
+<!-- ENDIF LISTONLINEREPORTS="true" -->
+
+<!-- IF ISSHOWDETAILS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td align="center" class="cellmenu1" colspan="3"><b>{LN_REPORTS_DETAILS}</b></td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_ID}</b></td>
-			<td align="left" class="line1" width="350">{ReportID}</td>
+			<td align="left" class="line1" width="350" colspan="2">{ReportID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_NAME}</b></td>
-			<td align="left" class="line2">{DisplayName}</td>
+			<td align="left" class="line2" colspan="2">{DisplayName}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_REPORTS_DESCRIPTION}</b></td>
-			<td align="left" class="line1">{Description}</td>
+			<td align="left" class="line1" colspan="2">{Description}</td>
 		</tr>
 		<!-- IF EnableHelpArticle="true" -->
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
-			<td align="center" class="line2"><a href="{ReportHelpArticle}" target="_blank">{LN_REPORTS_HELP_CLICK}</a></td>
+			<td align="center" class="line2" colspan="2"><a href="{ReportHelpArticle}" target="_blank">{LN_REPORTS_HELP_CLICK}</a></td>
 		</tr>
 		<!-- ENDIF EnableHelpArticle="true" -->
 		<!-- IF EnableNeedsInit="true" -->
@@ -113,12 +155,12 @@
 			</td>
 		</tr>
 		<!-- ENDIF EnableNeedsInit="true" -->
-		</table>
 
 		<!-- IF HASSAVEDREPORTS="true" -->
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
 		<tr>
-			<td align="center" colspan="2" class="cellmenu2" valign="top">{LN_REPORTS_SAVEDREPORTS}</td>
+			<td align="center" rowspan="{SavedReportRowSpan}" class="cellmenu2_naked" valign="top">{LN_REPORTS_SAVEDREPORTS}</td>
+			<td align="left" class="line1" colspan="2">
+			</td>
 		</tr>
 		<!-- BEGIN SAVEDREPORTS -->
 		<tr>
@@ -127,16 +169,14 @@
 			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
 			</td>
 			<td align="center" class="{srcssclass}">
-				&nbsp;<a href="{BASEPATH}todo.php?op=runreport&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
 				&nbsp;<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}"><img src="{MENU_EDIT}" width="16" title="{LN_REPORTS_EDITSAVEDREPORT}"></a>
 				&nbsp;<a href="{BASEPATH}admin/reports.php?op=removesavedreport&savedreportid={SavedReportID}"><img src="{MENU_DELETE}" width="16" title="{LN_REPORTS_REMOVESAVEDREPORT}"></a>
-
 			</td>
 		</tr>
 		<!-- END SAVEDREPORTS -->
-		</table>
 		<!-- ENDIF HASSAVEDREPORTS="true" -->
-
+		</table>
 
 		<br><br>
 		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -176,7 +216,7 @@
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
 <!--			<input type="hidden" name="op" value="addsavedreport">-->
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
 			</tr>
@@ -293,7 +333,7 @@
 			</table>
 
 			<div id="HiddenOutputFormatFile" class="HiddenContent">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
 			<tr>
 				<td align="left" class="cellmenu2" width="150" valign="top" nowrap><b>{LN_REPORTS_OUTPUTTARGET_FILE}</b></td>
 				<td align="left" class="line1" width="100%">
@@ -303,7 +343,7 @@
 			</table>
 			</div>
 
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
 			<!-- IF enableCronCommand="true" -->
 			<tr>
 				<td align="left" class="cellmenu2_naked" width="150" nowrap><b>{LN_REPORTS_CRONCMD}</b></td>

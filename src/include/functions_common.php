@@ -691,6 +691,9 @@ function InitFrontEndVariables()
 	$content['MENU_TRASH'] = $content['BASEPATH'] . "images/icons/garbage_empty.png";
 	$content['MENU_REPORTS'] = $content['BASEPATH'] . "images/icons/document_chart.png";
 	$content['MENU_CHARTPRESENTATION'] = $content['BASEPATH'] . "images/icons/presentation_chart.png";
+	$content['MENU_NETDOWNLOAD'] = $content['BASEPATH'] . "images/icons/download.png";
+	$content['MENU_DOCUMENTLIST'] = $content['BASEPATH'] . "images/icons/documents.png";
+	$content['MENU_WINDOWLIST'] = $content['BASEPATH'] . "images/icons/windows.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
