@@ -425,6 +425,8 @@ class Report_syslogsummary extends Report {
 						$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
 						$tmpMyEvent['syslogseverity_text'] = $this->GetSeverityDisplayName($tmpMyEvent['syslogseverity']); //$content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
 						$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
+						$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
+						$tmpMyEvent['syslogfacility_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogfacility']);
 					}
 				}
 			}
@@ -486,7 +488,7 @@ class Report_syslogsummary extends Report {
 		if ( isset( $severity_colors[$nSeverity] ) ) 
 			return $severity_colors[$nSeverity]; 
 		else
-			return $severity_colors[SYSLOG_NOTICE]; //Default
+			return $severity_colors[SYSLOG_INFO]; //Default
 	}
 
 	/*
