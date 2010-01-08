@@ -107,6 +107,7 @@ $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least o
 	$content['LN_GEN_REPORT_TARGET_STDOUT'] = "Direct Output";
 	$content['LN_GEN_REPORT_TARGET_FILE'] = "Save into File";
 	$content['LN_GEN_REPORT_TARGET_EMAIL'] = "Send as Email";
+$content['LN_GEN_UNKNOWN'] = "Unknown";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Search";

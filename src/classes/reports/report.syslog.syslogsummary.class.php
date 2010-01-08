@@ -5,7 +5,7 @@
 	* -----------------------------------------------------------------	*
 	* Some constants													*
 	*																	*
-	* Eventsummary Report is a basic report for EventLog
+	* Syslogsummary Report is a basic report for Syslog messages
 	*
 	* \version 1.0.0 Init Version
 	*																	*
@@ -45,24 +45,24 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'classes/reports/report.class.php');
 // --- 
 
-class Report_eventsummary extends Report {
+class Report_syslogsummary extends Report {
 	// Common Properties
 	public $_reportVersion = 1;										// Internally Version of the ReportEngine
-	public $_reportID = "report.eventlog.eventsummary.class";		// ID for the report, needs to be unique!
-	public $_reportFileBasicName = "report.eventlog.eventsummary";	// Basic Filename for reportfiles
-	public $_reportTitle = "EventLog Summary Report";				// Display name for the report
-	public $_reportDescription = "This is a EventLog Summary Report";
+	public $_reportID = "report.syslog.syslogsummary.class";		// ID for the report, needs to be unique!
+	public $_reportFileBasicName = "report.syslog.syslogsummary";	// Basic Filename for reportfiles
+	public $_reportTitle = "Syslog Summary Report";				// Display name for the report
+	public $_reportDescription = "This is a Syslog Summary Report";
 	public $_reportHelpArticle = "";
 	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
 	public $_reportInitialized = false;							// True means report is installed
 
 	// Advanced Report Options
 	private $_maxHosts = 20;									// Threshold for maximum hosts to analyse!
-	private $_maxEventsPerHost = 100;							// Threshold for maximum amount of events to analyse per host
+	private $_maxMsgsPerHost = 100;								// Threshold for maximum amount of syslogmessages to analyse per host
 	private $_colorThreshold = 10;								// Threshold for coloured display of Eventcounter
 
 	// Constructor
-	public function Report_eventsummary() {
+	public function Report_syslogsummary() {
 //		$this->_logStreamConfigObj = $streamConfigObj;
 
 		// Fill fields we need for this report
@@ -70,13 +70,10 @@ class Report_eventsummary extends Report {
 		$this->_arrProperties[] = SYSLOG_DATE;
 		$this->_arrProperties[] = SYSLOG_HOST;
 		$this->_arrProperties[] = SYSLOG_MESSAGETYPE;
-//		$this->_arrProperties[] = SYSLOG_FACILITY;
+		$this->_arrProperties[] = SYSLOG_FACILITY;
 		$this->_arrProperties[] = SYSLOG_SEVERITY;
-		$this->_arrProperties[] = SYSLOG_EVENT_ID;
-//		$this->_arrProperties[] = SYSLOG_EVENT_LOGTYPE;
-		$this->_arrProperties[] = SYSLOG_EVENT_SOURCE;
-//		$this->_arrProperties[] = SYSLOG_EVENT_CATEGORY;
-//		$this->_arrProperties[] = SYSLOG_EVENT_USER;
+		$this->_arrProperties[] = SYSLOG_SYSLOGTAG;
+		$this->_arrProperties[] = SYSLOG_PROCESSID;
 		$this->_arrProperties[] = SYSLOG_MESSAGE;
 		$this->_arrProperties[] = MISC_CHECKSUM;
 
@@ -89,10 +86,10 @@ class Report_eventsummary extends Report {
 														'MinValue'		=> 1,
 /*														'MaxValue'		=> 0,*/
 												); 
-		$this->_arrCustomFilters['_maxEventsPerHost'] = 
-												array (	'InternalID'	=> '_maxEventsPerHost', 
-														'DisplayLangID'	=> 'ln_report_maxEventsPerHost_displayname', 
-														'DescriptLangID'=> 'ln_report_maxEventsPerHost_description', 
+		$this->_arrCustomFilters['_maxMsgsPerHost'] = 
+												array (	'InternalID'	=> '_maxMsgsPerHost', 
+														'DisplayLangID'	=> 'ln_report_maxMsgsPerHost_displayname', 
+														'DescriptLangID'=> 'ln_report_maxMsgsPerHost_description', 
 														FILTER_TYPE		=> FILTER_TYPE_NUMBER, 
 														'DefaultValue'	=> 100, 
 														'MinValue'		=> 1,
@@ -123,7 +120,7 @@ class Report_eventsummary extends Report {
 		global $content, $severity_colors, $gl_starttime, $fields; 
 
 		// Create Filter string, append filter for EventLog Type msgs!
-		$szFilters = $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_NT_EventReport; 
+		$szFilters = $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_Syslog; 
 
 		// Set Filter string
 		$this->_streamObj->SetFilter( $szFilters );
@@ -158,7 +155,7 @@ class Report_eventsummary extends Report {
 				foreach ($content["report_summary"] as &$tmpReportData )
 				{
 					$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
-					$tmpReportData['bgcolor'] = $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
+					$tmpReportData['bgcolor'] = $this->GetSeverityBGColor( $tmpReportData[SYSLOG_SEVERITY] ); // $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
 
 					$iTotalEvents += $tmpReportData['ItemCount']; 
 				}
@@ -191,7 +188,7 @@ class Report_eventsummary extends Report {
 				return ERROR_REPORT_NODATA; 
 
 			// This function will consolidate the Events based per Host!
-			$this->ConsolidateEventsPerHost($arrHosts);
+			$this->ConsolidateSyslogmessagesPerHost($arrHosts);
 
 			// TimeStats
 			$nowtime = microtime_float();
@@ -273,8 +270,8 @@ class Report_eventsummary extends Report {
 					{
 						if ( $tmpfilterid == '_maxHosts' ) 
 							$this->_maxHosts = intval($szNewVal); 
-						else if ( $tmpfilterid == '_maxEventsPerHost' ) 
-							$this->_maxEventsPerHost = intval($szNewVal); 
+						else if ( $tmpfilterid == '_maxMsgsPerHost' ) 
+							$this->_maxMsgsPerHost = intval($szNewVal); 
 						else if ( $tmpfilterid == '_colorThreshold' ) 
 							$this->_colorThreshold = intval($szNewVal); 
 					}
@@ -292,9 +289,9 @@ class Report_eventsummary extends Report {
 
 	// --- Private functions...
 	/**
-	*	Helper function to consolidate events 
+	*	Helper function to consolidate syslogmessages 
 	*/
-	private function ConsolidateEventsPerHost( $arrHosts )
+	private function ConsolidateSyslogmessagesPerHost( $arrHosts )
 	{
 		global $content, $gl_starttime; 
 
@@ -343,31 +340,37 @@ class Report_eventsummary extends Report {
 						}
 
 						// Check if entry exists in result array
-						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]) ) 
+						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]) ) 
 						{
 							// Increment counter and set First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount']++; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount']++; 
 							
 							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'][EVTIME_TIMESTAMP] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE];
 
 							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'][EVTIME_TIMESTAMP] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
 							// Set Basic data entries
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_EVENT_ID] = $logArray[SYSLOG_EVENT_ID]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_EVENT_SOURCE] = $logArray[SYSLOG_EVENT_SOURCE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
+							if (isset( $content['filter_facility_list'][$logArray[SYSLOG_FACILITY]] )) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = $logArray[SYSLOG_FACILITY]; 
+							else
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = SYSLOG_NOTICE; // Set default in this case
+							if (isset( $content['filter_severity_list'][$logArray[SYSLOG_SEVERITY]] )) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
+							else
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = SYSLOG_LOCAL0; // Set default in this case
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SYSLOGTAG] = $logArray[SYSLOG_SYSLOGTAG]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
 
 							// Set Counter and First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['FirstEvent_Date'] = $logArray[SYSLOG_DATE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]['LastEvent_Date'] = $logArray[SYSLOG_DATE];
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount'] = 1; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
 						}
 					}
 
@@ -383,31 +386,31 @@ class Report_eventsummary extends Report {
 				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
 				{
 					// First use callback function to sort array
-					uasort($tmpConsolidatedComputer['cons_events'], "MultiSortArrayByItemCountDesc");
+					uasort($tmpConsolidatedComputer['cons_msgs'], "MultiSortArrayByItemCountDesc");
 					
-					// Remove entries according to _maxEventsPerHost
-					if ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost )
+					// Remove entries according to _maxMsgsPerHost
+					if ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost )
 					{
 						$iDropCount = 0;
 
 						do
 						{
-							array_pop($tmpConsolidatedComputer['cons_events']);
+							array_pop($tmpConsolidatedComputer['cons_msgs']);
 							$iDropCount++; 
-						} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
+						} while ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost ); 
 						
 						// Append a dummy entry which shows count of all other events
 						if ( $iDropCount > 0 ) 
 						{
 							$lastEntry[SYSLOG_SEVERITY] = SYSLOG_NOTICE; 
-							$lastEntry[SYSLOG_EVENT_ID] = "-"; 
-							$lastEntry[SYSLOG_EVENT_SOURCE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+							$lastEntry[SYSLOG_FACILITY] = SYSLOG_LOCAL0; 
+							$lastEntry[SYSLOG_SYSLOGTAG] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
 							$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
 							$lastEntry['ItemCount'] = $iDropCount; 
-							$lastEntry['FirstEvent_Date'] = "-"; 
-							$lastEntry['LastEvent_Date'] = "-";
+							$lastEntry['FirstOccurrence_Date'] = "-"; 
+							$lastEntry['LastOccurrence_Date'] = "-";
 
-							$tmpConsolidatedComputer['cons_events'][] = $lastEntry; 
+							$tmpConsolidatedComputer['cons_msgs'][] = $lastEntry; 
 						}
 					}
 
@@ -416,11 +419,12 @@ class Report_eventsummary extends Report {
 					$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 					// PostProcess Events!
-					foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 
+					foreach( $tmpConsolidatedComputer["cons_msgs"] as &$tmpMyEvent ) 
 					{
-						$tmpMyEvent['FirstEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstEvent_Date'] );
-						$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastEvent_Date'] );
-						$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+						$tmpMyEvent['FirstOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstOccurrence_Date'] );
+						$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
+						$tmpMyEvent['syslogseverity_text'] = $this->GetSeverityDisplayName($tmpMyEvent['syslogseverity']); //$content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+						$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
 					}
 				}
 			}
@@ -431,6 +435,74 @@ class Report_eventsummary extends Report {
 		// Work done!
 		return SUCCESS;
 	}
+
+	/*
+	*	Helper function to convert a facility string into a facility number
+	*/
+	private function GetFacilityDisplayName($nFacility)
+	{
+		global $content;
+		if ( isset($nFacility) && is_numeric($nFacility) ) 
+		{
+			foreach ( $content['filter_facility_list'] as $myfacility )
+			{
+				// check if valid!
+				if ( $myfacility['ID'] == $nFacility ) 
+					return $myfacility['DisplayName'];
+			}
+		}
+
+		// If we reach this point, facility is not valid
+		return $content['LN_GEN_UNKNOWN']; 
+	}
+
+	/*
+	*	Helper function to convert a severity string into a severity number
+	*/
+	private function GetSeverityDisplayName($nSeverity)
+	{
+		global $content;
+		if ( isset($nSeverity) && is_numeric($nSeverity) ) 
+		{
+			foreach ( $content['filter_severity_list'] as $myseverity )
+			{
+				// check if valid!
+				if ( $myseverity['ID'] == $nSeverity ) 
+					return $myseverity['DisplayName'];
+			}
+		}
+
+		// If we reach this point, severity is not valid
+		return $content['LN_GEN_UNKNOWN']; 
+	}
+
+	/*
+	*	Helper function to obtain Severity background color
+	*/
+	private function GetSeverityBGColor( $nSeverity )
+	{
+		global $severity_colors;
+
+		if ( isset( $severity_colors[$nSeverity] ) ) 
+			return $severity_colors[$nSeverity]; 
+		else
+			return $severity_colors[SYSLOG_NOTICE]; //Default
+	}
+
+	/*
+	*	Helper function to obtain Severity background color
+	*/
+	private function GetFacilityBGColor( $nFacility )
+	{
+		global $facility_colors;
+
+		if ( isset( $facility_colors[$nFacility] ) ) 
+			return $facility_colors[$nFacility]; 
+		else
+			return $facility_colors[SYSLOG_LOCAL0]; //Default
+	}
+
+	//---
 }
 
 ?>

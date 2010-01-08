@@ -775,6 +775,10 @@ class LogStreamDisk extends LogStream {
 					else // Just copy the value!
 						$myFieldData = $logArray[$szConsFieldId];
 
+					// Extra Check to avoid empty counters!
+					if ( strlen($myFieldData) <= 0 ) 
+						$myFieldData = $content['LN_STATS_OTHERS']; 
+
 					if ( isset($aResult[ $myFieldData ]) )
 						$aResult[ $myFieldData ]['ItemCount']++;
 					else

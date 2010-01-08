@@ -291,6 +291,9 @@ if ( isset($_GET['op']) )
 				// Get Reference to parser!
 				$myReport = $content['REPORTS'][ $content['ReportID'] ];
 				
+				// Set Extra language strings
+				$content['REPORTS_DETAILSFOR'] = GetAndReplaceLangStr( $content['LN_REPORTS_DETAILSFOR'], $content['ReportID'] ); 
+
 				// Set Report properties
 				$content['DisplayName'] = $myReport['DisplayName'];
 				$content['Description'] = $myReport['Description'];
@@ -366,6 +369,9 @@ if ( isset($_GET['op']) )
 			{
 				// Get Reference to report!
 				$myReport = $content['REPORTS'][ $content['ReportID'] ];
+
+				// Set Extra language strings
+				$content['REPORTS_DETAILSFOR'] = GetAndReplaceLangStr( $content['LN_REPORTS_DETAILSFOR'], $content['ReportID'] ); 
 
 				// Now Get data from saved report!
 				$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
@@ -521,17 +527,6 @@ if ( isset($_GET['op']) )
 					$myOnlineReport['installed_text'] = $content['LN_REPORTS_NOTINSTALLED']; 
 				}
 				// --- 
-
-				// --- Set Helper links
-				if ( $myOnlineReport['reporthelparticle'] == "-" ) 
-				{
-				}
-				else
-				{
-
-				}
-
-				// ---
 
 				// --- Set CSS Class
 				if ( $j % 2 == 0 )

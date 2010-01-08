@@ -26,6 +26,9 @@
 			<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
 			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_LIST}</a></td>
 			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=onlinelist" target="_top"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
+			<!-- IF ISADDSAVEDREPORT="true" -->
+			<td class="topmenu2" nowrap align="center" width="250"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
+			<!-- ENDIF ISADDSAVEDREPORT="true" -->
 			<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
 		</tr>
 		</table>
