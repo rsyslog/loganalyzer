@@ -286,7 +286,7 @@ class LogStreamDB extends LogStream {
 
 			// Check how long we are running. If only two seconds of execution time are left, we abort further reading!
 			$scriptruntime = intval(microtime_float() - $gl_starttime);
-			if ( $scriptruntime > ($content['MaxExecutionTime']-2) )
+			if ( $content['MaxExecutionTime'] > 0 && $scriptruntime > ($content['MaxExecutionTime']-2) )
 			{
 				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
 				$content['logstream_warning'] = "false";
@@ -581,6 +581,40 @@ class LogStreamDB extends LogStream {
 		//return affected rows
 		return $rowcount; 
 	}
+
+	/*
+	*	Implementation of the SaveMessageChecksum
+	*
+	*	Creates an database UPDATE Statement and performs it!
+	*/
+	public function SaveMessageChecksum( $arrProperitesIn )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($arrProperitesIn[SYSLOG_UID]) && isset($arrProperitesIn[MISC_CHECKSUM]) && isset($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]) )
+		{
+			// DELETE DATA NOW!
+			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = " . $arrProperitesIn[MISC_CHECKSUM] . 
+						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " = " . $arrProperitesIn[SYSLOG_UID]; 
+			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			if ($myQuery)
+			{
+				// Return success
+				return SUCCESS; 
+			}
+			else
+			{
+				// error occured, output DEBUG message
+				$this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+
+				// Failed
+				return ERROR; 
+			}
+		}
+	}
+
 
 	/**
 	* Implementation of ConsolidateItemListByField 

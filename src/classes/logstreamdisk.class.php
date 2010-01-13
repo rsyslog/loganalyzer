@@ -255,7 +255,7 @@ class LogStreamDisk extends LogStream {
 
 			// Check how long we are running. If only two seconds of execution time are left, we abort further reading!
 			$scriptruntime = intval(microtime_float() - $gl_starttime);
-			if ( $scriptruntime > ($content['MaxExecutionTime']-2) )
+			if ( $content['MaxExecutionTime'] > 0 && $scriptruntime > ($content['MaxExecutionTime']-2) )
 			{
 				// This may display a warning message, so the user knows we stopped reading records because of the script timeout. 
 				$content['logstream_warning'] = "false";
@@ -639,12 +639,22 @@ class LogStreamDisk extends LogStream {
 	/**
 	* Implementation of the CleanupLogdataByDate
 	*
-	* not implemented yet!
+	* not implemented!
 	*/
 	public function CleanupLogdataByDate( $nDateTimeStamp )
 	{
 		//not implemented
 		return null; 
+	}
+
+	/*
+	*	Implementation of the SaveMessageChecksum
+	*
+	*	not implemented!
+	*/
+	public function SaveMessageChecksum( $arrProperitesIn )
+	{
+		return SUCCESS; 
 	}
 
 

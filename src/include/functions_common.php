@@ -594,8 +594,12 @@ function InitRuntimeInformations()
 	// --- Try to extend the script timeout if possible!
 	$iTmp = GetConfigSetting("MiscMaxExecutionTime", 30, CFGLEVEL_GLOBAL);
 	if ( $iTmp != $content['MaxExecutionTime'] && $iTmp > 10 )
-	{	//Try to extend the runtime in this case!
-		@ini_set("max_execution_time", $iTmp);
+	{	
+		//Try to extend the runtime in this case!
+		if ( !isset($content['IN_PHPLOGCON_COMMANDLINE']) ) 
+			@ini_set("max_execution_time", $iTmp);
+
+		// Get ini setting
 		$content['MaxExecutionTime'] = ini_get("max_execution_time");
 	}
 	// ---
@@ -1431,7 +1435,7 @@ function ReverseResolveIP( $szIP, $prepend, $append )
 
 	// Substract 5 seconds we need to finish processing!
 	$scriptruntime = intval(microtime_float() - $gl_starttime);
-	if ( $scriptruntime > ($content['MaxExecutionTime']-5) )
+	if ( $content['MaxExecutionTime'] > 0 && $scriptruntime > ($content['MaxExecutionTime']-5) )
 		return "";
 
 	// Abort if these IP's are postet

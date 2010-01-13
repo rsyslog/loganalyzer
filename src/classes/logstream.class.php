@@ -247,6 +247,12 @@ abstract class LogStream {
 
 
 	/*
+	*	Helper function to set the message checksum, this will be used for database based logstream classes only
+	*/
+	public abstract function SaveMessageChecksum( $arrProperitesIn );
+
+
+	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/
 	public function RunBasicInits()

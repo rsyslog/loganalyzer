@@ -281,9 +281,6 @@ abstract class Report {
 
 		// Call report function to init advanced settings!
 		$this->InitAdvancedSettings();
-
-//		echo "TODO SetCustomFilters"; 
-//		exit;
 	}
 
 	/*

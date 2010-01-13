@@ -209,7 +209,7 @@ class Report_syslogsummary extends Report {
 	*/
 	public function InitReport()
 	{
-		// Nothing todo
+		// Nothing to do
 		return SUCCESS;
 	}
 
@@ -220,7 +220,7 @@ class Report_syslogsummary extends Report {
 	*/
 	public function RemoveReport()
 	{
-		// Nothing todo
+		// Nothing to do
 		return SUCCESS;
 	}
 
@@ -333,7 +333,7 @@ class Report_syslogsummary extends Report {
 						if ( !isset($logArray[MISC_CHECKSUM]) || $logArray[MISC_CHECKSUM] == 0 ) 
 						{
 							// Calc crc32 from message, we use this as index
-							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); 
+							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); // Maybe useful somewhere else: sprintf( "%u", crc32 ( $logArray[SYSLOG_MESSAGE] )); 
 							$strChecksum = $logArray[MISC_CHECKSUM];
 
 							// TODO, save calculated Checksum into DB!

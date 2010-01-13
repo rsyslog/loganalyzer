@@ -212,7 +212,7 @@ class Report_eventsummary extends Report {
 	*/
 	public function InitReport()
 	{
-		// Nothing todo
+		// Nothing to do
 		return SUCCESS;
 	}
 
@@ -223,7 +223,7 @@ class Report_eventsummary extends Report {
 	*/
 	public function RemoveReport()
 	{
-		// Nothing todo
+		// Nothing to do
 		return SUCCESS;
 	}
 
@@ -336,11 +336,14 @@ class Report_eventsummary extends Report {
 						if ( !isset($logArray[MISC_CHECKSUM]) || $logArray[MISC_CHECKSUM] == 0 ) 
 						{
 							// Calc crc32 from message, we use this as index
-							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); 
+							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); // Maybe useful somewhere else: sprintf( "%u", crc32 ( $logArray[SYSLOG_MESSAGE] )); 
 							$strChecksum = $logArray[MISC_CHECKSUM];
 
-							// TODO, save calculated Checksum into DB!
+							// Save calculated Checksum into DB!
+							$this->_streamObj->SaveMessageChecksum($logArray); 
 						}
+						else // Get checksum
+							$strChecksum = $logArray[MISC_CHECKSUM];
 
 						// Check if entry exists in result array
 						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_events'][ $strChecksum ]) ) 
