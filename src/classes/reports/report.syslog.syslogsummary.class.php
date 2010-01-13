@@ -154,7 +154,7 @@ class Report_syslogsummary extends Report {
 
 				foreach ($content["report_summary"] as &$tmpReportData )
 				{
-					$tmpReportData['DisplayName'] = GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
+					$tmpReportData['DisplayName'] = $this->GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
 					$tmpReportData['bgcolor'] = $this->GetSeverityBGColor( $tmpReportData[SYSLOG_SEVERITY] ); // $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
 
 					$iTotalEvents += $tmpReportData['ItemCount']; 
@@ -359,11 +359,11 @@ class Report_syslogsummary extends Report {
 							if (isset( $content['filter_facility_list'][$logArray[SYSLOG_FACILITY]] )) 
 								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = $logArray[SYSLOG_FACILITY]; 
 							else
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = SYSLOG_NOTICE; // Set default in this case
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
 							if (isset( $content['filter_severity_list'][$logArray[SYSLOG_SEVERITY]] )) 
 								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
 							else
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = SYSLOG_LOCAL0; // Set default in this case
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SYSLOGTAG] = $logArray[SYSLOG_SYSLOGTAG]; 
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
 

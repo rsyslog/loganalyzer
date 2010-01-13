@@ -579,13 +579,16 @@ abstract class Report {
 			$pdf->AddPage();
 //			$pdf->SetFontSize(12);
 			$pdf->WriteHTML( $szOutputBuffer );
-//			Header('Content-Type: application/pdf');
 			$szFinalOutput = $pdf->Output('', 'S'); // Output to STANDARD Input!
 		}
 
 		// Simple HTML Output!
 		if ( $this->_outputTarget == REPORT_TARGET_STDOUT ) 
 		{
+			// Check if we need another header
+			if ( $this->_outputFormat == REPORT_OUTPUT_PDF ) 
+				Header('Content-Type: application/pdf');
+
 			// Kindly output to browser
 			echo $szFinalOutput; 
 			$res = SUCCESS; 
