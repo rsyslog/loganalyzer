@@ -681,6 +681,46 @@ class LogStreamPDO extends LogStream {
 	}
 
 
+	/*
+	*	Implementation of the SaveMessageChecksum
+	*
+	*	Creates an database UPDATE Statement and performs it!
+	*/
+	public function SaveMessageChecksum( $arrProperitesIn )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		if ( isset($arrProperitesIn[SYSLOG_UID]) && isset($arrProperitesIn[MISC_CHECKSUM]) && isset($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]) )
+		{
+			// DELETE DATA NOW!
+			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = " . $arrProperitesIn[MISC_CHECKSUM] . 
+						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " = " . $arrProperitesIn[SYSLOG_UID]; 
+			$myQuery = $this->_dbhandle->query($szSql);
+			if ( $myQuery ) 
+			{
+				// Free query now
+				$myQuery->closeCursor();
+
+				// Return success
+				return SUCCESS; 
+			}
+			else
+			{
+				// error occured, output DEBUG message
+				$this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+
+				// Failed
+				return ERROR; 
+			}
+		}
+		else
+			// Missing important properties
+			return ERROR; 
+	}
+
+
 	/**
 	* Implementation of ConsolidateItemListByField 
 	*

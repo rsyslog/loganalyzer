@@ -613,6 +613,9 @@ class LogStreamDB extends LogStream {
 				return ERROR; 
 			}
 		}
+		else
+			// Missing important properties
+			return ERROR; 
 	}
 
 
