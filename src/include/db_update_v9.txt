@@ -11,7 +11,9 @@ CREATE TABLE `logcon_savedreports` (
   `outputTarget` varchar(64) NOT NULL,
   `outputTargetDetails` text NOT NULL,
   `scheduleSettings` text NOT NULL,
-) ENGINE=MyISAM COMMENT = 'Table to store saved reports';
+  PRIMARY KEY  (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT = 'Table to store saved reports' AUTO_INCREMENT=1 ;
+
 -- Insert data
 
 -- Updated Data
