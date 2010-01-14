@@ -105,21 +105,21 @@ $content['LN_GEN_UNKNOWN'] = "Unbekannt";
 
 // Topmenu Entries
 $content['LN_MENU_SEARCH'] = "Suchen";
-	$content['LN_MENU_SHOWEVENTS'] = "Meldungen";
+$content['LN_MENU_SHOWEVENTS'] = "Meldungen";
 $content['LN_MENU_HELP'] = "Hilfe";
-	$content['LN_MENU_DOC'] = "Doikumentation";
-	$content['LN_MENU_FORUM'] = "Support Forum";
-	$content['LN_MENU_WIKI'] = "phpLogCon Wiki";
-	$content['LN_MENU_PROSERVICES'] = "Professionelle Unterst&uuml;tzung";
-	$content['LN_MENU_SEARCHINKB'] = "Suche in der Wissensdatenbank";
+$content['LN_MENU_DOC'] = "Doikumentation";
+$content['LN_MENU_FORUM'] = "Support Forum";
+$content['LN_MENU_WIKI'] = "phpLogCon Wiki";
+$content['LN_MENU_PROSERVICES'] = "Professionelle Unterst&uuml;tzung";
+$content['LN_MENU_SEARCHINKB'] = "Suche in der Wissensdatenbank";
 $content['LN_MENU_LOGIN'] = "Anmeldung";
-	$content['LN_MENU_ADMINCENTER'] = "Administration";
+$content['LN_MENU_ADMINCENTER'] = "Administration";
 $content['LN_MENU_LOGOFF'] = "Abmeldung";
-	$content['LN_MENU_LOGGEDINAS'] = "Angemeldet als ";
-	$content['LN_MENU_MAXVIEW'] = "Anzeige maximieren";
-	$content['LN_MENU_NORMALVIEW'] = "Standard Anzeige";
-	$content['LN_MENU_STATISTICS'] = "Statistiken";
-	$content['LN_MENU_CLICKTOEXPANDMENU'] = "Klicken Sie das Icon um das Men&uuml; anzuzeigen";
+$content['LN_MENU_LOGGEDINAS'] = "Angemeldet als ";
+$content['LN_MENU_MAXVIEW'] = "Anzeige maximieren";
+$content['LN_MENU_NORMALVIEW'] = "Standard Anzeige";
+$content['LN_MENU_STATISTICS'] = "Statistiken";
+$content['LN_MENU_CLICKTOEXPANDMENU'] = "Klicken Sie das Icon um das Men&uuml; anzuzeigen";
 
 
 // Index Site
@@ -134,17 +134,17 @@ $content['LN_SEARCH_ADVANCED'] = "Erweiterte Suche";
 $content['LN_SEARCH'] = "Suche";
 $content['LN_SEARCH_RESET'] = "Suche zur&uuml;cksetzen";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Erweiterte Suche starten";
-	$content['LN_VIEW_MESSAGECENTERED'] = "Zur&uuml;ck zur ungefilterten Ansicht, mit dieser Meldung als erster";
-	$content['LN_VIEW_RELATEDMSG'] = "Anzeige vorheriger Syslog Meldungen ";
-	$content['LN_VIEW_FILTERFOR'] = "Filtere Meldungen nach ";
-	$content['LN_VIEW_SEARCHFOR'] = "Suche online nach ";
-	$content['LN_VIEW_SEARCHFORGOOGLE'] = "Durchsuche Google nach ";
-	$content['LN_GEN_MESSAGEDETAILS'] = "Meldungsdetails";
-	$content['LN_VIEW_ADDTOFILTER'] = "F&uuml; '%1' zur Filterliste hinzu";
-	$content['LN_VIEW_EXCLUDEFILTER'] = "Entferne '%1' von der Filterliste";
-	$content['LN_VIEW_FILTERFORONLY'] = "Filtere nur nach '%1'";
-	$content['LN_VIEW_SHOWALLBUT'] = "Anzeige aller Meldungen, ausgenommen '%1'";
-	$content['LN_VIEW_VISITLINK'] = "&Ouml;ffne Link '%1' in neuem Fenster";
+$content['LN_VIEW_MESSAGECENTERED'] = "Zur&uuml;ck zur ungefilterten Ansicht, mit dieser Meldung als erster";
+$content['LN_VIEW_RELATEDMSG'] = "Anzeige vorheriger Syslog Meldungen ";
+$content['LN_VIEW_FILTERFOR'] = "Filtere Meldungen nach ";
+$content['LN_VIEW_SEARCHFOR'] = "Suche online nach ";
+$content['LN_VIEW_SEARCHFORGOOGLE'] = "Durchsuche Google nach ";
+$content['LN_GEN_MESSAGEDETAILS'] = "Meldungsdetails";
+$content['LN_VIEW_ADDTOFILTER'] = "F&uuml; '%1' zur Filterliste hinzu";
+$content['LN_VIEW_EXCLUDEFILTER'] = "Entferne '%1' von der Filterliste";
+$content['LN_VIEW_FILTERFORONLY'] = "Filtere nur nach '%1'";
+$content['LN_VIEW_SHOWALLBUT'] = "Anzeige aller Meldungen, ausgenommen '%1'";
+$content['LN_VIEW_VISITLINK'] = "&Ouml;ffne Link '%1' in neuem Fenster";
 
 $content['LN_HIGHLIGHT'] = "Hervorhebung >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hervorhebung <<";
@@ -177,7 +177,7 @@ $content['LN_FILTER_OTHERS'] = "Andere Filter";
 $content['LN_FILTER_MESSAGE'] = "Syslog Meldungen";
 $content['LN_FILTER_SYSLOGTAG'] = "Syslogtag";
 $content['LN_FILTER_SOURCE'] = "Quelle (Hostname)";
-	$content['LN_FILTER_MESSAGETYPE'] = "Meldungs Typ";
+$content['LN_FILTER_MESSAGETYPE'] = "Meldungs Typ";
 
 // Install Page
 $content['LN_CFG_DBSERVER'] = "Datenbank Host";
@@ -197,133 +197,156 @@ $content['LN_CFG_DBSTORAGEENGINE'] = "Datenbank Typ";
 $content['LN_CFG_DBTABLENAME'] = "Datenbank Tabellenname";
 $content['LN_CFG_NAMEOFTHESOURCE'] = "Name der Quelle";
 $content['LN_CFG_FIRSTSYSLOGSOURCE'] = "Erste Syslog Quelle";
-	$content['LN_CFG_VIEW'] = "Anzeige ausw&auml;hlen";
-	$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Erfordert eine Benutzer-Anmeldung";
-	$content['LN_CFG_MSGPARSERS'] = "Meldungs Parser (Komma getrent)";
-	$content['LN_CFG_NORMALIZEMSG'] = "Standard Meldunganzeige mit Parser";
-	$content['LN_CFG_SKIPUNPARSEABLE'] = "&Uuml;berspringe nicht lesbare Meldungen (Nur m&ouml;glich, wenn ein Parsen konfiguriert wurde!)";
-	$content['LN_CFG_DBRECORDSPERQUERY'] = "Anzahl der Datenbankabfragen";
+$content['LN_CFG_VIEW'] = "Anzeige ausw&auml;hlen";
+$content['LN_CFG_DBUSERLOGINREQUIRED'] = "Erfordert eine Benutzer-Anmeldung";
+$content['LN_CFG_MSGPARSERS'] = "Meldungs Parser (Komma getrent)";
+$content['LN_CFG_NORMALIZEMSG'] = "Standard Meldunganzeige mit Parser";
+$content['LN_CFG_SKIPUNPARSEABLE'] = "&Uuml;berspringe nicht lesbare Meldungen (Nur m&ouml;glich, wenn ein Parsen konfiguriert wurde!)";
+$content['LN_CFG_DBRECORDSPERQUERY'] = "Anzahl der Datenbankabfragen";
 
 // Details page
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details f&uuml;r Syslog-Nachrichten mit der ID";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details f&uuml;r Nachrichten-ID";
 $content['LN_DETAIL_BACKTOLIST'] = "Zur&uuml;ck zur Listenansicht";
 
-	// Login Site
-	$content['LN_LOGIN_DESCRIPTION'] = "Bitte geben Sie Ihren Benutzernamen und Ihr dazugeh&ouml;riges Passwort ein, um sich bei phpLogCon anzumelden. ";
-	$content['LN_LOGIN_TITLE'] = "Anmeldung";
-	$content['LN_LOGIN_USERNAME'] = "Benutzername";
-	$content['LN_LOGIN_PASSWORD'] = "Passwort";
-	$content['LN_LOGIN_SAVEASCOOKIE'] = "Angemeldet bleiben";
-	$content['LN_LOGIN_ERRWRONGPASSWORD'] = "Falscher Benutzername oder falsches Passwort!";
-	$content['LN_LOGIN_USERPASSMISSING'] = "Benutzername und/oder Passwort wurden nicht eingegeben!";
+// Login Site
+$content['LN_LOGIN_DESCRIPTION'] = "Bitte geben Sie Ihren Benutzernamen und Ihr dazugeh&ouml;riges Passwort ein, um sich bei phpLogCon anzumelden. ";
+$content['LN_LOGIN_TITLE'] = "Anmeldung";
+$content['LN_LOGIN_USERNAME'] = "Benutzername";
+$content['LN_LOGIN_PASSWORD'] = "Passwort";
+$content['LN_LOGIN_SAVEASCOOKIE'] = "Angemeldet bleiben";
+$content['LN_LOGIN_ERRWRONGPASSWORD'] = "Falscher Benutzername oder falsches Passwort!";
+$content['LN_LOGIN_USERPASSMISSING'] = "Benutzername und/oder Passwort wurden nicht eingegeben!";
 
-	// Install Site
-	$content['LN_INSTALL_TITLETOP'] = "Installing phpLogCon Version %1 - Step %2";
-	$content['LN_INSTALL_TITLE'] = "Installer Step %1";
-	$content['LN_INSTALL_ERRORINSTALLED'] = 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.';
-	$content['LN_INSTALL_FILEORDIRNOTWRITEABLE'] = "At least one file or directory (or more) is not writeable, please check the file permissions (chmod 666)!";
-	$content['LN_INSTALL_SAMPLECONFIGMISSING'] = "The sample configuration file '%1' is missing. You have not fully uploaded phplogcon.";
-	$content['LN_INSTALL_ERRORCONNECTFAILED'] = "Database connect to '%1' failed! Please check Servername, Port, User and Password!";
-	$content['LN_INSTALL_ERRORACCESSDENIED'] = "Cannot use the database  '%1'! If the database does not exists, create it or check user access permissions!";
-	$content['LN_INSTALL_ERRORINVALIDDBFILE'] = "Error, invalid Database definition file (to short!), the file name is '%1'! Please check if the file was correctly uploaded.";
-	$content['LN_INSTALL_ERRORINSQLCOMMANDS'] = "Error, invalid Database definition file (no sql statements found!), the file name is '%1'!<br> Please check if the file was not correctly uploaded, or contact the phpLogCon forums for assistance!";
-	$content['LN_INSTALL_MISSINGUSERNAME'] = "Username needs to be specified";
-	$content['LN_INSTALL_PASSWORDNOTMATCH'] = "Either the password does not match or is to short!";
-	$content['LN_INSTALL_FAILEDTOOPENSYSLOGFILE'] = "Failed to open the syslog file '%1'! Check if the file exists and phplogcon has sufficient rights to it<br>";
-	$content['LN_INSTALL_FAILEDCREATECFGFILE'] = "Coult not create the configuration file in '%1'! Please verify the file permissions!";
-	$content['LN_INSTALL_FAILEDREADINGFILE'] = "Error reading the file '%1'! Please verify if the file exists!";
-	$content['LN_INSTALL_ERRORREADINGDBFILE'] = "Error reading the default database definition file in '%1'! Please verify  if the file exists!";
-	$content['LN_INSTALL_STEP1'] = "Step 1 - Prerequisites";
-	$content['LN_INSTALL_STEP2'] = "Step 2 - Verify File Permissions";
-	$content['LN_INSTALL_STEP3'] = "Step 3 - Basic Configuration";
-	$content['LN_INSTALL_STEP4'] = "Step 4 - Create Tables";
-	$content['LN_INSTALL_STEP5'] = "Step 5 - Check SQL Results";
-	$content['LN_INSTALL_STEP6'] = "Step 6 - Creating the Main Useraccount";
-	$content['LN_INSTALL_STEP7'] = "Step 7 - Create the first source for syslog messages";
-	$content['LN_INSTALL_STEP8'] = "Step 8 - Done";
-	$content['LN_INSTALL_STEP1_TEXT'] = 'Before you start installing phpLogCon, the Installer setup has to check a few things first.<br>You may have to correct some file permissions first. <br><br>Click on <input type="submit" value="Next"> to start the Test!';
-	$content['LN_INSTALL_STEP2_TEXT'] = "The following file permissions have been checked. Verify the results below! <br>You may use the <B>configure.sh</B> script from the <B>contrib</B> folder to set the permissions for you.";
-	$content['LN_INSTALL_STEP3_TEXT'] = "In this step, you configure the basic configurations for phpLogCon.";
-	$content['LN_INSTALL_STEP4_TEXT'] = 'If you reached this step, the database connection has been successfully verified!<br><br> The next step will be to create the necessary database tables used by the phpLogCon User System. This might take a while!<br> <b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>! Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database. <br><br><b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>';
-	$content['LN_INSTALL_STEP5_TEXT'] = "Tables have been created. Check the List below for possible Error's";
-	$content['LN_INSTALL_STEP6_TEXT'] = "You are now about to create the initial phpLogCon User Account.<br> This will be the first administrative user, which will be needed to login into phpLogCon and access the Admin Center!";
-	$content['LN_INSTALL_STEP8_TEXT'] = 'Congratulations! You have successfully installed phpLogCon :)! <br><br>Click <a href="index.php">here</a> to go to your installation.';
-	$content['LN_INSTALL_PROGRESS'] = "Install Progress: ";
-	$content['LN_INSTALL_FRONTEND'] = "Frontend Options";
-	$content['LN_INSTALL_NUMOFSYSLOGS'] = "Number of syslog messages per page";
-	$content['LN_INSTALL_MSGCHARLIMIT'] = "Message character limit for the main view";
-	$content['LN_INSTALL_STRCHARLIMIT'] = "Character display limit for all string type fields";
-	$content['LN_INSTALL_SHOWDETAILPOP'] = "Show message details popup";
-	$content['LN_INSTALL_AUTORESOLVIP'] = "Automatically resolved IP Addresses (inline)";
-	$content['LN_INSTALL_USERDBOPTIONS'] = "User Database Options";
-	$content['LN_INSTALL_ENABLEUSERDB'] = "Enable User Database";
-	$content['LN_INSTALL_SUCCESSSTATEMENTS'] = "Successfully executed statements:";
-	$content['LN_INSTALL_FAILEDSTATEMENTS'] = "Failed statements:";
-	$content['LN_INSTALL_STEP5_TEXT_NEXT'] = "You can now proceed to the <B>next</B> step adding the first phpLogCon Admin User!";
-	$content['LN_INSTALL_STEP5_TEXT_FAILED'] = "At least one statement failed,see error reasons below";
-	$content['LN_INSTALL_ERRORMSG'] = "Error Message";
-	$content['LN_INSTALL_SQLSTATEMENT'] = "SQL Statement";
-	$content['LN_INSTALL_CREATEUSER'] = "Create User Account";
-	$content['LN_INSTALL_PASSWORD'] = "Password";
-	$content['LN_INSTALL_PASSWORDREPEAT'] = "Repeat Password";
-	$content['LN_INSTALL_SUCCESSCREATED'] = "Successfully created User";
-	$content['LN_INSTALL_RECHECK'] = "ReCheck";
-	$content['LN_INSTALL_FINISH'] = "Finish!";
-	$content['LN_INSTALL_'] = "";
+// Install Site
+$content['LN_INSTALL_TITLETOP'] = "Installing phpLogCon Version %1 - Step %2";
+$content['LN_INSTALL_TITLE'] = "Installer Step %1";
+$content['LN_INSTALL_ERRORINSTALLED'] = 'phpLogCon is already configured!<br><br> If you want to reconfigure phpLogCon, either delete the current <B>config.php</B> or replace it with an empty file.<br><br>Click <A HREF="index.php">here</A> to return to pgpLogCon start page.';
+$content['LN_INSTALL_FILEORDIRNOTWRITEABLE'] = "At least one file or directory (or more) is not writeable, please check the file permissions (chmod 666)!";
+$content['LN_INSTALL_SAMPLECONFIGMISSING'] = "The sample configuration file '%1' is missing. You have not fully uploaded phplogcon.";
+$content['LN_INSTALL_ERRORCONNECTFAILED'] = "Database connect to '%1' failed! Please check Servername, Port, User and Password!";
+$content['LN_INSTALL_ERRORACCESSDENIED'] = "Cannot use the database  '%1'! If the database does not exists, create it or check user access permissions!";
+$content['LN_INSTALL_ERRORINVALIDDBFILE'] = "Error, invalid Database definition file (to short!), the file name is '%1'! Please check if the file was correctly uploaded.";
+$content['LN_INSTALL_ERRORINSQLCOMMANDS'] = "Error, invalid Database definition file (no sql statements found!), the file name is '%1'!<br> Please check if the file was not correctly uploaded, or contact the phpLogCon forums for assistance!";
+$content['LN_INSTALL_MISSINGUSERNAME'] = "Username needs to be specified";
+$content['LN_INSTALL_PASSWORDNOTMATCH'] = "Either the password does not match or is to short!";
+$content['LN_INSTALL_FAILEDTOOPENSYSLOGFILE'] = "Failed to open the syslog file '%1'! Check if the file exists and phplogcon has sufficient rights to it<br>";
+$content['LN_INSTALL_FAILEDCREATECFGFILE'] = "Coult not create the configuration file in '%1'! Please verify the file permissions!";
+$content['LN_INSTALL_FAILEDREADINGFILE'] = "Error reading the file '%1'! Please verify if the file exists!";
+$content['LN_INSTALL_ERRORREADINGDBFILE'] = "Error reading the default database definition file in '%1'! Please verify  if the file exists!";
+$content['LN_INSTALL_STEP1'] = "Step 1 - Prerequisites";
+$content['LN_INSTALL_STEP2'] = "Step 2 - Verify File Permissions";
+$content['LN_INSTALL_STEP3'] = "Step 3 - Basic Configuration";
+$content['LN_INSTALL_STEP4'] = "Step 4 - Create Tables";
+$content['LN_INSTALL_STEP5'] = "Step 5 - Check SQL Results";
+$content['LN_INSTALL_STEP6'] = "Step 6 - Creating the Main Useraccount";
+$content['LN_INSTALL_STEP7'] = "Step 7 - Create the first source for syslog messages";
+$content['LN_INSTALL_STEP8'] = "Step 8 - Done";
+$content['LN_INSTALL_STEP1_TEXT'] = 'Before you start installing phpLogCon, the Installer setup has to check a few things first.<br>You may have to correct some file permissions first. <br><br>Click on <input type="submit" value="Next"> to start the Test!';
+$content['LN_INSTALL_STEP2_TEXT'] = "The following file permissions have been checked. Verify the results below! <br>You may use the <B>configure.sh</B> script from the <B>contrib</B> folder to set the permissions for you.";
+$content['LN_INSTALL_STEP3_TEXT'] = "In this step, you configure the basic configurations for phpLogCon.";
+$content['LN_INSTALL_STEP4_TEXT'] = 'If you reached this step, the database connection has been successfully verified!<br><br> The next step will be to create the necessary database tables used by the phpLogCon User System. This might take a while!<br> <b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>! Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database. <br><br><b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>';
+$content['LN_INSTALL_STEP5_TEXT'] = "Tables have been created. Check the List below for possible Error's";
+$content['LN_INSTALL_STEP6_TEXT'] = "You are now about to create the initial phpLogCon User Account.<br> This will be the first administrative user, which will be needed to login into phpLogCon and access the Admin Center!";
+$content['LN_INSTALL_STEP8_TEXT'] = 'Congratulations! You have successfully installed phpLogCon :)! <br><br>Click <a href="index.php">here</a> to go to your installation.';
+$content['LN_INSTALL_PROGRESS'] = "Install Progress: ";
+$content['LN_INSTALL_FRONTEND'] = "Frontend Options";
+$content['LN_INSTALL_NUMOFSYSLOGS'] = "Number of syslog messages per page";
+$content['LN_INSTALL_MSGCHARLIMIT'] = "Message character limit for the main view";
+$content['LN_INSTALL_STRCHARLIMIT'] = "Character display limit for all string type fields";
+$content['LN_INSTALL_SHOWDETAILPOP'] = "Show message details popup";
+$content['LN_INSTALL_AUTORESOLVIP'] = "Automatically resolved IP Addresses (inline)";
+$content['LN_INSTALL_USERDBOPTIONS'] = "User Database Options";
+$content['LN_INSTALL_ENABLEUSERDB'] = "Enable User Database";
+$content['LN_INSTALL_SUCCESSSTATEMENTS'] = "Successfully executed statements:";
+$content['LN_INSTALL_FAILEDSTATEMENTS'] = "Failed statements:";
+$content['LN_INSTALL_STEP5_TEXT_NEXT'] = "You can now proceed to the <B>next</B> step adding the first phpLogCon Admin User!";
+$content['LN_INSTALL_STEP5_TEXT_FAILED'] = "At least one statement failed,see error reasons below";
+$content['LN_INSTALL_ERRORMSG'] = "Error Message";
+$content['LN_INSTALL_SQLSTATEMENT'] = "SQL Statement";
+$content['LN_INSTALL_CREATEUSER'] = "Create User Account";
+$content['LN_INSTALL_PASSWORD'] = "Password";
+$content['LN_INSTALL_PASSWORDREPEAT'] = "Repeat Password";
+$content['LN_INSTALL_SUCCESSCREATED'] = "Successfully created User";
+$content['LN_INSTALL_RECHECK'] = "ReCheck";
+$content['LN_INSTALL_FINISH'] = "Finish!";
+$content['LN_INSTALL_'] = "";
 
-	// Converter Site
-	$content['LN_CONVERT_TITLE'] = "Configuration Converter Step %1";
-	$content['LN_CONVERT_NOTALLOWED'] = "Login";
-	$content['LN_CONVERT_ERRORINSTALLED'] = 'phpLogCon is not allowed to convert your settings into the user database.<br><br> If you want to convert your convert your settings, add the variable following into your config.php: <br><b>$CFG[\'UserDBConvertAllowed\'] = true;</b><br><br> Click <A HREF="index.php">here</A> to return to pgpLogCon start page.';
-	$content['LN_CONVERT_STEP1'] = "Step 1 - Informations";
-	$content['LN_CONVERT_STEP2'] = "Step 2 - Create Tables";
-	$content['LN_CONVERT_STEP3'] = "Step 3 - Check SQL Results";
-	$content['LN_CONVERT_STEP4'] = "Step 4 - Creating the Main Useraccount";
-	$content['LN_CONVERT_STEP5'] = "Step 5 - Import Settings into UserDB";
-	$content['LN_CONVERT_TITLETOP'] = "Converting phpLogCon configuration settings - Step ";
-	$content['LN_CONVERT_STEP1_TEXT'] = 'This script allows you to import your existing configuration from the <b>config.php</b> file. This includes frontend settings, data sources, custom views and custom searches. Do only perform this conversion if you did install phpLogCon without the UserDB System, and decided to enable it now. <br><br><b>ANY EXISTING INSTANCE OF A USERDB WILL BE OVERWRITTEN!</b><br><br><input type="submit" value="Click here"> to start the first conversion step!';
-	$content['LN_CONVERT_STEP2_TEXT'] = 'The database connection has been successfully verified! <br><br>The next step will be to create the necessary database tables for the phpLogCon User System. This might take a while! <br><b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>!<br> Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database.<br><br><b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>';
-	$content['LN_CONVERT_STEP5_TEXT'] = '<input type="submit" value="Click here"> to start the last step of the conversion. In this step, your existing configuration from the <b>config.php</b> will be imported into the database.';
-	$content['LN_CONVERT_STEP6'] = "Step 8 - Done";
-	$content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
-	$content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
-	$content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
+// Converter Site
+$content['LN_CONVERT_TITLE'] = "Configuration Converter Step %1";
+$content['LN_CONVERT_NOTALLOWED'] = "Login";
+$content['LN_CONVERT_ERRORINSTALLED'] = 'phpLogCon is not allowed to convert your settings into the user database.<br><br> If you want to convert your convert your settings, add the variable following into your config.php: <br><b>$CFG[\'UserDBConvertAllowed\'] = true;</b><br><br> Click <A HREF="index.php">here</A> to return to pgpLogCon start page.';
+$content['LN_CONVERT_STEP1'] = "Step 1 - Informations";
+$content['LN_CONVERT_STEP2'] = "Step 2 - Create Tables";
+$content['LN_CONVERT_STEP3'] = "Step 3 - Check SQL Results";
+$content['LN_CONVERT_STEP4'] = "Step 4 - Creating the Main Useraccount";
+$content['LN_CONVERT_STEP5'] = "Step 5 - Import Settings into UserDB";
+$content['LN_CONVERT_TITLETOP'] = "Converting phpLogCon configuration settings - Step ";
+$content['LN_CONVERT_STEP1_TEXT'] = 'This script allows you to import your existing configuration from the <b>config.php</b> file. This includes frontend settings, data sources, custom views and custom searches. Do only perform this conversion if you did install phpLogCon without the UserDB System, and decided to enable it now. <br><br><b>ANY EXISTING INSTANCE OF A USERDB WILL BE OVERWRITTEN!</b><br><br><input type="submit" value="Click here"> to start the first conversion step!';
+$content['LN_CONVERT_STEP2_TEXT'] = 'The database connection has been successfully verified! <br><br>The next step will be to create the necessary database tables for the phpLogCon User System. This might take a while! <br><b>WARNING</b>, if you have an existing phpLogCon installation in this database with the same tableprefix, all your data will be <b>OVERWRITTEN</b>!<br> Make sure you are using a fresh database, or you want to overwrite your old phpLogCon database.<br><br><b>Click on <input type="submit" value="Next"> to start the creation of the tables</b>';
+$content['LN_CONVERT_STEP5_TEXT'] = '<input type="submit" value="Click here"> to start the last step of the conversion. In this step, your existing configuration from the <b>config.php</b> will be imported into the database.';
+$content['LN_CONVERT_STEP6'] = "Step 8 - Done";
+$content['LN_CONVERT_STEP6_TEXT'] = 'Congratulations! You have successfully converted your existing phpLogCon installation :)!<br><br>Important! Don\'t forget to REMOVE THE VARIABLES <b>$CFG[\'UserDBConvertAllowed\'] = true;</b> from your config.php file! <br><br>You can click <a href="index.php">here</a> to get to your phpLogConinstallation.';
+$content['LN_CONVERT_PROCESS'] = "Conversion Progress:";
+$content['LN_CONVERT_ERROR_SOURCEIMPORT'] = "Critical Error while importing the sources into the database, the SourceType '%1' is not supported by this phpLogCon Version.";
 
 // Stats Site
-	$content['LN_STATS_CHARTTITLE'] = "Top %1 '%2' sortiert nach Meldungsanzahl";
-	$content['LN_STATS_COUNTBY'] = "Meldungsanzahl '%1'";
-	$content['LN_STATS_GRAPH'] = "Grafik";
-	$content['LN_STATS_TOPRECORDS'] = "Max. Anzahl: %1";
-	$content['LN_STATS_GENERATEDAT'] = "Erstellumgsdatum: %1";
-	$content['LN_GEN_ERROR_INVALIDFIELD'] = "Ung&uuml;tiger Feldname";
-	$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Fehlender Feldname";
-	$content['LN_GEN_ERROR_INVALIDTYPE'] = "Ung&uuml;ltiger oder unbekannter Chart Typ";
-	$content['LN_ERROR_CHARTS_NOTCONFIGURED'] = "Es wurden kein Chart konfiguriert.";
-	$content['LN_CHART_TYPE'] = "Chart Typ";
-	$content['LN_CHART_WIDTH'] = "Chart Breite";
-	$content['LN_CHART_FIELD'] = "Chart Felder";
-	$content['LN_CHART_MAXRECORDS'] = "Top Anzahl Summe";
-	$content['LN_CHART_SHOWPERCENT'] = "Prozentuale Anzeige";
-	$content['LN_CHART_TYPE_CAKE'] = "Kuchen (Pie)";
-	$content['LN_CHART_TYPE_BARS_VERTICAL'] = "Balken vertikal";
-	$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Balken horizontal";
-	$content['LN_STATS_WARNINGDISPLAY'] = "Das Erstellen von Grafiken &uuml;ber eine grosse Anzahl von Datens&auml;tzen kann sehr Prozessortlastig sein.<br>Dies wird in nachfolgenden Versionen noch weiter optimiert werden.<br>Falls die Erstellung der Grafiken zu viel Prozessortzeit in Anspruch nehmen sollte, bitte brechen Sie die Erstellung einfach ab.";
+$content['LN_STATS_CHARTTITLE'] = "Top %1 '%2' sortiert nach Meldungsanzahl";
+$content['LN_STATS_COUNTBY'] = "Meldungsanzahl '%1'";
+$content['LN_STATS_GRAPH'] = "Grafik";
+$content['LN_STATS_TOPRECORDS'] = "Max. Anzahl: %1";
+$content['LN_STATS_GENERATEDAT'] = "Erstellumgsdatum: %1";
+$content['LN_GEN_ERROR_INVALIDFIELD'] = "Ung&uuml;tiger Feldname";
+$content['LN_GEN_ERROR_MISSINGCHARTFIELD'] = "Fehlender Feldname";
+$content['LN_GEN_ERROR_INVALIDTYPE'] = "Ung&uuml;ltiger oder unbekannter Chart Typ";
+$content['LN_ERROR_CHARTS_NOTCONFIGURED'] = "Es wurden kein Chart konfiguriert.";
+$content['LN_CHART_TYPE'] = "Chart Typ";
+$content['LN_CHART_WIDTH'] = "Chart Breite";
+$content['LN_CHART_FIELD'] = "Chart Felder";
+$content['LN_CHART_MAXRECORDS'] = "Top Anzahl Summe";
+$content['LN_CHART_SHOWPERCENT'] = "Prozentuale Anzeige";
+$content['LN_CHART_TYPE_CAKE'] = "Kuchen (Pie)";
+$content['LN_CHART_TYPE_BARS_VERTICAL'] = "Balken vertikal";
+$content['LN_CHART_TYPE_BARS_HORIZONTAL'] = "Balken horizontal";
+$content['LN_STATS_WARNINGDISPLAY'] = "Das Erstellen von Grafiken &uuml;ber eine grosse Anzahl von Datens&auml;tzen kann sehr Prozessortlastig sein.<br>Dies wird in nachfolgenden Versionen noch weiter optimiert werden.<br>Falls die Erstellung der Grafiken zu viel Prozessortzeit in Anspruch nehmen sollte, bitte brechen Sie die Erstellung einfach ab.";
 
-	// asktheoracle site
-	$content['LN_ORACLE_TITLE'] = "Fragen Sie das Orakel nach '%1'";
-	$content['LN_ORACLE_HELP_FOR'] = "Das sind die Links welche das Orakel f&uuml;r Sie ermittelt hat";
-	$content['LN_ORACLE_HELP_TEXT'] = "<br><h3>Sie haben das Orakel nach mehr Informationen &uuml;ber '%1' - '%2' gefragt.</h3>
-	<p align=\"left\">Diese Seite erm&ouml;glicht es Ihnen eine Suche &uuml;ber verschiedene Log-Quellen zu starten. %3
-	<br>Die Idee ist es, einfach nach Informationen &uuml;ber spezifizierte Angaben allerorts zu suchen, egal wo diese vorkommen.
-	</p>
-	";
-	$content['LN_ORACLE_HELP_TEXT_EXTERNAL'] = "Es wird eine Suche &uuml;ber externe Datenquellen erm&ouml;glichti.";
-	$content['LN_ORACLE_HELP_DETAIL'] = "Link &Uuml;bersicht f&uuml;r '%1' - '%2'";
-	$content['LN_ORACLE_SEARCH'] = "Suche"; // in '%1' Field";
-	$content['LN_ORACLE_SOURCENAME'] = "Quellen Name";
-	$content['LN_ORACLE_FIELD'] = "Feld";
-	$content['LN_ORACLE_ONLINESEARCH'] = "Online Suche";
-	$content['LN_ORACLE_WHOIS'] = "WHOIS Abfrage f&uuml;r '%1' - '%2'";
+// asktheoracle site
+$content['LN_ORACLE_TITLE'] = "Fragen Sie das Orakel nach '%1'";
+$content['LN_ORACLE_HELP_FOR'] = "Das sind die Links welche das Orakel f&uuml;r Sie ermittelt hat";
+$content['LN_ORACLE_HELP_TEXT'] = "<br><h3>Sie haben das Orakel nach mehr Informationen &uuml;ber '%1' - '%2' gefragt.</h3>
+<p align=\"left\">Diese Seite erm&ouml;glicht es Ihnen eine Suche &uuml;ber verschiedene Log-Quellen zu starten. %3
+<br>Die Idee ist es, einfach nach Informationen &uuml;ber spezifizierte Angaben allerorts zu suchen, egal wo diese vorkommen.
+</p>
+";
+$content['LN_ORACLE_HELP_TEXT_EXTERNAL'] = "Es wird eine Suche &uuml;ber externe Datenquellen erm&ouml;glichti.";
+$content['LN_ORACLE_HELP_DETAIL'] = "Link &Uuml;bersicht f&uuml;r '%1' - '%2'";
+$content['LN_ORACLE_SEARCH'] = "Suche"; // in '%1' Field";
+$content['LN_ORACLE_SOURCENAME'] = "Quellen Name";
+$content['LN_ORACLE_FIELD'] = "Feld";
+$content['LN_ORACLE_ONLINESEARCH'] = "Online Suche";
+$content['LN_ORACLE_WHOIS'] = "WHOIS Abfrage f&uuml;r '%1' - '%2'";
+
+	$content['LN_GEN_ERROR_INVALIDOP'] = "Invalid or missing operation type";
+	$content['LN_GEN_ERROR_INVALIDREPORTID'] = "Invalid or missing report id";
+	$content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'] = "Invalid or missing savedreport id";
+	$content['LN_GEN_ERROR_REPORTGENFAILED'] = "Failed generating report '%1' with the following error reason: %2";
+	$content['LN_GEN_ERROR_WHILEREPORTGEN'] = "Error occured while generating report"; 
+	$content['LN_GEN_ERROR_REPORT_NODATA'] = "No data found for report generation"; 
+	$content['LN_GEN_ALL_OTHER_EVENTS'] = "All other events";
+	$content['LN_REPORT_FOOTER_ENDERED'] = "Report rendered in";
+	$content['LN_REPORT_FILTERS'] = "List of used filters";
+	$content['LN_REPORT_FILTERTYPE_DATE'] = "Date";
+	$content['LN_REPORT_FILTERTYPE_NUMBER'] = "Number";
+	$content['LN_REPORT_FILTERTYPE_STRING'] = "String";
+	$content['LN_GEN_SUCCESS_WHILEREPORTGEN'] = "Report was successfully generated";
+	$content['LN_GEN_ERROR_REPORTFAILEDTOGENERATE'] = "Failed to generate report, error details: %1";
+	$content['LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS'] = "Successfully generated report: %1";
+
+	$content['LN_CMD_RUNREPORT'] = "Generating saved report '%1'";
+	$content['LN_CMD_REPORTIDNOTFOUND'] = "Invalid Report ID '%1'";
+	$content['LN_CMD_SAVEDREPORTIDNOTFOUND'] = "Invalid SavedReport ID '%1'";
+	$content['LN_CMD_NOREPORTID'] = "Missing Report ID";
+	$content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
+	$content['LN_CMD_NOCMDPROMPT'] = "Error, this script can only be run from the command prompt.";
 
 ?>

@@ -330,4 +330,27 @@ $content['LN_DETAIL_BACKTOLIST'] = "Voltar para a lista";
 	$content['LN_ORACLE_ONLINESEARCH'] = "Online Search";
 	$content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 
+	$content['LN_GEN_ERROR_INVALIDOP'] = "Invalid or missing operation type";
+	$content['LN_GEN_ERROR_INVALIDREPORTID'] = "Invalid or missing report id";
+	$content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'] = "Invalid or missing savedreport id";
+	$content['LN_GEN_ERROR_REPORTGENFAILED'] = "Failed generating report '%1' with the following error reason: %2";
+	$content['LN_GEN_ERROR_WHILEREPORTGEN'] = "Error occured while generating report"; 
+	$content['LN_GEN_ERROR_REPORT_NODATA'] = "No data found for report generation"; 
+	$content['LN_GEN_ALL_OTHER_EVENTS'] = "All other events";
+	$content['LN_REPORT_FOOTER_ENDERED'] = "Report rendered in";
+	$content['LN_REPORT_FILTERS'] = "List of used filters";
+	$content['LN_REPORT_FILTERTYPE_DATE'] = "Date";
+	$content['LN_REPORT_FILTERTYPE_NUMBER'] = "Number";
+	$content['LN_REPORT_FILTERTYPE_STRING'] = "String";
+	$content['LN_GEN_SUCCESS_WHILEREPORTGEN'] = "Report was successfully generated";
+	$content['LN_GEN_ERROR_REPORTFAILEDTOGENERATE'] = "Failed to generate report, error details: %1";
+	$content['LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS'] = "Successfully generated report: %1";
+
+	$content['LN_CMD_RUNREPORT'] = "Generating saved report '%1'";
+	$content['LN_CMD_REPORTIDNOTFOUND'] = "Invalid Report ID '%1'";
+	$content['LN_CMD_SAVEDREPORTIDNOTFOUND'] = "Invalid SavedReport ID '%1'";
+	$content['LN_CMD_NOREPORTID'] = "Missing Report ID";
+	$content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
+	$content['LN_CMD_NOCMDPROMPT'] = "Error, this script can only be run from the command prompt.";
+
 ?>
