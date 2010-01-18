@@ -2,6 +2,8 @@
 Version 2.8.0 (v2-stable), 2010-01-14
 - Merged previous Beta branch into Stable branch and set 
   new version number 2.8
+- As of RFC5424, changed ProcessID Field into string valuetype, which has 
+  effect on how searches are done.
 ---------------------------------------------------------------------------
 Version 2.7.3 (beta), 2009-11-17
 - Merged bugfixes and changes from 2.6.5 stable into beta branch 
