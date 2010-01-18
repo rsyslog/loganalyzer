@@ -170,7 +170,7 @@ $fields[SYSLOG_SYSLOGTAG]['SearchOnline'] = true;
 $fields[SYSLOG_PROCESSID]['FieldID'] = SYSLOG_PROCESSID;
 $fields[SYSLOG_PROCESSID]['FieldDefine'] = 'SYSLOG_PROCESSID';
 $fields[SYSLOG_PROCESSID]['FieldCaption'] = 'ProcessID';
-$fields[SYSLOG_PROCESSID]['FieldType'] = FILTER_TYPE_NUMBER;
+$fields[SYSLOG_PROCESSID]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_PROCESSID]['Sortable'] = true;
 $fields[SYSLOG_PROCESSID]['DefaultWidth'] = "65";
 $fields[SYSLOG_PROCESSID]['FieldAlign'] = "center";
@@ -357,6 +357,7 @@ $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_CATEGORY] = "EventCategory"
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_USER] = "EventUser";
 $dbmapping['monitorware']['DBMAPPINGS'][MISC_SYSTEMID] = "SystemID";
 $dbmapping['monitorware']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
+//$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_PROCESSID] = "ProcessID";
 
 $dbmapping['syslogng']['ID'] = "syslogng";
 $dbmapping['syslogng']['DisplayName'] = "SyslogNG";
