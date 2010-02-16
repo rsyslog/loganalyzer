@@ -1,28 +1,28 @@
 <?php
 /*
 	*********************************************************************
-	* phpLogCon - http://www.phplogcon.org
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------
 	* Main Configuration File
 	*
 	* -> Configuration need variables for the Database connection
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
@@ -54,13 +54,13 @@ $CFG['UserDBLoginRequired'] = false;
 
 // --- Misc Options
 $CFG['MiscShowDebugMsg'] = 0;				// if enabled, you will get additional output on certain places
-$CFG['MiscDebugToSyslog'] = 0;				// if enabled, debug messages from phpLogCon will be send to syslog on linux, and into the EventLog on Windows
+$CFG['MiscDebugToSyslog'] = 0;				// if enabled, debug messages from LogAnalyzer will be send to syslog on linux, and into the EventLog on Windows
 $CFG['MiscShowDebugGridCounter'] = 0;		// Only for debugging purposes, will add a counter column into the grid!
 $CFG["MiscShowPageRenderStats"] = 1;		// If enabled, you will see Pagerender Settings
-$CFG['MiscEnableGzipCompression'] = 1;		// If enabled, phplogcon will use gzip compression for output, we recommend
+$CFG['MiscEnableGzipCompression'] = 1;		// If enabled, LogAnalyzer will use gzip compression for output, we recommend
 											// to have this option enabled, it will highly reduce bandwith usage. 
-$CFG['MiscMaxExecutionTime'] = 30;			// phpLogCon will try to overwrite the default script timeout with this value during runtime!
-											// This can of course only work if phpLogCon is allowed to changed the script timeout. 
+$CFG['MiscMaxExecutionTime'] = 30;			// LogAnalyzer will try to overwrite the default script timeout with this value during runtime!
+											// This can of course only work if LogAnalyzer is allowed to changed the script timeout. 
 $CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informations on failed logins
 // --- 
 
@@ -71,7 +71,7 @@ $CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the mess
 $CFG['ViewStringCharacterLimit'] = 30;		// Default character limit for all other string type fields before they get trunscated! 0 means NO trunscation.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
 $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Details for each syslog message on mouse over. 
-$CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens phplogcon the first time. 
+$CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens LogAnalyzer the first time. 
 											// Currently only "default" and "dark" are available. 
 $CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
 $CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is set to anything higher the 0 (which means disabled), this means auto reload is enabled by default. 
@@ -137,7 +137,7 @@ $CFG['Charts'][] = array ( "DisplayName" => "Usage by Day", "chart_type" => CHAR
 	$CFG['Sources']['Source2']['DBTableType'] = "winsyslog";
 	$CFG['Sources']['Source2']['DBType'] = DB_MYSQL;
 	$CFG['Sources']['Source2']['DBServer'] = "localhost";
-	$CFG['Sources']['Source2']['DBName'] = "phplogcon";
+	$CFG['Sources']['Source2']['DBName'] = "loganalyzer";
 	$CFG['Sources']['Source2']['DBUser'] = "root";
 	$CFG['Sources']['Source2']['DBPassword'] = "";
 	$CFG['Sources']['Source2']['DBTableName'] = "systemevents";

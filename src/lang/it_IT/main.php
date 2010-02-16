@@ -1,38 +1,38 @@
 <?php
 /*
-   *********************************************************************
-   * -> www.phplogcon.org <-
-   * -----------------------------------------------------------------
-   *
-   * Copyright (C) 2008 Adiscon GmbH.
-   *
-   * This file is part of phpLogCon.
-        *
-        * Translation by Luigi Rosa
-        *       [mailto:lrosa@venus.it]
-        *
-   *
-   * PhpLogCon is free software: you can redistribute it and/or modify
-   * it under the terms of the GNU General Public License as published by
-   * the Free Software Foundation, either version 3 of the License, or
-   * (at your option) any later version.
-   *
-   * PhpLogCon is distributed in the hope that it will be useful,
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   * GNU General Public License for more details.
-   *
-   * You should have received a copy of the GNU General Public License
-   * along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
-   *
-   * A copy of the GPL can be found in the file "COPYING" in this
-   * distribution.
-   *********************************************************************
+	*********************************************************************
+	* LogAnalyzer - http://loganalyzer.adiscon.com
+	* -----------------------------------------------------------------
+	*
+	* Copyright (C) 2008-2010 Adiscon GmbH.
+	*
+	* This file is part of LogAnalyzer.
+	*
+	* Translation by Luigi Rosa
+	*       [mailto:lrosa@venus.it]
+	*
+	*
+	* LogAnalyzer is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
+	*
+	* LogAnalyzer is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
+	*
+	* You should have received a copy of the GNU General Public License
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
+	*
+	* A copy of the GPL can be found in the file "COPYING" in this
+	* distribution.
+	*********************************************************************
 */
 global $content;
 
 // Global Stuff
-$content['LN_MAINTITLE'] = "PhpLogCon pagina principale";
+$content['LN_MAINTITLE'] = "LogAnalyzer pagina principale";
 $content['LN_MAIN_SELECTSTYLE'] = "Stile";
 $content['LN_GEN_LANGUAGE'] = "Lingua";
 $content['LN_GEN_SELECTSOURCE'] = "Fonte";
@@ -64,7 +64,7 @@ $content['LN_GEN_SELECTVIEW'] = "Visualizzaizone";
 
 
 // Main Index Site
-$content['LN_ERROR_INSTALLFILEREMINDER'] = "Attenzione! Non hai ancora rimosso il file 'install.php' dalla directory principale di phpLogCon!";
+$content['LN_ERROR_INSTALLFILEREMINDER'] = "Attenzione! Non hai ancora rimosso il file 'install.php' dalla directory principale di LogAnalyzer!";
 $content['LN_TOP_NUM'] = "Nr.";
 $content['LN_TOP_UID'] = "uID";
 $content['LN_GRID_POPUPDETAILS'] = "Dettagli del messaggio di syslog con ID '%1'";

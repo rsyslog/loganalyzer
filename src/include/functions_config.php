@@ -1,31 +1,31 @@
 <?php
 /*
-*********************************************************************
-* -> www.phplogcon.org <-											*
-* -----------------------------------------------------------------	*
-* Maintain and read Source Configurations							*
-*																	*
-* -> Configuration need variables for the Database connection		*
-*
-* Copyright (C) 2008 Adiscon GmbH.
-*
-* This file is part of phpLogCon.
-*
-* PhpLogCon is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* PhpLogCon is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
-*
-* A copy of the GPL can be found in the file "COPYING" in this
-* distribution.
+	*********************************************************************
+	* LogAnalyzer - http://loganalyzer.adiscon.com
+	* -----------------------------------------------------------------	*
+	* Maintain and read Source Configurations							*
+	*																	*
+	* -> Configuration need variables for the Database connection		*
+	*
+	* Copyright (C) 2008-2010 Adiscon GmbH.
+	*
+	* This file is part of LogAnalyzer.
+	*
+	* LogAnalyzer is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
+	*
+	* LogAnalyzer is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
+	*
+	* You should have received a copy of the GNU General Public License
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
+	*
+	* A copy of the GPL can be found in the file "COPYING" in this
+	* distribution.
 	*********************************************************************
 */
 
@@ -488,7 +488,7 @@ function InitViewConfigs()
 {
 	global $CFG, $content, $currentViewID;
 	
-	// Predefined phpLogCon Views 
+	// Predefined LogAnalyzer Views 
 	$CFG['Views']['SYSLOG']= array( 
 									'ID' =>			"SYSLOG", 
 									'DisplayName' =>"Syslog Fields", 

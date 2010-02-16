@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head>
-<title>Using text log files with phpLogCon</title>
+<title>Using text log files with LogAnalyzer</title>
 </head>
 <body>
-<h1>Using text log files with phpLogCon</h1>
-<p><b>PhpLogcon natively supports operting on text log files.</b> So there
+<h1>Using text log files with LogAnalyzer</h1>
+<p><b>LogAnalyzer natively supports operting on text log files.</b> So there
 is no need to put log data into databases. Each approach has advantages
 and disadvantages, which we will not discuss in this paper. Here, we focus
 on how text log files are supported.
 <p>We assume that the reader is familiar with <a href="basics.html">basic
-phpLogCon concepts</a>. If you are not, get aquainted to them, first.
+LogAnalyzer concepts</a>. If you are not, get aquainted to them, first.
 
 <h2>Requirements for text log files </h2>
-<p>PhpLogCon can operate on any standard text log file, that means a file that
+<p>LogAnalyzer can operate on any standard text log file, that means a file that
 purely consists of printable characters and uses LF (linefeed, newline) characters
 as log line terminators. Most importantly, this includes standard syslog files
 as well as web server and other application logs.
@@ -33,30 +33,30 @@ For typical syslog files, that will probably mean they contain maximum one
 day's data.
 
 <h2>Use Cases for Text Log Files</h2>
-<p>A typical use case is in a hosting environment. There, phpLogCon may
+<p>A typical use case is in a hosting environment. There, LogAnalyzer may
 be used to do an online review of log data, via the web and without the need
 to log into an SSH session. This can be very handy to learn what is currently
 going on or, for example, to verify if an important mail left your system.
 
 <p>Another use case is that you would like to keep an eye on some local text files,
 for example while debugging an installation. Instead of reconfiguring your whole
-logging system, you can set up a phpLogCon instance and point it to the log files
+logging system, you can set up a LogAnalyzer instance and point it to the log files
 in question. Keep in mind that you are not restricted to syslog files. For example,
 you may want to add additional application text log files as data sources as well.
 With the cross-datasource search capability, you can quickly follow events across
 the boundaries of log servers.
 
-<p>For secuity sensitive-environments, the access to phpLogCon can be protected
+<p>For secuity sensitive-environments, the access to LogAnalyzer can be protected
 by several levels, e.g. user authentication or IP ranges at the firewall or
-http server level. Also, one may consider to activate a phpLogCon instance only
+http server level. Also, one may consider to activate a LogAnalyzer instance only
 when actually needed to do troubleshooting and keep it "turned off" at other times.
 The beauty of text log files is that you do not need to reconfigure the whole
 logging system to do so. All that is needed is to disable the web site inside
 the http server.
 
-<p>[<a href="manual.html">manual index</a>] [<a href="http://www.phplogcon.com/">phpLogCon site</a>]</p>
+<p>[<a href="manual.html">manual index</a>] [<a href="http://loganalyzer.adiscon.com">LogAnalyzer site</a>]</p>
 <p><font size="2">This documentation is part of the
-<a href="http://www.phplogcon.com/">phpLogCon</a>
+<a href="http://loganalyzer.adiscon.com">LogAnalyzer</a>
 project.<br>
 Copyright &copy; 2008 by
 <a href="http://www.adiscon.com/">Adiscon</a>.

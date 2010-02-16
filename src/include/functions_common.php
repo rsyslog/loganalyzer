@@ -1,7 +1,7 @@
 <?php
 /*
 	*********************************************************************
-	* -> www.phplogcon.org <-											*
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------	*
 	* Common needed functions											*
 	*																	*
@@ -9,22 +9,22 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
@@ -67,7 +67,7 @@ $LANG = "en";		// Default language
 
 // Default Template vars
 $content['BUILDNUMBER'] = "2.9.0";
-$content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
+$content['TITLE'] = "LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 
@@ -82,7 +82,7 @@ $content['EXTRA_FOOTER'] = "";
 $content['CURRENTURL'] = "";
 // --- 
 
-// --- Check PHP Version! If lower the 5, phplogcon will not work proberly!
+// --- Check PHP Version! If lower the 5, LogAnalyzer will not work proberly!
 $myPhpVer = phpversion();
 $myPhpVerArray = explode('.', $myPhpVer);
 if ( $myPhpVerArray[0] < 5 )
@@ -126,11 +126,11 @@ function CheckForInstallPhp()
 	// Check for installscript!
 	if ( file_exists($content['BASEPATH'] . "install.php") ) 
 		$strinstallmsg = '<br><br>' 
-						. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install PhpLogCon!</b><br><br>'
+						. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install LogAnalyzer!</b><br><br>'
 //							. 'See the Installation Guides for more Details!<br>'
 //							. '<a href="docs/installation.htm" target="_blank">English Installation Guide</a>&nbsp;|&nbsp;'
 //							. '<a href="docs/installation_de.htm" target="_blank">German Installation Guide</a><br><br>' 
-//							. 'Also take a look to the <a href="docs/readme.htm" target="_blank">Readme</a> for some basics around PhpLogCon!<br>'
+//							. 'Also take a look to the <a href="docs/readme.htm" target="_blank">Readme</a> for some basics around LogAnalyzer!<br>'
 						. '</center>';
 	else
 		$strinstallmsg = "";
@@ -552,7 +552,7 @@ function CheckAndSetRunMode()
 	// Define and Inits Syslog variables now!
 	// DEPRECIATED! define_syslog_variables();
 	// Syslog Constants are defined by default anyway!
-	openlog("phpLogCon", LOG_PID, LOG_USER);
+	openlog("LogAnalyzer", LOG_PID, LOG_USER);
 	
 	// --- Check necessary PHP Extensions!
 	$loadedExtensions = get_loaded_extensions();
@@ -588,7 +588,7 @@ function InitRuntimeInformations()
 	if ( is_dir($gl_root_path . "doc") )
 		$content['PHPLOGCON_HELPLINK'] = $content['BASEPATH'] . "doc/manual.html";
 	else
-		$content['PHPLOGCON_HELPLINK'] = "http://www.phplogcon.org/doc";
+		$content['PHPLOGCON_HELPLINK'] = "http://loganalyzer.adiscon.com/doc";
 	// ---
 
 	// --- Try to extend the script timeout if possible!
@@ -825,7 +825,7 @@ function InitConfigurationValues()
 		else
 		{
 			if ( defined('IS_ADMINPAGE') || defined("IS_NOLOGINPAGE") )	// Language System not initialized yet
-				DieWithFriendlyErrorMsg( "The phpLogCon user system is currently disabled or not installed." );
+				DieWithFriendlyErrorMsg( "The LogAnalyzer user system is currently disabled or not installed." );
 		}
 	}
 
@@ -983,7 +983,7 @@ function DieWithErrorMsg( $szerrmsg )
 	else if	( $RUNMODE == RUNMODE_WEBSERVER )
 	{
 		print( 
-			"<html><title>phpLogCon :: Critical Error occured</title><head>" . 
+			"<html><title>LogAnalyzer :: Critical Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 			"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
@@ -1014,7 +1014,7 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	{
 
 		print( 
-			"<html><title>phpLogCon :: Error occured</title><head>" . 
+			"<html><title>LogAnalyzer :: Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 			"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
@@ -1051,8 +1051,8 @@ function InitPageTitle()
 			$szReturn .= "Source '" . $content['Sources'][$currentSourceID]['Name'] . "' :: ";
 	}
 
-	// Append phpLogCon
-	$szReturn .= "phpLogCon";
+	// Append LogAnalyzer
+	$szReturn .= "LogAnalyzer";
 
 	if ( defined('IS_ADMINPAGE') )
 		$szReturn .= " :: " . $content['LN_ADMIN_CENTER'] . " :: ";

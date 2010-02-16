@@ -1,20 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head>
-<title>Using Windows Event Logs with phpLogCon</title>
+<title>Using Windows Event Logs with LogAnalyzer</title>
 </head>
 <body>
-<h1>Using Windows Event Logs with phpLogCon</h1>
-<p>phpLogCon provides a message parser that understand Windows Event Log entries
+<h1>Using Windows Event Logs with LogAnalyzer</h1>
+<p>LogAnalyzer provides a message parser that understand Windows Event Log entries
 in Adiscon common format. With that parser, all Windows event log properties can be
 easily accessed, displayed and searched for.
 
 <h2>How to get hold of the Windows Event Log Data</h2>
-<p>phpLogCon does not (yet) provide a data source driver to natively pull the log entries
+<p>LogAnalyzer does not (yet) provide a data source driver to natively pull the log entries
 from the Windows event logs. So it needs to be delivered to it. This can be done with
 Adiscon's <a href="http://www.eventreporter.com">EventReporter</a> or
 <a href="http://www.mwagent.com">MonitorWare Agent</a> software. These Agents are
 excuted either on each Windows machine (or a single machine doing remote monitoring)
-and the events extracted are written to phpLogCon's datasource (either a file or
+and the events extracted are written to LogAnalyzer's datasource (either a file or
 database). Depending on your network setup, you may have some intermediate systems,
 in which case the actual write to the data source is done by something like
 <a href="http://www.winsyslog.com">WinSyslog</a> or <a href="http://www.rsyslog.com">rsyslog</a>.
@@ -24,9 +24,9 @@ with proper view defininitions, it provides a native-like view and search capabi
 that data. Please note that Windows Event Log Fields can also be used as sources for
 drawing graphics.
 
-<p>[<a href="manual.html">manual index</a>] [<a href="http://www.phplogcon.com/">phpLogCon site</a>]</p>
+<p>[<a href="manual.html">manual index</a>] [<a href="http://loganalyzer.adiscon.com">LogAnalyzer site</a>]</p>
 <p><font size="2">This documentation is part of the
-<a href="http://www.phplogcon.com/">phpLogCon</a>
+<a href="http://loganalyzer.adiscon.com">LogAnalyzer</a>
 project.<br>
 Copyright &copy; 2008 by
 <a href="http://www.adiscon.com/">Adiscon</a>.

@@ -1,7 +1,7 @@
 <?php
 /*
 	*********************************************************************
-	* phpLogCon - http://www.phplogcon.org
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------
 	* Main Index File											
 	*																	
@@ -9,22 +9,22 @@
 	*																	
 	* All directives are explained within this file
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution				
@@ -60,7 +60,7 @@ $configsamplefile = $content['BASEPATH'] . "include/config.sample.php";
 // ***					*** //
 
 // --- CONTENT Vars
-$content['TITLE'] = "phpLogCon :: " . $content['LN_INSTALL_TITLE'];
+$content['TITLE'] = "LogAnalyzer :: " . $content['LN_INSTALL_TITLE'];
 // --- 
 
 // --- Read Vars
@@ -197,7 +197,7 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_SESSION['UserDBEnabled']) ) { $content['UserDBEnabled'] = $_SESSION['UserDBEnabled']; } else { $content['UserDBEnabled'] = false; }
 	if ( isset($_SESSION['UserDBServer']) ) { $content['UserDBServer'] = $_SESSION['UserDBServer']; } else { $content['UserDBServer'] = "localhost"; }
 	if ( isset($_SESSION['UserDBPort']) ) { $content['UserDBPort'] = $_SESSION['UserDBPort']; } else { $content['UserDBPort'] = "3306"; }
-	if ( isset($_SESSION['UserDBName']) ) { $content['UserDBName'] = $_SESSION['UserDBName']; } else { $content['UserDBName'] = "phplogcon"; }
+	if ( isset($_SESSION['UserDBName']) ) { $content['UserDBName'] = $_SESSION['UserDBName']; } else { $content['UserDBName'] = "loganalyzer"; }
 	if ( isset($_SESSION['UserDBPref']) ) { $content['UserDBPref'] = $_SESSION['UserDBPref']; } else { $content['UserDBPref'] = "logcon_"; }
 	if ( isset($_SESSION['UserDBUser']) ) { $content['UserDBUser'] = $_SESSION['UserDBUser']; } else { $content['UserDBUser'] = "user"; }
 	if ( isset($_SESSION['UserDBPass']) ) { $content['UserDBPass'] = $_SESSION['UserDBPass']; } else { $content['UserDBPass'] = ""; }
@@ -535,7 +535,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	if ( isset($_SESSION['SourceDBTableType']) ) { $content['SourceDBTableType'] = $_SESSION['SourceDBTableType']; } else { $content['SourceDBTableType'] = "monitorware"; }
 	CreateDBMappingsList($content['SourceDBTableType']);
 
-	if ( isset($_SESSION['SourceDBName']) ) { $content['SourceDBName'] = $_SESSION['SourceDBName']; } else { $content['SourceDBName'] = "phplogcon"; }
+	if ( isset($_SESSION['SourceDBName']) ) { $content['SourceDBName'] = $_SESSION['SourceDBName']; } else { $content['SourceDBName'] = "loganalyzer"; }
 	if ( isset($_SESSION['SourceDBServer']) ) { $content['SourceDBServer'] = $_SESSION['SourceDBServer']; } else { $content['SourceDBServer'] = "localhost"; }
 	if ( isset($_SESSION['SourceDBTableName']) ) { $content['SourceDBTableName'] = $_SESSION['SourceDBTableName']; } else { $content['SourceDBTableName'] = "systemevents"; }
 	if ( isset($_SESSION['SourceDBUser']) ) { $content['SourceDBUser'] = $_SESSION['SourceDBUser']; } else { $content['SourceDBUser'] = "user"; }
@@ -652,7 +652,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	if ( isset($_SESSION['UserDBLoginRequired']) && $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
 	if ( !isset($_SESSION['UserDBServer']))	{ $_SESSION['UserDBServer'] = "localhost"; }
 	if ( !isset($_SESSION['UserDBPort']))	{ $_SESSION['UserDBPort'] = "3306"; }
-	if ( !isset($_SESSION['UserDBName']))	{ $_SESSION['UserDBName'] = "phplogcon"; }
+	if ( !isset($_SESSION['UserDBName']))	{ $_SESSION['UserDBName'] = "loganalyzer"; }
 	if ( !isset($_SESSION['UserDBPref']))	{ $_SESSION['UserDBPref'] = "logcon_"; }
 	if ( !isset($_SESSION['UserDBUser']))	{ $_SESSION['UserDBUser'] = "root"; }
 	if ( !isset($_SESSION['UserDBPass']))	{ $_SESSION['UserDBPass'] = ""; }
@@ -757,7 +757,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// --- If UserDB is enabled, we need to convert the settings now 
 	if ( $_SESSION['UserDBEnabled'] ) 
 	{
-		// Fully Initialize phpLogCon now!
+		// Fully Initialize LogAnalyzer now!
 		InitPhpLogCon();
 		InitSourceConfigs();
 

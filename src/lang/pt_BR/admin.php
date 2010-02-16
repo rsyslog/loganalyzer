@@ -1,25 +1,25 @@
 <?php
 /*
 	*********************************************************************
-	* -> www.phplogcon.org <-
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
@@ -98,7 +98,7 @@ $content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Script Timeout in seconds";
 $content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&gt; area.";
 $content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
-$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional phpLogCon Logo URL. Leave empty to use the default one.";
+$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional LogAnalyzer Logo URL. Leave empty to use the default one.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
@@ -245,7 +245,7 @@ $content['LN_SOURCES_ADDEDIT'] = "Add / Edit a Source";
 $content['LN_SOURCES_TYPE'] = "Source Type";
 $content['LN_SOURCES_DISKTYPEOPTIONS'] = "Diskfile related Options";
 $content['LN_SOURCES_ERROR_MISSINGPARAM'] = "The paramater '%1' is missing.";
-$content['LN_SOURCES_ERROR_NOTAVALIDFILE'] = "Failed to open the syslog file '%1'! Check if the file exists and phplogcon has sufficient rights to it";
+$content['LN_SOURCES_ERROR_NOTAVALIDFILE'] = "Failed to open the syslog file '%1'! Check if the file exists and LogAnalyzer has sufficient rights to it";
 $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'] = "Unknown Source '%1' detected";
 $content['LN_SOURCE_HASBEENADDED'] = "The new Source '%1' has been successfully added.";
 $content['LN_SOURCES_EDIT'] = "Edit Source";
@@ -274,7 +274,7 @@ $content['LN_SOURCES_ERROR_DELDATA'] = "Could not delete data in the '%1' source
 $content['LN_SOURCES_HASBEENDELDATA'] = "Successfully deleted data from the '%1' source, '%2' rows were affected. ";
 
 // Database Upgrade
-$content['LN_DBUPGRADE_TITLE'] = "phpLogCon Database Update";
+$content['LN_DBUPGRADE_TITLE'] = "LogAnalyzer Database Update";
 $content['LN_DBUPGRADE_DBFILENOTFOUND'] = "The database upgrade file '%1' could not be found in the include folder! Please check if all files were successfully uploaded.";
 $content['LN_DBUPGRADE_DBDEFFILESHORT'] = "The database upgrade files where empty or did not contain any SQL Command! Please check if all files were successfully uploaded.";
 $content['LN_DBUPGRADE_WELCOME'] = "Welcome to the database upgrade";
@@ -286,7 +286,7 @@ $content['LN_DBUPGRADE_SUCCESSEXEC'] = "Successfully executed statements";
 $content['LN_DBUPGRADE_FAILEDEXEC'] = "Failed statements";
 $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "At least one statement failed, you may need to correct and fix this issue manually. See error details below";
 $content['LN_DBUPGRADE_ERRMSG'] = "Error Message";
-$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "phpLogCon Database Version";
+$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "LogAnalyzer Database Version";
 
 // Charts Options
 $content['LN_CHARTS_CENTER'] = "Charts Options";

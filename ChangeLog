@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------
+Version 3.0.0 (beta), 2010-02-16
+- All references to phpLogCon have now been renamed to LogAnalyzer, 
+  which will be the new name for the phpLogCon project from now on. 
+---------------------------------------------------------------------------
 Version 2.9.0 (beta), 2010-01-14
 - Merged previous devel branch into Stable branch and set 
   new version number 2.9

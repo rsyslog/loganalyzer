@@ -1,7 +1,7 @@
 <?php
 /*
 	*********************************************************************
-	* -> www.phplogcon.org <-											*
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------	*
 	* DB Function Helper File											*
 	*																	*
@@ -9,22 +9,22 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
@@ -61,7 +61,7 @@ function DB_Connect()
 	if (!$userdbconn) 
 	{
 		// Create Error Msg
-		$szErrorMsg = "Failed to establish a connection to the configured MYSQL Server. <br>PhpLogCon is not able to initialize the user system.";
+		$szErrorMsg = "Failed to establish a connection to the configured MYSQL Server. <br>LogAnalyzer is not able to initialize the user system.";
 		if ( isset($php_errormsg) ) 
 			$szErrorMsg .= "<br><br><b>Extra Error Details</b>:<br>" . $php_errormsg;
 
@@ -86,7 +86,7 @@ function DB_Connect()
 	if ( $szVerSplit[0] <= 3 ) 
 	{
 		//Unfortunatelly MYSQL 3.x is NOT Supported dude!
-		DieWithFriendlyErrorMsg( "You are running an MySQL 3.x Database Server Version. Unfortunately MySQL 3.x is NOT supported by PhpLogCon due the limited SQL Statement support. If this is a commercial webspace, contact your webhoster in order to upgrade to a higher MySQL Database Version. If this is your own rootserver, consider updating your MySQL Server.");
+		DieWithFriendlyErrorMsg( "You are running an MySQL 3.x Database Server Version. Unfortunately MySQL 3.x is NOT supported by LogAnalyzer due the limited SQL Statement support. If this is a commercial webspace, contact your webhoster in order to upgrade to a higher MySQL Database Version. If this is your own rootserver, consider updating your MySQL Server.");
 	}
 	// ---
 

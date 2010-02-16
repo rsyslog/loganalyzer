@@ -1,25 +1,25 @@
 <?php
 /*
 	*********************************************************************
-	* -> www.phplogcon.org <-
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------
 	*
-	* Copyright (C) 2008 Adiscon GmbH.
+	* Copyright (C) 2008-2010 Adiscon GmbH.
 	*
-	* This file is part of phpLogCon.
+	* This file is part of LogAnalyzer.
 	*
-	* PhpLogCon is free software: you can redistribute it and/or modify
+	* LogAnalyzer is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
 	* the Free Software Foundation, either version 3 of the License, or
 	* (at your option) any later version.
 	*
-	* PhpLogCon is distributed in the hope that it will be useful,
+	* LogAnalyzer is distributed in the hope that it will be useful,
 	* but WITHOUT ANY WARRANTY; without even the implied warranty of
 	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	* GNU General Public License for more details.
 	*
 	* You should have received a copy of the GNU General Public License
-	* along with phpLogCon. If not, see <http://www.gnu.org/licenses/>.
+	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
@@ -98,7 +98,7 @@ $content['LN_ADMIN_SCRIPTTIMEOUT'] = "PHP Skript max. Lauzeit in Sekunden";
 $content['LN_GEN_INJECTHTMLHEADER'] = "Voranstellen von HTML Code in &lt;head&gt; Bereich.";
 $content['LN_GEN_INJECTBODYHEADER'] = "Voranstellen von HTML Code am Anfang des &lt;body&gt; Bereichs.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Voranstellen von HTML Code Am Ende des &lt;body&gt; Bereichs.";
-$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optionale phpLogCon-Logo-URL. Bitte f&uuml;r das Standard-Logo leer lassen.";
+$content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optionale LogAnalyzer-Logo-URL. Bitte f&uuml;r das Standard-Logo leer lassen.";
 
 // User Center
 $content['LN_USER_CENTER'] = "Benutzer Optionen";
@@ -245,7 +245,7 @@ $content['LN_SOURCES_ADDEDIT'] = "Hinzuf&uuml;gen/Bearbeiten einer Quelle";
 $content['LN_SOURCES_TYPE'] = "Typ der Quelle";
 $content['LN_SOURCES_DISKTYPEOPTIONS'] = "Festplatten Datei, zugewiesene Optionen";
 $content['LN_SOURCES_ERROR_MISSINGPARAM'] = "Der Parameter '%1' fehlt.";
-$content['LN_SOURCES_ERROR_NOTAVALIDFILE'] = "Fehler beim &ouml;ffnen der Syslog Detei '%1'! Bitte &uuml;berpr&uuml;fen Sie die Existenz der Datei und die Rechte f&uuml;r phpLogCon.";
+$content['LN_SOURCES_ERROR_NOTAVALIDFILE'] = "Fehler beim &ouml;ffnen der Syslog Detei '%1'! Bitte &uuml;berpr&uuml;fen Sie die Existenz der Datei und die Rechte f&uuml;r LogAnalyzer.";
 $content['LN_SOURCES_ERROR_UNKNOWNSOURCE'] = "Unbekannte Quelle '%1' gefunden";
 $content['LN_SOURCE_HASBEENADDED'] = "Die neue Quelle '%1' wurde erfolgreich hinzugef&uuml;gt.";
 $content['LN_SOURCES_EDIT'] = "Quelle bearbeiten";
@@ -274,9 +274,9 @@ $content['LN_SOURCES_ERROR_DELDATA'] = "Es konnten keine Daten in der Quelle '%1
 $content['LN_SOURCES_HASBEENDELDATA'] = "Die Daten in der Quelle '%1'wurden erfolgreich gel&ouml;scht, '%2' Zeilen wurden entfern. ";
 
 // Database Upgrade
-$content['LN_DBUPGRADE_TITLE'] = "phpLogCon Datenbank Update";
-$content['LN_DBUPGRADE_DBFILENOTFOUND'] = "Die Datenbank Upgrade Datei '%1' konnte im 'include'-Ordner nicht gefunden werden! Bitte &uuml;berpr&uuml;fen Sie, ob Sie phpLogCon komplett heruntergeladen haben.";
-$content['LN_DBUPGRADE_DBDEFFILESHORT'] = "Die Datenbank Upgrade Datei ist leer oder enth&auml;lt kein SQL-Kommando! Bitte &uuml;berpr&uuml;fen Sie, ob Sie phpLogCon komplett heruntergeladen haben.";
+$content['LN_DBUPGRADE_TITLE'] = "LogAnalyzer Datenbank Update";
+$content['LN_DBUPGRADE_DBFILENOTFOUND'] = "Die Datenbank Upgrade Datei '%1' konnte im 'include'-Ordner nicht gefunden werden! Bitte &uuml;berpr&uuml;fen Sie, ob Sie LogAnalyzer komplett heruntergeladen haben.";
+$content['LN_DBUPGRADE_DBDEFFILESHORT'] = "Die Datenbank Upgrade Datei ist leer oder enth&auml;lt kein SQL-Kommando! Bitte &uuml;berpr&uuml;fen Sie, ob Sie LogAnalyzer komplett heruntergeladen haben.";
 $content['LN_DBUPGRADE_WELCOME'] = "Willkommen zum Datenbank Upgrade";
 $content['LN_DBUPGRADE_BEFORESTART'] = "Bevor Sie mit dem Upgrade der Datenbank beginnen, sollten Sie eine <b>KOMPLETTE SICHERUNG IHRER DATENBANK</b> durchf&uuml;hren. Alle weiteren Schritte werden automatisch duch das Upgrade-Skript durchgef&uuml;hrt.";
 $content['LN_DBUPGRADE_CURRENTINSTALLED'] = "Aktuell installierte Datenbank Version";
@@ -286,7 +286,7 @@ $content['LN_DBUPGRADE_SUCCESSEXEC'] = "Erfolgreich ausgef&uuml;hrte Anweisungen
 $content['LN_DBUPGRADE_FAILEDEXEC'] = "Nicht erfolgreich ausgef&uuml;hrte Anweisungen";
 $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "Es wurde mind. eine Anweisung nicht korekt ausgef&uuml;hrt, dies muss manuell durch Sie korrigiert werden. Bitte beachten Sie die untenstehenden Details";
 $content['LN_DBUPGRADE_ERRMSG'] = "Fehler Meldung";
-$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "phpLogCon Datenbank Version";
+$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "LogAnalyzer Datenbank Version";
 
 // Charts Options
 $content['LN_CHARTS_CENTER'] = "Charts Optionen";

@@ -1,7 +1,7 @@
 <?php
 /*
 	*********************************************************************
-	* -> www.phplogcon.org <-											*
+	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------	*
 	* Apache Logfile Parser used to split WebLog fields if 
 	* found in the msg. 

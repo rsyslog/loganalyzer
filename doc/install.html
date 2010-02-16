@@ -3,17 +3,17 @@
 <HEAD>
 </HEAD>
 <BODY>
-<H1>HOWTO install phpLogCon</H1>
+<H1>HOWTO install LogAnalyzer</H1>
 <P><BR><BR>
 </P>
 <H2>Abstract</H2>
-<P><I><B>In this paper, I describe how to install <A HREF="http://www.phplogcon.com/">phpLogCon</A>.</B>
+<P><I><B>In this paper, I describe how to install <A HREF="http://loganalyzer.adiscon.com">LogAnalyzer</A>.</B>
 It is intentionally a brief step-by-step guide, targeted to those who
 want to quickly get it up and running. For more elaborate
 information, please consult the rest of the <A HREF="manual.html">manual
 set</A>.</I></P>
 <H2>Steps To Do</H2>
-<H3>To install phpLogCon, you need:</H3>
+<H3>To install LogAnalyzer, you need:</H3>
 <UL>
 	<LI>Apache or IIS Webserver
 	<LI>PHP5
@@ -35,30 +35,30 @@ of writing to databases. Rsyslog is a drop-in replacement for stock
 syslogd and also *is* the stock  syslogd on some platforms (e.g.
 Fedora 8 and above).</P>
 <H3>Step 1 - Download Software</H3>
-<P>For obvious reasons, you need to download phpLogCon. Here, I
+<P>For obvious reasons, you need to download LogAnalyzer. Here, I
 assume that you use a distribution tarball. 
 </P>
 <P>Load the most recent build from
-<A HREF="http://www.phplogcon.com/downloads">http://www.phplogcon.com/downloads</A>.
+<A HREF="http://loganalyzer.adiscon.com/downloads">http://loganalyzer.adiscon.comdownloads</A>.
 Extract the software with &quot;tar xzf -nameOfDownloadSet-&quot;.
-This will create a new subdirectory phpLogCon-version in the current
+This will create a new subdirectory LogAnalyzer-version in the current
 working directory. CD into that. 
 </P>
 <H3>Step 2 
 </H3>
-<P>Upload all files from the phplogcon/src/ folder to you webserver.
+<P>Upload all files from the loganalyzer/src/ folder to you webserver.
 The other files are not needed on the webserver. 
 </P>
 <H3>Step 3 
 </H3>
-<P>If your webserver has write access to the phplogcon folder, you
+<P>If your webserver has write access to the LogAnalyzer folder, you
 can skip the following step: 
 </P>
 <P>     
 </P>
 <P>	Upload the scripts configure.sh and secure.sh from the contrib
 folder to your webserver, into 	the same folder where you uploaded
-the other phplogcon files into. Then set the execution 	flag to them
+the other LogAnalyzer files into. Then set the execution 	flag to them
 (chmod +x configure.sh secure.sh).          
 </P>
 <P>	Now run ./configure.sh, this will create a blank config.php, and
@@ -68,9 +68,9 @@ will also set write access to 	everyone to it.
 </P>
 <H3>Step 4 
 </H3>
-<P>Now open your phplogcon installation in your favourite webbrowser,
+<P>Now open your LogAnalyzer installation in your favourite webbrowser,
 you will see an error, and you will be pointed to the installation
-script. The install script will guide you through the phplogcon
+script. The install script will guide you through the LogAnalyzer
 installation, just follow the instructions.</P>
 <H3>Step 4.1</H3>
 <P>Prerequisites Beginning of installation / welcome site. This is
@@ -88,7 +88,7 @@ the complete Step 2.</P>
 <UL>
 	<LI><P>Number of syslog messages per page = 50 (default)</P>
 	<P>This is the number of syslog messages displayed on each page. You
-	can increase the value (makes phpLogCon slower) or decrease the
+	can increase the value (makes LogAnalyzer slower) or decrease the
 	value (makes it faster).    
 	</P>
 </UL>
@@ -120,7 +120,7 @@ the following information:</H6>
 <UL>
 	<LI><P>Logline Type = Syslog / Rsyslog (default) or Adiscon
 	WinSyslog</P>
-	<P>This tells phpLogCon, how the lines look like. This is necessary
+	<P>This tells LogAnalyzer, how the lines look like. This is necessary
 	for show the log messages properly.</P>
 </UL>
 <UL>
@@ -142,7 +142,7 @@ following information is needed:</H6>
 	is localhost. You can specify any other host if necessary.</P>
 </UL>
 <UL>
-	<LI><P>Database Name = phplogcon (default)</P>
+	<LI><P>Database Name = loganalyzer (default)</P>
 	<P>The name of the database you want to use.</P>
 </UL>
 <UL>
@@ -189,7 +189,7 @@ to be defined:</H6>
 	is localhost. You can specify any other host if necessary.</P>
 </UL>
 <UL>
-	<LI><P>Database Name = phplogcon (default)</P>
+	<LI><P>Database Name = loganalyzer (default)</P>
 	<P>The name of the database you want to use.</P>
 </UL>
 <UL>
@@ -219,7 +219,7 @@ to be defined:</H6>
 <P>Finish :)</P>
 <H3>Step 5</H3>
 <P>If everything went right, you should see syslog messages already
-in your phplogcon installation. You can now remove the install.php
+in your LogAnalyzer installation. You can now remove the install.php
 script now. 
 </P>
 <H2>Note on Accesing Files</H2>
@@ -231,15 +231,15 @@ server runs under also has the correct file permissions. Be careful
 when doing this, you may create a security vulnerability by granting
 too much to too many users.</P>
 <H2>Note on MySQL Databases</H2>
-<P>phpLogCon does support using a MySQL database as syslog source.
-PhpLogCon supports Adiscon's MonitorWare database schema. The schema
+<P>LogAnalyzer does support using a MySQL database as syslog source.
+LogAnalyzer supports Adiscon's MonitorWare database schema. The schema
 used by php-syslog-ng is also partly supported. That schema, however,
 is somewhat inefficient in that it stores facility and severity codes
 as textual values. We do not currently convert these values back to
 their native format and consequently facility and severity can not be
 taken from a php-syslog-ng database.</P>
 <H3>Copyright</H3>
-<P>This documentation is part of the <A HREF="http://www.phplogcon.org/">phpLogCon</A>
+<P>This documentation is part of the <A HREF="http://loganalyzer.adiscon.com/">LogAnalyzer</A>
 project.<BR>Copyright &copy; 2008 by 
 <A HREF="http://www.adiscon.com/">Adiscon</A>.
 Released under the GNU GPL version 1.2 or higher.</FONT></P>

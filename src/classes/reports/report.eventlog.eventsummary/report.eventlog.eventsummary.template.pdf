@@ -101,7 +101,7 @@
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="mainfooter">
 <tr>
-	<td align="center" class="line0" valign="top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2009) &nbsp;<a href="http://www.phplogcon.org" target="_blank">Report</A> Version {report_version} </td>
+	<td align="center" class="line0" valign="top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2009) &nbsp;<a href="http://loganalyzer.adiscon.com" target="_blank">Report</A> Version {report_version} </td>
 	<td align="center" class="line1" valign="top"><B>Partners:</B>&nbsp;<a href="http://www.rsyslog.com" target="_blank">Rsyslog</a> | &nbsp;<a href="http://www.winsyslog.com" target="_blank">WinSyslog</a></td>
 </tr>
 <!-- IF ShowPageRenderStats="true" -->

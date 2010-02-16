@@ -1,8 +1,8 @@
 
- phpLogCon Installation help
+ LogAnalyzer Installation help
  ----------------------------------
 
- To install phpLogCon, you will need:
+ To install LogAnalyzer, you will need:
 
  * Apache or IIS Webserver
  * PHP5 
@@ -25,15 +25,15 @@
  Installation in Detail
  ----------------------
 
-  1. Upload all files from the phplogcon/src/ folder to you webserver. 
+  1. Upload all files from the loganalyzer/src/ folder to you webserver. 
      The other files are not needed on the webserver. 
 
-  2. If your webserver has write access to the phplogcon folder, 
+  2. If your webserver has write access to the LogAnalyzer folder, 
      you can skip the following step: 
      
          Upload the scripts configure.sh and secure.sh from the 
          contrib folder to your webserver, into the same folder 
-	 where you uploaded the other phplogcon files into. Then set 
+	 where you uploaded the other LogAnalyzer files into. Then set 
 	 the execution flag to them (chmod +x configure.sh secure.sh). 
          
          Now run ./configure.sh, this will create a blank config.php, 
@@ -41,9 +41,9 @@
          
          You can of course do this manually if you want. 
 
-  3. Now open your phplogcon installation in your favourite webbrowser,
+  3. Now open your LogAnalyzer installation in your favourite webbrowser,
      you will see an error, and you will be pointed to the installation 
-     script. The install script will guide you through the phplogcon 
+     script. The install script will guide you through the LogAnalyzer 
      installation, just follow the instructions.
  
   3.1 Step 1 - Prerequisites Beginning of installation / welcome site
@@ -61,7 +61,7 @@
 
 	       - Number of syslog messages per page = 50 (default)
 	       This is the number of syslog messages displayed on each page. 
-	       You can increase the value (makes phpLogCon slower) or decrease
+	       You can increase the value (makes LogAnalyzer slower) or decrease
 	       the value (makes it faster). 
 
 	       - Message character limit for the main view = 80 (default)
@@ -97,7 +97,7 @@
 	       information:
 
 	       - Logline Type = Syslog / Rsyslog (default) or Adiscon WinSyslog
-	       This tells phpLogCon, how the lines look like. This is 
+	       This tells LogAnalyzer, how the lines look like. This is 
 	       necessary for show the log messages properly.
 
 	       - Syslog File = /var/log/syslog (default)
@@ -116,7 +116,7 @@
 	       This is the host, where the database is located. By default this
 	       is localhost. You can specify any other host if necessary.
 
-	       - Database Name = phplogcon (default)
+	       - Database Name = loganalyzer (default)
 	       The name of the database you want to use.
 
 	       - Database Tablename = systemevents (default)
@@ -156,7 +156,7 @@
 	       This is the host, where the database is located. By default this
 	       is localhost. You can specify any other host if necessary.
 
-	       - Database Name = phplogcon (default)
+	       - Database Name = loganalyzer (default)
 	       The name of the database you want to use.
 
 	       - Database Tablename = systemevents (default)
@@ -182,7 +182,7 @@
 
 
   4. If everything went right, you should see syslog messages already 
-     in your phplogcon installation. You can now remove the install.php 
+     in your LogAnalyzer installation. You can now remove the install.php 
      script now. 
 
 
@@ -201,8 +201,8 @@ to too many users.
 Note on MySQL Databases
 --------------------------------
  
-phpLogCon does support using a MySQL database as syslog source. 
-PhpLogCon supports Adiscon's MonitorWare database schema. The schema
+LogAnalyzer does support using a MySQL database as syslog source. 
+LogAnalyzer supports Adiscon's MonitorWare database schema. The schema
 used by php-syslog-ng is also partly supported. That schema, however, is
 somewhat inefficient in that it stores facility and severity codes as
 textual values. We do not currently convert these values back to their
