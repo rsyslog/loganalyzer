@@ -966,6 +966,10 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $szFieldDisplayName . " '" . $fieldGridItem['fieldvalue'] . "'", 
 			'IconSource' => $content['MENU_NETWORK']
 			);
+
+		// Enable SearchOnline Icon
+		$fieldGridItem['searchonline'] = true; 
+		$fieldGridItem['SearchOnlineUrl'] = 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue; 
 	}
 	
 	// Search for links within the fieldcontent!
