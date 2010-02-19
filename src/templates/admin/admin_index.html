@@ -6,6 +6,22 @@
 </tr>
 </table>
 <br><br>
+
+<!-- IF isupdateavailable="true" -->
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:400px">
+		<div class="PriorityError">{LN_UPDATE_AVAILABLE}</div>
+		<p>
+		{LN_UPDATE_INSTALLEDVER} {BUILDNUMBER}
+		<br>
+		{LN_UPDATE_AVAILABLEVER} {UPDATEVERSION}
+		<br>
+		<a href="{isupdateavailable_updatelink}" target="_blank">{LN_UPDATE_LINK}</a>
+		</p>
+	</div>
+</center>
+</br>
+<!-- ENDIF isupdateavailable="true" -->
 	
 <form action="" method="post">
 	<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="750" align="center">

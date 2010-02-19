@@ -98,6 +98,18 @@ function InitUserSession()
 				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
 			// --- 
 
+			if ( isset($_SESSION['UPDATEAVAILABLE']) && $_SESSION['UPDATEAVAILABLE'] ) 
+			{
+				// Check Version numbers again to avoid update notification if update was done during meantime!
+				if ( CompareVersionNumbers($content['BUILDNUMBER'], $_SESSION['UPDATEVERSION']) )
+				{
+					$content['UPDATEVERSION'] = $_SESSION['UPDATEVERSION'];
+					$content['isupdateavailable'] = true;
+					$content['isupdateavailable_updatelink'] = $_SESSION['UPDATELINK'];
+					$content['UPDATE_AVAILABLETEXT'] = GetAndReplaceLangStr($content['LN_UPDATE_AVAILABLETEXT'], $content['BUILDNUMBER'], $_SESSION['UPDATEVERSION']);
+				}
+			}
+
 			// --- Extracheck for available database updates!
 			if ( isset($content['database_forcedatabaseupdate']) && $content['database_forcedatabaseupdate'] == "yes" && !defined('IS_UPRGADEPAGE') )
 				RedirectToDatabaseUpgrade();
@@ -178,7 +190,7 @@ function CheckUserLogin( $username, $password )
 				if ( isset($content['SESSION_GROUPIDS']) ) 
 					$content['SESSION_GROUPIDS'] .= ", " . $myrows[$i]['groupid'];
 				else
-					$content['SESSION_GROUPIDS'] .= $myrows[$i]['groupid'];
+					$content['SESSION_GROUPIDS'] = $myrows[$i]['groupid'];
 			}
 		}
 
@@ -195,6 +207,32 @@ function CheckUserLogin( $username, $password )
 		if ( isset($content['database_forcedatabaseupdate']) && $content['database_forcedatabaseupdate'] == "yes" && !defined('IS_UPRGADEPAGE') )
 			RedirectToDatabaseUpgrade();
 		// ---
+
+		// --- Now we check for an PhpLogCon Update
+		$myHandle = @fopen($content['UPDATEURL'], "r");
+		
+		if( $myHandle ) 
+		{
+			$myBuffer = "";
+			while (!feof ($myHandle))
+				$myBuffer .= fgets($myHandle, 4096);
+			fclose($myHandle);
+
+			$myLines = explode("\n", $myBuffer);
+
+			// Compare Version numbers!
+			if ( CompareVersionNumbers($content['BUILDNUMBER'], $myLines[0]) )
+			{	
+				// True means new version available!
+				$_SESSION['UPDATEAVAILABLE'] = true;
+				$_SESSION['UPDATEVERSION'] = $myLines[0];
+				if ( isset($myLines[1]) ) 
+					$_SESSION['UPDATELINK'] = $myLines[1];
+				else
+					$_SESSION['UPDATELINK'] = "http://www.phplogcon.org";
+			}
+		}
+		// --- 
 
 		// Success !
 		return true;
@@ -279,6 +317,28 @@ function GetGroupsForSelectfield()
 	else
 		return false;
 	// ---
+}
+
+// Helper function to compare versions
+function CompareVersionNumbers( $oldVer, $newVer )
+{
+	// Split version numbers
+	$currentVersion = explode(".", $oldVer);
+	$newVersion = explode(".", $newVer);
+
+	// Check if the format is correct!
+	if ( count($newVersion) != 3 )
+		return false;
+
+	// check for update
+	if		( isset($newVersion[0]) && $newVersion[0] > $currentVersion[0] )
+		return true;
+	else if	( isset($newVersion[1]) && $newVersion[0] == $currentVersion[0] && $newVersion[1] > $currentVersion[1] )
+		return true;
+	else if ( isset($newVersion[2]) && $newVersion[0] == $currentVersion[0] && $newVersion[1] == $currentVersion[1] && $newVersion[2] > $currentVersion[2] )
+		return true;
+	else
+		return false;
 }
 
 
