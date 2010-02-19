@@ -55,6 +55,10 @@ $content['LN_GEN_GROUPONLYNAME'] = "Gruppe '%1'";
 $content['LN_ADMIN_POPUPHELP'] = "Details f%uuml;r diese Funktion";
 $content['LN_ADMIN_DBSTATS'] = "Anzeige der Datenbankinformationen.";
 $content['LN_ADMIN_CLEARDATA'] = "Wenn Sie alte Datenbankeintr&auml;ge l&ouml;schen wollen, benutzen Sie diese Funktion.";
+$content['LN_UPDATE_AVAILABLE'] = "Update available";
+$content['LN_UPDATE_INSTALLEDVER'] = "Installed version: ";
+$content['LN_UPDATE_AVAILABLEVER'] = "Available version: ";
+$content['LN_UPDATE_LINK'] = "Click here to get the update";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Globale Anzeige Optionen";
