@@ -27,6 +27,7 @@
 			<td align="center" width="50" class="cellmenu1"><b>{LN_USER_ID}</b></td>
 			<td align="center" width="300" class="cellmenu1"><b>{LN_USER_NAME}</b></td>
 			<td align="center" width="100" class="cellmenu1"><b>{LN_USER_ISADMIN}</b></td>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_USER_ISREADONLY}</b></td>
 			<td align="center" width="200" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN USERS -->
@@ -34,6 +35,7 @@
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
 			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?op=edit&id={ID}">{username}</a></td>
 			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?miniop=setisadmin&id={ID}&newval={set_isadmin}"><img src="{is_isadmin_string}" width="16"></a></td>
+			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?miniop=setisreadonly&id={ID}&newval={set_isreadonly}"><img src="{is_readonly_string}" width="16"></a></td>
 			<td align="center" class="{cssclass}">
 				&nbsp;<a href="{BASEPATH}admin/users.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_USER_EDIT}"></a>
 				&nbsp;<a href="{BASEPATH}admin/users.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_USER_DELETE}"></a>
@@ -41,7 +43,7 @@
 		</tr>
 		<!-- END USERS -->
 		<tr>
-			<td align="center" colspan="4" class="line0"><b><a href="{BASEPATH}admin/users.php?op=add"><img src="{MENU_ADDUSER}" title="{LN_USER_ADD}">&nbsp;{LN_USER_ADD}</a></b></td>
+			<td align="center" colspan="5" class="line0"><b><a href="{BASEPATH}admin/users.php?op=add"><img src="{MENU_ADDUSER}" title="{LN_USER_ADD}">&nbsp;{LN_USER_ADD}</a></b></td>
 		</tr>
 		</table>
 <!-- ENDIF LISTUSERS="true" -->
@@ -67,6 +69,10 @@
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_ISADMIN}</b></td>
 				<td align="right" class="line1"><input type="checkbox" name="isadmin" value="yes" {CHECKED_ISADMIN}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_ISREADONLY}</b></td>
+				<td align="right" class="line1"><input type="checkbox" name="isreadonly" value="yes" {CHECKED_ISREADONLY}></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">

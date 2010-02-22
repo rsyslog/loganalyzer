@@ -58,46 +58,83 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
 	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
 
-if ( isset($_GET['miniop']) && $_GET['miniop'] == "setisadmin" ) 
+if ( isset($_GET['miniop']) ) 
 {
 	if ( isset($_GET['id']) && isset($_GET['newval']) )
 	{
-		//PreInit these values 
-		$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
-		$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+		if ( $_GET['miniop'] == "setisadmin" ) 
+		{
+			//PreInit these values 
+			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
+			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
 
-		// --- handle special case
-		if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 0)
-		{
-			// This will print an additional secure check which the user needs to confirm and exit the script execution.
-			PrintSecureUserCheck( $content['LN_USER_WARNREMOVEADMIN'], $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+			// --- handle special case
+			if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 0)
+			{
+				// This will print an additional secure check which the user needs to confirm and exit the script execution.
+				PrintSecureUserCheck( $content['LN_USER_WARNREMOVEADMIN'], $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+			}
+			// ---
+			
+			// Perform SQL Query!
+			$sqlquery = "SELECT * " . 
+						" FROM " . DB_USERS . 
+						" WHERE ID = " . $content['USERID'];
+			$result = DB_Query($sqlquery);
+			$myuser = DB_GetSingleRow($result, true);
+			if ( isset($myuser['username']) )
+			{
+				// Update is_admin setting!
+				$result = DB_Query("UPDATE " . DB_USERS . " SET 
+					is_admin = $iNewVal 
+					WHERE ID = " . $content['USERID']);
+				DB_FreeQuery($result);
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+			}
 		}
-		// ---
-		
-		// Perform SQL Query!
-		$sqlquery = "SELECT * " . 
-					" FROM " . DB_USERS . 
-					" WHERE ID = " . $content['USERID'];
-		$result = DB_Query($sqlquery);
-		$myuser = DB_GetSingleRow($result, true);
-		if ( isset($myuser['username']) )
+		else if ( $_GET['miniop'] == "setisreadonly" ) 
 		{
-			// Update is_admin setting!
-			$result = DB_Query("UPDATE " . DB_USERS . " SET 
-				is_admin = $iNewVal 
-				WHERE ID = " . $content['USERID']);
-			DB_FreeQuery($result);
-		}
-		else
-		{
-			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+			//PreInit these values 
+			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
+			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+
+			// --- handle special case
+			if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 1)
+			{
+				// This will print an additional secure check which the user needs to confirm and exit the script execution.
+				PrintSecureUserCheck( $content['LN_USER_WARNRADYONLYADMIN'], $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+			}
+			// ---
+			
+			// Perform SQL Query!
+			$sqlquery = "SELECT * " . 
+						" FROM " . DB_USERS . 
+						" WHERE ID = " . $content['USERID'];
+			$result = DB_Query($sqlquery);
+			$myuser = DB_GetSingleRow($result, true);
+			if ( isset($myuser['username']) )
+			{
+				// Update is_admin setting!
+				$result = DB_Query("UPDATE " . DB_USERS . " SET 
+					is_readonly = $iNewVal 
+					WHERE ID = " . $content['USERID']);
+				DB_FreeQuery($result);
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_IDNOTFOUND'], $content['USERID'] );
+			}
 		}
 	}
 	else
 	{
 		$content['ISERROR'] = true;
-		$content['ERROR_MSG'] = "Error setting is_admin flat, invalid ID, User not found";
+		$content['ERROR_MSG'] = $content['LN_USER_ERROR_SETTINGFLAG'];
 	}
 }
 
@@ -145,6 +182,11 @@ if ( isset($_GET['op']) )
 				else
 					$content['CHECKED_ISADMIN'] = "";
 
+				// Set is_readonly flag
+				if ( $myuser['is_readonly'] == 1 ) 
+					$content['CHECKED_ISREADONLY'] = "checked";
+				else
+					$content['CHECKED_ISREADONLY'] = "";
 			}
 			else
 			{
@@ -228,7 +270,7 @@ if ( isset($_POST['op']) )
 	if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
 	if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }
 	if ( isset ($_POST['isadmin']) ) { $content['ISADMIN'] = 1; } else {$content['ISADMIN'] = 0; }
-
+	if ( isset ($_POST['isreadonly']) ) { $content['ISREADONLY'] = 1; } else {$content['ISREADONLY'] = 0; }
 
 	// Check mandotary values
 	if ( $content['USERNAME'] == "" )
@@ -265,10 +307,11 @@ if ( isset($_POST['op']) )
 					$content['PASSWORDHASH'] = md5( $content['PASSWORD1'] );
 
 					// Add new User now!
-					$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin) 
+					$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin, is_readonly) 
 					VALUES ('" . $content['USERNAME'] . "', 
 							'" . $content['PASSWORDHASH'] . "',
-							" . $content['ISADMIN'] . ")");
+							" . $content['ISADMIN'] . ", 
+							" . $content['ISREADONLY'] . ")");
 					DB_FreeQuery($result);
 					
 					// Do the final redirect
@@ -306,7 +349,8 @@ if ( isset($_POST['op']) )
 						$result = DB_Query("UPDATE " . DB_USERS . " SET 
 							username = '" . $content['USERNAME'] . "', 
 							password = '" . $content['PASSWORDHASH'] . "', 
-							is_admin = " . $content['ISADMIN'] . "
+							is_admin = " . $content['ISADMIN'] . ", 
+							is_readonly = " . $content['ISREADONLY'] . "
 							WHERE ID = " . $content['USERID']);
 						DB_FreeQuery($result);
 					}
@@ -316,7 +360,8 @@ if ( isset($_POST['op']) )
 					// Edit the User now!
 					$result = DB_Query("UPDATE " . DB_USERS . " SET 
 						username = '" . $content['USERNAME'] . "', 
-						is_admin = " . $content['ISADMIN'] . "
+						is_admin = " . $content['ISADMIN'] . ", 
+						is_readonly = " . $content['ISREADONLY'] . "
 						WHERE ID = " . $content['USERID']);
 					DB_FreeQuery($result);
 				}
@@ -336,7 +381,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// Read all Serverentries
 	$sqlquery = "SELECT ID, " . 
 				" username, " . 
-				" is_admin " . 
+				" is_admin, " . 
+				" is_readonly " . 
 				" FROM " . DB_USERS . 
 				" ORDER BY ID ";
 	$result = DB_Query($sqlquery);
@@ -345,7 +391,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// --- Process Users
 	for($i = 0; $i < count($content['USERS']); $i++)
 	{
-		// --- Set Image for IsClanMember
+		// --- Set Image for IsAdmin
 		if ( $content['USERS'][$i]['is_admin'] == 1 ) 
 		{
 			$content['USERS'][$i]['is_isadmin_string'] = $content['MENU_SELECTION_ENABLED'];
@@ -355,6 +401,19 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		{
 			$content['USERS'][$i]['is_isadmin_string'] = $content['MENU_SELECTION_DISABLED'];
 			$content['USERS'][$i]['set_isadmin'] = 1;
+		}
+		// ---
+
+		// --- Set Image for IsReadonly
+		if ( $content['USERS'][$i]['is_readonly'] == 1 ) 
+		{
+			$content['USERS'][$i]['is_readonly_string'] = $content['MENU_SELECTION_ENABLED'];
+			$content['USERS'][$i]['set_isreadonly'] = 0;
+		}
+		else
+		{
+			$content['USERS'][$i]['is_readonly_string'] = $content['MENU_SELECTION_DISABLED'];
+			$content['USERS'][$i]['set_isreadonly'] = 1;
 		}
 		// ---
 

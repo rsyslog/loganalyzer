@@ -130,6 +130,10 @@ $content['LN_USER_ADDEDIT'] = "Add/Edit User";
 $content['LN_USER_WARNREMOVEADMIN'] = "You are about to revoke your own administrative priviledges. Are you sure to remove your admin status?";
 $content['LN_USER_WARNDELETEUSER'] = "Are you sure that you want to delete the User '%1'? All his personal settings will be deleted as well.";
 $content['LN_USER_ERROR_INVALIDSESSIONS'] = "Invalid User Session.";
+$content['LN_USER_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ID or User not found";
+$content['LN_USER_WARNRADYONLYADMIN'] = "You are about to set your account to readonly! This will prevent you from changing any settings! Are you sure that you want to proceed?";
+$content['LN_USER_ISREADONLY'] = "Readonly User?";
+$content['LN_USER_'] = "";
 $content['LN_USER_'] = "";
 
 // Group center
