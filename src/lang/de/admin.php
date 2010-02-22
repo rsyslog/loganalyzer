@@ -360,6 +360,8 @@ $content['LN_PARSERS_WARNREMOVE'] = "Sie sind dabei die ben&ouml;tigten Felder d
 $content['LN_PARSERS_ERROR_HASBEENREMOVED'] = "Alle Einstellungen ('%2' benutzerdefinierte Felder) f&uuml;r den Meldungs Parser '%1' wurden entfernt. ";
 $content['LN_PARSERS_ERROR_HASBEENADDED'] = "Alle erforderlichen Einstellungen ('%2' benutzerdefinierte Felder) f&uuml;r den Meldungs Parser '%1' wurden hinzugef&uuml;gt. ";
 $content['LN_PARSERS_ERROR_NOFIELDS'] = "Der Meldungs Parser '%1' ben&ouml;tigt keine benutzerdefinierten Felder.";
+$content['LN_PARSERSMENU_LIST'] = "List installed Message Parsers";
+$content['LN_PARSERS_ONLINELIST'] = "All Available Parsers";
 $content['LN_PARSERS_'] = "";
 
 // Command Line stuff
