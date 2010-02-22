@@ -69,6 +69,14 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 // --- 
 
 // --- BEGIN Custom Code
+
+// --- Set Helpervariable for non-ADMIN users
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+	$content['READONLY_ISUSERONLY'] = "disabled"; 
+else
+	$content['READONLY_ISUSERONLY'] = ""; 
+// --- 
+
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "add") 
@@ -86,6 +94,14 @@ if ( isset($_GET['op']) )
 		$content['userid'] = null;
 		$content['CHECKED_ISUSERONLY'] = "";
 		$content['SEARCHID'] = "";
+
+		// --- Can only create a USER source!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+		{
+			$content['userid'] = $content['SESSION_USERID']; 
+			$content['CHECKED_ISUSERONLY'] = "checked"; 
+		}
+		// --- 
 		
 		// --- Check if groups are available
 		$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -116,11 +132,17 @@ if ( isset($_GET['op']) )
 			{
 				$content['SEARCHID'] = $mysearch['ID'];
 				$content['DisplayName'] = $mysearch['DisplayName'];
+				$content['userid'] = $mysearch['userid'];
 				$content['SearchQuery'] = $mysearch['SearchQuery'];
-				if ( $mysearch['userid'] != null )
+				if ( $content['userid'] != null )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
+
+				// --- Can only EDIT own views!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 && $content['userid'] == NULL ) 
+					DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWEDTOEDIT'] );
+				// --- 
 				
 				// --- Check if groups are available
 				$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -215,11 +237,20 @@ if ( isset($_POST['op']) )
 	} 
 	else 
 	{
-		$content['userid'] = "null"; 
-		if ( isset ($_POST['groupid']) && $_POST['groupid'] != -1 ) 
-			$content['groupid'] = intval($_POST['groupid']); 
-		else 
-			$content['groupid'] = "null";
+		// --- Can only create a USER source!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+		{
+			$content['userid'] = $content['SESSION_USERID']; 
+			$content['groupid'] = "null"; 
+		}
+		else
+		{
+			$content['userid'] = "null"; 
+			if ( isset ($_POST['groupid']) && $_POST['groupid'] != -1 ) 
+				$content['groupid'] = intval($_POST['groupid']); 
+			else 
+				$content['groupid'] = "null";
+		}
 	}
 
 	// --- Check mandotary values
