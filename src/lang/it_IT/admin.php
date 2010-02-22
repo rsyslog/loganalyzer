@@ -104,6 +104,7 @@ $content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&g
 $content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
 $content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional phpLogCon Logo URL. Leave empty to use the default one.";
+$content['LN_ADMIN_ERROR_NOTALLOWEDTOEDIT'] = "You are not allowed to edit this configuration item.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

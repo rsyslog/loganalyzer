@@ -61,6 +61,13 @@ IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // Init helper variable to empty string
 $content['FormUrlAddOP'] = "";
 
+// --- Set Helpervariable for non-ADMIN users
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+	$content['READONLY_ISUSERONLY'] = "disabled"; 
+else
+	$content['READONLY_ISUSERONLY'] = ""; 
+// --- 
+
 if ( isset($_GET['op']) )
 {
 	if ($_GET['op'] == "add") 
@@ -72,10 +79,18 @@ if ( isset($_GET['op']) )
 		
 		//PreInit these values 
 		$content['DisplayName'] = "";
-		$content['userid'] = null;
-		$content['CHECKED_ISUSERONLY'] = "";
 		$content['VIEWID'] = "";
 		$content['FormUrlAddOP'] = "?op=add";
+		$content['userid'] = null;
+		$content['CHECKED_ISUSERONLY'] = "";
+
+		// --- Can only create a USER source!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+		{
+			$content['userid'] = $content['SESSION_USERID']; 
+			$content['CHECKED_ISUSERONLY'] = "checked"; 
+		}
+		// --- 
 
 		// --- Check if groups are available
 		$content['SUBGROUPS'] = GetGroupsForSelectfield();
@@ -115,6 +130,11 @@ if ( isset($_GET['op']) )
 					$content['CHECKED_ISUSERONLY'] = "checked";
 				else
 					$content['CHECKED_ISUSERONLY'] = "";
+
+				// --- Can only EDIT own views!
+				if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 && $content['userid'] == NULL ) 
+					DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWEDTOEDIT'] );
+				// --- 
 
 				// --- Check if groups are available
 				$content['SUBGROUPS'] = GetGroupsForSelectfield();
