@@ -52,8 +52,25 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
-// --- BEGIN Custom Code
+// --- Deny if User is READONLY!
+if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] == 1 )
+{
+	if (	isset($_POST['op']) ||
+			(
+				isset($_GET['op']) && 
+				(
+					$_GET['op'] == "initreport" || 
+					$_GET['op'] == "removereport" ||
+					$_GET['op'] == "addsavedreport" ||
+					$_GET['op'] == "removesavedreport"
+				)
+			)	
+		)
+		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_READONLY'] );
+}
+// --- 
 
+// --- BEGIN Custom Code
 // Hardcoded settings
 define('URL_ONLINEREPORTS', 'http://tools.adiscon.net/listreports.php');
 $content['OPTIONAL_TITLE'] = "";

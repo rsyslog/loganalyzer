@@ -105,6 +105,7 @@ $content['LN_GEN_INJECTHTMLHEADER'] = "Inject this html code into the &lt;head&g
 $content['LN_GEN_INJECTBODYHEADER'] = "Inject this html code at the beginning of the &lt;body&gt; area.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Inject this html code at the end &lt;body&gt; area.";
 $content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optional LogAnalyzer Logo URL. Leave empty to use the default one.";
+$content['LN_ADMIN_ERROR_READONLY'] = "This is a READONLY User, you are not allowed to perform any change operations.";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";
@@ -133,7 +134,6 @@ $content['LN_USER_ERROR_INVALIDSESSIONS'] = "Invalid User Session.";
 $content['LN_USER_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ID or User not found";
 $content['LN_USER_WARNRADYONLYADMIN'] = "You are about to set your account to readonly! This will prevent you from changing any settings! Are you sure that you want to proceed?";
 $content['LN_USER_ISREADONLY'] = "Readonly User?";
-$content['LN_USER_'] = "";
 $content['LN_USER_'] = "";
 
 // Group center

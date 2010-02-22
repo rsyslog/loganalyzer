@@ -103,6 +103,7 @@ $content['LN_GEN_INJECTHTMLHEADER'] = "Voranstellen von HTML Code in &lt;head&gt
 $content['LN_GEN_INJECTBODYHEADER'] = "Voranstellen von HTML Code am Anfang des &lt;body&gt; Bereichs.";
 $content['LN_GEN_INJECTBODYFOOTER'] = "Voranstellen von HTML Code Am Ende des &lt;body&gt; Bereichs.";
 $content['LN_ADMIN_PHPLOGCON_LOGOURL'] = "Optionale LogAnalyzer-Logo-URL. Bitte f&uuml;r das Standard-Logo leer lassen.";
+$content['LN_ADMIN_ERROR_READONLY'] = "This is a READONLY User, you are not allowed to perform any change operations.";
 
 // User Center
 $content['LN_USER_CENTER'] = "Benutzer Optionen";

@@ -75,6 +75,7 @@ function InitUserSession()
 			$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
 			$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 			$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
+			$content['SESSION_ISREADONLY'] = $_SESSION['SESSION_ISREADONLY'];
 			if ( isset($_SESSION['SESSION_GROUPIDS']) )
 				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
 
@@ -170,11 +171,17 @@ function CheckUserLogin( $username, $password )
 		$_SESSION['SESSION_USERNAME'] = $username;
 		$_SESSION['SESSION_USERID'] = $myrow['ID'];
 		$_SESSION['SESSION_ISADMIN'] = $myrow['is_admin'];
+		// Check Readonly setting
+		if ( $content['database_installedversion'] > 8 )
+			$_SESSION['SESSION_ISREADONLY'] = $myrow['is_readonly'];
+		else
+			$_SESSION['SESSION_ISREADONLY'] = false; 
 
 		$content['SESSION_LOGGEDIN'] = $_SESSION['SESSION_LOGGEDIN'];
 		$content['SESSION_USERNAME'] = $_SESSION['SESSION_USERNAME'];
 		$content['SESSION_USERID'] = $_SESSION['SESSION_USERID'];
 		$content['SESSION_ISADMIN'] = $_SESSION['SESSION_ISADMIN'];
+		$content['SESSION_ISREADONLY'] = $_SESSION['SESSION_ISREADONLY'];
 
 		// --- Read Groupmember ship for the user!
 		$sqlquery = "SELECT " . 

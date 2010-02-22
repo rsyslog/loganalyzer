@@ -52,6 +52,22 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
+// --- Deny if User is READONLY!
+if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] == 1 )
+{
+	if (	isset($_POST['op']) ||
+			(
+				isset($_GET['op']) && 
+				(
+					$_GET['op'] == "add" || 
+					$_GET['op'] == "delete" 
+				)
+			)	
+		)
+		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_READONLY'] );
+}
+// --- 
+
 // --- BEGIN Custom Code
 if ( isset($_GET['op']) )
 {
