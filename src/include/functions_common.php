@@ -67,7 +67,7 @@ $LANG = "en";		// Default language
 
 // Default Template vars
 $content['BUILDNUMBER'] = "2.8.0";
-$content['UPDATEURL'] = "http://www.phplogcon.org/updatecheck/version.txt";
+$content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
