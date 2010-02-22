@@ -305,11 +305,20 @@ if ( isset($_POST['op']) )
 	} 
 	else 
 	{
-		$content['userid'] = "null"; 
-		if ( isset ($_POST['groupid']) && $_POST['groupid'] != -1 ) 
-			$content['groupid'] = intval($_POST['groupid']); 
-		else 
-			$content['groupid'] = "null";
+		// --- Can only create a USER source!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+		{
+			$content['userid'] = $content['SESSION_USERID']; 
+			$content['groupid'] = "null"; 
+		}
+		else
+		{
+			$content['userid'] = "null"; 
+			if ( isset ($_POST['groupid']) && $_POST['groupid'] != -1 ) 
+				$content['groupid'] = intval($_POST['groupid']); 
+			else 
+				$content['groupid'] = "null";
+		}
 	}
 
 	// --- Check mandotary values
