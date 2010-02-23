@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "2.8.0";
+$content['BUILDNUMBER'] = "2.8.1";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "phpLogCon :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1481,6 +1481,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "MiscEnableGzipCompression", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "SuppressDuplicatedMessages", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InlineOnlineSearchIcons", true, null, null,$bForceStripSlahes );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewStringCharacterLimit", true, null, null,$bForceStripSlahes );
@@ -1524,6 +1525,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscEnableGzipCompression", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SuppressDuplicatedMessages", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "InlineOnlineSearchIcons", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );

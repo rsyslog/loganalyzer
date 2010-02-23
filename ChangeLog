@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------
+Version 2.8.1 (v2-stable), 2010-02-23
+- Added Inline searchicon, will be visible in each online 
+  searchable field. Can be disabled in admin center.
+- Added Updatecheck which will be performed during login only, so once per
+  session. If a newer Version is available, you will be notified in 
+  Admin Center.
+- Secured Views, Sources, Searches and Charts Admin access from users 
+  without admin access. 
+- Settings will be remembered now when configuring columns in Views 
+  Admin Panel.
+- Normal users cannot init or remove message parsers anymore
+- Added Time-extension on search page (send by Sergey Sireskin). 
+---------------------------------------------------------------------------
 Version 2.8.0 (v2-stable), 2010-01-14
 - Merged previous Beta branch into Stable branch and set 
   new version number 2.8
