@@ -90,14 +90,59 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 					$filters['filter_daterange_to_month'] = intval($_GET['filter_daterange_to_month']);
 				if ( isset($_GET['filter_daterange_to_day']) ) 
 					$filters['filter_daterange_to_day'] = intval($_GET['filter_daterange_to_day']);
+
+				// Read range values and prepend leading zeroes for values < 10
+				if ( isset($_GET['filter_daterange_from_hour']) )
+				{
+					$filters['filter_daterange_from_hour'] = intval($_GET['filter_daterange_from_hour']);
+					if ($filters['filter_daterange_from_hour'] < 10)
+					    $filters['filter_daterange_from_hour'] = '0' . $filters['filter_daterange_from_hour'];
+				}
+				if ( isset($_GET['filter_daterange_from_minute']) )
+				{
+					$filters['filter_daterange_from_minute'] = intval($_GET['filter_daterange_from_minute']);
+					if ($filters['filter_daterange_from_minute'] < 10)
+					    $filters['filter_daterange_from_minute'] = '0' . $filters['filter_daterange_from_minute'];
+				}
+				if ( isset($_GET['filter_daterange_from_second']) )
+				{
+					$filters['filter_daterange_from_second'] = intval($_GET['filter_daterange_from_second']);
+					if ($filters['filter_daterange_from_second'] < 10)
+					    $filters['filter_daterange_from_second'] = '0' . $filters['filter_daterange_from_second'];
+				}
+				if ( isset($_GET['filter_daterange_to_hour']) )
+				{
+					$filters['filter_daterange_to_hour'] = intval($_GET['filter_daterange_to_hour']);
+					if ($filters['filter_daterange_to_hour'] < 10)
+					    $filters['filter_daterange_to_hour'] = '0' . $filters['filter_daterange_to_hour'] = '0';
+				}
+				if ( isset($_GET['filter_daterange_to_minute']) )
+				{
+					$filters['filter_daterange_to_minute'] = intval($_GET['filter_daterange_to_minute']);
+					if ($filters['filter_daterange_to_minute'] < 10)
+					    $filters['filter_daterange_to_minute'] = '0' . $filters['filter_daterange_to_minute'];
+				}
+				if ( isset($_GET['filter_daterange_to_second']) )
+				{
+					$filters['filter_daterange_to_second'] = intval($_GET['filter_daterange_to_second']);
+					if ($filters['filter_daterange_to_second'] < 10)
+					    $filters['filter_daterange_to_second'] = '0' . $filters['filter_daterange_to_second'] = '0';
+				}
 				
 				// Append to searchstring
 				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" . 
 														$filters['filter_daterange_from_month'] . "-" . 
-														$filters['filter_daterange_from_day'] . "T00:00:00 ";
+														$filters['filter_daterange_from_day'] . "T" . 
+														$filters['filter_daterange_from_hour'] . ":" . 
+														$filters['filter_daterange_from_minute'] . ":" . 
+														$filters['filter_daterange_from_second'] . " ";
+
 				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
 														$filters['filter_daterange_to_month'] . "-" . 
-														$filters['filter_daterange_to_day'] . "T23:59:59 ";
+														$filters['filter_daterange_to_day'] . "T" . 
+														$filters['filter_daterange_to_hour'] . ":" . 
+														$filters['filter_daterange_to_minute'] . ":" . 
+														$filters['filter_daterange_to_second'] . " ";
 
 			}
 			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )

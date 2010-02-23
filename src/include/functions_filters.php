@@ -78,6 +78,13 @@ function InitFilterHelpers()
 		$content['months'][] = $i;
 	for ( $i = 1; $i <= 31; $i++ )
 		$content['days'][] = $i;
+	// Init Hour, minute and second array
+	for ( $i = 0; $i <= 23; $i++ )
+		$content['hours'][] = ($i < 10) ? '0' . $i : $i;
+	for ( $i = 0; $i <= 59; $i++ )
+		$content['minutes'][] = ($i < 10) ? '0' . $i : $i;
+	for ( $i = 0; $i <= 59; $i++ )
+		$content['seconds'][] = ($i < 10) ? '0' . $i : $i;
 
 	// Init filter_daterange_from_year
 	if ( isset($_SESSION['filter_daterange_from_year']) ) 
@@ -120,6 +127,48 @@ function InitFilterHelpers()
 	else
 		$filters['filter_daterange_to_day'] = $tomorrowDay;
 	FillDateRangeArray($content['days'], "filter_daterange_to_day_list", "filter_daterange_to_day");
+
+	// Init filter_daterange_from_hour
+	if ( isset($_SESSION['filter_daterange_from_hour']) ) 
+		$filters['filter_daterange_from_hour'] = intval($_SESSION['filter_daterange_from_hour']);
+	else
+		$filters['filter_daterange_from_hour'] = 0;
+	FillDateRangeArray($content['hours'], "filter_daterange_from_hour_list", "filter_daterange_from_hour");
+
+	// Init filter_daterange_from_minute
+	if ( isset($_SESSION['filter_daterange_from_minute']) ) 
+		$filters['filter_daterange_from_minute'] = intval($_SESSION['filter_daterange_from_minute']);
+	else
+		$filters['filter_daterange_from_minute'] = 0;
+	FillDateRangeArray($content['minutes'], "filter_daterange_from_minute_list", "filter_daterange_from_minute");
+
+	// Init filter_daterange_from_second
+	if ( isset($_SESSION['filter_daterange_from_second']) ) 
+		$filters['filter_daterange_from_second'] = intval($_SESSION['filter_daterange_from_second']);
+	else
+		$filters['filter_daterange_from_second'] = 0;
+	FillDateRangeArray($content['seconds'], "filter_daterange_from_second_list", "filter_daterange_from_second");
+
+	// Init filter_daterange_to_hour
+	if ( isset($_SESSION['filter_daterange_to_hour']) ) 
+		$filters['filter_daterange_to_hour'] = intval($_SESSION['filter_daterange_to_hour']);
+	else
+		$filters['filter_daterange_to_hour'] = 23;
+	FillDateRangeArray($content['hours'], "filter_daterange_to_hour_list", "filter_daterange_to_hour");
+
+	// Init filter_daterange_to_minute
+	if ( isset($_SESSION['filter_daterange_to_minute']) ) 
+		$filters['filter_daterange_to_minute'] = intval($_SESSION['filter_daterange_to_minute']);
+	else
+		$filters['filter_daterange_to_minute'] = 59;
+	FillDateRangeArray($content['minutes'], "filter_daterange_to_minute_list", "filter_daterange_to_minute");
+
+	// Init filter_daterange_to_second
+	if ( isset($_SESSION['filter_daterange_to_second']) ) 
+		$filters['filter_daterange_to_second'] = intval($_SESSION['filter_daterange_to_second']);
+	else
+		$filters['filter_daterange_to_second'] = 59;
+	FillDateRangeArray($content['seconds'], "filter_daterange_to_second_list", "filter_daterange_to_second");
 
 	// --- Define LASTX Array
 
