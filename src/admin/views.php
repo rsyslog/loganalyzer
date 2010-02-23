@@ -320,7 +320,7 @@ if ( isset($_POST['op']) )
 				$content['groupid'] = "null";
 		}
 	}
-
+	
 	// --- Check mandotary values
 	if ( $content['DisplayName'] == "" )
 	{
@@ -331,6 +331,26 @@ if ( isset($_POST['op']) )
 
 	if ( !isset($content['ISERROR']) ) 
 	{	
+
+		// --- Set SUBOP Helpers
+		if ( $content['userid'] == "null" )
+			$content['CHECKED_ISUSERONLY'] = "";
+		else
+			$content['CHECKED_ISUSERONLY'] = "checked";
+
+		if ( $content['ISGROUPSAVAILABLE'] && $content['groupid'] != "null" )
+		{
+			// Process All Groups
+			for($i = 0; $i < count($content['SUBGROUPS']); $i++)
+			{
+				if ( $content['SUBGROUPS'][$i]['mygroupid'] == $content['groupid'] )
+					$content['SUBGROUPS'][$i]['group_selected'] = "selected";
+				else
+					$content['SUBGROUPS'][$i]['group_selected'] = "";
+			}
+		}
+		// --- 
+
 		// Check subop's first!
 		if ( isset($_POST['subop']) )
 		{
