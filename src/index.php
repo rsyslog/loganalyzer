@@ -967,7 +967,7 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 			'IconSource' => $content['MENU_NETWORK']
 			);
 
-		if ( GetConfigSetting("InlineOnlineSearchIcons", 0, CFGLEVEL_USER) == 1 )
+		if ( GetConfigSetting("InlineOnlineSearchIcons", 1, CFGLEVEL_USER) == 1 )
 		{
 			// Enable SearchOnline Icon
 			$fieldGridItem['searchonline'] = true; 
