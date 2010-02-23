@@ -1536,6 +1536,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "MiscEnableGzipCompression", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "SuppressDuplicatedMessages", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "InlineOnlineSearchIcons", true, null, null,$bForceStripSlahes );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewStringCharacterLimit", true, null, null,$bForceStripSlahes );
@@ -1579,6 +1580,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "MiscEnableGzipCompression", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SuppressDuplicatedMessages", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "TreatNotFoundFiltersAsTrue", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "InlineOnlineSearchIcons", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "ViewMessageCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );

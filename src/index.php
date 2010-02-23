@@ -967,9 +967,12 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 			'IconSource' => $content['MENU_NETWORK']
 			);
 
-		// Enable SearchOnline Icon
-		$fieldGridItem['searchonline'] = true; 
-		$fieldGridItem['SearchOnlineUrl'] = 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue; 
+		if ( GetConfigSetting("InlineOnlineSearchIcons", 0, CFGLEVEL_USER) == 1 )
+		{
+			// Enable SearchOnline Icon
+			$fieldGridItem['searchonline'] = true; 
+			$fieldGridItem['SearchOnlineUrl'] = 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue; 
+		}
 	}
 	
 	// Search for links within the fieldcontent!

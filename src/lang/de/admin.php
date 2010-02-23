@@ -90,6 +90,9 @@ $content['LN_GEN_ACCESSDENIED'] = "Der Zugriff auf diese Funktion wurde verweige
 $content['LN_GEN_DEFVIEWS'] = "Standard Anzeige";
 $content['LN_GEN_DEFSOURCE'] = "Standard Quelle";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Doppelte Meldungen nur einmal anzeigen";
+$content['LN_GEN_TREATFILTERSTRUE'] = "Treat filters of not found fields as true";
+$content['LN_GEN_INLINESEARCHICONS'] = "Show Onlinesearch icons within fields";
+
 $content['LN_GEN_OPTIONNAME'] = "Option Name";
 $content['LN_GEN_GLOBALVALUE'] = "Globale Werte";
 $content['LN_GEN_PERSONALVALUE'] = "Pers&ouml;nliche (benutzerbezogene)Werte";

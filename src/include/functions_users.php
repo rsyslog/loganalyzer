@@ -330,8 +330,8 @@ function GetGroupsForSelectfield()
 function CompareVersionNumbers( $oldVer, $newVer )
 {
 	// Split version numbers
-	$currentVersion = explode(".", $oldVer);
-	$newVersion = explode(".", $newVer);
+	$currentVersion = explode(".", trim($oldVer) );
+	$newVersion = explode(".", trim($newVer) );
 
 	// Check if the format is correct!
 	if ( count($newVersion) != 3 )

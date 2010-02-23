@@ -91,6 +91,7 @@ $content['LN_GEN_DEFVIEWS'] = "Default selected view";
 $content['LN_GEN_DEFSOURCE'] = "Default selected source";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Suppress duplicated messages";
 $content['LN_GEN_TREATFILTERSTRUE'] = "Treat filters of not found fields as true";
+$content['LN_GEN_INLINESEARCHICONS'] = "Show Onlinesearch icons within fields";
 
 $content['LN_GEN_OPTIONNAME'] = "Option name";
 $content['LN_GEN_GLOBALVALUE'] = "Global value";
