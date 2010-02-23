@@ -139,6 +139,11 @@ if ( isset($_GET['op']) )
 	}
 	else if ($_GET['op'] == "removeparser") 
 	{
+		// --- Only if the user is an admin!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+			DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+		// ---
+
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
@@ -194,6 +199,11 @@ if ( isset($_GET['op']) )
 	}
 	else if ($_GET['op'] == "initparser") 
 	{
+		// --- Only if the user is an admin!
+		if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+			DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+		// ---
+
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 

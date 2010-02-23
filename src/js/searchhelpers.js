@@ -25,6 +25,12 @@ function toggleDatefiltervisibility(FormName)
 		toggleformelement('filter_daterange_to_year', false);
 		toggleformelement('filter_daterange_to_month', false);
 		toggleformelement('filter_daterange_to_day', false);
+		toggleformelement('filter_daterange_from_hour', false);
+		toggleformelement('filter_daterange_from_minute', false);
+		toggleformelement('filter_daterange_from_second', false);
+		toggleformelement('filter_daterange_to_hour', false);
+		toggleformelement('filter_daterange_to_minute', false);
+		toggleformelement('filter_daterange_to_second', false);
 
 		toggleformelement('filter_daterange_last_x', false);
 	}
@@ -39,6 +45,12 @@ function toggleDatefiltervisibility(FormName)
 		toggleformelement('filter_daterange_to_year', true);
 		toggleformelement('filter_daterange_to_month', true);
 		toggleformelement('filter_daterange_to_day', true);
+		toggleformelement('filter_daterange_from_hour', true);
+		toggleformelement('filter_daterange_from_minute', true);
+		toggleformelement('filter_daterange_from_second', true);
+		toggleformelement('filter_daterange_to_hour', true);
+		toggleformelement('filter_daterange_to_minute', true);
+		toggleformelement('filter_daterange_to_second', true);
 
 		toggleformelement('filter_daterange_last_x', false);
 	}
@@ -53,6 +65,12 @@ function toggleDatefiltervisibility(FormName)
 		toggleformelement('filter_daterange_to_year', false);
 		toggleformelement('filter_daterange_to_month', false);
 		toggleformelement('filter_daterange_to_day', false);
+		toggleformelement('filter_daterange_from_hour', false);
+		toggleformelement('filter_daterange_from_minute', false);
+		toggleformelement('filter_daterange_from_second', false);
+		toggleformelement('filter_daterange_to_hour', false);
+		toggleformelement('filter_daterange_to_minute', false);
+		toggleformelement('filter_daterange_to_second', false);
 
 		toggleformelement('filter_daterange_last_x', true);
 	}
@@ -70,10 +88,16 @@ function CalculateSearchPreview(szSearchFormName, szPreviewArea)
 	{
 		szOutString += "datefrom:"	+ mySearchform.elements['filter_daterange_from_year'].value + "-" 
 									+ mySearchform.elements['filter_daterange_from_month'].value + "-"
-									+ mySearchform.elements['filter_daterange_from_day'].value + "T00:00:00 ";
+									+ mySearchform.elements['filter_daterange_from_day'].value + "T"
+									+ mySearchform.elements['filter_daterange_from_hour'].value + ":"
+									+ mySearchform.elements['filter_daterange_from_minute'].value + ":"
+									+ mySearchform.elements['filter_daterange_from_second'].value + " ";
 		szOutString += "dateto:"	+ mySearchform.elements['filter_daterange_to_year'].value + "-" 
 									+ mySearchform.elements['filter_daterange_to_month'].value + "-"
-									+ mySearchform.elements['filter_daterange_to_day'].value + "T00:00:00 ";
+									+ mySearchform.elements['filter_daterange_to_day'].value + "T"
+									+ mySearchform.elements['filter_daterange_to_hour'].value + ":"
+									+ mySearchform.elements['filter_daterange_to_minute'].value + ":"
+									+ mySearchform.elements['filter_daterange_to_second'].value + " ";
 	}
 	else if (mySearchform.elements['filter_datemode'].value == DATEMODE_LASTX)
 	{
