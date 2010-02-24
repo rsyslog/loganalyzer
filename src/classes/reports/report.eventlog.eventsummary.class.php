@@ -52,7 +52,7 @@ class Report_eventsummary extends Report {
 	public $_reportFileBasicName = "report.eventlog.eventsummary";	// Basic Filename for reportfiles
 	public $_reportTitle = "EventLog Summary Report";				// Display name for the report
 	public $_reportDescription = "This is a EventLog Summary Report";
-	public $_reportHelpArticle = "";
+	public $_reportHelpArticle = "http://loganalyzer.adiscon.com/plugins/reports/eventlog-eventsummary";
 	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
 	public $_reportInitialized = false;							// True means report is installed
 

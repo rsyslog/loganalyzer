@@ -323,6 +323,7 @@ function InitReportModules()
 						$szReportHelpArticle = $tmpReport->_reportHelpArticle;
 						$bNeedsInit = $tmpReport->_reportNeedsInit;
 						$bInitialized = $tmpReport->_reportInitialized;
+						$aRequiredFieldsList = $tmpReport->GetRequiredProperties();
 						
 /*
 						// check for required fields!
@@ -351,7 +352,7 @@ function InitReportModules()
 														"Initialized" => $bInitialized, 
 														"ObjRef" => $tmpReport, 
 //														"CustomFields" => $bCustomFields, 
-//														"CustomFieldsList" => $aCustomFieldList, 
+														"RequiredFieldsList" => $aRequiredFieldsList, 
 														);
 
 						// --- Now Search and populate savedReports | but only if DB Version is 9 or higher.

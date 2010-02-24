@@ -133,6 +133,10 @@
 			<td align="center" class="cellmenu1" colspan="3"><b>{LN_REPORTS_DETAILS}</b></td>
 		</tr>
 		<tr>
+			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_CAT}</b></td>
+			<td align="left" class="line1" width="350" colspan="2">{Category}</td>
+		</tr>
+		<tr>
 			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_ID}</b></td>
 			<td align="left" class="line1" width="350" colspan="2">{ReportID}</td>
 		</tr>
@@ -144,6 +148,17 @@
 			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_REPORTS_DESCRIPTION}</b></td>
 			<td align="left" class="line1" colspan="2">{Description}</td>
 		</tr>
+		<!-- IF EnableRequiredFields="true" -->
+		<tr>
+			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_REPORTS_REQUIREDFIELDS}</b></td>
+			<td align="left" class="line1" colspan="2">
+				<!-- BEGIN RequiredFieldsList -->
+				<br><B>{FieldCaption}</B> ({FieldDefine})
+				<!-- END RequiredFieldsList -->
+				<br><br>
+			</td>
+		</tr>
+		<!-- ENDIF EnableRequiredFields="true" -->
 		<!-- IF EnableHelpArticle="true" -->
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>

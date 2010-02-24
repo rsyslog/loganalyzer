@@ -95,6 +95,7 @@ if ( isset($_GET['op']) )
 				// Get Reference to parser!
 				$myReport = $content['REPORTS'][ $content['ReportID'] ];
 
+				$content['Category'] = $myReport['Category'];
 				$content['DisplayName'] = $myReport['DisplayName'];
 				$content['Description'] = $myReport['Description'];
 				
@@ -102,6 +103,23 @@ if ( isset($_GET['op']) )
 				{
 					$content['EnableHelpArticle'] = true;
 					$content['ReportHelpArticle'] = $myReport['ReportHelpArticle'];
+				}
+
+				// check for custom fields
+				
+				if ( isset($myReport['RequiredFieldsList']) && count($myReport['RequiredFieldsList']) > 0 ) 
+				{
+					// Needs custom fields!
+					$content['EnableRequiredFields'] = true;
+					// $content['CustomFieldsList'] = $myParser['CustomFieldsList'];
+
+					foreach( $myReport['RequiredFieldsList'] as $myField ) 
+					{
+						if ( isset($fields[$myField]) ) 
+							$content['RequiredFieldsList'][$myField] = array ("FieldID" => $myField, "FieldDefine" => $fields[$myField]["FieldDefine"], "FieldCaption" => $fields[$myField]["FieldCaption"] );  
+						else
+							$content['RequiredFieldsList'][$myField] = array ("FieldID" => $myField, "FieldDefine" => $myField, "FieldCaption" => $myField );  
+					}
 				}
 				
 				// check for custom fields
@@ -1270,13 +1288,13 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 		{	
 			// Running on Windows
 			$phpCmd = PHP_BINDIR . "\\php.exe"; 
-			$phpScript = realpath($gl_root_path) . "cron\\cmdreportgen.php";
+			$phpScript = realpath($gl_root_path) . "\\cron\\cmdreportgen.php";
 		} 
 		else 
 		{
 			// Running on LINUX
 			$phpCmd = PHP_BINDIR . "/php"; 
-			$phpScript = realpath($gl_root_path) . "cron/cmdreportgen.php";
+			$phpScript = realpath($gl_root_path) . "/cron/cmdreportgen.php";
 		}
 		
 		// Enable display of report command

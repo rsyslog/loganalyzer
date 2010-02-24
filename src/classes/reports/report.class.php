@@ -442,6 +442,15 @@ abstract class Report {
 
 
 	/*
+	* Helper function to return the arrProperties
+	*/
+	public function GetRequiredProperties()
+	{
+		// return Filebasename
+		return $this->_arrProperties; 
+	}
+
+	/*
 	* Helper function to return the BaseFileName
 	*/
 	public function GetBaseFileName()

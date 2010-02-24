@@ -52,7 +52,7 @@ class Report_syslogsummary extends Report {
 	public $_reportFileBasicName = "report.syslog.syslogsummary";	// Basic Filename for reportfiles
 	public $_reportTitle = "Syslog Summary Report";				// Display name for the report
 	public $_reportDescription = "This is a Syslog Summary Report";
-	public $_reportHelpArticle = "";
+	public $_reportHelpArticle = "http://loganalyzer.adiscon.com/plugins/reports/syslog-syslogsummary";
 	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
 	public $_reportInitialized = false;							// True means report is installed
 

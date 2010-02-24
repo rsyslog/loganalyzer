@@ -68,7 +68,7 @@ $LANG = "en";		// Default language
 // Default Template vars
 $content['BUILDNUMBER'] = "3.0.0";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
-$content['TITLE'] = "LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
+$content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 
@@ -127,7 +127,7 @@ function CheckForInstallPhp()
 	// Check for installscript!
 	if ( file_exists($content['BASEPATH'] . "install.php") ) 
 		$strinstallmsg = '<br><br>' 
-						. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install LogAnalyzer!</b><br><br>'
+						. '<center><b>Click <a href="' . $content['BASEPATH'] . 'install.php">here</a> to Install Adiscon LogAnalyzer!</b><br><br>'
 //							. 'See the Installation Guides for more Details!<br>'
 //							. '<a href="docs/installation.htm" target="_blank">English Installation Guide</a>&nbsp;|&nbsp;'
 //							. '<a href="docs/installation_de.htm" target="_blank">German Installation Guide</a><br><br>' 
@@ -801,7 +801,7 @@ function InitConfigurationValues()
 				else if ( defined('IS_ADMINPAGE') )
 				{
 					// Language System not initialized yet
-					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages." );
+					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages.", "login.php", "Click here to login" );
 				}
 			}
 
@@ -984,7 +984,7 @@ function DieWithErrorMsg( $szerrmsg )
 	else if	( $RUNMODE == RUNMODE_WEBSERVER )
 	{
 		print( 
-			"<html><title>LogAnalyzer :: Critical Error occured</title><head>" . 
+			"<html><title>Adiscon LogAnalyzer :: Critical Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 			"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
@@ -1002,7 +1002,7 @@ function DieWithErrorMsg( $szerrmsg )
 	exit;
 }
 
-function DieWithFriendlyErrorMsg( $szerrmsg )
+function DieWithFriendlyErrorMsg( $szerrmsg, $szLink = "", $szLinkLable = "" )
 {
 	global $RUNMODE, $content, $gl_root_path;
 	if		( $RUNMODE == RUNMODE_COMMANDLINE )
@@ -1014,19 +1014,23 @@ function DieWithFriendlyErrorMsg( $szerrmsg )
 	else if	( $RUNMODE == RUNMODE_WEBSERVER )
 	{
 
-		print( 
-			"<html><title>LogAnalyzer :: Error occured</title><head>" . 
+		echo  
+			"<html><title>Adiscon LogAnalyzer :: Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
 			"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
 			"<H3>Error occured</H3>" . 
 			"</td></tr>" . 
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" .
 			$szerrmsg . 
-			"<br><br></td></tr></table>" . 
-			"</body></html>"
-		);
+			"<br><br></td></tr>"; 
+		if ( strlen($szLink) > 0 && strlen($szLinkLable) > 0 )
+			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"$gl_root_path$szLink\" target=\"\">$szLinkLable</a></tr></td>";
+		echo 
+			"</table>" . 
+			"</body></html>"; 
+
 	}
 
 	// Abort further execution
@@ -1053,7 +1057,7 @@ function InitPageTitle()
 	}
 
 	// Append LogAnalyzer
-	$szReturn .= "LogAnalyzer";
+	$szReturn .= "Adiscon LogAnalyzer";
 
 	if ( defined('IS_ADMINPAGE') )
 		$szReturn .= " :: " . $content['LN_ADMIN_CENTER'] . " :: ";
