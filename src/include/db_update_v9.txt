@@ -14,7 +14,7 @@ CREATE TABLE `logcon_savedreports` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT = 'Table to store saved reports' AUTO_INCREMENT=1 ;
 
-ALTER TABLE `logcon_users` ADD `is_readonly` BOOL NOT NULL DEFAULT '0' AFTER `is_admin` ;
+ALTER TABLE `logcon_users` ADD `is_readonly` tinyint(1) NOT NULL DEFAULT '0' AFTER `is_admin` ;
 
 -- Insert data
 

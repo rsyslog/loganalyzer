@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS `logcon_users` (
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `is_admin` tinyint(1) NOT NULL default '0',
+  `is_readonly` tinyint(1) NOT NULL DEFAULT '0', 
   `last_login` int(4) NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table for the phplogcon users' AUTO_INCREMENT=1 ;
@@ -181,3 +182,4 @@ CREATE TABLE `logcon_savedreports` (
   `scheduleSettings` text NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT = 'Table to store saved reports' AUTO_INCREMENT=1 ;
+
