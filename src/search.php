@@ -114,7 +114,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 				{
 					$filters['filter_daterange_to_hour'] = intval($_GET['filter_daterange_to_hour']);
 					if ($filters['filter_daterange_to_hour'] < 10)
-					    $filters['filter_daterange_to_hour'] = '0' . $filters['filter_daterange_to_hour'] = '0';
+					    $filters['filter_daterange_to_hour'] = '0' . $filters['filter_daterange_to_hour']; 
 				}
 				if ( isset($_GET['filter_daterange_to_minute']) )
 				{
@@ -126,7 +126,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 				{
 					$filters['filter_daterange_to_second'] = intval($_GET['filter_daterange_to_second']);
 					if ($filters['filter_daterange_to_second'] < 10)
-					    $filters['filter_daterange_to_second'] = '0' . $filters['filter_daterange_to_second'] = '0';
+					    $filters['filter_daterange_to_second'] = '0' . $filters['filter_daterange_to_second']; 
 				}
 				
 				// Append to searchstring
