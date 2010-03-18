@@ -700,6 +700,7 @@ function InitFrontEndVariables()
 	$content['MENU_DOCUMENTLIST'] = $content['BASEPATH'] . "images/icons/documents.png";
 	$content['MENU_WINDOWLIST'] = $content['BASEPATH'] . "images/icons/windows.png";
 	$content['MENU_CHECKED'] = $content['BASEPATH'] . "images/icons/check.png";
+	$content['MENU_PLAY_GREEN'] = $content['BASEPATH'] . "images/icons/bullet_triangle_green.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
