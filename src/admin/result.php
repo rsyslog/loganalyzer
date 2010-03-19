@@ -55,8 +55,8 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // Init admin langauge file now!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 
-// Hardcoded atm
-$content['REDIRSECONDS'] = 2;
+// Configureable now!
+$content['REDIRSECONDS'] =  GetConfigSetting("AdminChangeWaitTime", 2, CFGLEVEL_USER);
 // ***					*** //
 
 // --- CONTENT Vars
@@ -75,7 +75,7 @@ if ( isset($_GET['msg']) )
 else
 	$content['SZMSG'] = $content["LN_ADMIN_UNKNOWNSTATE"]; 
 
-$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "' in 5 seconds";	// Title of the Page 
+$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "' in " . $content['REDIRSECONDS'] . " seconds";	// Title of the Page 
 // --- 
 
 // --- Parsen and Output

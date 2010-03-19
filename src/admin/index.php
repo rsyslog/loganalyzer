@@ -159,6 +159,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['PopupMenuTimeout']) && is_numeric($_POST['PopupMenuTimeout']) ) { $content['PopupMenuTimeout'] = $_POST['PopupMenuTimeout']; }
 			if ( isset ($_POST['ViewEntriesPerPage']) && is_numeric($_POST['ViewEntriesPerPage']) ) { $content['ViewEntriesPerPage'] = $_POST['ViewEntriesPerPage']; }
 			if ( isset ($_POST['ViewEnableAutoReloadSeconds']) && is_numeric($_POST['ViewEnableAutoReloadSeconds']) ) { $content['ViewEnableAutoReloadSeconds'] = $_POST['ViewEnableAutoReloadSeconds']; }
+			if ( isset ($_POST['AdminChangeWaitTime']) && is_numeric($_POST['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime'] = $_POST['AdminChangeWaitTime']; }
 			if ( isset ($_POST['MiscMaxExecutionTime']) && is_numeric($_POST['MiscMaxExecutionTime']) ) { $content['MiscMaxExecutionTime'] = $_POST['MiscMaxExecutionTime']; }
 
 			// Read Text fields
@@ -213,6 +214,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_PopupMenuTimeout']) && is_numeric($_POST['User_PopupMenuTimeout']) ) { $USERCFG['PopupMenuTimeout'] = $_POST['User_PopupMenuTimeout']; }
 			if ( isset ($_POST['User_ViewEntriesPerPage']) && is_numeric($_POST['User_ViewEntriesPerPage']) ) { $USERCFG['ViewEntriesPerPage'] = $_POST['User_ViewEntriesPerPage']; }
 			if ( isset ($_POST['User_ViewEnableAutoReloadSeconds']) && is_numeric($_POST['User_ViewEnableAutoReloadSeconds']) ) { $USERCFG['ViewEnableAutoReloadSeconds'] = $_POST['User_ViewEnableAutoReloadSeconds']; }
+			if ( isset ($_POST['User_AdminChangeWaitTime']) && is_numeric($_POST['User_AdminChangeWaitTime']) ) { $USERCFG['AdminChangeWaitTime'] = $_POST['User_AdminChangeWaitTime']; }
 // TODO!!!!!!!!!!!111111111			
 
 			// Read Text fields
@@ -233,6 +235,7 @@ if ( isset($_POST['op']) )
 if ( !isset($content['SuppressDuplicatedMessages']) ) { $content['SuppressDuplicatedMessages'] = 0; }
 if ( !isset($content['TreatNotFoundFiltersAsTrue']) ) { $content['TreatNotFoundFiltersAsTrue'] = 0; }
 if ( !isset($content['InlineOnlineSearchIcons']) ) { $content['InlineOnlineSearchIcons'] = 1; }
+if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime'] = 2; }
 
 // Set checkbox States
 if (isset($content['ViewUseTodayYesterday']) && $content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
@@ -329,6 +332,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	$content['User_PopupMenuTimeout'] = GetConfigSetting('PopupMenuTimeout', $content['PopupMenuTimeout'], CFGLEVEL_USER);
 	$content['User_ViewEntriesPerPage'] = GetConfigSetting('ViewEntriesPerPage', $content['ViewEntriesPerPage'], CFGLEVEL_USER);
 	$content['User_ViewEnableAutoReloadSeconds'] = GetConfigSetting('ViewEnableAutoReloadSeconds', $content['ViewEnableAutoReloadSeconds'], CFGLEVEL_USER);
+	$content['User_AdminChangeWaitTime'] = GetConfigSetting('AdminChangeWaitTime', $content['AdminChangeWaitTime'], CFGLEVEL_USER);
 	$content['User_SearchCustomButtonCaption'] = GetConfigSetting('SearchCustomButtonCaption', $content['SearchCustomButtonCaption'], CFGLEVEL_USER);
 	$content['User_SearchCustomButtonSearch'] = GetConfigSetting('SearchCustomButtonSearch', $content['SearchCustomButtonSearch'], CFGLEVEL_USER);
 	// ---

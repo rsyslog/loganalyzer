@@ -1547,6 +1547,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "ViewStringCharacterLimit", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewEntriesPerPage", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "AdminChangeWaitTime", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "PopupMenuTimeout", true, null, null,$bForceStripSlahes );
 
 	WriteConfigValue( "PrependTitle", true, null, null,$bForceStripSlahes );
@@ -1591,6 +1592,7 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "ViewStringCharacterLimit", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEntriesPerPage", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableAutoReloadSeconds", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "AdminChangeWaitTime", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "PopupMenuTimeout", false, $content['SESSION_USERID'] );
 
 	WriteConfigValue( "PrependTitle", false, $content['SESSION_USERID'] );

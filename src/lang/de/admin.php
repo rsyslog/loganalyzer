@@ -79,6 +79,7 @@ $content['LN_GEN_MSGCHARLIMIT'] = "Anzahl der Zeichen im Meldungsfenster in der 
 $content['LN_GEN_STRCHARLIMIT'] = "Anzahl der Zeichen in Feldern";
 $content['LN_GEN_ENTRIESPERPAGE'] = "Anzahl der Zeilen pro Seite";
 $content['LN_GEN_AUTORELOADSECONDS'] = "Erm&ouml;gliche automatisches neu laden der Seite nach Sekunden";
+$content['LN_GEN_ADMINCHANGEWAITTIME'] = "Reloadtime in Adminpanel";
 $content['LN_GEN_IPADRRESOLVE'] = "Ermitteln der IP-Adresse durch DNS-Abfragen";
 $content['LN_GEN_CUSTBTNCAPT'] = "Benutzerdefinierte Such-Titel";
 $content['LN_GEN_CUSTBTNSRCH'] = "Benutzerdefinierte Such-Zeichenfolge";
@@ -92,7 +93,6 @@ $content['LN_GEN_DEFSOURCE'] = "Standard Quelle";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Doppelte Meldungen nur einmal anzeigen";
 $content['LN_GEN_TREATFILTERSTRUE'] = "Treat filters of not found fields as true";
 $content['LN_GEN_INLINESEARCHICONS'] = "Show Onlinesearch icons within fields";
-
 $content['LN_GEN_OPTIONNAME'] = "Option Name";
 $content['LN_GEN_GLOBALVALUE'] = "Globale Werte";
 $content['LN_GEN_PERSONALVALUE'] = "Pers&ouml;nliche (benutzerbezogene)Werte";

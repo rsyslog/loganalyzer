@@ -79,6 +79,7 @@ $content['LN_GEN_MSGCHARLIMIT'] = "Character limit of the message in main view";
 $content['LN_GEN_STRCHARLIMIT'] = "Character display limit for all string type fields";
 $content['LN_GEN_ENTRIESPERPAGE'] = "Number of entries per page";
 $content['LN_GEN_AUTORELOADSECONDS'] = "Enable autoreload after seconds";
+$content['LN_GEN_ADMINCHANGEWAITTIME'] = "Reloadtime in Adminpanel";
 $content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";
 $content['LN_GEN_CUSTBTNCAPT'] = "Custom search caption";
 $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
@@ -92,7 +93,6 @@ $content['LN_GEN_DEFSOURCE'] = "Default selected source";
 $content['LN_GEN_SUPPRESSDUPMSG'] = "Suppress duplicated messages";
 $content['LN_GEN_TREATFILTERSTRUE'] = "Treat filters of not found fields as true";
 $content['LN_GEN_INLINESEARCHICONS'] = "Show Onlinesearch icons within fields";
-
 $content['LN_GEN_OPTIONNAME'] = "Option name";
 $content['LN_GEN_GLOBALVALUE'] = "Global value";
 $content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
