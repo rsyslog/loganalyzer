@@ -462,8 +462,6 @@ if ( isset($_GET['op']) )
 					$content['cronCommand'] = CreateCronCommand( $content['ReportID'], $content['SavedReportID'] );
 
 					// Other settings ... TODO!
-//					$content['customFilters'] = "";
-//					$content['outputTarget'] = "";
 					$content['scheduleSettings'] = "";
 				}
 				else
@@ -589,16 +587,20 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	// Init Filterstring variable
 	$szFilterString = ""; 
 	
-	if ( (strlen($content['filterString']) > 0 && isset($_POST['filterString'])) && $content['filterString'] != $_POST['filterString'] ) 
+	if (	strlen($content['filterString']) > 0 && 
+			!isset($_POST['subop']) && 
+			!isset($_POST['subop_edit']) && 
+			!isset($_POST['subop_delete']) && 
+			isset($_POST['report_filterString']) && $content['filterString'] != $_POST['report_filterString'] ) 
 	{
 		// Overwrite filterString from form data instead of filter array!
+		$content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']);
 	}
 	else
 	{
 		// Process POST data!
 		if ( isset($_POST['Filters']) )
 		{
-			
 			// Get Filter array
 			$AllFilters = $_POST['Filters'];
 			
@@ -926,7 +928,6 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 
 }
 
-
 // Handle POST requests
 if ( isset($_POST['op']) )
 {
@@ -947,7 +948,14 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['SourceID']) ) { $content['SourceID'] = DB_RemoveBadChars($_POST['SourceID']); }
 		if ( isset($_POST['report_customtitle']) ) { $content['customTitle'] = DB_RemoveBadChars($_POST['report_customtitle']); } else {$content['report_customtitle'] = ""; }
 		if ( isset($_POST['report_customcomment']) ) { $content['customComment'] = DB_RemoveBadChars($_POST['report_customcomment']); } else {$content['report_customcomment'] = ""; }
-		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
+
+
+//		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
+
+//echo $szFilterString . "!" . $content['filterString'];
+//exit;
+
+
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
 		if ( isset($_POST['outputTarget']) ) { $content['outputTarget'] = DB_RemoveBadChars($_POST['outputTarget']); }
 		if ( isset($_POST['outputTarget_filename']) ) { $content['outputTarget_filename'] = DB_RemoveBadChars($_POST['outputTarget_filename']); }
