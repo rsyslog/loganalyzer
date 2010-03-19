@@ -957,7 +957,7 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 		);
 
 	// Add Online Search Button
-	if ( isset($fields[$FieldID]['SearchOnline']) && $fields[$FieldID]['SearchOnline'] )
+	if ( isset($fields[$FieldID]['SearchOnline']) && $fields[$FieldID]['SearchOnline'] && strlen($fieldGridItem['fieldvalue']) > 0 )
 	{
 		$fieldGridItem['buttons'][] = array( 
 			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
