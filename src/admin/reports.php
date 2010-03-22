@@ -895,6 +895,9 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 						$tmpComparisons['cp_selected'] = "selected"; 
 					else
 						$tmpComparisons['cp_selected'] = ""; 
+					
+					// Init Date Field Helpers!
+					InitDatefieldHelpers( $tmpFilter );
 				}
 				else
 				{
@@ -1479,6 +1482,86 @@ function xml2array($url, $get_attributes = 1, $priority = 'tag')
         }
     }
     return ($xml_array);
+}
+
+/*
+*	Helper functions to init a Datefield
+*/
+function InitDatefieldHelpers( &$myFilter )
+{
+	global $content; 
+	global $currentTime, $currentDay, $currentMonth, $currentYear, $tomorrowTime, $tomorrowDay, $tomorrowMonth, $tomorrowYear; 
+
+	if ( $myFilter['FilterDateMode'] == DATEMODE_LASTX ) 
+		$myFilter['filter_lastx_default'] = intval($myFilter['FilterValue']);
+	else
+		$myFilter['filter_lastx_default'] = DATE_LASTX_7DAYS;
+
+	$myFilter['MyFilter_daterange_last_x_list'][0]['LastXID'] = DATE_LASTX_HOUR;
+	$myFilter['MyFilter_daterange_last_x_list'][0]['LastXDisplayName'] = $content['LN_DATE_LASTX_HOUR'];
+	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_HOUR ) { $myFilter['MyFilter_daterange_last_x_list'][0]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][0]['selected'] = ""; }
+
+	$myFilter['MyFilter_daterange_last_x_list'][1]['LastXID'] = DATE_LASTX_12HOURS;
+	$myFilter['MyFilter_daterange_last_x_list'][1]['LastXDisplayName'] = $content['LN_DATE_LASTX_12HOURS'];
+	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_12HOURS ) { $myFilter['MyFilter_daterange_last_x_list'][1]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][1]['selected'] = ""; }
+
+	$myFilter['MyFilter_daterange_last_x_list'][2]['LastXID'] = DATE_LASTX_24HOURS;
+	$myFilter['MyFilter_daterange_last_x_list'][2]['LastXDisplayName'] = $content['LN_DATE_LASTX_24HOURS'];
+	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_24HOURS ) { $myFilter['MyFilter_daterange_last_x_list'][2]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][2]['selected'] = ""; }
+
+	$myFilter['MyFilter_daterange_last_x_list'][3]['LastXID'] = DATE_LASTX_7DAYS;
+	$myFilter['MyFilter_daterange_last_x_list'][3]['LastXDisplayName'] = $content['LN_DATE_LASTX_7DAYS'];
+	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_7DAYS ) { $myFilter['MyFilter_daterange_last_x_list'][3]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][3]['selected'] = ""; }
+
+	$myFilter['MyFilter_daterange_last_x_list'][4]['LastXID'] = DATE_LASTX_31DAYS;
+	$myFilter['MyFilter_daterange_last_x_list'][4]['LastXDisplayName'] = $content['LN_DATE_LASTX_31DAYS'];
+	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_31DAYS ) { $myFilter['MyFilter_daterange_last_x_list'][4]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][4]['selected'] = ""; }
+	// ---
+
+	// Init filter_daterange_to_year
+	if ( isset($_SESSION['filter_daterange_to_year']) ) 
+		$filters['filter_daterange_to_year'] = intval($_SESSION['filter_daterange_to_year']);
+	else
+		$filters['filter_daterange_to_year'] = $tomorrowYear;
+	FillDateRangeArray($content['years'], "filter_daterange_to_year_list", "filter_daterange_to_year");
+
+	// Init filter_daterange_to_month
+	if ( isset($_SESSION['filter_daterange_to_month']) ) 
+		$filters['filter_daterange_to_month'] = intval($_SESSION['filter_daterange_to_month']);
+	else
+		$filters['filter_daterange_to_month'] = $tomorrowMonth;
+	FillDateRangeArray($content['months'], "filter_daterange_to_month_list", "filter_daterange_to_month");
+
+	// Init filter_daterange_to_day
+	if ( isset($_SESSION['filter_daterange_to_day']) ) 
+		$filters['filter_daterange_to_day'] = intval($_SESSION['filter_daterange_to_day']);
+	else
+		$filters['filter_daterange_to_day'] = $tomorrowDay;
+	FillDateRangeArray($content['days'], "filter_daterange_to_day_list", "filter_daterange_to_day");
+
+	// Init filter_daterange_to_hour
+	if ( isset($_SESSION['filter_daterange_to_hour']) ) 
+		$filters['filter_daterange_to_hour'] = intval($_SESSION['filter_daterange_to_hour']);
+	else
+		$filters['filter_daterange_to_hour'] = 23;
+	FillDateRangeArray($content['hours'], "filter_daterange_to_hour_list", "filter_daterange_to_hour");
+
+	// Init filter_daterange_to_minute
+	if ( isset($_SESSION['filter_daterange_to_minute']) ) 
+		$filters['filter_daterange_to_minute'] = intval($_SESSION['filter_daterange_to_minute']);
+	else
+		$filters['filter_daterange_to_minute'] = 59;
+	FillDateRangeArray($content['minutes'], "filter_daterange_to_minute_list", "filter_daterange_to_minute");
+
+	// Init filter_daterange_to_second
+	if ( isset($_SESSION['filter_daterange_to_second']) ) 
+		$filters['filter_daterange_to_second'] = intval($_SESSION['filter_daterange_to_second']);
+	else
+		$filters['filter_daterange_to_second'] = 59;
+	FillDateRangeArray($content['seconds'], "filter_daterange_to_second_list", "filter_daterange_to_second");
+
+
+
 }
 
 // --- END Helper functions 

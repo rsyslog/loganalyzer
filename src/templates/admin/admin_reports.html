@@ -209,6 +209,9 @@
 		Helper Javascript Constants
 		*/
 		const REPORT_TARGET_STDOUT = 'stdout', REPORT_TARGET_FILE = 'file', REPORT_TARGET_EMAIL = 'mail';
+		const DATEMODE_LASTX = 3, DATEMODE_RANGE_FROM = 4, DATEMODE_RANGE_TO = 5;
+		const DATE_LASTX_HOUR = 1, DATE_LASTX_12HOURS = 2, DATE_LASTX_24HOURS = 3, DATE_LASTX_7DAYS = 4,DATE_LASTX_31DAYS = 5;
+
 		/*
 		*	Helper function to show and hide areas of the filterview
 		*/
@@ -231,6 +234,40 @@
 				toggleformelement('outputFormat_filename', false);
 			}
 		}
+
+		function toggleDatefiltervisibility(FormName, Fieldnumber)
+		{
+			var myform = document.getElementById(FormName);
+			if (myform.elements['newcomparison_' + Fieldnumber].value == DATEMODE_LASTX)
+			{
+				showvisibility('HiddenDateLastXOptions_' + Fieldnumber);
+				hidevisibility('HiddenDateDetailsOptions_' + Fieldnumber);
+
+				toggleformelement('filter_daterange_year_' + Fieldnumber, false);
+				toggleformelement('filter_daterange_month_' + Fieldnumber, false);
+				toggleformelement('filter_daterange_day_' + Fieldnumber, false);
+				toggleformelement('filter_daterange_hour_' + Fieldnumber, false);
+				toggleformelement('filter_daterange_minute_' + Fieldnumber, false);
+				toggleformelement('filter_daterange_second_' + Fieldnumber, false);
+
+				toggleformelement('filter_daterange_last_x_' + Fieldnumber, true);
+			}
+			else if (myform.elements['newcomparison_' + Fieldnumber].value == DATEMODE_RANGE_FROM || myform.elements['newcomparison_' + Fieldnumber].value == DATEMODE_RANGE_TO)
+			{
+				showvisibility('HiddenDateDetailsOptions_' + Fieldnumber);
+				hidevisibility('HiddenDateLastXOptions_' + Fieldnumber);
+
+				toggleformelement('filter_daterange_year_' + Fieldnumber, true);
+				toggleformelement('filter_daterange_month_' + Fieldnumber, true);
+				toggleformelement('filter_daterange_day_' + Fieldnumber, true);
+				toggleformelement('filter_daterange_hour_' + Fieldnumber, true);
+				toggleformelement('filter_daterange_minute_' + Fieldnumber, true);
+				toggleformelement('filter_daterange_second_' + Fieldnumber, true);
+
+				toggleformelement('filter_daterange_last_x_' + Fieldnumber, false);
+			}
+		}
+
 		</script>
 
 		<form action="{BASEPATH}admin/reports.php{FormUrlAddOP}" method="post" id="savedreportform">
@@ -268,16 +305,84 @@
 						<b>{FilterFieldName} (<I>{FilterFieldID}</I>)</b>
 					</td>
 					<td align="left" class="{colcssclass}" width="100">
-						<select name="newcomparison_{ROWCNT}" size="1" STYLE="width: 100px">
+						<select name="newcomparison_{ROWCNT}" size="1" STYLE="width: 100px" OnChange="toggleDatefiltervisibility('savedreportform', {ROWCNT});">
 							<!-- BEGIN Comparisons -->
 							<option value="{ComparisonBit}" {cp_selected}>{ComparisonCaption}</option>
 							<!-- END Comparisons -->
 						</select>
 					</td>
 					<td align="left" class="{colcssclass}" width="200">
+					<!-- IF FilterType!="2" -->
 						<input type="text" name="FilterValue_{ROWCNT}" size="32" maxlength="255" value="{FilterValue}">
+					<!-- ENDIF FilterType!="2" -->
+					<!-- IF FilterType="2" -->
+						<div id="HiddenDateDetailsOptions_{ROWCNT}" class="HiddenContent">
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+						<tr>
+							<td align="left" width="100%">
+								<select name="filter_daterange_year_{ROWCNT}" size="1" STYLE="width: 60px">
+									<!-- BEGIN filter_daterange_year_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_year_list -->
+								</select>
+								 - 
+								<select name="filter_daterange_month_{ROWCNT}" size="1" STYLE="width: 50px">
+									<!-- BEGIN filter_daterange_month_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_month_list -->
+								</select>
+								 - 
+								<select name="filter_daterange_day_{ROWCNT}" size="1" STYLE="width: 50px">
+									<!-- BEGIN filter_daterange_day_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_day_list -->
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="left" width="100%">
+								<select name="filter_daterange_hour_{ROWCNT}" size="1" STYLE="width: 60px">
+									<!-- BEGIN filter_daterange_hour_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_hour_list -->
+								</select>
+								 - 
+								<select name="filter_daterange_minute_{ROWCNT}" size="1" STYLE="width: 50px">
+									<!-- BEGIN filter_daterange_minute_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_minute_list -->
+								</select>
+								 - 
+								<select name="filter_daterange_second_{ROWCNT}" size="1" STYLE="width: 50px">
+									<!-- BEGIN filter_daterange_second_list -->
+									<option {selected} value="{value}">{value}</option>
+									<!-- END filter_daterange_second_list -->
+								</select>
+							</td>
+						</tr>
+						</table>
+						</div>
+
+						<div id="HiddenDateLastXOptions_{ROWCNT}" class="HiddenContent">
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+						<tr>
+							<td align="left" width="100%">
+								<select name="filter_daterange_last_x_{ROWCNT}" size="1">
+									<!-- BEGIN MyFilter_daterange_last_x_list -->
+									<option {selected} value="{LastXID}">{LastXDisplayName}</option>
+									<!-- END MyFilter_daterange_last_x_list -->
+								</select>
+							</td>
+						</tr>
+						</table>
+						</div>
+
+						<script language="javascript">
+							// Manually perform initial Javascript Calls
+							toggleDatefiltervisibility('savedreportform',{ROWCNT});
+						</script>
+					<!-- ENDIF FilterType="2" -->
 					</td>
-					
 					<td align="center" class="{colcssclass}" width="50">
 						<button name="subop_edit" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_REPORTS_FILTER_EDIT}"></button>
 						<button name="subop_delete" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_REPORTS_FILTER_REMOVE}"></button>

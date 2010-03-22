@@ -61,6 +61,7 @@ function InitFilterHelpers()
 	if ( $filters['filter_datemode'] == DATEMODE_LASTX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
 	
 	// Init Date Range Parameters
+	global $currentTime, $currentDay, $currentMonth, $currentYear, $tomorrowTime, $tomorrowDay, $tomorrowMonth, $tomorrowYear; 
 	$currentTime = time();
 	$currentDay = date("d", $currentTime);
 	$currentMonth = date("m", $currentTime);
