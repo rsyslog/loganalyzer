@@ -639,17 +639,20 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 							{
 								case 4:		// DATEMODE_RANGE_FROM
 									$szFilterString .= "datefrom:"; 
+									$szFilterString .= CreateTimeStampFromValues($i); 
 									break; 
 								case 5:		// DATEMODE_RANGE_TO
 									$szFilterString .= "dateto:"; 
+									$szFilterString .= CreateTimeStampFromValues($i); 
 									break; 
 								case 3:		// DATEMODE_LASTX
 									$szFilterString .= "datelastx:"; 
+									if ( isset($_POST['filter_daterange_last_x_' . $i]) ) 
+										$szFilterString .= DB_RemoveBadChars($_POST['filter_daterange_last_x_' . $i]); 
+									else
+										$szFilterString .= DATE_LASTX_24HOURS; // Default value
 									break; 
 							}
-
-							// Append field value
-							$szFilterString .= $tmpFilterValue; 
 						}
 						else if ( $tmpField['FieldType'] == FILTER_TYPE_NUMBER ) 
 						{
@@ -729,7 +732,7 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	//		print_r ( $AllFilters ); 
 		}
 	}
-	
+
 	// Add new filter if wanted
 	if ( isset($_POST['subop']) )
 	{
@@ -966,8 +969,10 @@ if ( isset($_POST['op']) )
 		// Read Custom Filters
 		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
 		{
+//			print_r ( $tmpCustomFilter ); 
 			// Set fieldvalue if available from POST data
-			if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) { $tmpCustomFilter['fieldvalue'] = DB_RemoveBadChars($_POST[ $tmpCustomFilter['fieldname'] ]); }
+			if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) 
+				$tmpCustomFilter['fieldvalue'] = DB_RemoveBadChars($_POST[ $tmpCustomFilter['fieldname'] ]); 
 		}
 		
 		// Read done, now build "customFilters" string!
@@ -1544,6 +1549,41 @@ function InitDatefieldHelpers( &$myFilter )
 	ReportsFillDateRangeArray($content['hours'], $myFilter, "filter_daterange_hour_list", "filter_daterange_hour");
 	ReportsFillDateRangeArray($content['minutes'], $myFilter, "filter_daterange_minute_list", "filter_daterange_minute");
 	ReportsFillDateRangeArray($content['seconds'], $myFilter, "filter_daterange_second_list", "filter_daterange_second");
+}
+
+function CreateTimeStampFromValues($iNum)
+{
+	global $currentTime, $currentDay, $currentMonth, $currentYear, $tomorrowTime, $tomorrowDay, $tomorrowMonth, $tomorrowYear; 
+	
+	// Read and parse Date
+	if ( isset($_POST['filter_daterange_year_' . $iNum]) ) 
+		$tmpYear = DB_RemoveBadChars($_POST['filter_daterange_year_' . $iNum]); 
+	else
+		$tmpYear = $currentYear;	// Default value
+	if ( isset($_POST['filter_daterange_month_' . $iNum]) ) 
+		$tmpMonth = DB_RemoveBadChars($_POST['filter_daterange_month_' . $iNum]); 
+	else
+		$tmpMonth = $tomorrowMonth;	// Default value
+	if ( isset($_POST['filter_daterange_day_' . $iNum]) ) 
+		$tmpDay = DB_RemoveBadChars($_POST['filter_daterange_day_' . $iNum]); 
+	else
+		$tmpDay = $currentDay;		// Default value
+
+	// Read and parse Time
+	if ( isset($_POST['filter_daterange_hour_' . $iNum]) ) 
+		$tmpHour = DB_RemoveBadChars($_POST['filter_daterange_hour_' . $iNum]); 
+	else
+		$tmpHour = 0;	// Default value
+	if ( isset($_POST['filter_daterange_minute_' . $iNum]) ) 
+		$tmpMinute = DB_RemoveBadChars($_POST['filter_daterange_minute_' . $iNum]); 
+	else
+		$tmpMinute = 0; // Default value
+	if ( isset($_POST['filter_daterange_second_' . $iNum]) ) 
+		$tmpSecond = DB_RemoveBadChars($_POST['filter_daterange_second_' . $iNum]); 
+	else
+		$tmpSecond = 0; // Default value
+
+	return $tmpYear . "-" . $tmpMonth . "-" . $tmpDay . "T" . $tmpHour . ":" . $tmpMinute . ":" . $tmpSecond; 
 }
 
 function ReportsFillDateRangeArray($sourcearray, &$myFilter, $szArrayListName, $szFilterName)
