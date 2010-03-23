@@ -1517,51 +1517,48 @@ function InitDatefieldHelpers( &$myFilter )
 	$myFilter['MyFilter_daterange_last_x_list'][4]['LastXDisplayName'] = $content['LN_DATE_LASTX_31DAYS'];
 	if ( $myFilter['filter_lastx_default'] == DATE_LASTX_31DAYS ) { $myFilter['MyFilter_daterange_last_x_list'][4]['selected'] = "selected"; } else { $myFilter['MyFilter_daterange_last_x_list'][4]['selected'] = ""; }
 	// ---
-
-	// Init filter_daterange_to_year
-	if ( isset($_SESSION['filter_daterange_to_year']) ) 
-		$filters['filter_daterange_to_year'] = intval($_SESSION['filter_daterange_to_year']);
+	
+	// Init Date/Time values 
+	if ( GetDateTimeDetailsFromTimeString($myFilter['FilterValue'], $mysecond, $myminute, $myhour, $myday, $mymonth, $myyear) ) 
+	{
+		$myFilter['filter_daterange_year'] = intval($myyear);
+		$myFilter['filter_daterange_month'] = intval($mymonth);
+		$myFilter['filter_daterange_day'] = intval($myday);
+		$myFilter['filter_daterange_hour'] = intval($myhour);
+		$myFilter['filter_daterange_minute'] = intval($myminute);
+		$myFilter['filter_daterange_second'] = intval($mysecond);
+	}
 	else
-		$filters['filter_daterange_to_year'] = $tomorrowYear;
-	FillDateRangeArray($content['years'], "filter_daterange_to_year_list", "filter_daterange_to_year");
+	{
+		$myFilter['filter_daterange_year'] = $tomorrowYear;
+		$myFilter['filter_daterange_month'] = $tomorrowMonth;
+		$myFilter['filter_daterange_day'] = $tomorrowDay;
+		$myFilter['filter_daterange_hour'] = 0;
+		$myFilter['filter_daterange_minute'] = 0;
+		$myFilter['filter_daterange_second'] = 0;
+	}
 
-	// Init filter_daterange_to_month
-	if ( isset($_SESSION['filter_daterange_to_month']) ) 
-		$filters['filter_daterange_to_month'] = intval($_SESSION['filter_daterange_to_month']);
-	else
-		$filters['filter_daterange_to_month'] = $tomorrowMonth;
-	FillDateRangeArray($content['months'], "filter_daterange_to_month_list", "filter_daterange_to_month");
+	ReportsFillDateRangeArray($content['years'], $myFilter, "filter_daterange_year_list", "filter_daterange_year");
+	ReportsFillDateRangeArray($content['months'], $myFilter, "filter_daterange_month_list", "filter_daterange_month");
+	ReportsFillDateRangeArray($content['days'], $myFilter, "filter_daterange_day_list", "filter_daterange_day");
+	ReportsFillDateRangeArray($content['hours'], $myFilter, "filter_daterange_hour_list", "filter_daterange_hour");
+	ReportsFillDateRangeArray($content['minutes'], $myFilter, "filter_daterange_minute_list", "filter_daterange_minute");
+	ReportsFillDateRangeArray($content['seconds'], $myFilter, "filter_daterange_second_list", "filter_daterange_second");
+}
 
-	// Init filter_daterange_to_day
-	if ( isset($_SESSION['filter_daterange_to_day']) ) 
-		$filters['filter_daterange_to_day'] = intval($_SESSION['filter_daterange_to_day']);
-	else
-		$filters['filter_daterange_to_day'] = $tomorrowDay;
-	FillDateRangeArray($content['days'], "filter_daterange_to_day_list", "filter_daterange_to_day");
+function ReportsFillDateRangeArray($sourcearray, &$myFilter, $szArrayListName, $szFilterName)
+{
+	global $content; 
+	$iCount = count($sourcearray);
 
-	// Init filter_daterange_to_hour
-	if ( isset($_SESSION['filter_daterange_to_hour']) ) 
-		$filters['filter_daterange_to_hour'] = intval($_SESSION['filter_daterange_to_hour']);
-	else
-		$filters['filter_daterange_to_hour'] = 23;
-	FillDateRangeArray($content['hours'], "filter_daterange_to_hour_list", "filter_daterange_to_hour");
-
-	// Init filter_daterange_to_minute
-	if ( isset($_SESSION['filter_daterange_to_minute']) ) 
-		$filters['filter_daterange_to_minute'] = intval($_SESSION['filter_daterange_to_minute']);
-	else
-		$filters['filter_daterange_to_minute'] = 59;
-	FillDateRangeArray($content['minutes'], "filter_daterange_to_minute_list", "filter_daterange_to_minute");
-
-	// Init filter_daterange_to_second
-	if ( isset($_SESSION['filter_daterange_to_second']) ) 
-		$filters['filter_daterange_to_second'] = intval($_SESSION['filter_daterange_to_second']);
-	else
-		$filters['filter_daterange_to_second'] = 59;
-	FillDateRangeArray($content['seconds'], "filter_daterange_to_second_list", "filter_daterange_to_second");
-
-
-
+	for ( $i = 0; $i < $iCount; $i++)
+	{
+		$myFilter[$szArrayListName][$i]['value'] = $sourcearray[$i];
+		if ( $myFilter[$szFilterName]  == $sourcearray[$i] ) 
+			$myFilter[$szArrayListName][$i]['selected'] = "selected";
+		else
+			$myFilter[$szArrayListName][$i]['selected'] = "";
+	}
 }
 
 // --- END Helper functions 

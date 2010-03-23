@@ -317,4 +317,25 @@ function GetTimeStampFromTimeString($szTimeString)
 	}
 }
 
+function GetDateTimeDetailsFromTimeString($szTimeString, &$second, &$minute, &$hour, &$day, &$month, &$year)
+{
+	//Sample: 2008-4-1T00:00:00
+	if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/", $szTimeString, $out) )
+	{
+		// Assign parameters
+		$second = $out[6]; 
+		$minute = $out[5]; 
+		$hour = $out[4]; 
+		$day = $out[3]; 
+		$month = $out[2]; 
+		$year = $out[1]; 
+		
+		// Success!
+		return true;
+	}
+	else
+		// Failed
+		return false;
+}
+
 ?>
