@@ -74,15 +74,15 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="250"><b>{LN_CHARTS_NAME}</b></td>
-				<td align="right" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
+				<td align="left" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHARTS_ENABLED}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="chart_enabled" value="1" {CHECKED_ISCHARTENABLED}></td>
+				<td align="left" class="line1"><input type="checkbox" name="chart_enabled" value="1" {CHECKED_ISCHARTENABLED}></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_TYPE}</b></td>
-				<td align="right" class="line1">
+				<td align="left" class="line1">
 					<select id="chart_type" name="chart_type" size="1" OnChange="toggleSourceTypeVisibility('chart_type');">
 						<!-- BEGIN CHARTTYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
@@ -92,7 +92,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_FIELD}</b></td>
-				<td align="right" class="line1">
+				<td align="left" class="line1">
 					<select id="chart_field" name="chart_field" size="1">
 						<!-- BEGIN CHARTFIELDS -->
 						<option {selected} value="{ID}">{DisplayName}</option>
@@ -102,25 +102,25 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_WIDTH}</b></td>
-				<td align="right" class="line1"><input type="text" name="chart_width" size="55" maxlength="255" value="{chart_width}"></td>
+				<td align="left" class="line1"><input type="text" name="chart_width" size="55" maxlength="255" value="{chart_width}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_MAXRECORDS}</b></td>
-				<td align="right" class="line1"><input type="text" name="maxrecords" size="55" maxlength="255" value="{maxrecords}"></td>
+				<td align="left" class="line1"><input type="text" name="maxrecords" size="55" maxlength="255" value="{maxrecords}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_SHOWPERCENT}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="showpercent" value="1" {CHECKED_ISSHOWPERCENT}></td>
+				<td align="left" class="line1"><input type="checkbox" name="showpercent" value="1" {CHECKED_ISSHOWPERCENT}></td>
 			</tr>
 
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
+				<td align="left" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
 			</tr>
 			<!-- IF ISGROUPSAVAILABLE="true" -->
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
-				<td align="right" class="line2">
+				<td align="left" class="line2">
 					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY}>
 						<!-- BEGIN SUBGROUPS -->
 						<option value="{mygroupid}" {group_selected}>{groupname}</option>

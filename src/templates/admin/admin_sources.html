@@ -242,16 +242,16 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="250"><b>{LN_SOURCES_NAME}</b></td>
-				<td align="right" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
+				<td align="left" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" width="250" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
-				<td align="right" class="line1" width="350"><textarea name="Description" cols="50" rows="5">{Description}</textarea></td>
+				<td align="left" class="line1" width="350"><textarea name="Description" cols="50" rows="5">{Description}</textarea></td>
 			</tr>
 			
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_SOURCES_TYPE}</b></td>
-				<td align="right" class="line1">
+				<td align="left" class="line1">
 					<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
 						<!-- BEGIN SOURCETYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
@@ -261,7 +261,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
-				<td align="right" class="line1">
+				<td align="left" class="line1">
 					<select id="SourceViewID" name="SourceViewID" size="1">
 						<!-- BEGIN VIEWS -->
 						<option {selected} value="{ID}">{DisplayName}</option>
@@ -271,25 +271,25 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_MSGPARSERS}</b></td>
-				<td align="right" class="line1"><input type="text" name="MsgParserList" size="55" maxlength="255" value="{MsgParserList}"></td>
+				<td align="left" class="line1"><input type="text" name="MsgParserList" size="55" maxlength="255" value="{MsgParserList}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_NORMALIZEMSG}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="MsgNormalize" value="1" {CHECKED_ISNORMALIZEMSG}></td>
+				<td align="left" class="line1"><input type="checkbox" name="MsgNormalize" value="1" {CHECKED_ISNORMALIZEMSG}></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked"><b>{LN_CFG_SKIPUNPARSEABLE}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="MsgSkipUnparseable" value="1" {CHECKED_ISSKIPUNPARSEABLE}></td>
+				<td align="left" class="line1"><input type="checkbox" name="MsgSkipUnparseable" value="1" {CHECKED_ISSKIPUNPARSEABLE}></td>
 			</tr>
 
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
-				<td align="right" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
+				<td align="left" class="line1"><input type="checkbox" name="isuseronly" value="{userid}" {CHECKED_ISUSERONLY}></td>
 			</tr>
 			<!-- IF ISGROUPSAVAILABLE="true" -->
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
-				<td align="right" class="line2">
+				<td align="left" class="line2">
 					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY}>
 						<!-- BEGIN SUBGROUPS -->
 						<option value="{mygroupid}" {group_selected}>{groupname}</option>
@@ -306,7 +306,7 @@
 			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DISKTYPEOPTIONS}</b></td></tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
-				<td align="right" class="line0" width="350">
+				<td align="left" class="line0" width="350">
 					<select name="SourceLogLineType" size="1">
 						<!-- BEGIN LOGLINETYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
@@ -316,7 +316,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SYSLOGFILE}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
 			</tr>
 			</table>
 			</div>
@@ -330,7 +330,7 @@
 			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 			<tr>
 				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
-				<td align="right" class="line1" width="350">
+				<td align="left" class="line1" width="350">
 					<select name="SourceDBType" size="1">
 						<!-- BEGIN DBTYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
@@ -344,7 +344,7 @@
 			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 			<tr>
 				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
-				<td align="right" class="line0" width="350">
+				<td align="left" class="line0" width="350">
 					<select name="SourceDBTableType" size="1">
 						<!-- BEGIN DBMAPPINGS -->
 						<option {selected} value="{type}">{DisplayName}</option>
@@ -357,27 +357,27 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
-				<td align="right" class="line0"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLENAME}</b></td>
-				<td align="right" class="line0"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
-				<td align="right" class="line1"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
-				<td align="right" class="line0"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
+				<td align="left" class="line0"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
-				<td align="right" class="line1" width="100%">
+				<td align="left" class="line1" width="100%">
 					<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
 				</td>
 			</tr>
@@ -388,7 +388,7 @@
 			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 			<tr>
 				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBRECORDSPERQUERY}</b></td>
-				<td align="right" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQuery}"></td>
+				<td align="left" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQuery}"></td>
 			</tr>
 			</table>
 			</div>
