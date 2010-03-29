@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 3.0.0 (beta), 2010-03-29
+- All references to phpLogCon have now been renamed to LogAnalyzer, 
+  which will be the new name for the phpLogCon project from now on. 
+- Added initial implementation of the new Report engine along with 
+  two free reports called "EventLog Summary" and "Syslog Summary"
+- Autoreload time in admin panels is now configureable. 
+- Added Read-Only User functionality.
+- Added Updatecheck functionality for future update notifications.
+- Fixed alignment of formfields in all admin panels. 
+---------------------------------------------------------------------------
 Version 2.8.1 (v2-stable), 2010-02-23
 - Added Inline searchicon, will be visible in each online 
   searchable field. Can be disabled in admin center.
@@ -11,10 +21,6 @@ Version 2.8.1 (v2-stable), 2010-02-23
   Admin Panel.
 - Normal users cannot init or remove message parsers anymore
 - Added Time-extension on search page (send by Sergey Sireskin). 
----------------------------------------------------------------------------
-Version 3.0.0 (beta), 2010-02-16
-- All references to phpLogCon have now been renamed to LogAnalyzer, 
-  which will be the new name for the phpLogCon project from now on. 
 ---------------------------------------------------------------------------
 Version 2.9.0 (beta), 2010-01-14
 - Merged previous devel branch into Stable branch and set 
