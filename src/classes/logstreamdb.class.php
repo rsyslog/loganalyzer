@@ -601,6 +601,9 @@ class LogStreamDB extends LogStream {
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
 			{
+				// Free res!
+				mysql_free_result($myQuery);
+
 				// Return success
 				return SUCCESS; 
 			}
@@ -1235,8 +1238,27 @@ class LogStreamDB extends LogStream {
 		$this->_myDBQuery = mysql_query($szSql, $this->_dbhandle);
 		if ( !$this->_myDBQuery ) 
 		{
-			$this->PrintDebugError("Invalid SQL: ".$szSql);
-			return ERROR_DB_QUERYFAILED;
+			// Check if a field is missing!
+			if ( mysql_errno() == 1054 ) 
+			{
+				// Handle missing field and try again!
+				if ( $this->HandleMissingField() == SUCCESS ) 
+				{
+					$this->_myDBQuery = mysql_query($szSql, $this->_dbhandle);
+					if ( !$this->_myDBQuery ) 
+					{
+						$this->PrintDebugError("Invalid SQL: ".$szSql);
+						return ERROR_DB_QUERYFAILED;
+					}
+				}
+				else // Failed to add field dynamically
+					return ERROR_DB_QUERYFAILED;
+			}
+			else
+			{
+				$this->PrintDebugError("Invalid SQL: ".$szSql);
+				return ERROR_DB_QUERYFAILED;
+			}
 		}
 		else
 		{
@@ -1416,7 +1438,60 @@ class LogStreamDB extends LogStream {
 		*/
 	}
 
+	/*
+	*	Returns the number of possible records by using a select count statement!
+	*/
+	private function HandleMissingField()
+	{
+		global $dbmapping, $fields;
 
+		// Get Err description
+		$errdesc = mysql_error();
+
+		// check matching of error msg!
+		if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc, $errOutArr ) )
+		{
+			$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+			// Loop through all fields to see which one is missing!
+			foreach ( $this->_arrProperties as $myproperty ) 
+			{
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $errOutArr[1] == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
+				{
+					// Create SQL Numeric field
+					$szUpdateSql = "";
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
+
+					if ( strlen($szUpdateSql) > 0 )
+					{
+						// Update Table schema now!
+						$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
+						if (!$myQuery)
+						{
+							// Return failure!
+							$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
+							return ERROR_DB_DBFIELDNOTFOUND;
+						}
+					}
+					else
+					{
+						// Return failure!
+						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+						return ERROR_DB_DBFIELDNOTFOUND;
+					}
+				}
+			}
+
+			// Reached this point means success!
+			return SUCCESS; 
+		}
+		else
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ".$szSql);
+			return ERROR_DB_DBFIELDNOTFOUND;
+	}
+
+// --- End of Class!
 }
 
 ?>
