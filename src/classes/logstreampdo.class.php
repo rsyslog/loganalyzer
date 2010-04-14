@@ -1379,8 +1379,27 @@ class LogStreamPDO extends LogStream {
 		$this->_myDBQuery = $this->_dbhandle->query($szSql);
 		if ( !$this->_myDBQuery ) 
 		{
-			$this->PrintDebugError( "Invalid SQL: " . $szSql . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
-			return ERROR_DB_QUERYFAILED;
+			// Check if a field is missing!
+			if ( $this->_dbhandle->errorCode() == "42S22" ) // 42S22 Means ER_BAD_FIELD_ERROR
+			{
+				// Handle missing field and try again!
+				if ( $this->HandleMissingField() == SUCCESS ) 
+				{
+					$this->_myDBQuery = $this->_dbhandle->query($szSql);
+					if ( !$this->_myDBQuery ) 
+					{
+						$this->PrintDebugError( "Invalid SQL: " . $szSql ); 
+						return ERROR_DB_QUERYFAILED;
+					}
+				}
+				else // Failed to add field dynamically
+					return ERROR_DB_QUERYFAILED;
+			}
+			else
+			{
+				$this->PrintDebugError( "Invalid SQL: " . $szSql); // . "<br><br>Errorcode: " . $this->_dbhandle->errorCode() );
+				return ERROR_DB_QUERYFAILED;
+			}
 		}
 		else
 		{
@@ -1619,7 +1638,66 @@ class LogStreamPDO extends LogStream {
 		return $numRows;
 	}
 
+	/*
+	*	Function handles missing database fields automatically!
+	*/
+	private function HandleMissingField()
+	{
+		global $dbmapping, $fields;
 
+		// Get Err description
+		$errdesc = $this->_dbhandle->errorInfo();
+
+		// check matching of error msg!
+		if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) )
+		{
+			$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+			// Loop through all fields to see which one is missing!
+			foreach ( $this->_arrProperties as $myproperty ) 
+			{
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $errOutArr[1] == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
+				{
+					// Create SQL Numeric field
+					$szUpdateSql = "";
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+
+					if ( strlen($szUpdateSql) > 0 )
+					{
+						// Update Table schema now!
+						$myQuery = $this->_dbhandle->query($szUpdateSql);
+						if (!$myQuery)
+						{
+							// Return failure!
+							$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
+							return ERROR_DB_DBFIELDNOTFOUND;
+						}
+						else // Free query now
+							$myQuery->closeCursor();
+					}
+					else
+					{
+						// Return failure!
+						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+						return ERROR_DB_DBFIELDNOTFOUND;
+					}
+				}
+			}
+
+			// Reached this point means success!
+			return SUCCESS; 
+		}
+		else
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ".$szSql);
+			return ERROR_DB_DBFIELDNOTFOUND;
+	}
+
+
+// --- End of Class!
 }
-
 ?>

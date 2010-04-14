@@ -1444,7 +1444,7 @@ class LogStreamDB extends LogStream {
 	}
 
 	/*
-	*	Returns the number of possible records by using a select count statement!
+	*	Function handles missing database fields automatically!
 	*/
 	private function HandleMissingField()
 	{
