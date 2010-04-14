@@ -1467,6 +1467,10 @@ class LogStreamDB extends LogStream {
 					$szUpdateSql = "";
 					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
 						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
 
 					if ( strlen($szUpdateSql) > 0 )
 					{
