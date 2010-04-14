@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 3.0.1 (beta), 2010-04-14
+- Fixed record height issue when "Show Onlinesearch icons within fields" 
+  option was enabled
+- Added support to automatically add missing fields in Mysql and PDO 
+  Logstreams. Currently MySQL and PostgreSQL are support only. 
+- Error details of logstream sources will now be shown on detail.php
+  page as well.
+---------------------------------------------------------------------------
 Version 3.0.0 (beta), 2010-03-29
 - All references to phpLogCon have now been renamed to LogAnalyzer, 
   which will be the new name for the phpLogCon project from now on. 
