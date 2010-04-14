@@ -403,10 +403,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 
 		if ( $ret == ERROR_UNDEFINED ) 
 			$content['detailederror'] = "Undefined error happened within the logstream.";
-//		else if ( $ret == ERROR_FILE_NOT_READABLE ) 
-//			$content['detailederror'] = "Syslog file is not readable, read access may be denied. ";
 		else 
-				$content['detailederror'] = "Unknown or unhandeled error occured.";
+			$content['detailederror'] = "Unknown or unhandeled error occured.";
+		// Add extra error stuff
+		if ( isset($extraErrorDescription) )
+			$content['detailederror'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 
 		}
 	}

@@ -1556,12 +1556,17 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
+		global $extraErrorDescription; 
+
 		$errdesc = $this->_dbhandle == null ? "" : implode( ";", $this->_dbhandle->errorInfo() );
 		$errno = $this->_dbhandle == null ? "" : $this->_dbhandle->errorCode();
 
 		$errormsg="$szErrorMsg <br>";
 		$errormsg.="Detail error: $errdesc <br>";
 		$errormsg.="Error Code: $errno <br>";
+
+		// Add to additional error output
+		$extraErrorDescription = $errormsg;
 
 		//Output!
 		OutputDebugMessage("LogStreamPDO|PrintDebugError: $errormsg", DEBUG_ERROR);

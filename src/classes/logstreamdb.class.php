@@ -1363,6 +1363,8 @@ class LogStreamDB extends LogStream {
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
+		global $extraErrorDescription; 
+
 		$errdesc = mysql_error();
 		$errno = mysql_errno();
 
@@ -1370,6 +1372,9 @@ class LogStreamDB extends LogStream {
 		$errormsg.="Detail error: $errdesc <br>";
 		$errormsg.="Error Code: $errno <br>";
 		
+		// Add to additional error output
+		$extraErrorDescription = $errormsg;
+
 		//Output!
 		OutputDebugMessage("LogStreamDB|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
