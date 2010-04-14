@@ -1380,7 +1380,7 @@ class LogStreamPDO extends LogStream {
 		if ( !$this->_myDBQuery ) 
 		{
 			// Check if a field is missing!
-			if ( $this->_dbhandle->errorCode() == "42S22" ) // 42S22 Means ER_BAD_FIELD_ERROR
+			if ( $this->_dbhandle->errorCode() == "42S22" || $this->_dbhandle->errorCode() == "42703" ) // 42S22 Means ER_BAD_FIELD_ERROR
 			{
 				// Handle missing field and try again!
 				if ( $this->HandleMissingField() == SUCCESS ) 
@@ -1649,7 +1649,11 @@ class LogStreamPDO extends LogStream {
 		$errdesc = $this->_dbhandle->errorInfo();
 
 		// check matching of error msg!
-		if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) )
+		if (	
+				preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) ||		// MySQL
+				preg_match("/column \"(.*?)\" does not exist/", $errdesc[2], $errOutArr )	// PostgreSQL
+//							 ERROR: column "checksum" does not exist LINE 1: ... eventsource, eventcategory, eventuser, systemid, checksum, ... ^
+			)
 		{
 			$szTableType = $this->_logStreamConfigObj->DBTableType;
 
@@ -1658,14 +1662,27 @@ class LogStreamPDO extends LogStream {
 			{
 				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $errOutArr[1] == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
 				{
-					// Create SQL Numeric field
 					$szUpdateSql = "";
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+					if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+					{
+						// MYSQL Statements
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NULL"; 
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+					}
+					else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+					{
+						// MYSQL Statements
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " int NOT NULL DEFAULT '0'"; 
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " varchar(60) NULL"; 
+						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " timestamp without time zone NULL"; 
+					}
 
 					if ( strlen($szUpdateSql) > 0 )
 					{
@@ -1693,7 +1710,7 @@ class LogStreamPDO extends LogStream {
 			return SUCCESS; 
 		}
 		else
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ".$szSql);
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc[2]);
 			return ERROR_DB_DBFIELDNOTFOUND;
 	}
 

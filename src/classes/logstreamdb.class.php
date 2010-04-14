@@ -1496,7 +1496,7 @@ class LogStreamDB extends LogStream {
 			return SUCCESS; 
 		}
 		else
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ".$szSql);
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc);
 			return ERROR_DB_DBFIELDNOTFOUND;
 	}
 
