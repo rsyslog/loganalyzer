@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------
+Version 3.0.2 (beta), 2010-10-22
+- Added support to use a proxy server for internal url request. For 
+  example the update check request which is done during login 
+  will use this proxy server if configured. 
+---------------------------------------------------------------------------
 Version 3.0.1 (beta), 2010-04-14
 - Fixed record height issue when "Show Onlinesearch icons within fields" 
   option was enabled
