@@ -85,6 +85,7 @@ $CFG['TreatNotFoundFiltersAsTrue'] = 0;		// If you filter / search for messages,
 $CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout value for popup menus in milliseconds. (those menus which popup when you click on the value of a field.
 $CFG['PhplogconLogoUrl'] = "";				// Put an Url to a custom toplogo you want to use.
 $CFG['InlineOnlineSearchIcons'] = 1;		// Show online search icons
+$CFG['UseProxyServerForRemoteQueries'] = "";// If empty no proxy server will be used. If set to a proxy server url like 127.0.0.1:8080, LogAnalyzer will use this server for url queries like the updatecheck. 
 // ---
 
 // --- Custom HTML Code 

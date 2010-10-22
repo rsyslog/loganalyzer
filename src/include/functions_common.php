@@ -899,6 +899,11 @@ function InitConfigurationValues()
 		$content['PhplogconLogoUrl'] = ""; // Init Option
 	// --- 
 
+	// --- Set Proxy Option 
+	if ( strlen(GetConfigSetting("UseProxyServerForRemoteQueries", false)) <= 0 ) 
+		$content['UseProxyServerForRemoteQueries'] = ""; // Init Option
+	// --- 
+
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
@@ -1562,6 +1567,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "DebugUserLogin", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "MiscDebugToSyslog", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "MiscMaxExecutionTime", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "UseProxyServerForRemoteQueries", true, null, null,$bForceStripSlahes );
 
 	// Custom HTML Code 
 	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );

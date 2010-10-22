@@ -216,8 +216,18 @@ function CheckUserLogin( $username, $password )
 		// ---
 
 		// --- Now we check for an PhpLogCon Update
-		$myHandle = @fopen($content['UPDATEURL'], "r");
-		
+		if ( strlen(GetConfigSetting("UseProxyServerForRemoteQueries", "") > 0) )
+		{
+			// Proxy Server configured, create a context with proxy option!
+			$opts = array('http' => array('proxy' => 'tcp://' + GetConfigSetting("UseProxyServerForRemoteQueries", ""), 'request_fulluri' => true));
+			$context = stream_context_create($opts);
+			
+			// Create handle with my context!
+			$myHandle = @fopen($content['UPDATEURL'], "r", false, $context);
+		}
+		else
+			$myHandle = @fopen($content['UPDATEURL'], "r");
+
 		if( $myHandle ) 
 		{
 			$myBuffer = "";

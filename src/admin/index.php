@@ -171,6 +171,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['InjectBodyHeader']) ) { $content['InjectBodyHeader'] = $_POST['InjectBodyHeader']; }
 			if ( isset ($_POST['InjectBodyFooter']) ) { $content['InjectBodyFooter'] = $_POST['InjectBodyFooter']; }
 			if ( isset ($_POST['PhplogconLogoUrl']) ) { $content['PhplogconLogoUrl'] = $_POST['PhplogconLogoUrl']; }
+			if ( isset ($_POST['UseProxyServerForRemoteQueries']) ) { $content['UseProxyServerForRemoteQueries'] = $_POST['UseProxyServerForRemoteQueries']; }
 
 			// Save configuration variables now
 			SaveGeneralSettingsIntoDB();
