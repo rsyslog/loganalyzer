@@ -54,7 +54,7 @@
 				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
 				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
 				<!-- ENDIF ActionsAllowed!="true" -->
-				&nbsp;<a href="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
+				&nbsp;<a href="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
 				
 			</td>
 		</tr>
@@ -111,6 +111,10 @@
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_SHOWPERCENT}</b></td>
 				<td align="left" class="line1"><input type="checkbox" name="showpercent" value="1" {CHECKED_ISSHOWPERCENT}></td>
+			</tr>
+			<tr>
+				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_CHARTS_FILTERSTRING}</b></td>
+				<td align="left" class="line1" width="100%"><font class="ErrorMsg">{LN_CHARTS_FILTERSTRING_HELP}</font></br><input type="text" name="chart_defaultfilter" size="100" maxlength="1024" value="{chart_defaultfilter}"></td>
 			</tr>
 
 			<tr>

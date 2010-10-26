@@ -823,6 +823,8 @@ function LoadChartsFromDatabase()
 	if ( $content['database_installedversion'] < 3 )
 		return;
 
+	// Add new fields depending on DB Version!
+
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
@@ -841,6 +843,7 @@ function LoadChartsFromDatabase()
 				DB_CHARTS . ".chart_type, " . 
 				DB_CHARTS . ".chart_width, " . 
 				DB_CHARTS . ".chart_field, " . 
+				DB_CHARTS . ".chart_defaultfilter, " . 
 				DB_CHARTS . ".maxrecords, " . 
 				DB_CHARTS . ".showpercent, " . 
 				DB_CHARTS . ".userid, " .

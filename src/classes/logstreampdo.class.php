@@ -1045,11 +1045,20 @@ class LogStreamPDO extends LogStream {
 				}
 			}
 
+			// Create SQL Where Clause!
+			if ( $this->_SQLwhereClause == "" ) 
+			{
+				$res = $this->CreateSQLWhereClause();
+				if ( $res != SUCCESS ) 
+					return $res;
+			}
+
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
 						$myDBQueryFieldName . ", " . 
 						"count(" . $myDBFieldName . ") as totalcount " . 
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
 						" ORDER BY totalcount DESC"; 
 			// Append LIMIT in this case!

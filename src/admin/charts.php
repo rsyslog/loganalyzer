@@ -96,6 +96,7 @@ if ( isset($_GET['op']) )
 		$content['maxrecords'] = 5; 
 		$content['showpercent'] = 0; 
 		$content['CHECKED_ISSHOWPERCENT'] = "";
+		$content['chart_defaultfilter'] = ""; 
 		// Chart Field
 		$content['chart_field'] = SYSLOG_HOST; 
 		CreateChartFields($content['chart_field']);
@@ -149,6 +150,7 @@ if ( isset($_GET['op']) )
 					$content['CHECKED_ISCHARTENABLED'] = "";
 				$content['chart_width'] = $myChart['chart_width'];
 				$content['maxrecords'] = $myChart['maxrecords'];
+				$content['chart_defaultfilter'] = $myChart['chart_defaultfilter']; 
 				$content['showpercent'] = $myChart['showpercent'];
 				if ( $myChart['showpercent'] == 1 )
 					$content['CHECKED_ISSHOWPERCENT'] = "checked";
@@ -261,6 +263,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['chart_field']) ) { $content['chart_field'] = DB_RemoveBadChars($_POST['chart_field']); }
 	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval(DB_RemoveBadChars($_POST['maxrecords'])); }
 	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval(DB_RemoveBadChars($_POST['showpercent'])); } else {$content['showpercent'] = 0; }
+	if ( isset($_POST['chart_defaultfilter']) ) { $content['chart_defaultfilter'] = DB_RemoveBadChars($_POST['chart_defaultfilter']); }
 	
 	// User & Group handeled specially
 	if ( isset ($_POST['isuseronly']) ) 
@@ -310,12 +313,13 @@ if ( isset($_POST['op']) )
 		if ( $_POST['op'] == "addnewchart" )
 		{
 			// Add custom search now!
-			$sqlquery = "INSERT INTO " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, maxrecords, showpercent, userid, groupid) 
+			$sqlquery = "INSERT INTO " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, chart_defaultfilter, maxrecords, showpercent, userid, groupid) 
 			VALUES ('" . $content['Name'] . "', 
 					" . $content['chart_enabled'] . ", 
 					" . $content['chart_type'] . ", 
 					" . $content['chart_width'] . ", 
 					'" . $content['chart_field'] . "',
+					'" . $content['chart_defaultfilter'] . "',
 					" . $content['maxrecords'] . ", 
 					" . $content['showpercent'] . ", 
 					" . $content['userid'] . ", 
@@ -344,7 +348,8 @@ if ( isset($_POST['op']) )
 								chart_enabled = " . $content['chart_enabled'] . ", 
 								chart_type = " . $content['chart_type'] . ", 
 								chart_width = " . $content['chart_width'] . ", 
-								chart_field = '" . $content['chart_field'] . "', 
+								chart_field = '" . $content['chart_field'] . "',
+								chart_defaultfilter = '" . $content['chart_defaultfilter'] . "',
 								maxrecords = " . $content['maxrecords'] . ", 
 								showpercent = " . $content['showpercent'] . ", 
 								userid = " . $content['userid'] . ", 
@@ -439,6 +444,12 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_DISABLED"];
 		// ---
 
+		// --- Set enabled or disabled state
+		if ( strlen($myChart['chart_defaultfilter']) > 0 )
+			$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
+		else 
+			$myChart['chart_defaultfilter_urldecoded'] = "";
+		// ---
 
 		// --- Set CSS Class
 		if ( $i % 2 == 0 )

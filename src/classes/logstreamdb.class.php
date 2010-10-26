@@ -885,11 +885,20 @@ class LogStreamDB extends LogStream {
 				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
 			}
 
+			// Create SQL Where Clause!
+			if ( $this->_SQLwhereClause == "" ) 
+			{
+				$res = $this->CreateSQLWhereClause();
+				if ( $res != SUCCESS ) 
+					return $res;
+			}
+
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
 						$myDBQueryFieldName . ", " . 
 						"count(" . $myDBFieldName . ") as TotalCount " . 
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
 						" ORDER BY TotalCount DESC" . 
 						" LIMIT " . $nRecordLimit;

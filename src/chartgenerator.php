@@ -114,6 +114,11 @@ if ( isset($_GET['showpercent']) )
 }
 else
 	$content['showpercent'] = 0;
+
+if ( isset($_GET['defaultfilter']) )
+	$content['chart_defaultfilter'] = $_GET['defaultfilter'];
+else
+	$content['chart_defaultfilter'] = "";
 // ---
 
 // --- BEGIN CREATE TITLE
@@ -132,10 +137,37 @@ if ( !$content['error_occured'] )
 
 		// Create LogStream Object 
 		$stream = $stream_config->LogStreamFactory($stream_config);
-		
+		$stream->SetFilter($content['chart_defaultfilter']);
+
 		// Set Columns we want to open!
 		$content['ChartColumns'][] = SYSLOG_UID;
 		$content['ChartColumns'][] = $content['chart_field'];
+
+		// Append fields from defaultfilter as well !
+		if ( strlen($content['chart_defaultfilter']) > 0 ) 
+		{
+			$tmpFilters = explode(" ", $content['chart_defaultfilter']);
+			foreach($tmpFilters as $myFilter) 
+			{
+				if ( strlen(trim($myFilter)) <= 0 ) 
+					continue;
+
+				if (	($pos = strpos($myFilter, ":")) !== false 
+							&&
+						($pos > 0 && substr($myFilter, $pos-1,1) != '\\') /* Only if character before is no backslash! */ )
+				{
+					// Split key and value
+					$tmpArray = explode(":", $myFilter, 2);
+
+					// Check if keyfield is valid and add to our Columns array if available
+					$newField = $stream->ReturnFilterKeyBySearchField($tmpArray[FILTER_TMP_KEY]);
+					if ( $newField )
+						$content['ChartColumns'][] = $newField;
+				}
+			}
+		}
+		
+		// Open Data Connection!
 		$res = $stream->Open( $content['ChartColumns'], true );
 		if ( $res == SUCCESS )
 		{

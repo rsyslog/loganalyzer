@@ -541,11 +541,28 @@ abstract class LogStream {
 		return $this->_filters; 
 	}
 
+	/**
+	*	Helper function to find a fieldkey by using the SearchField 
+	*/
+	public function ReturnFilterKeyBySearchField($szSearchField)
+	{	
+		global $fields; 
+
+		foreach ($fields as $myField) 
+		{
+			if ( $myField['SearchField'] == $szSearchField )
+				return $myField['FieldID'];
+		}
+		
+
+		return FALSE; 
+	}
+
 
 	/*
 	* --- PIRVATE HELPERS!
 	*/
-	
+
 	/**
 	*	Helper function to parse filters into a useful filter array we can work with.
 	*/
@@ -1016,7 +1033,7 @@ abstract class LogStream {
 	}
 
 	/*
-	*	Helpre function needed in ParseFilters 
+	*	Helper function needed in SetFilterIncludeMode 
 	*/
 	private function SetFilterIncludeMode(&$szValue)
 	{
