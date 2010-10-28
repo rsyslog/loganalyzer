@@ -53,6 +53,7 @@ abstract class LogStreamConfig {
 	protected $_msgParserList = null;		// Contains a string list of configure msg parsers
 	protected $_msgParserObjList = null;	// Contains an object reference list to the msg parsers
 	protected $_MsgNormalize = 0;			// If set to one, the msg will be reconstructed if successfully parsed before
+	public $_defaultfilter = "";			// Default filter for this source, will be added to all further filters. 
 	public $_SkipUnparseable = 0;			// If set to one, all unparseable message will be ignored! This of course only applies if a msg parser is used
 
 	// Constructor prototype 
@@ -100,6 +101,14 @@ abstract class LogStreamConfig {
 			$this->_MsgNormalize = 0;
 		else
 			$this->_MsgNormalize = 1;
+	}
+
+	/*
+	* Helper function to set defautl filters 
+	*/
+	public function SetDefaultfilter( $szNewVal )
+	{
+		$this->_defaultfilter = $szNewVal;
 	}
 
 	/*

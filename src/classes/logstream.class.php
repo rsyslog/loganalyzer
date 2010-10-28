@@ -268,8 +268,16 @@ abstract class LogStream {
 	*/
 	public function SetFilter($szFilters)
 	{
-		// Parse Filters from string
-		$this->ParseFilters($szFilters);
+		// prepend default Filters
+		if ( strlen($this->_logStreamConfigObj->_defaultfilter) > 0 ) 
+			$finalfilters = $this->_logStreamConfigObj->_defaultfilter . " " . $szFilters; 
+		else
+			$finalfilters = $szFilters; 
+
+		OutputDebugMessage("SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
+
+		// Parse Filters from string 
+		$this->ParseFilters($finalfilters);
 		return SUCCESS;	
 	}
  

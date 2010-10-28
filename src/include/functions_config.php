@@ -91,6 +91,12 @@ function InitSource(&$mysource)
 			$CFG['Sources'][$iSourceID]['Description'] = "";
 			$content['Sources'][$iSourceID]['Description'] = "";
 		}
+
+		if ( !isset($mysource['defaultfilter']) )
+		{
+			$CFG['Sources'][$iSourceID]['defaultfilter'] = "";
+			$content['Sources'][$iSourceID]['defaultfilter'] = "";
+		}
 		// ---
 
 		// Set default view id to source
@@ -197,6 +203,8 @@ function InitSource(&$mysource)
 			$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
 		if ( isset($mysource['MsgSkipUnparseable']) )
 			$mysource['ObjRef']->SetSkipUnparseable( $mysource['MsgSkipUnparseable'] );
+		if ( isset($mysource['defaultfilter']) )
+			$mysource['ObjRef']->SetDefaultfilter( $mysource['defaultfilter'] );
 
 		// Set default SourceID here!
 		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 

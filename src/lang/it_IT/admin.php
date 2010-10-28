@@ -285,6 +285,8 @@ $content['LN_SOURCES_ERROR_INVALIDCLEANUP'] = "Invalid Data Cleanup type";
 $content['LN_SOURCES_WARNDELETEDATA'] = "Are you sure that you want to clear logdata in the '%1' source? This cannot be undone!";
 $content['LN_SOURCES_ERROR_DELDATA'] = "Could not delete data in the '%1' source";
 $content['LN_SOURCES_HASBEENDELDATA'] = "Successfully deleted data from the '%1' source, '%2' rows were affected. ";
+$content['LN_SOURCES_FILTERSTRING'] = "Default Searchfilter";
+$content['LN_SOURCES_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to show only messages from 'server1', use this searchfilter: source:=server1";
 
 // Database Upgrade
 $content['LN_DBUPGRADE_TITLE'] = "LogAnalyzer Database Update";
@@ -322,6 +324,8 @@ $content['LN_CHARTS_HASBEENEDIT'] = "The Chart '%1' has been successfully edited
 $content['LN_CHARTS_ID'] = "ID";
 $content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
 $content['LN_CHARTS_PREVIEW'] = "Preview Chart in a new Window";
+$content['LN_CHARTS_FILTERSTRING'] = "Default Filter";
+$content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
 
 // Fields Options
 $content['LN_FIELDS_CENTER'] = "Fields Options";
