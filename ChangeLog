@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------
+Version 3.0.3 (beta), 2010-10-28
+- Added support for using custom filter for charts, for example if you 
+  want to create charts for single servers. 
+- Added support for using custom default filters in logstream sources. 
+  This filter will always prepended for all other custom search filters. 
+- Added new UserDB fields and updated database version to 10
+---------------------------------------------------------------------------
 Version 3.0.2 (beta), 2010-10-22
 - Added support to use a proxy server for internal url request. For 
   example the update check request which is done during login 

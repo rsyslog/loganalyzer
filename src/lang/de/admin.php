@@ -282,7 +282,7 @@ $content['LN_SOURCES_ERROR_INVALIDCLEANUP'] = "Ung&uuml;ltiger L&ouml;sch-Typ";
 $content['LN_SOURCES_WARNDELETEDATA'] = "Sind Sie sicher, dass Sie alle Daten l&ouml;schen wollen welche in der '%1' Quelle enthalten sind? Dies kann nicht mehr r&uuml;ckg&auml;ngig gemacht werden!";
 $content['LN_SOURCES_ERROR_DELDATA'] = "Es konnten keine Daten in der Quelle '%1' gel&ouml;scht werden";
 $content['LN_SOURCES_HASBEENDELDATA'] = "Die Daten in der Quelle '%1'wurden erfolgreich gel&ouml;scht, '%2' Zeilen wurden entfern. ";
-$content['LN_SOURCES_FILTERSTRING'] = "Default Searchfilter";
+$content['LN_SOURCES_FILTERSTRING'] = "Custom Searchfilter";
 $content['LN_SOURCES_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to show only messages from 'server1', use this searchfilter: source:=server1";
 
 // Database Upgrade
@@ -313,7 +313,7 @@ $content['LN_CHARTS_ERROR_IDNOTFOUND'] = "Die Chart-ID konnte in der Datenbank n
 $content['LN_CHARTS_WARNDELETESEARCH'] = "Sind Sie sicher, dass Sie den Chart '%1' l&ouml;schen wollen? Dies kann nicht mehr r&uuml;ckg&auml;ngig gemacht werden!";
 $content['LN_CHARTS_ERROR_DELCHART'] = "L&ouml;schen des Chart mit der id '%1' fehlgeschlagen!";
 $content['LN_CHARTS_ERROR_HASBEENDEL'] = "Der Chart '%1' wurde erfolgreich gel&ouml;scht!";
-$content['LN_CHARTS_FILTERSTRING'] = "Default Filter";
+$content['LN_CHARTS_FILTERSTRING'] = "Custom Filter";
 $content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
 
 // Fields Options

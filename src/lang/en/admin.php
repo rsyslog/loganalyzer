@@ -240,7 +240,7 @@ $content['LN_DBMP_HASBEENADDED'] = "The Custom Database Mapping '%1' has been su
 $content['LN_DBMP_ERROR_NOCOLUMNS'] = "You need to add at least one column in order to add a new Custom Database Mapping.";
 $content['LN_DBMP_HASBEENEDIT'] = "The Custom Database Mapping '%1' has been successfully edited.";
 $content['LN_DBMP_ERROR_MISSINGFIELDNAME'] = "Missing mapping for the '%1' field.";
-$content['LN_SOURCES_FILTERSTRING'] = "Default Searchfilter";
+$content['LN_SOURCES_FILTERSTRING'] = "Custom Searchfilter";
 $content['LN_SOURCES_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to show only messages from 'server1', use this searchfilter: source:=server1";
 
 // Custom Sources center
@@ -326,7 +326,7 @@ $content['LN_CHARTS_HASBEENEDIT'] = "The Chart '%1' has been successfully edited
 $content['LN_CHARTS_ID'] = "ID";
 $content['LN_CHARTS_ASSIGNTO'] = "Assigned To";
 $content['LN_CHARTS_PREVIEW'] = "Preview Chart in a new Window";
-$content['LN_CHARTS_FILTERSTRING'] = "Default Filter";
+$content['LN_CHARTS_FILTERSTRING'] = "Custom Filter";
 $content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
 
 
