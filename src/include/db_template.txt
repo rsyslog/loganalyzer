@@ -81,7 +81,7 @@ CREATE TABLE `logcon_sources` (
   `DBTableName` varchar(64) default NULL,
   `DBEnableRowCounting` tinyint(1) default NULL,
   `DBRecordsPerQuery` int(11) NOT NULL default '100',
-  `defaultfilter` VARCHAR(1024) NOT NULL AFTER, 
+  `defaultfilter` VARCHAR(1024) NOT NULL, 
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
