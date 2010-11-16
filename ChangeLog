@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 3.0.4 (beta), 2010-11-16
+- Fixed Copy and Paste error in db_template.txt.
+---------------------------------------------------------------------------
 Version 3.0.3 (beta), 2010-10-28
 - Added support for using custom filter for charts, for example if you 
   want to create charts for single servers. 
