@@ -147,7 +147,7 @@ if ( !$content['error_occured'] )
 		if ( $aFilterFields != null ) 
 			$content['ChartColumns'] = $aFilterFields; 
 
-		// append mandetory fields
+		// Append mandetory fields
 		if ( !in_array(SYSLOG_UID, $content['ChartColumns']) )
 			$content['ChartColumns'][] = SYSLOG_UID;
 		if ( !in_array($content['chart_field'], $content['ChartColumns']) )
