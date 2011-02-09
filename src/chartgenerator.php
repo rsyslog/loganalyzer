@@ -139,9 +139,19 @@ if ( !$content['error_occured'] )
 		$stream = $stream_config->LogStreamFactory($stream_config);
 		$stream->SetFilter($content['chart_defaultfilter']);
 
+
 		// Set Columns we want to open!
-		$content['ChartColumns'][] = SYSLOG_UID;
-		$content['ChartColumns'][] = $content['chart_field'];
+		$content['ChartColumns'] = array();
+		// First add filter fields to array
+		$aFilterFields = $stream->ReturnFieldsByFilters(); 
+		if ( $aFilterFields != null ) 
+			$content['ChartColumns'] = $aFilterFields; 
+
+		// append mandetory fields
+		if ( !in_array(SYSLOG_UID, $content['ChartColumns']) )
+			$content['ChartColumns'][] = SYSLOG_UID;
+		if ( !in_array($content['chart_field'], $content['ChartColumns']) )
+			$content['ChartColumns'][] = $content['chart_field'];
 
 		// Append fields from defaultfilter as well !
 		if ( strlen($content['chart_defaultfilter']) > 0 ) 

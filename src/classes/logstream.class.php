@@ -567,6 +567,24 @@ abstract class LogStream {
 	}
 
 
+	/**
+	*	Helper function to return all fields needed for filters
+	*	Can be helpful for functions which need to add filtering fields
+	*/
+	public function ReturnFieldsByFilters()
+	{	
+		global $fields; 
+
+		if ( $this->_filters != null )
+		{
+			// Return array keys
+			$aResult = array_keys($this->_filters); 
+			return $aResult; 
+		}
+		else // No fields at all!
+			return null; 
+	}
+
 	/*
 	* --- PIRVATE HELPERS!
 	*/

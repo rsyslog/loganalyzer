@@ -1151,7 +1151,7 @@ class LogStreamDB extends LogStream {
 				}
 			}
 
-//echo $this->_SQLwhereClause;
+// echo $this->_SQLwhereClause;
 			//$dbmapping[$szTableType][SYSLOG_UID]
 		}
 		else // No filters means nothing to do!
