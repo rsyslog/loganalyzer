@@ -43,12 +43,10 @@ function NewWindow(Location, WindowName,X_width,Y_height,Option) {
 function toggleformelement(ElementNameToggle, isEnabled)
 {
 	var myFormElement = document.getElementById(ElementNameToggle);
-	if ( isEnabled )
-	{
+	if ( isEnabled ) {
 		myFormElement.disabled = false;
 	}
-	else
-	{
+	else {
 		myFormElement.disabled = true;
 	}
 }
