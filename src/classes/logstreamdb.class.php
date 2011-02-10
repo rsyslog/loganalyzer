@@ -567,6 +567,16 @@ class LogStreamDB extends LogStream {
 			{
 				// Get affected rows and return!
 				$rowcount = mysql_affected_rows();
+				
+				// Reset AUTO_INCREMENT if all records were deleted!
+				if ( $nDateTimeStamp == 0 ) 
+				{
+					$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " AUTO_INCREMENT=0";
+					$myQuery = mysql_query($szSql, $this->_dbhandle);
+					// error occured, output DEBUG message
+					if (!$myQuery)
+						$this->PrintDebugError("CleanupLogdataByDate failed to reset AUTO_INCREMENT for '" . $this->_logStreamConfigObj->DBTableName . "' table. ");
+				}
 
 				// Free result not needed here!
 				//mysql_free_result ($myQuery); 
