@@ -75,6 +75,7 @@ $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 // PreInit overall user variables
 $content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
 $content['EXTRA_METATAGS'] = "";
+//$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
 $content['EXTRA_HTMLHEAD'] = "";
@@ -1082,7 +1083,8 @@ function GetStringWithHTMLCodes($myStr)
 {
 
 	// Replace all special characters with valid html representations
-	return htmlentities($myStr);
+	return htmlentities($myStr, ENT_NOQUOTES, "UTF-8");
+//TODO CONFIGURABLE!
 }
 
 function InitTemplateParser()
