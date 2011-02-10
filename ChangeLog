@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 3.0.5 (beta), 2011-02-10
+- Fixed javascript compatibility issue related to Internet Explorer 
+  in reports admin.
+- Fixed spelling error in german language translation
+- Fixed problem with german special characters (Umlaute) in Form captions.
+  Some admin panels did not work properly because of this issue. 
+- Filters were ignored in chart generation if the according filter fields 
+  were not included in the chart data.
+- The auto-increment value of the ID field is now resetted if all data 
+  is cleared using the mysql logstream maintenance functions. 
+---------------------------------------------------------------------------
 Version 3.0.4 (beta), 2010-11-16
 - Fixed Copy and Paste error in db_template.txt.
 ---------------------------------------------------------------------------
