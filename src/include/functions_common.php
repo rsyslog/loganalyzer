@@ -75,7 +75,6 @@ $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 // PreInit overall user variables
 $content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
 $content['EXTRA_METATAGS'] = "";
-//$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 $content['EXTRA_JAVASCRIPT'] = "";
 $content['EXTRA_STYLESHEET'] = "";
 $content['EXTRA_HTMLHEAD'] = "";
@@ -905,6 +904,10 @@ function InitConfigurationValues()
 		$content['UseProxyServerForRemoteQueries'] = ""; // Init Option
 	// --- 
 
+	// --- Read Encoding Option, and set default!
+	$content['HeaderDefaultEncoding'] = GetConfigSetting("HeaderDefaultEncoding", ENC_ISO_8859_1);  
+	// --- 
+
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
@@ -1089,12 +1092,15 @@ function GetStringWithHTMLCodes($myStr)
 
 function InitTemplateParser()
 {
-	global $page, $gl_root_path;
+	global $page, $gl_root_path, $content;
 	// -----------------------------------------------
 	// Create Template Object and set some variables for the templates
 	// -----------------------------------------------
 	$page = new Template();
 	$page -> set_path ( $gl_root_path . "templates/" );
+	
+	// Append correct Character encoding to HTML Header
+	$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=' . $content['HeaderDefaultEncoding'] . '" />';
 }
 
 function VerifyLanguage( $mylang ) 
@@ -1570,6 +1576,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "MiscDebugToSyslog", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "MiscMaxExecutionTime", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "UseProxyServerForRemoteQueries", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "HeaderDefaultEncoding", true, null, null,$bForceStripSlahes );
 
 	// Custom HTML Code 
 	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );

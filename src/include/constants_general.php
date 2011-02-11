@@ -216,4 +216,10 @@ $msgtype_colors[IUT_SMTPLISTENER] = "#CCE4DE";
 $msgtype_colors[IUT_WEBSERVERLOG] = "#E1FBD0";
 // --- 
 
+// Supported Encodings
+define('ENC_ISO_8859_1', "ISO-8859-1"); 
+define('ENC_UTF8', "utf-8"); 
+$encodings[ENC_ISO_8859_1] = array("ID" => ENC_ISO_8859_1); 
+$encodings[ENC_UTF8] = array("ID" => ENC_UTF8); 
+
 ?>

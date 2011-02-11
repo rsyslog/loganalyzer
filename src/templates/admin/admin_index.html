@@ -281,6 +281,16 @@
 		<td align="left" class="line1" colspan="2"><input type="text" name="UseProxyServerForRemoteQueries" size="85" maxlength="255" value="{UseProxyServerForRemoteQueries}" {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>
 	<tr>
+		<td align="left" class="cellmenu2"><b>{LN_ADMIN_DEFAULTENCODING}</b></td>
+		<td align="left" class="line1" colspan="2">
+			<select id="HeaderDefaultEncoding" name="HeaderDefaultEncoding" size="1" {DISABLE_GLOBALEDIT_FORMCONTROL}>
+				<!-- BEGIN ENCODINGS -->
+				<option {selected} value="{ID}">{DisplayName}</option>
+				<!-- END ENCODINGS -->
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td align="left" class="cellmenu2"><b>{LN_GEN_DEBUGUSERLOGIN}</b></td>
 		<td align="left" class="line2" colspan="2"><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>

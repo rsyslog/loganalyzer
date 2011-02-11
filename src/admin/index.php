@@ -172,6 +172,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['InjectBodyFooter']) ) { $content['InjectBodyFooter'] = $_POST['InjectBodyFooter']; }
 			if ( isset ($_POST['PhplogconLogoUrl']) ) { $content['PhplogconLogoUrl'] = $_POST['PhplogconLogoUrl']; }
 			if ( isset ($_POST['UseProxyServerForRemoteQueries']) ) { $content['UseProxyServerForRemoteQueries'] = $_POST['UseProxyServerForRemoteQueries']; }
+			if ( isset ($_POST['HeaderDefaultEncoding']) ) { $content['HeaderDefaultEncoding'] = $_POST['HeaderDefaultEncoding']; }
 
 			// Save configuration variables now
 			SaveGeneralSettingsIntoDB();
@@ -308,6 +309,22 @@ foreach ( $content['SOURCES'] as &$mySource )
 		$mySource['selected'] = "";
 }
 // --- 
+
+// --- Init for DefaultEncoding field!
+// copy Sources Array
+$content['ENCODINGS'] = $encodings;
+// if ( !isset($content['DefaultSourceID']) ) { $content['DefaultSourceID'] = ''; }
+foreach ( $content['ENCODINGS'] as &$myEncoding)
+{
+	$myEncoding['DisplayName'] = 	$myEncoding['ID'];
+	if ( $myEncoding['ID'] == $content['HeaderDefaultEncoding'] )
+		$myEncoding['selected'] = "selected";
+	else
+		$myEncoding['selected'] = "";
+}
+// --- 
+
+
 
 // Do if User wants extra options
 if ( $content['ENABLEUSEROPTIONS'] )

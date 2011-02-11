@@ -86,6 +86,7 @@ $CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout 
 $CFG['PhplogconLogoUrl'] = "";				// Put an Url to a custom toplogo you want to use.
 $CFG['InlineOnlineSearchIcons'] = 1;		// Show online search icons
 $CFG['UseProxyServerForRemoteQueries'] = "";// If empty no proxy server will be used. If set to a proxy server url like 127.0.0.1:8080, LogAnalyzer will use this server for url queries like the updatecheck. 
+$CFG['HeaderDefaultEncoding'] = ENC_ISO_8859_1;	// Set default character encoding
 // ---
 
 // --- Custom HTML Code 
