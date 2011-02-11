@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------
+Version 3.0.6 (beta), 2011-02-11
+- Added missing filterstring url parameter into statistics.php. 
+- You can enabled/disable charts by clicking on the checkbox now in 
+  the Charts Admin panel. 
+- Added support to select character encoding in HTML Header. This enables 
+  Loganalyzer to process and display UTF-8 encoded logs properly. 
+  The default encoding is ISO-8859-1 and can be switched in the general 
+  admin panel, or by adding the $CFG['HeaderDefaultEncoding'] configuration 
+  variable into config.php. Possible values are ENC_ISO_8859_1 
+  and ENC_UTF8. The supported encodings can be extended by adding 
+  new encoding definitions in include/constats_general.php.
+---------------------------------------------------------------------------
 Version 3.0.5 (beta), 2011-02-10
 - Fixed javascript compatibility issue related to Internet Explorer 
   in reports admin.
