@@ -315,6 +315,8 @@ $content['LN_CHARTS_ERROR_DELCHART'] = "L&ouml;schen des Chart mit der id '%1' f
 $content['LN_CHARTS_ERROR_HASBEENDEL'] = "Der Chart '%1' wurde erfolgreich gel&ouml;scht!";
 $content['LN_CHARTS_FILTERSTRING'] = "Custom Filter";
 $content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
+$content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'] = "Error, ChartID with ID '%1' , was not found";
+$content['LN_CHARTS_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ChartID or operation.";
 
 // Fields Options
 $content['LN_FIELDS_CENTER'] = "Feld Options";

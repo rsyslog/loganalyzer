@@ -62,6 +62,13 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 					$_GET['op'] == "add" || 
 					$_GET['op'] == "delete" 
 				)
+				||
+				(	isset($_GET['miniop']) && 
+					(
+						$_GET['miniop'] == "setenabled" 
+					)
+				)
+
 			)	
 		)
 		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_READONLY'] );
@@ -76,6 +83,47 @@ if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 )
 else
 	$content['READONLY_ISUSERONLY'] = ""; 
 // --- 
+
+if ( isset($_GET['miniop']) ) 
+{
+	if ( isset($_GET['id']) && isset($_GET['newval']) )
+	{
+		if ( $_GET['miniop'] == "setenabled" ) 
+		{
+			//PreInit these values 
+			$content['CHARTID'] = intval(DB_RemoveBadChars($_GET['id']));
+			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+
+			// Perform SQL Query!
+			$sqlquery = "SELECT * " . 
+						" FROM " . DB_CHARTS . 
+						" WHERE ID = " . $content['CHARTID'];
+			$result = DB_Query($sqlquery);
+			$mychart = DB_GetSingleRow($result, true);
+			if ( isset($mychart['DisplayName']) )
+			{
+				// Update enabled setting!
+				$result = DB_Query("UPDATE " . DB_CHARTS . " SET 
+					chart_enabled = $iNewVal 
+					WHERE ID = " . $content['CHARTID']);
+				DB_FreeQuery($result);
+
+				// Reload Charts from DB
+				LoadChartsFromDatabase();
+			}
+			else
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'], $content['CHARTID'] );
+			}
+		}
+	}
+	else
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = $content['LN_CHARTS_ERROR_SETTINGFLAG'];
+	}
+}
 
 if ( isset($_GET['op']) )
 {
@@ -439,9 +487,17 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 		// --- Set enabled or disabled state
 		if ( $myChart['chart_enabled'] == 1 )
+		{
 			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_ENABLED"];
+			$myChart['set_enabled'] = 0;
+		}
 		else 
+		{
 			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_DISABLED"];
+			$myChart['set_enabled'] = 1;
+		}
+
+		
 		// ---
 
 		// --- Set Chart default Filterstring
