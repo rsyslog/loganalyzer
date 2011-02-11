@@ -101,6 +101,13 @@ if ( isset($content['Charts']) )
 				$myChart['showpercent_display'] = "No";
 			// --- 
 
+			// --- Set Chart default Filterstring
+			if ( strlen($myChart['chart_defaultfilter']) > 0 )
+				$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
+			else 
+				$myChart['chart_defaultfilter_urldecoded'] = "";
+			// ---
+
 			// --- Set CSS Class
 			if ( $i % 2 == 0 )
 			{
