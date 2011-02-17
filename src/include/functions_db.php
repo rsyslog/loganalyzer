@@ -57,7 +57,7 @@ function DB_Connect()
 	if ($userdbconn) 
 		return;
 
-	$userdbconn = @mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
+	$userdbconn = @mysql_connect( GetConfigSetting("UserDBServer") . ":" . GetConfigSetting("UserDBPort"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
 	if (!$userdbconn) 
 	{
 		// Create Error Msg
