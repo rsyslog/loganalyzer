@@ -330,6 +330,7 @@ abstract class Report {
 		$content["report_title"] = $this->GetCustomTitle();
 		$content["report_comment"] = $this->GetCustomComment();
 		$content["report_version"] = $this->GetReportVersion();
+		$content["report_gentime"] = date(DATE_RFC822);
 
 		// Create array for readable filters display
 		$myFilters = $this->_streamObj->ReturnFiltersArray(); 

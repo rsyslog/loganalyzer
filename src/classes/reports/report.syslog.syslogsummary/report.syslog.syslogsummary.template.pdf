@@ -9,6 +9,7 @@
 <body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
 
 <H3>{report_title}</H3>
+<p>{LN_REPORT_GENERATEDTIME} <b>{report_gentime}</b></p>
 <p>{report_comment}</p>
 
 <!-- IF report_filters_enabled="true" -->
@@ -101,7 +102,7 @@
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="mainfooter">
 <tr>
-	<td align="center" class="line0" valign="top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2009) &nbsp;<a href="http://loganalyzer.adiscon.com" target="_blank">Report</A> Version {report_version} </td>
+	<td align="center" class="line0" valign="top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2009-2011) &nbsp;<a href="http://loganalyzer.adiscon.com" target="_blank">Report</A> Version {report_version} </td>
 	<td align="center" class="line1" valign="top"><B>Partners:</B>&nbsp;<a href="http://www.rsyslog.com" target="_blank">Rsyslog</a> | &nbsp;<a href="http://www.winsyslog.com" target="_blank">WinSyslog</a></td>
 </tr>
 <!-- IF ShowPageRenderStats="true" -->

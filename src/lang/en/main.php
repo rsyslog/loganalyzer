@@ -361,6 +361,7 @@ $content['LN_CMD_SAVEDREPORTIDNOTFOUND'] = "Invalid SavedReport ID '%1'";
 $content['LN_CMD_NOREPORTID'] = "Missing Report ID";
 $content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
 $content['LN_CMD_NOCMDPROMPT'] = "Error, this script can only be run from the command prompt.";
+$content['LN_REPORT_GENERATEDTIME'] = "Report generated at: ";
 
 
 ?>

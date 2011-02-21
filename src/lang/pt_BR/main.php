@@ -354,5 +354,6 @@ $content['LN_DETAIL_BACKTOLIST'] = "Voltar para a lista";
 	$content['LN_CMD_NOREPORTID'] = "Missing Report ID";
 	$content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
 	$content['LN_CMD_NOCMDPROMPT'] = "Error, this script can only be run from the command prompt.";
+	$content['LN_REPORT_GENERATEDTIME'] = "Report generated at: ";
 
 ?>

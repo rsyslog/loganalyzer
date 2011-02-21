@@ -612,7 +612,7 @@ class LogStreamDB extends LogStream {
 			if ($myQuery)
 			{
 				// Free res!
-				mysql_free_result($myQuery);
+				// NOT NEEDED HERE! mysql_free_result($myQuery);
 
 				// Return success
 				return SUCCESS; 
