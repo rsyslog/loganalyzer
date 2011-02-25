@@ -123,7 +123,7 @@ class Report_eventsummary extends Report {
 		global $content, $severity_colors, $gl_starttime, $fields; 
 
 		// Create Filter string, append filter for EventLog Type msgs!
-		$szFilters = $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_NT_EventReport; 
+		$szFilters = $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_NT_EventReport . ",=" . IUT_WEVTMONV2; // Include EventLog v1 and v2 
 
 		// Set Filter string
 		$this->_streamObj->SetFilter( $szFilters );
