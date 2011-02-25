@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------
+Version 3.0.7 (beta), 2011-02-25
+- Added UserDBPort Parameter into DB_Connect function. Thanks to forum 
+  user "plebreton" pointing to this bug.
+- Added Output of report generation time into templates and common 
+  report variabes.
+- Fixed a bug in logstream DB causing unnecessary mysql_free_result 
+  calls when updating Checksum data.
+- Fixed filter dialog issue parsing message filters wrong in Report 
+  Admin Panel. An semicolon was added while saving report settings. 
+- Added missing mapping for ProcessID field for monitorware database 
+  mapping (logstream constants).
+---------------------------------------------------------------------------
 Version 3.0.6 (beta), 2011-02-11
 - Added missing filterstring url parameter into statistics.php. 
 - You can enabled/disable charts by clicking on the checkbox now in 
