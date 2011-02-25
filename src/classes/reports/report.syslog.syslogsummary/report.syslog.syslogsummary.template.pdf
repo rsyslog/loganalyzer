@@ -79,7 +79,7 @@
 	<tr>
 		<td class="line1" valign="top" align="center" rowspan="2">{ZAEHLER}</td>
 		<td class="line1" valign="top" align="left">{FirstOccurrence_Date_Formatted}</td>
-		<td class="line1" valign="top" align="left">{FirstOccurrence_Date_Formatted}</td>
+		<td class="line1" valign="top" align="left">{LastOccurrence_Date_Formatted}</td>
 		<td class="line1" valign="top" align="left">{syslogseverity_text}</td>
 		<td class="line1" valign="top" align="left"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogfacility&q={syslogfacility_text}" target="_blank">{syslogfacility_text}</a></td>
 		<td class="line1" valign="top" align="left"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogtag&q={syslogtag}" target="_blank">{syslogtag}</a></td>
