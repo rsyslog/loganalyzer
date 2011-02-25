@@ -350,6 +350,7 @@ $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_MESSAGE] = "Message";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_FACILITY] = "Facility";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_SEVERITY] = "Priority";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "SysLogTag";
+$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_PROCESSID] = "ProcessID";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_ID] = "EventID";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_LOGTYPE] = "EventLogType";
 $dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_EVENT_SOURCE] = "EventSource";

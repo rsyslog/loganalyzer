@@ -688,29 +688,30 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 						}
 						else if ( $tmpField['FieldType'] == FILTER_TYPE_STRING ) 
 						{
-							// Append Fieldname
-							$szFilterString .= $tmpField['SearchField']; 
+							// Append Fieldname, if set!
+							if (isset($tmpField['SearchField']) && strlen($tmpField['SearchField']) > 0 ) 
+								$szFilterString .= $tmpField['SearchField'] . ":"; 
 
 							// Append comparison
 							switch ( $tmpComparison ) 
 							{
 								case 1:		// FILTER_MODE_INCLUDE
-									$szFilterString .= ":"; 
+									$szFilterString .= ""; 
 									break; 
 								case 2:		// FILTER_MODE_EXCLUDE
-									$szFilterString .= ":-"; 
+									$szFilterString .= "-"; 
 									break; 
 								case 5:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHFULL
-									$szFilterString .= ":="; 
+									$szFilterString .= "="; 
 									break; 
 								case 6:		// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHFULL
-									$szFilterString .= ":-="; 
+									$szFilterString .= "-="; 
 									break; 
 								case 9:		// FILTER_MODE_INCLUDE + FILTER_MODE_SEARCHREGEX
-									$szFilterString .= ":~"; 
+									$szFilterString .= "~"; 
 									break; 
 								case 10:	// FILTER_MODE_EXCLUDE + FILTER_MODE_SEARCHREGEX
-									$szFilterString .= ":-~"; 
+									$szFilterString .= "-~"; 
 									break; 
 							}
 
@@ -770,14 +771,17 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 				}
 				else if ( $myNewField['FieldType'] == FILTER_TYPE_STRING ) 
 				{
-					// Append sample filter
-					$szFilterString .= $myNewField['SearchField']. ":sample"; 
+					// Searchfield filter
+					if (isset($myNewField['SearchField']) && strlen($myNewField['SearchField']) > 0 ) 
+						$szFilterString .= $myNewField['SearchField'] . ":";
+					
+					// Append sample
+					$szFilterString .= "sample"; 
 				}
 			}
 			// Append to Filterstring
 		}
 	}
-
 	// Copy Final Filterstring if necessary
 	if ( strlen($szFilterString) > 0 ) 
 		$content['filterString'] = $szFilterString; 
