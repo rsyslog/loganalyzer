@@ -209,6 +209,7 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["syslog"]['DisplayName'] = "Syslog / RSyslog";
 	if ( $selectedType == $content['LOGLINETYPES']["syslog"]['type'] ) { $content['LOGLINETYPES']["syslog"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["syslog"]['selected'] = ""; }
 
+
 	// Adiscon Winsyslog
 	$content['LOGLINETYPES']["winsyslog"]['type'] = "winsyslog";
 	$content['LOGLINETYPES']["winsyslog"]['DisplayName'] = "Adiscon WinSyslog";
@@ -218,6 +219,11 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["misc"]['type'] = "misc";
 	$content['LOGLINETYPES']["misc"]['DisplayName'] = "Miscellaneous logfiles";
 	if ( $selectedType == $content['LOGLINETYPES']["misc"]['type'] ) { $content['LOGLINETYPES']["misc"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["misc"]['selected'] = ""; }
+
+	// RSyslog Format23
+	$content['LOGLINETYPES']["syslog23"]['type'] = "syslog23";
+	$content['LOGLINETYPES']["syslog23"]['DisplayName'] = "RSyslog Format23 (RFC 5424)";
+	if ( $selectedType == $content['LOGLINETYPES']["syslog23"]['type'] ) { $content['LOGLINETYPES']["syslog23"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["syslog23"]['selected'] = ""; }
 }
 
 function CreateSourceTypesList( $selectedSource )
