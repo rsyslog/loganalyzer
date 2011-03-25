@@ -7,7 +7,7 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2010 Adiscon GmbH.
+	* Copyright (C) 2008-2011 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -90,23 +90,6 @@ class LogStreamLineParsersyslog23 extends LogStreamLineParser {
 			$arrArguments[SYSLOG_PROCESSID] = $out[6];
 			$arrArguments[SYSLOG_MESSAGE] = $out[9];
 		}
-/*		// Sample (RSyslog): 2008-03-28T11:07:40.591633+01:00 localhost rger: test 1
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}.[0-9]{1,2}:[0-9]{1,2}) (.*?) (.*?):(.*?)$/", $szLine, $out ) )
-		{
-			// Copy parsed properties!
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_HOST] = $out[2];
-			$arrArguments[SYSLOG_SYSLOGTAG] = $out[3];
-			$arrArguments[SYSLOG_MESSAGE] = $out[4];
-		}
-		// Sample: 2008-03-28T15:17:05.480876+01:00,**NO MATCH**
-		else if ( preg_match("/([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,6}.[0-9]{1,2}:[0-9]{1,2}),(.*?)$/", $szLine, $out ) )
-		{
-			// Some kind of debug message or something ...
-			$arrArguments[SYSLOG_DATE] = GetEventTime($out[1]);
-			$arrArguments[SYSLOG_MESSAGE] = $out[2];
-		}
-*/
 		else
 		{
 			if ( isset($arrArguments[SYSLOG_MESSAGE]) && strlen($arrArguments[SYSLOG_MESSAGE]) > 0 ) 
