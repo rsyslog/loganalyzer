@@ -197,6 +197,10 @@ else
 
 
 // --- BEGIN Custom Code
+
+// Do not BLOCK other Site Calls
+WriteClosePHPSession();
+
 if ( isset($content['Sources'][$currentSourceID]) ) 
 {
 	// Obtain and get the Config Object

@@ -127,6 +127,9 @@ $content['TITLE'] = InitPageTitle();
 
 // --- BEGIN Custom Code
 
+// Do not BLOCK other Site Calls
+WriteClosePHPSession();
+
 // Get data and print on the image!
 if ( !$content['error_occured'] )
 {

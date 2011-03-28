@@ -1513,6 +1513,19 @@ function StartPHPSession()
 	}
 }
 
+/*
+*	This Functions starts the main PHP Session if necessary
+*/
+function WriteClosePHPSession()
+{
+	global $RUNMODE;
+	if ( $RUNMODE == RUNMODE_WEBSERVER )
+	{
+		@session_write_close();
+	}
+}
+
+
 function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 {
 	global $content, $page;
