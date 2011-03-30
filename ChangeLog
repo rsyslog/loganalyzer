@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 3.2.0 (stable), 2011-03-30
+- Added new logline parser for Syslog23 Format (RFC 5424). This format 
+  is suported by the RSYSLOG_SyslogProtocol23Format template in RSyslog.
+  This format also includes syslog facility and priority.
+- Added php session_write_close to certain places to avoid hanging 
+  browser sessions. 
+- Eventlog Summary Report now also detects and processes data from
+  EventLog Monitor V2 (from EventReporter/MonitorWare Agent).
+- Fixed typo in Syslog Report, Last Occurrence date is now correctly 
+  printed in the report.
+---------------------------------------------------------------------------
 Version 3.0.7 (beta), 2011-02-25
 - Added UserDBPort Parameter into DB_Connect function. Thanks to forum 
   user "plebreton" pointing to this bug.
