@@ -914,6 +914,10 @@ function InitConfigurationValues()
 	$content['HeaderDefaultEncoding'] = GetConfigSetting("HeaderDefaultEncoding", ENC_ISO_8859_1);  
 	// --- 
 
+	// --- Read ContextLinks Option, and set default!
+	$content['EnableContextLinks'] = GetConfigSetting("EnableContextLinks", 1);  
+	// --- 
+
 	// Init main langauge file now!
 	IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
@@ -1341,6 +1345,10 @@ function AddContextLinks(&$sourceTxt)
 {
 	global $szTLDDomains;
 
+	// check if user disabled Context Links. 
+	if ( GetConfigSetting("EnableContextLinks", 1, CFGLEVEL_USER) == 0 )
+		return; 
+
 	// Return if not enabled!
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
@@ -1566,6 +1574,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 
 	WriteConfigValue( "ViewUseTodayYesterday", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewEnableDetailPopups", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "EnableContextLinks", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "EnableIPAddressResolve", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "MiscShowDebugMsg", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "MiscShowDebugGridCounter", true, null, null,$bForceStripSlahes );
@@ -1613,6 +1622,7 @@ function SaveUserGeneralSettingsIntoDB()
 
 	WriteConfigValue( "ViewUseTodayYesterday", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableDetailPopups", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "EnableContextLinks", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "EnableIPAddressResolve", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "MiscShowDebugMsg", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "MiscShowDebugGridCounter", false, $content['SESSION_USERID'] );

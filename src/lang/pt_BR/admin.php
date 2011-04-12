@@ -110,6 +110,7 @@ $content['LN_ADMIN_ERROR_READONLY'] = "This is a READONLY User, you are not allo
 $content['LN_ADMIN_ERROR_NOTALLOWEDTOEDIT'] = "You are not allowed to edit this configuration item.";
 $content['LN_ADMIN_USEPROXYSERVER'] = "Leave empty if you do not want to use a proxy server! If set to valid proxy server (for example '127.0.0.1:8080'), LogAnalyzer will use this server for remote queries like the update check feature.";
 $content['LN_ADMIN_DEFAULTENCODING'] = "Default character encoding"; 
+$content['LN_GEN_CONTEXTLINKS'] = "Enable Contextlinks (Question marks)";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

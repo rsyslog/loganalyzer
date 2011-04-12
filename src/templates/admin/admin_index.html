@@ -204,6 +204,14 @@
 		<td align="left" class="line1" ><input type="checkbox" name="User_ViewEnableDetailPopups" value="yes" {User_ViewEnableDetailPopups_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
+	
+	<tr>
+		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_CONTEXTLINKS}</b></td>
+		<td align="left" class="line1" ><input type="checkbox" name="EnableContextLinks" value="yes" {EnableContextLinks_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+		<td align="left" class="line1" ><input type="checkbox" name="User_EnableContextLinks" value="yes" {User_EnableContextLinks_checked}></td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_IPADRRESOLVE}</b></td>
 		<td align="left" class="line1" ><input type="checkbox" name="EnableIPAddressResolve" value="yes" {EnableIPAddressResolve_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>

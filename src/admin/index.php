@@ -142,6 +142,7 @@ if ( isset($_POST['op']) )
 			// Read checkboxes
 			if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
 			if ( isset ($_POST['ViewEnableDetailPopups']) ) { $content['ViewEnableDetailPopups'] = 1; } else { $content['ViewEnableDetailPopups'] = 0; } 
+			if ( isset ($_POST['EnableContextLinks']) ) { $content['EnableContextLinks'] = 1; } else { $content['EnableContextLinks'] = 0; } 
 			if ( isset ($_POST['EnableIPAddressResolve']) ) { $content['EnableIPAddressResolve'] = 1; } else { $content['EnableIPAddressResolve'] = 0; } 
 			if ( isset ($_POST['MiscShowDebugMsg']) ) { $content['MiscShowDebugMsg'] = 1; } else { $content['MiscShowDebugMsg'] = 0; } 
 			if ( isset ($_POST['MiscShowDebugGridCounter']) ) { $content['MiscShowDebugGridCounter'] = 1; } else { $content['MiscShowDebugGridCounter'] = 0; } 
@@ -201,6 +202,7 @@ if ( isset($_POST['op']) )
 			// Read checkboxes
 			if ( isset ($_POST['User_ViewUseTodayYesterday']) ) { $USERCFG['ViewUseTodayYesterday'] = 1; } else { $USERCFG['ViewUseTodayYesterday'] = 0; } 
 			if ( isset ($_POST['User_ViewEnableDetailPopups']) ) { $USERCFG['ViewEnableDetailPopups'] = 1; } else { $USERCFG['ViewEnableDetailPopups'] = 0; } 
+			if ( isset ($_POST['User_EnableContextLinks']) ) { $USERCFG['EnableContextLinks'] = 1; } else { $USERCFG['EnableContextLinks'] = 0; } 
 			if ( isset ($_POST['User_EnableIPAddressResolve']) ) { $USERCFG['EnableIPAddressResolve'] = 1; } else { $USERCFG['EnableIPAddressResolve'] = 0; } 
 			if ( isset ($_POST['User_MiscShowDebugMsg']) ) { $USERCFG['MiscShowDebugMsg'] = 1; } else { $USERCFG['MiscShowDebugMsg'] = 0; } 
 			if ( isset ($_POST['User_MiscShowDebugGridCounter']) ) { $USERCFG['MiscShowDebugGridCounter'] = 1; } else { $USERCFG['MiscShowDebugGridCounter'] = 0; } 
@@ -242,6 +244,7 @@ if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime']
 // Set checkbox States
 if (isset($content['ViewUseTodayYesterday']) && $content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
 if (isset($content['ViewEnableDetailPopups']) && $content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
+if (isset($content['EnableContextLinks']) && $content['EnableContextLinks'] == 1) { $content['EnableContextLinks_checked'] = "checked"; } else { $content['EnableContextLinks_checked'] = ""; }
 if (isset($content['EnableIPAddressResolve']) && $content['EnableIPAddressResolve'] == 1) { $content['EnableIPAddressResolve_checked'] = "checked"; } else { $content['EnableIPAddressResolve_checked'] = ""; }
 
 if (isset($content['MiscShowDebugMsg']) && $content['MiscShowDebugMsg'] == 1) { $content['MiscShowDebugMsg_checked'] = "checked"; } else { $content['MiscShowDebugMsg_checked'] = ""; }
@@ -332,6 +335,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	// Set checkbox States
 	if ( GetConfigSetting('ViewUseTodayYesterday', $content['ViewUseTodayYesterday'], CFGLEVEL_USER) == 1) { $content['User_ViewUseTodayYesterday_checked'] = "checked"; } else { $content['User_ViewUseTodayYesterday_checked'] = ""; }
 	if ( GetConfigSetting('ViewEnableDetailPopups', $content['ViewEnableDetailPopups'], CFGLEVEL_USER) == 1) { $content['User_ViewEnableDetailPopups_checked'] = "checked"; } else { $content['User_ViewEnableDetailPopups_checked'] = ""; }
+	if ( GetConfigSetting('EnableContextLinks', $content['EnableContextLinks'], CFGLEVEL_USER) == 1) { $content['User_EnableContextLinks_checked'] = "checked"; } else { $content['User_EnableContextLinks_checked'] = ""; }
 	if ( GetConfigSetting('EnableIPAddressResolve', $content['EnableIPAddressResolve'], CFGLEVEL_USER) == 1) { $content['User_EnableIPAddressResolve_checked'] = "checked"; } else { $content['User_EnableIPAddressResolve_checked'] = ""; }
 
 	if ( GetConfigSetting('MiscShowDebugMsg', $content['MiscShowDebugMsg'], CFGLEVEL_USER) == 1) { $content['User_MiscShowDebugMsg_checked'] = "checked"; } else { $content['User_MiscShowDebugMsg_checked'] = ""; }

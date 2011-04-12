@@ -79,6 +79,7 @@ $CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button
 
+$CFG['EnableContextLinks'] = 1;				// if enabled, context links within the messages will automatically be created and added. Set this to 0 to disable all context links. 
 $CFG['EnableIPAddressResolve'] = 1;			// If enabled, IP Addresses inline messages are automatically resolved and the result is added in brackets {} behind the IP Address
 $CFG['SuppressDuplicatedMessages'] = 0;		// If enabled, duplicated messages will be suppressed in the main display. 
 $CFG['TreatNotFoundFiltersAsTrue'] = 0;		// If you filter / search for messages, and the fields you are filtering for is not found, the filter result is treaten as TRUE! 
