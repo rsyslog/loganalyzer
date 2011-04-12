@@ -1193,7 +1193,7 @@ function GetEventTime($szTimStr)
 			$eventtime[EVTIME_TIMESTAMP] = mktime($out[3], $out[4], $out[5], GetMonthFromString($out[1]), $out[2], date("Y")-1 );
 		}
 
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 
 //			echo gmdate(DATE_RFC822, $eventtime[EVTIME_TIMESTAMP]) . "<br>";
@@ -1201,19 +1201,19 @@ function GetEventTime($szTimStr)
 //			exit;
 	}
 	// Sample: 2008-04-02T11:12:32+02:00
-	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})\+([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
+	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})([+-])([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = $out[7]; 
+		$eventtime[EVTIME_TIMEZONE] = $out[7] . $out[8] . $out[9]; 
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	// Sample: 2008-04-02T11:12:32.380449+02:00
-	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})\.([0-9]{1,6})\+([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
+	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})\.([0-9]{1,6})([+-])([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = $out[8]; 
+		$eventtime[EVTIME_TIMEZONE] = $out[8] . $out[9] . $out[10];  
 		$eventtime[EVTIME_MICROSECONDS] = $out[7];
 	}
 	// Sample: 2008-04-02,15:19:06
@@ -1221,7 +1221,7 @@ function GetEventTime($szTimStr)
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	// Sample: 2008-02-19 12:52:37
@@ -1229,7 +1229,7 @@ function GetEventTime($szTimStr)
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	// Sample: 2007-4-18T00:00:00
@@ -1237,15 +1237,15 @@ function GetEventTime($szTimStr)
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	// Sample: 16/Sep/2008:13:37:47 +0200
-	else if ( preg_match("/([0-9]{1,2})\/(...)\/([0-9]{1,4}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) \+([0-9]{1,4})/", $szTimStr, $out ) )
+	else if ( preg_match("/([0-9]{1,2})\/(...)\/([0-9]{1,4}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) ([+-])([0-9]{1,4})/", $szTimStr, $out ) )
 	{
 		// Apache Logfile typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[4], $out[5], $out[6], GetMonthFromString($out[2]), $out[1], $out[3]);
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // > WTF TODO! > $out[7]
+		$eventtime[EVTIME_TIMEZONE] = $out[7] . $out[8]; // Get Offset from MSG
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	// Sample: 2008-02-19
@@ -1253,13 +1253,13 @@ function GetEventTime($szTimStr)
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime(0, 0, 0, $out[2], $out[3], $out[1]);
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
 	else
 	{
 		$eventtime[EVTIME_TIMESTAMP] = 0;
-		$eventtime[EVTIME_TIMEZONE] = date_default_timezone_get(); // WTF TODO!
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 		
 		// Print Error!
@@ -1340,7 +1340,7 @@ function GetMonthFromString($szMonth)
 function AddContextLinks(&$sourceTxt)
 {
 	global $szTLDDomains;
-	
+
 	// Return if not enabled!
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
