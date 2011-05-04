@@ -838,6 +838,11 @@ function InitConfigurationValues()
 	}
 
 	// --- Language Handling
+
+	// Set gen language default
+	$content['gen_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_GLOBAL); 
+	
+	// Now check for current used language
 	if ( isset($_SESSION['CUSTOM_LANG']) && VerifyLanguage($_SESSION['CUSTOM_LANG']) )
 	{
 		$content['user_lang'] = $_SESSION['CUSTOM_LANG'];
