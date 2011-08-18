@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------
+Version 3.2.2 (stable), ????-??-??
+- Fixed syntaxlogic bugs in proxy utilisation, thanks to forum 
+  member pierre: http://kb.monitorware.com/post-t10570.html#p20033
+---------------------------------------------------------------------------
 Version 3.2.1 (stable), 2011-04-12
 - Fixed timezone parsing in GetEventTime function. This caused problems 
   reading date/time strings with negative timezone offsets.
