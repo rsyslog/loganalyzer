@@ -72,8 +72,8 @@ include_once($gl_root_path . 'classes/logstream.class.php');
 define('IN_PHPLOGCON_COMMANDLINE', true);
 $content['IN_PHPLOGCON_COMMANDLINE'] = true;
 InitPhpLogCon();
-InitSourceConfigs();
 InitFilterHelpers();	// Helpers for frontend filtering!
+InitSourceConfigs();
 
 // Firts of all init List of Reports!
 InitReportModules();
@@ -107,7 +107,7 @@ function RunReport()
 	if ( $res != SUCCESS ) 
 	{
 		// Print error and die!
-		$szError = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_ERRORCHECKINGSOURCE'], GetAndReplaceLangStr( GetErrorMessage($res), $mySavedReport['sourceid']) ); 
+		$szError = GetAndReplaceLangStr( $content['LN_GEN_ERROR_REPORTGENFAILED'], $mySavedReport['customTitle'], GetAndReplaceLangStr( GetErrorMessage($res), $mySavedReport['sourceid']) ); 
 		if ( isset($extraErrorDescription) )
 			$szError .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 		DieWithErrorMsg( $szError );
@@ -206,6 +206,34 @@ function RunReport()
 	}
 	else
 		DieWithErrorMsg( $content["LN_CMD_NOSAVEDREPORTID"] );
+
+	// Run Optional Params first: userid/groupid
+	if ( isset($_SERVER["argv"][4]) )
+	{
+		// Set to SourceID property!
+		$tmpvar = $_SERVER["argv"][4];
+
+		if ( strpos($tmpvar, "=") !== false ) 
+		{
+			$tmparr = explode("=", $tmpvar); 
+			if ( $tmparr[0] == "userid" )
+			{
+				$userid = $tmparr[1]; 
+				$_SESSION['SESSION_LOGGEDIN'] = true;
+				$_SESSION['SESSION_USERID'] = $userid; 
+				$content['SESSION_LOGGEDIN'] = true;
+				$content['SESSION_USERID'] = $userid; 
+			}
+			else if ( $tmparr[0] == "groupid" )
+			{
+				$groupid = $tmparr[1]; 
+			}
+		}
+
+		// Reload Configured Sources
+		LoadSourcesFromDatabase();
+		InitSourceConfigs();
+	}
 	// --- 
 
 	// --- Operation Handling now

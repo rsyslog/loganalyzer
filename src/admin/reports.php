@@ -1299,10 +1299,19 @@ function InitOutputtargetDefinitions($myReport, $outputTargetDetails)
 
 function CreateCronCommand( $myReportID, $mySavedReportID = null )
 {
-	global $content, $gl_root_path; 
+	global $content, $gl_root_path, $myReport; 
 
 	if ( isset($mySavedReportID) ) 
 	{
+		// Get Reference to report!
+		$myReport = $content['REPORTS'][ $myReportID ];
+
+		// Get reference to savedreport
+		$mySavedReport = $myReport['SAVEDREPORTS'][ $mySavedReportID ]; 
+
+		// Get configured Source for savedreport
+		$myReportSource = $content['Sources'][ $mySavedReport['sourceid'] ]; 
+
 		$pos = strpos( strtoupper(PHP_OS), "WIN");
 		if ($pos !== false) 
 		{	
@@ -1320,6 +1329,17 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 		// Enable display of report command
 		$content['enableCronCommand'] = true;
 		$szCommand = $phpCmd . " " . $phpScript . " runreport " . $myReportID . " " . $mySavedReportID;
+
+		// --- Check for user or group sources 
+		if ( $myReportSource['userid'] != null ) 
+		{
+			$szCommand .= " " . "userid=" . $myReportSource['userid']; 
+		}
+		else if ( $myReportSource['groupid'] != null ) 
+		{
+			$szCommand .= " " . "groupid=" . $myReportSource['userid']; 
+		}
+		// --- 
 	}
 	else
 	{

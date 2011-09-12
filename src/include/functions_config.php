@@ -985,7 +985,7 @@ function LoadSourcesFromDatabase()
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows) && count($myrows) > 0 )
 	{
-		// Overwrite existing Views array
+		// Overwrite existing Sources array
 		unset($CFG['Sources']);
 		
 		// Append to Source Array
