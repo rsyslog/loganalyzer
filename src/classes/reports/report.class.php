@@ -407,7 +407,7 @@ abstract class Report {
 							else
 								$aNewDisplayFilter['FilterDisplay'] .= "contains '" . $tmpFilter[FILTER_VALUE] . "'"; 
 						}
-						else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+						else if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 						{
 							if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
 								$aNewDisplayFilter['FilterDisplay'] .= "does not equal '" . $tmpFilter[FILTER_VALUE] . "'"; 
@@ -424,7 +424,7 @@ abstract class Report {
 						$aNewDisplayFilter['FilterDisplay'] .= $aNewDisplayFilter['FilterCaption'] . " "; 
 						if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 							$aNewDisplayFilter['FilterDisplay'] .= "== " . $tmpFilter[FILTER_VALUE]; 
-						else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
+						else if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 							$aNewDisplayFilter['FilterDisplay'] .= "!= " . $tmpFilter[FILTER_VALUE]; 
 					}
 
