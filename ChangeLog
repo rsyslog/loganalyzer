@@ -1,7 +1,18 @@
 ---------------------------------------------------------------------------
 Version 3.2.2 (stable), ????-??-??
+- Implemented support to use User or Group configured logstream sources 
+  in commandline report generator (cmdreportgen.php). The Report Admin 
+  will generate an additional parameter for the sample commandline:
+  userid=$uid or groupid=$gid 
 - Fixed syntaxlogic bugs in proxy utilisation, thanks to forum 
   member pierre: http://kb.monitorware.com/post-t10570.html#p20033
+- Fixed ignoring "IPAddressResolve" setting when "EnableContextLinks" 
+  was disabled. 
+- Fixed filter detection bug in report class which could lead to problems
+  with certain filter evaluations. 
+- Fixed error in parsing include/exclude filters for numeric fields 
+  in report admin panel. Changes in the main filter parser were 
+  also necessary to fix this issue.
 ---------------------------------------------------------------------------
 Version 3.2.1 (stable), 2011-04-12
 - Fixed timezone parsing in GetEventTime function. This caused problems 
