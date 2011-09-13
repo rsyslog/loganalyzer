@@ -1310,7 +1310,9 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 		$mySavedReport = $myReport['SAVEDREPORTS'][ $mySavedReportID ]; 
 
 		// Get configured Source for savedreport
-		$myReportSource = $content['Sources'][ $mySavedReport['sourceid'] ]; 
+		$myReportSource = null; 
+		if ( isset($content['Sources'][ $mySavedReport['sourceid'] ]) ) 
+			$myReportSource = $content['Sources'][ $mySavedReport['sourceid'] ]; 
 
 		$pos = strpos( strtoupper(PHP_OS), "WIN");
 		if ($pos !== false) 
@@ -1337,7 +1339,7 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 		}
 		else if ( $myReportSource['groupid'] != null ) 
 		{
-			$szCommand .= " " . "groupid=" . $myReportSource['userid']; 
+			$szCommand .= " " . "groupid=" . $myReportSource['groupid']; 
 		}
 		// --- 
 	}

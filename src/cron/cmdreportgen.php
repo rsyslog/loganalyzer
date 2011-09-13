@@ -218,15 +218,16 @@ function RunReport()
 			$tmparr = explode("=", $tmpvar); 
 			if ( $tmparr[0] == "userid" )
 			{
-				$userid = $tmparr[1]; 
+				// Set logged in state for LogAnalyzer System
 				$_SESSION['SESSION_LOGGEDIN'] = true;
-				$_SESSION['SESSION_USERID'] = $userid; 
 				$content['SESSION_LOGGEDIN'] = true;
-				$content['SESSION_USERID'] = $userid; 
+				$_SESSION['SESSION_USERID'] = $tmparr[1]; 
+				$content['SESSION_USERID'] = $tmparr[1]; 
 			}
 			else if ( $tmparr[0] == "groupid" )
 			{
-				$groupid = $tmparr[1]; 
+				$_SESSION['SESSION_GROUPIDS'] = $tmparr[1];
+				$content['SESSION_GROUPIDS'] = $tmparr[1];
 			}
 		}
 
