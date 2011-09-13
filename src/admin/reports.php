@@ -798,7 +798,6 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 		
 		// Copy filter array
 		$AllFilters = $stream->ReturnFiltersArray(); 
-//		print_r( $stream->ReturnFiltersArray() ); 
 	}
 
 	if ( isset($AllFilters) )
@@ -908,6 +907,9 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 				}
 				else
 				{
+//					print_r ( $tmpFilter  ); 
+//					echo $tmpComparisons['ComparisonBit'] . " - " . FILTER_MODE_EXCLUDE .  " - " . FILTER_MODE; 
+//					exit;
 					if ( $tmpComparisons['ComparisonBit'] == $tmpFilter['FilterMode'] ) 
 						$tmpComparisons['cp_selected'] = "selected"; 
 					else

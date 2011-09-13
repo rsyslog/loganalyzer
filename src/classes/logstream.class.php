@@ -653,7 +653,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE],$tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
@@ -683,7 +683,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
@@ -721,7 +721,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 								{
@@ -749,7 +749,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
@@ -774,7 +774,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
@@ -799,7 +799,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
@@ -881,7 +881,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
@@ -906,7 +906,7 @@ abstract class LogStream {
 							else
 							{
 								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 									$tmpArray[FILTER_TMP_VALUE] = "";
@@ -947,7 +947,7 @@ abstract class LogStream {
 									else
 									{
 										// First set Filter Mode
-										$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]);
+										$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
 
 										if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
 											$tmpArray[FILTER_TMP_VALUE] = "";
@@ -1061,7 +1061,7 @@ abstract class LogStream {
 	/*
 	*	Helper function needed in SetFilterIncludeMode 
 	*/
-	private function SetFilterIncludeMode(&$szValue)
+	private function SetFilterIncludeMode(&$szValue, $myFilterType = FILTER_TYPE_STRING) // Default = String!
 	{
 		// Init BIT!
 		$myBits = FILTER_MODE_INCLUDE;
@@ -1090,7 +1090,10 @@ abstract class LogStream {
 		{
 			//trunscate -
 			$szValue = substr( $szValue, 1);
-			$myBits |= FILTER_MODE_SEARCHFULL;
+
+			// Add BIT if not NUMBER FIELD!
+			if ( $myFilterType != FILTER_TYPE_NUMBER )
+				$myBits |= FILTER_MODE_SEARCHFULL;
 		}
 
 		// If Filter is a REGEX match!				
@@ -1099,8 +1102,11 @@ abstract class LogStream {
 		{
 			//trunscate -
 			$szValue = substr( $szValue, 1);
-			$myBits |= FILTER_MODE_SEARCHREGEX;
+			// Add BIT if not NUMBER FIELD!
+			if ( $myFilterType != FILTER_TYPE_NUMBER )
+				$myBits |= FILTER_MODE_SEARCHREGEX;
 		}
+		// --- 
 
 		// return result 
 		return $myBits;
