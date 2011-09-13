@@ -1350,16 +1350,16 @@ function AddContextLinks(&$sourceTxt)
 {
 	global $szTLDDomains;
 
-	// check if user disabled Context Links. 
-	if ( GetConfigSetting("EnableContextLinks", 1, CFGLEVEL_USER) == 0 )
-		return; 
-
 	// Return if not enabled!
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
 		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
 	}
+
+	// check if user disabled Context Links. 
+	if ( GetConfigSetting("EnableContextLinks", 1, CFGLEVEL_USER) == 0 )
+		return; 
 
 	// Create if not set!
 	if ( !isset($szTLDDomains) )
