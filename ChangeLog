@@ -13,6 +13,12 @@ Version 3.2.2 (stable), ????-??-??
 - Fixed error in parsing include/exclude filters for numeric fields 
   in report admin panel. Changes in the main filter parser were 
   also necessary to fix this issue.
+- Added function to automatically remove MagicQuotes (performed if 
+  the php "magic_quotes_gpc" is on). 
+- Added support to search for full phrases instead of words only. Kindly
+  use Quotes to mark the start and end of a phrase, for example: 
+  "Search for this"	// Searches for full phrase
+  -"Search for this"	// Excludes full phrase
 ---------------------------------------------------------------------------
 Version 3.2.1 (stable), 2011-04-12
 - Fixed timezone parsing in GetEventTime function. This caused problems 

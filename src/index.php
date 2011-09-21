@@ -112,6 +112,7 @@ $content['main_pager_last_found'] = false;
 // Init Sorting variables
 $content['sorting'] = "";
 $content['searchstr'] = "";
+$content['searchstr_htmlform'] = "";
 $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
@@ -139,7 +140,10 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 	{
 		// Message is just appended
 		if ( isset($myfilter) && strlen($myfilter) > 0 )
+		{
 			$content['searchstr'] = $myfilter;
+			$content['searchstr_htmlform'] = htmlspecialchars($myfilter);
+		}
 	}
 
 	if ( strlen($content['highlightstr']) > 0 ) 

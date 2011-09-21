@@ -278,6 +278,7 @@ abstract class LogStream {
 
 		// Parse Filters from string 
 		$this->ParseFilters($finalfilters);
+
 		return SUCCESS;	
 	}
  
@@ -598,7 +599,10 @@ abstract class LogStream {
 
 		if ( isset($szFilters) && strlen($szFilters) > 0 )
 		{
-			$tmpEntries = explode(" ", $szFilters);
+//OLD			$tmpEntries = explode(" ", $szFilters);
+			// Use RegEx for intelligent splitting
+			$szFilterRgx = '/[,\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
+			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 			foreach($tmpEntries as $myEntry) 
 			{
 				// Continue if empty filter!
@@ -630,7 +634,7 @@ abstract class LogStream {
 							$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
 						}
 					}
-					
+
 					// Handle filter based
 					switch( $tmpArray[FILTER_TMP_KEY] )
 					{
@@ -1047,9 +1051,13 @@ abstract class LogStream {
 					
 					// Replace "\:" with ":", so we can filter with it ^^
 					if ( strpos($myEntry, ":") !== false ) 
-						$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = str_replace("\\:", ":", $myEntry);
-					else
-						$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry;
+						$myEntry = str_replace("\\:", ":", $myEntry);
+
+					// Check for Begin and Ending Quotes and remove them from the search value!
+					$myEntry = preg_replace('/\\\\\\"/i', "$1", $myEntry);
+
+					// Assign value to filter array
+					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry; 
 				}
 			}
 		}

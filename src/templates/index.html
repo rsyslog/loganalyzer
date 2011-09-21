@@ -34,7 +34,7 @@
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
 	<td nowrap align="center" nowrap valign="top">
-		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr}" class="SearchFormTextbox">
+		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="SearchFormTextbox">
 		<br>
 <!-- IF enabledoraclesearchstr="true" -->
 	<a href="{oraclesearchlink}" target="_top">
@@ -108,7 +108,7 @@
 				<td align="right">
 					<input type="hidden" name="op" value="export">
 					<input type="hidden" name="uid" value="{uid_original}">
-					<input type="hidden" name="filter" value="{searchstr}">
+					<input type="hidden" name="filter" value="{searchstr_htmlform}">
 					<!-- IF skipone="true" -->
 					<input type="hidden" name="skipone" value="true">
 					<!-- ENDIF skipone="true" -->

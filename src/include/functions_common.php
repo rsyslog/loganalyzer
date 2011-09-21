@@ -196,6 +196,10 @@ function InitPhpLogCon()
 	InitPhpDebugMode();
 	// --- 
 
+	// --- Check and Remove Magic Quotes!
+	RemoveMagicQuotes(); 
+	// ---
+
 	// Finally defined PHPLOGCON_INITIALIZED!
 	define( 'PHPLOGCON_INITIALIZED', TRUE );
 }
@@ -575,6 +579,28 @@ function CheckAndSetRunMode()
 	// Check PDO Extension
 	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
 	// --- 
+}
+
+/*
+*	This helper function removes all magic quotes from input Parameters!
+*/
+function RemoveMagicQuotes()
+{
+	if (get_magic_quotes_gpc()) {
+		$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+		while (list($key, $val) = each($process)) {
+			foreach ($val as $k => $v) {
+				unset($process[$key][$k]);
+				if (is_array($v)) {
+					$process[$key][stripslashes($k)] = $v;
+					$process[] = &$process[$key][stripslashes($k)];
+				} else {
+					$process[$key][stripslashes($k)] = stripslashes($v);
+				}
+			}
+		}
+		unset($process);
+	}
 }
 
 function InitRuntimeInformations()
@@ -1483,7 +1509,7 @@ function ReverseResolveIP( $szIP, $prepend, $append )
 	{
 		// Resolve name if needed
 		if ( !isset($_SESSION['dns_cache'][$szIP]) ) 
-			$_SESSION['dns_cache'][$szIP] = gethostbyaddr($szIP);
+			$_SESSION['dns_cache'][$szIP] = @gethostbyaddr($szIP); // Suppress error messages by gethostbyaddr
 		
 		// Abort if IP and RESOLVED name are the same ^^!
 		if ( $_SESSION['dns_cache'][$szIP] == $szIP || strlen($_SESSION['dns_cache'][$szIP]) <= 0 )
