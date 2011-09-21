@@ -21,6 +21,8 @@ Version 3.2.2 (stable), ????-??-??
   -"Search for this"	// Excludes full phrase
 - Report admin, fixed filter editor issues when full phrase strings 
   (with spaces) were configured. 
+- Report admin, the custom filterstring was not saved if new report 
+  was created or the previous custom filterstring was empty. 
 ---------------------------------------------------------------------------
 Version 3.2.1 (stable), 2011-04-12
 - Fixed timezone parsing in GetEventTime function. This caused problems 

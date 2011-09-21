@@ -589,11 +589,17 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	// Init Filterstring variable
 	$szFilterString = ""; 
 	
-	if (	strlen($content['filterString']) > 0 && 
-			!isset($_POST['subop']) && 
-			!isset($_POST['subop_edit']) && 
-			!isset($_POST['subop_delete']) && 
-			isset($_POST['report_filterString']) && $content['filterString'] != $_POST['report_filterString'] ) 
+	if (	
+			(	strlen($content['filterString']) <= 0 && 
+				isset($_POST['report_filterString']) )
+			||
+			(	strlen($content['filterString']) > 0 && 
+				!isset($_POST['subop']) && 
+				!isset($_POST['subop_edit']) && 
+				!isset($_POST['subop_delete']) && 
+				(	isset($_POST['report_filterString']) && $content['filterString'] != $_POST['report_filterString']	)
+			)
+		)
 	{
 		// Overwrite filterString from form data instead of filter array!
 		$content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']);
