@@ -563,7 +563,6 @@ abstract class LogStream {
 				return $myField['FieldID'];
 		}
 		
-
 		return FALSE; 
 	}
 
@@ -603,6 +602,7 @@ abstract class LogStream {
 			// Use RegEx for intelligent splitting
 			$szFilterRgx = '/[,\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
 			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+//DEBUG			print_r (  $tmpEntries );
 			foreach($tmpEntries as $myEntry) 
 			{
 				// Continue if empty filter!
@@ -1054,7 +1054,7 @@ abstract class LogStream {
 						$myEntry = str_replace("\\:", ":", $myEntry);
 
 					// Check for Begin and Ending Quotes and remove them from the search value!
-					$myEntry = preg_replace('/\\\\\\"/i', "$1", $myEntry);
+					$myEntry = preg_replace('/\\"/i', "$1", $myEntry);
 
 					// Assign value to filter array
 					$this->_filters[SYSLOG_MESSAGE][$iNum][FILTER_VALUE] = $myEntry; 

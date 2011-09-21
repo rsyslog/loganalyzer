@@ -19,6 +19,8 @@ Version 3.2.2 (stable), ????-??-??
   use Quotes to mark the start and end of a phrase, for example: 
   "Search for this"	// Searches for full phrase
   -"Search for this"	// Excludes full phrase
+- Report admin, fixed filter editor issues when full phrase strings 
+  (with spaces) were configured. 
 ---------------------------------------------------------------------------
 Version 3.2.1 (stable), 2011-04-12
 - Fixed timezone parsing in GetEventTime function. This caused problems 

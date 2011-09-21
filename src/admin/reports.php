@@ -338,6 +338,7 @@ if ( isset($_GET['op']) )
 				$content['customTitle'] = $myReport['DisplayName'];
 				$content['customComment'] = "";
 				$content['filterString'] = ""; 
+				$content['filterString_htmlform'] = ""; 
 				
 				// Init Custom Filters
 				InitCustomFilterDefinitions($myReport, "");
@@ -427,6 +428,7 @@ if ( isset($_GET['op']) )
 					$content['customTitle'] = $mySavedReport['customTitle'];
 					$content['customComment'] = $mySavedReport['customComment'];
 					$content['filterString'] = $mySavedReport['filterString'];
+					$content['filterString_htmlform'] = htmlspecialchars($content['filterString']); 
 
 					// Init Custom Filters
 					InitCustomFilterDefinitions($myReport, $mySavedReport['customFilters']);
@@ -595,6 +597,7 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	{
 		// Overwrite filterString from form data instead of filter array!
 		$content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']);
+		$content['filterString_htmlform'] = htmlspecialchars($content['filterString']); 
 	}
 	else
 	{
@@ -603,7 +606,7 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 		{
 			// Get Filter array
 			$AllFilters = $_POST['Filters'];
-			
+
 			// Loop through filters and build filterstring!
 			$i = 0;
 			foreach( $AllFilters as $tmpFilterID )
@@ -716,9 +719,12 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 							}
 
 							// Append field value
-							$szFilterString .= $tmpFilterValue; 
+							if ( strpos($tmpFilterValue, " ") === false || (substr($tmpFilterValue, 0, 1) == "\"" && substr($tmpFilterValue, strlen($tmpFilterValue)-1, 1) == "\"" ) ) 
+								$szFilterString .= $tmpFilterValue; 
+							else
+								// Spaces are in search value, so we add quotes to the string!
+								$szFilterString .= "\"" . $tmpFilterValue . "\""; 
 						}
-
 						// Append trailing space
 						$szFilterString .= " "; 
 					}
@@ -728,9 +734,10 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 				$i++;
 			}
 
-	//		echo $content['filterString'] . "<br>";
-	//		echo $szFilterString . "<br>"; 
-	//		print_r ( $AllFilters ); 
+// DEBUG stuff
+//			echo $content['filterString'] . "<br>\r\n";
+//			echo $szFilterString . "<br>\r\n"; 
+//			print_r ( $AllFilters ); 
 		}
 	}
 
