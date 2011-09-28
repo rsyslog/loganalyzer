@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-Version 3.2.2 (stable), ????-??-??
+Version 3.2.2 (stable), 2011-09-28
 - Implemented support to use User or Group configured logstream sources 
   in commandline report generator (cmdreportgen.php). The Report Admin 
   will generate an additional parameter for the sample commandline:
