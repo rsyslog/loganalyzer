@@ -243,34 +243,23 @@ function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL, $bForceStripSlahes =
 {
 	if ( $dbEngine == DB_MSSQL ) 
 	{
-//TODO STRIP SLASHES ?!
 		// MSSQL needs special treatment -.-
 		return str_replace("'","''",$myString);
 	}
 	else
 	{
 		// Replace with internal PHP Functions!
-		if ( !get_magic_quotes_gpc() || $bForceStripSlahes )
-			return addslashes($myString);
-	//		return addcslashes($myString, "'");
-		else
-			return $myString;
+		return addslashes($myString);
 	}
-
-/*
-	$returnstr = str_replace("\\","\\\\",$myString);
-	$returnstr = str_replace("'","\\'",$returnstr);
-	return $returnstr;
-*/
 }
 
 function DB_StripSlahes($myString)
 {
 	// Replace with internal PHP Functions!
-	if ( get_magic_quotes_gpc() )
+//	if ( get_magic_quotes_gpc() )
 		return stripslashes($myString);
-	else
-		return $myString;
+//	else
+//		return $myString;
 }
 
 function DB_ReturnLastInsertID($myResult = false)
