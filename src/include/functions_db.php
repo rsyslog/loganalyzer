@@ -211,13 +211,14 @@ function DB_ReturnSimpleErrorMsg()
 
 function DB_PrintError($MyErrorMsg, $DieOrNot)
 {
-	global $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep;
+	global $content, $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep;
 
 	$errdesc = mysql_error();
 	$errno = mysql_errno();
 
 	// Define global variable so we know an error has occured!
-	define('PHPLOGCON_INERROR', true);
+	if ( !defined('PHPLOGCON_INERROR') )
+		define('PHPLOGCON_INERROR', true);
 
 	$errormsg="Database error: $MyErrorMsg $linesep";
 	$errormsg.="mysql error: $errdesc $linesep";
@@ -229,7 +230,20 @@ function DB_PrintError($MyErrorMsg, $DieOrNot)
 	if ($DieOrNot == true)
 		DieWithErrorMsg( "$linesep" . $errormsg );
 	else
+	{
 		OutputDebugMessage("DB_PrintError: $errormsg", DEBUG_ERROR);
+
+		if ( !isset($content['detailederror']) )
+		{
+			$content['detailederror_code'] = ERROR_DB_QUERYFAILED;
+			$content['detailederror'] = GetErrorMessage(ERROR_DB_QUERYFAILED);
+		}
+		else
+			$content['detailederror'] .= "<br><br>" . GetErrorMessage(ERROR_DB_QUERYFAILED);
+		
+		// Append SQL Detail Error
+		$content['detailederror'] .= "<br><br>" . $errormsg;
+	}
 }
 
 function DB_RemoveParserSpecialBadChars($myString)

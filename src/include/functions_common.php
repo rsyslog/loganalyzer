@@ -1034,7 +1034,8 @@ function DieWithErrorMsg( $szerrmsg )
 	}
 	else if	( $RUNMODE == RUNMODE_WEBSERVER )
 	{
-		print( 
+		// Print main error!
+		print	( 
 			"<html><title>Adiscon LogAnalyzer :: Critical Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
@@ -1044,7 +1045,20 @@ function DieWithErrorMsg( $szerrmsg )
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
 			"<td class=\"tableBackground\" align=\"left\"><br>" . 
 			$szerrmsg . 
-			"<br><br></td></tr></table>" . 
+			"<br><br></td></tr></table>");
+		
+		// Print Detail error's if available
+		if ( isset($content['detailederror']) )
+		{
+			print ("<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Additional Errordetails:</td>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			$content['detailederror'] . 
+			"<br><br></td></tr></table>");
+		}
+
+		// End HTML Body
+		print(
 			"</body></html>"
 		);
 	}
