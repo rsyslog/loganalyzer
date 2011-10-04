@@ -72,6 +72,9 @@ $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
 
+// Hardcoded DEFINES
+define('URL_ONLINEREPORTS', 'http://tools.adiscon.net/listreports.php');
+
 // PreInit overall user variables
 $content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
 $content['EXTRA_METATAGS'] = "";
@@ -733,6 +736,7 @@ function InitFrontEndVariables()
 	$content['MENU_WINDOWLIST'] = $content['BASEPATH'] . "images/icons/windows.png";
 	$content['MENU_CHECKED'] = $content['BASEPATH'] . "images/icons/check.png";
 	$content['MENU_PLAY_GREEN'] = $content['BASEPATH'] . "images/icons/bullet_triangle_green.png";
+	$content['MENU_PLAY_GREEN_WINDOW'] = $content['BASEPATH'] . "images/icons/table_sql_run.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
