@@ -376,6 +376,9 @@ $content['LN_REPORTS_SAVEDREPORTS'] = "Saved reports";
 $content['LN_REPORTS_ADMIN'] = "Administrate Reports";
 $content['LN_REPORTMENU_LIST'] = "List installed Reports";
 $content['LN_REPORTMENU_ONLINELIST'] = "All Available Reports";
-
+$content['LN_REPORTS_INFORMATION'] = "This page shows a list of installed and available reports including saved report configurations.
+<br/>To run a report, click on the buttons right to the Saved Reports.
+<br/>Attention! Generating reports can be very time consuming depending on the size of your database.
+";
 
 ?>
