@@ -927,11 +927,21 @@ abstract class LogStream {
 							break;
 						/* END WebLog based fields */
 						default:
+/* OLD CODE							
 							// Custom Field, try to guess field!
-
 							if ( isset($fields[$tmpArray[FILTER_TMP_KEY]]) && isset($fields[$tmpArray[FILTER_TMP_KEY]]['SearchField']) )
 							{
 								$tmpKeyName = $tmpArray[FILTER_TMP_KEY]; 
+*/
+							// Custom Field, try to find field!
+							foreach ($fields as $aField) {
+								   if ($aField['SearchField'] == $tmpArray[FILTER_TMP_KEY]) {
+										   $tmpKeyName = $aField['FieldID'];
+										   break;
+								   }
+							}
+							if ( isset($fields[$tmpKeyName]) && isset($fields[$tmpKeyName]['SearchField']) )
+							{
 								$tmpFilterType = $fields[$tmpKeyName]['FieldType'];
 								
 								// Handle numeric fields!
