@@ -598,11 +598,12 @@ abstract class LogStream {
 
 		if ( isset($szFilters) && strlen($szFilters) > 0 )
 		{
-//OLD			$tmpEntries = explode(" ", $szFilters);
+//OLD		$tmpEntries = explode(" ", $szFilters);
 			// Use RegEx for intelligent splitting
-			$szFilterRgx = '/[,\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
+			$szFilterRgx = '/[\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
 			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 //DEBUG			print_r (  $tmpEntries );
+
 			foreach($tmpEntries as $myEntry) 
 			{
 				// Continue if empty filter!
