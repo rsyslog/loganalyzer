@@ -336,8 +336,11 @@ class Report_syslogsummary extends Report {
 							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); // Maybe useful somewhere else: sprintf( "%u", crc32 ( $logArray[SYSLOG_MESSAGE] )); 
 							$strChecksum = $logArray[MISC_CHECKSUM];
 
-							// TODO, save calculated Checksum into DB!
+							// Save calculated Checksum into DB!
+							$this->_streamObj->SaveMessageChecksum($logArray); 
 						}
+						else // Get checksum
+							$strChecksum = $logArray[MISC_CHECKSUM];
 
 						// Check if entry exists in result array
 						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]) ) 
