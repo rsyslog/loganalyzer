@@ -399,7 +399,7 @@ abstract class Report {
 						$aNewDisplayFilter['FilterType'] = $content['LN_REPORT_FILTERTYPE_STRING'];
 						
 						// Set Filterdisplay
-						$aNewDisplayFilter['FilterDisplay'] .= $aNewDisplayFilter['FilterCaption'] . " "; 
+						$aNewDisplayFilter['FilterDisplay'] = $aNewDisplayFilter['FilterCaption'] . " "; 
 						if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 						{
 							if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL ) 
@@ -421,7 +421,7 @@ abstract class Report {
 						$aNewDisplayFilter['FilterType'] = $content['LN_REPORT_FILTERTYPE_NUMBER'];
 
 						// Set Filterdisplay
-						$aNewDisplayFilter['FilterDisplay'] .= $aNewDisplayFilter['FilterCaption'] . " "; 
+						$aNewDisplayFilter['FilterDisplay'] = $aNewDisplayFilter['FilterCaption'] . " "; 
 						if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 							$aNewDisplayFilter['FilterDisplay'] .= "== " . $tmpFilter[FILTER_VALUE]; 
 						else if ( $tmpFilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
