@@ -207,7 +207,7 @@ abstract class LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false);
+	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false);
 
 
 	/**
@@ -253,6 +253,11 @@ abstract class LogStream {
 
 
 	/*
+	*	Helper function for logstream classes to clear filter based stuff
+	*/
+	public abstract function ResetFilters( );
+
+	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/
 	public function RunBasicInits()
@@ -276,6 +281,9 @@ abstract class LogStream {
 
 		OutputDebugMessage("SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
 
+		// Reset Filters first to make sure we do not add multiple filters!
+		$this->_filters = null;
+	
 		// Parse Filters from string 
 		$this->ParseFilters($finalfilters);
 
@@ -583,6 +591,23 @@ abstract class LogStream {
 		}
 		else // No fields at all!
 			return null; 
+	}
+
+	/*
+	*	Helper function to get the internal Field ID by database field name!
+	*/
+	public function GetFieldIDbyDatabaseMapping($szTableType, $szFieldName)
+	{
+		global $content, $dbmapping;
+
+		foreach( $dbmapping[$szTableType]['DBMAPPINGS'] as $myFieldID => $myDBMapping ) 
+		{
+			if ( $myDBMapping == $szFieldName ) 
+				return $myFieldID; 
+		}
+
+		// Default return! 
+		return $szFieldName; 
 	}
 
 	/*
@@ -1182,7 +1207,5 @@ abstract class LogStream {
 		return -1;
 	}
 
-
-	
 }
 ?>

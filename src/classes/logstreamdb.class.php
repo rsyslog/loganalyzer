@@ -112,6 +112,15 @@ class LogStreamDB extends LogStream {
 		return SUCCESS;
 	}
 
+	/*
+	*	Helper function to clear the current querystring!
+	*/
+	public function ResetFilters()
+	{
+		// Clear _SQLwhereClause variable! 
+		$this->_SQLwhereClause = ""; 
+	}
+
 	/**
 	* Close the database connection.
 	*
@@ -744,7 +753,7 @@ class LogStreamDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false)
 	{
 		global $content, $dbmapping, $fields;
 
@@ -793,13 +802,20 @@ class LogStreamDB extends LogStream {
 		}
 		else // Only Include ConsolidateField
 			$myDBQueryFields = $myDBConsFieldName . ", ";
-
+		
+		// Add Min and Max fields for DATE if desired 
+		if ( $bIncludeMinMaxDateFields )
+		{
+			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as FirstOccurrence_Date, ";
+			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as LastOccurrence_Date, ";
+		}
+		
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "ItemCount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
-		
+
 		// Special handling for date fields
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
@@ -815,7 +831,7 @@ class LogStreamDB extends LogStream {
 			$szLimitSql = "";
 
 		// Create SQL Where Clause!
-		if ( $this->_SQLwhereClause == "" ) 
+		if ( strlen($this->_SQLwhereClause) <= 0 ) 
 		{
 			$res = $this->CreateSQLWhereClause();
 			if ( $res != SUCCESS ) 
@@ -832,11 +848,14 @@ class LogStreamDB extends LogStream {
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
 
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);
 		if ( !$myquery ) 
 			return ERROR_DB_QUERYFAILED;
-		
+
 		// Initialize Array variable
 		$aResult = array();
 
@@ -848,12 +867,17 @@ class LogStreamDB extends LogStream {
 
 			foreach ( $myRow as $myFieldName => $myFieldValue ) 
 			{
-				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
+				$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+				$aNewRow[ $myFieldID ] = $myFieldValue;
+
+/*				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
 					$aNewRow[$szConsFieldId] = $myFieldValue;
 				else
+				{
 					$aNewRow[$myFieldName] = $myFieldValue;
+*/
+//				}
 			}
-			
 			// Add new row to result
 			$aResult[] = $aNewRow;
 		}
@@ -864,7 +888,6 @@ class LogStreamDB extends LogStream {
 		else
 			return ERROR_NOMORERECORDS;
 	}
-
 
 	/**
 	* Implementation of GetCountSortedByField 
@@ -937,6 +960,7 @@ class LogStreamDB extends LogStream {
 			return ERROR_DB_DBFIELDNOTFOUND;
 		}
 	}
+
 
 
 	/*

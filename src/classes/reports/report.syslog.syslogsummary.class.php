@@ -293,148 +293,191 @@ class Report_syslogsummary extends Report {
 	*/
 	private function ConsolidateSyslogmessagesPerHost( $arrHosts )
 	{
-		global $content, $gl_starttime; 
+		global $content, $gl_starttime, $fields; 
 
 		// Now open the stream for data processing
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
-			// Set reading direction
-//			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
-
-			// Init uid helper
-			$uID = UID_UNKNOWN;
-
-			// Set position to BEGIN of FILE
-			$this->_streamObj->Sseek($uID, EnumSeek::BOS, 0);
-
-			// Start reading data
-			$ret = $this->_streamObj->Read($uID, $logArray);
-			
+			if ( true ) 
+			{
+			// --- New Method to consolidate data!
 			// TimeStats
 			$nowtime = microtime_float();
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
-			// Found first data record
-			if ( $ret == SUCCESS )
+			foreach ( $arrHosts as $myHost ) 
 			{
-				do
+				// Set custom filters
+				$this->_streamObj->ResetFilters();
+				$this->_streamObj->SetFilter( $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_Syslog . " " . $fields[SYSLOG_HOST]['SearchField'] . ":=" . $myHost );
+
+				// Set Host Item Basics if not set yet
+				$content["report_consdata"][ $myHost ][SYSLOG_HOST] = $myHost; 
+
+				// Get Data for single host
+				$content["report_consdata"][ $myHost ]['cons_msgs'] = $this->_streamObj->ConsolidateDataByField( MISC_CHECKSUM, $this->_maxMsgsPerHost, MISC_CHECKSUM, SORTING_ORDER_DESC, null, true, true );
+
+				//print_r ($fields[SYSLOG_MESSAGE]);
+				foreach ( $content["report_consdata"][ $myHost ]['cons_msgs'] as &$myConsData )
 				{
-					// Check if Event from host is in our hosts array
-					if ( in_array($logArray[SYSLOG_HOST], $arrHosts) ) 
+					// Set Basic data entries
+					if (!isset( $content['filter_facility_list'][$myConsData[SYSLOG_FACILITY]] )) 
+						$myConsData[SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
+					if (!isset( $content['filter_severity_list'][$myConsData[SYSLOG_SEVERITY]] )) 
+						$myConsData[SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
+
+					// Set Counter and First/Last Event date
+					$myConsData['FirstOccurrence_Date'] = $myConsData[SYSLOG_DATE]; 
+					$myConsData['LastOccurrence_Date'] = $myConsData[SYSLOG_DATE];
+				}
+
+			}
+
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+			// ---
+			}
+			else
+			{
+				// --- Old Method!
+				// Init uid helper
+				$uID = UID_UNKNOWN;
+
+				// Set position to BEGIN of FILE
+				$this->_streamObj->Sseek($uID, EnumSeek::BOS, 0);
+
+				// Start reading data
+				$ret = $this->_streamObj->Read($uID, $logArray);
+				
+				// TimeStats
+				$nowtime = microtime_float();
+				$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+
+				// Found first data record
+				if ( $ret == SUCCESS )
+				{
+					do
 					{
-						// Set Host Item Basics if not set yet
-						if ( !isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST]) )
+						// Check if Event from host is in our hosts array
+						if ( in_array($logArray[SYSLOG_HOST], $arrHosts) ) 
 						{
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST] = $logArray[SYSLOG_HOST]; 
-						}
+							// Set Host Item Basics if not set yet
+							if ( !isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST]) )
+							{
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ][SYSLOG_HOST] = $logArray[SYSLOG_HOST]; 
+							}
 
-						// Calc checksum
-						if ( !isset($logArray[MISC_CHECKSUM]) || $logArray[MISC_CHECKSUM] == 0 ) 
-						{
-							// Calc crc32 from message, we use this as index
-							$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); // Maybe useful somewhere else: sprintf( "%u", crc32 ( $logArray[SYSLOG_MESSAGE] )); 
-							$strChecksum = $logArray[MISC_CHECKSUM];
+							// Calc checksum
+							if ( !isset($logArray[MISC_CHECKSUM]) || $logArray[MISC_CHECKSUM] == 0 ) 
+							{
+								// Calc crc32 from message, we use this as index
+								$logArray[MISC_CHECKSUM] = crc32( $logArray[SYSLOG_MESSAGE] ); // Maybe useful somewhere else: sprintf( "%u", crc32 ( $logArray[SYSLOG_MESSAGE] )); 
+								$strChecksum = $logArray[MISC_CHECKSUM];
 
-							// Save calculated Checksum into DB!
-							$this->_streamObj->SaveMessageChecksum($logArray); 
-						}
-						else // Get checksum
-							$strChecksum = $logArray[MISC_CHECKSUM];
+								// Save calculated Checksum into DB!
+								$this->_streamObj->SaveMessageChecksum($logArray); 
+							}
+							else // Get checksum
+								$strChecksum = $logArray[MISC_CHECKSUM];
 
-						// Check if entry exists in result array
-						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]) ) 
-						{
-							// Increment counter and set First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount']++; 
-							
-							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'][EVTIME_TIMESTAMP] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							// Check if entry exists in result array
+							if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]) ) 
+							{
+								// Increment counter and set First/Last Event date
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount']++; 
+								
+								// Set FirstEvent date if necessary!
+								if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'][EVTIME_TIMESTAMP] ) 
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE];
 
-							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'][EVTIME_TIMESTAMP] ) 
+								// Set LastEvent date if necessary!
+								if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'][EVTIME_TIMESTAMP] ) 
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							}
+							else
+							{
+								// Set Basic data entries
+								if (isset( $content['filter_facility_list'][$logArray[SYSLOG_FACILITY]] )) 
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = $logArray[SYSLOG_FACILITY]; 
+								else
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
+								if (isset( $content['filter_severity_list'][$logArray[SYSLOG_SEVERITY]] )) 
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
+								else
+									$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SYSLOGTAG] = $logArray[SYSLOG_SYSLOGTAG]; 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
+
+								// Set Counter and First/Last Event date
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount'] = 1; 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
 								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							}
 						}
-						else
-						{
-							// Set Basic data entries
-							if (isset( $content['filter_facility_list'][$logArray[SYSLOG_FACILITY]] )) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = $logArray[SYSLOG_FACILITY]; 
-							else
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
-							if (isset( $content['filter_severity_list'][$logArray[SYSLOG_SEVERITY]] )) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = $logArray[SYSLOG_SEVERITY]; 
-							else
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_SYSLOGTAG] = $logArray[SYSLOG_SYSLOGTAG]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
 
-							// Set Counter and First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
-						}
+						// Get next data record
+						$ret = $this->_streamObj->ReadNext($uID, $logArray);
+					} while ( $ret == SUCCESS );
+
+					// TimeStats
+					$nowtime = microtime_float();
+					$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+				}
+				else
+					return $ret;
+			}
+
+
+			// --- Start Postprocessing
+			foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
+			{
+				// First use callback function to sort array
+				uasort($tmpConsolidatedComputer['cons_msgs'], "MultiSortArrayByItemCountDesc");
+				
+				// Remove entries according to _maxMsgsPerHost
+				if ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost )
+				{
+					$iDropCount = 0;
+
+					do
+					{
+						array_pop($tmpConsolidatedComputer['cons_msgs']);
+						$iDropCount++; 
+					} while ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost ); 
+					
+					// Append a dummy entry which shows count of all other events
+					if ( $iDropCount > 0 ) 
+					{
+						$lastEntry[SYSLOG_SEVERITY] = SYSLOG_NOTICE; 
+						$lastEntry[SYSLOG_FACILITY] = SYSLOG_LOCAL0; 
+						$lastEntry[SYSLOG_SYSLOGTAG] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+						$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+						$lastEntry['ItemCount'] = $iDropCount; 
+						$lastEntry['FirstOccurrence_Date'] = "-"; 
+						$lastEntry['LastOccurrence_Date'] = "-";
+
+						$tmpConsolidatedComputer['cons_msgs'][] = $lastEntry; 
 					}
-
-					// Get next data record
-					$ret = $this->_streamObj->ReadNext($uID, $logArray);
-				} while ( $ret == SUCCESS );
+				}
 
 				// TimeStats
 				$nowtime = microtime_float();
 				$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
-				// Start Postprocessing
-				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
+				// PostProcess Events!
+				foreach( $tmpConsolidatedComputer["cons_msgs"] as &$tmpMyEvent ) 
 				{
-					// First use callback function to sort array
-					uasort($tmpConsolidatedComputer['cons_msgs'], "MultiSortArrayByItemCountDesc");
-					
-					// Remove entries according to _maxMsgsPerHost
-					if ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost )
-					{
-						$iDropCount = 0;
-
-						do
-						{
-							array_pop($tmpConsolidatedComputer['cons_msgs']);
-							$iDropCount++; 
-						} while ( count($tmpConsolidatedComputer['cons_msgs']) > $this->_maxMsgsPerHost ); 
-						
-						// Append a dummy entry which shows count of all other events
-						if ( $iDropCount > 0 ) 
-						{
-							$lastEntry[SYSLOG_SEVERITY] = SYSLOG_NOTICE; 
-							$lastEntry[SYSLOG_FACILITY] = SYSLOG_LOCAL0; 
-							$lastEntry[SYSLOG_SYSLOGTAG] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
-							$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
-							$lastEntry['ItemCount'] = $iDropCount; 
-							$lastEntry['FirstOccurrence_Date'] = "-"; 
-							$lastEntry['LastOccurrence_Date'] = "-";
-
-							$tmpConsolidatedComputer['cons_msgs'][] = $lastEntry; 
-						}
-					}
-
-					// TimeStats
-					$nowtime = microtime_float();
-					$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
-
-					// PostProcess Events!
-					foreach( $tmpConsolidatedComputer["cons_msgs"] as &$tmpMyEvent ) 
-					{
-						$tmpMyEvent['FirstOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstOccurrence_Date'] );
-						$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
-						$tmpMyEvent['syslogseverity_text'] = $this->GetSeverityDisplayName($tmpMyEvent['syslogseverity']); //$content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
-						$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
-						$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
-						$tmpMyEvent['syslogfacility_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogfacility']);
-					}
+					$tmpMyEvent['FirstOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstOccurrence_Date'] );
+					$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
+					$tmpMyEvent['syslogseverity_text'] = $this->GetSeverityDisplayName($tmpMyEvent['syslogseverity']); //$content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+					$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
+					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
+					$tmpMyEvent['syslogfacility_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogfacility']);
 				}
 			}
-			else
-				return $ret;
+			// --- 
 		}
 
 		// Work done!

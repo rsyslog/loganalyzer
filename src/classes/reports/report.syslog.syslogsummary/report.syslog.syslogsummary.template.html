@@ -95,30 +95,29 @@
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
 		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_number}</td>
+		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_firstoccurrence}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_lastoccurrence}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_severity}</td>
 		<td class="cellmenu1" align="center" width="150" nowrap>{ln_report_facility}</td>
 		<td class="cellmenu1" align="center" width="80" nowrap>{ln_report_syslogtag}</td>
 		<td class="cellmenu1" align="center" width="100%" nowrap>{ln_report_description}</td>
-		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 	</tr>
 	<!-- BEGIN cons_msgs -->
 	<tr>
 		<td class="line1" valign="top" align="center">{ZAEHLER}</td>
-		<td class="line1" valign="top" align="center">{FirstOccurrence_Date_Formatted}</td>
-		<td class="line1" valign="top" align="center">{LastOccurrence_Date_Formatted}</td>
-		<td class="lineColouredWhite" valign="top" align="center" bgcolor="{syslogseverity_bgcolor}"><b>{syslogseverity_text}</b></td>
-		<td class="lineColouredWhite" valign="top" align="center" bgcolor="{syslogfacility_bgcolor}"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogfacility&q={syslogfacility_text}" target="_blank">{syslogfacility_text}</a></td>
-		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogtag&q={syslogtag}" target="_blank">{syslogtag}</a></td>
-		<td class="line1" valign="top" align="left">{msg}</td>
 		<!-- IF ItemCount>=$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{ItemCount}</b></td>
 		<!-- ENDIF ItemCount>=$_colorThreshold -->
 		<!-- IF ItemCount<$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{ItemCount}</b></td>
 		<!-- ENDIF ItemCount<$_colorThreshold -->
-		
+		<td class="line1" valign="top" align="center">{FirstOccurrence_Date_Formatted}</td>
+		<td class="line1" valign="top" align="center">{LastOccurrence_Date_Formatted}</td>
+		<td class="lineColouredWhite" valign="top" align="center" bgcolor="{syslogseverity_bgcolor}"><b>{syslogseverity_text}</b></td>
+		<td class="lineColouredWhite" valign="top" align="center" bgcolor="{syslogfacility_bgcolor}"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogfacility&q={syslogfacility_text}" target="_blank">{syslogfacility_text}</a></td>
+		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=syslogtag&q={syslogtag}" target="_blank">{syslogtag}</a></td>
+		<td class="line1" valign="top" align="left">{msg}</td>
 	</tr>
 
 	<!-- END cons_msgs -->

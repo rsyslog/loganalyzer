@@ -566,8 +566,8 @@ function CheckAndSetRunMode()
 	// Define and Inits Syslog variables now!
 	// DEPRECIATED! define_syslog_variables();
 	// Syslog Constants are defined by default anyway!
-	openlog("LogAnalyzer", LOG_PID, LOG_USER);
-	
+	$syslogOpened = openlog("LogAnalyzer", LOG_PID, LOG_USER);
+
 	// --- Check necessary PHP Extensions!
 	$loadedExtensions = get_loaded_extensions();
 	
@@ -1347,7 +1347,7 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 	// Check if the user wants to syslog the error!
 	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
 	{
-		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+		$syslogSend = syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
 	}
 }
 
