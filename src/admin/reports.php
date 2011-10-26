@@ -589,9 +589,9 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	$szFilterString = ""; 
 	
 	if (	
-			(	strlen($content['filterString']) <= 0 && 
-				isset($_POST['report_filterString']) )
-			||
+//			(	strlen($content['filterString']) <= 0 && 
+//				isset($_POST['report_filterString']) )
+//			||
 			(	strlen($content['filterString']) > 0 && 
 				!isset($_POST['subop']) && 
 				!isset($_POST['subop_edit']) && 
@@ -739,10 +739,20 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 				$i++;
 			}
 
-// DEBUG stuff
-//			echo $content['filterString'] . "<br>\r\n";
-//			echo $szFilterString . "<br>\r\n"; 
-//			print_r ( $AllFilters ); 
+			// Reset Allfilters Array to NULL in this case!
+			if ( strlen($szFilterString) <= 0 ) 
+			{
+				$content['filterString'] = ""; 
+				$content['filterString_htmlform'] = ""; 
+			}
+
+			/*
+			// DEBUG stuff
+			echo $content['filterString'] . "<br>\r\n";
+			echo $szFilterString . "<br>\r\n"; 
+			print_r ( $AllFilters ); 
+			// */
+
 		}
 	}
 
@@ -796,7 +806,10 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	}
 	// Copy Final Filterstring if necessary
 	if ( strlen($szFilterString) > 0 ) 
+	{
 		$content['filterString'] = $szFilterString; 
+		$content['filterString_htmlform'] = htmlspecialchars($szFilterString); 
+	}
 
 	//	echo $content['SourceID'];
 	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
