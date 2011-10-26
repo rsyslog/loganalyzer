@@ -118,6 +118,15 @@ class LogStreamPDO extends LogStream {
 		return SUCCESS;
 	}
 
+	/*
+	*	Helper function to clear the current querystring!
+	*/
+	public function ResetFilters()
+	{
+		// Clear _SQLwhereClause variable! 
+		$this->_SQLwhereClause = ""; 
+	}
+
 	/**
 	* Close the database connection.
 	*
@@ -864,7 +873,7 @@ class LogStreamPDO extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false)
 	{
 		global $content, $dbmapping, $fields;;
 
@@ -914,6 +923,13 @@ class LogStreamPDO extends LogStream {
 		else // Only Include ConsolidateField
 			$myDBQueryFields = $myDBConsFieldName . ", ";
 
+		// Add Min and Max fields for DATE if desired 
+		if ( $bIncludeMinMaxDateFields )
+		{
+			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as FirstOccurrence_Date, ";
+			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as LastOccurrence_Date, ";
+		}
+
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "ItemCount"; 
 		else
@@ -960,6 +976,9 @@ class LogStreamPDO extends LogStream {
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
 
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamPDO|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+
 		// Perform Database Query
 		$this->_myDBQuery = $this->_dbhandle->query($szSql);
 		if ( !$this->_myDBQuery ) 
@@ -984,10 +1003,14 @@ class LogStreamPDO extends LogStream {
 
 			foreach ( $myRow as $myFieldName => $myFieldValue ) 
 			{
+				$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+				$aNewRow[ $myFieldID ] = $myFieldValue;
+				/*
 				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
 					$aNewRow[$szConsFieldId] = $myFieldValue;
 				else
 					$aNewRow[$myFieldName] = $myFieldValue;
+				*/
 			}
 
 			// Add new row to result

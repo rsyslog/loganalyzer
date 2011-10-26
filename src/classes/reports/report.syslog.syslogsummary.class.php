@@ -326,12 +326,7 @@ class Report_syslogsummary extends Report {
 						$myConsData[SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
 					if (!isset( $content['filter_severity_list'][$myConsData[SYSLOG_SEVERITY]] )) 
 						$myConsData[SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
-
-					// Set Counter and First/Last Event date
-					$myConsData['FirstOccurrence_Date'] = $myConsData[SYSLOG_DATE]; 
-					$myConsData['LastOccurrence_Date'] = $myConsData[SYSLOG_DATE];
 				}
-
 			}
 
 			// TimeStats

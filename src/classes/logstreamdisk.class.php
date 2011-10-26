@@ -92,6 +92,14 @@ class LogStreamDisk extends LogStream {
 		return SUCCESS;
 	}
 
+	/*
+	*	Helper function to clear the current querystring!
+	*/
+	public function ResetFilters()
+	{
+		// nothing todo in this logstream 
+	}
+
 	/**
 	* Close the file.
 	*
@@ -752,7 +760,7 @@ class LogStreamDisk extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false)
 	{
 		global $content, $fields;
 
@@ -790,7 +798,10 @@ class LogStreamDisk extends LogStream {
 						$myFieldData = $content['LN_STATS_OTHERS']; 
 
 					if ( isset($aResult[ $myFieldData ]) )
+					{
 						$aResult[ $myFieldData ]['ItemCount']++;
+						$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+					}
 					else
 					{
 						// Initialize entry if we haven't exceeded the RecordLImit yet!
@@ -811,6 +822,9 @@ class LogStreamDisk extends LogStream {
 								$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
 
 							$aResult[ $myFieldData ]['ItemCount'] = 1;
+
+							$aResult[ $myFieldData ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
+							$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
