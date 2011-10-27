@@ -296,15 +296,50 @@ class Report_eventsummary extends Report {
 	*/
 	private function ConsolidateEventsPerHost( $arrHosts )
 	{
-		global $content, $gl_starttime; 
+		global $content, $gl_starttime, $fields; 
 
 		// Now open the stream for data processing
 		$res = $this->_streamObj->Open( $this->_arrProperties, true );
 		if ( $res == SUCCESS )
 		{
-			// Set reading direction
-//			$this->_streamObj->SetReadDirection( EnumReadDirection::Backward );
+			// --- New Method to consolidate data!
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
+			// Update all Checksums first!
+			$this->_streamObj->UpdateAllMessageChecksum(); 
+
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+
+			foreach ( $arrHosts as $myHost ) 
+			{
+				// Set custom filters
+				$this->_streamObj->ResetFilters();
+				$this->_streamObj->SetFilter( $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_NT_EventReport . ",=" . IUT_WEVTMONV2 . " " . $fields[SYSLOG_HOST]['SearchField'] . ":=" . $myHost );
+
+				// Set Host Item Basics if not set yet
+				$content["report_consdata"][ $myHost ][SYSLOG_HOST] = $myHost; 
+
+				// Get Data for single host
+				$content["report_consdata"][ $myHost ]['cons_events'] = $this->_streamObj->ConsolidateDataByField( MISC_CHECKSUM, $this->_maxEventsPerHost, MISC_CHECKSUM, SORTING_ORDER_DESC, null, true, true );
+				//print_r ($fields[SYSLOG_MESSAGE]);
+				foreach ( $content["report_consdata"][ $myHost ]['cons_events'] as &$myConsData )
+				{
+					// Set Basic data entries
+					if (!isset( $content['filter_severity_list'][$myConsData[SYSLOG_SEVERITY]] )) 
+						$myConsData[SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
+				}
+			}
+
+			// TimeStats
+			$nowtime = microtime_float();
+			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+			// ---
+
+/* OLD CODE
 			// Init uid helper
 			$uID = UID_UNKNOWN;
 
@@ -381,59 +416,74 @@ class Report_eventsummary extends Report {
 				// TimeStats
 				$nowtime = microtime_float();
 				$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+			}
+*/
 
-				// Start Postprocessing
-				foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
+			// Start Postprocessing
+			foreach( $content["report_consdata"] as &$tmpConsolidatedComputer ) 
+			{
+				// First use callback function to sort array
+				uasort($tmpConsolidatedComputer['cons_events'], "MultiSortArrayByItemCountDesc");
+				
+				// Remove entries according to _maxEventsPerHost
+				if ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost )
 				{
-					// First use callback function to sort array
-					uasort($tmpConsolidatedComputer['cons_events'], "MultiSortArrayByItemCountDesc");
+					$iDropCount = 0;
+
+					do
+					{
+						array_pop($tmpConsolidatedComputer['cons_events']);
+						$iDropCount++; 
+					} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
 					
-					// Remove entries according to _maxEventsPerHost
-					if ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost )
+					// Append a dummy entry which shows count of all other events
+					if ( $iDropCount > 0 ) 
 					{
-						$iDropCount = 0;
+						$lastEntry[SYSLOG_SEVERITY] = SYSLOG_NOTICE; 
+						$lastEntry[SYSLOG_EVENT_ID] = "-"; 
+						$lastEntry[SYSLOG_EVENT_SOURCE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+						$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
+						$lastEntry['ItemCount'] = $iDropCount; 
+						$lastEntry['FirstEvent_Date'] = "-"; 
+						$lastEntry['LastEvent_Date'] = "-";
 
-						do
-						{
-							array_pop($tmpConsolidatedComputer['cons_events']);
-							$iDropCount++; 
-						} while ( count($tmpConsolidatedComputer['cons_events']) > $this->_maxEventsPerHost ); 
-						
-						// Append a dummy entry which shows count of all other events
-						if ( $iDropCount > 0 ) 
-						{
-							$lastEntry[SYSLOG_SEVERITY] = SYSLOG_NOTICE; 
-							$lastEntry[SYSLOG_EVENT_ID] = "-"; 
-							$lastEntry[SYSLOG_EVENT_SOURCE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
-							$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
-							$lastEntry['ItemCount'] = $iDropCount; 
-							$lastEntry['FirstEvent_Date'] = "-"; 
-							$lastEntry['LastEvent_Date'] = "-";
-
-							$tmpConsolidatedComputer['cons_events'][] = $lastEntry; 
-						}
-					}
-
-					// TimeStats
-					$nowtime = microtime_float();
-					$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
-
-					// PostProcess Events!
-					foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 
-					{
-						$tmpMyEvent['FirstEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstEvent_Date'] );
-						$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastEvent_Date'] );
-						$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+						$tmpConsolidatedComputer['cons_events'][] = $lastEntry; 
 					}
 				}
+
+				// TimeStats
+				$nowtime = microtime_float();
+				$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
+
+				// PostProcess Events!
+				foreach( $tmpConsolidatedComputer["cons_events"] as &$tmpMyEvent ) 
+				{
+					$tmpMyEvent['FirstEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstOccurrence_Date'] );
+					$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
+					$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
+					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
+				}
 			}
-			else
-				return $ret;
+			// --- 
 		}
 
 		// Work done!
 		return SUCCESS;
 	}
+
+	/*
+	*	Helper function to obtain Severity background color
+	*/
+	private function GetSeverityBGColor( $nSeverity )
+	{
+		global $severity_colors;
+
+		if ( isset( $severity_colors[$nSeverity] ) ) 
+			return $severity_colors[$nSeverity]; 
+		else
+			return $severity_colors[SYSLOG_INFO]; //Default
+	}
+
 }
 
 ?>

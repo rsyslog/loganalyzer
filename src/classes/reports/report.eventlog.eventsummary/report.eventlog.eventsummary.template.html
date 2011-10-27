@@ -94,30 +94,29 @@
 	<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate">
 	<tr>
 		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_number}</td>
+		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_firstevent}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_lastevent}</td>
 		<td class="cellmenu1" align="center" width="150" nowrap>{ln_report_process}</td>
 		<td class="cellmenu1" align="center" width="100" nowrap>{ln_report_severity}</td>
 		<td class="cellmenu1" align="center" width="80" nowrap>{ln_report_eventid}</td>
 		<td class="cellmenu1" align="center" width="100%" nowrap>{ln_report_description}</td>
-		<td class="cellmenu1" align="center" width="50" nowrap>{ln_report_count}</td>
 	</tr>
 	<!-- BEGIN cons_events -->
 	<tr>
 		<td class="line1" valign="top" align="center">{ZAEHLER}</td>
-		<td class="line1" valign="top" align="center">{FirstEvent_Date_Formatted}</td>
-		<td class="line1" valign="top" align="center">{LastEvent_Date_Formatted}</td>
-		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=sourceproc&q={sourceproc}" target="_blank">{sourceproc}</a></td>
-		<td class="line1" valign="top" align="center">{syslogseverity_text}</td>
-		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=id&q={id}" target="_blank">{id}</a></td>
-		<td class="line1" valign="top" align="left">{msg}</td>
 		<!-- IF ItemCount>=$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{ItemCount}</b></td>
 		<!-- ENDIF ItemCount>=$_colorThreshold -->
 		<!-- IF ItemCount<$_colorThreshold -->
 			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{ItemCount}</b></td>
 		<!-- ENDIF ItemCount<$_colorThreshold -->
-		
+		<td class="line1" valign="top" align="center">{FirstEvent_Date_Formatted}</td>
+		<td class="line1" valign="top" align="center">{LastEvent_Date_Formatted}</td>
+		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=sourceproc&q={sourceproc}" target="_blank">{sourceproc}</a></td>
+		<td class="lineColouredWhite" valign="top" align="center" bgcolor="{syslogseverity_bgcolor}"><b>{syslogseverity_text}</b></td>
+		<td class="line1" valign="top" align="center"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=id&q={id}" target="_blank">{id}</a></td>
+		<td class="line1" valign="top" align="left">{msg}</td>
 	</tr>
 
 	<!-- END cons_events -->
