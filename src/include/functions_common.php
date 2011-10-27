@@ -570,7 +570,6 @@ function CheckAndSetRunMode()
 
 	// --- Check necessary PHP Extensions!
 	$loadedExtensions = get_loaded_extensions();
-	
 	// Check for GD libary
 	if ( in_array("gd", $loadedExtensions) ) 
 		$content['GD_IS_ENABLED'] = true;
@@ -581,6 +580,8 @@ function CheckAndSetRunMode()
 	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
 	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
+	// Check sockets Extension
+	if ( in_array("sockets", $loadedExtensions) ) { $content['SOCKETS_IS_ENABLED'] = true; } else { $content['SOCKETS_IS_ENABLED'] = false; }
 	// --- 
 }
 
@@ -1347,7 +1348,31 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 	// Check if the user wants to syslog the error!
 	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
 	{
-		$syslogSend = syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+		if ( $content['SOCKETS_IS_ENABLED'] ) 
+		{
+			// Send using UDP ourself!
+			$sock = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+			$stprifac = (SYSLOG_LOCAL0 << 3); 
+			if ( $szDbgLevel == DEBUG_ERROR_WTF ) 
+				$stprifac += SYSLOG_CRIT;
+			else if ( $szDbgLevel == DEBUG_ERROR ) 
+				$stprifac += SYSLOG_ERR;
+			else if ( $szDbgLevel == DEBUG_WARN ) 
+				$stprifac += SYSLOG_WARNING;
+			else if ( $szDbgLevel == DEBUG_INFO ) 
+				$stprifac += SYSLOG_NOTICE;
+			else if ( $szDbgLevel == DEBUG_DEBUG ) 
+				$stprifac += SYSLOG_INFO;
+			else if ( $szDbgLevel == DEBUG_ULTRADEBUG ) 
+				$stprifac += SYSLOG_DEBUG;
+			
+			// Generate RFC5424 Syslog MSG
+			$szsyslogmsg = "<" . $stprifac . ">" . date("c") . " " . php_uname ("n") . " " . "loganalyzer - - - " . $szDbg ;
+			@socket_sendto($sock, $szsyslogmsg, strlen($szsyslogmsg), 0, '127.0.0.1', 514);
+			@socket_close($sock);
+		}
+		else // Use PHP System function to send via syslog
+			$syslogSend = syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
 	}
 }
 

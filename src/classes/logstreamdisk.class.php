@@ -666,6 +666,17 @@ class LogStreamDisk extends LogStream {
 	}
 
 
+	/*
+	*	Implementation of the UpdateAllMessageChecksum
+	*
+	*	not implemented!
+	*/
+	public function UpdateAllMessageChecksum( )
+	{
+		return SUCCESS; 
+	}
+
+
 	/**
 	* Implementation of ConsolidateItemListByField 
 	*
@@ -785,6 +796,11 @@ class LogStreamDisk extends LogStream {
 			{
 				if ( isset($logArray[$szConsFieldId]) )
 				{
+					// --- Special Case for the checksum field, we need to generate the checksum ourself!
+					if ( $szConsFieldId == MISC_CHECKSUM ) 
+						$logArray[$szConsFieldId] = crc32( $logArray[SYSLOG_MESSAGE] ); 
+					// --- 
+
 					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
 					{
 						// Convert to FULL Day Date for now!

@@ -691,6 +691,48 @@ class LogStreamPDO extends LogStream {
 
 
 	/*
+	*	Implementation of the UpdateAllMessageChecksum
+	*
+	*	Update all missing checksum properties in the current database
+	*/
+	public function UpdateAllMessageChecksum( )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// UPDATE DATA NOW!
+		$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+					" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = crc32(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
+					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL"; 
+
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamPDO|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		
+		// Running SQL Query
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ( $myQuery ) 
+		{
+			// Output Debug Informations
+			OutputDebugMessage("LogStreamPDO|UpdateAllMessageChecksum: Successfully updated Checksum of '" . $myQuery->rowCount() . "' datarecords", DEBUG_INFO);
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Return success
+			return SUCCESS; 
+		}
+		else
+		{
+			// error occured, output DEBUG message
+			$this->PrintDebugError("UpdateAllMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+
+			// Failed
+			return ERROR; 
+		}
+	}
+
+
+	/*
 	*	Implementation of the SaveMessageChecksum
 	*
 	*	Creates an database UPDATE Statement and performs it!

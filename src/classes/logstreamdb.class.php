@@ -601,6 +601,46 @@ class LogStreamDB extends LogStream {
 		return $rowcount; 
 	}
 
+	
+	/*
+	*	Implementation of the UpdateAllMessageChecksum
+	*
+	*	Update all missing checksum properties in the current database
+	*/
+	public function UpdateAllMessageChecksum( )
+	{
+		global $querycount, $dbmapping;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// UPDATE DATA NOW!
+		$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+					" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = crc32(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
+					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL"; 
+
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		
+		// Running SQL Query
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if ($myQuery)
+		{
+			// Debug Output
+			OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysql_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
+
+			// Return success
+			return SUCCESS; 
+		}
+		else
+		{
+			// error occured, output DEBUG message
+			$this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+
+			// Failed
+			return ERROR; 
+		}
+	}
+
+
 	/*
 	*	Implementation of the SaveMessageChecksum
 	*
@@ -613,7 +653,7 @@ class LogStreamDB extends LogStream {
 
 		if ( isset($arrProperitesIn[SYSLOG_UID]) && isset($arrProperitesIn[MISC_CHECKSUM]) && isset($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]) )
 		{
-			// DELETE DATA NOW!
+			// UPDATE DATA NOW!
 			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
 						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = " . $arrProperitesIn[MISC_CHECKSUM] . 
 						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " = " . $arrProperitesIn[SYSLOG_UID]; 
@@ -711,6 +751,9 @@ class LogStreamDB extends LogStream {
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
+
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamDB|ConsolidateItemListByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);
@@ -849,7 +892,7 @@ class LogStreamDB extends LogStream {
 					$szLimitSql ;
 
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
 		$myquery = mysql_query($szSql, $this->_dbhandle);

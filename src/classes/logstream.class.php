@@ -253,6 +253,12 @@ abstract class LogStream {
 
 
 	/*
+	*	Helper function to set the checksum for all messages in the current logstream class
+	*/
+	public abstract function UpdateAllMessageChecksum( );
+
+
+	/*
 	*	Helper function for logstream classes to clear filter based stuff
 	*/
 	public abstract function ResetFilters( );
@@ -279,7 +285,7 @@ abstract class LogStream {
 		else
 			$finalfilters = $szFilters; 
 
-		OutputDebugMessage("SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
+		OutputDebugMessage("LogStream|SetFilter: SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
 
 		// Reset Filters first to make sure we do not add multiple filters!
 		$this->_filters = null;
