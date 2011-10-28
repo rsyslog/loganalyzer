@@ -263,6 +263,31 @@ abstract class LogStream {
 	*/
 	public abstract function ResetFilters( );
 
+
+	/*
+	*	Helper function for logstream classes to check for data indexes, only applies to database based logstream classes
+	*/
+	public abstract function VerifyIndexes( $arrProperitesIn );
+
+
+	/*
+	*	Helper function for logstream classes to create missing indexes, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingIndexes( $arrProperitesIn );
+
+
+	/*
+	*	Helper function for logstream classes to check for missing triggers, only applies to database based logstream classes
+	*/
+	public abstract function VerifyChecksumTrigger( );
+
+
+	/*
+	*	Helper function for logstream classes to create missing trigger, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingTrigger( );
+
+
 	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/

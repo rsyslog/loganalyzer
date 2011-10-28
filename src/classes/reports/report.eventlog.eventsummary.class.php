@@ -289,6 +289,33 @@ class Report_eventsummary extends Report {
 	}
 
 
+	/*
+	* Implementation of CheckLogStreamSource
+	*/
+	public function CheckLogStreamSource( $mySourceID )
+	{
+
+
+	}
+
+
+	/*
+	* Implementation of CreateLogStreamIndexes | Will create missing INDEXES
+	*/
+	public function CreateLogStreamIndexes( $mySourceID )
+	{
+
+	}
+
+
+	/*
+	* Implementation of CreateLogStreamIndexes | Will create missing TRIGGER
+	*/
+	public function CreateLogStreamTrigger( $mySourceID )
+	{
+
+	}
+
 
 	// --- Private functions...
 	/**

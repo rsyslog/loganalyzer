@@ -457,6 +457,19 @@ $content['LN_REPORTS_NOTINSTALLED'] = "Not installed";
 $content['LN_REPORTS_DOWNLOAD'] = "Download Link";
 $content['LN_REPORTS_SAMPLELINK'] = "Report Sample";
 $content['LN_REPORTS_DETAILSFOR'] = "Details for '%1' report";
+$content['LN_REPORTS_PERFORMANCE_WARNING'] = "Logstream Performance Warning";
+$content['LN_REPORTS_OPTIMIZE_LOGSTREAMSOURCE'] = "Yes, optimize logstream source!";
+$content['LN_REPORTS_OPTIMIZE_INDEXES'] = "The datasource '%1' is not optimized for this report. There is at least one INDEX missing. Creating INDEXES will speedup the report generation. <br><br>Do you want LogAnalyter to create the necessary INDEXES now? This may take more then a few minutes, so please be patient!";
+$content['LN_REPORTS_ERROR_FAILED_CREATE_INDEXES'] = "Failed to create INDEXES for datasource '%1' with error code '%2'";
+$content['LN_REPORTS_INDEX_CREATED'] = "Logstream INDEXES created";
+$content['LN_REPORTS_INDEX_CREATED_SUCCESS'] = "Successfully created all INDEXES for datasource '%1'.";
+$content['LN_REPORTS_OPTIMIZE_TRIGGER'] = "The datasource '%1' does not have a TRIGGER installed to automatically generate the message checksum on INSERT. Creating the TRIGGER will speedup the report generation. <br><br>Do you want LogAnalyter to create the TRIGGER now? ";
+$content['LN_REPORTS_TRIGGER_CREATED'] = "Logstream TRIGGER created";
+$content['LN_REPORTS_TRIGGER_CREATED_SUCCESS'] = "Successfully created TRIGGER for datasource '%1'.";
+$content['LN_REPORTS_ERROR_FAILED_CREATE_TRIGGER'] = "Failed to create TRIGGER for datasource '%1' with error code '%2'";
 $content['LN_REPORTS_'] = "";
+$content['LN_REPORTS_'] = "";
+
+
 
 ?>

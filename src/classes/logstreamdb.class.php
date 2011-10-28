@@ -181,6 +181,152 @@ class LogStreamDB extends LogStream {
 		return SUCCESS;
 	}
 
+
+	/*
+	*	Implementation of VerifyIndexes: Checks if indexes exist for desired fields
+	*/
+	public function VerifyIndexes( $arrProperitesIn )
+	{
+		global $dbmapping, $fields;
+
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+			{
+				OutputDebugMessage("LogStreamDB|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				continue;
+			}
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamDB|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				return ERROR_DB_INDEXESMISSING; 
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of VerifyChecksumTrigger: Checks if checksum trigger exists
+	*/
+	public function VerifyChecksumTrigger( )
+	{
+		global $dbmapping, $fields;
+
+		// Get List of Triggers as Array
+		$arrIndexTriggers = $this->GetTriggersAsArray(); 
+		$szDBName = $this->_logStreamConfigObj->DBName;
+		
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		$szTriggerName = $szDBName . "_" . $szTableName; 
+		
+		// Try to find logstream trigger
+		if ( count($arrIndexTriggers) > 0 ) 
+		{
+			if ( in_array($szTriggerName, $arrIndexTriggers) )
+				return SUCCESS; 
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: Missing TRIGGERS for Table '" . $szTableName . "'", DEBUG_WARN);
+				return ERROR_DB_TRIGGERMISSING; 
+			}
+		}
+		else
+		{
+			// Index is missing for this field!
+			OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: No TRIGGERS found in your database", DEBUG_WARN);
+			return ERROR_DB_TRIGGERMISSING; 
+		}
+	}
+
+
+	/*
+	*	Implementation of CreateMissingIndexes: Checks if indexes exist for desired fields
+	*/
+	public function CreateMissingIndexes( $arrProperitesIn )
+	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+				continue;
+			else
+			{
+				// Update Table schema now!
+				$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
+
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamDB|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
+				
+				// Add missing INDEX now!
+				$myQuery = mysql_query($szSql, $this->_dbhandle);
+				if (!$myQuery)
+				{
+					// Return failure!
+					$this->PrintDebugError("Dynamically Adding INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed with Statement: '" . $szSql . "'");
+					return ERROR_DB_INDEXFAILED;
+				}
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of CreateMissingTrigger: Checks if indexes exist for desired fields
+	*/
+	public function CreateMissingTrigger( )
+	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Triggers as Array
+		$szDBName = $this->_logStreamConfigObj->DBName;
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		$szTriggerName = $szDBName . "_" . $szTableName; 
+		
+		// Create TRIGGER SQL!
+		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
+					 FOR EACH ROW
+					 BEGIN
+					 SET NEW.Checksum = crc32(NEW.Message);
+					 END
+					;";
+
+		// Index is missing for this field!
+		OutputDebugMessage("LogStreamDB|CreateMissingTrigger: Createing missing TRIGGER for '" . $szTableName . "' - " . $szSql, DEBUG_INFO);
+		
+		// Add missing INDEX now!
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if (!$myQuery)
+		{
+			// Return failure!
+			$this->PrintDebugError("Dynamically Adding TRIGGER for '" . $szTableName . "' failed with Statement: '" . $szSql . "'");
+			return ERROR_DB_TRIGGERFAILED;
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
 	/**
 	* Read the data from a specific uID which means in this
 	* case beginning with from the Database ID
@@ -1584,6 +1730,84 @@ class LogStreamDB extends LogStream {
 		else
 			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc);
 			return ERROR_DB_DBFIELDNOTFOUND;
+	}
+
+	/*
+	*	Helper function to return a list of Indexes for the logstream table 
+	*/
+	private function GetIndexesAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrIndexKeys = array();
+
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if ($myQuery)
+		{
+			// Loop through results
+			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+			{
+				// Add to index keys
+				$arrIndexKeys[] = strtolower($myRow['Key_name']); 
+			}
+
+			// Free query now
+			mysql_free_result ($myQuery); 
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// return Array
+		return $arrIndexKeys; 
+	}
+
+
+	/*
+	*	Helper function to return a list of Indexes for the logstream table 
+	*/
+	private function GetTriggersAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrIndexTriggers = array();
+
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW TRIGGERS"; 
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if ($myQuery)
+		{
+			// Loop through results
+			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+			{
+//				print_r (  $myRow ); 
+				// Add to index keys
+				$arrIndexTriggers[] = strtolower($myRow['Trigger']); 
+			}
+
+			// Free query now
+			mysql_free_result ($myQuery); 
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// return Array
+		return $arrIndexTriggers; 
 	}
 
 // --- End of Class!

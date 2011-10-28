@@ -117,6 +117,25 @@ abstract class Report {
 	*/
 	public abstract function InitAdvancedSettings();
 
+
+	/**
+	* If the reports needs to optimize the logstream, it is checked and verified by this function 
+	*/
+	public abstract function CheckLogStreamSource( $mySourceID );
+
+
+	/**
+	* If the reports needs INDEXES, these are created by this function 
+	*/
+	public abstract function CreateLogStreamIndexes( $mySourceID );
+
+	
+	/**
+	* If the reports needs a TRIGGER, these are created by this function 
+	*/
+	public abstract function CreateLogStreamTrigger( $mySourceID );
+
+
 	/**
 	* verifyDataSource, verifies if data is accessable and 
 	* contains what we need
