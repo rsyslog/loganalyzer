@@ -1290,13 +1290,15 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				if ( isset($extraErrorDescription) )
 					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 			}
-			
-			// Show information in performance warning area
-			$content['ISSOURCENOTOPTIMIZED'] = true;
-			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_TRIGGER_CREATED']; 
-			$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_TRIGGER_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] );
-			$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+			else
+			{
+				// Show information in performance warning area
+				$content['ISSOURCENOTOPTIMIZED'] = true;
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_TRIGGER_CREATED']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_TRIGGER_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+			}
 
 			// return result
 			return $res; 

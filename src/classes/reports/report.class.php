@@ -656,5 +656,143 @@ abstract class Report {
 		return $res; 
 	}
 
+
+	/**
+	* If the reports needs to optimize the logstream, it is checked and verified by this function 
+	*/
+	public function CheckLogStreamSourceByPropertyArray( $mySourceID, $arrProperties, $myTriggerProperty )
+	{
+		global $content, $fields; 
+		$res = SUCCESS; 
+
+		if ( $this->_streamCfgObj == null ) 
+		{
+			if ( isset($content['Sources'][$mySourceID]) )
+			{
+				// Obtain and get the Config Object
+				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
+
+				// Return success if logstream is FILE based!
+				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
+					return SUCCESS; 
+			}
+			else
+				return ERROR_SOURCENOTFOUND;
+		}
+
+		if ( $this->_streamObj == null ) 
+		{
+			// Create LogStream Object 
+			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
+		}
+
+		// Check datasource and return result
+		$res = $this->_streamObj->Verify();
+		if ( $res == SUCCESS )
+		{
+			// Will check if certain INDEXES do exists for database logstream classes!
+			$res = $this->_streamObj->VerifyIndexes( $arrProperties ); 
+			if ($res != SUCCESS ) 
+				return $res; 
+
+			// Will check if certain INDEXES do exists for database logstream classes!
+			$res = $this->_streamObj->VerifyChecksumTrigger( $myTriggerProperty ); 
+			if ($res != SUCCESS ) 
+				return $res; 
+		}
+
+		// return results!
+		return $res;
+	}
+
+
+	/**
+	* If the reports needs INDEXES, these are created by this function 
+	*/
+	public function CreateLogStreamIndexesByPropertyArray( $mySourceID, $arrProperties )
+	{
+		global $content, $fields; 
+		$res = SUCCESS; 
+
+		if ( $this->_streamCfgObj == null ) 
+		{
+			if ( isset($content['Sources'][$mySourceID]) )
+			{
+				// Obtain and get the Config Object
+				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
+
+				// Return success if logstream is FILE based!
+				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
+					return SUCCESS; 
+			}
+			else
+				return ERROR_SOURCENOTFOUND;
+		}
+
+		if ( $this->_streamObj == null ) 
+		{
+			// Create LogStream Object 
+			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
+		}
+
+		// Check datasource and return result
+		$res = $this->_streamObj->Verify();
+		if ( $res == SUCCESS )
+		{
+			// Will check if certain INDEXES do exists for database logstream classes!
+			$res = $this->_streamObj->CreateMissingIndexes( $arrProperties ); 
+			if ($res != SUCCESS ) 
+				return $res; 
+		}
+
+		// return results!
+		return $res;
+	}
+
+
+	/**
+	* If the reports needs INDEXES, these are created by this function 
+	*/
+	public function CreateLogStreamTriggerByPropertyArray( $mySourceID, $myTriggerProperty, $myChecksumProperty )
+	{
+		global $content, $fields; 
+		$res = SUCCESS; 
+
+		if ( $this->_streamCfgObj == null ) 
+		{
+			if ( isset($content['Sources'][$mySourceID]) )
+			{
+				// Obtain and get the Config Object
+				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
+
+				// Return success if logstream is FILE based!
+				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
+					return SUCCESS; 
+			}
+			else
+				return ERROR_SOURCENOTFOUND;
+		}
+
+		if ( $this->_streamObj == null ) 
+		{
+			// Create LogStream Object 
+			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
+		}
+
+		// Check datasource and return result
+		$res = $this->_streamObj->Verify();
+		if ( $res == SUCCESS )
+		{
+			// Will check if certain INDEXES do exists for database logstream classes!
+			$res = $this->_streamObj->CreateMissingTrigger( $myTriggerProperty, $myChecksumProperty ); 
+			if ($res != SUCCESS ) 
+				return $res; 
+		}
+
+		// return results!
+		return $res;
+	}
+
+
 }
 ?>

@@ -291,44 +291,8 @@ class Report_syslogsummary extends Report {
 	*/
 	public function CheckLogStreamSource( $mySourceID )
 	{
-		global $content, $fields; 
-		$res = SUCCESS; 
-
-		if ( $this->_streamCfgObj == null ) 
-		{
-			if ( isset($content['Sources'][$mySourceID]) )
-			{
-				// Obtain and get the Config Object
-				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
-
-				// Return success if logstream is FILE based!
-				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
-					return SUCCESS; 
-			}
-			else
-				return ERROR_SOURCENOTFOUND;
-		}
-
-		if ( $this->_streamObj == null ) 
-		{
-			// Create LogStream Object 
-			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
-		}
-
-		// Check datasource and return result
-		$res = $this->_streamObj->Verify();
-		if ( $res == SUCCESS )
-		{
-			// Will check if certain INDEXES do exists for database logstream classes!
-			$res = $this->_streamObj->VerifyIndexes( array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY) ); 
-			if ($res != SUCCESS ) 
-				return $res; 
-
-			// Will check if certain INDEXES do exists for database logstream classes!
-			$res = $this->_streamObj->VerifyChecksumTrigger(); 
-			if ($res != SUCCESS ) 
-				return $res; 
-		}
+		// Call basic report Check function 
+		$res = $this->CheckLogStreamSourceByPropertyArray( $mySourceID, array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY, SYSLOG_MESSAGETYPE), SYSLOG_MESSAGE );
 
 		// return results!
 		return $res;
@@ -340,39 +304,8 @@ class Report_syslogsummary extends Report {
 	*/
 	public function CreateLogStreamIndexes( $mySourceID )
 	{
-		global $content, $fields; 
-		$res = SUCCESS; 
-
-		if ( $this->_streamCfgObj == null ) 
-		{
-			if ( isset($content['Sources'][$mySourceID]) )
-			{
-				// Obtain and get the Config Object
-				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
-
-				// Return success if logstream is FILE based!
-				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
-					return SUCCESS; 
-			}
-			else
-				return ERROR_SOURCENOTFOUND;
-		}
-
-		if ( $this->_streamObj == null ) 
-		{
-			// Create LogStream Object 
-			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
-		}
-
-		// Check datasource and return result
-		$res = $this->_streamObj->Verify();
-		if ( $res == SUCCESS )
-		{
-			// Will check if certain INDEXES do exists for database logstream classes!
-			$res = $this->_streamObj->CreateMissingIndexes( array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY) ); 
-			if ($res != SUCCESS ) 
-				return $res; 
-		}
+		// Call basic report Check function 
+		$res = $this->CreateLogStreamIndexesByPropertyArray( $mySourceID, array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY, SYSLOG_MESSAGETYPE) );
 
 		// return results!
 		return $res;
@@ -384,39 +317,8 @@ class Report_syslogsummary extends Report {
 	*/
 	public function CreateLogStreamTrigger( $mySourceID )
 	{
-		global $content, $fields; 
-		$res = SUCCESS; 
-
-		if ( $this->_streamCfgObj == null ) 
-		{
-			if ( isset($content['Sources'][$mySourceID]) )
-			{
-				// Obtain and get the Config Object
-				$this->_streamCfgObj = $content['Sources'][$mySourceID]['ObjRef'];
-
-				// Return success if logstream is FILE based!
-				if ( $content['Sources'][$mySourceID]['SourceType'] == SOURCE_DISK ) 
-					return SUCCESS; 
-			}
-			else
-				return ERROR_SOURCENOTFOUND;
-		}
-
-		if ( $this->_streamObj == null ) 
-		{
-			// Create LogStream Object 
-			$this->_streamObj = $this->_streamCfgObj->LogStreamFactory($this->_streamCfgObj);
-		}
-
-		// Check datasource and return result
-		$res = $this->_streamObj->Verify();
-		if ( $res == SUCCESS )
-		{
-			// Will check if certain INDEXES do exists for database logstream classes!
-			$res = $this->_streamObj->CreateMissingTrigger(); 
-			if ($res != SUCCESS ) 
-				return $res; 
-		}
+		// Call basic report Check function 
+		$res = $this->CreateLogStreamTriggerByPropertyArray( $mySourceID, SYSLOG_MESSAGE, MISC_CHECKSUM );
 
 		// return results!
 		return $res;

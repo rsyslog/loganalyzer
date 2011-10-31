@@ -294,8 +294,11 @@ class Report_eventsummary extends Report {
 	*/
 	public function CheckLogStreamSource( $mySourceID )
 	{
+		// Call basic report Check function 
+		$res = $this->CheckLogStreamSourceByPropertyArray( $mySourceID, array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY, SYSLOG_MESSAGETYPE), SYSLOG_MESSAGE );
 
-
+		// return results!
+		return $res;
 	}
 
 
@@ -304,7 +307,11 @@ class Report_eventsummary extends Report {
 	*/
 	public function CreateLogStreamIndexes( $mySourceID )
 	{
+		// Call basic report Check function 
+		$res = $this->CreateLogStreamIndexesByPropertyArray( $mySourceID, array(SYSLOG_HOST, MISC_CHECKSUM, SYSLOG_DATE, SYSLOG_SEVERITY, SYSLOG_MESSAGETYPE) );
 
+		// return results!
+		return $res;
 	}
 
 
@@ -313,7 +320,11 @@ class Report_eventsummary extends Report {
 	*/
 	public function CreateLogStreamTrigger( $mySourceID )
 	{
+		// Call basic report Check function 
+		$res = $this->CreateLogStreamTriggerByPropertyArray( $mySourceID, SYSLOG_MESSAGE, MISC_CHECKSUM );
 
+		// return results!
+		return $res;
 	}
 
 

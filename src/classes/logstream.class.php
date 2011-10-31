@@ -279,13 +279,13 @@ abstract class LogStream {
 	/*
 	*	Helper function for logstream classes to check for missing triggers, only applies to database based logstream classes
 	*/
-	public abstract function VerifyChecksumTrigger( );
+	public abstract function VerifyChecksumTrigger( $myTriggerProperty );
 
 
 	/*
 	*	Helper function for logstream classes to create missing trigger, only applies to database based logstream classes
 	*/
-	public abstract function CreateMissingTrigger( );
+	public abstract function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty );
 
 
 	/*
