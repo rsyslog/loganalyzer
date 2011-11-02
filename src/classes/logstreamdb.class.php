@@ -183,6 +183,39 @@ class LogStreamDB extends LogStream {
 
 
 	/*
+	*	Implementation of VerifyFields: Checks if fields exist in table
+	*/
+	public function VerifyFields( $arrProperitesIn )
+	{
+		global $dbmapping, $fields;
+
+		// Get List of Indexes as Array
+		$arrFieldKeys = $this->GetFieldsAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
+			{
+				OutputDebugMessage("LogStreamDB|VerifyFields: Found Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				continue;
+			}
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamDB|VerifyFields: Missing Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				return ERROR_DB_DBFIELDNOTFOUND; 
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
 	*	Implementation of VerifyIndexes: Checks if indexes exist for desired fields
 	*/
 	public function VerifyIndexes( $arrProperitesIn )
@@ -295,30 +328,84 @@ class LogStreamDB extends LogStream {
 
 
 	/*
-	*	Implementation of CreateMissingTrigger: Checks if indexes exist for desired fields
+	*	Implementation of CreateMissingFields: Checks if indexes exist for desired fields
+	*/
+	public function CreateMissingFields( $arrProperitesIn )
+	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Indexes as Array
+		$arrFieldKeys = $this->GetFieldsAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
+				continue;
+			else
+			{
+				if ( $this->HandleMissingField( $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrProperitesIn ) == SUCCESS )
+				{
+					// Index is missing for this field!
+					OutputDebugMessage("LogStreamDB|CreateMissingFields: Createing missing FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], DEBUG_INFO);
+				}
+				else
+				{
+					// Return failure!
+					$this->PrintDebugError("Dynamically Adding FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed!");
+					return ERROR_DB_ADDDBFIELDFAILED;
+				}
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of GetCreateMissingTriggerSQL: Creates SQL needed to create a TRIGGER
+	*/
+	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
+	{
+		global $dbmapping, $fields, $querycount;
+
+		// Get List of Triggers as Array
+		$szDBName = $this->_logStreamConfigObj->DBName;
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		
+		// Create Triggername
+		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $myDBTriggerField; 
+
+		// Create TRIGGER SQL!
+		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
+					 FOR EACH ROW
+					 BEGIN
+					 SET NEW." . $myDBTriggerCheckSumField . " = crc32(NEW." . $myDBTriggerField . ");
+					 END
+					;";
+
+		return $szSql; 
+	}
+
+
+	/*
+	*	Implementation of CreateMissingTrigger: Creates missing triggers !
 	*/
 	public function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
 	{
 		global $dbmapping, $fields, $querycount;
 	
 		// Get List of Triggers as Array
-		$szDBName = $this->_logStreamConfigObj->DBName;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
 		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
 		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
 		$szDBTriggerCheckSumField = $dbmapping[$szTableType]['DBMAPPINGS'][$myCheckSumProperty]; 
+
+		// Get SQL Code to create the trigger!
+		$szSql = $this->GetCreateMissingTriggerSQL( $szDBTriggerField, $szDBTriggerCheckSumField ); 
 		
-		// Create Triggername
-		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $szDBTriggerField; 
-
-		// Create TRIGGER SQL!
-		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
-					 FOR EACH ROW
-					 BEGIN
-					 SET NEW." . $szDBTriggerCheckSumField . " = crc32(NEW." . $szDBTriggerField . ");
-					 END
-					;";
-
 		// Index is missing for this field!
 		OutputDebugMessage("LogStreamDB|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
 		
@@ -327,12 +414,77 @@ class LogStreamDB extends LogStream {
 		if (!$myQuery)
 		{
 			// Return failure!
-			$this->PrintDebugError("Dynamically Adding TRIGGER for '" . $szTableName . "' failed with Statement: '" . $szSql . "'");
+			$this->PrintDebugError("Dynamically Adding TRIGGER for '" . $szTableName . "' failed!<br/><br/>If you want to manually add the TRIGGER, use the following SQL Command:<br/> " . str_replace("\n", "<br/>", $szSql) . "<br/>");
+			
 			return ERROR_DB_TRIGGERFAILED;
 		}
 		
 		// Successfull
 		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of ChangeChecksumFieldUnsigned: Changes the Checkusm field to unsigned!
+	*/
+	public function ChangeChecksumFieldUnsigned()
+	{
+		global $dbmapping, $fields, $querycount;
+
+		// Get variables
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Change Checksumfield to use UNSIGNED!
+		$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` CHANGE `" . 
+						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` `" . 
+						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` INT(11) UNSIGNED NOT NULL DEFAULT '0'"; 
+
+		// Update Table schema now!
+		$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
+		if (!$myQuery)
+		{
+			// Return failure!
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - Failed to Change field '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "' from signed to unsigned with sql statement: '" . $szUpdateSql . "'");
+			return ERROR_DB_CHECKSUMCHANGEFAILED;
+		}
+
+		// return results
+		return SUCCESS;
+	}
+
+
+	/*
+	*	Implementation of VerifyChecksumField: Verifies if the checkusm field is signed or unsigned!
+	*/
+	public function VerifyChecksumField()
+	{
+		global $dbmapping, $fields, $querycount;
+		
+		// Get variables
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		if ($myQuery)
+		{
+			// Get result!
+			$myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC);
+			if (strpos( strtolower($myRow['Type']), "unsigned") === false ) 
+			{
+				// return error code!
+				return ERROR_DB_CHECKSUMERROR; 
+			}
+
+			// Free query now
+			mysql_free_result ($myQuery); 
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+	
+		// return results
+		return SUCCESS;
 	}
 
 
@@ -770,7 +922,7 @@ class LogStreamDB extends LogStream {
 		// UPDATE DATA NOW!
 		$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
 					" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = crc32(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
-					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL"; 
+					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
 
 		// Output Debug Informations
 		OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
@@ -1687,63 +1839,73 @@ class LogStreamDB extends LogStream {
 	/*
 	*	Function handles missing database fields automatically!
 	*/
-	private function HandleMissingField()
+	private function HandleMissingField( $szMissingField = null, $arrProperties = null )
 	{
 		global $dbmapping, $fields;
 
 		// Get Err description
 		$errdesc = mysql_error();
-
-		// check matching of error msg!
-		if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc, $errOutArr ) )
+		
+		// Try to get missing field from SQL Error of not specified as argument
+		if ( $szMissingField == null ) 
 		{
-			$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-			// Loop through all fields to see which one is missing!
-			foreach ( $this->_arrProperties as $myproperty ) 
+			if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc, $errOutArr ) ) 
+				$szMissingField = $errOutArr[1]; 
+			else
 			{
-				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $errOutArr[1] == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
-				{
-					// Create SQL Numeric field
-					$szUpdateSql = ""; $szUnsigned = "";
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
-					{
-						// This will add the checksum field as unsigned automatically!
-						if ( $myproperty == MISC_CHECKSUM ) 
-							$szUnsigned = "UNSIGNED";
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) " . $szUnsigned . " NOT NULL DEFAULT '0'"; 
-					}
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
-					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
-						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+				$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc);
+				return ERROR_DB_DBFIELDNOTFOUND;
+			}
+		}
 
-					if ( strlen($szUpdateSql) > 0 )
-					{
-						// Update Table schema now!
-						$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
-						if (!$myQuery)
-						{
-							// Return failure!
-							$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
-							return ERROR_DB_DBFIELDNOTFOUND;
-						}
-					}
-					else
+		// Set Properties to default if NULL 
+		if ( $arrProperties == null ) 
+			$arrProperties = $this->_arrProperties; 
+		
+		// Get Tabletype
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperties as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $szMissingField == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
+			{
+				// Create SQL Numeric field
+				$szUpdateSql = ""; $szUnsigned = "";
+				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+				{
+					// This will add the checksum field as unsigned automatically!
+					if ( $myproperty == MISC_CHECKSUM ) 
+						$szUnsigned = "UNSIGNED";
+					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) " . $szUnsigned . " NOT NULL DEFAULT '0'"; 
+				}
+				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
+				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+
+				if ( strlen($szUpdateSql) > 0 )
+				{
+					// Update Table schema now!
+					$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
+					if (!$myQuery)
 					{
 						// Return failure!
-						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
-						return ERROR_DB_DBFIELDNOTFOUND;
+						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
+						return ERROR_DB_ADDDBFIELDFAILED;
 					}
 				}
+				else
+				{
+					// Return failure!
+					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+					return ERROR_DB_ADDDBFIELDFAILED;
+				}
 			}
-
-			// Reached this point means success!
-			return SUCCESS; 
 		}
-		else
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc);
-			return ERROR_DB_DBFIELDNOTFOUND;
+
+		// Reached this point means success!
+		return SUCCESS; 
 	}
 
 	/*
@@ -1786,53 +1948,30 @@ class LogStreamDB extends LogStream {
 
 
 	/*
-	*	Helper function to chang ethe checksum field type to unsigned INT!
+	*	Helper function to return a list of Fields from the logstream table 
 	*/
-	private function ChangeChecksumFieldUnsigned()
+	private function GetFieldsAsArray()
 	{
-		global $dbmapping, $fields, $querycount;
+		global $querycount;
 
-		// Change Checksumfield to use UNSIGNED!
-		$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` CHANGE `" . 
-						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` `" . 
-						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` INT(11) UNSIGNED NOT NULL DEFAULT '0'"; 
-
-		// Update Table schema now!
-		$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
-		if (!$myQuery)
-		{
-			// Return failure!
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - Failed to Change field '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "' from signed to unsigned with sql statement: '" . $szUpdateSql . "'");
-			return ERROR_DB_CHECKSUMCHANGEFAILED;
-		}
-
-		// return results
-		return SUCCESS;
-	}
-
-
-	/*
-	*	Helper function to chang ethe checksum field type to unsigned INT!
-	*/
-	private function CheckChecksumField()
-	{
-		global $dbmapping, $fields, $querycount;
-
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
 		// Init Array
-		$arrFields = array();
+		$arrFieldKeys = array();
 
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]; 
+		$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
-			// Get result!
-			$myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
-
-			if (strpos($myRow, "unsigned") !== false ) 
+			// Loop through results
+			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
 			{
-				// return error code!
-				return ERROR_DB_CHECKSUMERROR; 
+				// Add to index keys
+				$arrFieldKeys[] = strtolower($myRow['Field']); 
 			}
 
 			// Free query now
@@ -1841,9 +1980,9 @@ class LogStreamDB extends LogStream {
 			// Increment for the Footer Stats 
 			$querycount++;
 		}
-	
-		// return results
-		return SUCCESS;
+
+		// return Array
+		return $arrFieldKeys; 
 	}
 
 

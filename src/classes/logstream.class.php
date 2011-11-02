@@ -265,6 +265,18 @@ abstract class LogStream {
 
 
 	/*
+	*	Helper function for logstream classes to check if all fields are available!
+	*/
+	public abstract function VerifyFields( $arrProperitesIn );
+
+	
+	/*
+	*	Helper function for logstream classes to create missing indexes, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingFields( $arrProperitesIn );
+
+	
+	/*
 	*	Helper function for logstream classes to check for data indexes, only applies to database based logstream classes
 	*/
 	public abstract function VerifyIndexes( $arrProperitesIn );
@@ -286,6 +298,23 @@ abstract class LogStream {
 	*	Helper function for logstream classes to create missing trigger, only applies to database based logstream classes
 	*/
 	public abstract function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty );
+
+
+	/*
+	*	Helper function for logstream classes to create the SQL statement needed to create the trigger, only applies to database based logstream classes
+	*/
+	public abstract function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField );
+
+	/*
+	*	Helper function for logstream classes to check if the checksum field is configured correctly
+	*/
+	public abstract function VerifyChecksumField( );
+
+
+	/*
+	*	Helper function for logstream classes to change the checksum field from unsigned INT
+	*/
+	public abstract function ChangeChecksumFieldUnsigned( );
 
 
 	/*

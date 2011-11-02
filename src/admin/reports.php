@@ -1256,8 +1256,31 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 	// Check if optimize variable is set!
 	if ( isset($_GET['optimize']) )
 	{
+		
 		// Check what we have to do
-		if ( $_GET['optimize'] == "indexes" ) 
+		if ( $_GET['optimize'] == "addfields" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->CreateMissingLogStreamFields( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_ADDING_FIELDS'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			
+			// Show information in performance warning area
+			$content['ISSOURCENOTOPTIMIZED'] = true;
+			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_FIELDS_CREATED']; 
+			$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_FIELDS_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] ); 
+			$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+
+			// return result
+			return $res; 
+		}
+		else if ( $_GET['optimize'] == "indexes" ) 
 		{
 			// This will create all INDEXES we need for this logstream!
 			$res = $myReportObj->CreateLogStreamIndexes( $mySourceID );
@@ -1273,7 +1296,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			$content['ISSOURCENOTOPTIMIZED'] = true;
 			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_INDEX_CREATED']; 
 			$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_INDEX_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_INDEX_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] ); 
 			$content['MSG_WARNING_SUBMITFORM'] = "false"; 
 
 			// return result
@@ -1303,6 +1326,30 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			// return result
 			return $res; 
 		}
+		else if ( $_GET['optimize'] == "checksum" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->ChangeChecksumFieldUnsigned( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			else
+			{
+				// Show information in performance warning area
+				$content['ISSOURCENOTOPTIMIZED'] = true;
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_CHECKSUM_CHANGED']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHECKSUM_CHANGED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+			}
+
+			// return result
+			return $res; 
+		}
 	}
 
 	$res = $myReportObj->CheckLogStreamSource( $mySourceID );
@@ -1317,13 +1364,21 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 
 		// Current Logstream Source is not optimized! Show to user!
 		$content['ISSOURCENOTOPTIMIZED'] = true;
-		if ( $res == ERROR_DB_INDEXESMISSING ) 
+		if ( $res == ERROR_DB_DBFIELDNOTFOUND ) 
+		{
+			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+			$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
+		}
+		else if ( $res == ERROR_DB_INDEXESMISSING ) 
 		{
 			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
 			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
 			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Optimize INDEXES in this case!
+			$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
 		}
 		else if ( $res == ERROR_DB_TRIGGERMISSING ) 
 		{
@@ -1331,7 +1386,15 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
 			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Optimize INDEXES in this case!
+			$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
+		}
+		else if ( $res == ERROR_DB_CHECKSUMERROR ) 
+		{
+			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+			$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
 		}
 	}
 }
