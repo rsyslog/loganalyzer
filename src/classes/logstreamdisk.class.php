@@ -92,13 +92,6 @@ class LogStreamDisk extends LogStream {
 		return SUCCESS;
 	}
 
-	/*
-	*	Helper function to clear the current querystring!
-	*/
-	public function ResetFilters()
-	{
-		// nothing todo in this logstream 
-	}
 
 	/**
 	* Close the file.
@@ -672,6 +665,97 @@ class LogStreamDisk extends LogStream {
 	*	not implemented!
 	*/
 	public function UpdateAllMessageChecksum( )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to clear the current querystring!
+	*/
+	public function ResetFilters()
+	{
+		// nothing todo in this logstream 
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to verify fields | not needed in disk logstream!
+	*/
+	public abstract function VerifyFields( $arrProperitesIn )
+	{
+		return SUCCESS; 
+	}
+
+	
+	/*
+	*	Helper function to create missing fields | not needed in disk logstream!
+	*/
+	public abstract function CreateMissingFields( $arrProperitesIn )
+	{
+		return SUCCESS; 
+	}
+
+	
+	/*
+	*	Helper function to verify indexes | not needed in disk logstream!
+	*/
+	public abstract function VerifyIndexes( $arrProperitesIn )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to create missing indexes | not needed in disk logstream!
+	*/
+	public abstract function CreateMissingIndexes( $arrProperitesIn )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to verify triggers | not needed in disk logstream!
+	*/
+	public abstract function VerifyChecksumTrigger( $myTriggerProperty )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to verify triggers | not needed in disk logstream!
+	*/
+	public abstract function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to create missing  triggers | not needed in disk logstream!
+	*/
+	public abstract function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to verify checksum field | not needed in disk logstream!
+	*/
+	public abstract function VerifyChecksumField( )
+	{
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to correct the checksum field | not needed in disk logstream!
+	*/
+	public abstract function ChangeChecksumFieldUnsigned( )
 	{
 		return SUCCESS; 
 	}
