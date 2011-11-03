@@ -228,6 +228,329 @@ class LogStreamPDO extends LogStream {
 		return SUCCESS;
 	}
 
+
+	/*
+	*	Implementation of VerifyFields: Checks if fields exist in table
+	*/
+	public function VerifyFields( $arrProperitesIn )
+	{
+		global $dbmapping, $fields;
+
+		// Get List of Indexes as Array
+		$arrFieldKeys = $this->GetFieldsAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
+			{
+				OutputDebugMessage("LogStreamPDO|VerifyFields: Found Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				continue;
+			}
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamPDO|VerifyFields: Missing Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				return ERROR_DB_DBFIELDNOTFOUND; 
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of VerifyIndexes: Checks if indexes exist for desired fields
+	*/
+	public function VerifyIndexes( $arrProperitesIn )
+	{
+		global $dbmapping, $fields;
+
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+			{
+				OutputDebugMessage("LogStreamPDO|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				continue;
+			}
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamPDO|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				return ERROR_DB_INDEXESMISSING; 
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of VerifyChecksumTrigger: Checks if checksum trigger exists
+	*/
+	public function VerifyChecksumTrigger( $myTriggerProperty )
+	{
+		global $dbmapping, $fields;
+
+		// Avoid Check if TRIGGERS are not supported!
+		if ( $this->_logStreamConfigObj->GetPDOTriggersSupported() == false ) 
+			return SUCCESS; 
+
+		// Get List of Triggers as Array
+		$arrIndexTriggers = $this->GetTriggersAsArray(); 
+
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		$szDBName = $this->_logStreamConfigObj->DBName;
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
+
+		// Create Triggername
+		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $szDBTriggerField; 
+		
+		// Try to find logstream trigger
+		if ( count($arrIndexTriggers) > 0 ) 
+		{
+			if ( in_array($szTriggerName, $arrIndexTriggers) )
+				return SUCCESS; 
+			else
+			{
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamPDO|VerifyChecksumTrigger: Missing TRIGGER '" . $szTriggerName . "' for Table '" . $szTableName . "'", DEBUG_WARN);
+				return ERROR_DB_TRIGGERMISSING; 
+			}
+		}
+		else
+		{
+			// Index is missing for this field!
+			OutputDebugMessage("LogStreamPDO|VerifyChecksumTrigger: No TRIGGERS found in your database", DEBUG_WARN);
+			return ERROR_DB_TRIGGERMISSING; 
+		}
+	}
+
+
+	/*
+	*	Implementation of CreateMissingIndexes: Checks if indexes exist for desired fields
+	*/
+	public function CreateMissingIndexes( $arrProperitesIn )
+	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+				continue;
+			else
+			{
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+				// Update Table schema now!
+				$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
+
+				// Index is missing for this field!
+				OutputDebugMessage("LogStreamPDO|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
+				
+				// Add missing INDEX now!
+				$myQuery = $this->_dbhandle->query($szSql);
+				if (!$myQuery)
+				{
+					// Return failure!
+					$this->PrintDebugError("Dynamically Adding INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed with Statement: '" . $szSql . "'");
+					return ERROR_DB_INDEXFAILED;
+				}
+				else // Free query now
+					$myQuery->closeCursor();
+			}
+		}
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of CreateMissingFields: Checks if indexes exist for desired fields
+	*/
+	public function CreateMissingFields( $arrProperitesIn )
+	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Indexes as Array
+		$arrFieldKeys = $this->GetFieldsAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
+				continue;
+			else
+			{
+				if ( $this->HandleMissingField( $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrProperitesIn ) == SUCCESS )
+				{
+					// Index is missing for this field!
+					OutputDebugMessage("LogStreamPDO|CreateMissingFields: Createing missing FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], DEBUG_INFO);
+				}
+				else
+				{
+					// Return failure!
+					$this->PrintDebugError("Dynamically Adding FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed!");
+					return ERROR_DB_ADDDBFIELDFAILED;
+				}
+			}
+		}
+		
+		// Successfull
+		return SUCCESS;
+	}
+
+
+	/*
+	*	Implementation of GetCreateMissingTriggerSQL: Creates SQL needed to create a TRIGGER
+	*/
+	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
+	{
+		global $dbmapping, $fields, $querycount;
+
+		// Get List of Triggers as Array
+		$szDBName = $this->_logStreamConfigObj->DBName;
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		
+		// Create Triggername
+		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $myDBTriggerField; 
+
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+		// Create TRIGGER SQL!
+		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
+					 FOR EACH ROW
+					 BEGIN
+					 SET NEW." . $myDBTriggerCheckSumField . " = crc32(NEW." . $myDBTriggerField . ");
+					 END
+					;";
+
+		return $szSql; 
+	}
+
+
+	/*
+	*	Implementation of CreateMissingTrigger: Creates missing triggers !
+	*/
+	public function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
+	{
+		global $dbmapping, $fields, $querycount;
+
+		// Avoid if TRIGGERS are not supported!
+		if ( $this->_logStreamConfigObj->GetPDOTriggersSupported() == false ) 
+			return SUCCESS; 
+	
+		// Get List of Triggers as Array
+		$szTableName = $this->_logStreamConfigObj->DBTableName;
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
+		$szDBTriggerCheckSumField = $dbmapping[$szTableType]['DBMAPPINGS'][$myCheckSumProperty]; 
+
+		// Get SQL Code to create the trigger!
+		$szSql = $this->GetCreateMissingTriggerSQL( $szDBTriggerField, $szDBTriggerCheckSumField ); 
+		
+		// Index is missing for this field!
+		OutputDebugMessage("LogStreamPDO|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
+		
+		// Add missing INDEX now!
+		$myQuery = $this->_dbhandle->query($szSql);
+		if (!$myQuery)
+		{
+			// Return failure!
+			$this->PrintDebugError("Dynamically Adding TRIGGER for '" . $szTableName . "' failed!<br/><br/>If you want to manually add the TRIGGER, use the following SQL Command:<br/> " . str_replace("\n", "<br/>", $szSql) . "<br/>");
+			return ERROR_DB_TRIGGERFAILED;
+		}
+		else // Free query now
+			$myQuery->closeCursor();
+		
+		// Successfull
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Implementation of ChangeChecksumFieldUnsigned: Changes the Checkusm field to unsigned!
+	*/
+	public function ChangeChecksumFieldUnsigned()
+	{
+		global $dbmapping, $fields, $querycount;
+
+		// Get variables
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+		// Change Checksumfield to use UNSIGNED!
+		$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` CHANGE `" . 
+						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` `" . 
+						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` INT(11) UNSIGNED NOT NULL DEFAULT '0'"; 
+
+		// Update Table schema now!
+		$myQuery = $this->_dbhandle->query($szUpdateSql);
+		if (!$myQuery)
+		{
+			// Return failure!
+			$this->PrintDebugError("ER_BAD_FIELD_ERROR - Failed to Change field '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "' from signed to unsigned with sql statement: '" . $szUpdateSql . "'");
+			return ERROR_DB_CHECKSUMCHANGEFAILED;
+		}
+		else // Free query now
+			$myQuery->closeCursor();
+
+		// return results
+		return SUCCESS;
+	}
+
+
+	/*
+	*	Implementation of VerifyChecksumField: Verifies if the checkusm field is signed or unsigned!
+	*/
+	public function VerifyChecksumField()
+	{
+		global $dbmapping, $fields, $querycount;
+		
+		// Get variables
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ($myQuery)
+		{
+			// Get result!
+			$myRow = $myQuery->fetch(PDO::FETCH_ASSOC); 
+			if (strpos( strtolower($myRow['Type']), "unsigned") === false ) 
+			{
+				// return error code!
+				return ERROR_DB_CHECKSUMERROR; 
+			}
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+	
+		// return results
+		return SUCCESS;
+	}
+
+
 	/**
 	* Read the data from a specific uID which means in this
 	* case beginning with from the Database ID
@@ -1715,77 +2038,212 @@ class LogStreamPDO extends LogStream {
 	/*
 	*	Function handles missing database fields automatically!
 	*/
-	private function HandleMissingField()
+	private function HandleMissingField( $szMissingField = null, $arrProperties = null )
 	{
 		global $dbmapping, $fields;
 
 		// Get Err description
 		$errdesc = $this->_dbhandle->errorInfo();
 
-		// check matching of error msg!
-		if (	
-				preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) ||		// MySQL
-				preg_match("/column \"(.*?)\" does not exist/", $errdesc[2], $errOutArr )	// PostgreSQL
-//							 ERROR: column "checksum" does not exist LINE 1: ... eventsource, eventcategory, eventuser, systemid, checksum, ... ^
-			)
+		// Try to get missing field from SQL Error of not specified as argument
+		if ( $szMissingField == null ) 
 		{
-			$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-			// Loop through all fields to see which one is missing!
-			foreach ( $this->_arrProperties as $myproperty ) 
+			// check matching of error msg!
+			if (	
+					preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) ||		// MySQL
+					preg_match("/column \"(.*?)\" does not exist/", $errdesc[2], $errOutArr )	// PostgreSQL
+//							 ERROR: column "checksum" does not exist LINE 1: ... eventsource, eventcategory, eventuser, systemid, checksum, ... ^
+				)
+				$szMissingField = $errOutArr[1]; 
+			else
 			{
-				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $errOutArr[1] == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
-				{
-					$szUpdateSql = "";
-					if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-					{
-						// MYSQL Statements
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
-							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
-							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NULL"; 
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
-							$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
-					}
-					else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
-					{
-						// MYSQL Statements
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
-							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " int NOT NULL DEFAULT '0'"; 
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
-							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " varchar(60) NULL"; 
-						if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
-							$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " timestamp without time zone NULL"; 
-					}
+				$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc[2]);
+				return ERROR_DB_DBFIELDNOTFOUND;
+			}
+		}
+			
+		// Set Properties to default if NULL 
+		if ( $arrProperties == null ) 
+			$arrProperties = $this->_arrProperties; 
+		
+		// Get Tabletype
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-					if ( strlen($szUpdateSql) > 0 )
-					{
-						// Update Table schema now!
-						$myQuery = $this->_dbhandle->query($szUpdateSql);
-						if (!$myQuery)
-						{
-							// Return failure!
-							$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
-							return ERROR_DB_DBFIELDNOTFOUND;
-						}
-						else // Free query now
-							$myQuery->closeCursor();
-					}
-					else
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperties as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $szMissingField == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
+			{
+				$szUpdateSql = "";
+				if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+				{
+					// MYSQL Statements
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) NOT NULL DEFAULT '0'"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NULL"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+						$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+				}
+				else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+				{
+					// MYSQL Statements
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " int NOT NULL DEFAULT '0'"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " varchar(60) NULL"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " timestamp without time zone NULL"; 
+				}
+
+				if ( strlen($szUpdateSql) > 0 )
+				{
+					// Update Table schema now!
+					$myQuery = $this->_dbhandle->query($szUpdateSql);
+					if (!$myQuery)
 					{
 						// Return failure!
-						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
 						return ERROR_DB_DBFIELDNOTFOUND;
 					}
+					else // Free query now
+						$myQuery->closeCursor();
+				}
+				else
+				{
+					// Return failure!
+					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+					return ERROR_DB_DBFIELDNOTFOUND;
 				}
 			}
+		}
 
-			// Reached this point means success!
-			return SUCCESS; 
+		// Reached this point means success!
+		return SUCCESS; 
+	}
+
+
+	/*
+	*	Helper function to return a list of Indexes for the logstream table 
+	*/
+	private function GetIndexesAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrIndexKeys = array();
+
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ($myQuery)
+		{
+			// Loop through results
+			while ( $myRow = $myQuery->fetch(PDO::FETCH_ASSOC) )
+			{
+				// Add to index keys
+				$arrIndexKeys[] = strtolower($myRow['Key_name']); 
+			}
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// return Array
+		return $arrIndexKeys; 
+	}
+
+
+	/*
+	*	Helper function to return a list of Fields from the logstream table 
+	*/
+	private function GetFieldsAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrFieldKeys = array();
+
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+		// Create SQL and Get FIELDS for table!
+		$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ($myQuery)
+		{
+			// Loop through results
+			while ( $myRow = $myQuery->fetch(PDO::FETCH_ASSOC) )
+			{
+				// Add to index keys
+				$arrFieldKeys[] = strtolower($myRow['Field']); 
+			}
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Increment for the Footer Stats 
+			$querycount++;
 		}
 		else
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc[2]);
-			return ERROR_DB_DBFIELDNOTFOUND;
+			$this->PrintDebugError("ERROR_DB_QUERYFAILED - GetFieldsAsArray SQL '" . $szSql . "' failed!");
+
+
+		// return Array
+		return $arrFieldKeys; 
+	}
+
+
+	/*
+	*	Helper function to return a list of Indexes for the logstream table 
+	*/
+	private function GetTriggersAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrIndexTriggers = array();
+
+// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+		// Create SQL and Get INDEXES for table!
+		$szSql = "SHOW TRIGGERS"; 
+		$myQuery = $this->_dbhandle->query($szSql);
+		if ($myQuery)
+		{
+			// Loop through results
+			while ( $myRow = $myQuery->fetch(PDO::FETCH_ASSOC) )
+			{
+				// Add to index keys
+				$arrIndexTriggers[] = strtolower($myRow['Trigger']); 
+			}
+
+			// Free query now
+			$myQuery->closeCursor();
+
+			// Increment for the Footer Stats 
+			$querycount++;
+		}
+
+		// return Array
+		return $arrIndexTriggers; 
 	}
 
 

@@ -613,7 +613,6 @@ class LogStreamDisk extends LogStream {
 	public function GetLogStreamStats()
 	{
 		// Get some file data!
-
 /*
 			// return results!
 			return $stats;
@@ -683,7 +682,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to verify fields | not needed in disk logstream!
 	*/
-	public abstract function VerifyFields( $arrProperitesIn )
+	public function VerifyFields( $arrProperitesIn )
 	{
 		return SUCCESS; 
 	}
@@ -692,7 +691,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to create missing fields | not needed in disk logstream!
 	*/
-	public abstract function CreateMissingFields( $arrProperitesIn )
+	public function CreateMissingFields( $arrProperitesIn )
 	{
 		return SUCCESS; 
 	}
@@ -701,7 +700,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to verify indexes | not needed in disk logstream!
 	*/
-	public abstract function VerifyIndexes( $arrProperitesIn )
+	public function VerifyIndexes( $arrProperitesIn )
 	{
 		return SUCCESS; 
 	}
@@ -710,7 +709,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to create missing indexes | not needed in disk logstream!
 	*/
-	public abstract function CreateMissingIndexes( $arrProperitesIn )
+	public function CreateMissingIndexes( $arrProperitesIn )
 	{
 		return SUCCESS; 
 	}
@@ -719,7 +718,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to verify triggers | not needed in disk logstream!
 	*/
-	public abstract function VerifyChecksumTrigger( $myTriggerProperty )
+	public function VerifyChecksumTrigger( $myTriggerProperty )
 	{
 		return SUCCESS; 
 	}
@@ -728,7 +727,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to verify triggers | not needed in disk logstream!
 	*/
-	public abstract function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
+	public function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
 	{
 		return SUCCESS; 
 	}
@@ -737,7 +736,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to create missing  triggers | not needed in disk logstream!
 	*/
-	public abstract function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
+	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
 	{
 		return SUCCESS; 
 	}
@@ -746,7 +745,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to verify checksum field | not needed in disk logstream!
 	*/
-	public abstract function VerifyChecksumField( )
+	public function VerifyChecksumField( )
 	{
 		return SUCCESS; 
 	}
@@ -755,7 +754,7 @@ class LogStreamDisk extends LogStream {
 	/*
 	*	Helper function to correct the checksum field | not needed in disk logstream!
 	*/
-	public abstract function ChangeChecksumFieldUnsigned( )
+	public function ChangeChecksumFieldUnsigned( )
 	{
 		return SUCCESS; 
 	}

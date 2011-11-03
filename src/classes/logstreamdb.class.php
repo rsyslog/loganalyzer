@@ -967,9 +967,6 @@ class LogStreamDB extends LogStream {
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
 			{
-				// Free res!
-				// NOT NEEDED HERE! mysql_free_result($myQuery);
-
 				// Return success
 				return SUCCESS; 
 			}

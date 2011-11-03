@@ -1253,6 +1253,21 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 	// Get Objectreference to report
 	$myReportObj = $myReport["ObjRef"];
 
+	// Handle GET and POST input!
+	$content['MSG_WARNING_FORMURL'] = $_SERVER['SCRIPT_NAME'] . "?";
+	$content['MSG_CHECK_URL'] = $_SERVER['SCRIPT_NAME'] . "?";
+	foreach ($_GET as $varname => $varvalue)
+	{
+		// All variables!
+		$content['MSG_WARNING_FORMURL'] .= $varname . "=" . $varvalue . "&";
+
+		// Skip the Optimize variable!
+		if (strpos( $varname, "optimize" ) === false ) 
+			$content['MSG_CHECK_URL'] .= $varname . "=" . $varvalue . "&";
+	}
+	foreach ($_POST as $varname => $varvalue)
+		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+
 	// Check if optimize variable is set!
 	if ( isset($_GET['optimize']) )
 	{
@@ -1355,13 +1370,6 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 	$res = $myReportObj->CheckLogStreamSource( $mySourceID );
 	if ( $res != SUCCESS ) 
 	{
-		// Handle GET and POST input!
-		$content['MSG_WARNING_FORMURL'] = $_SERVER['SCRIPT_NAME'] . "?";
-		foreach ($_GET as $varname => $varvalue)
-			$content['MSG_WARNING_FORMURL'] .= $varname . "=" . $varvalue . "&";
-		foreach ($_POST as $varname => $varvalue)
-			$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
-
 		// Current Logstream Source is not optimized! Show to user!
 		$content['ISSOURCENOTOPTIMIZED'] = true;
 		if ( $res == ERROR_DB_DBFIELDNOTFOUND ) 

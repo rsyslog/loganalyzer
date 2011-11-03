@@ -476,6 +476,8 @@ $content['LN_REPORTS_ADD_MISSINGFIELDS'] = "The datasource '%1' does not contain
 $content['LN_REPORTS_ERROR_FAILED_ADDING_FIELDS'] = "Failed adding missing datafields in datasource '%1' with error code '%2'";
 $content['LN_REPORTS_FIELDS_CREATED'] = "Added missing datafields";
 $content['LN_REPORTS_FIELDS_CREATED_SUCCESS'] = "Successfully added missing datafields for datasource '%1'.";
+$content['LN_REPORTS_RECHECKLOGSTREAMSOURCE'] = "Do you want to check the current logstream source again?";
 $content['LN_REPORTS_'] = "";
+
 
 ?>
