@@ -331,13 +331,16 @@ class LogStreamPDO extends LogStream {
 		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
 
 		// Create Triggername
-		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $szDBTriggerField; 
+		$szTriggerName = strtolower($szDBName . "_" . $szTableName . "_" . $szDBTriggerField); 
 		
 		// Try to find logstream trigger
 		if ( count($arrIndexTriggers) > 0 ) 
 		{
 			if ( in_array($szTriggerName, $arrIndexTriggers) )
+			{
+				OutputDebugMessage("LogStreamPDO|VerifyChecksumTrigger: Found TRIGGER '" . $szTriggerName. "' for table '" . $szTableName . "'", DEBUG_ULTRADEBUG);
 				return SUCCESS; 
+			}
 			else
 			{
 				// Index is missing for this field!
@@ -452,16 +455,33 @@ class LogStreamPDO extends LogStream {
 		$szTableName = $this->_logStreamConfigObj->DBTableName;
 		
 		// Create Triggername
-		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $myDBTriggerField; 
+		$szTriggerName = strtolower($szDBName . "_" . $szTableName . "_" . $myDBTriggerField); 
 
-// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
 		// Create TRIGGER SQL!
-		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
+		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+			$szSql ="CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
 					 FOR EACH ROW
 					 BEGIN
 					 SET NEW." . $myDBTriggerCheckSumField . " = crc32(NEW." . $myDBTriggerField . ");
 					 END
 					;";
+		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+		// Experimental Trigger Support for POSTGRESQL
+			$szSql ="
+					CREATE LANGUAGE plpgsql ; 
+					CREATE FUNCTION " . $szTriggerName . "() RETURNS trigger AS $" . $szTriggerName . "$
+						BEGIN
+							NEW." . $myDBTriggerCheckSumField . " := hashtext(NEW." . $myDBTriggerField . ");
+							RETURN NEW;
+						END;
+					$" . $szTriggerName . "$ LANGUAGE plpgsql;
+
+					CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT OR UPDATE ON \"" . $szTableName . "\"
+						FOR EACH ROW EXECUTE PROCEDURE " . $szTriggerName . "();
+					";
+		else 
+			// NOT SUPPORTED
+			return null; 
 
 		return $szSql; 
 	}
@@ -2298,9 +2318,15 @@ class LogStreamPDO extends LogStream {
 		// Init Array
 		$arrIndexTriggers = array();
 
-// TODO if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW TRIGGERS"; 
+		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+			$szSql = "SHOW TRIGGERS"; 
+		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+			$szSql = "select tgname as \"Trigger\" from pg_trigger;";
+		else 
+			// Not supported in this case!
+			return null; 
+		
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{
