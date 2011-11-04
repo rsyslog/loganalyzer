@@ -1935,11 +1935,11 @@ function GetErrorMessage($errorCode)
 function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
 {
 	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+	if ($arrayFirst['itemcount'] == $arraySecond['itemcount'])
 		return 0;
 	
 	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
+	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? 1 : -1;
 }
 
 /**
@@ -1948,11 +1948,11 @@ function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
 function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
 {
 	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+	if ($arrayFirst['itemcount'] == $arraySecond['itemcount'])
 		return 0;
 	
 	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
+	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? -1 : 1;
 }
 // --- 
 

@@ -157,13 +157,13 @@ class Report_syslogsummary extends Report {
 					$tmpReportData['DisplayName'] = $this->GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
 					$tmpReportData['bgcolor'] = $this->GetSeverityBGColor( $tmpReportData[SYSLOG_SEVERITY] ); // $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
 
-					$iTotalEvents += $tmpReportData['ItemCount']; 
+					$iTotalEvents += $tmpReportData['itemcount']; 
 				}
 
 				// Prepent Item with totalevents count
 				$totalItem['DisplayName'] = "Total Events"; 
 				$totalItem['bgcolor'] = "#999999";
-				$totalItem['ItemCount'] = $iTotalEvents; 
+				$totalItem['itemcount'] = $iTotalEvents; 
 
 				// Prepent to array
 				array_unshift( $content["report_summary"], $totalItem );
@@ -423,15 +423,15 @@ class Report_syslogsummary extends Report {
 						if ( isset($content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]) ) 
 						{
 							// Increment counter and set First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount']++; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['itemcount']++; 
 							
 							// Set FirstEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'][EVTIME_TIMESTAMP] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] < $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['firstoccurrence_date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['firstoccurrence_date'] = $logArray[SYSLOG_DATE];
 
 							// Set LastEvent date if necessary!
-							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'][EVTIME_TIMESTAMP] ) 
-								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							if ( $logArray[SYSLOG_DATE][EVTIME_TIMESTAMP] > $content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['lastoccurrence_date'][EVTIME_TIMESTAMP] ) 
+								$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['lastoccurrence_date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
@@ -448,9 +448,9 @@ class Report_syslogsummary extends Report {
 							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ][SYSLOG_MESSAGE] = $logArray[SYSLOG_MESSAGE]; 
 
 							// Set Counter and First/Last Event date
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['ItemCount'] = 1; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
-							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['itemcount'] = 1; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['firstoccurrence_date'] = $logArray[SYSLOG_DATE]; 
+							$content["report_consdata"][ $logArray[SYSLOG_HOST] ]['cons_msgs'][ $strChecksum ]['lastoccurrence_date'] = $logArray[SYSLOG_DATE];
 						}
 					}
 
@@ -490,9 +490,9 @@ class Report_syslogsummary extends Report {
 						$lastEntry[SYSLOG_FACILITY] = SYSLOG_LOCAL0; 
 						$lastEntry[SYSLOG_SYSLOGTAG] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
 						$lastEntry[SYSLOG_MESSAGE] = $content['LN_GEN_ALL_OTHER_EVENTS']; 
-						$lastEntry['ItemCount'] = $iDropCount; 
-						$lastEntry['FirstOccurrence_Date'] = "-"; 
-						$lastEntry['LastOccurrence_Date'] = "-";
+						$lastEntry['itemcount'] = $iDropCount; 
+						$lastEntry['firstoccurrence_date'] = "-"; 
+						$lastEntry['lastoccurrence_date'] = "-";
 
 						$tmpConsolidatedComputer['cons_msgs'][] = $lastEntry; 
 					}
@@ -505,8 +505,8 @@ class Report_syslogsummary extends Report {
 				// PostProcess Events!
 				foreach( $tmpConsolidatedComputer["cons_msgs"] as &$tmpMyEvent ) 
 				{
-					$tmpMyEvent['FirstOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['FirstOccurrence_Date'] );
-					$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['LastOccurrence_Date'] );
+					$tmpMyEvent['FirstOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['firstoccurrence_date'] );
+					$tmpMyEvent['LastOccurrence_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['lastoccurrence_date'] );
 					$tmpMyEvent['syslogseverity_text'] = $this->GetSeverityDisplayName($tmpMyEvent['syslogseverity']); //$content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
 					$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
 					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 

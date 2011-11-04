@@ -1019,7 +1019,7 @@ class LogStreamDB extends LogStream {
 
 		// Set Sorted Field
 		if ( $szConsFieldId == $szSortFieldId ) 
-			$myDBSortedFieldName = "ItemCount"; 
+			$myDBSortedFieldName = "itemcount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
@@ -1049,7 +1049,7 @@ class LogStreamDB extends LogStream {
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
-					"count(" . $myDBConsFieldName . ") as ItemCount " . 
+					"count(" . $myDBConsFieldName . ") as itemcount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
 					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
@@ -1153,12 +1153,12 @@ class LogStreamDB extends LogStream {
 		// Add Min and Max fields for DATE if desired 
 		if ( $bIncludeMinMaxDateFields )
 		{
-			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as FirstOccurrence_Date, ";
-			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as LastOccurrence_Date, ";
+			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as firstoccurrence_date, ";
+			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as lastoccurrence_date, ";
 		}
 		
 		if ( $szConsFieldId == $szSortFieldId ) 
-			$myDBSortedFieldName = "ItemCount"; 
+			$myDBSortedFieldName = "itemcount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
@@ -1188,7 +1188,7 @@ class LogStreamDB extends LogStream {
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
-					"count(" . $myDBConsFieldName . ") as ItemCount " . 
+					"count(" . $myDBConsFieldName . ") as itemcount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
 					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 

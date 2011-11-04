@@ -38,7 +38,7 @@
 <!-- BEGIN report_summary -->
 <tr>
 	<td class="cellmenu2">{DisplayName}</td>
-	<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{ItemCount}</b></td>
+	<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{itemcount}</b></td>
 </tr>
 <!-- END report_summary -->
 </table>
@@ -52,7 +52,7 @@
 <tr>
 	<td class="line1">
 <!-- BEGIN report_computers -->
-	<a href="#{FROMHOST}">{FROMHOST}</a>({ItemCount}), 
+	<a href="#{FROMHOST}">{FROMHOST}</a>({itemcount}), 
 <!-- END report_computers -->
 	</td>
 </tr>
@@ -78,12 +78,12 @@
 	<!-- BEGIN cons_events -->
 	<tr>
 		<td class="line1" valign="top" align="center" rowspan="2">{ZAEHLER}</td>
-		<!-- IF ItemCount>=$_colorThreshold -->
-			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#DD0000"><b>{ItemCount}</b></td>
-		<!-- ENDIF ItemCount>=$_colorThreshold -->
-		<!-- IF ItemCount<$_colorThreshold -->
-			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#CCCCCC"><b>{ItemCount}</b></td>
-		<!-- ENDIF ItemCount<$_colorThreshold -->
+		<!-- IF itemcount>=$_colorThreshold -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#DD0000"><b>{itemcount}</b></td>
+		<!-- ENDIF itemcount>=$_colorThreshold -->
+		<!-- IF itemcount<$_colorThreshold -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#CCCCCC"><b>{itemcount}</b></td>
+		<!-- ENDIF itemcount<$_colorThreshold -->
 		<td class="line1" valign="top" align="left">{FirstEvent_Date_Formatted}</td>
 		<td class="line1" valign="top" align="left">{LastEvent_Date_Formatted}</td>
 		<td class="line1" valign="top" align="left"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=sourceproc&q={sourceproc}" target="_blank">{sourceproc}</a></td>
