@@ -705,13 +705,13 @@ if ( isset($_POST['op']) )
 		// DB Params
 		else if ( $tmpSource['SourceType'] == SOURCE_DB || $tmpSource['SourceType'] == SOURCE_PDO ) 
 		{
-			$tmpSource['DBType']		= $content['SourceDBType'];
-			$tmpSource['DBName']		= $content['SourceDBName'];
-			$tmpSource['DBTableType']	= $content['SourceDBTableType'];
-			$tmpSource['DBServer']		= $content['SourceDBServer'];
-			$tmpSource['DBTableName']	= $content['SourceDBTableName'];
-			$tmpSource['DBUser']		= $content['SourceDBUser'];
-			$tmpSource['DBPassword']	= $content['SourceDBPassword'];
+			$tmpSource['DBType']				= DB_StripSlahes($content['SourceDBType']);
+			$tmpSource['DBName']				= DB_StripSlahes($content['SourceDBName']);
+			$tmpSource['DBTableType']			= DB_StripSlahes($content['SourceDBTableType']);
+			$tmpSource['DBServer']				= DB_StripSlahes($content['SourceDBServer']);
+			$tmpSource['DBTableName']			= DB_StripSlahes($content['SourceDBTableName']);
+			$tmpSource['DBUser']				= DB_StripSlahes($content['SourceDBUser']);
+			$tmpSource['DBPassword']			= DB_StripSlahes($content['SourceDBPassword']);
 			$tmpSource['DBEnableRowCounting']	= $content['SourceDBEnableRowCounting'];
 			$tmpSource['DBRecordsPerQuery']		= $content['SourceDBRecordsPerQuery'];
 			$tmpSource['userid']		= $content['userid'];
