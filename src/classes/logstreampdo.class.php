@@ -1026,14 +1026,36 @@ class LogStreamPDO extends LogStream {
 		// Perform if Connection is true!
 		if ( $this->_dbhandle != null ) 
 		{
-			// Create WHERE attachment
+			// --- Init Filters if necessary!
+			if ( $this->_filters == null )
+				$this->SetFilter( "" ); // This will init filters!
+			
+			// Create SQL Where Clause!
+			$this->CreateSQLWhereClause();
+			// ---
+
+			// --- Add default WHERE clause
+			if ( strlen($this->_SQLwhereClause) > 0 ) 
+				$szWhere = $this->_SQLwhereClause;
+			else 
+				$szWhere = ""; 
+
+			// Add Datefilter if necessary!
 			if ( $nDateTimeStamp > 0 ) 
-				$szWhere = " WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " < '" . date('Y-m-d H:i:s', $nDateTimeStamp) . "'"; 
-			else
-				$szWhere = "";
+			{
+				if ( strlen($szWhere) > 0 ) 
+					$szWhere .= " AND "; 
+				else
+					$szWhere = " WHERE "; 
+				
+				// Append Date Filter!
+				$szWhere .= $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " < '" . date('Y-m-d H:i:s', $nDateTimeStamp) . "'"; 
+			}
+			// --- 
 
 			// DELETE DATA NOW!
 			$szSql = "DELETE FROM " .  $this->_logStreamConfigObj->DBTableName . $szWhere; 
+			OutputDebugMessage("LogStreamPDO|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
 			$myQuery = $this->_dbhandle->query($szSql);
 			if ( $myQuery ) 
 			{
@@ -1596,8 +1618,20 @@ class LogStreamPDO extends LogStream {
 			// Reset WhereClause
 			$this->_SQLwhereClause = "";
 
+			// --- Build Query Array
+			$arrayQueryProperties = $this->_arrProperties; 
+			if ( isset($this->_arrFilterProperties) && $this->_arrFilterProperties != null)
+			{
+				foreach ( $this->_arrFilterProperties as $filterproperty )
+				{
+					if ( $this->_arrProperties == null || !in_array($filterproperty, $this->_arrProperties) ) 
+						$arrayQueryProperties[] = $filterproperty; 
+				}
+			}
+			// --- 
+
 			// Loop through all available properties
-			foreach( $this->_arrProperties as $propertyname )
+			foreach( $arrayQueryProperties as $propertyname )
 			{
 				// If the property exists in the filter array, we have something to filter for ^^!
 				if ( array_key_exists($propertyname, $this->_filters) )

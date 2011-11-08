@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------
+Version 3.2.3 (stable), 2011-11-08
+- Removed magic quotes check from database functions (obselete due 
+  the changes in the last version)
+- Merged Changes from BUGID #288 (Thanks to User Jeff)
+- Fixed internal Filter parsing bug introduced in 3.2.2. 
+- Fixed bug in syslog summary report missing checksum in report generation
+- Fixed bug in preparing filters for display in basic report class
+- Fixed bug in verification routine of sources admin when backslashes 
+  were in any other variables
+- Fixed BUGID #291, custom filters are now taken care in database 
+  logstream sources when cleaning up data.
+- Changed minwidth for context menus from 200 to 250px due display 
+  problems in some browsers.
+---------------------------------------------------------------------------
 Version 3.2.2 (stable), 2011-09-28
 - Implemented support to use User or Group configured logstream sources 
   in commandline report generator (cmdreportgen.php). The Report Admin 
