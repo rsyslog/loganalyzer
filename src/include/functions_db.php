@@ -433,6 +433,4 @@ function GetRowsAffected()
 	return mysql_affected_rows();
 }
 
-
-
 ?>
