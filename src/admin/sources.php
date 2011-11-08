@@ -350,6 +350,8 @@ if ( isset($_GET['op']) )
 			{
 				// Create LogStream Object 
 				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+
+				// Verify if datasource is available
 				$res = $stream->Verify();
 				if ( $res != SUCCESS ) 
 				{

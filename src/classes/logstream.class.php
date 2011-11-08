@@ -53,6 +53,7 @@ abstract class LogStream {
 	protected $_current_uId = -1;
 	protected $_logStreamConfigObj = null;
 	protected $_arrProperties = null;
+	protected $_arrFilterProperties = null; // Helper Array to store all detected properties from Filterstring
 
 	/**
 	* Open the stream for read access.
@@ -619,7 +620,7 @@ abstract class LogStream {
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
 //print_r (  $tmpArray );
-
+					
 					// Continue if empty filter!
 					if ( strlen(trim($tmpArray[FILTER_TMP_VALUE])) == 0 ) 
 						continue;
@@ -977,6 +978,10 @@ abstract class LogStream {
 								$tmpFilterType = FILTER_TYPE_UNKNOWN;
 						//done!
 					}
+
+					// Add to detected filter array
+					if ( $this->_arrFilterProperties == null || !in_array($tmpKeyName, $this->_arrFilterProperties) )
+						$this->_arrFilterProperties[] = $tmpKeyName; 
 
 					// Ignore if unknown filter!
 					if ( $tmpFilterType != FILTER_TYPE_UNKNOWN ) 
