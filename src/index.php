@@ -918,8 +918,10 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 		$szFieldDisplayName = $FieldID;
 	
 	// Set FieldSearch Value
-	if ( $fieldType == FILTER_TYPE_STRING) 
+	if ( $fieldType == FILTER_TYPE_STRING && isset($fieldGridItem['encodedfieldvalue']) ) 
+	{
 		$szEncodedFieldValue = urlencode($fieldGridItem['encodedfieldvalue']);
+	}
 	else
 		$szEncodedFieldValue = $fieldGridItem['fieldvalue'];
 
