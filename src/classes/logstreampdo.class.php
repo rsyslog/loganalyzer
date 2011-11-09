@@ -322,7 +322,8 @@ class LogStreamPDO extends LogStream {
 		$arrIndexTriggers = $this->GetTriggersAsArray(); 
 
 		// TRIGGER Listing failed! Nothing we can do in this case!
-		if ( $arrIndexTriggers == null ) 
+		if ( !isset($arrIndexTriggers) )//  == null ) 
+//		if ( $arrIndexTriggers == null ) 
 			return SUCCESS; 
 
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
@@ -379,6 +380,8 @@ class LogStreamPDO extends LogStream {
 				if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
 					$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
 				else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+					$szSql = "CREATE INDEX " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "_idx ON " . $this->_logStreamConfigObj->DBTableName . " (" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . ");"; 
+				else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL )
 					$szSql = "CREATE INDEX " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "_idx ON " . $this->_logStreamConfigObj->DBTableName . " (" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . ");"; 
 				else
 					// Not supported in this case!
@@ -479,6 +482,22 @@ class LogStreamPDO extends LogStream {
 					CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT OR UPDATE ON \"" . $szTableName . "\"
 						FOR EACH ROW EXECUTE PROCEDURE " . $szTriggerName . "();
 					";
+		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL )
+		{
+			// Trigger code for MSSQL!
+			$szSql ="CREATE TRIGGER " . $szTriggerName . " ON " . $szTableName . " AFTER INSERT AS 
+					BEGIN
+						-- SET NOCOUNT ON added to prevent extra result sets from
+						-- interfering with SELECT statements.
+						SET NOCOUNT ON;
+
+						-- Insert statements for trigger here
+						UPDATE " . $szTableName . " 
+						SET    " . $myDBTriggerCheckSumField . " = checksum(I." . $myDBTriggerField . ")
+						FROM   systemevents JOIN inserted I on " . $szTableName . "." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " = I." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " 
+					END
+			";
+		}
 		else 
 			// NOT SUPPORTED
 			return null; 
@@ -569,7 +588,13 @@ class LogStreamPDO extends LogStream {
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
+			$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+		else
+			// NOT SUPPORTED or NEEDED
+			return SUCCESS; 
+		
+		// Run Query to check the Checksum field!
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{
@@ -1100,7 +1125,12 @@ class LogStreamPDO extends LogStream {
 						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = hashtext(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
 						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
 		}
-//MSSQL: binary_checksum
+		elseif ($this->_logStreamConfigObj->DBType == DB_MSSQL )
+		{
+			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = checksum(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
+						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
+		}
 		else
 		{
 			// Failed | Checksum function not supported!
@@ -1350,7 +1380,8 @@ class LogStreamPDO extends LogStream {
 			{
 				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
 				{
-					if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+					if (	$this->_logStreamConfigObj->DBType == DB_PGSQL || 
+							$this->_logStreamConfigObj->DBType == DB_MSSQL )
 						$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ") AS " . $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 					else
 						// Default for other PDO Engines
@@ -1361,7 +1392,8 @@ class LogStreamPDO extends LogStream {
 			// Append Sortingfield
 			if ( !in_array($szConsFieldId, $aIncludeCustomFields) )
 			{
-				if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+				if (	$this->_logStreamConfigObj->DBType == DB_PGSQL || 
+						$this->_logStreamConfigObj->DBType == DB_MSSQL )
 					$myDBQueryFields .= "Max(" . $myDBConsFieldName . ") AS " . $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 				else
 					// Default for other PDO Engines
@@ -1375,7 +1407,8 @@ class LogStreamPDO extends LogStream {
 			{
 				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
 				{
-					if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+					if (	$this->_logStreamConfigObj->DBType == DB_PGSQL || 
+							$this->_logStreamConfigObj->DBType == DB_MSSQL )
 						$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ") AS " . $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
 					else
 						// Default for other PDO Engines
@@ -1385,7 +1418,8 @@ class LogStreamPDO extends LogStream {
 		}
 		else // Only Include ConsolidateField
 		{
-			if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
+			if (	$this->_logStreamConfigObj->DBType == DB_PGSQL || 
+					$this->_logStreamConfigObj->DBType == DB_MSSQL )
 				$myDBQueryFields = "Max(" . $myDBConsFieldName . ") as " . $myDBConsFieldName. ", ";
 			else
 				// Default for other PDO Engines
@@ -1418,6 +1452,9 @@ class LogStreamPDO extends LogStream {
 			else if($this->_logStreamConfigObj->DBType == DB_MSSQL )
 			{
 				// TODO FIND A WAY FOR MSSQL!
+				// Helper variable for the select statement
+				$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+				$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 			}
 		}
 
@@ -1427,23 +1464,37 @@ class LogStreamPDO extends LogStream {
 			// Append LIMIT in this case!
 			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
 							$this->_logStreamConfigObj->DBType == DB_PGSQL )
-				$szLimitSql = " LIMIT " . $nRecordLimit;
+			{
+				$szLimitSqlBefore = ""; 
+				$szLimitSqlAfter = " LIMIT " . $nRecordLimit;
+			}
+			else if(		$this->_logStreamConfigObj->DBType == DB_MSSQL )
+			{
+				$szLimitSqlBefore = " TOP(" . $nRecordLimit . ") "; 
+				$szLimitSqlAfter = "";
+			}
 			else
-				$szLimitSql = "";
-			// TODO FIND A WAY FOR MSSQL!
+			{
+				$szLimitSqlBefore = ""; 
+				$szLimitSqlAfter = ""; 
+			}
 		}
 		else
-			$szLimitSql = "";
+		{
+			$szLimitSqlBefore = ""; 
+			$szLimitSqlAfter = ""; 
+		}
 
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
+					$szLimitSqlBefore . 
 					$myDBQueryFields .  
 					"count(" . $myDBConsFieldName . ") as itemcount " . 
 					" FROM " . $this->_logStreamConfigObj->DBTableName . 
 					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
-					$szLimitSql ;
+					$szLimitSqlAfter ;
 
 		// Output Debug Informations
 		OutputDebugMessage("LogStreamPDO|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
@@ -2243,6 +2294,10 @@ class LogStreamPDO extends LogStream {
 				{
 					// Return failure!
 					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing and failed to be added automatically! The fields has to be added manually to the database layout!'");
+
+					global $extraErrorDescription;
+					$extraErrorDescription = "Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' was missing and has been automatically added to the database layout.";
+
 					return ERROR_DB_DBFIELDNOTFOUND;
 				}
 			}
@@ -2273,10 +2328,13 @@ class LogStreamPDO extends LogStream {
 			$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL ) 
 			$szSql = "SELECT c.relname AS \"Key_name\" FROM pg_catalog.pg_class c JOIN pg_catalog.pg_index i ON i.indexrelid = c.oid JOIN pg_catalog.pg_class t ON i.indrelid   = t.oid WHERE c.relkind = 'i' AND t.relname = 'systemevents' AND c.relname LIKE '%idx%'";
+		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL ) 
+			$szSql = "SELECT sysindexes.name AS Key_name FROM sysobjects, sysindexes WHERE sysobjects.xtype='U' AND sysindexes.id=object_id(sysobjects.name) and sysobjects.name='" . $this->_logStreamConfigObj->DBTableName . "' ORDER BY sysobjects.name ASC";
 		else
 			// Not supported in this case!
 			return null; 
 
+		OutputDebugMessage("LogStreamPDO|GetIndexesAsArray: List Indexes for '" .  $this->_logStreamConfigObj->DBTableName . "' - " . $szSql, DEBUG_ULTRADEBUG);
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{
@@ -2284,7 +2342,7 @@ class LogStreamPDO extends LogStream {
 			while ( $myRow = $myQuery->fetch(PDO::FETCH_ASSOC) )
 			{
 				// Add to index keys
-				if ( $this->_logStreamConfigObj->DBType == DB_PGSQL ) 
+				if ( $this->_logStreamConfigObj->DBType == DB_PGSQL || $this->_logStreamConfigObj->DBType == DB_MSSQL  ) 
 					$arrIndexKeys[] = str_replace( "_idx", "", strtolower($myRow['Key_name']) ); 
 				else
 					$arrIndexKeys[] = strtolower($myRow['Key_name']); 
@@ -2322,10 +2380,13 @@ class LogStreamPDO extends LogStream {
 			$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
 			$szSql = "SELECT column_name as \"Field\" FROM information_schema.COLUMNS WHERE table_name = '" . $this->_logStreamConfigObj->DBTableName . "'"; 
+		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL ) 
+			$szSql = "SELECT syscolumns.name AS Field FROM sysobjects JOIN syscolumns ON sysobjects.id = syscolumns.id WHERE sysobjects.xtype='U' AND sysobjects.name='" . $this->_logStreamConfigObj->DBTableName . "'"; 
 		else 
 			// Not supported in this case!
 			return null; 
 
+		OutputDebugMessage("LogStreamPDO|GetFieldsAsArray: List Columns for '" .  $this->_logStreamConfigObj->DBTableName . "' - " . $szSql, DEBUG_ULTRADEBUG);
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{
@@ -2370,11 +2431,14 @@ class LogStreamPDO extends LogStream {
 		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
 			$szSql = "SHOW TRIGGERS"; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
-			$szSql = "select tgname as \"Trigger\" from pg_trigger;";
+			$szSql = "SELECT tgname as \"Trigger\" from pg_trigger;";
+		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL )
+			$szSql = "SELECT B.Name as TableName,A.name AS 'Trigger' FROM sysobjects A,sysobjects B WHERE A.xtype='TR' AND A.parent_obj = B.id"; //  AND B.Name='systemevents'";
 		else 
 			// Not supported in this case!
 			return null; 
 		
+		OutputDebugMessage("LogStreamPDO|GetTriggersAsArray: List Triggers for '" .  $this->_logStreamConfigObj->DBTableName . "' - " . $szSql, DEBUG_ULTRADEBUG);
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ($myQuery)
 		{
