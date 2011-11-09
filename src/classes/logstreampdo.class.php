@@ -2166,18 +2166,21 @@ class LogStreamPDO extends LogStream {
 		{
 			// check matching of error msg!
 			if (	
-					preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) ||		// MySQL
-					preg_match("/column \"(.*?)\" does not exist/", $errdesc[2], $errOutArr )	// PostgreSQL
+					preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc[2], $errOutArr ) ||	// MySQL
+					preg_match("/column \"(.*?)\" does not exist/", $errdesc[2], $errOutArr ) ||	// PostgreSQL
+					preg_match("/Invalid column name '(.*?)'/", $errdesc[2], $errOutArr )			// MSSQL
 //							 ERROR: column "checksum" does not exist LINE 1: ... eventsource, eventcategory, eventuser, systemid, checksum, ... ^
 				)
+			{
 				$szMissingField = $errOutArr[1]; 
+			}
 			else
 			{
 				$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc[2]);
 				return ERROR_DB_DBFIELDNOTFOUND;
 			}
 		}
-			
+
 		// Set Properties to default if NULL 
 		if ( $arrProperties == null ) 
 			$arrProperties = $this->_arrProperties; 
@@ -2211,7 +2214,18 @@ class LogStreamPDO extends LogStream {
 					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
 						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " timestamp without time zone NULL"; 
 				}
-
+				else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL )
+				{
+					// MYSQL Statements
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " INT NOT NULL DEFAULT '0'"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " VARCHAR(60) NULL"; 
+					if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
+						$szUpdateSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
+				}
+				
+				// Run SQL Command to add the missing field!
 				if ( strlen($szUpdateSql) > 0 )
 				{
 					// Update Table schema now!
@@ -2228,7 +2242,7 @@ class LogStreamPDO extends LogStream {
 				else
 				{
 					// Return failure!
-					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
+					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing and failed to be added automatically! The fields has to be added manually to the database layout!'");
 					return ERROR_DB_DBFIELDNOTFOUND;
 				}
 			}
