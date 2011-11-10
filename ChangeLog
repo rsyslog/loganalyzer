@@ -1,4 +1,35 @@
 ---------------------------------------------------------------------------
+Version 3.3.0 (beta), 2011-11-??
+- Added more debug output at critical areas.
+- New view for Reports in main area. The new view is simular to the 
+  statistics page and makes the report more aware and accessable to 
+  loganalyzer users. The reports are still edited in the Admin Center. 
+- Syslog/Eventlog Summary Report - both reports have been upgraded to V2!
+  The "Event Count" column has been moved to the left of the report. 
+  The report use logstream functions now to generate the report data.
+  This has a huge positive impact on performance of database logstream 
+  sources. Checksum calculation needed to consolidate messages is now
+  done by the logstream source. 
+- Fixed bug with filter edit handling in report admin
+- Added function to generate missing checksums for all messages in 
+  logstream reports. This means first time you generate a report could 
+  take a little bit longer then usual. 
+- Some cosmetic changes in Syslog/Eventlog Summary report templates. 
+- Added optimization check into logstream sources. This check is 
+  automatically performed by the report admin. If Fields, Indexes 
+  or Triggers are missing, the report admin will inform you and give you
+  the possibility optimize the logstream source. These checks are supported 
+  for Mysql, PostgreSQL and MSSQL only. Loganalyzer will need ALTER TABLE 
+  rights in order to fix or optimize the database structure. 
+  Indexes added by the a Report will enhance generation time as the 
+  involved fields are used for grouping or sorting. Triggers are used 
+  to generate the message checksum when a new data record is INSERTED 
+  into the database. 
+- Changed mininum width of context menu on mainpage from 
+  200 to 250px due display problems in some browsers. 
+- Savedreports in Report Admin can now be saved only. This is useful 
+  to check the logstream source after change for optimization.
+---------------------------------------------------------------------------
 Version 3.2.3 (stable), 2011-11-08
 - Removed magic quotes check from database functions (obselete due 
   the changes in the last version)
