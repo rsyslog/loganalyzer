@@ -419,8 +419,6 @@ $content['LN_REPORTS_ERROR_HASBEENREMOVED'] = "All settings for the report '%1' 
 $content['LN_REPORTS_ERROR_HASBEENADDED'] = "All required settings for the report '%1' have been added.";
 $content['LN_REPORTS_ERROR_NOFIELDS'] = "The report '%1' does not have any custom settings which can be added.";
 $content['LN_REPORTS_ERROR_REPORTDOESNTNEEDTOBEREMOVED'] = "The report '%1' does not need to be removed or initialized.";
-$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport";
-$content['LN_REPORTS_EDITSAVEDREPORT'] = "Edit Savedreport";
 $content['LN_REPORTS_REMOVESAVEDREPORT'] = "Remove Savedreport";
 $content['LN_REPORTS_CUSTOMTITLE'] = "Report Title";
 $content['LN_REPORTS_CUSTOMCOMMENT'] = "Comment / Description";
@@ -477,6 +475,10 @@ $content['LN_REPORTS_ERROR_FAILED_ADDING_FIELDS'] = "Failed adding missing dataf
 $content['LN_REPORTS_FIELDS_CREATED'] = "Added missing datafields";
 $content['LN_REPORTS_FIELDS_CREATED_SUCCESS'] = "Successfully added missing datafields for datasource '%1'.";
 $content['LN_REPORTS_RECHECKLOGSTREAMSOURCE'] = "Do you want to check the current logstream source again?";
+$content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport and save changes";
+$content['LN_REPORTS_EDITSAVEDREPORT'] = "Save changes";
+$content['LN_REPORTS_ADDSAVEDREPORTANDRETURN'] = "Add Savedreport and return to reportlist";
+$content['LN_REPORTS_EDITSAVEDREPORTANDRETURN'] = "Save changes and return to reportlist";
 $content['LN_REPORTS_'] = "";
 
 

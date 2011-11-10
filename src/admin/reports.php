@@ -60,10 +60,11 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 			(
 				isset($_GET['op']) && 
 				(
-					$_GET['op'] == "initreport" || 
-					$_GET['op'] == "removereport" ||
-					$_GET['op'] == "addsavedreport" ||
-					$_GET['op'] == "removesavedreport"
+					strpos($_GET['op'], "initreport") !== false || 
+					strpos($_GET['op'], "removereport") !== false ||
+					strpos($_GET['op'], "editsavedreport") !== false ||
+					strpos($_GET['op'], "addsavedreport") !== false ||
+					strpos($_GET['op'], "removesavedreport") !== false 
 				)
 			)	
 		)
@@ -306,7 +307,7 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "addsavedreport") 
+	else if (strpos($_GET['op'], "addsavedreport") !== false ) 
 	{
 		if ( isset($_GET['id']) )
 		{
@@ -316,7 +317,9 @@ if ( isset($_GET['op']) )
 			// Init Form variables 
 			$content['ISADDSAVEDREPORT'] = "true";
 			$content['REPORT_FORMACTION'] = "addsavedreport";
+			$content['REPORT_FORMACTIONRETURN'] = "addsavedreport_return";
 			$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
+			$content['REPORT_SENDANDRETURN'] = $content['LN_REPORTS_ADDSAVEDREPORTANDRETURN'];
 			$content['FormUrlAddOP'] = "?op=addsavedreport&id=" . $content['ReportID'];
 			
 			// Check if report exists
@@ -392,12 +395,15 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "editsavedreport") 
+	else if (strpos($_GET['op'], "editsavedreport") !== false ) 
 	{
 		// Set Mode to add
 		$content['ISADDSAVEDREPORT'] = "true";
 		$content['REPORT_FORMACTION'] = "editsavedreport";
+		$content['REPORT_FORMACTIONRETURN'] = "editsavedreport_return";
 		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_EDITSAVEDREPORT'];
+		$content['REPORT_SENDANDRETURN'] = $content['LN_REPORTS_EDITSAVEDREPORTANDRETURN'];
+		
 
 		if ( isset($_GET['id']) )
 		{
@@ -977,7 +983,6 @@ if ( isset($_POST['op']) )
 	// Get ReportID!
 	if ( isset($_POST['id']) ) { $content['ReportID'] = DB_RemoveBadChars($_POST['id']); } else {$content['ReportID'] = ""; }
 
-
 	// Only Continue if reportid is valud!
 	if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 	{
@@ -1092,7 +1097,7 @@ if ( isset($_POST['op']) )
 		if ( !isset($content['ISERROR']) ) 
 		{	
 			// Everything was alright, so we go to the next step!
-			if ( $_POST['op'] == "addsavedreport" )
+			if ( strpos($_POST['op'], "addsavedreport") !== false  )
 			{
 				// Add custom search now!
 				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, outputTargetDetails, scheduleSettings) 
@@ -1107,14 +1112,29 @@ if ( isset($_POST['op']) )
 						'" . $content['outputTargetDetails'] . "', 
 						'" . $content['scheduleSettings'] . "'
 						)";
-
+				// Perform INSERT
 				$result = DB_Query($sqlquery);
+
+				// Get INSERTID from query!
+				$lastInsertID = mysql_insert_id(); 
+				
+				// free ressources
 				DB_FreeQuery($result);
 
 				// Do the final redirect
-				RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+				if ( strpos($_POST['op'], "_return") !== false ) 
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+				else
+				{
+					// Correct FormUrlAddUrl!
+					$szRediUrl = str_replace( "op=addsavedreport", "op=editsavedreport", $content['FormUrlAddOP']); 
+					$szRediUrl .= "&savedreportid=" . $lastInsertID; 
+
+					// Redirect to editpage!
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" . $szRediUrl );
+				}
 			}
-			else if ( $_POST['op'] == "editsavedreport" )
+			else if ( strpos($_POST['op'], "editsavedreport") !== false )
 			{
 				$result = DB_Query("SELECT ID FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID']);
 				$myrow = DB_GetSingleRow($result, true);
@@ -1141,7 +1161,10 @@ if ( isset($_POST['op']) )
 					DB_FreeQuery($result);
 
 					// Done redirect!
-					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+					if ( strpos($_POST['op'], "_return") !== false ) 
+						RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+					else
+						RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" . $content['FormUrlAddOP'] );
 				}
 			}
 
@@ -1268,6 +1291,9 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 	foreach ($_POST as $varname => $varvalue)
 		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
 
+	// Append Force Optimice Paramater
+	$content['MSG_CHECK_URL'] .= "forcecheckoptimize=true";
+
 	// Check if optimize variable is set!
 	if ( isset($_GET['optimize']) )
 	{
@@ -1367,44 +1393,64 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 		}
 	}
 
-	$res = $myReportObj->CheckLogStreamSource( $mySourceID );
-	if ( $res != SUCCESS ) 
+	// Use SESSION to check if Source needs to be checked for optimization
+	$bForceCheck = false;
+	if (	!isset($_SESSION['Sources'][$mySourceID]['optimized']) || 
+			$_SESSION['Sources'][$mySourceID]['optimized'] == false || 
+			( isset($_GET['forcecheckoptimize']) && $_GET['forcecheckoptimize'] == "true" )
+		) 
+		// Set Checking to true!
+		$bForceCheck = true; 
+
+	// Lets see if we need to check
+	if ( $bForceCheck )
 	{
-		// Current Logstream Source is not optimized! Show to user!
-		$content['ISSOURCENOTOPTIMIZED'] = true;
-		if ( $res == ERROR_DB_DBFIELDNOTFOUND ) 
+		// Run checks
+		$res = $myReportObj->CheckLogStreamSource( $mySourceID );
+		if ( $res != SUCCESS ) 
 		{
-			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
-			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
-			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
+			// Current Logstream Source is not optimized! Show to user!
+			$content['ISSOURCENOTOPTIMIZED'] = true;
+			if ( $res == ERROR_DB_DBFIELDNOTFOUND ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
+			}
+			else if ( $res == ERROR_DB_INDEXESMISSING ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
+			}
+			else if ( $res == ERROR_DB_TRIGGERMISSING ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
+			}
+			else if ( $res == ERROR_DB_CHECKSUMERROR ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
+			}
 		}
-		else if ( $res == ERROR_DB_INDEXESMISSING ) 
+		else
 		{
-			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
-			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
-			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
-		}
-		else if ( $res == ERROR_DB_TRIGGERMISSING ) 
-		{
-			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
-			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
-			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
-		}
-		else if ( $res == ERROR_DB_CHECKSUMERROR ) 
-		{
-			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
-			$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
-			$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-			$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
+			// Check was successfull! Set Checked Property in LogStream Source
+			$_SESSION['Sources'][$mySourceID]['optimized'] = true; 
 		}
 	}
+
 }
 
 
