@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-Version 3.3.0 (beta), 2011-11-??
+Version 3.3.0 (beta), 2011-11-14
 - Added more debug output at critical areas.
 - New view for Reports in main area. The new view is simular to the 
   statistics page and makes the report more aware and accessable to 
