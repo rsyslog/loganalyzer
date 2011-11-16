@@ -1494,10 +1494,16 @@ class LogStreamPDO extends LogStream {
 		// return error if there was one!
 		if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
 			return $res;
-
-		// return specially with NO RECORDS when 0 records are returned! Otherwise it will be -1
-		if ( $this->_myDBQuery->rowCount() == 0 )
-			return ERROR_NOMORERECORDS;
+		
+		// Check rowcount property only on supported drivers, others may always return 0 like oracle PDO Driver
+		if (	$this->_logStreamConfigObj->DBType == DB_MYSQL ||
+				$this->_logStreamConfigObj->DBType == DB_MSSQL ||
+				$this->_logStreamConfigObj->DBType == DB_PGSQL )
+		{
+			// return specially with NO RECORDS when 0 records are returned! Otherwise it will be -1
+			if ( $this->_myDBQuery->rowCount() == 0 )
+				return ERROR_NOMORERECORDS;
+		}
 
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
