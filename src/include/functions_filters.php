@@ -81,11 +81,26 @@ function InitFilterHelpers()
 		$content['days'][] = $i;
 	// Init Hour, minute and second array
 	for ( $i = 0; $i <= 23; $i++ )
-		$content['hours'][] = ($i < 10) ? '0' . $i : $i;
+	{
+		if ($i < 10) 
+			$content['hours'][] = '0' . $i; 
+		else
+			$content['hours'][] = $i; 
+	}
 	for ( $i = 0; $i <= 59; $i++ )
-		$content['minutes'][] = ($i < 10) ? '0' . $i : $i;
+	{
+		if ($i < 10) 
+			$content['minutes'][] = '0' . $i; 
+		else
+			$content['minutes'][] = $i; 
+	}
 	for ( $i = 0; $i <= 59; $i++ )
-		$content['seconds'][] = ($i < 10) ? '0' . $i : $i;
+	{
+		if ($i < 10) 
+			$content['seconds'][] = '0' . $i; 
+		else
+			$content['seconds'][] = $i; 
+	}
 
 	// Init filter_daterange_from_year
 	if ( isset($_SESSION['filter_daterange_from_year']) ) 

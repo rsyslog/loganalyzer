@@ -216,7 +216,8 @@ function CheckUserLogin( $username, $password )
 		// ---
 
 		// --- Now we check for an PhpLogCon Update
-		if ( strlen(GetConfigSetting("UseProxyServerForRemoteQueries", "")) > 0 )
+		$iProxyLen = strlen(GetConfigSetting("UseProxyServerForRemoteQueries", "")); 
+		if ( $iProxyLen > 0 )
 		{
 			// Proxy Server configured, create a context with proxy option!
 			$opts = array('http' => array('proxy' => 'tcp://' . GetConfigSetting("UseProxyServerForRemoteQueries", ""), 'request_fulluri' => true));
