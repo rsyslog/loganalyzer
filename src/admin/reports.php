@@ -39,6 +39,7 @@ $gl_root_path = './../';
 include($gl_root_path . 'include/functions_common.php');
 include($gl_root_path . 'include/functions_frontendhelpers.php');
 include($gl_root_path . 'include/functions_filters.php');
+include($gl_root_path . 'include/functions_reports.php');
 
 // Set PAGE to be ADMINPAGE!
 define('IS_ADMINPAGE', true);
@@ -59,10 +60,11 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 			(
 				isset($_GET['op']) && 
 				(
-					$_GET['op'] == "initreport" || 
-					$_GET['op'] == "removereport" ||
-					$_GET['op'] == "addsavedreport" ||
-					$_GET['op'] == "removesavedreport"
+					strpos($_GET['op'], "initreport") !== false || 
+					strpos($_GET['op'], "removereport") !== false ||
+					strpos($_GET['op'], "editsavedreport") !== false ||
+					strpos($_GET['op'], "addsavedreport") !== false ||
+					strpos($_GET['op'], "removesavedreport") !== false 
 				)
 			)	
 		)
@@ -71,8 +73,6 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 // --- 
 
 // --- BEGIN Custom Code
-// Hardcoded settings
-define('URL_ONLINEREPORTS', 'http://tools.adiscon.net/listreports.php');
 $content['OPTIONAL_TITLE'] = "";
 
 // Firts of all init List of Reports!
@@ -307,7 +307,7 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "addsavedreport") 
+	else if (strpos($_GET['op'], "addsavedreport") !== false ) 
 	{
 		if ( isset($_GET['id']) )
 		{
@@ -317,7 +317,9 @@ if ( isset($_GET['op']) )
 			// Init Form variables 
 			$content['ISADDSAVEDREPORT'] = "true";
 			$content['REPORT_FORMACTION'] = "addsavedreport";
+			$content['REPORT_FORMACTIONRETURN'] = "addsavedreport_return";
 			$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_ADDSAVEDREPORT'];
+			$content['REPORT_SENDANDRETURN'] = $content['LN_REPORTS_ADDSAVEDREPORTANDRETURN'];
 			$content['FormUrlAddOP'] = "?op=addsavedreport&id=" . $content['ReportID'];
 			
 			// Check if report exists
@@ -359,6 +361,9 @@ if ( isset($_GET['op']) )
 						$mySource['sourceselected'] = "";
 				}
 				
+				// Check if logstream is optimized!
+				CheckConfiguredLogStreamSource($myReport, $content['SourceID']); 
+
 				// Create Outputlist
 				$content['outputFormat'] = REPORT_OUTPUT_HTML; 
 				CreateOutputformatList( $content['outputFormat'] );
@@ -390,12 +395,15 @@ if ( isset($_GET['op']) )
 			$content['ERROR_MSG'] = $content['LN_REPORTS_ERROR_INVALIDID'];
 		}
 	}
-	else if ($_GET['op'] == "editsavedreport") 
+	else if (strpos($_GET['op'], "editsavedreport") !== false ) 
 	{
 		// Set Mode to add
 		$content['ISADDSAVEDREPORT'] = "true";
 		$content['REPORT_FORMACTION'] = "editsavedreport";
+		$content['REPORT_FORMACTIONRETURN'] = "editsavedreport_return";
 		$content['REPORT_SENDBUTTON'] = $content['LN_REPORTS_EDITSAVEDREPORT'];
+		$content['REPORT_SENDANDRETURN'] = $content['LN_REPORTS_EDITSAVEDREPORTANDRETURN'];
+		
 
 		if ( isset($_GET['id']) )
 		{
@@ -448,6 +456,9 @@ if ( isset($_GET['op']) )
 							$mySource['sourceselected'] = "";
 					}
 					
+					// Check if logstream is optimized!
+					CheckConfiguredLogStreamSource($myReport, $content['SourceID']); 
+
 					// Create Outputlist
 					$content['outputFormat'] = $mySavedReport['outputFormat']; 
 					CreateOutputformatList( $content['outputFormat'] );
@@ -590,9 +601,9 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	$szFilterString = ""; 
 	
 	if (	
-			(	strlen($content['filterString']) <= 0 && 
-				isset($_POST['report_filterString']) )
-			||
+//			(	strlen($content['filterString']) <= 0 && 
+//				isset($_POST['report_filterString']) )
+//			||
 			(	strlen($content['filterString']) > 0 && 
 				!isset($_POST['subop']) && 
 				!isset($_POST['subop_edit']) && 
@@ -740,10 +751,20 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 				$i++;
 			}
 
-// DEBUG stuff
-//			echo $content['filterString'] . "<br>\r\n";
-//			echo $szFilterString . "<br>\r\n"; 
-//			print_r ( $AllFilters ); 
+			// Reset Allfilters Array to NULL in this case!
+			if ( strlen($szFilterString) <= 0 ) 
+			{
+				$content['filterString'] = ""; 
+				$content['filterString_htmlform'] = ""; 
+			}
+
+			/*
+			// DEBUG stuff
+			echo $content['filterString'] . "<br>\r\n";
+			echo $szFilterString . "<br>\r\n"; 
+			print_r ( $AllFilters ); 
+			// */
+
 		}
 	}
 
@@ -797,7 +818,10 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	}
 	// Copy Final Filterstring if necessary
 	if ( strlen($szFilterString) > 0 ) 
+	{
 		$content['filterString'] = $szFilterString; 
+		$content['filterString_htmlform'] = htmlspecialchars($szFilterString); 
+	}
 
 	//	echo $content['SourceID'];
 	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
@@ -959,7 +983,6 @@ if ( isset($_POST['op']) )
 	// Get ReportID!
 	if ( isset($_POST['id']) ) { $content['ReportID'] = DB_RemoveBadChars($_POST['id']); } else {$content['ReportID'] = ""; }
 
-
 	// Only Continue if reportid is valud!
 	if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 	{
@@ -1074,7 +1097,7 @@ if ( isset($_POST['op']) )
 		if ( !isset($content['ISERROR']) ) 
 		{	
 			// Everything was alright, so we go to the next step!
-			if ( $_POST['op'] == "addsavedreport" )
+			if ( strpos($_POST['op'], "addsavedreport") !== false  )
 			{
 				// Add custom search now!
 				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, outputTargetDetails, scheduleSettings) 
@@ -1089,14 +1112,29 @@ if ( isset($_POST['op']) )
 						'" . $content['outputTargetDetails'] . "', 
 						'" . $content['scheduleSettings'] . "'
 						)";
-
+				// Perform INSERT
 				$result = DB_Query($sqlquery);
+
+				// Get INSERTID from query!
+				$lastInsertID = mysql_insert_id(); 
+				
+				// free ressources
 				DB_FreeQuery($result);
 
 				// Do the final redirect
-				RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+				if ( strpos($_POST['op'], "_return") !== false ) 
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+				else
+				{
+					// Correct FormUrlAddUrl!
+					$szRediUrl = str_replace( "op=addsavedreport", "op=editsavedreport", $content['FormUrlAddOP']); 
+					$szRediUrl .= "&savedreportid=" . $lastInsertID; 
+
+					// Redirect to editpage!
+					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENADDED'], DB_StripSlahes($content['customTitle']) ) , "reports.php" . $szRediUrl );
+				}
 			}
-			else if ( $_POST['op'] == "editsavedreport" )
+			else if ( strpos($_POST['op'], "editsavedreport") !== false )
 			{
 				$result = DB_Query("SELECT ID FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID']);
 				$myrow = DB_GetSingleRow($result, true);
@@ -1123,7 +1161,10 @@ if ( isset($_POST['op']) )
 					DB_FreeQuery($result);
 
 					// Done redirect!
-					RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+					if ( strpos($_POST['op'], "_return") !== false ) 
+						RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" );
+					else
+						RedirectResult( GetAndReplaceLangStr( $content['LN_REPORTS_HASBEENEDIT'], DB_StripSlahes($content['customTitle']) ) , "reports.php" . $content['FormUrlAddOP'] );
 				}
 			}
 
@@ -1224,6 +1265,198 @@ $page -> output();
 // --- 
 // --- BEGIN Helper functions 
 // --- 
+
+/*
+*	Helper function to init custom filters from report
+*/
+function CheckConfiguredLogStreamSource($myReport, $mySourceID)
+{
+	global $content, $extraErrorDescription; 
+
+	// Get Objectreference to report
+	$myReportObj = $myReport["ObjRef"];
+
+	// Handle GET and POST input!
+	$content['MSG_WARNING_FORMURL'] = $_SERVER['SCRIPT_NAME'] . "?";
+	$content['MSG_CHECK_URL'] = $_SERVER['SCRIPT_NAME'] . "?";
+	foreach ($_GET as $varname => $varvalue)
+	{
+		// All variables!
+		$content['MSG_WARNING_FORMURL'] .= $varname . "=" . $varvalue . "&";
+
+		// Skip the Optimize variable!
+		if (strpos( $varname, "optimize" ) === false ) 
+			$content['MSG_CHECK_URL'] .= $varname . "=" . $varvalue . "&";
+	}
+	foreach ($_POST as $varname => $varvalue)
+		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+
+	// Append Force Optimice Paramater
+	$content['MSG_CHECK_URL'] .= "forcecheckoptimize=true";
+
+	// Check if optimize variable is set!
+	if ( isset($_GET['optimize']) )
+	{
+		
+		// Check what we have to do
+		if ( $_GET['optimize'] == "addfields" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->CreateMissingLogStreamFields( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_ADDING_FIELDS'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			
+			// Show information in performance warning area
+			$content['ISSOURCENOTOPTIMIZED'] = true;
+			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_FIELDS_CREATED']; 
+			$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_FIELDS_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] ); 
+			$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+
+			// return result
+			return $res; 
+		}
+		else if ( $_GET['optimize'] == "indexes" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->CreateLogStreamIndexes( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_CREATE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			
+			// Show information in performance warning area
+			$content['ISSOURCENOTOPTIMIZED'] = true;
+			$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_INDEX_CREATED']; 
+			$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+			$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_INDEX_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] ); 
+			$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+
+			// return result
+			return $res; 
+		}
+		else if ( $_GET['optimize'] == "trigger" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->CreateLogStreamTrigger( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_CREATE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			else
+			{
+				// Show information in performance warning area
+				$content['ISSOURCENOTOPTIMIZED'] = true;
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_TRIGGER_CREATED']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_TRIGGER_CREATED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+			}
+
+			// return result
+			return $res; 
+		}
+		else if ( $_GET['optimize'] == "checksum" ) 
+		{
+			// This will create all INDEXES we need for this logstream!
+			$res = $myReportObj->ChangeChecksumFieldUnsigned( $mySourceID );
+			if ( $res != SUCCESS ) 
+			{
+				$content['ISERROR'] = true;
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'], $res ); 
+				if ( isset($extraErrorDescription) )
+					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+			}
+			else
+			{
+				// Show information in performance warning area
+				$content['ISSOURCENOTOPTIMIZED'] = true;
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_CHECKSUM_CHANGED']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityNotice'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHECKSUM_CHANGED_SUCCESS'], $content['SOURCES'][$mySourceID]['Name'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "false"; 
+			}
+
+			// return result
+			return $res; 
+		}
+	}
+
+	// Use SESSION to check if Source needs to be checked for optimization
+	$bForceCheck = false;
+	if (	!isset($_SESSION['Sources'][$mySourceID]['optimized']) || 
+			$_SESSION['Sources'][$mySourceID]['optimized'] == false || 
+			( isset($_GET['forcecheckoptimize']) && $_GET['forcecheckoptimize'] == "true" )
+		) 
+		// Set Checking to true!
+		$bForceCheck = true; 
+
+	// Lets see if we need to check
+	if ( $bForceCheck )
+	{
+		// Run checks
+		$res = $myReportObj->CheckLogStreamSource( $mySourceID );
+		if ( $res != SUCCESS ) 
+		{
+			// Current Logstream Source is not optimized! Show to user!
+			$content['ISSOURCENOTOPTIMIZED'] = true;
+			if ( $res == ERROR_DB_DBFIELDNOTFOUND ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
+			}
+			else if ( $res == ERROR_DB_INDEXESMISSING ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
+			}
+			else if ( $res == ERROR_DB_TRIGGERMISSING ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
+			}
+			else if ( $res == ERROR_DB_CHECKSUMERROR ) 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
+			}
+		}
+		else
+		{
+			// Check was successfull! Set Checked Property in LogStream Source
+			$_SESSION['Sources'][$mySourceID]['optimized'] = true; 
+		}
+	}
+
+}
+
+
+/*
+*	Helper function to init custom filters from report
+*/
 function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 {
 	global $content; 
@@ -1310,224 +1543,6 @@ function InitOutputtargetDefinitions($myReport, $outputTargetDetails)
 			$content['outputTarget_' . $propertyID] = $propertyValue;
 		}
 	}
-}
-
-function CreateCronCommand( $myReportID, $mySavedReportID = null )
-{
-	global $content, $gl_root_path, $myReport; 
-
-	if ( isset($mySavedReportID) ) 
-	{
-		// Get Reference to report!
-		$myReport = $content['REPORTS'][ $myReportID ];
-
-		// Get reference to savedreport
-		$mySavedReport = $myReport['SAVEDREPORTS'][ $mySavedReportID ]; 
-
-		// Get configured Source for savedreport
-		$myReportSource = null; 
-		if ( isset($content['Sources'][ $mySavedReport['sourceid'] ]) ) 
-			$myReportSource = $content['Sources'][ $mySavedReport['sourceid'] ]; 
-
-		$pos = strpos( strtoupper(PHP_OS), "WIN");
-		if ($pos !== false) 
-		{	
-			// Running on Windows
-			$phpCmd = PHP_BINDIR . "\\php.exe"; 
-			$phpScript = realpath($gl_root_path) . "cron\\cmdreportgen.php";
-		} 
-		else 
-		{
-			// Running on LINUX
-			$phpCmd = PHP_BINDIR . "/php"; 
-			$phpScript = realpath($gl_root_path) . "/cron/cmdreportgen.php";
-		}
-		
-		// Enable display of report command
-		$content['enableCronCommand'] = true;
-		$szCommand = $phpCmd . " " . $phpScript . " runreport " . $myReportID . " " . $mySavedReportID;
-
-		// --- Check for user or group sources 
-		if ( $myReportSource['userid'] != null ) 
-		{
-			$szCommand .= " " . "userid=" . $myReportSource['userid']; 
-		}
-		else if ( $myReportSource['groupid'] != null ) 
-		{
-			$szCommand .= " " . "groupid=" . $myReportSource['groupid']; 
-		}
-		// --- 
-	}
-	else
-	{
-		// Disable display of report command
-		$content['enableCronCommand'] = false;
-		$szCommand = "";
-	}
-
-	// return result 
-	return $szCommand; 
-}
-
-function InitOnlineReports()
-{
-	global $content; 
-
-	$xmlArray = xml2array( URL_ONLINEREPORTS ); 
-	if ( is_array($xmlArray) && isset($xmlArray['reports']['report']) && count($xmlArray['reports']['report']) > 0 ) 
-	{
-		foreach( $xmlArray['reports']['report'] as $myOnlineReport ) 
-		{
-			// Copy to OnlineReports Array
-			$content['ONLINEREPORTS'][] = $myOnlineReport; 
-		}
-
-		// Success!
-		return true;
-	}
-	else
-		// Failure
-		return false;
-}
-
-// Helper function from php doc
-function xml2array($url, $get_attributes = 1, $priority = 'tag')
-{
-    $contents = "";
-    if (!function_exists('xml_parser_create'))
-    {
-        return false;
-    }
-    $parser = xml_parser_create('');
-    if (!($fp = @ fopen($url, 'rb')))
-    {
-        return false;
-    }
-    while (!feof($fp))
-    {
-        $contents .= fread($fp, 8192);
-    }
-    fclose($fp);
-    xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, "UTF-8");
-    xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-    xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-    xml_parse_into_struct($parser, trim($contents), $xml_values);
-    xml_parser_free($parser);
-    if (!$xml_values)
-        return; //Hmm...
-    $xml_array = array ();
-    $parents = array ();
-    $opened_tags = array ();
-    $arr = array ();
-    $current = & $xml_array;
-    $repeated_tag_index = array (); 
-    foreach ($xml_values as $data)
-    {
-        unset ($attributes, $value);
-        extract($data);
-        $result = array ();
-        $attributes_data = array ();
-        if (isset ($value))
-        {
-            if ($priority == 'tag')
-                $result = $value;
-            else
-                $result['value'] = $value;
-        }
-        if (isset ($attributes) and $get_attributes)
-        {
-            foreach ($attributes as $attr => $val)
-            {
-                if ($priority == 'tag')
-                    $attributes_data[$attr] = $val;
-                else
-                    $result['attr'][$attr] = $val; //Set all the attributes in a array called 'attr'
-            }
-        }
-        if ($type == "open")
-        { 
-            $parent[$level -1] = & $current;
-            if (!is_array($current) or (!in_array($tag, array_keys($current))))
-            {
-                $current[$tag] = $result;
-                if ($attributes_data)
-                    $current[$tag . '_attr'] = $attributes_data;
-                $repeated_tag_index[$tag . '_' . $level] = 1;
-                $current = & $current[$tag];
-            }
-            else
-            {
-                if (isset ($current[$tag][0]))
-                {
-                    $current[$tag][$repeated_tag_index[$tag . '_' . $level]] = $result;
-                    $repeated_tag_index[$tag . '_' . $level]++;
-                }
-                else
-                { 
-                    $current[$tag] = array (
-                        $current[$tag],
-                        $result
-                    ); 
-                    $repeated_tag_index[$tag . '_' . $level] = 2;
-                    if (isset ($current[$tag . '_attr']))
-                    {
-                        $current[$tag]['0_attr'] = $current[$tag . '_attr'];
-                        unset ($current[$tag . '_attr']);
-                    }
-                }
-                $last_item_index = $repeated_tag_index[$tag . '_' . $level] - 1;
-                $current = & $current[$tag][$last_item_index];
-            }
-        }
-        elseif ($type == "complete")
-        {
-            if (!isset ($current[$tag]))
-            {
-                $current[$tag] = $result;
-                $repeated_tag_index[$tag . '_' . $level] = 1;
-                if ($priority == 'tag' and $attributes_data)
-                    $current[$tag . '_attr'] = $attributes_data;
-            }
-            else
-            {
-                if (isset ($current[$tag][0]) and is_array($current[$tag]))
-                {
-                    $current[$tag][$repeated_tag_index[$tag . '_' . $level]] = $result;
-                    if ($priority == 'tag' and $get_attributes and $attributes_data)
-                    {
-                        $current[$tag][$repeated_tag_index[$tag . '_' . $level] . '_attr'] = $attributes_data;
-                    }
-                    $repeated_tag_index[$tag . '_' . $level]++;
-                }
-                else
-                {
-                    $current[$tag] = array (
-                        $current[$tag],
-                        $result
-                    ); 
-                    $repeated_tag_index[$tag . '_' . $level] = 1;
-                    if ($priority == 'tag' and $get_attributes)
-                    {
-                        if (isset ($current[$tag . '_attr']))
-                        { 
-                            $current[$tag]['0_attr'] = $current[$tag . '_attr'];
-                            unset ($current[$tag . '_attr']);
-                        }
-                        if ($attributes_data)
-                        {
-                            $current[$tag][$repeated_tag_index[$tag . '_' . $level] . '_attr'] = $attributes_data;
-                        }
-                    }
-                    $repeated_tag_index[$tag . '_' . $level]++; //0 and 1 index is already taken
-                }
-            }
-        }
-        elseif ($type == 'close')
-        {
-            $current = & $parent[$level -1];
-        }
-    }
-    return ($xml_array);
 }
 
 /*
