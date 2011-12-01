@@ -217,32 +217,23 @@ function GetFormatedDate($evttimearray)
 {
 	global $content;
 
-	if ( is_array($evttimearray) )
+	if ( !is_array($evttimearray) )
+		return $evttimearray;
+
+	if ( 
+			GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
+			&&
+			( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
+		)
 	{
-		if ( 
-				GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
-				&&
-				( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
-			)
-		{
-			if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
-				return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
-			else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
-				return "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
-		}
-		
-		// Copy to local variable
-		$nMyTimeStamp = $evttimearray[EVTIME_TIMESTAMP]; 
-	}
-	else
-	{
-		$nMyTimeStamp  = strtotime($evttimearray); 
-		if ( $nMyTimeStamp  === FALSE ) // Could not convert into timestamp so return original!
-			return $evttimearray;
+		if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
+			return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+		else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
+			return "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 	}
 
 	// Reach return normal format!
-	return $szDateFormatted = date("Y-m-d H:i:s", $nMyTimeStamp );
+	return $szDateFormatted = date("Y-m-d H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
 }
 
 function GetDebugBgColor( $szDebugMode )

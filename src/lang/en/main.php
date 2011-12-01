@@ -124,9 +124,9 @@ $content['LN_MENU_LOGOFF'] = "Logoff";
 $content['LN_MENU_LOGGEDINAS'] = "Logged in as";
 $content['LN_MENU_MAXVIEW'] = "Maximize View";
 $content['LN_MENU_NORMALVIEW'] = "Normalize View";
-$content['LN_MENU_STATISTICS'] = "Statistics";
-$content['LN_MENU_CLICKTOEXPANDMENU'] = "Click the icon to show the menu";
-	$content['LN_MENU_REPORTS'] = "Reports";
+	$content['LN_MENU_STATISTICS'] = "Statistics";
+	$content['LN_MENU_CLICKTOEXPANDMENU'] = "Click the icon to show the menu";
+
 
 // Main Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warning! You still have NOT removed the 'install.php' from your LogAnalyzer main directory!";
@@ -339,7 +339,6 @@ $content['LN_ORACLE_FIELD'] = "Field";
 $content['LN_ORACLE_ONLINESEARCH'] = "Online Search";
 $content['LN_ORACLE_WHOIS'] = "WHOIS Lookup for '%1' value '%2'";
 
-// Report Strings
 $content['LN_GEN_ERROR_INVALIDOP'] = "Invalid or missing operation type";
 $content['LN_GEN_ERROR_INVALIDREPORTID'] = "Invalid or missing report id";
 $content['LN_GEN_ERROR_MISSINGSAVEDREPORTID'] = "Invalid or missing savedreport id";
@@ -363,24 +362,6 @@ $content['LN_CMD_NOREPORTID'] = "Missing Report ID";
 $content['LN_CMD_NOSAVEDREPORTID'] = "Missing SavedReport ID";
 $content['LN_CMD_NOCMDPROMPT'] = "Error, this script can only be run from the command prompt.";
 $content['LN_REPORT_GENERATEDTIME'] = "Report generated at: ";
-
-$content['LN_REPORT_ACTIONS'] = "Run Report Actions";
-$content['LN_REPORTS_CAT'] = "Report Category";
-$content['LN_REPORTS_ID'] = "Report ID";
-$content['LN_REPORTS_NAME'] = "Report Name";
-$content['LN_REPORTS_DESCRIPTION'] = "Report Description";
-$content['LN_REPORTS_HELP'] = "Help";
-$content['LN_REPORTS_HELP_CLICK'] = "Click here for a detailed report description";
-$content['LN_REPORTS_INFO'] = "Show more Information";
-$content['LN_REPORTS_SAVEDREPORTS'] = "Saved reports";
-$content['LN_REPORTS_ADMIN'] = "Administrate Reports";
-$content['LN_REPORTMENU_LIST'] = "List installed Reports";
-$content['LN_REPORTMENU_ONLINELIST'] = "All Available Reports";
-$content['LN_REPORTS_INFORMATION'] = "This page shows a list of installed and available reports including saved report configurations.
-<br/>To run a report, click on the buttons right to the Saved Reports.
-<br/>Attention! Generating reports can be very time consuming depending on the size of your database.
-";
-$content['LN_REPORTS_CHECKLOGSTREAMSOURCE'] = "Verify Logstream optimization";
 
 
 ?>

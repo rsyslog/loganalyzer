@@ -38,7 +38,7 @@
 <!-- BEGIN report_summary -->
 <tr>
 	<td class="cellmenu2">{DisplayName}</td>
-	<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{itemcount}</b></td>
+	<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{ItemCount}</b></td>
 </tr>
 <!-- END report_summary -->
 </table>
@@ -52,7 +52,7 @@
 <tr>
 	<td class="line1">
 <!-- BEGIN report_computers -->
-	<a href="#{FROMHOST}">{FROMHOST}</a>({itemcount}), 
+	<a href="#{FROMHOST}">{FROMHOST}</a>({ItemCount}), 
 <!-- END report_computers -->
 	</td>
 </tr>
@@ -68,27 +68,27 @@
 	<table width="100%" cellpadding="0" cellspacing="1" border="1" align="center" class="with_border_alternate">
 	<tr>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_number}</td>
-		<td class="cellmenu1" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_count}</td>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="100" nowrap>{ln_report_firstevent}</td>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="100" nowrap>{ln_report_lastevent}</td>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="100" nowrap>{ln_report_process}</td>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="50" nowrap>{ln_report_severity}</td>
 		<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="50" nowrap>{ln_report_eventid}</td>
+		<td class="cellmenu1" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_count}</td>
 	</tr>
 	<!-- BEGIN cons_events -->
 	<tr>
 		<td class="line1" valign="top" align="center" rowspan="2">{ZAEHLER}</td>
-		<!-- IF itemcount>=$_colorThreshold -->
-			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#DD0000"><b>{itemcount}</b></td>
-		<!-- ENDIF itemcount>=$_colorThreshold -->
-		<!-- IF itemcount<$_colorThreshold -->
-			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#CCCCCC"><b>{itemcount}</b></td>
-		<!-- ENDIF itemcount<$_colorThreshold -->
 		<td class="line1" valign="top" align="left">{FirstEvent_Date_Formatted}</td>
 		<td class="line1" valign="top" align="left">{LastEvent_Date_Formatted}</td>
 		<td class="line1" valign="top" align="left"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=sourceproc&q={sourceproc}" target="_blank">{sourceproc}</a></td>
 		<td class="line1" valign="top" align="left">{syslogseverity_text}</td>
 		<td class="line1" valign="top" align="left"><a href="http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=id&q={id}" target="_blank">{id}</a></td>
+		<!-- IF ItemCount>=$_colorThreshold -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#DD0000"><b>{ItemCount}</b></td>
+		<!-- ENDIF ItemCount>=$_colorThreshold -->
+		<!-- IF ItemCount<$_colorThreshold -->
+			<td class="lineColouredWhite" valign="top" align="right" bgcolor="#CCCCCC"><b>{ItemCount}</b></td>
+		<!-- ENDIF ItemCount<$_colorThreshold -->
 	</tr>
 	<tr>
 		<td class="cellmenu1" align="center" valign="top" nowrap colspan="2" width="200">{ln_report_description}</td>

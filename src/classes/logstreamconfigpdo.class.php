@@ -64,35 +64,6 @@ class LogStreamConfigPDO extends LogStreamConfig {
 		return new LogStreamPDO($o);
 	}
 
-	
-	public function GetPDOTriggersSupported()
-	{
-		// TRIGGERS are not supported for all db engines!
-		switch ($this->DBType)
-		{
-			case DB_MYSQL:
-				return true;
-			case DB_MSSQL:
-				return true;
-			case DB_ODBC:
-				return false;
-			case DB_PGSQL:
-				return true;
-			case DB_OCI:
-				return false;
-			case DB_DB2:
-				return false;
-			case DB_FIREBIRD:
-				return false;
-			case DB_INFORMIX:
-				return false;
-			case DB_SQLITE:
-				return false;
-			default:
-				return false;
-		}
-	}
-
 	public function GetPDODatabaseType()
 	{
 		switch ($this->DBType)

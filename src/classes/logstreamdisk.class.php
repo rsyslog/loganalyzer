@@ -92,7 +92,6 @@ class LogStreamDisk extends LogStream {
 		return SUCCESS;
 	}
 
-
 	/**
 	* Close the file.
 	*
@@ -613,6 +612,7 @@ class LogStreamDisk extends LogStream {
 	public function GetLogStreamStats()
 	{
 		// Get some file data!
+
 /*
 			// return results!
 			return $stats;
@@ -653,108 +653,6 @@ class LogStreamDisk extends LogStream {
 	*	not implemented!
 	*/
 	public function SaveMessageChecksum( $arrProperitesIn )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Implementation of the UpdateAllMessageChecksum
-	*
-	*	not implemented!
-	*/
-	public function UpdateAllMessageChecksum( )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to clear the current querystring!
-	*/
-	public function ResetFilters()
-	{
-		// nothing todo in this logstream 
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to verify fields | not needed in disk logstream!
-	*/
-	public function VerifyFields( $arrProperitesIn )
-	{
-		return SUCCESS; 
-	}
-
-	
-	/*
-	*	Helper function to create missing fields | not needed in disk logstream!
-	*/
-	public function CreateMissingFields( $arrProperitesIn )
-	{
-		return SUCCESS; 
-	}
-
-	
-	/*
-	*	Helper function to verify indexes | not needed in disk logstream!
-	*/
-	public function VerifyIndexes( $arrProperitesIn )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to create missing indexes | not needed in disk logstream!
-	*/
-	public function CreateMissingIndexes( $arrProperitesIn )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to verify triggers | not needed in disk logstream!
-	*/
-	public function VerifyChecksumTrigger( $myTriggerProperty )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to verify triggers | not needed in disk logstream!
-	*/
-	public function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to create missing  triggers | not needed in disk logstream!
-	*/
-	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to verify checksum field | not needed in disk logstream!
-	*/
-	public function VerifyChecksumField( )
-	{
-		return SUCCESS; 
-	}
-
-
-	/*
-	*	Helper function to correct the checksum field | not needed in disk logstream!
-	*/
-	public function ChangeChecksumFieldUnsigned( )
 	{
 		return SUCCESS; 
 	}
@@ -854,7 +752,7 @@ class LogStreamDisk extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false)
+	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false)
 	{
 		global $content, $fields;
 
@@ -879,11 +777,6 @@ class LogStreamDisk extends LogStream {
 			{
 				if ( isset($logArray[$szConsFieldId]) )
 				{
-					// --- Special Case for the checksum field, we need to generate the checksum ourself!
-					if ( $szConsFieldId == MISC_CHECKSUM ) 
-						$logArray[$szConsFieldId] = crc32( $logArray[SYSLOG_MESSAGE] ); 
-					// --- 
-
 					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
 					{
 						// Convert to FULL Day Date for now!
@@ -897,10 +790,7 @@ class LogStreamDisk extends LogStream {
 						$myFieldData = $content['LN_STATS_OTHERS']; 
 
 					if ( isset($aResult[ $myFieldData ]) )
-					{
 						$aResult[ $myFieldData ]['ItemCount']++;
-						$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
-					}
 					else
 					{
 						// Initialize entry if we haven't exceeded the RecordLImit yet!
@@ -921,9 +811,6 @@ class LogStreamDisk extends LogStream {
 								$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
 
 							$aResult[ $myFieldData ]['ItemCount'] = 1;
-
-							$aResult[ $myFieldData ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
-							$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
