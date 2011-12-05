@@ -28,8 +28,7 @@
 global $content;
 
 // Global Stuff
-$content['ln_report_event_summary'] = "Event Summary";
-$content['ln_report_computer_summary'] = "Computer Summary";
+$content['ln_report_logonoff_summary'] = "Summary of Logon/Logoff events";
 $content['ln_report_consolidation'] = "Logon / Logoff Events consolidated per User";
 $content['ln_report_summary'] = "Report Summary";
 $content['ln_report_number'] = "No.";
@@ -46,12 +45,6 @@ $content['ln_report_maxLogOnLogOffsPerHost_displayname'] = "Max Logon/Logoffs pe
 $content['ln_report_maxLogOnLogOffsPerHost_description'] = "The maximum number of Logon/Logoff events displayed per host/user.";
 $content['ln_report_colorThreshold_displayname'] = "Counter Threshold";
 $content['ln_report_colorThreshold_description'] = "If the amount of consolidated events is higher then this threshold, the countfield will be marked red.";
-$content['ln_report_'] = "";
-$content['ln_report_'] = "";
-$content['ln_report_'] = "";
-$content['ln_report_'] = "";
-$content['ln_report_'] = "";
-$content['ln_report_'] = "";
 $content['ln_report_'] = "";
 
 ?>

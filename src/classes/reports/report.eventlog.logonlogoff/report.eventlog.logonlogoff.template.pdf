@@ -33,7 +33,7 @@
 
 <table width="200" cellpadding="0" cellspacing="1" border="1" align="left" class="with_border_alternate">
 <tr>
-	<td class="cellmenu1" colspan="2" align="center" bgcolor="#9FDAF1"><b>{ln_report_event_summary}</b></td>
+	<td class="cellmenu1" colspan="2" align="center" bgcolor="#9FDAF1"><b>{ln_report_logonoff_summary}</b></td>
 </tr>
 <!-- BEGIN report_summary -->
 <tr>

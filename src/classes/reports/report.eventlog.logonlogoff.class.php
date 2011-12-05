@@ -5,13 +5,13 @@
 	* -----------------------------------------------------------------	*
 	* Some constants													*
 	*																	*
-	* Eventsummary Report is a basic report for EventLog
+	* Logon/Logoff Report is a basic report for EventLog based Data
 	*
 	* \version 1.0.0 Init Version
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2009 Adiscon GmbH.
+	* Copyright (C) 2008-2011 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -50,16 +50,16 @@ class Report_logonlogoff extends Report {
 	public $_reportVersion = 1;										// Internally Version of the ReportEngine
 	public $_reportID = "report.eventlog.logonlogoff.class";		// ID for the report, needs to be unique!
 	public $_reportFileBasicName = "report.eventlog.logonlogoff";	// Basic Filename for reportfiles
-	public $_reportTitle = "EventLog Logon/Logoff Report";				// Display name for the report
+	public $_reportTitle = "EventLog Logon/Logoff Report";			// Display name for the report
 	public $_reportDescription = "This is a EventLog Logon/Logoff Summary Report";
 	public $_reportHelpArticle = "http://loganalyzer.adiscon.com/plugins/reports/eventlog-logonlogoff";
-	public $_reportNeedsInit = false;							// True means that this report needs additional init stuff
-	public $_reportInitialized = false;							// True means report is installed
+	public $_reportNeedsInit = false;								// True means that this report needs additional init stuff
+	public $_reportInitialized = false;								// True means report is installed
 
 	// Advanced Report Options
-	private $_maxHosts = 20;									// Threshold for maximum hosts to analyse!
-	private $_maxLogOnLogOffsPerHost = 100;						// Threshold for maximum amount of logon/logoffs to analyse per host
-	private $_colorThreshold = 10;								// Threshold for coloured display of Eventcounter
+	private $_maxHosts = 20;										// Threshold for maximum hosts to analyse!
+	private $_maxLogOnLogOffsPerHost = 100;							// Threshold for maximum amount of logon/logoffs to analyse per host
+	private $_colorThreshold = 10;									// Threshold for coloured display of Eventcounter
 
 	// Constructor
 	public function Report_logonlogoff() {
@@ -171,24 +171,6 @@ class Report_logonlogoff extends Report {
 			}
 			else
 				return ERROR_REPORT_NODATA; 
-
-/*
-			// Get List of hosts
-			$content["report_computers"] = $this->_streamObj->ConsolidateItemListByField( SYSLOG_HOST, $this->_maxHosts, SYSLOG_HOST, SORTING_ORDER_DESC );
-
-			// TimeStats
-			$nowtime = microtime_float();
-			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s, ";
-
-			if ( is_array($content["report_computers"]) && count($content["report_computers"]) > 0 )
-			{
-				// Create plain hosts list for Consolidate function
-				foreach ( $content["report_computers"] as $tmpComputer ) 
-					$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
-			}
-			else
-				return ERROR_REPORT_NODATA; 
-*/
 
 			// This function will consolidate the Events based per Host!
 			$this->ConsolidateLogonLogoffs(); // ($arrHosts);
