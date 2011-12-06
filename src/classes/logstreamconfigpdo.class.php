@@ -27,10 +27,6 @@
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
-	* 
-	* Adiscon LogAnalyzer is also available under a commercial license.
-	* For details, contact info@adiscon.com or visit
-	* http://loganalyzer.adiscon.com/commercial
 	*********************************************************************
 */
 
@@ -66,6 +62,35 @@ class LogStreamConfigPDO extends LogStreamConfig {
 
 		// return LogStreamDisk instance
 		return new LogStreamPDO($o);
+	}
+
+	
+	public function GetPDOTriggersSupported()
+	{
+		// TRIGGERS are not supported for all db engines!
+		switch ($this->DBType)
+		{
+			case DB_MYSQL:
+				return true;
+			case DB_MSSQL:
+				return true;
+			case DB_ODBC:
+				return false;
+			case DB_PGSQL:
+				return true;
+			case DB_OCI:
+				return false;
+			case DB_DB2:
+				return false;
+			case DB_FIREBIRD:
+				return false;
+			case DB_INFORMIX:
+				return false;
+			case DB_SQLITE:
+				return false;
+			default:
+				return false;
+		}
 	}
 
 	public function GetPDODatabaseType()

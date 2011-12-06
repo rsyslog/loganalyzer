@@ -27,10 +27,6 @@
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
-	* 
-	* Adiscon LogAnalyzer is also available under a commercial license.
-	* For details, contact info@adiscon.com or visit
-	* http://loganalyzer.adiscon.com/commercial
 	*********************************************************************
 */
 
@@ -212,7 +208,7 @@ abstract class LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false);
+	public abstract function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false);
 
 
 	/**
@@ -258,6 +254,71 @@ abstract class LogStream {
 
 
 	/*
+	*	Helper function to set the checksum for all messages in the current logstream class
+	*/
+	public abstract function UpdateAllMessageChecksum( );
+
+
+	/*
+	*	Helper function for logstream classes to clear filter based stuff
+	*/
+	public abstract function ResetFilters( );
+
+
+	/*
+	*	Helper function for logstream classes to check if all fields are available!
+	*/
+	public abstract function VerifyFields( $arrProperitesIn );
+
+	
+	/*
+	*	Helper function for logstream classes to create missing indexes, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingFields( $arrProperitesIn );
+
+	
+	/*
+	*	Helper function for logstream classes to check for data indexes, only applies to database based logstream classes
+	*/
+	public abstract function VerifyIndexes( $arrProperitesIn );
+
+
+	/*
+	*	Helper function for logstream classes to create missing indexes, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingIndexes( $arrProperitesIn );
+
+
+	/*
+	*	Helper function for logstream classes to check for missing triggers, only applies to database based logstream classes
+	*/
+	public abstract function VerifyChecksumTrigger( $myTriggerProperty );
+
+
+	/*
+	*	Helper function for logstream classes to create missing trigger, only applies to database based logstream classes
+	*/
+	public abstract function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty );
+
+
+	/*
+	*	Helper function for logstream classes to create the SQL statement needed to create the trigger, only applies to database based logstream classes
+	*/
+	public abstract function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField );
+
+	/*
+	*	Helper function for logstream classes to check if the checksum field is configured correctly
+	*/
+	public abstract function VerifyChecksumField( );
+
+
+	/*
+	*	Helper function for logstream classes to change the checksum field from unsigned INT
+	*/
+	public abstract function ChangeChecksumFieldUnsigned( );
+
+
+	/*
 	* Helper functino to trigger initialisation of MsgParsers
 	*/
 	public function RunBasicInits()
@@ -279,8 +340,11 @@ abstract class LogStream {
 		else
 			$finalfilters = $szFilters; 
 
-		OutputDebugMessage("SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
+		OutputDebugMessage("LogStream|SetFilter: SetFilter combined = '" . $finalfilters . "'. ", DEBUG_DEBUG);
 
+		// Reset Filters first to make sure we do not add multiple filters!
+		$this->_filters = null;
+	
 		// Parse Filters from string 
 		$this->ParseFilters($finalfilters);
 
@@ -588,6 +652,23 @@ abstract class LogStream {
 		}
 		else // No fields at all!
 			return null; 
+	}
+
+	/*
+	*	Helper function to get the internal Field ID by database field name!
+	*/
+	public function GetFieldIDbyDatabaseMapping($szTableType, $szFieldName)
+	{
+		global $content, $dbmapping;
+
+		foreach( $dbmapping[$szTableType]['DBMAPPINGS'] as $myFieldID => $myDBMapping ) 
+		{
+			if ( $myDBMapping == $szFieldName ) 
+				return $myFieldID; 
+		}
+
+		// Default return! 
+		return $szFieldName; 
 	}
 
 	/*
@@ -1188,7 +1269,5 @@ abstract class LogStream {
 		return -1;
 	}
 
-
-	
 }
 ?>
