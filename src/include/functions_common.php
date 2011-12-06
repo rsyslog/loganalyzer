@@ -28,10 +28,6 @@
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
-	* 
-	* Adiscon LogAnalyzer is also available under a commercial license.
-	* For details, contact info@adiscon.com or visit
-	* http://loganalyzer.adiscon.com/commercial
 	*********************************************************************
 */
 
