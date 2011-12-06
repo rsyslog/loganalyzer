@@ -695,10 +695,14 @@ abstract class Report {
 			if ($res != SUCCESS ) 
 				return $res; 
 
-			// Will check if certain INDEXES do exists for database logstream!
-			$res = $this->_streamObj->VerifyIndexes( $arrProperties ); 
-			if ($res != SUCCESS ) 
-				return $res; 
+			// Will check if TRIGGERS are installed! Requires SUPER access in database logstream!
+			if ( $arrProperties != null ) 
+			{
+				// Will check if certain INDEXES do exists for database logstream!
+				$res = $this->_streamObj->VerifyIndexes( $arrProperties ); 
+				if ($res != SUCCESS ) 
+					return $res; 
+			}
 
 			// Will check if checksum field is correctly configured for database logstream!
 			$res = $this->_streamObj->VerifyChecksumField( ); 
@@ -706,9 +710,12 @@ abstract class Report {
 				return $res; 
 
 			// Will check if TRIGGERS are installed! Requires SUPER access in database logstream!
-			$res = $this->_streamObj->VerifyChecksumTrigger( $myTriggerProperty ); 
-			if ($res != SUCCESS ) 
-				return $res; 
+			if ( $myTriggerProperty != null ) 
+			{
+				$res = $this->_streamObj->VerifyChecksumTrigger( $myTriggerProperty ); 
+				if ($res != SUCCESS ) 
+					return $res; 
+			}
 		}
 
 		// return results!
