@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 3.4.0 (stable), 2011-12-06
+- Added initial version of a new free report for consolidating 
+  Windows Eventlog Logon / Logoff events
+- PDO LogStream, the RowCount function is now only used 
+  with MYSQL, PGSQL and MSSQL. Other PDO Drivers may not return a 
+  useful value.
+- Removed language files from source, can be found here from now on: 
+  http://loganalyzer.adiscon.com/translations
+- Straighten out a couple of issues  
+- Doc: Redirected professional support options to proper page
+---------------------------------------------------------------------------
 Version 3.2.3 (stable), 2011-11-08
 - Removed magic quotes check from database functions (obselete due 
   the changes in the last version)
