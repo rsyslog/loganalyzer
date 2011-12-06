@@ -1171,7 +1171,10 @@ function WriteFlowingBlock( $s , $outofblock = false )
              case 'J':
                  foreach ( $content as $k => $chunk )
                  {
-                     $this->restoreFont( $font[ $k ] );
+// BEGIN FIX BY ANDRE
+				     if ( isset($font[ $k ]) )
+						$this->restoreFont( $font[ $k ] );
+// END FIX BY ANDRE
                      $stringWidth = $this->GetStringWidth( $chunk ) + ( $this->ws * substr_count( $chunk, ' ' ) / $this->k );
                      // determine which borders should be used
                      $b = '';
@@ -1200,7 +1203,10 @@ function WriteFlowingBlock( $s , $outofblock = false )
              case 'C':
                  foreach ( $content as $k => $chunk )
                  {
-                     $this->restoreFont( $font[ $k ] );
+// BEGIN FIX BY ANDRE
+				     if ( isset($font[ $k ]) )
+						$this->restoreFont( $font[ $k ] );
+// END FIX BY ANDRE
                      $stringWidth = $this->GetStringWidth( $chunk ) + ( $this->ws * substr_count( $chunk, ' ' ) / $this->k );
                      // determine which borders should be used
                      $b = '';
