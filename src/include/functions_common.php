@@ -28,7 +28,7 @@
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
-	*
+	* 
 	* Adiscon LogAnalyzer is also available under a commercial license.
 	* For details, contact info@adiscon.com or visit
 	* http://loganalyzer.adiscon.com/commercial
@@ -70,11 +70,14 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.2.3";
+$content['BUILDNUMBER'] = "3.4.0";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
 $content['SHOW_DONATEBUTTON'] = true; // Default = true!
+
+// Hardcoded DEFINES
+define('URL_ONLINEREPORTS', 'http://tools.adiscon.net/listreports.php');
 
 // PreInit overall user variables
 $content['EXTRA_PHPLOGCON_LOGO'] = $content['BASEPATH'] . "images/main/Header-Logo.png";
@@ -567,11 +570,10 @@ function CheckAndSetRunMode()
 	// Define and Inits Syslog variables now!
 	// DEPRECIATED! define_syslog_variables();
 	// Syslog Constants are defined by default anyway!
-	openlog("LogAnalyzer", LOG_PID, LOG_USER);
-	
+	$syslogOpened = openlog("LogAnalyzer", LOG_PID, LOG_USER);
+
 	// --- Check necessary PHP Extensions!
 	$loadedExtensions = get_loaded_extensions();
-	
 	// Check for GD libary
 	if ( in_array("gd", $loadedExtensions) ) 
 		$content['GD_IS_ENABLED'] = true;
@@ -582,6 +584,8 @@ function CheckAndSetRunMode()
 	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
 	if ( in_array("PDO", $loadedExtensions) ) { $content['PDO_IS_ENABLED'] = true; } else { $content['PDO_IS_ENABLED'] = false; }
+	// Check sockets Extension
+	if ( in_array("sockets", $loadedExtensions) ) { $content['SOCKETS_IS_ENABLED'] = true; } else { $content['SOCKETS_IS_ENABLED'] = false; }
 	// --- 
 }
 
@@ -737,6 +741,7 @@ function InitFrontEndVariables()
 	$content['MENU_WINDOWLIST'] = $content['BASEPATH'] . "images/icons/windows.png";
 	$content['MENU_CHECKED'] = $content['BASEPATH'] . "images/icons/check.png";
 	$content['MENU_PLAY_GREEN'] = $content['BASEPATH'] . "images/icons/bullet_triangle_green.png";
+	$content['MENU_PLAY_GREEN_WINDOW'] = $content['BASEPATH'] . "images/icons/table_sql_run.png";
 
 	$content['MENU_PAGER_BEGIN'] = $content['BASEPATH'] . "images/icons/media_beginning.png";
 	$content['MENU_PAGER_PREVIOUS'] = $content['BASEPATH'] . "images/icons/media_rewind.png";
@@ -1038,7 +1043,8 @@ function DieWithErrorMsg( $szerrmsg )
 	}
 	else if	( $RUNMODE == RUNMODE_WEBSERVER )
 	{
-		print( 
+		// Print main error!
+		print	( 
 			"<html><title>Adiscon LogAnalyzer :: Critical Error occured</title><head>" . 
 			"<link rel=\"stylesheet\" href=\"" . $gl_root_path . "themes/default/main.css\" type=\"text/css\"></head><body><br><br>" .
 			"<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
@@ -1048,7 +1054,20 @@ function DieWithErrorMsg( $szerrmsg )
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
 			"<td class=\"tableBackground\" align=\"left\"><br>" . 
 			$szerrmsg . 
-			"<br><br></td></tr></table>" . 
+			"<br><br></td></tr></table>");
+		
+		// Print Detail error's if available
+		if ( isset($content['detailederror']) )
+		{
+			print ("<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Additional Errordetails:</td>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			$content['detailederror'] . 
+			"<br><br></td></tr></table>");
+		}
+
+		// End HTML Body
+		print(
 			"</body></html>"
 		);
 	}
@@ -1333,7 +1352,31 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 	// Check if the user wants to syslog the error!
 	if ( GetConfigSetting("MiscDebugToSyslog", 0, CFGLEVEL_GLOBAL) == 1 )
 	{
-		syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
+		if ( $content['SOCKETS_IS_ENABLED'] ) 
+		{
+			// Send using UDP ourself!
+			$sock = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+			$stprifac = (SYSLOG_LOCAL0 << 3); 
+			if ( $szDbgLevel == DEBUG_ERROR_WTF ) 
+				$stprifac += SYSLOG_CRIT;
+			else if ( $szDbgLevel == DEBUG_ERROR ) 
+				$stprifac += SYSLOG_ERR;
+			else if ( $szDbgLevel == DEBUG_WARN ) 
+				$stprifac += SYSLOG_WARNING;
+			else if ( $szDbgLevel == DEBUG_INFO ) 
+				$stprifac += SYSLOG_NOTICE;
+			else if ( $szDbgLevel == DEBUG_DEBUG ) 
+				$stprifac += SYSLOG_INFO;
+			else if ( $szDbgLevel == DEBUG_ULTRADEBUG ) 
+				$stprifac += SYSLOG_DEBUG;
+			
+			// Generate RFC5424 Syslog MSG
+			$szsyslogmsg = "<" . $stprifac . ">" . date("c") . " " . php_uname ("n") . " " . "loganalyzer - - - " . $szDbg ;
+			@socket_sendto($sock, $szsyslogmsg, strlen($szsyslogmsg), 0, '127.0.0.1', 514);
+			@socket_close($sock);
+		}
+		else // Use PHP System function to send via syslog
+			$syslogSend = syslog(GetPriorityFromDebugLevel($szDbgLevel), $szDbg);
 	}
 }
 
@@ -1896,11 +1939,11 @@ function GetErrorMessage($errorCode)
 function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
 {
 	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+	if ($arrayFirst['itemcount'] == $arraySecond['itemcount'])
 		return 0;
 	
 	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? 1 : -1;
+	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? 1 : -1;
 }
 
 /**
@@ -1909,11 +1952,11 @@ function MultiSortArrayByItemCountDesc( $arrayFirst, $arraySecond )
 function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
 {
 	// Do not sort in this case
-	if ($arrayFirst['ItemCount'] == $arraySecond['ItemCount'])
+	if ($arrayFirst['itemcount'] == $arraySecond['itemcount'])
 		return 0;
 	
 	// Move up or down
-	return ($arrayFirst['ItemCount'] < $arraySecond['ItemCount']) ? -1 : 1;
+	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? -1 : 1;
 }
 // --- 
 

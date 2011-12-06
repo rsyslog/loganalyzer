@@ -28,7 +28,7 @@
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
 	* distribution.
-	*
+	* 
 	* Adiscon LogAnalyzer is also available under a commercial license.
 	* For details, contact info@adiscon.com or visit
 	* http://loganalyzer.adiscon.com/commercial
@@ -71,5 +71,12 @@ define('ERROR_CHARTS_NOTCONFIGURED', 20);
 define('ERROR_MSG_SKIPMESSAGE', 21);
 define('ERROR_MSG_SCANABORTED', 23);
 define('ERROR_REPORT_NODATA', 25);
+define('ERROR_DB_INDEXESMISSING', 26);
+define('ERROR_DB_TRIGGERMISSING', 27);
+define('ERROR_DB_INDEXFAILED', 28);
+define('ERROR_DB_TRIGGERFAILED', 29);
+define('ERROR_DB_CHECKSUMERROR', 30);
+define('ERROR_DB_CHECKSUMCHANGEFAILED', 31);
+define('ERROR_DB_ADDDBFIELDFAILED', 32);
 
 ?>

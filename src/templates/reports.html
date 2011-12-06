@@ -1,0 +1,221 @@
+<!-- INCLUDE include_header.html --> 
+
+<!-- IF ISERROR="true" -->
+<br><br>
+<center>
+	<div class="table_with_border_second ErrorMsg" style="width:600px">
+		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
+		<p align="left">{ERROR_MSG}</p>
+		<p>
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
+			{LN_GEN_MOREINFORMATION}
+			</a>
+		</p>
+		</div>
+	<br><br>
+</center>
+<br><br>
+<!-- ENDIF ISERROR="true" -->
+
+<!-- IF reportsenabled="true" -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<tr>
+	<td colspan="3" class="title" nowrap><B>{LN_MENU_REPORTS}</B></td>
+</tr>
+<tr>
+	<td colspan="3" class="titleSecond"><br><blockquote>{LN_REPORTS_INFORMATION}</blockquote><br></td>
+</tr>
+<tr>
+	<td align="center" class="line2">
+
+	<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="100%" class="with_border_alternate">
+	<tr>
+		<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
+		<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0">{LN_REPORTS_ADMIN}</a></td>
+		<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
+		<!-- IF ISADDSAVEDREPORT="true" -->
+		<td class="topmenu2" nowrap align="center" width="250"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
+		<!-- ENDIF ISADDSAVEDREPORT="true" -->
+		<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+
+<br/><br/>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border_alternative">
+		<!-- BEGIN REPORTS -->
+{rowbegin}
+		<table cellpadding="2" cellspacing="0" border="0" align="center" valign="top" width="350" class="table_with_border_light">
+		<tr>
+			<td align="center" width="100" class="cellmenu1" nowrap><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="100%" class="cellmenu1"><a href="{BASEPATH}admin/reports.php?op=details&id={ID}" class="cellmenu1_link">{DisplayName}</a></td>
+		</tr>
+		<tr>
+			<td align="center" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
+			<td align="left" width="100%" class="line1">
+				<!-- IF ReportHelpEnabled="true" -->
+				&nbsp;&nbsp;<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}">&nbsp;{LN_REPORTS_HELP}</a>
+				<!-- ENDIF ReportHelpEnabled="true" -->
+				&nbsp;&nbsp;<a href="{BASEPATH}admin/reports.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_REPORTS_INFO}">&nbsp;{LN_REPORTS_INFO}</a>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" class="cellmenu2_naked"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="left" width="100%" class="line2">{Description}</td>
+		</tr>
+		<tr>
+			<td align="center" class="cellmenu2_naked" valign="_top"><b>{LN_REPORTS_SAVEDREPORTS}</b></td>
+			<td align="center" width="100%" class="line2">
+			
+			<!-- IF HASSAVEDREPORTS="true" -->
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="400" class="with_border_alternative">
+			<!-- BEGIN SAVEDREPORTS -->
+			<tr>
+				<td align="left" class="{srcssclass}" colspan="2">
+				<img src="{MENU_REPORTS}" width="16">
+				<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle}</a>
+				</td>
+				<td align="center" class="{srcssclass}">
+					&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_PLAY_GREEN}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+				</td>
+			</tr>
+			<!-- END SAVEDREPORTS -->
+			</table>
+			<!-- ENDIF HASSAVEDREPORTS="true" -->
+
+			</td>
+		</tr>
+		</table>
+	<br><br>
+{rowend}
+
+		<!-- END REPORTS -->
+		</table>
+
+<!-- IF LISTONLINEREPORTS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td align="center" width="50" class="cellmenu1"><b>{LN_REPORTS_INSTALLED}</b></td>
+			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
+			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
+		</tr>
+		<!-- BEGIN ONLINEREPORTS -->
+		<tr>
+			<td align="center" class="{cssclass}"><img src="{installed_icon}" width="16" title="{installed_text}"></td>
+			<td align="left" class="{cssclass}" valign="top"><b>{reportid}</b></td>
+			<td align="left" class="{cssclass}" valign="top">
+			<!-- IF reportdownloadlink="-" -->
+			<b>{reportname}</b>
+			<!-- ENDIF reportdownloadlink="-" -->
+			<!-- IF reportdownloadlink!="-" -->
+			<a href="{reportdownloadlink}" target="_blank">{reportname}</a>
+			<!-- ENDIF reportdownloadlink!="-" -->
+			</td>
+			<td align="left" class="{cssclass}" valign="top">{reportdescription}</td>
+			<td align="center" class="{cssclass}">
+				<!-- IF reportdownloadlink!="-" -->
+				<a href="{reportdownloadlink}" target="_blank"><img src="{MENU_NETDOWNLOAD}" width="16" title="{LN_REPORTS_DOWNLOAD}"></a>&nbsp;&nbsp;
+				<!-- ENDIF reportdownloadlink!="-" -->
+				<!-- IF reporthelparticle!="-" -->
+				<a href="{reporthelparticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
+				<!-- ENDIF reporthelparticle!="-" -->
+				<!-- IF reportsamplelink!="-" -->
+				<a href="{reportsamplelink}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_SAMPLELINK}"></a>&nbsp;&nbsp;
+				<!-- ENDIF reportsamplelink!="-" -->
+			</td>
+		</tr>
+		<!-- END ONLINEREPORTS -->
+		</table>
+<!-- ENDIF LISTONLINEREPORTS="true" -->
+
+<!-- IF ISSHOWDETAILS="true" -->
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<tr>
+			<td align="center" class="cellmenu1" colspan="3"><b>{LN_REPORTS_DETAILS}</b></td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_CAT}</b></td>
+			<td align="left" class="line1" width="350" colspan="2">{Category}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_ID}</b></td>
+			<td align="left" class="line1" width="350" colspan="2">{ReportID}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="left" class="line2" colspan="2">{DisplayName}</td>
+		</tr>
+		<tr>
+			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="left" class="line1" colspan="2">{Description}</td>
+		</tr>
+		<!-- IF EnableRequiredFields="true" -->
+		<tr>
+			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_REPORTS_REQUIREDFIELDS}</b></td>
+			<td align="left" class="line1" colspan="2">
+				<!-- BEGIN RequiredFieldsList -->
+				<br><B>{FieldCaption}</B> ({FieldDefine})
+				<!-- END RequiredFieldsList -->
+				<br><br>
+			</td>
+		</tr>
+		<!-- ENDIF EnableRequiredFields="true" -->
+		<!-- IF EnableHelpArticle="true" -->
+		<tr>
+			<td align="left" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
+			<td align="center" class="line2" colspan="2"><a href="{ReportHelpArticle}" target="_blank">{LN_REPORTS_HELP_CLICK}</a></td>
+		</tr>
+		<!-- ENDIF EnableHelpArticle="true" -->
+		<!-- IF EnableNeedsInit="true" -->
+		<tr>
+			<td align="center" class="tableBackground" colspan="2">
+				<!-- IF InitEnabled="true" -->
+				<a href="{BASEPATH}admin/reports.php?op=initreport&id={ReportID}"><img src="{MENU_PARSER_INIT}" width="16" title="{LN_REPORTS_INIT}"> {LN_REPORTS_INIT}</a>
+				<!-- ENDIF InitEnabled="true" -->
+				<!-- IF DeleteEnabled="true" -->
+				<a href="{BASEPATH}admin/reports.php?op=removereport&id={ReportID}"><img src="{MENU_PARSER_DELETE}" width="16" title="{LN_REPORTS_REMOVE}"> {LN_REPORTS_REMOVE}</a>
+				<!-- ENDIF DeleteEnabled="true" -->
+			</td>
+		</tr>
+		<!-- ENDIF EnableNeedsInit="true" -->
+
+		<!-- IF HASSAVEDREPORTS="true" -->
+		<tr>
+			<td align="center" rowspan="{SavedReportRowSpan}" class="cellmenu2_naked" valign="top">{LN_REPORTS_SAVEDREPORTS}</td>
+			<td align="left" class="line1" colspan="2">
+			</td>
+		</tr>
+		<!-- BEGIN SAVEDREPORTS -->
+		<tr>
+			<td align="left" class="{srcssclass}">
+			<img src="{MENU_REPORTS}" width="16">
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
+			</td>
+			<td align="center" class="{srcssclass}">
+				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+				&nbsp;<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}"><img src="{MENU_EDIT}" width="16" title="{LN_REPORTS_EDITSAVEDREPORT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/reports.php?op=removesavedreport&savedreportid={SavedReportID}"><img src="{MENU_DELETE}" width="16" title="{LN_REPORTS_REMOVESAVEDREPORT}"></a>
+			</td>
+		</tr>
+		<!-- END SAVEDREPORTS -->
+		<!-- ENDIF HASSAVEDREPORTS="true" -->
+		</table>
+
+		<br><br>
+		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+<!-- ENDIF ISSHOWDETAILS="true" -->
+
+		<br><br>
+		</td>
+	</tr>
+</table>
+<!-- ENDIF reportsenabled="true" -->
+
+<!-- INCLUDE include_footer.html -->

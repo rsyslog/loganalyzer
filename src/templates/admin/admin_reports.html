@@ -5,7 +5,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:600px">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p align="left">{ERROR_MSG}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -270,6 +270,36 @@
 
 		</script>
 
+		<!-- IF ISSOURCENOTOPTIMIZED="true" -->
+		<table width="775" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<tr>
+			<td align="center" valign="top" class="line1 ErrorMsg">
+			<div class="{MSG_WARNING_CLASS}">{MSG_WARNING_TITLE}</div>
+			<p align="left">{MSG_WARNING_DETAILS}</p>
+			<a href="{MSG_CHECK_URL}" target="_top">{LN_REPORTS_RECHECKLOGSTREAMSOURCE}</a>
+			<br>
+			<br>
+			</td>
+		</tr>
+		<!-- IF MSG_WARNING_SUBMITFORM="true" -->
+		<tr>
+			<td align="center" class="line2">
+				<br>
+				<form action="{MSG_WARNING_FORMURL}" method="post" name="confirmform">
+					<!-- BEGIN POST_VARIABLES -->
+					<input type="hidden" name="{varname}" value="{varvalue}">
+					<!-- END POST_VARIABLES -->
+					<input type="image" src="{BASEPATH}images/icons/check.png" alt="{LN_REPORTS_OPTIMIZEYES}" class="borderless" width="16">
+					<br>
+					<input type="submit" value="{LN_REPORTS_OPTIMIZE_LOGSTREAMSOURCE}" class="borderless">
+				</form>
+
+			</td>
+		</tr>
+		<!-- ENDIF MSG_WARNING_SUBMITFORM="true" -->
+		</table>
+		<!-- ENDIF ISSOURCENOTOPTIMIZED="true" -->
+
 		<form action="{BASEPATH}admin/reports.php{FormUrlAddOP}" method="post" id="savedreportform">
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
@@ -434,6 +464,8 @@
 						<option value="{SourceID}" {sourceselected}>{Name}</option>
 						<!-- END SOURCES -->
 					</select>
+					<a href="{MSG_CHECK_URL}" target="_top">{LN_REPORTS_CHECKLOGSTREAMSOURCE}</a>
+<!--					<button name="forcecheckoptimize" type="true" value="{REPORT_FORMACTION}" title="{LN_REPORTS_CHECKLOGSTREAMSOURCE}">{LN_REPORTS_CHECKLOGSTREAMSOURCE}</button>-->
 				</td>
 			</tr>
 			<tr>
@@ -479,6 +511,7 @@
 			<tr>
 				<td align="center" colspan="2">
 					<button name="op" type="submit" value="{REPORT_FORMACTION}" title="{REPORT_SENDBUTTON}">{REPORT_SENDBUTTON}</button>
+					<button name="op" type="submit" value="{REPORT_FORMACTIONRETURN}" title="{REPORT_SENDBUTTON}">{REPORT_SENDANDRETURN}</button>
 				</td>
 			</tr>
 			</table>
