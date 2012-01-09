@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------
+Version 3.4.1 (stable), ????-??-??
+- Fixed a bug in Syslog and Eventlog summary report which consolidated 
+  wrong events when the source filter was used in the report.
+---------------------------------------------------------------------------
 Version 3.4.0 (stable), 2011-12-06
 - Added initial version of a new free report for consolidating 
   Windows Eventlog Logon / Logoff events
