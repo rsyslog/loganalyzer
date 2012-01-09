@@ -353,7 +353,9 @@ class Report_syslogsummary extends Report {
 			{
 				// Set custom filters
 				$this->_streamObj->ResetFilters();
-				$this->_streamObj->SetFilter( $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_Syslog . " " . $fields[SYSLOG_HOST]['SearchField'] . ":=" . $myHost );
+				$this->_streamObj->SetFilter( $this->_filterString . " " . $fields[SYSLOG_MESSAGETYPE]['SearchField'] . ":=" . IUT_Syslog );
+				$this->_streamObj->RemoveFilters( SYSLOG_HOST ); 
+				$this->_streamObj->AppendFilter( $fields[SYSLOG_HOST]['SearchField'] . ":=" . $myHost ); 
 
 				// Set Host Item Basics if not set yet
 				$content["report_consdata"][ $myHost ][SYSLOG_HOST] = $myHost; 

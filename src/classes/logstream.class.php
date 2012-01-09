@@ -344,13 +344,48 @@ abstract class LogStream {
 
 		// Reset Filters first to make sure we do not add multiple filters!
 		$this->_filters = null;
-	
+
 		// Parse Filters from string 
 		$this->ParseFilters($finalfilters);
 
+		// return success
 		return SUCCESS;	
 	}
- 
+
+ 	/**
+	* Append filter definition for the current stream.
+	* 
+	* @param filter object in: filter object
+	* @return integer Error state
+	*/
+	public function AppendFilter($szFilters)
+	{
+		OutputDebugMessage("LogStream|AppendFilter: SetFilter combined = '" . $szFilters . "'. ", DEBUG_DEBUG);
+	
+		// Parse Filters from string 
+		$this->ParseFilters($szFilters);
+
+		// return success
+		return SUCCESS;	
+	}
+
+ 	/**
+	* Remove filters for a specific Fieldtype
+	* 
+	* @param filter object in: FieldID
+	* @return integer Error state
+	*/
+	public function RemoveFilters($szFieldID)
+	{
+		// Removing Filters for this field!
+		if ( isset($this->_filters[$szFieldID]) ) 
+			unset($this->_filters[$szFieldID]); 
+
+		// return success
+		return SUCCESS;	
+	}
+
+
 	/**
 	* Set the direction the stream should read data.
 	*
