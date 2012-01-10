@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-Version 3.4.1 (stable), ????-??-??
+Version 3.4.1 (stable), 2012-01-10
 - Fixed a bug in Syslog and Eventlog summary report which consolidated 
   wrong events when the source filter was used in the report.
 ---------------------------------------------------------------------------
