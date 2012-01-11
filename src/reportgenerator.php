@@ -145,7 +145,13 @@ if ( !$content['error_occured'] )
 				}
 				else
 				{
-					// Call processing part now!
+					// Init IncludePath
+					$reportIncludePath = $myReportObj->GetReportIncludePath(); 
+
+					// Include Custom language file if available
+					$myReportObj->InitReportLanguageFile($reportIncludePath); 
+
+					// Now start the processing part!
 					$res = $myReportObj->startDataProcessing();
 					if ( $res != SUCCESS ) 
 					{
@@ -155,13 +161,6 @@ if ( !$content['error_occured'] )
 					else
 					{
 						// --- Perform report output
-
-						// Init IncludePath
-						$reportIncludePath = $myReportObj->GetReportIncludePath(); 
-
-						// Include Custom language file if available
-						$myReportObj->InitReportLanguageFile($reportIncludePath); 
-						
 						// Init template Parser
 						$page = new Template();
 						$page -> set_path ( $reportIncludePath );

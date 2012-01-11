@@ -300,11 +300,14 @@ function InitMessageParsers()
 /*
 *	This function generates a list of available reports modules and custom reports
 */
-function InitReportModules()
+function InitReportModules($szRootPath = "")
 {
 	global $content, $gl_root_path;
-
-	$szDirectory = $gl_root_path . 'classes/reports/'; 
+	
+	// Check for parameter
+	if ( strlen($szRootPath) == 0 ) 
+		$szRootPath = $gl_root_path; 
+	$szDirectory = $szRootPath . 'classes/reports/'; 
 	$aFiles = list_files($szDirectory, true); 
 	if ( isset($aFiles) && count($aFiles) > 0 )
 	{

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{report_title}</title>
+	<style type="text/css">
+	<!-- INCLUDE report.eventlog.auditsummary.css --> 
+	</style>
+</head>
+<body TOPMARGIN="0" LEFTMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+
+<H3>{report_title}</H3>
+<p>{LN_REPORT_GENERATEDTIME} <b>{report_gentime}</b></p>
+<p>{report_comment}</p>
+
+<!-- IF report_filters_enabled="true" -->
+<br />
+<table width="100%" cellpadding="0" cellspacing="1" border="1" align="left" class="with_border_alternate">
+<tr>
+	<td class="cellmenu1" colspan="2" align="center" bgcolor="#9FDAF1">{LN_REPORT_FILTERS}</td>
+</tr>
+<!-- BEGIN report_filters -->
+<tr>
+	<td class="cellmenu2">{FilterType}</td>
+	<td class="line1" align="left"><b>{FilterDisplay}</b></td>
+</tr>
+<!-- END report_filters -->
+</table>
+<!-- ENDIF report_filters_enabled="true" -->
+
+<br />
+
+<H3>{ln_report_summary}</H3>
+
+<table width="200" cellpadding="0" cellspacing="1" border="1" align="left" class="with_border_alternate">
+<tr>
+	<td class="cellmenu1" colspan="2" align="center" bgcolor="#9FDAF1"><b>{ln_report_audit_summary}</b></td>
+</tr>
+<!-- BEGIN report_summary -->
+<tr>
+	<td class="cellmenu2">{DisplayName}</td>
+	<td class="lineColouredWhite" bgcolor="{bgcolor}" align="right"><b>{itemcount}</b></td>
+</tr>
+<!-- END report_summary -->
+</table>
+
+<table width="100%" cellpadding="0" cellspacing="1" border="1" align="left" class="with_border_alternate">
+<tr>
+	<td class="cellmenu1" colspan="2" align="center" bgcolor="#9FDAF1"><b>{ln_report_consolidated_summary}</b></td>
+</tr>
+<tr>
+	<td class="line1">
+	<!-- BEGIN report_consolidated -->
+	<!-- IF itemcount>=1 -->
+	<a href="#{TargetLink}">{TargetLink}</a>({itemcount}), 
+	<!-- ENDIF itemcount>=1 -->
+	<!-- IF itemcount="0" -->
+	<b>{TargetLink}</b>({itemcount}), 
+	<!-- ENDIF itemcount="0" -->
+	<!-- END report_consolidated -->
+	</td>
+</tr>
+</table>
+
+<br />
+<H3>{ln_report_consolidation}</H3>
+
+<!-- BEGIN report_consdata -->
+<!-- IF cons_count>0 -->
+<h3><a name="{DataCaption}">{DataCaption}</a></h3>
+<table width="100%" cellpadding="0" cellspacing="1" border="1" align="center" class="with_border_alternate">
+<tr>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="center" width="25" nowrap>{ln_report_number}</td>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="center" width="40" nowrap>{ln_report_count}</td>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="50" nowrap>{ln_report_firstevent}</td>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="50" nowrap>{ln_report_lastevent}</td>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="100" nowrap>{ln_report_user}</td>
+	<td class="cellmenu1" bgcolor="#9FDAF1" align="left" width="80" nowrap>{ln_report_host}</td>
+</tr>
+<!-- BEGIN cons_events -->
+<tr>
+	<td class="line1" valign="top" align="center">{ZAEHLER}</td>
+	<!-- IF itemcount>=$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#DD0000"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount>=$_colorThreshold -->
+
+	<!-- IF itemcount<$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#CCCCCC"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount<$_colorThreshold -->
+
+	<td class="line1" valign="top" align="left">{FirstEvent_Date_Formatted}</td>
+	<td class="line1" valign="top" align="left">{LastEvent_Date_Formatted}</td>
+	<td class="line1" valign="top" align="left">{user}</td>
+	<td class="line1" valign="top" align="left">{FROMHOST}</td>
+</tr>
+<!-- END cons_events -->
+</table>
+<!-- ENDIF cons_count>0 -->
+<!-- END report_consdata -->
+
+
+<br/>
+<h3><a name="{report_detaildata_users_caption}">{report_detaildata_users_caption}</a></h3>
+<table width="100%" cellpadding="0" cellspacing="1" border="1" align="center" class="with_border_alternate">
+<tr>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_number}</td>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_count}</td>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="100%" nowrap>{ln_report_user}</td>
+</tr>
+<!-- BEGIN report_detaildata_users -->
+<tr>
+	<td class="line1" valign="top" align="center">{ZAEHLER}</td>
+	
+	<!-- IF itemcount>=$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount>=$_colorThreshold -->
+
+	<!-- IF itemcount<$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount<$_colorThreshold -->
+
+	<td class="line1" valign="top" align="left">{user}</a></td>
+</tr>
+<!-- END report_detaildata_users -->
+</table>
+
+<br/>
+<h3><a name="{report_detaildata_hosts_caption}">{report_detaildata_hosts_caption}</a></h3>
+<table width="100%" cellpadding="0" cellspacing="1" border="1" align="center" class="with_border_alternate">
+<tr>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_number}</td>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="50" nowrap>{ln_report_count}</td>
+	<td class="cellmenu2" bgcolor="#9FDAF1" align="center" width="100%" nowrap>{ln_report_host}</td>
+</tr>
+<!-- BEGIN report_detaildata_hosts -->
+<tr>
+	<td class="line1" valign="top" align="center">{ZAEHLER}</td>
+
+	<!-- IF itemcount>=$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#990000"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount>=$_colorThreshold -->
+
+	<!-- IF itemcount<$_colorThreshold -->
+		<td class="lineColouredWhite" valign="top" align="right" bgcolor="#AAAAAA"><b>{itemcount}</b></td>
+	<!-- ENDIF itemcount<$_colorThreshold -->
+
+	<td class="line1" valign="top" align="left">{FROMHOST}</a></td>
+</tr>
+<!-- END report_detaildata_hosts -->
+</table>
+
+
+<br /><br /> 
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="mainfooter">
+<tr>
+	<td align="center" class="line0" valign="top">Made by <a href="http://www.adiscon.com" target="_blank">Adiscon GmbH</a> (2009-2012) &nbsp;<a href="http://loganalyzer.adiscon.com" target="_blank">Report</A> Version {report_version} </td>
+	<td align="center" class="line1" valign="top"><B>Partners:</B>&nbsp;<a href="http://www.rsyslog.com" target="_blank">Rsyslog</a> | &nbsp;<a href="http://www.winsyslog.com" target="_blank">WinSyslog</a></td>
+</tr>
+<!-- IF ShowPageRenderStats="true" -->
+<tr>
+	<td align="center" class="line2" valign="top" colspan="2">
+		<small>
+		{LN_REPORT_FOOTER_ENDERED}: <B>{report_rendertime}</B>
+		&nbsp;|&nbsp;{LN_FOOTER_DBQUERIES}: <B>{TOTALQUERIES}</B>
+		</small>
+	</td>
+</tr>
+<!-- ENDIF ShowPageRenderStats="true" -->
+</table>
+
+</body> 
+</html>
