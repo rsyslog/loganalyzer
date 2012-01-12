@@ -444,12 +444,20 @@
 				</tr>
 				<!-- BEGIN CUSTOMFILTERS -->
 				<tr>
-					<td align="left" class="{colcssclass}" width="350">
+					<!-- IF filtertype="1" -->
+					<td align="left" class="{colcssclass}" width="400">
 						<b>{fieldcaption}</b><br/>(<I>{fielddescription}</I>)
 					</td>
-					<td align="left" class="{colcssclass}" width="200">
-						<input type="text" name="{fieldname}" size="40" maxlength="255" value="{fieldvalue}">
+					<td align="left" class="{colcssclass}" width="150">
+						<input type="text" name="{fieldname}" size="30" maxlength="255" value="{fieldvalue}">
 					</td>
+					<!-- ENDIF filtertype="1" -->
+					<!-- IF filtertype="3" -->
+					<td align="left" class="{colcssclass}" colspan="2">
+						<input type="checkbox" name="{fieldname}" value="1" {fieldvalue_selected}>
+						<b>{fieldcaption}</b> &nbsp; (<I>{fielddescription}</I>)
+					</td>
+					<!-- ENDIF filtertype="3" -->
 				</tr>
 				<!-- END CUSTOMFILTERS -->
 				</table>

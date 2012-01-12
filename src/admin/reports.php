@@ -1011,10 +1011,21 @@ if ( isset($_POST['op']) )
 		// Read Custom Filters
 		foreach ( $content['CUSTOMFILTERS'] as &$tmpCustomFilter ) 
 		{
-//			print_r ( $tmpCustomFilter ); 
 			// Set fieldvalue if available from POST data
-			if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) 
-				$tmpCustomFilter['fieldvalue'] = DB_RemoveBadChars($_POST[ $tmpCustomFilter['fieldname'] ]); 
+			if ( $tmpCustomFilter['filtertype'] == FILTER_TYPE_BOOL ) 
+			{
+				if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) 
+					$tmpCustomFilter['fieldvalue'] = 1; 
+				else
+					$tmpCustomFilter['fieldvalue'] = 0; 
+			}
+			else
+			{
+				if ( isset($_POST[ $tmpCustomFilter['fieldname'] ]) ) 
+				{
+					$tmpCustomFilter['fieldvalue'] = DB_RemoveBadChars($_POST[ $tmpCustomFilter['fieldname'] ]); 
+				}
+			}
 		}
 		
 		// Read done, now build "customFilters" string!
@@ -1506,15 +1517,19 @@ function InitCustomFilterDefinitions($myReport, $CustomFilterValues)
 			$szColcssclass = "line2";
 		$i++;
 		// --- 
+		
+		// Set Checkbox value
+		if ( $tmpCustomFilter['filtertype'] == FILTER_TYPE_BOOL && $szDefaultValue == 1 ) { $szFieldValueSelected = "checked"; } else { $szFieldValueSelected = ""; }
 
 		// Add to Display Array of custom filters!
 		$content['CUSTOMFILTERS'][] = array (
-										'fieldname'			=> $filterID, 
-										'fieldcaption'		=> $content[ $tmpCustomFilter['DisplayLangID'] ],
-										'fielddescription'	=> $content[ $tmpCustomFilter['DescriptLangID'] ],
-										'filtertype'		=> $tmpCustomFilter['filtertype'], 
-										'fieldvalue'		=> $szDefaultValue, 
-										'colcssclass'		=> $szColcssclass, 
+										'fieldname'				=> $filterID, 
+										'fieldcaption'			=> $content[ $tmpCustomFilter['DisplayLangID'] ],
+										'fielddescription'		=> $content[ $tmpCustomFilter['DescriptLangID'] ],
+										'filtertype'			=> $tmpCustomFilter['filtertype'], 
+										'fieldvalue'			=> $szDefaultValue, 
+										'fieldvalue_selected'	=> $szFieldValueSelected, 
+										'colcssclass'			=> $szColcssclass, 
 									);
 	}
 }

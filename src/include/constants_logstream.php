@@ -83,6 +83,7 @@ define('MISC_CHECKSUM', 'misc_checksum');
 define('FILTER_TYPE_STRING', 0);
 define('FILTER_TYPE_NUMBER', 1);
 define('FILTER_TYPE_DATE', 2);
+define('FILTER_TYPE_BOOL', 3);
 define('FILTER_TYPE_UNKNOWN', 99);
 
 // Define possible alignments

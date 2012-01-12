@@ -48,9 +48,20 @@ class Report_auditsummary extends Report {
 	public $_reportInitialized = false;								// True means report is installed
 
 	// Advanced Report Options
-	private $_maxHosts = 20;										// Threshold for maximum hosts to analyse!
-	private $_maxauditsummarysPerHost = 100;							// Threshold for maximum amount of logon/logoffs to analyse per host
-	private $_colorThreshold = 10;									// Threshold for coloured display of Eventcounter
+	private $_maxHosts = 20;									// Threshold for maximum hosts to analyse!
+	private $_maxauditsummarysPerHost = 100;					// Threshold for maximum amount of logon/logoffs to analyse per host
+	private $_colorThreshold = 10;								// Threshold for coloured display of Eventcounter
+	private $_events_logon = 1;									// Enable analysis of Logon Events
+	private $_events_logoff = 1;								// Enable analysis of Logoff Events
+	private $_events_logonfail = 1;								// Enable analysis of Logon failures Events
+	private $_events_policychangeevents = 1;					// Enable analysis of Audit policy changes
+	private $_events_objectaccess = 1;							// Enable analysis of Object access Events
+	private $_events_systemevents = 1;							// Enable analysis of System Events
+	private $_events_hostsessionevents = 1;						// Enable analysis of Host session Events 
+	private $_events_useraccchangeevents = 1;					// Enable analysis of User Account changes
+	private $_events_auditpolicychangesevents = 1;				// Enable analysis of Audit policiy changes Events
+	private $_events_useractions = 1;							// Enable analysis of individual User actions
+	private $_events_hostactions = 1;							// Enable analysis of individual Host actions
 
 	// Constructor
 	public function Report_auditsummary() {
@@ -93,6 +104,85 @@ class Report_auditsummary extends Report {
 														'DefaultValue'	=> 10, 
 														'MinValue'		=> 1,
 /*														'MaxValue'		=> 0,*/
+												); 
+		
+		/* Boolean Options */ 
+		$this->_arrCustomFilters['_events_logon'] = 
+												array (	'InternalID'	=> '_events_logon', 
+														'DisplayLangID'	=> 'ln_report_events_logon_displayname', 
+														'DescriptLangID'=> 'ln_report_events_logon_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_logoff'] = 
+												array (	'InternalID'	=> '_events_logoff', 
+														'DisplayLangID'	=> 'ln_report_events_logoff_displayname', 
+														'DescriptLangID'=> 'ln_report_events_logoff_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_logonfail'] = 
+												array (	'InternalID'	=> '_events_logonfail', 
+														'DisplayLangID'	=> 'ln_report_events_logonfail_displayname', 
+														'DescriptLangID'=> 'ln_report_events_logonfail_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_policychangeevents'] = 
+												array (	'InternalID'	=> '_events_policychangeevents', 
+														'DisplayLangID'	=> 'ln_report_events_policychangeevents_displayname', 
+														'DescriptLangID'=> 'ln_report_events_policychangeevents_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_objectaccess'] = 
+												array (	'InternalID'	=> '_events_objectaccess', 
+														'DisplayLangID'	=> 'ln_report_events_objectaccess_displayname', 
+														'DescriptLangID'=> 'ln_report_events_objectaccess_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_systemevents'] = 
+												array (	'InternalID'	=> '_events_systemevents', 
+														'DisplayLangID'	=> 'ln_report_events_systemevents_displayname', 
+														'DescriptLangID'=> 'ln_report_events_systemevents_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_hostsessionevents'] = 
+												array (	'InternalID'	=> '_events_hostsessionevents', 
+														'DisplayLangID'	=> 'ln_report_events_hostsessionevents_displayname', 
+														'DescriptLangID'=> 'ln_report_events_hostsessionevents_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_useraccchangeevents'] = 
+												array (	'InternalID'	=> '_events_useraccchangeevents', 
+														'DisplayLangID'	=> 'ln_report_events_useraccchangeevents_displayname', 
+														'DescriptLangID'=> 'ln_report_events_useraccchangeevents_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_auditpolicychangesevents'] = 
+												array (	'InternalID'	=> '_events_auditpolicychangesevents', 
+														'DisplayLangID'	=> 'ln_report_events_auditpolicychangesevents_displayname', 
+														'DescriptLangID'=> 'ln_report_events_auditpolicychangesevents_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_useractions'] = 
+												array (	'InternalID'	=> '_events_useractions', 
+														'DisplayLangID'	=> 'ln_report_events_useractions_displayname', 
+														'DescriptLangID'=> 'ln_report_events_useractions_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
+												); 
+		$this->_arrCustomFilters['_events_hostactions'] = 
+												array (	'InternalID'	=> '_events_hostactions', 
+														'DisplayLangID'	=> 'ln_report_events_hostactions_displayname', 
+														'DescriptLangID'=> 'ln_report_events_hostactions_description', 
+														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
+														'DefaultValue'	=> 1, 
 												); 
 
 		
@@ -253,6 +343,31 @@ class Report_auditsummary extends Report {
 						else if ( $tmpfilterid == '_colorThreshold' ) 
 							$this->_colorThreshold = intval($szNewVal); 
 					}
+					else if ( $this->_arrCustomFilters[$tmpfilterid][FILTER_TYPE] == FILTER_TYPE_BOOL )
+					{ 
+						if ( $tmpfilterid == '_events_logon' ) 
+							$this->_events_logon = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_logoff' ) 
+							$this->_events_logoff = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_logonfail' ) 
+							$this->_events_logonfail = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_policychangeevents' ) 
+							$this->_events_policychangeevents = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_objectaccess' ) 
+							$this->_events_objectaccess = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_systemevents' ) 
+							$this->_events_systemevents = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_hostsessionevents' ) 
+							$this->_events_hostsessionevents = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_useraccchangeevents' ) 
+							$this->_events_useraccchangeevents = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_auditpolicychangesevents' ) 
+							$this->_events_auditpolicychangesevents = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_useractions' ) 
+							$this->_events_useractions = intval($szNewVal); 
+						else if ( $tmpfilterid == '_events_hostactions' ) 
+							$this->_events_hostactions = intval($szNewVal); 
+					}
 					else
 					{
 						// Write to debuglog
@@ -325,69 +440,102 @@ class Report_auditsummary extends Report {
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
 
 			// --- Process Logons
-			$content["report_consdata"]["logon"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("528,4624" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logonevents" /* Logon Events */); 
-			$content["report_consdata"]["logon"]['DataCaption'] = $content["ln_report_logonevents"]; 
-			$content["report_consdata"]["logon"]['cons_count'] = count($content["report_consdata"]["logon"]['cons_events']); 
+			if ( $this->_events_logon == 1 ) 
+			{
+				$content["report_consdata"]["logon"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("528,4624" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logonevents" /* Logon Events */); 
+				$content["report_consdata"]["logon"]['DataCaption'] = $content["ln_report_logonevents"]; 
+				$content["report_consdata"]["logon"]['cons_count'] = count($content["report_consdata"]["logon"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Logoffs
-			$content["report_consdata"]["logoff"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("538,4634" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logoffevents" /* Logoff Events */); 
-			$content["report_consdata"]["logoff"]['DataCaption'] = $content["ln_report_logoffevents"]; 
-			$content["report_consdata"]["logoff"]['cons_count'] = count($content["report_consdata"]["logoff"]['cons_events']); 
+			if ( $this->_events_logoff == 1 ) 
+			{
+				$content["report_consdata"]["logoff"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("538,4634" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logoffevents" /* Logoff Events */); 
+				$content["report_consdata"]["logoff"]['DataCaption'] = $content["ln_report_logoffevents"]; 
+				$content["report_consdata"]["logoff"]['cons_count'] = count($content["report_consdata"]["logoff"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Logon failures
-			$content["report_consdata"]["logonfail"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("529,530,531,532,533,534,535,536,537,4625,4626,4627,4628,4629,4630,4631,4632,4633" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logonfailevents" /* Logoff Events */); 
-			$content["report_consdata"]["logonfail"]['DataCaption'] = $content["ln_report_logonfailevents"]; 
-			$content["report_consdata"]["logonfail"]['cons_count'] = count($content["report_consdata"]["logonfail"]['cons_events']); 
+			if ( $this->_events_logonfail == 1 ) 
+			{
+				$content["report_consdata"]["logonfail"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("529,530,531,532,533,534,535,536,537,4625,4626,4627,4628,4629,4630,4631,4632,4633" /* Include EventIDs for new and old Eventlog API*/, "ln_report_logonfailevents" /* Logoff Events */); 
+				$content["report_consdata"]["logonfail"]['DataCaption'] = $content["ln_report_logonfailevents"]; 
+				$content["report_consdata"]["logonfail"]['cons_count'] = count($content["report_consdata"]["logonfail"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Audigpolicy changes
-			$content["report_consdata"]["auditpolchanged"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("617,618,619,643,4713,4714,4715,4719,4739" /* Include EventIDs for new and old Eventlog API*/, "ln_report_auditpolchangedevents" /* Logoff Events */); 
-			$content["report_consdata"]["auditpolchanged"]['DataCaption'] = $content["ln_report_auditpolchangedevents"]; 
-			$content["report_consdata"]["auditpolchanged"]['cons_count'] = count($content["report_consdata"]["auditpolchanged"]['cons_events']); 
+			if ( $this->_events_policychangeevents == 1 ) 
+			{
+				$content["report_consdata"]["auditpolchanged"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("617,618,619,643,4713,4714,4715,4719,4739" /* Include EventIDs for new and old Eventlog API*/, "ln_report_policychangeevents" /* Logoff Events */); 
+				$content["report_consdata"]["auditpolchanged"]['DataCaption'] = $content["ln_report_policychangeevents"]; 
+				$content["report_consdata"]["auditpolchanged"]['cons_count'] = count($content["report_consdata"]["auditpolchanged"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Objectaccess
-			$content["report_consdata"]["objectaccess"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("567,4663" /* Include EventIDs for new and old Eventlog API*/, "ln_report_objectaccessevents" /* Logoff Events */); 
-			$content["report_consdata"]["objectaccess"]['DataCaption'] = $content["ln_report_objectaccessevents"]; 
-			$content["report_consdata"]["objectaccess"]['cons_count'] = count($content["report_consdata"]["objectaccess"]['cons_events']); 
+			if ( $this->_events_objectaccess == 1 ) 
+			{
+				$content["report_consdata"]["objectaccess"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("567,4663" /* Include EventIDs for new and old Eventlog API*/, "ln_report_objectaccessevents" /* Object access Events */); 
+				$content["report_consdata"]["objectaccess"]['DataCaption'] = $content["ln_report_objectaccessevents"]; 
+				$content["report_consdata"]["objectaccess"]['cons_count'] = count($content["report_consdata"]["objectaccess"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process System events
-			$content["report_consdata"]["systemevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("512,513,520,4108,4109,4616,4697" /* Include EventIDs for new and old Eventlog API*/, "ln_report_systemevents" /* Logoff Events */); 
-			$content["report_consdata"]["systemevents"]['DataCaption'] = $content["ln_report_systemevents"]; 
-			$content["report_consdata"]["systemevents"]['cons_count'] = count($content["report_consdata"]["systemevents"]['cons_events']); 
+			if ( $this->_events_systemevents == 1 ) 
+			{
+				$content["report_consdata"]["systemevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("512,513,520,4108,4109,4616,4697" /* Include EventIDs for new and old Eventlog API*/, "ln_report_systemevents" /* System Events */); 
+				$content["report_consdata"]["systemevents"]['DataCaption'] = $content["ln_report_systemevents"]; 
+				$content["report_consdata"]["systemevents"]['cons_count'] = count($content["report_consdata"]["systemevents"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Host Session events
-			$content["report_consdata"]["hostsessionevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("682,683,4778,4779" /* Include EventIDs for new and old Eventlog API*/, "ln_report_hostsessionevents" /* Logoff Events */); 
-			$content["report_consdata"]["hostsessionevents"]['DataCaption'] = $content["ln_report_hostsessionevents"]; 
-			$content["report_consdata"]["hostsessionevents"]['cons_count'] = count($content["report_consdata"]["hostsessionevents"]['cons_events']); 
+			if ( $this->_events_hostsessionevents == 1 ) 
+			{
+				$content["report_consdata"]["hostsessionevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("682,683,4778,4779" /* Include EventIDs for new and old Eventlog API*/, "ln_report_hostsessionevents" /* Host session Events */); 
+				$content["report_consdata"]["hostsessionevents"]['DataCaption'] = $content["ln_report_hostsessionevents"]; 
+				$content["report_consdata"]["hostsessionevents"]['cons_count'] = count($content["report_consdata"]["hostsessionevents"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process User Account Changes events
-			$content["report_consdata"]["useraccchangeevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("642," /* Include EventIDs for new and old Eventlog API*/, "ln_report_useraccchangeevents" /* Logoff Events */); 
-			$content["report_consdata"]["useraccchangeevents"]['DataCaption'] = $content["ln_report_useraccchangeevents"]; 
-			$content["report_consdata"]["useraccchangeevents"]['cons_count'] = count($content["report_consdata"]["useraccchangeevents"]['cons_events']); 
+			if ( $this->_events_useraccchangeevents == 1 ) 
+			{
+				$content["report_consdata"]["useraccchangeevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("642" /* Include EventIDs for new and old Eventlog API*/, "ln_report_useraccchangeevents" /* User Account Changes */); 
+				$content["report_consdata"]["useraccchangeevents"]['DataCaption'] = $content["ln_report_useraccchangeevents"]; 
+				$content["report_consdata"]["useraccchangeevents"]['cons_count'] = count($content["report_consdata"]["useraccchangeevents"]['cons_events']); 
+			}
 			// ---
 
 			// --- Process Audit policy changes events
-			$content["report_consdata"]["auditpolicychangeevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("612, 807, 4719, 4912" /* Include EventIDs for new and old Eventlog API*/, "ln_report_auditpolicychangeevents" /* Logoff Events */); 
-			$content["report_consdata"]["auditpolicychangeevents"]['DataCaption'] = $content["ln_report_auditpolicychangeevents"]; 
-			$content["report_consdata"]["auditpolicychangeevents"]['cons_count'] = count($content["report_consdata"]["auditpolicychangeevents"]['cons_events']); 
+			if ( $this->_events_auditpolicychangesevents == 1 ) 
+			{
+				$content["report_consdata"]["auditpolicychangeevents"]['cons_events'] = $this->ConsolidateAuditSummaryByIDs("612, 807, 4719, 4912" /* Include EventIDs for new and old Eventlog API*/, "ln_report_auditpolicychangeevents" /* Logoff Events */); 
+				$content["report_consdata"]["auditpolicychangeevents"]['DataCaption'] = $content["ln_report_auditpolicychangeevents"]; 
+				$content["report_consdata"]["auditpolicychangeevents"]['cons_count'] = count($content["report_consdata"]["auditpolicychangeevents"]['cons_events']); 
+			}
 			// ---
 
 			// --- Individual User Actions
-			$content["report_detaildata_users"] = $this->ConsolidateAuditSummaryByField( SYSLOG_EVENT_USER, "ln_report_individualuseractions" /* User Actions */); 
-			$content["report_detaildata_users_caption"] = $content["ln_report_individualuseractions"]; 
-			$content["report_detaildata_users_cons_count"] = count($content["report_detaildata_users"]); 
+			if ( $this->_events_useractions == 1 ) 
+			{
+				$content["report_detaildata_users"] = $this->ConsolidateAuditSummaryByField( SYSLOG_EVENT_USER, "ln_report_individualuseractions" /* User Actions */); 
+				$content["report_detaildata_users_caption"] = $content["ln_report_individualuseractions"]; 
+				$content["report_detaildata_users_cons_count"] = count($content["report_detaildata_users"]); 
+			}
 			// ---
 
 			// --- Individual Host Actions
-			$content["report_detaildata_hosts"] = $this->ConsolidateAuditSummaryByField( SYSLOG_HOST, "ln_report_individualhostactions" /* Host Actions */); 
-			$content["report_detaildata_hosts_caption"] = $content["ln_report_individualhostactions"]; 
-			$content["report_detaildata_hosts_cons_count"] = count($content["report_detaildata_hosts"]); 
+			if ( $this->_events_hostactions == 1 ) 
+			{
+				$content["report_detaildata_hosts"] = $this->ConsolidateAuditSummaryByField( SYSLOG_HOST, "ln_report_individualhostactions" /* Host Actions */); 
+				$content["report_detaildata_hosts_caption"] = $content["ln_report_individualhostactions"]; 
+				$content["report_detaildata_hosts_cons_count"] = count($content["report_detaildata_hosts"]); 
+			}
 			// ---
 
 			// Start Postprocessing
