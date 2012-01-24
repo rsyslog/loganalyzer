@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------
+Version 3.5.0 (beta), 2012-01-24
+- Added new Report "Eventlog Audit Summary Report" which can generate 
+  detailed security reports for Windows Eventlog security records. 
+  It supports Windows 2003 and 2008 Server and is compliant with the 
+  Sarbanes-Oxley (SOX) Act, 2002. 
+- Added support for customized boolean report filters. This enhancement 
+  is also used by the new "Eventlog Audit Summary Report". 
+---------------------------------------------------------------------------
 Version 3.4.1 (stable), 2012-01-10
 - Fixed a bug in Syslog and Eventlog summary report which consolidated 
   wrong events when the source filter was used in the report.

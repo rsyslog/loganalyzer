@@ -9,7 +9,7 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2010 Adiscon GmbH.
+	* Copyright (C) 2008-2012 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.4.1";
+$content['BUILDNUMBER'] = "3.5.0";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
