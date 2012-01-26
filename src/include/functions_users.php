@@ -161,12 +161,20 @@ function CheckUserLogin( $username, $password )
 {
 	global $content;
 
-	// TODO: SessionTime and AccessLevel check
-
-	$md5pass = md5($password);
-	$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
-	$result = DB_Query($sqlquery);
-	$myrow = DB_GetSingleRow($result, true);
+	// Check if LDAP Auth has to be used!
+	if ( GetConfigSetting("LDAPUserLoginRequired", "") == "true")
+	{
+		// perform user auth using LDAP, will add user record to loganalyzer DB if necessary
+		$myrow = CheckLDAPUserLogin( $username, $password );
+	}
+	else // Normal MYSQL Login!
+	{
+		// TODO: SessionTime and AccessLevel check
+		$md5pass = md5($password);
+		$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
+		$result = DB_Query($sqlquery);
+		$myrow = DB_GetSingleRow($result, true);
+	}
 
 	// The admin field must be set!
 	if ( isset($myrow['is_admin']) )
@@ -261,13 +269,95 @@ function CheckUserLogin( $username, $password )
 	}
 	else
 	{
+		/*
+		if (isset($myrow) && is_numeric($myrow) ) 
+		{
+			//return error code!
+			return $myrow;
+		}
+		*/
 		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
 			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
-		
+			
 		// Default return false
 		return false;
 	}
 }
+
+
+function CheckLDAPUserLogin( $username, $password )
+{
+	global $content;
+	 
+	$ldap_filter='('.$content['LDAPSearchFilter'].'('.$content['LDAPUidAttribute'].'="'.$username.'"))';
+	 
+	// Open LDAP connection
+	if (!($ds=ldap_connect($content['LDAPServer'],$content['LDAPPort'])))
+		return false;
+	
+	ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+	 
+	// Bind as the privilegied user
+	if (!($r = ldap_bind($ds, $content['LDAPBindDN'], $content['LDAPBindPassword'])))
+		return false;
+
+	// search for the user
+	if (!($r=ldap_search( $ds, $content['LDAPBaseDN'], $ldap_filter, array("uid","cn","localentryid","userpassword") )))
+	{
+		DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "'
+		<strong>Sessionarray</strong>
+		<pre>" . var_export($_SESSION, true) . "</pre>
+		<strong>Search Filter </strong>: " . $ldap_filter );
+		
+		// return not really needed here
+		return false;
+	}
+	 
+	$info = ldap_get_entries($ds, $r);
+	if (!$info || $info["count"] != 1)
+	{
+		DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "'
+		<strong>Sessionarray</strong>
+		<pre>" . var_export($_SESSION, true) . "</pre>
+		<strong>Search Filter </strong>: " . $ldap_filter );
+
+		// return not really needed here
+		return false;
+	}
+	 
+	// now we have the user data. Do a bind to check for his password
+	if (!($r=ldap_bind( $ds, $info[0]['dn'],$password)))
+		return false;
+	 
+	// for the moment when a user logs in from LDAP, create it in the DB.
+	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
+	 
+	// check if the user already exist
+	$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "'";
+	$result = DB_Query($sqlquery);
+	$myrow = DB_GetSingleRow($result, true);
+	if (!isset($myrow['is_admin']) )
+	{
+		// Create User
+		$result = DB_Query("INSERT INTO " . DB_USERS . " (id, username, password, is_admin, is_readonly) VALUES (".$info[0]['localentryid'][0].", '$username', rnd".md5(mt_rand()."rnd")."', 0, 1)");
+		DB_FreeQuery($result);
+		$myrow['is_admin'] = 0;
+		$myrow['last_login'] = 0;
+		$myrow['is_readonly'] = 1;
+	}
+	
+	
+	$myrowfinal['username'] = $info[0][$content['LDAPUidAttribute']][0];
+	$myrowfinal['password'] = "hidden";
+	$myrowfinal['dn'] = $info[0]['dn'];
+	$myrowfinal['ID'] = $info[0]['localentryid'][0];
+	$myrowfinal['is_admin'] = $myrow['is_admin'];
+	$myrowfinal['is_readonly'] = $myrow['is_readonly'];
+	$myrowfinal['last_login'] = $myrow['last_login'];
+	 
+	return $myrowfinal;
+}
+
 
 function DoLogOff()
 {
