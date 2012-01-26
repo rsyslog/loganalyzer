@@ -331,7 +331,7 @@ class LogStreamPDO extends LogStream {
 		$szTableName = $this->_logStreamConfigObj->DBTableName;
 		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
 
-		// Create Triggername
+		// Create Triggername | lowercase!
 		$szTriggerName = strtolower($szDBName . "_" . $szTableName . "_" . $szDBTriggerField); 
 		
 		// Try to find logstream trigger

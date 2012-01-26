@@ -263,8 +263,8 @@ class LogStreamDB extends LogStream {
 		$szTableName = $this->_logStreamConfigObj->DBTableName;
 		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
 
-		// Create Triggername
-		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $szDBTriggerField; 
+		// Create Triggername | lowercase!
+		$szTriggerName = strtolower( $szDBName . "_" . $szTableName . "_" . $szDBTriggerField ); 
 		
 		// Try to find logstream trigger
 		if ( count($arrIndexTriggers) > 0 ) 
