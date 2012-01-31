@@ -226,6 +226,10 @@ $content['LN_LOGIN_PASSWORD'] = "Password";
 $content['LN_LOGIN_SAVEASCOOKIE'] = "Stay logged on";
 $content['LN_LOGIN_ERRWRONGPASSWORD'] = "Wrong username or password!";
 $content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
+$content['LN_LOGIN_LDAP_USERNOTFOUND'] = "User '%1' could not be found";
+$content['LN_LOGIN_LDAP_USERCOULDNOTLOGIN'] = "Could not login user '%1', LDAP error: %2";
+$content['LN_LOGIN_LDAP_PASSWORDFAIL'] = "User '%1' could not login with the given password";
+
 
 // Install Site
 $content['LN_INSTALL_TITLETOP'] = "Installing LogAnalyzer Version %1 - Step %2";

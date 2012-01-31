@@ -65,7 +65,9 @@ function InitUserSession()
 
 	if ( isset($_SESSION['SESSION_LOGGEDIN']) )
 	{
-		if ( !$_SESSION['SESSION_LOGGEDIN'] ) 
+		if (	!$_SESSION['SESSION_LOGGEDIN'] || 
+				!isset($_SESSION['SESSION_USERID']) /* Check if UserID is set! */
+			) 
 		{
 			$content['SESSION_LOGGEDIN'] = false;
 			
@@ -289,45 +291,57 @@ function CheckLDAPUserLogin( $username, $password )
 {
 	global $content;
 	 
-	$ldap_filter='('.$content['LDAPSearchFilter'].'('.$content['LDAPUidAttribute'].'="'.$username.'"))';
+	// Create LDAP Searchfilter
+	$ldap_filter='(&'.$content['LDAPSearchFilter'].'('.$content['LDAPUidAttribute'].'='.$username.'))';
 	 
 	// Open LDAP connection
-	if (!($ds=ldap_connect($content['LDAPServer'],$content['LDAPPort'])))
+	if (!($ldapConn=@ldap_connect($content['LDAPServer'],$content['LDAPPort'])))
 		return false;
 	
-	ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+	ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
 	 
 	// Bind as the privilegied user
-	if (!($r = ldap_bind($ds, $content['LDAPBindDN'], $content['LDAPBindPassword'])))
+	if (!($r = ldap_bind($ldapConn, $content['LDAPBindDN'], $content['LDAPBindPassword'])))
 		return false;
 
-	// search for the user
-	if (!($r=ldap_search( $ds, $content['LDAPBaseDN'], $ldap_filter, array("uid","cn","localentryid","userpassword") )))
+	// Search for the user
+	if (!($r=@ldap_search( $ldapConn, $content['LDAPBaseDN'], $ldap_filter, array("uid","cn","localentryid","userpassword") )))
 	{
-		DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "'
-		<strong>Sessionarray</strong>
-		<pre>" . var_export($_SESSION, true) . "</pre>
-		<strong>Search Filter </strong>: " . $ldap_filter );
-		
-		// return not really needed here
+		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
+		{
+			// Die with error
+			DebugLDAPErrorAndDie( GetAndReplaceLangStr($content['LN_LOGIN_LDAP_USERCOULDNOTLOGIN'], $username, ldap_err2str(ldap_errno($ldapConn))), $ldap_filter ); 
+		}
+
+		// return false in this case
 		return false;
 	}
-	 
-	$info = ldap_get_entries($ds, $r);
+
+	$info = ldap_get_entries($ldapConn, $r);
 	if (!$info || $info["count"] != 1)
 	{
-		DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "'
-		<strong>Sessionarray</strong>
-		<pre>" . var_export($_SESSION, true) . "</pre>
-		<strong>Search Filter </strong>: " . $ldap_filter );
+		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
+		{
+			// Die with error
+			DebugLDAPErrorAndDie( GetAndReplaceLangStr( $content['LN_LOGIN_LDAP_USERNOTFOUND'], $username ), $ldap_filter ); 
+		}
 
-		// return not really needed here
+		// return false in this case
 		return false;
 	}
 	 
 	// now we have the user data. Do a bind to check for his password
-	if (!($r=ldap_bind( $ds, $info[0]['dn'],$password)))
+	if (!($r=@ldap_bind( $ldapConn, $info[0]['dn'],$password)))
+	{
+		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
+		{
+			// Die with error
+			DebugLDAPErrorAndDie( GetAndReplaceLangStr( $content['LN_LOGIN_LDAP_PASSWORDFAIL'], $username ), $ldap_filter ); 
+		}
+
+		// return false in this case
 		return false;
+	}
 	 
 	// for the moment when a user logs in from LDAP, create it in the DB.
 	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
@@ -338,24 +352,48 @@ function CheckLDAPUserLogin( $username, $password )
 	$myrow = DB_GetSingleRow($result, true);
 	if (!isset($myrow['is_admin']) )
 	{
-		// Create User
-		$result = DB_Query("INSERT INTO " . DB_USERS . " (id, username, password, is_admin, is_readonly) VALUES (".$info[0]['localentryid'][0].", '$username', rnd".md5(mt_rand()."rnd")."', 0, 1)");
+		// Create User | use password to create MD5 Hash, so technically the user could login without LDAP as well
+		$sqlcmd = "INSERT INTO " . DB_USERS . " (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . md5($password) . "', 0, 1)"; 
+
+		$result = DB_Query($sqlcmd);
 		DB_FreeQuery($result);
 		$myrow['is_admin'] = 0;
 		$myrow['last_login'] = 0;
 		$myrow['is_readonly'] = 1;
 	}
 	
-	
-	$myrowfinal['username'] = $info[0][$content['LDAPUidAttribute']][0];
-	$myrowfinal['password'] = "hidden";
+	// Construct Row and return
+	$myrowfinal['username'] = $username;
+	$myrowfinal['password'] = md5($password);
 	$myrowfinal['dn'] = $info[0]['dn'];
-	$myrowfinal['ID'] = $info[0]['localentryid'][0];
+	if ( isset($myrow['ID']) ) 
+		$myrowfinal['ID'] = $myrow['ID'];				// Get from SELECT
+	else
+		$myrowfinal['ID'] = DB_ReturnLastInsertID();	// Get from last insert!
 	$myrowfinal['is_admin'] = $myrow['is_admin'];
 	$myrowfinal['is_readonly'] = $myrow['is_readonly'];
 	$myrowfinal['last_login'] = $myrow['last_login'];
-	 
 	return $myrowfinal;
+}
+
+/*
+*	LDAP Debug Helpre function
+*/
+function DebugLDAPErrorAndDie($szErrorMsg, $szLdapFilter)
+{
+	global $content;
+
+	// Add extra debug if wanted!
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
+	{
+		$szErrorMsg .=	
+					"</br></br>LDAPBind DN: " . $content['LDAPBindDN'] . 
+					"</br>Search Filter: " . $szLdapFilter . 
+					"</br><pre>Session Array: </br>" . var_export($_SESSION, true) . "</pre>"; 
+	}
+
+	// USER NOT FOUND
+	DieWithFriendlyErrorMsg( $szErrorMsg ); 
 }
 
 
