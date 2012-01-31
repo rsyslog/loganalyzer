@@ -55,15 +55,15 @@ $CFG['UserDBUser'] = "";
 $CFG['UserDBPass'] = "";
 $CFG['UserDBLoginRequired'] = false;
 // LDAP auth options
-$CFG['LDAPUserLoginRequired'] = false;			// activate LDAP auth
-$CFG['LDAPServer'] = "localhost";				// LDAP server hostname or IP
-$CFG['LDAPPort'] = 389;							// LDAP port, 389 or 636 for SSL
-$CFG['LDAPBaseDN'] = "ou=my,o=ldap";			// Base DN for LDAP search
-$CFG['LDAPSearchFilter'] = "(objectclass=inetOrgPerson)"; // search filter
-$CFG['LDAPUidAttribute'] = "uid";				// the LDAP attribute used in the search to find the user. ex : uid, cn
-$CFG['LDAPBindDN'] = "cn=Manager,ou=my,o=ldap";	// DN of the privileged user for the search
-$CFG['LDAPBindPassword'] = 'secret';			// Password of the privilegied user
-$CFG['LDAPGroupAttribute'] = 'member';			// attribute used to search for groups
+$CFG['LDAPUserLoginRequired'] = true;				// activate LDAP auth
+$CFG['LDAPServer'] = "172.17.0.100";				// LDAP server hostname or IP
+$CFG['LDAPPort'] = 389;								// LDAP port, 389 or 636 for SSL
+$CFG['LDAPBaseDN'] = 'CN=Users,DC=domain,DC=local';	// Base DN for LDAP Search, this is a typical ActiveDirectory sample
+$CFG['LDAPSearchFilter'] = '(objectClass=user)';	// Basic Search filter
+$CFG['LDAPUidAttribute'] = "sAMAccountName";		// The LDAP attribute used in the search to find the user, example: uid, cn or sAMAccountName (Active Directory)
+													// DN of the privileged user for the search
+$CFG['LDAPBindDN'] = 'CN=Searchuser,CN=Users,DC=domain,DC=local';	
+$CFG['LDAPBindPassword'] = 'Password';				// Password of the privilegied user
 // --- 
 
 // --- Misc Options
