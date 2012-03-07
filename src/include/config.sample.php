@@ -54,15 +54,16 @@ $CFG['UserDBPref'] = "";
 $CFG['UserDBUser'] = "";
 $CFG['UserDBPass'] = "";
 $CFG['UserDBLoginRequired'] = false;
+
 // LDAP auth options
 $CFG['LDAPUserLoginRequired'] = true;				// activate LDAP auth
-$CFG['LDAPServer'] = "172.17.0.100";				// LDAP server hostname or IP
+$CFG['LDAPServer'] = "127.0.0.1";					// LDAP server hostname or IP
 $CFG['LDAPPort'] = 389;								// LDAP port, 389 or 636 for SSL
 $CFG['LDAPBaseDN'] = 'CN=Users,DC=domain,DC=local';	// Base DN for LDAP Search, this is a typical ActiveDirectory sample
 $CFG['LDAPSearchFilter'] = '(objectClass=user)';	// Basic Search filter
 $CFG['LDAPUidAttribute'] = "sAMAccountName";		// The LDAP attribute used in the search to find the user, example: uid, cn or sAMAccountName (Active Directory)
 													// DN of the privileged user for the search
-$CFG['LDAPBindDN'] = 'CN=Searchuser,CN=Users,DC=domain,DC=local';	
+$CFG['LDAPBindDN'] = 'CN=Searchuser,CN=Users,DC=domain,DC=local'; // "Searchuser" = the privilegied user used to query LDAP Directory
 $CFG['LDAPBindPassword'] = 'Password';				// Password of the privilegied user
 // --- 
 
