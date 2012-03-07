@@ -56,7 +56,7 @@ $CFG['UserDBPass'] = "";
 $CFG['UserDBLoginRequired'] = false;
 
 // LDAP auth options
-$CFG['LDAPUserLoginRequired'] = true;				// activate LDAP auth
+$CFG['LDAPUserLoginRequired'] = false;				// Activate LDAP auth
 $CFG['LDAPServer'] = "127.0.0.1";					// LDAP server hostname or IP
 $CFG['LDAPPort'] = 389;								// LDAP port, 389 or 636 for SSL
 $CFG['LDAPBaseDN'] = 'CN=Users,DC=domain,DC=local';	// Base DN for LDAP Search, this is a typical ActiveDirectory sample
