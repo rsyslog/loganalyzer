@@ -59,6 +59,7 @@ define('MAX_STEPS', 8);
 $content['web_theme'] = "default";
 $content['user_theme'] = "default";
 $configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
+$content['HeaderDefaultEncoding'] = ENC_ISO_8859_1; // Set Default encoding!  
 
 //ini_set('error_reporting', E_ALL); // DEBUG ENABLE
 // ***					*** //
@@ -206,7 +207,22 @@ else if ( $content['INSTALL_STEP'] == 3 )
 	if ( isset($_SESSION['UserDBUser']) ) { $content['UserDBUser'] = $_SESSION['UserDBUser']; } else { $content['UserDBUser'] = "user"; }
 	if ( isset($_SESSION['UserDBPass']) ) { $content['UserDBPass'] = $_SESSION['UserDBPass']; } else { $content['UserDBPass'] = ""; }
 	if ( isset($_SESSION['UserDBLoginRequired']) ) { $content['UserDBLoginRequired'] = $_SESSION['UserDBLoginRequired']; } else { $content['UserDBLoginRequired'] = false; }
+
+	// Init Auth Options
+	if ( isset($_SESSION['UserDBAuthMode']) ) { $content['UserDBAuthMode'] = $_SESSION['UserDBAuthMode']; } else { $content['UserDBAuthMode'] = USERDB_AUTH_INTERNAL; }
+	CreateAuthTypesList($content['UserDBAuthMode']);
+
+	// LDAP related properties
+	if ( isset($_SESSION['LDAPServer']) ) { $content['LDAPServer'] = $_SESSION['LDAPServer']; } else { $content['LDAPServer'] = "localhost"; }
+	if ( isset($_SESSION['LDAPPort']) ) { $content['LDAPPort'] = $_SESSION['LDAPPort']; } else { $content['LDAPPort'] = "389"; }
+	if ( isset($_SESSION['LDAPBaseDN']) ) { $content['LDAPBaseDN'] = $_SESSION['LDAPBaseDN']; } else { $content['LDAPBaseDN'] = "CN=Users,DC=domain,DC=local"; }
+	if ( isset($_SESSION['LDAPSearchFilter']) ) { $content['LDAPSearchFilter'] = $_SESSION['LDAPSearchFilter']; } else { $content['LDAPSearchFilter'] = "(objectClass=user)"; }
+	if ( isset($_SESSION['LDAPUidAttribute']) ) { $content['LDAPUidAttribute'] = $_SESSION['LDAPUidAttribute']; } else { $content['LDAPUidAttribute'] = "sAMAccountName"; }
+	if ( isset($_SESSION['LDAPBindDN']) ) { $content['LDAPBindDN'] = $_SESSION['LDAPBindDN']; } else { $content['LDAPBindDN'] = "CN=Searchuser,CN=Users,DC=domain,DC=local"; }
+	if ( isset($_SESSION['LDAPBindPassword']) ) { $content['LDAPBindPassword'] = $_SESSION['LDAPBindPassword']; } else { $content['LDAPBindPassword'] = "Password"; }
+	if ( isset($_SESSION['LDAPDefaultAdminUser']) ) { $content['LDAPDefaultAdminUser'] = $_SESSION['LDAPDefaultAdminUser']; } else { $content['LDAPDefaultAdminUser'] = "Administrator"; }
 	
+	// Set template variables
 	if ( $content['UserDBEnabled'] == 1 )
 	{
 		$content['UserDBEnabled_true'] = "checked";
@@ -299,7 +315,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 			if ( isset($_POST['UserDBUser']) )
 				$_SESSION['UserDBUser'] = DB_RemoveBadChars($_POST['UserDBUser']);
 			else
-				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING']. $content['LN_CFG_DBUSER'] );
+				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_DBUSER'] );
 
 			if ( isset($_POST['UserDBPass']) )
 				$_SESSION['UserDBPass'] = DB_RemoveBadChars($_POST['UserDBPass']);
@@ -310,7 +326,49 @@ else if ( $content['INSTALL_STEP'] == 4 )
 				$_SESSION['UserDBLoginRequired'] = intval(DB_RemoveBadChars($_POST['UserDBLoginRequired']));
 			else
 				$_SESSION['UserDBLoginRequired'] = false;
+
+			if ( isset($_POST['UserDBAuthMode']) )
+				$_SESSION['UserDBAuthMode'] = intval(DB_RemoveBadChars($_POST['UserDBAuthMode']));
+			else
+				$_SESSION['UserDBAuthMode'] = USERDB_AUTH_INTERNAL;
 			
+
+			// LDAP Properties
+			if ( $_SESSION['UserDBAuthMode'] == USERDB_AUTH_LDAP )
+			{
+				if ( isset($_POST['LDAPServer']) )
+					$_SESSION['LDAPServer'] = DB_RemoveBadChars($_POST['LDAPServer']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPServer'] );
+				if ( isset($_POST['LDAPPort']) )
+					$_SESSION['LDAPPort'] = intval(DB_RemoveBadChars($_POST['LDAPPort']));
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPPort'] );
+				if ( isset($_POST['LDAPBaseDN']) )
+					$_SESSION['LDAPBaseDN'] = DB_RemoveBadChars($_POST['LDAPBaseDN']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPBaseDN'] );
+				if ( isset($_POST['LDAPSearchFilter']) )
+					$_SESSION['LDAPSearchFilter'] = DB_RemoveBadChars($_POST['LDAPSearchFilter']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPSearchFilter'] );
+				if ( isset($_POST['LDAPUidAttribute']) )
+					$_SESSION['LDAPUidAttribute'] = DB_RemoveBadChars($_POST['LDAPUidAttribute']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPUidAttribute'] );
+				if ( isset($_POST['LDAPBindDN']) )
+					$_SESSION['LDAPBindDN'] = DB_RemoveBadChars($_POST['LDAPBindDN']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPBindDN'] );
+				if ( isset($_POST['LDAPBindPassword']) )
+					$_SESSION['LDAPBindPassword'] = DB_RemoveBadChars($_POST['LDAPBindPassword']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPBindPassword'] );
+				if ( isset($_POST['LDAPDefaultAdminUser']) )
+					$_SESSION['LDAPDefaultAdminUser'] = DB_RemoveBadChars($_POST['LDAPDefaultAdminUser']);
+				else
+					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPDefaultAdminUser'] );
+			}
 
 			// Now Check database connect
 			$link_id = mysql_connect( $_SESSION['UserDBServer'], $_SESSION['UserDBUser'], $_SESSION['UserDBPass']);

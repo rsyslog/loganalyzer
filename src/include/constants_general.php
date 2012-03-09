@@ -103,6 +103,11 @@ define('DB_INFORMIX', 7);
 define('DB_SQLITE', 8);
 // --- 
 
+// --- Define supported AUTH Methods
+define('USERDB_AUTH_INTERNAL', 0);
+define('USERDB_AUTH_LDAP', 1);
+// --- 
+
 // --- Syslog specific defines!
 define('SYSLOG_KERN', 0);
 define('SYSLOG_USER', 1);

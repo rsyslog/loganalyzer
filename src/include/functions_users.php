@@ -164,7 +164,7 @@ function CheckUserLogin( $username, $password )
 	global $content;
 
 	// Check if LDAP Auth has to be used!
-	if ( GetConfigSetting("LDAPUserLoginRequired", "") == "true")
+	if ( GetConfigSetting("UserDBAuthMode", USERDB_AUTH_INTERNAL) == USERDB_AUTH_LDAP)
 	{
 		// perform user auth using LDAP, will add user record to loganalyzer DB if necessary
 		$myrow = CheckLDAPUserLogin( $username, $password );

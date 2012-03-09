@@ -35,6 +35,24 @@
 			showvisibility("HiddenDBTYpesOptions");
 		}
 	}
+
+	/*
+	*	Helper function to show and hide areas of the filterview
+	*/
+	function toggleAuthTypeVisibility(FormFieldName)
+	{
+		var myfield = document.getElementById(FormFieldName);
+		if (myfield.value == 0)
+		{
+			showvisibility("HiddenInternalAuthOptions");
+			hidevisibility("HiddenLdapAuthOptions");
+		}
+		else if (myfield.value == 1)
+		{
+			hidevisibility("HiddenInternalAuthOptions");
+			showvisibility("HiddenLdapAuthOptions");
+		}
+	}
 </script>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mainheader">
@@ -204,6 +222,55 @@
 						<input type="radio" name="UserDBLoginRequired" value="0" {UserDBLoginRequired_false}> No
 					</td>
 				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_AUTHTYPE}</b></td>
+					<td align="right" class="line1" width="100%">
+						<select id="UserDBAuthMode" name="UserDBAuthMode" size="1" OnChange="toggleAuthTypeVisibility('UserDBAuthMode');">
+							<!-- BEGIN AUTHTYPES -->
+							<option {selected} value="{type}">{DisplayName}</option>
+							<!-- END AUTHTYPES -->
+						</select>
+					</td>
+				</tr>
+				</table>
+
+				<div id="HiddenInternalAuthOptions" class="HiddenContent">
+				</div>
+				<div id="HiddenLdapAuthOptions" class="HiddenContent">
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" align="center">
+				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_GEN_AUTH_LDAP_OPTIONS}</b></td></tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPServer}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPServer" size="40" maxlength="255" value="{LDAPServer}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_LDAPPort}</b></td>
+					<td align="right" class="line1" width="100%"><input type="text" name="LDAPPort" size="40" maxlength="255" value="{LDAPPort}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPBaseDN}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPBaseDN" size="40" maxlength="255" value="{LDAPBaseDN}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPSearchFilter}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPSearchFilter" size="40" maxlength="255" value="{LDAPSearchFilter}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPUidAttribute}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPUidAttribute" size="40" maxlength="255" value="{LDAPUidAttribute}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPBindDN}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPBindDN" size="40" maxlength="255" value="{LDAPBindDN}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_LDAPBindPassword}</b></td>
+					<td align="right" class="line1" width="100%"><input type="password" name="LDAPBindPassword" size="40" maxlength="255" value="{LDAPBindPassword}"></td>
+				</tr>
+				<tr>
+					<td align="left" class="cellmenu2" width="265" nowrap><b>{LN_CFG_LDAPDefaultAdminUser}</b></td>
+					<td align="right" class="line2" width="100%"><input type="text" name="LDAPDefaultAdminUser" size="40" maxlength="255" value="{LDAPDefaultAdminUser}"></td>
+				</tr>
 				</table>
 				</div>
 
@@ -221,6 +288,9 @@
 			<!-- IF UserDBEnabled_false="checked" -->
 			hidevisibility('HiddenUserDBOptions');
 			<!-- ENDIF UserDBEnabled_false="checked" -->
+
+			// Manually perform initial Javascript Calls
+			toggleAuthTypeVisibility('UserDBAuthMode');
 		</script>
 		<!-- ENDIF INSTALL_STEP="3" -->
 

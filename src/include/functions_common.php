@@ -253,6 +253,21 @@ function CreateSourceTypesList( $selectedSource )
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
 }
 
+function CreateAuthTypesList( $selectedAuth )
+{
+	global $content;
+
+	// SOURCE_DISK
+	$content['AUTHTYPES'][USERDB_AUTH_INTERNAL]['type'] = USERDB_AUTH_INTERNAL;
+	$content['AUTHTYPES'][USERDB_AUTH_INTERNAL]['DisplayName'] = $content['LN_GEN_AUTH_INTERNAL'];
+	if ( $selectedAuth == $content['AUTHTYPES'][USERDB_AUTH_INTERNAL]['type'] ) { $content['AUTHTYPES'][USERDB_AUTH_INTERNAL]['selected'] = "selected"; } else { $content['AUTHTYPES'][USERDB_AUTH_INTERNAL]['selected'] = ""; }
+
+	// SOURCE_DB ( MYSQL NATIVE )
+	$content['AUTHTYPES'][USERDB_AUTH_LDAP]['type'] = USERDB_AUTH_LDAP;
+	$content['AUTHTYPES'][USERDB_AUTH_LDAP]['DisplayName'] = $content['LN_GEN_AUTH_LDAP'];
+	if ( $selectedAuth == $content['AUTHTYPES'][USERDB_AUTH_LDAP]['type'] ) { $content['AUTHTYPES'][USERDB_AUTH_LDAP]['selected'] = "selected"; } else { $content['AUTHTYPES'][USERDB_AUTH_LDAP]['selected'] = ""; }
+}
+
 function CreateFieldAlignmentList( $selectedAlignment )
 {
 	global $content;
