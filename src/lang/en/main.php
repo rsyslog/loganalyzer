@@ -240,6 +240,8 @@ $content['LN_LOGIN_USERPASSMISSING'] = "Username or password not given";
 $content['LN_LOGIN_LDAP_USERNOTFOUND'] = "User '%1' could not be found";
 $content['LN_LOGIN_LDAP_USERCOULDNOTLOGIN'] = "Could not login user '%1', LDAP error: %2";
 $content['LN_LOGIN_LDAP_PASSWORDFAIL'] = "User '%1' could not login with the given password";
+$content['LN_LOGIN_LDAP_SERVERFAILED'] = "Failed to connect to LDAP Server '%1'";
+$content['LN_LOGIN_LDAP_USERBINDFAILED'] = "Could not bind with the Search user DN '%1'";
 
 
 // Install Site
@@ -294,6 +296,7 @@ $content['LN_INSTALL_PASSWORDREPEAT'] = "Repeat Password";
 $content['LN_INSTALL_SUCCESSCREATED'] = "Successfully created User";
 $content['LN_INSTALL_RECHECK'] = "ReCheck";
 $content['LN_INSTALL_FINISH'] = "Finish!";
+$content['LN_INSTALL_LDAPCONNECTFAILED'] = "Failed to connect to your LDAP Server '%1'.";
 $content['LN_INSTALL_'] = "";
 
 // Converter Site

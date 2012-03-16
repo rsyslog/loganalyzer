@@ -426,6 +426,33 @@ else if ( $content['INSTALL_STEP'] == 4 )
 	// If UserDB is disabled, skip next step!
 	if ( $_SESSION['UserDBEnabled'] == 0 )
 		ForwardOneStep();
+	else
+	{
+		if ( $_SESSION['UserDBAuthMode']  == USERDB_AUTH_LDAP )
+		{
+			// We need the user system now!
+			ini_set('error_reporting', E_WARNING); // Enable Warnings!
+			InitUserDbSettings();		// We need some DB Settings
+			InitUserSystemPhpLogCon();	
+
+			// LDAP Variables
+			$content['LDAPServer']			= $_SESSION['LDAPServer']; 
+			$content['LDAPPort']			= $_SESSION['LDAPPort'];
+			$content['LDAPBindDN']			= $_SESSION['LDAPBindDN'];
+			$content['LDAPBindPassword']	= $_SESSION['LDAPBindPassword'];
+
+			// try LDAP Connect!
+			$ldapConn = DoLDAPConnect(); 
+			if ( $ldapConn ) 
+			{
+				$bBind = DoLDAPBind($ldapConn); 
+				if ( !$bBind ) 
+					RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_LOGIN_LDAP_USERBINDFAILED'], $_SESSION['LDAPBindDN']) );
+			}
+			else
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_LDAPCONNECTFAILED'], $_SESSION['LDAPServer']) );
+		}
+	}
 }
 else if ( $content['INSTALL_STEP'] == 5 )
 {
@@ -512,20 +539,25 @@ else if ( $content['INSTALL_STEP'] == 6 )
 {
 	if ( $_SESSION['UserDBEnabled'] == 1 )
 	{
-		if ( isset($_SESSION['MAIN_Username']) )
-			$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
-		else
-			$content['MAIN_Username'] = "";
-
-		$content['MAIN_Password1'] = "";
-		$content['MAIN_Password2'] = "";
-
-		// Check for Error Msg
-		if ( isset($_GET['errormsg']) )
+		if ( $_SESSION['UserDBAuthMode']  == USERDB_AUTH_INTERNAL )
 		{
-			$content['iserror'] = "true";
-			$content['errormsg'] = urldecode( DB_StripSlahes($_GET['errormsg']) );
+			if ( isset($_SESSION['MAIN_Username']) )
+				$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
+			else
+				$content['MAIN_Username'] = "";
+
+			$content['MAIN_Password1'] = "";
+			$content['MAIN_Password2'] = "";
+
+			// Check for Error Msg
+			if ( isset($_GET['errormsg']) )
+			{
+				$content['iserror'] = "true";
+				$content['errormsg'] = urldecode( DB_StripSlahes($_GET['errormsg']) );
+			}
 		}
+		else // USERDB_AUTH_LDAP does not need this steo!
+			ForwardOneStep();
 	}
 	else // NO Database means NO user management, so next step!
 		ForwardOneStep();
@@ -534,26 +566,35 @@ else if ( $content['INSTALL_STEP'] == 7 )
 {
 	if ( $_SESSION['UserDBEnabled'] == 1 )
 	{
-		if ( isset($_POST['username']) )
-			$_SESSION['MAIN_Username'] = DB_RemoveBadChars($_POST['username']);
-		else
-			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_MISSINGUSERNAME'] );
+		if ( $_SESSION['UserDBAuthMode']  == USERDB_AUTH_INTERNAL )
+		{
+			if ( isset($_POST['username']) )
+				$_SESSION['MAIN_Username'] = DB_RemoveBadChars($_POST['username']);
+			else
+				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_MISSINGUSERNAME'] );
 
-		if ( isset($_POST['password1']) )
-			$_SESSION['MAIN_Password1'] = DB_RemoveBadChars($_POST['password1']);
-		else
+			if ( isset($_POST['password1']) )
+				$_SESSION['MAIN_Password1'] = DB_RemoveBadChars($_POST['password1']);
+			else
+				$_SESSION['MAIN_Password1'] = "";
+
+			if ( isset($_POST['password2']) )
+				$_SESSION['MAIN_Password2'] = DB_RemoveBadChars($_POST['password2']);
+			else
+				$_SESSION['MAIN_Password2'] = "";
+
+			if (	
+					strlen($_SESSION['MAIN_Password1']) < 4 ||
+					$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
+				)
+				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
+		}
+		else if ( $_SESSION['UserDBAuthMode']  == USERDB_AUTH_LDAP )
+		{
+			$_SESSION['MAIN_Username'] = $_SESSION['LDAPDefaultAdminUser']; 
 			$_SESSION['MAIN_Password1'] = "";
-
-		if ( isset($_POST['password2']) )
-			$_SESSION['MAIN_Password2'] = DB_RemoveBadChars($_POST['password2']);
-		else
 			$_SESSION['MAIN_Password2'] = "";
-
-		if (	
-				strlen($_SESSION['MAIN_Password1']) < 4 ||
-				$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
-			)
-			RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
+		}
 
 		// --- Now execute all commands
 		ini_set('error_reporting', E_WARNING); // Enable Warnings!
@@ -709,7 +750,7 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// If we reached this point, we have gathered all necessary information to create our configuration file ;)!
 	$filebuffer = LoadDataFile($configsamplefile);
 	
-	// Sez helper variables and init user vars if needed!
+	// Set helper variables and init user vars if needed!
 	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] ) { $_SESSION['UserDBEnabled_value'] = "true"; } else { $_SESSION['UserDBEnabled_value'] = "false"; }
 	if ( isset($_SESSION['UserDBLoginRequired']) && $_SESSION['UserDBLoginRequired'] ) { $_SESSION['UserDBLoginRequired_value'] = "true"; } else { $_SESSION['UserDBLoginRequired_value'] = "false"; }
 	if ( !isset($_SESSION['UserDBServer']))	{ $_SESSION['UserDBServer'] = "localhost"; }
@@ -718,6 +759,16 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	if ( !isset($_SESSION['UserDBPref']))	{ $_SESSION['UserDBPref'] = "logcon_"; }
 	if ( !isset($_SESSION['UserDBUser']))	{ $_SESSION['UserDBUser'] = "root"; }
 	if ( !isset($_SESSION['UserDBPass']))	{ $_SESSION['UserDBPass'] = ""; }
+	if ( !isset($_SESSION['UserDBAuthMode']))	{ $_SESSION['UserDBAuthMode'] = USERDB_AUTH_INTERNAL; }
+
+	// LDAP vars
+	if ( !isset($_SESSION['LDAPServer']))		{ $_SESSION['LDAPServer'] = "127.0.0.1"; }
+	if ( !isset($_SESSION['LDAPPort']))			{ $_SESSION['LDAPPort'] = "389"; }
+	if ( !isset($_SESSION['LDAPBaseDN']))		{ $_SESSION['LDAPBaseDN'] = "CN=Users,DC=domain,DC=local"; }
+	if ( !isset($_SESSION['LDAPSearchFilter']))	{ $_SESSION['LDAPSearchFilter'] = "(objectClass=user)"; }
+	if ( !isset($_SESSION['LDAPUidAttribute']))	{ $_SESSION['LDAPUidAttribute'] = "sAMAccountName"; }
+	if ( !isset($_SESSION['LDAPBindDN']))		{ $_SESSION['LDAPBindDN'] = "CN=Searchuser,CN=Users,DC=domain,DC=local"; }
+	if ( !isset($_SESSION['LDAPBindPassword']))	{ $_SESSION['LDAPBindPassword'] = "Password"; }
 
 	// Start replacing existing sample configurations
 	$patterns[] = "/\\\$CFG\['ViewMessageCharacterLimit'\] = [0-9]{1,2};/";
@@ -733,6 +784,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['UserDBUser'\] = (.*?);/";
 	$patterns[] = "/\\\$CFG\['UserDBPass'\] = (.*?);/";
 	$patterns[] = "/\\\$CFG\['UserDBLoginRequired'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['UserDBAuthMode'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPServer'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPPort'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPBaseDN'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPSearchFilter'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPUidAttribute'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPBindDN'\] = (.*?);/";
+	$patterns[] = "/\\\$CFG\['LDAPBindPassword'\] = (.*?);/";
 
 	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
 	$replacements[] = "\$CFG['ViewStringCharacterLimit'] = " . $_SESSION['ViewStringCharacterLimit'] . ";";
@@ -747,6 +806,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$replacements[] = "\$CFG['UserDBUser'] = '" . $_SESSION['UserDBUser'] . "';";
 	$replacements[] = "\$CFG['UserDBPass'] = '" . $_SESSION['UserDBPass'] . "';";
 	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . $_SESSION['UserDBLoginRequired_value'] . ";";
+	$replacements[] = "\$CFG['UserDBAuthMode'] = " . $_SESSION['UserDBAuthMode'] . ";";
+	$replacements[] = "\$CFG['LDAPServer'] = '" . $_SESSION['LDAPServer'] . "';";
+	$replacements[] = "\$CFG['LDAPPort'] = " . $_SESSION['LDAPPort'] . ";";
+	$replacements[] = "\$CFG['LDAPBaseDN'] = '" . $_SESSION['LDAPBaseDN'] . "';";
+	$replacements[] = "\$CFG['LDAPSearchFilter'] = '" . $_SESSION['LDAPSearchFilter'] . "';";
+	$replacements[] = "\$CFG['LDAPUidAttribute'] = '" . $_SESSION['LDAPUidAttribute'] . "';";
+	$replacements[] = "\$CFG['LDAPBindDN'] = '" . $_SESSION['LDAPBindDN'] . "';";
+	$replacements[] = "\$CFG['LDAPBindPassword'] = '" . $_SESSION['LDAPBindPassword'] . "';";
 	
 	//User Database	Options
 	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] )

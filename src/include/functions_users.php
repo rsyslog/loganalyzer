@@ -286,23 +286,61 @@ function CheckUserLogin( $username, $password )
 	}
 }
 
+function DoLDAPConnect()
+{
+	global $content;
+
+	// Open LDAP connection
+	if (!($ldapConn=@ldap_connect($content['LDAPServer'],$content['LDAPPort'])))
+		return false;
+
+	ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
+	 
+	// reached this point means success!
+	return $ldapConn; 
+}
+
+function DoLDAPBind($ldapConn)
+{
+	global $content;
+
+	// Bind as the privilegied user
+	return ldap_bind($ldapConn, $content['LDAPBindDN'], $content['LDAPBindPassword']); 
+}
 
 function CheckLDAPUserLogin( $username, $password )
 {
 	global $content;
-	 
+
 	// Create LDAP Searchfilter
 	$ldap_filter='(&'.$content['LDAPSearchFilter'].'('.$content['LDAPUidAttribute'].'='.$username.'))';
-	 
-	// Open LDAP connection
-	if (!($ldapConn=@ldap_connect($content['LDAPServer'],$content['LDAPPort'])))
+
+	// Get LDAP Connection 
+	$ldapConn = DoLDAPConnect(); 
+	if ( $ldapConn ) 
+	{
+		if ( !DoLDAPBind($ldapConn) ) 
+		{
+			if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
+			{
+				// Die with error
+				DebugLDAPErrorAndDie( GetAndReplaceLangStr($content['LN_LOGIN_LDAP_USERBINDFAILED'], $content['LDAPBindDN'], ldap_err2str(ldap_errno($ldapConn))), $ldap_filter ); 
+			}
+
+			return false; 
+		}
+	}
+	else
+	{
+		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
+		{
+			// Die with error
+			DebugLDAPErrorAndDie( GetAndReplaceLangStr($content['LN_LOGIN_LDAP_SERVERFAILED'], $content['LDAPServer'] . ":" . $content['LDAPPort'], ldap_err2str(ldap_errno($ldapConn))), $ldap_filter ); 
+		}
+		
+		// return false in this case
 		return false;
-	
-	ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
-	 
-	// Bind as the privilegied user
-	if (!($r = ldap_bind($ldapConn, $content['LDAPBindDN'], $content['LDAPBindPassword'])))
-		return false;
+	}
 
 	// Search for the user
 	if (!($r=@ldap_search( $ldapConn, $content['LDAPBaseDN'], $ldap_filter, array("uid","cn","localentryid","userpassword") )))
@@ -374,6 +412,7 @@ function CheckLDAPUserLogin( $username, $password )
 	$myrowfinal['is_readonly'] = $myrow['is_readonly'];
 	$myrowfinal['last_login'] = $myrow['last_login'];
 	return $myrowfinal;
+
 }
 
 /*

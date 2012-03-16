@@ -400,6 +400,12 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 {
 	// Default Mode = List Users
 	$content['LISTUSERS'] = "true";
+	
+	// Set AddUsers TAB!
+	if ( $content['UserDBAuthMode']  == USERDB_AUTH_LDAP )
+		$content["ALLOWADDUSERS"] = "false"; 
+	else
+		$content["ALLOWADDUSERS"] = "true"; 
 
 	// Read all Serverentries
 	$sqlquery = "SELECT ID, " . 
