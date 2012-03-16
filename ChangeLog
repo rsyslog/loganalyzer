@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 3.5.1 (beta), 2012-03-16
+- Added Support for LDAP Authentication based on the modification 
+  from forum user "Prune". LDAP Support can be configured during the 
+  installation of LogAnalyzer, but can also be turned on later by
+  editing the config.php. More Details will be found in our wiki: 
+  http://wiki.rsyslog.com/index.php/LogAnalyzer
+- Fixed a #bugid 303, VerifyChecksumTrigger function had trouble 
+  with mixed cased triggernames.
+---------------------------------------------------------------------------
 Version 3.5.0 (beta), 2012-01-24
 - Added new Report "Eventlog Audit Summary Report" which can generate 
   detailed security reports for Windows Eventlog security records. 
