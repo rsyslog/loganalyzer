@@ -189,6 +189,23 @@ function InitSource(&$mysource)
 			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
 			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
 		}
+		else if ( $mysource['SourceType'] == SOURCE_MONGODB)
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigmongodb.class.php');
+
+			$mysource['ObjRef'] = new LogStreamConfigMongoDB();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			$mysource['ObjRef']->DBCollection = $mysource['DBTableName'];
+			$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+//			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+		}
 		else
 		{	
 			// UNKNOWN, remove config entry!

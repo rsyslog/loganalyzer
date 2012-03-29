@@ -251,6 +251,11 @@ function CreateSourceTypesList( $selectedSource )
 	$content['SOURCETYPES'][SOURCE_PDO]['type'] = SOURCE_PDO;
 	$content['SOURCETYPES'][SOURCE_PDO]['DisplayName'] = $content['LN_GEN_SOURCE_PDO'];
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_PDO]['type'] ) { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_PDO]['selected'] = ""; }
+
+	// SOURCE_MONGODB ( MONGODB Wrapper)
+	$content['SOURCETYPES'][SOURCE_MONGODB]['type'] = SOURCE_MONGODB;
+	$content['SOURCETYPES'][SOURCE_MONGODB]['DisplayName'] = $content['LN_GEN_SOURCE_MONGODB'];
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_MONGODB]['type'] ) { $content['SOURCETYPES'][SOURCE_MONGODB]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_MONGODB]['selected'] = ""; }
 }
 
 function CreateAuthTypesList( $selectedAuth )
@@ -728,6 +733,7 @@ function InitFrontEndVariables()
 	$content['MENU_SOURCE_DISK'] = $content['BASEPATH'] . "images/icons/document_text.png";
 	$content['MENU_SOURCE_DB'] = $content['BASEPATH'] . "images/icons/data_table.png";
 	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
+	$content['MENU_SOURCE_MONGODB'] = $content['BASEPATH'] . "images/icons/mongodb.png";
 	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";
 	$content['MENU_NORMAL'] = $content['BASEPATH'] . "images/icons/table_selection_block.png";
 	$content['MENU_USEROPTIONS'] = $content['BASEPATH'] . "images/icons/businessman_preferences.png";

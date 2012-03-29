@@ -44,6 +44,7 @@ $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "MYSQL Native";
 $content['LN_GEN_SOURCE_PDO'] = "Database (PDO)";
+$content['LN_GEN_SOURCE_MONGODB'] = "MongoDB Native";
 $content['LN_GEN_RECORDSPERPAGE'] = "records per page";
 $content['LN_GEN_PRECONFIGURED'] = "Preconfigured";
 $content['LN_GEN_AVAILABLESEARCHES'] = "Available searches";

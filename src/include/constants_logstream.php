@@ -376,6 +376,18 @@ $dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_MESSAGE] = "msg";
 $dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "tag";
 $dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_PROCESSID] = "program";
 
+$dbmapping['mongodb']['ID'] = "mongodb";
+$dbmapping['mongodb']['DisplayName'] = "MongoDB";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_UID] = "_id";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_DATE] = "time";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_HOST] = "sys";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_MESSAGE] = "msg";
+// $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_FACILITY] = "Facility";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SEVERITY] = "level";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "procid";
+//$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_PROCESSID] = "ProcessID";
+$dbmapping['mongodb']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
+
 // Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 
 foreach( $dbmapping as &$myMapping ) 
 {

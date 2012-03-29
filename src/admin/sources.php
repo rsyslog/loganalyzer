@@ -346,7 +346,9 @@ if ( isset($_GET['op']) )
 			$content['SourceTypeName'] = $content['SOURCETYPES'][ $content['SourceType'] ]['DisplayName'];
 
 			// Fix Filename manually for FILE LOGSTREAM!
-			if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+			if (	$content['SourceType'] == SOURCE_DB || 
+					$content['SourceType'] == SOURCE_PDO || 
+					$content['SourceType'] == SOURCE_MONGODB ) 
 			{
 				// Create LogStream Object 
 				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
@@ -545,7 +547,10 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['SourceDiskFile']) ) { $content['SourceDiskFile'] = DB_RemoveBadChars($_POST['SourceDiskFile']); }
 		}
 		// DB Params
-		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+		else if (	$content['SourceType'] == SOURCE_DB || 
+					$content['SourceType'] == SOURCE_PDO || 
+					$content['SourceType'] == SOURCE_MONGODB 
+			) 
 		{
 			if ( isset($_POST['SourceDBType']) ) { $content['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']); }
 			if ( isset($_POST['SourceDBName']) ) { $content['SourceDBName'] = DB_RemoveBadChars($_POST['SourceDBName']); }
@@ -640,7 +645,10 @@ if ( isset($_POST['op']) )
 			}
 		}
 		// DB Params
-		else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+		else if (	$content['SourceType'] == SOURCE_DB || 
+					$content['SourceType'] == SOURCE_PDO ||
+					$content['SourceType'] == SOURCE_MONGODB 
+			) 
 		{
 			if ( !isset($content['SourceDBType']) ) 
 			{ 
@@ -705,7 +713,10 @@ if ( isset($_POST['op']) )
 			$tmpSource['DiskFile']		= $content['SourceDiskFileTesting']; // use SourceDiskFileTesting rather then SourceDiskFile as it is corrected
 		}
 		// DB Params
-		else if ( $tmpSource['SourceType'] == SOURCE_DB || $tmpSource['SourceType'] == SOURCE_PDO ) 
+		else if (	$tmpSource['SourceType'] == SOURCE_DB || 
+					$tmpSource['SourceType'] == SOURCE_PDO || 
+					$tmpSource['SourceType'] == SOURCE_MONGODB 
+				) 
 		{
 			$tmpSource['DBType']				= DB_StripSlahes($content['SourceDBType']);
 			$tmpSource['DBName']				= DB_StripSlahes($content['SourceDBName']);
@@ -761,7 +772,10 @@ if ( isset($_POST['op']) )
 						" . $content['groupid'] . " 
 						)";
 			}
-			else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+			else if (	$content['SourceType'] == SOURCE_DB || 
+						$content['SourceType'] == SOURCE_PDO ||
+						$content['SourceType'] == SOURCE_MONGODB
+				) 
 			{
 				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, defaultfilter, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, DBRecordsPerQuery, userid, groupid) 
 				VALUES ('" . $content['Name'] . "', 
@@ -821,7 +835,10 @@ if ( isset($_POST['op']) )
 									groupid = " . $content['groupid'] . "
 									WHERE ID = " . $content['SOURCEID'];
 				}
-				else if ( $content['SourceType'] == SOURCE_DB || $content['SourceType'] == SOURCE_PDO ) 
+				else if (	$content['SourceType'] == SOURCE_DB || 
+							$content['SourceType'] == SOURCE_PDO || 
+							$content['SourceType'] == SOURCE_MONGODB 
+					) 
 				{
 					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
 									Name = '" . $content['Name'] . "', 
@@ -931,6 +948,15 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			// Enabled Database Maintenance functions
 			$mySource['IsDatabaseSource'] = true;
 		}
+		else if ( $mySource['SourceType'] == SOURCE_MONGODB )
+		{
+			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_MONGODB"];
+			$mySource['SourcesTypeText'] = $content["LN_SOURCES_MONGODB"];
+
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
+		}
+		
 		// ---
 
 		// --- Set CSS Class

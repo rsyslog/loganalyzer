@@ -71,6 +71,7 @@ define('CFGLEVEL_USER', 2);
 define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
 define('SOURCE_PDO', '3');
+define('SOURCE_MONGODB', '4');
 // --- 
 
 // --- Exportformat defines
