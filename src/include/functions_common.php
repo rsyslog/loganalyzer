@@ -1283,7 +1283,7 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = $out[7] . $out[8] . $out[9]; 
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
-	// Sample: 2008-04-02T11:12:32.380449+02:00
+	// Sample:	2008-04-02T11:12:32.380449+02:00
 	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})\.([0-9]{1,6})([+-])([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
 		// RFC 3164 typical timestamp

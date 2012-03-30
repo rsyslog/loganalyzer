@@ -59,7 +59,13 @@ $content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css"
 
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
-	$content['uid_current'] = intval($_GET['uid']);
+{
+	// Now check by numeric as uid can be larger than INT values
+	if ( is_numeric($_GET['uid']) ) 
+		$content['uid_current'] = $_GET['uid']; 
+	else
+		$content['uid_current'] = UID_UNKNOWN;
+}
 else
 	$content['uid_current'] = UID_UNKNOWN;
 
