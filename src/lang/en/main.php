@@ -82,7 +82,7 @@ $content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, ma
 $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least one field could not be found.";
 
 	$content['LN_GEN_SELECTEXPORT'] = "&gt; Select Exportformat &lt;";
-	$content['LN_GEN_EXPORT_CVS'] = "CVS (Comma separated)";
+	$content['LN_GEN_EXPORT_CVS'] = "CSV (Comma separated)";
 	$content['LN_GEN_EXPORT_XML'] = "XML";
 	$content['LN_GEN_EXPORT_PDF'] = "PDF";
 	$content['LN_GEN_ERROR_EXPORING'] = "Error exporting data";
