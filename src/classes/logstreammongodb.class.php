@@ -109,9 +109,9 @@ class LogStreamMongoDB extends LogStream {
 			return $res;
 		
 		// Create Filters for first time!
-		$res = $this->CreateQueryArray(UID_UNKNOWN);
-		if ( $res != SUCCESS ) 
-			return $res;
+//		$res = $this->CreateQueryArray(UID_UNKNOWN);
+//		if ( $res != SUCCESS ) 
+//			return $res;
 
 		// Success, this means we init the Pagenumber to ONE!
 		$this->_currentPageNumber = 1;
@@ -413,26 +413,6 @@ TODO
 	*/
 	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
 	{
-/*
-		global $dbmapping, $fields, $querycount;
-
-		// Get List of Triggers as Array
-		$szDBName = $this->_logStreamConfigObj->DBName;
-		$szTableName = $this->_logStreamConfigObj->DBTableName;
-		
-		// Create Triggername
-		$szTriggerName = $szDBName . "_" . $szTableName . "_" . $myDBTriggerField; 
-
-		// Create TRIGGER SQL!
-		$szSql =	"CREATE TRIGGER " . $szTriggerName . " BEFORE INSERT ON `" . $szTableName . "`
-					 FOR EACH ROW
-					 BEGIN
-					 SET NEW." . $myDBTriggerCheckSumField . " = crc32(NEW." . $myDBTriggerField . ");
-					 END
-					;";
-
-		return $szSql; 
-*/		
 		return ""; 
 	}
 
@@ -1485,69 +1465,122 @@ TODO!!!
 										// --- Check if user wants to include or exclude!
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
 										{
-//											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$in' => $myfilter[FILTER_VALUE] ); 
-//											$this->_myMongoQuery[ $szMongoPropID ]['$in'] = $myfilter[FILTER_VALUE] ; 
-
-											$js = "function() { return this." . $szMongoPropID . " == '" . $myfilter[FILTER_VALUE] . "'; }";
-											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$where' => $js);
-
+											if ( $propertyname == SYSLOG_MESSAGE ) 
+												// If we filter for Syslog MSG, we use $ALL to match all values
+												$this->_myMongoQuery[ $szMongoPropID ]['$all'][] = $myfilter[FILTER_VALUE]; 
+											else
+												// We use $in by default to get results for each value
+												$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = $myfilter[FILTER_VALUE]; 
 										}
 										else
-										{
-											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$ne' => $myfilter[FILTER_VALUE] ); 
-//											$queryarray[$propertyname] = array ( $szMongoPropID => $myfilter[FILTER_VALUE]); 
-										}
+											// $ne equals NOT EQUAL 
+											$this->_myMongoQuery[ $szMongoPropID ]['$ne'][] = $myfilter[FILTER_VALUE]; 
 										// ---
 									}
-/*
 									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX )
 									{
 										// --- Check if user wants to include or exclude!
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
-											$addnod = "";
+										{
+											// Use REGEX to filter for values, NOT TESTED YET!
+											$this->_myMongoQuery[ $szMongoPropID ]['$regex'][] = $myfilter[FILTER_VALUE]; 
+										}
 										else
-											$addnod = " NOT";
+											// Negate the query using $NOT operator. 
+											$this->_myMongoQuery[ $szMongoPropID ]['$not']['$regex'][] = $myfilter[FILTER_VALUE]; 
 										// ---
-
-										$szSearchBegin = " REGEXP '";
-										$szSearchEnd = "' ";
 									}
 									else
 									{
+										// This should be a typical LIKE query: Check if done RIGHT TODO!
+
 										// --- Check if user wants to include or exclude!
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
-											$addnod = "";
+										{
+											if ( $propertyname == SYSLOG_MESSAGE ) 
+												// If we filter for Syslog MSG, we use $ALL to match all values
+												$this->_myMongoQuery[ $szMongoPropID ]['$all'][] = $myfilter[FILTER_VALUE]; 
+											else
+												// We use $in by default to get results for each value
+												$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = $myfilter[FILTER_VALUE]; 
+										}
 										else
-											$addnod = " NOT";
+											// $ne equals NOT EQUAL 
+											$this->_myMongoQuery[ $szMongoPropID ]['$nin'][] = $myfilter[FILTER_VALUE]; 
 										// ---
+									}
+									// ---
+									break;
 
-										$szSearchBegin = " LIKE '%";
-										$szSearchEnd = "%' ";
+								case FILTER_TYPE_NUMBER:
+									// --- Check if user wants to include or exclude!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE )
+									{
+										// We use $in by default to get results for each value
+										$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = $myfilter[FILTER_VALUE]; 
+									}
+									else
+									{
+										// $ne equals NOT EQUAL 
+										$this->_myMongoQuery[ $szMongoPropID ]['$nin'][] = $myfilter[FILTER_VALUE]; 
 									}
 									// ---
 
-									// --- If Syslog message, we have AND handling, otherwise OR!
-									if ( $propertyname == SYSLOG_MESSAGE )
-										$addor = " AND ";
-									else
+									break;
+								case FILTER_TYPE_DATE:
+									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
 									{
-										// If we exclude filters, we need to combine with AND
-										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
-											$addor = " OR ";
-										else
-											$addor = " AND ";
+										// Get current timestamp
+										$nNowTimeStamp = time();
+
+										if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+											$nNowTimeStamp -= 60 * 60; // One Hour!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
+											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
+											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
+										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
+											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
+										else 
+										{
+											// Set filter to unknown and Abort in this case!
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
+											break;
+										}
+
+										// Create MongoDate Object from Timestamp
+										$myMongoDate = new MongoDate($nNowTimeStamp);
+
+										// add to query array
+										$this->_myMongoQuery[ $szMongoPropID ]['$gte'] = $myMongoDate;  
 									}
-									// ---
-									
-									// Now Create LIKE Filters
-									if ( isset($tmpfilters[$propertyname]) ) 
-										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $szMongoPropID . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
-									else
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
 									{
-										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
-										$tmpfilters[$propertyname][FILTER_VALUE] = $szMongoPropID . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+										// We use $gt (>) by default to get filter by date 
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+
+										// Create MongoDate Object from Timestamp
+										$myMongoDate = new MongoDate($myeventtime[EVTIME_TIMESTAMP]);
+										
+										// add to query array
+										$this->_myMongoQuery[ $szMongoPropID ]['$gte'] = $myMongoDate; 
 									}
-*/
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_TO ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+
+										// Create MongoDate Object from Timestamp
+										$myMongoDate = new MongoDate($myeventtime[EVTIME_TIMESTAMP]);
+
+										// add to query array
+										$this->_myMongoQuery[ $szMongoPropID ]['$lte'] = $myMongoDate;
+									}
+									break;
+								default:
+									// Nothing to do!
 									break;
 							}
 						}
@@ -1556,8 +1589,8 @@ TODO!!!
 
 			}
 
-print_r (  array('x' => array( '$gt' => 5, '$lt' => 20 )) ); 
-print_r ( $this->_myMongoQuery ) ;
+			//print_r (  array('x' => array( '$gt' => 5, '$lt' => 20 )) ); 
+			OutputDebugMessage("CreateQueryArray verbose: " . var_export($this->_myMongoQuery, true), DEBUG_DEBUG);
 		}
 
 		if ( $uID != UID_UNKNOWN ) 
@@ -1827,20 +1860,22 @@ print_r ( $this->_myMongoQuery ) ;
 //		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
 		$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery, $this->_myMongoFields); // ->limit(10); // $collection->find();
 
-		OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
+		// OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
 
 		$myCursor = $myCursor->sort(array("_id" => -1));
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
 
-		while ($myRow = $myCursor->getNext())
+//		while ($myCursor->hasNext() && $myRow = $myCursor->getNext())
+		foreach ($myCursor as $myRow)
 		{
 			// Check if result was successfull!
 			if ( $myRow === FALSE || !$myRow  )
 				break;
 
-			$myRow[ "_id" ] = base_convert($myRow[ "_id" ], 16, 10); // ($myRow["_id"]->{'$id'}); 
-//			$myRow[ "_id" ] = $myRow["_id"]->getInc(); // Use Inc value for now, easier to read!
+			// Convert ID from HEX back to DEC
+			$myRow[ "_id" ] = base_convert($myRow[ "_id" ], 16, 10); 
+
 			// Keys will be converted into lowercase!
 			$this->bufferedRecords[$iBegin] = array_change_key_case( $myRow, CASE_LOWER);
 			$iBegin++;
@@ -1850,87 +1885,21 @@ print_r ( $this->_myMongoQuery ) ;
 		if ( $iBegin == $this->_currentRecordNum )
 			return ERROR_NOMORERECORDS;
 		// --- 
-/*
+
 		// Only obtain count if enabled and not done before
-		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
+		if ( /*$this->_logStreamConfigObj->DBEnableRowCounting &&*/ $this->_totalRecordCount == -1 ) 
 		{
-			$this->_totalRecordCount = $this->GetRowCountFromTable();
+			$this->_totalRecordCount = $myCursor->count(); // $this->GetRowCountFromTable();
 
 			if ( $this->_totalRecordCount <= 0 )
 				return ERROR_NOMORERECORDS;
 		}
-*/
+
 		// Increment for the Footer Stats 
 		$querycount++;
 		
 		// return success state if reached this point!
 		return SUCCESS;
-	}
-
-	/*
-	*	Creates the SQL Statement we are going to use!
-	*/
-	private function CreateSQLStatement($uID, $includeFields = true)
-	{
-/*
-		global $dbmapping;
-		
-		// Copy helper variables, this is just for better readability
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		$szSortColumn = $this->_logStreamConfigObj->SortColumn;
-		
-		// Create Basic SQL String
-		if ( $this->_logStreamConfigObj->DBEnableRowCounting ) // with SQL_CALC_FOUND_ROWS
-			$sqlString = "SELECT SQL_CALC_FOUND_ROWS " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID];
-		else													// without row calc
-			$sqlString = "SELECT " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID];
-		
-		// Append fields if needed
-		if ( $includeFields && $this->_arrProperties != null ) 
-		{
-			// Loop through all requested fields
-			foreach ( $this->_arrProperties as $myproperty ) 
-			{	
-				// SYSLOG_UID already added!
-				if ( $myproperty != SYSLOG_UID && isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) )
-				{
-					// Append field!
-					$sqlString .= ", " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty];
-				}
-			}
-		}
-
-		// Append FROM 'table'!
-		$sqlString .= " FROM " . $this->_logStreamConfigObj->DBTableName;
-
-		// Append precreated where clause
-		$sqlString .= $this->_SQLwhereClause;
-
-		// Append UID QUERY!
-		if ( $uID != -1 )
-		{
-			if ( $this->_readDirection == EnumReadDirection::Forward )
-				$myOperator = ">=";
-			else
-				$myOperator = "<=";
-
-			if ( strlen($this->_SQLwhereClause) > 0 )
-				$sqlString .= " AND " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
-			else
-				$sqlString .= " WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " $myOperator $uID";
-		}
-
-		// Append ORDER clause
-		if ( $this->_readDirection == EnumReadDirection::Forward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn];
-		else if ( $this->_readDirection == EnumReadDirection::Backward )
-			$sqlString .= " ORDER BY " .  $dbmapping[$szTableType]['DBMAPPINGS'][$szSortColumn] . " DESC";
-
-		// return SQL result string:
-		return $sqlString;
-
-*/
-		return ""; 
 	}
 
 	/*
