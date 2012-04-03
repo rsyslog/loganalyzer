@@ -1462,15 +1462,102 @@ TODO!!!
 
 		if ( $this->_filters != null )
 		{
-			// Init Fields Array
-			foreach ( $this->_arrProperties as $property ) 
+			// Loop through all available properties
+			foreach( $this->_arrProperties as $propertyname )
 			{
-				// Check if mapping exists
-				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$property]) )
+				// If the property exists in the filter array, we have something to filter for ^^!
+				if ( array_key_exists($propertyname, $this->_filters) )
 				{
-					$this->_myMongoQuery[ $dbmapping[$szTableType]['DBMAPPINGS'][$property] ] = true; 
+					// Process all filters
+					foreach( $this->_filters[$propertyname] as $myfilter ) 
+					{
+						// Only perform if database mapping is available for this filter!
+						if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]) ) 
+						{
+							$szMongoPropID = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]; 
+
+							switch( $myfilter[FILTER_TYPE] )
+							{
+								case FILTER_TYPE_STRING:
+									// --- Either make a LIKE or a equal query!
+									if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHFULL )
+									{
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+										{
+//											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$in' => $myfilter[FILTER_VALUE] ); 
+//											$this->_myMongoQuery[ $szMongoPropID ]['$in'] = $myfilter[FILTER_VALUE] ; 
+
+											$js = "function() { return this." . $szMongoPropID . " == '" . $myfilter[FILTER_VALUE] . "'; }";
+											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$where' => $js);
+
+										}
+										else
+										{
+											$this->_myMongoQuery[ $szMongoPropID ][] = array ( '$ne' => $myfilter[FILTER_VALUE] ); 
+//											$queryarray[$propertyname] = array ( $szMongoPropID => $myfilter[FILTER_VALUE]); 
+										}
+										// ---
+									}
+/*
+									else if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX )
+									{
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addnod = "";
+										else
+											$addnod = " NOT";
+										// ---
+
+										$szSearchBegin = " REGEXP '";
+										$szSearchEnd = "' ";
+									}
+									else
+									{
+										// --- Check if user wants to include or exclude!
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addnod = "";
+										else
+											$addnod = " NOT";
+										// ---
+
+										$szSearchBegin = " LIKE '%";
+										$szSearchEnd = "%' ";
+									}
+									// ---
+
+									// --- If Syslog message, we have AND handling, otherwise OR!
+									if ( $propertyname == SYSLOG_MESSAGE )
+										$addor = " AND ";
+									else
+									{
+										// If we exclude filters, we need to combine with AND
+										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
+											$addor = " OR ";
+										else
+											$addor = " AND ";
+									}
+									// ---
+									
+									// Now Create LIKE Filters
+									if ( isset($tmpfilters[$propertyname]) ) 
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $addor . $szMongoPropID . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+									else
+									{
+										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_STRING;
+										$tmpfilters[$propertyname][FILTER_VALUE] = $szMongoPropID . $addnod . $szSearchBegin . DB_RemoveBadChars($myfilter[FILTER_VALUE]) . $szSearchEnd;
+									}
+*/
+									break;
+							}
+						}
+					}
 				}
+
 			}
+
+print_r (  array('x' => array( '$gt' => 5, '$lt' => 20 )) ); 
+print_r ( $this->_myMongoQuery ) ;
 		}
 
 		if ( $uID != UID_UNKNOWN ) 
