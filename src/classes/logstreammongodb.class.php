@@ -1456,7 +1456,6 @@ TODO!!!
 						{
 							$szMongoPropID = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]; 
 
-										print_r ( $myfilter ); 
 							switch( $myfilter[FILTER_TYPE] )
 							{
 								case FILTER_TYPE_STRING:
@@ -1500,10 +1499,10 @@ TODO!!!
 										{
 											if ( $propertyname == SYSLOG_MESSAGE ) 
 												// If we filter for Syslog MSG, we use $ALL to match all values
-												$this->_myMongoQuery[ $szMongoPropID ]['$all'][] = $myfilter[FILTER_VALUE]; 
+												$this->_myMongoQuery[ $szMongoPropID ]['$regex'][] = $myfilter[FILTER_VALUE]; // Using REGEX for now!
 											else
 												// We use $in by default to get results for each value
-												$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = $myfilter[FILTER_VALUE]; 
+												$this->_myMongoQuery[ $szMongoPropID ]['$regex'][] = $myfilter[FILTER_VALUE]; // Using REGEX for now!
 										}
 										else
 											// $ne equals NOT EQUAL 
@@ -1587,7 +1586,6 @@ TODO!!!
 						}
 					}
 				}
-
 			}
 
 			//print_r (  array('x' => array( '$gt' => 5, '$lt' => 20 )) ); 
@@ -1866,12 +1864,11 @@ TODO!!!
 		$myCursor = $myCursor->sort(array("_id" => -1));
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
-
 //		while ($myCursor->hasNext() && $myRow = $myCursor->getNext())
-		foreach ($myCursor as $myRow)
+		foreach ($myCursor as $mongoid => $myRow)
 		{
-			// Check if result was successfull!
-			if ( $myRow === FALSE || !$myRow  )
+			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
+			if ( $myRow === FALSE || !$myRow || $uID == base_convert($mongoid, 16, 10) )
 				break;
 
 			// Convert ID from HEX back to DEC
