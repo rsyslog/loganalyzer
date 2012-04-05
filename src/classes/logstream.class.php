@@ -858,30 +858,6 @@ abstract class LogStream {
 							}
 							// --- 
 							break;
-						case "processid": 
-							$tmpKeyName = SYSLOG_PROCESSID; 
-							$tmpFilterType = FILTER_TYPE_NUMBER;
-							// --- Extra numeric Check 
-							if ( isset($tmpValues) ) 
-							{
-								foreach( $tmpValues as $mykey => $szValue ) 
-								{
-									if ( is_numeric($szValue[FILTER_TMP_VALUE]) )
-										$tmpValues[$mykey][FILTER_TMP_VALUE] = $szValue[FILTER_TMP_VALUE];
-									else
-										$tmpValues[$mykey][FILTER_TMP_VALUE] = "";
-								}
-							}
-							else
-							{
-								// First set Filter Mode
-								$tmpArray[FILTER_TMP_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE], $tmpFilterType);
-
-								if ( !is_numeric($tmpArray[FILTER_TMP_VALUE]) )
-									$tmpArray[FILTER_TMP_VALUE] = "";
-							}
-							// --- 
-							break;
 						/* BEGIN Eventlog based fields */
 						case "eventid": 
 							$tmpKeyName = SYSLOG_EVENT_ID; 
@@ -967,6 +943,10 @@ abstract class LogStream {
 							$tmpKeyName = SYSLOG_DATE; 
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_LASTX; 
+							break;
+						case "processid": 
+							$tmpKeyName = SYSLOG_PROCESSID; 
+							$tmpFilterType = FILTER_TYPE_STRING;
 							break;
 						/* BEGIN WebLog based fields */
 						case SYSLOG_WEBLOG_USER: 
