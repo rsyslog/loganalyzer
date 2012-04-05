@@ -329,39 +329,6 @@ TODO
 	*/
 	public function CreateMissingIndexes( $arrProperitesIn )
 	{
-/*
-TODO
-		global $dbmapping, $fields, $querycount;
-	
-		// Get List of Indexes as Array
-		$arrIndexKeys = $this->GetIndexesAsArray(); 
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Loop through all fields to see which one is missing!
-		foreach ( $arrProperitesIn as $myproperty ) 
-		{
-			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
-				continue;
-			else
-			{
-				// Update Table schema now!
-				$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
-
-				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
-				
-				// Add missing INDEX now!
-				$myQuery = mysql_query($szSql, $this->_dbhandle);
-				if (!$myQuery)
-				{
-					// Return failure!
-					$this->PrintDebugError("Dynamically Adding INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed with Statement: '" . $szSql . "'");
-					return ERROR_DB_INDEXFAILED;
-				}
-			}
-		}
-*/
-
 		// Successfull
 		return SUCCESS; 
 	}
@@ -372,37 +339,6 @@ TODO
 	*/
 	public function CreateMissingFields( $arrProperitesIn )
 	{
-/*
-TODO
-
-		global $dbmapping, $fields, $querycount;
-	
-		// Get List of Indexes as Array
-		$arrFieldKeys = $this->GetFieldsAsArray(); 
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Loop through all fields to see which one is missing!
-		foreach ( $arrProperitesIn as $myproperty ) 
-		{
-			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
-				continue;
-			else
-			{
-				if ( $this->HandleMissingField( $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrProperitesIn ) == SUCCESS )
-				{
-					// Index is missing for this field!
-					OutputDebugMessage("LogStreamDB|CreateMissingFields: Createing missing FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], DEBUG_INFO);
-				}
-				else
-				{
-					// Return failure!
-					$this->PrintDebugError("Dynamically Adding FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed!");
-					return ERROR_DB_ADDDBFIELDFAILED;
-				}
-			}
-		}
-*/
-
 		// Successfull
 		return SUCCESS; 
 	}
@@ -413,6 +349,7 @@ TODO
 	*/
 	public function GetCreateMissingTriggerSQL( $myDBTriggerField, $myDBTriggerCheckSumField )
 	{
+		// Return nothing
 		return ""; 
 	}
 
@@ -422,33 +359,6 @@ TODO
 	*/
 	public function CreateMissingTrigger( $myTriggerProperty, $myCheckSumProperty )
 	{
-/*
-TODO
-		global $dbmapping, $fields, $querycount;
-	
-		// Get List of Triggers as Array
-		$szTableName = $this->_logStreamConfigObj->DBTableName;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
-		$szDBTriggerCheckSumField = $dbmapping[$szTableType]['DBMAPPINGS'][$myCheckSumProperty]; 
-
-		// Get SQL Code to create the trigger!
-		$szSql = $this->GetCreateMissingTriggerSQL( $szDBTriggerField, $szDBTriggerCheckSumField ); 
-		
-		// Index is missing for this field!
-		OutputDebugMessage("LogStreamDB|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
-		
-		// Add missing INDEX now!
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if (!$myQuery)
-		{
-			// Return failure!
-			$this->PrintDebugError("Dynamically Adding TRIGGER for '" . $szTableName . "' failed!<br/><br/>If you want to manually add the TRIGGER, use the following SQL Command:<br/> " . str_replace("\n", "<br/>", $szSql) . "<br/>");
-			
-			return ERROR_DB_TRIGGERFAILED;
-		}
-*/
-
 		// Successfull
 		return SUCCESS; 
 	}
@@ -459,28 +369,6 @@ TODO
 	*/
 	public function ChangeChecksumFieldUnsigned()
 	{
-/*
-TODO!!!
-		global $dbmapping, $fields, $querycount;
-
-		// Get variables
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Change Checksumfield to use UNSIGNED!
-		$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` CHANGE `" . 
-						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` `" . 
-						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` INT(11) UNSIGNED NOT NULL DEFAULT '0'"; 
-
-		// Update Table schema now!
-		$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
-		if (!$myQuery)
-		{
-			// Return failure!
-			$this->PrintDebugError("ER_BAD_FIELD_ERROR - Failed to Change field '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "' from signed to unsigned with sql statement: '" . $szUpdateSql . "'");
-			return ERROR_DB_CHECKSUMCHANGEFAILED;
-		}
-*/
-
 		// return results
 		return SUCCESS;
 	}
@@ -491,34 +379,6 @@ TODO!!!
 	*/
 	public function VerifyChecksumField()
 	{
-/*
-TODO
-		global $dbmapping, $fields, $querycount;
-		
-		// Get variables
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// Get result!
-			$myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC);
-			if (strpos( strtolower($myRow['Type']), "unsigned") === false ) 
-			{
-				// return error code!
-				return ERROR_DB_CHECKSUMERROR; 
-			}
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-*/
-
 		// return results
 		return SUCCESS;
 	}
@@ -721,34 +581,8 @@ TODO
 	*/
 	public function GetFirstPageUID()
 	{
-/* TODO
-		global $querycount, $dbmapping;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		
-		// Only perform query if row counting is enabled!
-		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
-			return $this->_firstPageUID;
-
-		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
-			$this->_firstPageUID = $myRow[0];
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-
-		// Return result!
-		return $this->_firstPageUID;
-*/
-
-		return -1;
+		// functions became obselete
+		return UID_UNKNOWN;
 	}
 
 	/**
@@ -757,35 +591,8 @@ TODO
 	*/
 	public function GetLastPageUID()
 	{
-/*
-TODO
-		global $querycount, $dbmapping;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Only perform query if row counting is enabled!
-		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
-			return $this->_lastPageUID;
-
-		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
-			$this->_lastPageUID = $myRow[0];
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-		
-		// Return result!
-		return $this->_lastPageUID;
-*/
-
-		return -1;
+		// functions became obselete
+		return UID_UNKNOWN;
 	}
 
 	/**
@@ -820,58 +627,27 @@ TODO
 	*/
 	public function GetLogStreamStats()
 	{
-/*
-		global $querycount, $dbmapping;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
+		global $querycount; 
 
-		// Perform if Connection is true!
-		if ( $this->_dbhandle != null ) 
+		$myStats = null;
+		$myList = $this->_myMongoDB->listCollections();
+		foreach ($myList as $myCollection)
 		{
-			// Obtain Stats data for this table!
-			$szSql = "SHOW TABLE STATUS FROM " .  $this->_logStreamConfigObj->DBName; 
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
-			if ($myQuery)
-			{
-				// Loop through results
-				while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
-				{
-					// Set tablename!
-					$tableName = $myRow['Name'];
-					$myStats = null;
-					$myStats[]			= array( 'StatsDisplayName' => 'Table name', 'StatsValue' => $tableName );
+			// Set tablename!
+			$tableName = $myCollection->getName(); 
+			$myStats[]			= array( 'StatsDisplayName' => 'Table name', 'StatsValue' => $tableName );
 
-					// copy usefull statsdata
-					if ( isset($myRow['Engine']) ) 
-						$myStats[]		= array( 'StatsDisplayName' => 'Table engine', 'StatsValue' => $myRow['Engine'] );
-					if ( isset($myRow['Rows']) ) 
-						$myStats[]		= array( 'StatsDisplayName' => 'Rowcount', 'StatsValue' => $myRow['Rows'] );
-					
-					if ( isset($myRow['Data_length']) ) 
-						$myStats[]		= array( 'StatsDisplayName' => 'Table filesize (bytes)', 'StatsValue' => $myRow['Data_length'] );
-					if ( isset($myRow['Collation']) ) 
-						$myStats[]		= array( 'StatsDisplayName' => 'Collation', 'StatsValue' => $myRow['Collation'] );
-					if ( isset($myRow['Comment']) ) 
-						$myStats[]		= array( 'StatsDisplayName' => 'Comment', 'StatsValue' => $myRow['Comment'] );
+			// copy usefull statsdata
+			$myStats[]		= array( 'StatsDisplayName' => 'Datacount', 'StatsValue' => $myCollection->count() );
+			$myStats[]		= array( 'StatsDisplayName' => 'IndexInfo', 'StatsValue' => var_export($myCollection->getIndexInfo(), true) );
+			// $myStats[]		= array( 'StatsDisplayName' => 'validate', 'StatsValue' => var_export($myCollection->validate(), true) );
 
-					$stats[]['STATSDATA'] = $myStats;
-				}
-
-				// Free query now
-				mysql_free_result ($myQuery); 
-
-				// Increment for the Footer Stats 
-				$querycount++;
-			}
-			
-			// return results!
-			return $stats;
+			$stats[]['STATSDATA'] = $myStats;
+			$querycount++; 
 		}
-		else
-			return null;
-*/
 
-		// NOT IMPLEMENTED YET!
-		return null;
+		// return results!
+		return $stats;
 	}
 
 	/**
@@ -901,79 +677,35 @@ TODO
 	*/
 	public function CleanupLogdataByDate( $nDateTimeStamp )
 	{
-/*
-TODO
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		// Set default rowcount
 		$rowcount = null;
 
-		// Perform if Connection is true!
-		if ( $this->_dbhandle != null ) 
+		// Create MongoDate Object from Timestamp
+		$myMongoDate = new MongoDate($nDateTimeStamp);
+
+		// Create Criteria Array
+		$myCriteria = array( $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] => array('$lte' => $myMongoDate) ); 
+
+		// Get Datacount!
+		$myCursor = $this->_myMongoCollection->find( $myCriteria ); 
+		$rowcount = $myCursor->count(); 
+		
+		// we have something to delete!
+		if ( $rowcount > 0 ) 
 		{
-			// --- Init Filters if necessary!
-			if ( $this->_filters == null )
-				$this->SetFilter( "" ); // This will init filters!
-			
-			// Create SQL Where Clause!
-			$this->CreateSQLWhereClause();
-			// ---
+			// Remove all older records now!
+			$myResult = $this->_myMongoCollection->remove( $myCriteria ); 
+			OutputDebugMessage("LogStreamMongoDB|CleanupLogdataByDate: Result of deleting '$rowcount' objects: '$myResult'", DEBUG_DEBUG);
 
-			// --- Add default WHERE clause
-			if ( strlen($this->_SQLwhereClause) > 0 ) 
-				$szWhere = $this->_SQLwhereClause;
-			else 
-				$szWhere = ""; 
-			
-			// Add Datefilter if necessary!
-			if ( $nDateTimeStamp > 0 ) 
-			{
-				if ( strlen($szWhere) > 0 ) 
-					$szWhere .= " AND "; 
-				else
-					$szWhere = " WHERE "; 
-				
-				// Append Date Filter!
-				$szWhere .= " UNIX_TIMESTAMP(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") < " . $nDateTimeStamp; 
-			}
-			// ---
-
-			// DELETE DATA NOW!
-			$szSql = "DELETE FROM " .  $this->_logStreamConfigObj->DBTableName . $szWhere; 
-			OutputDebugMessage("LogStreamDB|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
-			if ($myQuery)
-			{
-				// Get affected rows and return!
-				$rowcount = mysql_affected_rows();
-				
-				// Reset AUTO_INCREMENT if all records were deleted!
-				if ( $nDateTimeStamp == 0 ) 
-				{
-					$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " AUTO_INCREMENT=0";
-					$myQuery = mysql_query($szSql, $this->_dbhandle);
-					// error occured, output DEBUG message
-					if (!$myQuery)
-						$this->PrintDebugError("CleanupLogdataByDate failed to reset AUTO_INCREMENT for '" . $this->_logStreamConfigObj->DBTableName . "' table. ");
-				}
-
-				// Free result not needed here!
-				//mysql_free_result ($myQuery); 
-			}
-			else
-			{
-				// error occured, output DEBUG message
-				$this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
-			}
+			// error occured, output DEBUG message
+			// $this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
 		}
 
 		//return affected rows
 		return $rowcount; 
-*/
-
-		//not implemented
-		return null; 
 	}
 
 	
@@ -1015,7 +747,6 @@ TODO
 			return ERROR; 
 		}
 */
-
 		return SUCCESS; 
 	}
 
@@ -1868,7 +1599,7 @@ TODO!!!
 		foreach ($myCursor as $mongoid => $myRow)
 		{
 			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
-			if ( $myRow === FALSE || !$myRow || $uID == base_convert($mongoid, 16, 10) )
+			if ( $myRow === FALSE || !$myRow || ($uID == base_convert($mongoid, 16, 10) && $myCursor->count() <= 1) )
 				break;
 
 			// Convert ID from HEX back to DEC
