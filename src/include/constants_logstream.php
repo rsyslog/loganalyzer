@@ -384,8 +384,8 @@ $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_HOST] = "sys";
 $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_MESSAGE] = "msg";
 $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_FACILITY] = "syslog_fac";
 $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SEVERITY] = "syslog_sever";
-$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "syslog_tag";
-$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_PROCESSID] = "procid";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "procid"; // not using syslog_tag because of PID in it
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_PROCESSID] = "pid";
 $dbmapping['mongodb']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
 
 // Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 

@@ -1456,6 +1456,7 @@ TODO!!!
 						{
 							$szMongoPropID = $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname]; 
 
+										print_r ( $myfilter ); 
 							switch( $myfilter[FILTER_TYPE] )
 							{
 								case FILTER_TYPE_STRING:
