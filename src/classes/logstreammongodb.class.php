@@ -284,41 +284,6 @@ TODO!!!
 	*/
 	public function VerifyChecksumTrigger( $myTriggerProperty )
 	{
-/*
-TODO
-		global $dbmapping, $fields;
-
-		// Get List of Triggers as Array
-		$arrIndexTriggers = $this->GetTriggersAsArray(); 
-
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		$szDBName = $this->_logStreamConfigObj->DBName;
-		$szTableName = $this->_logStreamConfigObj->DBTableName;
-		$szDBTriggerField = $dbmapping[$szTableType]['DBMAPPINGS'][$myTriggerProperty]; 
-
-		// Create Triggername | lowercase!
-		$szTriggerName = strtolower( $szDBName . "_" . $szTableName . "_" . $szDBTriggerField ); 
-		
-		// Try to find logstream trigger
-		if ( count($arrIndexTriggers) > 0 ) 
-		{
-			if ( in_array($szTriggerName, $arrIndexTriggers) )
-				return SUCCESS; 
-			else
-			{
-				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: Missing TRIGGER '" . $szTriggerName . "' for Table '" . $szTableName . "'", DEBUG_WARN);
-				return ERROR_DB_TRIGGERMISSING; 
-			}
-		}
-		else
-		{
-			// Index is missing for this field!
-			OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: No TRIGGERS found in your database", DEBUG_WARN);
-			return ERROR_DB_TRIGGERMISSING; 
-		}
-*/
-
 		// Successfull
 		return SUCCESS; 
 	}
@@ -788,6 +753,8 @@ TODO
 			return ERROR; 
 */
 
+// TODO!
+
 		return SUCCESS; 
 	}
 
@@ -801,16 +768,17 @@ TODO
 	*/
 	public function ConsolidateItemListByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder)
 	{
-/*
-TODO!!!
 		global $content, $dbmapping, $fields;
 
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
-		
+
 		// Check if fields are available 
 		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
 			return ERROR_DB_DBFIELDNOTFOUND;
+
+/*
+TODO!!!
 
 		// --- Set Options 
 		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
