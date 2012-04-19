@@ -681,37 +681,65 @@ TODO!!!
 	*/
 	public function UpdateAllMessageChecksum( )
 	{
-/*
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		// UPDATE DATA NOW!
-		$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
-					" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = crc32(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
-					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
-
-		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		// --- Create Query Array!
+		$myMongoQuery = array(); 
+		if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
+			return $res;
 		
-		// Running SQL Query
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// Debug Output
-			OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysql_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
+		// Copy array 
+		$myMongoQuery = $this->_myMongoQuery; 
 
-			// Return success
-			return SUCCESS; 
-		}
-		else
-		{
-			// error occured, output DEBUG message
-			$this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+		// Set default for custom fields!
+//		$myMongoQuery[ $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] ] = array( '$exists' => FALSE); 
+		$myMongoQuery[ $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] ] = null; 
+		// var_dump ( $myMongoQuery ); 
+		// ---
 
-			// Failed
-			return ERROR; 
+		// --- Set DB Fields Array 
+		$myMongoFields = array(); 
+		$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] ] = true; 
+		$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] ] = true; 
+		// ---
+		
+		// DEBUG CODE: KILL all checksums!
+//		echo $this->_myMongoCollection->update( array ( "_id" => array( '$exists' => TRUE) ), array( '$set' => array($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] => null) ), array("multiple" => true) );
+//		exit; 
+		//
+
+		// Append LIMIT clause
+		$iCount = 0; 
+		$myCursor = $this->_myMongoCollection->find($myMongoQuery, $myMongoFields); // ->limit(10); // $collection->find();
+		foreach ($myCursor as $mongoid => $myRow)
+		{
+			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
+			if ( $myRow === FALSE || !$myRow && $myCursor->count() <= 1 )
+				break;
+// var_dump ( $myRow ); 
+
+			// Create Querydata
+			$myRow[ "_id" ]; // = base_convert($myRow[ "_id" ], 16, 10); // Convert ID from HEX back to DEC
+			// $mongoID = new MongoID( $myRow[ "_id" ] );
+			$queryArray = array('_id' => $myRow[ "_id" ]);
+			
+			// Create Update Data
+			$updateChecksum = crc32($myRow[ $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] ]);
+			$updateData = array( '$set' => array($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] => $updateChecksum) ); 
+
+			// Update data in Collection
+			$this->_myMongoCollection->update( $queryArray, $updateData );
+			$iCount++; // Debugcounter
+
+//var_dump ( $updateData ); 
+//var_dump ( $queryArray ); 
+//var_dump ( $this->_myMongoCollection->findOne($queryArray) ); 
+//exit; 
 		}
-*/
+
+		// Debug Output
+		OutputDebugMessage("LogStreamMongoDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . $iCount . "' datarecords", DEBUG_INFO);
 		return SUCCESS; 
 	}
 
@@ -723,39 +751,31 @@ TODO!!!
 	*/
 	public function SaveMessageChecksum( $arrProperitesIn )
 	{
-/*
+echo "wtf";
+exit; 
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		if ( isset($arrProperitesIn[SYSLOG_UID]) && isset($arrProperitesIn[MISC_CHECKSUM]) && isset($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]) )
 		{
-			// UPDATE DATA NOW!
-			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
-						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = " . $arrProperitesIn[MISC_CHECKSUM] . 
-						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " = " . $arrProperitesIn[SYSLOG_UID]; 
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
-			if ($myQuery)
-			{
-				// Return success
-				return SUCCESS; 
-			}
-			else
-			{
-				// error occured, output DEBUG message
-				$this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+			// Create Querydata
+			$myMongoID = new MongoId( base_convert($arrProperitesIn[SYSLOG_UID], 10, 16) ); 
+			$queryArray = array('_id' => $myMongoID);
+			
+			// Create Update Data
+			$updateData = array( '$set' => array($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] => $arrProperitesIn[MISC_CHECKSUM]) ); 
+			
+			// Update data in Collection
+			$this->_myMongoCollection->update( $queryArray, $updateData );
+// TODO: ERROR HANDLING!
+// $this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
 
-				// Failed
-				return ERROR; 
-			}
+			// Return success
+			return SUCCESS; 
 		}
 		else
 			// Missing important properties
 			return ERROR; 
-*/
-
-// TODO!
-
-		return SUCCESS; 
 	}
 
 
@@ -777,30 +797,26 @@ TODO!!!
 		if ( !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId]) || !isset($dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId]) )
 			return ERROR_DB_DBFIELDNOTFOUND;
 
-/*
-TODO!!!
-
 		// --- Set Options 
 		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
-
-		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
-			$szSortingOrder = "DESC"; 
-		else
-			$szSortingOrder = "ASC"; 
-		// --- 
 
 		// --- Set DB Field names
 		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
 		$myDBGroupByFieldName = $myDBConsFieldName;
-		$myDBQueryFields = $myDBConsFieldName . ", ";
-
+//		$myDBQueryFields = $myDBConsFieldName . ", ";
 		// Set Sorted Field
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "itemcount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
-		
+
+		// --- Set DB Fields Array 
+		$myMongoFields = array(); 
+		$myMongoFields[ $myDBConsFieldName ] = true; 
+		// ---
+
+/*
 		// Special handling for date fields
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
@@ -822,7 +838,22 @@ TODO!!!
 			if ( $res != SUCCESS ) 
 				return $res;
 		}
+*/
 
+		// --- Create Query Array!
+		$myMongoQuery = array(); 
+		if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
+			return $res;
+
+		// Copy array 
+		$myMongoQuery = $this->_myMongoQuery; 
+
+		// Set default for custom fields!
+		$myMongoQuery[ $myDBSortedFieldName ] = 0; 
+		// ---
+
+
+/*
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
@@ -832,46 +863,56 @@ TODO!!!
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
+*/
+
+
+
+		// --- Process Data and consolidate!
+		
+		// Create reduce function
+		$groupReduce = "function (obj, prev) { prev." . $myDBSortedFieldName . "++; }";
+
+		// mongodb group is simular to groupby from MYSQL
+		$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
 
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|ConsolidateItemListByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
-		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
-		if ( !$myquery ) 
-			return ERROR_DB_QUERYFAILED;
-		
 		// Initialize Array variable
 		$aResult = array();
 
-		// read data records
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		// Loop through results
+		foreach ($myResult['retval'] as $myid => $myRow)
 		{
-			// Create new row
+			// Create new row for resultarray
 			$aNewRow = array();
 
 			foreach ( $myRow as $myFieldName => $myFieldValue ) 
 			{
-				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
-					$aNewRow[$szConsFieldId] = $myFieldValue;
-				else
-					$aNewRow[$myFieldName] = $myFieldValue;
+				if ( !is_array($myFieldValue) )
+				{
+					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+					$aNewRow[ $myFieldID ] = $myFieldValue;
+				}
 			}
-			
 			// Add new row to result
 			$aResult[] = $aNewRow;
 		}
 
 		// return finished array
 		if ( count($aResult) > 0 )
+		{
+			// Use callback function to sort array
+			if ( $nSortingOrder == SORTING_ORDER_DESC )
+				uasort($aResult, "MultiSortArrayByItemCountDesc");
+			else
+				uasort($aResult, "MultiSortArrayByItemCountAsc");
+// print_r ( var_export($aResult, true) ); 
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array: " . var_export($aResult, true), DEBUG_DEBUG);
 			return $aResult;
+		}
 		else
 			return ERROR_NOMORERECORDS;
-
-*/
-		
-		// NOT IMPLEMENTED
-		return ERROR_NOMORERECORDS;
 	}
 
 
@@ -884,9 +925,6 @@ TODO!!!
 	*/
 	public function ConsolidateDataByField($szConsFieldId, $nRecordLimit, $szSortFieldId, $nSortingOrder, $aIncludeCustomFields = null, $bIncludeLogStreamFields = false, $bIncludeMinMaxDateFields = false)
 	{
-/*
-TODO!!!
-
 		global $content, $dbmapping, $fields;
 
 		// Copy helper variables, this is just for better readability
@@ -899,77 +937,164 @@ TODO!!!
 		// --- Set Options 
 		$nConsFieldType = $fields[$szConsFieldId]['FieldType'];
 
-		if ( $nSortingOrder == SORTING_ORDER_DESC ) 
-			$szSortingOrder = "DESC"; 
-		else
-			$szSortingOrder = "ASC"; 
-		// --- 
-
 		// --- Set DB Field names
 		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
 		$myDBGroupByFieldName = $myDBConsFieldName;
-		
-		// Check which fields to include
-		if ( $aIncludeCustomFields != null ) 
-		{
-			$myDBQueryFields = "";
-			foreach ( $aIncludeCustomFields as $myFieldName ) 
-			{
-				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
-					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
-			}
-			
-			// Append Sortingfield
-			if ( !in_array($szConsFieldId, $aIncludeCustomFields) )
-				$myDBQueryFields .= $myDBConsFieldName . ", ";
-		}
-		else if ( $bIncludeLogStreamFields ) 
-		{
-			$myDBQueryFields = "";
-			foreach ( $this->_arrProperties as $myFieldName ) 
-			{
-				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
-					$myDBQueryFields .= $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] . ", ";
-			}
-		}
-		else // Only Include ConsolidateField
-			$myDBQueryFields = $myDBConsFieldName . ", ";
-		
-		// Add Min and Max fields for DATE if desired 
-		if ( $bIncludeMinMaxDateFields )
-		{
-			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as firstoccurrence_date, ";
-			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as lastoccurrence_date, ";
-		}
-		
+		// Set Sorted Field
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "itemcount"; 
 		else
 			$myDBSortedFieldName = $szSortFieldId; 
 		// --- 
 
+		// --- Set DB Fields Array 
+		$myMongoFields = array(); 
+		$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] ] = true; 
+		$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$szSortFieldId] ] = true; 
+
+		// Check which fields to include
+		if ( $aIncludeCustomFields != null ) 
+		{
+			foreach ( $aIncludeCustomFields as $myFieldName ) 
+			{
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] ] = true; 
+			}
+			
+			// Append Sortingfield
+			if ( !in_array($szConsFieldId, $aIncludeCustomFields) )
+				$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] ] = true; 
+		}
+		else if ( $bIncludeLogStreamFields ) 
+		{
+			// var_dump($this->_arrProperties ); 
+			foreach ( $this->_arrProperties as $myFieldName ) 
+			{
+				if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName]) ) 
+					$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$myFieldName] ] = true; 
+			}
+		}
+
+//$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] ] = 1; 
+var_dump($myMongoFields); 
+
+		// --- Create Query Array!
+		$myMongoQuery = array(); 
+		if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
+			return $res;
+
+		// Copy array 
+		$myMongoQuery = $this->_myMongoQuery; 
+
+		// Set default for custom fields!
+		$myMongoQuery[ $myDBSortedFieldName ] = 0; // Set default for counter field
+
+		// Add Min and Max fields for DATE if desired 
+		if ( $bIncludeMinMaxDateFields )
+		{
+// TODO!
+//			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as firstoccurrence_date, ";
+//			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as lastoccurrence_date, ";
+//			$myMongoQuery[ firstoccurrence_date ] = "$min"; //  =>  );
+//			$myMongoQuery[ lastoccurrence_date ] = 0;
+		}
+		// ---
+
+//var_dump($myMongoQuery); 
+		// ---
+
 		// Special handling for date fields
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
+			echo "!"; 
+			exit;
 			// Helper variable for the select statement
 			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
 
+/*
+TODO!!!
 		// Set Limit String
 		if ( $nRecordLimit > 0 ) 
 			$szLimitSql = " LIMIT " . $nRecordLimit;
 		else
 			$szLimitSql = "";
-
-		// Create SQL Where Clause!
-		if ( strlen($this->_SQLwhereClause) <= 0 ) 
+*/
+		// --- Process Data and consolidate!
+		// Create reduce function
+		$groupReduce = "
+		function (obj, prev) 
+		{ 
+			prev." . $myDBSortedFieldName . "++; "; 
+		// Add fields!
+		foreach( $myMongoFields as $key => $myfield )
 		{
-			$res = $this->CreateSQLWhereClause();
-			if ( $res != SUCCESS ) 
-				return $res;
+			if ( $key != $myDBConsFieldName ) 
+				$groupReduce .= "prev." . $key . " = obj." . $key . ";"; 
 		}
 
+		$groupReduce .= "
+		}";
+
+		// mongodb group is simular to groupby from MYSQL
+		$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+
+		// Output Debug Informations
+		OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
+
+		// Initialize Array variable
+		$aResult = array();
+		
+		// Loop through results
+		foreach ($myResult['retval'] as $myid => $myRow)
+		{
+
+			// Create new row for resultarray
+			$aNewRow = array();
+			
+			// Dummy
+			if ( $bIncludeMinMaxDateFields )
+			{
+				$myDate = $myRow[$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE]]; 
+//echo "!". gettype($myDate); 
+//print_r ( $myRow ); 
+//echo "!" . $myDate->sec; 
+//exit;
+
+				$aNewRow['firstoccurrence_date'] = time(); // $myDate->sec; 
+				$aNewRow['lastoccurrence_date'] = time(); // $myDate->sec; 
+			}
+
+
+			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			{
+				if ( !is_array($myFieldValue) )
+				{
+					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+					$aNewRow[ $myFieldID ] = $myFieldValue;
+				}
+			}
+			// Add new row to result
+			$aResult[] = $aNewRow;
+		}
+
+		// return finished array
+		if ( count($aResult) > 0 )
+		{
+			// Use callback function to sort array
+			if ( $nSortingOrder == SORTING_ORDER_DESC )
+				uasort($aResult, "MultiSortArrayByItemCountDesc");
+			else
+				uasort($aResult, "MultiSortArrayByItemCountAsc");
+
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array: " . var_export($aResult, true), DEBUG_DEBUG);
+			return $aResult;
+		}
+		else
+			return ERROR_NOMORERECORDS;
+		// ---
+/*
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
@@ -979,44 +1104,7 @@ TODO!!!
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
 					$szLimitSql ;
-
-		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
-
-		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
-		if ( !$myquery ) 
-			return ERROR_DB_QUERYFAILED;
-
-		// Initialize Array variable
-		$aResult = array();
-
-		// read data records
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
-		{
-			// Create new row
-			$aNewRow = array();
-
-			foreach ( $myRow as $myFieldName => $myFieldValue ) 
-			{
-				$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
-				$aNewRow[ $myFieldID ] = $myFieldValue;
-
-//				}
-			}
-			// Add new row to result
-			$aResult[] = $aNewRow;
-		}
-
-		// return finished array
-		if ( count($aResult) > 0 )
-			return $aResult;
-		else
-			return ERROR_NOMORERECORDS;
 */
-
-		// NOT IMPLEMENTED
-		return ERROR_NOMORERECORDS;
 	}
 
 	/**
@@ -1028,6 +1116,7 @@ TODO!!!
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
+		echo "!GetCountSortedByField!"; 
 /*
 TODO!!!
 		global $content, $dbmapping;
@@ -1641,12 +1730,15 @@ TODO!!!
 	*/
 	private function GetRowCountByString($szQuery)
 	{
+/* TODO!
 		if ($myQuery = mysql_query($szQuery)) 
 		{   
 			$num_rows = mysql_num_rows($myQuery);
 			mysql_free_result ($myQuery); 
 		}
 		return $num_rows;
+*/
+		return -1; 
 	}
 
 	/*
@@ -1654,8 +1746,11 @@ TODO!!!
 	*/
 	private function GetRowCountByQueryID($myQuery)
 	{
+/* TODO!
 		$num_rows = mysql_num_rows($myQuery);
 		return $num_rows;
+*/
+		return -1; 
 	}
 
 	/*
@@ -1663,6 +1758,8 @@ TODO!!!
 	*/
 	private function GetRowCountFromTable()
 	{
+// TODO!
+/*
 		if ( $myquery = mysql_query("Select FOUND_ROWS();", $this->_dbhandle) ) 
 		{
 			// Get first and only row!
@@ -1676,217 +1773,8 @@ TODO!!!
 
 		// return result!
 		return $numRows;
-
-		/* OLD slow code!
-		global $dbmapping,$querycount;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Create Statement and perform query!
-		$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
-		if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
-		{
-			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
-			$numRows = $myRow[0];
-
-			// Increment for the Footer Stats 
-			$querycount++;
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-		}
-		else
-			$numRows = -1;
 		*/
-	}
-
-	/*
-	*	Function handles missing database fields automatically!
-	*/
-	private function HandleMissingField( $szMissingField = null, $arrProperties = null )
-	{
-		global $dbmapping, $fields;
-
-		// Get Err description
-		$errdesc = mysql_error();
-		
-		// Try to get missing field from SQL Error of not specified as argument
-		if ( $szMissingField == null ) 
-		{
-			if ( preg_match("/Unknown column '(.*?)' in '(.*?)'$/", $errdesc, $errOutArr ) ) 
-				$szMissingField = $errOutArr[1]; 
-			else
-			{
-				$this->PrintDebugError("ER_BAD_FIELD_ERROR - SQL Statement: ". $errdesc);
-				return ERROR_DB_DBFIELDNOTFOUND;
-			}
-		}
-
-		// Set Properties to default if NULL 
-		if ( $arrProperties == null ) 
-			$arrProperties = $this->_arrProperties; 
-		
-		// Get Tabletype
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Loop through all fields to see which one is missing!
-		foreach ( $arrProperties as $myproperty ) 
-		{
-			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && $szMissingField == $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] )
-			{
-				// Create SQL Numeric field
-				$szUpdateSql = ""; $szUnsigned = "";
-				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_NUMBER ) 
-				{
-					// This will add the checksum field as unsigned automatically!
-					if ( $myproperty == MISC_CHECKSUM ) 
-						$szUnsigned = "UNSIGNED";
-					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` int(11) " . $szUnsigned . " NOT NULL DEFAULT '0'"; 
-				}
-				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_STRING ) 
-					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` varchar(60) NOT NULL DEFAULT ''"; 
-				if ( $fields[$myproperty]['FieldType'] == FILTER_TYPE_DATE ) 
-					$szUpdateSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD `" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'"; 
-
-				if ( strlen($szUpdateSql) > 0 )
-				{
-					// Update Table schema now!
-					$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
-					if (!$myQuery)
-					{
-						// Return failure!
-						$this->PrintDebugError("ER_BAD_FIELD_ERROR - Dynamically Adding field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' with Statement failed: '" . $szUpdateSql . "'");
-						return ERROR_DB_ADDDBFIELDFAILED;
-					}
-				}
-				else
-				{
-					// Return failure!
-					$this->PrintDebugError("ER_BAD_FIELD_ERROR - Field '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' is missing has to be added manually to the database layout!'");
-					return ERROR_DB_ADDDBFIELDFAILED;
-				}
-			}
-		}
-
-		// Reached this point means success!
-		return SUCCESS; 
-	}
-
-	/*
-	*	Helper function to return a list of Indexes for the logstream table 
-	*/
-	private function GetIndexesAsArray()
-	{
-		global $querycount;
-
-		// Verify database connection (This also opens the database!)
-		$res = $this->Verify();
-		if ( $res != SUCCESS ) 
-			return $res;
-		
-		// Init Array
-		$arrIndexKeys = array();
-
-		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
-			{
-				// Add to index keys
-				$arrIndexKeys[] = strtolower($myRow['Key_name']); 
-			}
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-
-		// return Array
-		return $arrIndexKeys; 
-	}
-
-
-	/*
-	*	Helper function to return a list of Fields from the logstream table 
-	*/
-	private function GetFieldsAsArray()
-	{
-		global $querycount;
-
-		// Verify database connection (This also opens the database!)
-		$res = $this->Verify();
-		if ( $res != SUCCESS ) 
-			return $res;
-		
-		// Init Array
-		$arrFieldKeys = array();
-
-		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
-			{
-				// Add to index keys
-				$arrFieldKeys[] = strtolower($myRow['Field']); 
-			}
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-
-		// return Array
-		return $arrFieldKeys; 
-	}
-
-
-	/*
-	*	Helper function to return a list of Indexes for the logstream table 
-	*/
-	private function GetTriggersAsArray()
-	{
-		global $querycount;
-
-		// Verify database connection (This also opens the database!)
-		$res = $this->Verify();
-		if ( $res != SUCCESS ) 
-			return $res;
-		
-		// Init Array
-		$arrIndexTriggers = array();
-
-		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW TRIGGERS"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
-		if ($myQuery)
-		{
-			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
-			{
-//				print_r (  $myRow ); 
-				// Add to index keys
-				$arrIndexTriggers[] = strtolower($myRow['Trigger']); 
-			}
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-
-			// Increment for the Footer Stats 
-			$querycount++;
-		}
-
-		// return Array
-		return $arrIndexTriggers; 
+		return -1; 
 	}
 
 // --- End of Class!

@@ -73,7 +73,7 @@ class Report_syslogsummary extends Report {
 		$this->_arrProperties[] = SYSLOG_FACILITY;
 		$this->_arrProperties[] = SYSLOG_SEVERITY;
 		$this->_arrProperties[] = SYSLOG_SYSLOGTAG;
-		$this->_arrProperties[] = SYSLOG_PROCESSID;
+		// $this->_arrProperties[] = SYSLOG_PROCESSID;
 		$this->_arrProperties[] = SYSLOG_MESSAGE;
 		$this->_arrProperties[] = MISC_CHECKSUM;
 
