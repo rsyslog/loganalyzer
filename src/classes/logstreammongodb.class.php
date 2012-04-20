@@ -5,15 +5,13 @@
 	* -----------------------------------------------------------------	*
 	* Some constants													*
 	*																	*
-	* LogStreamDB provides access to the data in database. In the most
-	* cases this will be plain text files. If we need access to e.g.
-	* zipped files, this will be handled by a separate driver.
+	* LogStreamMongoDB provides access to MongoDB databases.
 	*
-	* \version 2.0.0 Init Version
+	* \version 1.0.0 Init Version
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2010 Adiscon GmbH.
+	* Copyright (C) 2008-2012 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -109,6 +107,7 @@ class LogStreamMongoDB extends LogStream {
 			return $res;
 		
 		// Create Filters for first time!
+// NEEDED OR NOT?
 //		$res = $this->CreateQueryArray(UID_UNKNOWN);
 //		if ( $res != SUCCESS ) 
 //			return $res;
@@ -162,15 +161,15 @@ class LogStreamMongoDB extends LogStream {
 		{
 			try 
 			{
-// TODO: USername and Password support!
+// TODO: Username and Password support!
 				// Forces to open a new Connection
 				$this->_myMongoCon = new Mongo("mongodb://" . $this->_logStreamConfigObj->DBServer . ":" . $this->_logStreamConfigObj->DBPort ); // Connect to Mongo Server
 			}
 			catch ( MongoConnectionException $e ) 
 			{
-				global $extraErrorDescription;
-				$extraErrorDescription = $e->getMessage;
-				 
+				// Log error!
+				$this->PrintDebugError("Verify:Connect failed with error ' " . $e->getMessage() . " '");
+
 				// Return error code
 				return ERROR_DB_CONNECTFAILED;
 			}
@@ -182,8 +181,8 @@ class LogStreamMongoDB extends LogStream {
 		}
 		catch ( MongoException $e ) 
 		{
-			global $extraErrorDescription;
-			$extraErrorDescription = $e->getMessage;
+			// Log error!
+			$this->PrintDebugError("Verify:selectDB failed with error ' " . $e->getMessage() . " '");
 
 			// Return error code
 			return ERROR_DB_CANNOTSELECTDB;
@@ -196,8 +195,8 @@ class LogStreamMongoDB extends LogStream {
 		}
 		catch ( MongoException $e ) 
 		{
-			global $extraErrorDescription;
-			$extraErrorDescription = $e->getMessage;
+			// Log error!
+			$this->PrintDebugError("Verify:selectCollection failed with error ' " . $e->getMessage() . " '");
 
 			// Return error code
 			return ERROR_DB_TABLENOTFOUND;
@@ -213,33 +212,7 @@ class LogStreamMongoDB extends LogStream {
 	*/
 	public function VerifyFields( $arrProperitesIn )
 	{
-/*
-TODO!!!
-		global $dbmapping, $fields;
-
-		// Get List of Indexes as Array
-		$arrFieldKeys = $this->GetFieldsAsArray(); 
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Loop through all fields to see which one is missing!
-		foreach ( $arrProperitesIn as $myproperty ) 
-		{
-//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
-			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
-			{
-				OutputDebugMessage("LogStreamDB|VerifyFields: Found Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
-				continue;
-			}
-			else
-			{
-				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyFields: Missing Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
-				return ERROR_DB_DBFIELDNOTFOUND; 
-			}
-		}
-*/
-
-		// Successfull
+		// Not needed, successfull
 		return SUCCESS; 
 	}
 
@@ -249,42 +222,21 @@ TODO!!!
 	*/
 	public function VerifyIndexes( $arrProperitesIn )
 	{
-/*
-TODO!!!
-		global $dbmapping, $fields;
+		/*
+		TODO!!!
+		needed ? 
+		*/
 
-		// Get List of Indexes as Array
-		$arrIndexKeys = $this->GetIndexesAsArray(); 
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Loop through all fields to see which one is missing!
-		foreach ( $arrProperitesIn as $myproperty ) 
-		{
-//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
-			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
-			{
-				OutputDebugMessage("LogStreamDB|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
-				continue;
-			}
-			else
-			{
-				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
-				return ERROR_DB_INDEXESMISSING; 
-			}
-		}
-*/		
 		// Successfull
 		return SUCCESS; 
 	}
-
 
 	/*
 	*	Implementation of VerifyChecksumTrigger: Checks if checksum trigger exists
 	*/
 	public function VerifyChecksumTrigger( $myTriggerProperty )
 	{
-		// Successfull
+		// Not needed, successfull
 		return SUCCESS; 
 	}
 
@@ -347,7 +299,6 @@ TODO!!!
 		// return results
 		return SUCCESS;
 	}
-
 
 	/**
 	* Read the data from a specific uID which means in this
@@ -654,19 +605,27 @@ TODO!!!
 		// Create Criteria Array
 		$myCriteria = array( $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] => array('$lte' => $myMongoDate) ); 
 
-		// Get Datacount!
-		$myCursor = $this->_myMongoCollection->find( $myCriteria ); 
-		$rowcount = $myCursor->count(); 
-		
-		// we have something to delete!
-		if ( $rowcount > 0 ) 
+		try 
 		{
-			// Remove all older records now!
-			$myResult = $this->_myMongoCollection->remove( $myCriteria ); 
-			OutputDebugMessage("LogStreamMongoDB|CleanupLogdataByDate: Result of deleting '$rowcount' objects: '$myResult'", DEBUG_DEBUG);
+			// Get Datacount!
+			$myCursor = $this->_myMongoCollection->find( $myCriteria ); 
+			$rowcount = $myCursor->count(); 
+		
+			// we have something to delete!
+			if ( $rowcount > 0 ) 
+			{
+				// Remove all older records now!
+				$myResult = $this->_myMongoCollection->remove( $myCriteria ); 
+				OutputDebugMessage("LogStreamMongoDB|CleanupLogdataByDate: Result of deleting '$rowcount' objects: '$myResult'", DEBUG_DEBUG);
 
-			// error occured, output DEBUG message
-			// $this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
+				// error occured, output DEBUG message
+				// $this->PrintDebugError("CleanupLogdataByDate failed with SQL Statement ' " . $szSql . " '");
+			}
+		}
+		catch ( MongoCursorException $e ) 
+		{
+			// Log error!
+			$this->PrintDebugError("CleanupLogdataByDate failed with error ' " . $e->getMessage() . " '");
 		}
 
 		//return affected rows
@@ -717,7 +676,6 @@ TODO!!!
 			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
 			if ( $myRow === FALSE || !$myRow && $myCursor->count() <= 1 )
 				break;
-// var_dump ( $myRow ); 
 
 			// Create Querydata
 			$myRow[ "_id" ]; // = base_convert($myRow[ "_id" ], 16, 10); // Convert ID from HEX back to DEC
@@ -732,17 +690,16 @@ TODO!!!
 			$this->_myMongoCollection->update( $queryArray, $updateData );
 			$iCount++; // Debugcounter
 
-//var_dump ( $updateData ); 
-//var_dump ( $queryArray ); 
-//var_dump ( $this->_myMongoCollection->findOne($queryArray) ); 
-//exit; 
+			//var_dump ( $updateData ); 
+			//var_dump ( $queryArray ); 
+			//var_dump ( $this->_myMongoCollection->findOne($queryArray) ); 
+			//exit; 
 		}
 
 		// Debug Output
 		OutputDebugMessage("LogStreamMongoDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . $iCount . "' datarecords", DEBUG_INFO);
 		return SUCCESS; 
 	}
-
 
 	/*
 	*	Implementation of the SaveMessageChecksum
@@ -751,8 +708,6 @@ TODO!!!
 	*/
 	public function SaveMessageChecksum( $arrProperitesIn )
 	{
-echo "wtf";
-exit; 
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
@@ -765,10 +720,19 @@ exit;
 			// Create Update Data
 			$updateData = array( '$set' => array($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] => $arrProperitesIn[MISC_CHECKSUM]) ); 
 			
-			// Update data in Collection
-			$this->_myMongoCollection->update( $queryArray, $updateData );
-// TODO: ERROR HANDLING!
-// $this->PrintDebugError("SaveMessageChecksum failed with SQL Statement ' " . $szSql . " '");
+			try 
+			{
+				// Update data in Collection
+				$this->_myMongoCollection->update( $queryArray, $updateData );
+			}
+			catch ( MongoCursorException $e ) 
+			{
+				// Log error!
+				$this->PrintDebugError("SaveMessageChecksum failed with error ' " . $e->getMessage() . " '");
+				 
+				// Return error code
+				return ERROR_DB_QUERYFAILED;
+			}
 
 			// Return success
 			return SUCCESS; 
@@ -803,7 +767,7 @@ exit;
 		// --- Set DB Field names
 		$myDBConsFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId];
 		$myDBGroupByFieldName = $myDBConsFieldName;
-//		$myDBQueryFields = $myDBConsFieldName . ", ";
+
 		// Set Sorted Field
 		if ( $szConsFieldId == $szSortFieldId ) 
 			$myDBSortedFieldName = "itemcount"; 
@@ -824,20 +788,6 @@ exit;
 			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
-
-		// Set Limit String
-		if ( $nRecordLimit > 0 ) 
-			$szLimitSql = " LIMIT " . $nRecordLimit;
-		else
-			$szLimitSql = "";
-
-		// Create SQL Where Clause!
-		if ( $this->_SQLwhereClause == "" ) 
-		{
-			$res = $this->CreateSQLWhereClause();
-			if ( $res != SUCCESS ) 
-				return $res;
-		}
 */
 
 		// --- Create Query Array!
@@ -852,31 +802,26 @@ exit;
 		$myMongoQuery[ $myDBSortedFieldName ] = 0; 
 		// ---
 
-
-/*
-		// Create SQL String now!
-		$szSql =	"SELECT " . 
-					$myDBQueryFields .  
-					"count(" . $myDBConsFieldName . ") as itemcount " . 
-					" FROM " . $this->_logStreamConfigObj->DBTableName . 
-					$this->_SQLwhereClause . 
-					" GROUP BY " . $myDBGroupByFieldName . 
-					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
-					$szLimitSql ;
-*/
-
-
-
 		// --- Process Data and consolidate!
-		
 		// Create reduce function
 		$groupReduce = "function (obj, prev) { prev." . $myDBSortedFieldName . "++; }";
 
-		// mongodb group is simular to groupby from MYSQL
-		$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+		try 
+		{
+			// Output Debug Informations
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
-		// Output Debug Informations
-		OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
+			// mongodb group is simular to groupby from MYSQL
+			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+		}
+		catch ( MongoCursorException $e ) 
+		{
+			// Log error!
+			$this->PrintDebugError("ConsolidateItemListByField failed with error ' " . $e->getMessage() . " '");
+			 
+			// Return error code
+			return ERROR_DB_QUERYFAILED;
+		}
 
 		// Initialize Array variable
 		$aResult = array();
@@ -889,7 +834,7 @@ exit;
 
 			foreach ( $myRow as $myFieldName => $myFieldValue ) 
 			{
-				if ( !is_array($myFieldValue) )
+				if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Process normal values
 				{
 					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
 					$aNewRow[ $myFieldID ] = $myFieldValue;
@@ -907,8 +852,21 @@ exit;
 				uasort($aResult, "MultiSortArrayByItemCountDesc");
 			else
 				uasort($aResult, "MultiSortArrayByItemCountAsc");
-// print_r ( var_export($aResult, true) ); 
-			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array: " . var_export($aResult, true), DEBUG_DEBUG);
+
+			// Check if we have to truncate the array
+			if ($nRecordLimit != 0 && count($aResult) > $nRecordLimit)
+			{	
+				// Create new stripped array
+				$aStripResult = array (); 
+				for($iCount = 0; $iCount < $nRecordLimit; $iCount++)
+					$aStripResult[$iCount] = $aResult[$iCount]; 
+				
+				// Overwrite stripped results
+				$aResult = $aStripResult; 
+			}
+
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Results Array (count " . count($aResult) . ")", DEBUG_ULTRADEBUG);
+			// OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Results Array <pre>" . var_export($aResult, true) . "</pre>", DEBUG_ULTRADEBUG);
 			return $aResult;
 		}
 		else
@@ -976,7 +934,7 @@ exit;
 		}
 
 //$myMongoFields[ $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] ] = 1; 
-var_dump($myMongoFields); 
+//var_dump($myMongoFields); 
 
 		// --- Create Query Array!
 		$myMongoQuery = array(); 
@@ -989,17 +947,7 @@ var_dump($myMongoFields);
 		// Set default for custom fields!
 		$myMongoQuery[ $myDBSortedFieldName ] = 0; // Set default for counter field
 
-		// Add Min and Max fields for DATE if desired 
-		if ( $bIncludeMinMaxDateFields )
-		{
-// TODO!
-//			$myDBQueryFields .= "Min(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as firstoccurrence_date, ";
-//			$myDBQueryFields .= "Max(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ") as lastoccurrence_date, ";
-//			$myMongoQuery[ firstoccurrence_date ] = "$min"; //  =>  );
-//			$myMongoQuery[ lastoccurrence_date ] = 0;
-		}
-		// ---
-
+//TODO		$myMongoQuery[ '$limit' ] = 5; 
 //var_dump($myMongoQuery); 
 		// ---
 
@@ -1013,35 +961,48 @@ var_dump($myMongoFields);
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
 
-/*
-TODO!!!
-		// Set Limit String
-		if ( $nRecordLimit > 0 ) 
-			$szLimitSql = " LIMIT " . $nRecordLimit;
-		else
-			$szLimitSql = "";
-*/
 		// --- Process Data and consolidate!
 		// Create reduce function
 		$groupReduce = "
 		function (obj, prev) 
 		{ 
 			prev." . $myDBSortedFieldName . "++; "; 
-		// Add fields!
-		foreach( $myMongoFields as $key => $myfield )
-		{
-			if ( $key != $myDBConsFieldName ) 
-				$groupReduce .= "prev." . $key . " = obj." . $key . ";"; 
-		}
-
+			// Add fields!
+			foreach( $myMongoFields as $key => $myfield )
+			{
+				if ( $key != $myDBConsFieldName ) 
+					$groupReduce .= "prev." . $key . " = obj." . $key . ";"; 
+			}
+			if ( $bIncludeMinMaxDateFields )
+			{
+				$groupReduce .= "
+				if ( prev.firstoccurrence_date == null || prev.firstoccurrence_date > obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {
+					prev.firstoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . "; 
+				}
+				if ( prev.lastoccurrence_date == null || prev.lastoccurrence_date < obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {
+					prev.lastoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . "; 
+				}";
+			}
 		$groupReduce .= "
-		}";
+		}
+		";
 
-		// mongodb group is simular to groupby from MYSQL
-		$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+		try 
+		{
+			// Output Debug Informations
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
-		// Output Debug Informations
-		OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
+			// mongodb group is simular to groupby from MYSQL
+			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+		}
+		catch ( MongoCursorException $e ) 
+		{
+			// Log error!
+			$this->PrintDebugError("ConsolidateDataByField failed with error ' " . $e->getMessage() . " '");
+			 
+			// Return error code
+			return ERROR_DB_QUERYFAILED;
+		}
 
 		// Initialize Array variable
 		$aResult = array();
@@ -1053,23 +1014,33 @@ TODO!!!
 			// Create new row for resultarray
 			$aNewRow = array();
 			
-			// Dummy
+			// Handly Datefields for min and max!
 			if ( $bIncludeMinMaxDateFields )
 			{
-				$myDate = $myRow[$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE]]; 
+				if ( isset($myRow['firstoccurrence_date']) && isset($myRow['lastoccurrence_date']) ) 
+				{
+					$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myRow['firstoccurrence_date']->sec );
+					$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myRow['lastoccurrence_date']->sec );
+				}
+				else
+				{
+					// Get default date 
+					$myDate = $myRow[$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE]]; 
+					if ( gettype($myDate) == "object" && get_class($myDate) == "MongoDate" ) 
+					{
+						$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myDate->sec );
+						$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myDate->sec );
+					}
+				}
 //echo "!". gettype($myDate); 
-//print_r ( $myRow ); 
 //echo "!" . $myDate->sec; 
+//var_dump ( $myRow ); 
 //exit;
-
-				$aNewRow['firstoccurrence_date'] = time(); // $myDate->sec; 
-				$aNewRow['lastoccurrence_date'] = time(); // $myDate->sec; 
 			}
-
 
 			foreach ( $myRow as $myFieldName => $myFieldValue ) 
 			{
-				if ( !is_array($myFieldValue) )
+				if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Only Copy NON-Array and NON-Object values!
 				{
 					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
 					$aNewRow[ $myFieldID ] = $myFieldValue;
@@ -1088,23 +1059,25 @@ TODO!!!
 			else
 				uasort($aResult, "MultiSortArrayByItemCountAsc");
 
-			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array: " . var_export($aResult, true), DEBUG_DEBUG);
+			// Check if we have to truncate the array
+			if ($nRecordLimit != 0 && count($aResult) > $nRecordLimit)
+			{	
+				// Create new stripped array
+				$aStripResult = array (); 
+				for($iCount = 0; $iCount < $nRecordLimit; $iCount++)
+					$aStripResult[$iCount] = $aResult[$iCount]; 
+				
+				// Overwrite stripped results
+				$aResult = $aStripResult; 
+			}
+
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array (count " . count($aResult) . ")", DEBUG_ULTRADEBUG);
+			// OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Results Array <pre>" . var_export($aResult, true) . "</pre>", DEBUG_ULTRADEBUG);
 			return $aResult;
 		}
 		else
 			return ERROR_NOMORERECORDS;
 		// ---
-/*
-		// Create SQL String now!
-		$szSql =	"SELECT " . 
-					$myDBQueryFields .  
-					"count(" . $myDBConsFieldName . ") as itemcount " . 
-					" FROM " . $this->_logStreamConfigObj->DBTableName . 
-					$this->_SQLwhereClause . 
-					" GROUP BY " . $myDBGroupByFieldName . 
-					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
-					$szLimitSql ;
-*/
 	}
 
 	/**
@@ -1116,9 +1089,6 @@ TODO!!!
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
-		echo "!GetCountSortedByField!"; 
-/*
-TODO!!!
 		global $content, $dbmapping;
 
 		// Copy helper variables, this is just for better readability
@@ -1130,48 +1100,87 @@ TODO!!!
 			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
 			$myDBQueryFieldName = $myDBFieldName;
 			$mySelectFieldName = $myDBFieldName;
-			
-			// Special handling for date fields
-			if ( $nFieldType == FILTER_TYPE_DATE )
+
+			// --- Create Query Array!
+			$myMongoQuery = array(); 
+			if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
+				return $res;
+
+			// Copy array 
+			$myMongoQuery = $this->_myMongoQuery; 
+
+			// Set default for custom fields!
+			$myMongoQuery[ 'TotalCount' ] = 0; 
+			// ---
+
+			// --- Process Data and consolidate!
+			// Create reduce function
+			$groupReduce = "function (obj, prev) { prev.TotalCount++; }";
+
+			try 
 			{
-				// Helper variable for the select statement
-				$mySelectFieldName = $mySelectFieldName . "Grouped";
-				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
-			}
+				// Output Debug Informations
+				OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
-			// Create SQL Where Clause!
-			if ( $this->_SQLwhereClause == "" ) 
+				// mongodb group is simular to groupby from MYSQL
+				$myResult = $this->_myMongoCollection->group( array($mySelectFieldName => 1), $myMongoQuery, $groupReduce);
+			}
+			catch ( MongoCursorException $e ) 
 			{
-				$res = $this->CreateSQLWhereClause();
-				if ( $res != SUCCESS ) 
-					return $res;
-			}
-
-			// Create SQL String now!
-			$szSql =	"SELECT " . 
-						$myDBQueryFieldName . ", " . 
-						"count(" . $myDBFieldName . ") as TotalCount " . 
-						" FROM " . $this->_logStreamConfigObj->DBTableName . 
-						$this->_SQLwhereClause . 
-						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY TotalCount DESC" . 
-						" LIMIT " . $nRecordLimit;
-
-			// Perform Database Query
-			$myquery = mysql_query($szSql, $this->_dbhandle);
-			if ( !$myquery ) 
+				// Log error!
+				$this->PrintDebugError("GetCountSortedByField failed with error ' " . $e->getMessage() . " '");
+				 
+				// Return error code
 				return ERROR_DB_QUERYFAILED;
-			
+			}
+
 			// Initialize Array variable
 			$aResult = array();
 
-			// read data records
-			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
-				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
+			// Loop through results
+			foreach ($myResult['retval'] as $myid => $myRow)
+			{
+				if ( !is_array($myRow[$mySelectFieldName]) && !is_object($myRow[$mySelectFieldName]) ) // Process normal values
+					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
+				else
+				{
+					// Special Handling for datetype!
+					if ( gettype($myRow[$mySelectFieldName]) == "object" && get_class($myRow[$mySelectFieldName]) == "MongoDate" ) 
+					{
+						if ( !isset($aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ]) ) 
+							$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] = $myRow['TotalCount'];
+						else
+							$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] += $myRow['TotalCount'];
+					}
+					else
+						$aResult[ "Unknown Type" ] = $myRow['TotalCount'];
+				}
+			}
 
 			// return finished array
 			if ( count($aResult) > 0 )
+			{
+				// Sort Array
+				arsort($aResult,SORT_NUMERIC);
+
+				// Check if we have to truncate the array
+				if ($nRecordLimit != 0 && count($aResult) > $nRecordLimit)
+				{	
+					// Create new stripped array
+					$aStripResult = array (); 
+					for($iCount = 0; $iCount < $nRecordLimit; $iCount++)
+						$aStripResult[$iCount] = $aResult[$iCount]; 
+					
+					// Overwrite stripped results
+					$aResult = $aStripResult; 
+				}
+
+				OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: Results Array (count " . count($aResult) . ")", DEBUG_ULTRADEBUG);
+				// OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Results Array <pre>" . var_export($aResult, true) . "</pre>", DEBUG_ULTRADEBUG);
+				
+				// return results
 				return $aResult;
+			}
 			else
 				return ERROR_NOMORERECORDS;
 		}
@@ -1180,12 +1189,7 @@ TODO!!!
 			// return error code, field mapping not found
 			return ERROR_DB_DBFIELDNOTFOUND;
 		}
-*/
-
-		// NOT IMPLEMENTED
-		return ERROR_NOMORERECORDS;
 	}
-
 
 
 	/*
@@ -1624,7 +1628,7 @@ TODO!!!
 				}
 			}
 
-// echo $this->_SQLwhereClause;
+			// echo $this->_SQLwhereClause;
 			//$dbmapping[$szTableType][SYSLOG_UID]
 		}
 		else // No filters means nothing to do!
@@ -1652,7 +1656,6 @@ TODO!!!
 		$myCursor = $myCursor->sort(array("_id" => -1));
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
-//		while ($myCursor->hasNext() && $myRow = $myCursor->getNext())
 		foreach ($myCursor as $mongoid => $myRow)
 		{
 			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
@@ -1675,7 +1678,7 @@ TODO!!!
 		// Only obtain count if enabled and not done before
 		if ( /*$this->_logStreamConfigObj->DBEnableRowCounting &&*/ $this->_totalRecordCount == -1 ) 
 		{
-			$this->_totalRecordCount = $myCursor->count(); // $this->GetRowCountFromTable();
+			$this->_totalRecordCount = $myCursor->count();
 
 			if ( $this->_totalRecordCount <= 0 )
 				return ERROR_NOMORERECORDS;
@@ -1722,59 +1725,7 @@ TODO!!!
 		$extraErrorDescription = $errormsg;
 
 		//Output!
-		OutputDebugMessage("LogStreamDB|PrintDebugError: $errormsg", DEBUG_ERROR);
-	}
-	
-	/*
-	*	Returns the number of possible records by using a query
-	*/
-	private function GetRowCountByString($szQuery)
-	{
-/* TODO!
-		if ($myQuery = mysql_query($szQuery)) 
-		{   
-			$num_rows = mysql_num_rows($myQuery);
-			mysql_free_result ($myQuery); 
-		}
-		return $num_rows;
-*/
-		return -1; 
-	}
-
-	/*
-	*	Returns the number of possible records by using an existing queryid
-	*/
-	private function GetRowCountByQueryID($myQuery)
-	{
-/* TODO!
-		$num_rows = mysql_num_rows($myQuery);
-		return $num_rows;
-*/
-		return -1; 
-	}
-
-	/*
-	*	Returns the number of possible records by using a select count statement!
-	*/
-	private function GetRowCountFromTable()
-	{
-// TODO!
-/*
-		if ( $myquery = mysql_query("Select FOUND_ROWS();", $this->_dbhandle) ) 
-		{
-			// Get first and only row!
-			$myRow = mysql_fetch_array($myquery);
-			
-			// copy row count
-			$numRows = $myRow[0];
-		}
-		else
-			$numRows = -1;
-
-		// return result!
-		return $numRows;
-		*/
-		return -1; 
+		OutputDebugMessage("LogStreamMongoDB|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
 
 // --- End of Class!

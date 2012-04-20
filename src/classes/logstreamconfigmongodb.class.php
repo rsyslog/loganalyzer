@@ -42,8 +42,8 @@ class LogStreamConfigMongoDB extends LogStreamConfig {
 	public $DBServer = '127.0.0.1';
 	public $DBPort = 27017;
 	public $DBName = 'syslog';
-//	public $DBUser = '';
-//	public $DBPassword = '';
+	public $DBUser = '';					// Default = No database user!
+	public $DBPassword = '';				// Default = No Password
 	public $DBTableType = 'mongodb';		// Default = Use mongodb layout!
 	public $DBCollection = 'rsyslog';		// Default Tabelname from RSYSLOG
 //	public $DBEnableRowCounting = true;		// Default RowCounting is enabled!

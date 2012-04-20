@@ -157,6 +157,8 @@ if ( !$content['error_occured'] )
 					{
 						$content['error_occured'] = true;
 						$content['error_details'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_REPORTGENFAILED'], $mySavedReport['customTitle'], GetErrorMessage($res) );
+						if ( isset($extraErrorDescription) )
+							$content['error_details'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 					}
 					else
 					{
@@ -181,6 +183,8 @@ if ( !$content['error_occured'] )
 							// Output failed, display what happened to the user
 							$content['error_occured'] = true;
 							$content['error_details'] = GetAndReplaceLangStr($content["LN_GEN_ERROR_REPORTFAILEDTOGENERATE"], $szErrorStr); 
+							if ( isset($extraErrorDescription) )
+								$content['error_details'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 						}
 						// --- 
 					}

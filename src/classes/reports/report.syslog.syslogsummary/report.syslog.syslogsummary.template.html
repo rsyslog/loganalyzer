@@ -150,6 +150,22 @@
 </tr>
 </table>
 
+<!-- IF SHOWDEBUGMSG="true" -->
+<table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" class="with_border">
+<tr> 
+	<td nowrap align="left" nowrap valign="top" class="cellmenu1_naked">{LN_DEBUGLEVEL}</td>
+	<td align="center" nowrap valign="top" class="cellmenu1_naked" width="100%">{LN_DEBUGMESSAGE}</td>
+</tr>
+	<!-- BEGIN DEBUGMSG -->
+	<tr>
+		<td nowrap align="center" nowrap valign="top" class="lineColouredWhite" bgcolor="{DBGLEVELBG}"><B>{DBGLEVELTXT}</B></td>
+		<td align="left" nowrap valign="middle" class="line1">
+		<div id="SearchCode">{DBGMSG}</div>
+		</td>
+	</tr>
+	<!-- END DEBUGMSG -->
+</table>
+<!-- ENDIF SHOWDEBUGMSG="true" -->
 
 </body> 
 </html>
