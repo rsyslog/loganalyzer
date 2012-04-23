@@ -161,7 +161,6 @@ class LogStreamMongoDB extends LogStream {
 		{
 			try 
 			{
-// TODO: Username and Password support!
 				// Forces to open a new Connection
 				$this->_myMongoCon = new Mongo("mongodb://" . $this->_logStreamConfigObj->DBServer . ":" . $this->_logStreamConfigObj->DBPort ); // Connect to Mongo Server
 			}
@@ -178,6 +177,33 @@ class LogStreamMongoDB extends LogStream {
 		try 
 		{
 			$this->_myMongoDB = $this->_myMongoCon->selectDB( $this->_logStreamConfigObj->DBName ); // Connect to Database
+
+			// Only try to auth if Username is configured
+			if ( strlen($this->_logStreamConfigObj->DBUser) > 0 )
+			{
+				// TODO: Not tested yet, sample code!
+				$szUsrPwd	= $this->_logStreamConfigObj->DBUser . ":mongo:" . $this->_logStreamConfigObj->DBPassword;
+				$hashUsrPwd = md5($szUsrPwd);
+
+				// Get Nonce
+				$myNonce = $this->_myMongoDB->command(array("getnonce" => 1));
+				$saltedHash = md5($myNonce["nonce"] . $this->_logStreamConfigObj->DBUser . $hashUsrPwd);
+				
+				$result = $this->_myMongoDB->command(array("authenticate" => 1, 
+					"user" => $this->_logStreamConfigObj->DBUser,
+					"nonce" => $myNonce["nonce"],
+					"key" => $saltedHash
+				));
+
+				if ( $result["ok"] == 0 ) 
+				{
+					// Log error!
+					$this->PrintDebugError("Verify:Auth failed with error ' " . $result["errmsg"] . " '");
+
+					// Return error code
+					return ERROR_DB_CANNOTSELECTDB;
+				}
+			}
 		}
 		catch ( MongoException $e ) 
 		{
@@ -947,8 +973,9 @@ class LogStreamMongoDB extends LogStream {
 		// Set default for custom fields!
 		$myMongoQuery[ $myDBSortedFieldName ] = 0; // Set default for counter field
 
-//TODO		$myMongoQuery[ '$limit' ] = 5; 
-//var_dump($myMongoQuery); 
+		//TODO, LIMIT not possible currently!
+		// $myMongoQuery[ '$limit' ] = 5; 
+		//var_dump($myMongoQuery); 
 		// ---
 
 		// Special handling for date fields
@@ -1284,7 +1311,7 @@ class LogStreamMongoDB extends LogStream {
 									}
 									else
 									{
-										// This should be a typical LIKE query: Check if done RIGHT TODO!
+										// This should be a typical LIKE query: Some more checking NEEDED (TODO)!
 
 										// --- Check if user wants to include or exclude!
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE)
