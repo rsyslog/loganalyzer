@@ -1693,18 +1693,19 @@ class LogStreamMongoDB extends LogStream {
 		foreach ($myCursor as $mongoid => $myRow)
 		{
 //			echo $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789') . "-" .  $mongoid . "<br>"; 
-			$mongoid = $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789');
 
 			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
-			if (	$myRow === FALSE || 
-					!$myRow || 
-					($uID == $mongoid && $myCursor->count() <= 1) || 
-					($mongoidprev == $mongoid) 
-				)
-			{
-				$iBegin--;
+			if ( $myRow === FALSE || !$myRow )
 				break;
-			}
+			
+			// Convert MongoID
+			$mongoid = $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789');
+			
+			// Additional Check to stop processing
+			if (	($uID == $mongoid && $myCursor->count() <= 1) ||
+					(strpos($mongoidprev,$mongoid) !== FALSE) /* Force STRING Type comparison, otherwise PHP will try to compare as NUMBER (INT Limit)!*/
+				)
+				break;
 
 			// Convert ID from HEX back to DEC
 			$myRow[ "_id" ] = $mongoid; // base_convert($mongoid, 16, 10); 
