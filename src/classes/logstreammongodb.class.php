@@ -740,7 +740,7 @@ class LogStreamMongoDB extends LogStream {
 		if ( isset($arrProperitesIn[SYSLOG_UID]) && isset($arrProperitesIn[MISC_CHECKSUM]) && isset($dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM]) )
 		{
 			// Create Querydata
-			$myMongoID = new MongoId( base_convert($arrProperitesIn[SYSLOG_UID], 10, 16) ); 
+			$myMongoID = new MongoId( $this->convBaseHelper($arrProperitesIn[SYSLOG_UID], '0123456789', '0123456789abcdef') ); 
 			$queryArray = array('_id' => $myMongoID);
 			
 			// Create Update Data
@@ -1336,12 +1336,12 @@ class LogStreamMongoDB extends LogStream {
 									if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE )
 									{
 										// We use $in by default to get results for each value
-										$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = $myfilter[FILTER_VALUE]; 
+										$this->_myMongoQuery[ $szMongoPropID ]['$in'][] = intval($myfilter[FILTER_VALUE]); 
 									}
 									else
 									{
 										// $ne equals NOT EQUAL 
-										$this->_myMongoQuery[ $szMongoPropID ]['$nin'][] = $myfilter[FILTER_VALUE]; 
+										$this->_myMongoQuery[ $szMongoPropID ]['$nin'][] = intval($myfilter[FILTER_VALUE]); 
 									}
 									// ---
 
@@ -1414,7 +1414,7 @@ class LogStreamMongoDB extends LogStream {
 		if ( $uID != UID_UNKNOWN ) 
 		{
 			// Add uID Filter as well!
-			$myMongoID = new MongoId( base_convert($uID, 10, 16) ); 
+			$myMongoID = new MongoId( $this->convBaseHelper($uID, '0123456789', '0123456789abcdef') ); 
 			$this->_myMongoQuery[ $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] ] = array( '$lt' => $myMongoID ); 
 		}
 
@@ -1678,25 +1678,48 @@ class LogStreamMongoDB extends LogStream {
 //		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
 		$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery, $this->_myMongoFields); // ->limit(10); // $collection->find();
 
-		// OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
+		// Uncomment for debug!
+		// OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: myCursor->info() = <pre>" . var_export($myCursor->info(), true) . "</pre>", DEBUG_ULTRADEBUG);
 
+		// Limit records
+		$myCursor->limit( $this->_logStreamConfigObj->RecordsPerQuery );
+
+		// OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
 		$myCursor = $myCursor->sort(array("_id" => -1));
+
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
+		$mongoidprev = -1; 
 		foreach ($myCursor as $mongoid => $myRow)
 		{
+//			echo $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789') . "-" .  $mongoid . "<br>"; 
+			$mongoid = $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789');
+
 			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
-			if ( $myRow === FALSE || !$myRow || ($uID == base_convert($mongoid, 16, 10) && $myCursor->count() <= 1) )
+			if (	$myRow === FALSE || 
+					!$myRow || 
+					($uID == $mongoid && $myCursor->count() <= 1) || 
+					($mongoidprev == $mongoid) 
+				)
+			{
+				$iBegin--;
 				break;
+			}
 
 			// Convert ID from HEX back to DEC
-			$myRow[ "_id" ] = base_convert($myRow[ "_id" ], 16, 10); 
+			$myRow[ "_id" ] = $mongoid; // base_convert($mongoid, 16, 10); 
+			$mongoidprev = $mongoid;	// Helper variable to compare last row
 
 			// Keys will be converted into lowercase!
 			$this->bufferedRecords[$iBegin] = array_change_key_case( $myRow, CASE_LOWER);
 			$iBegin++;
 		}
 
+		// Uncomment for debug!
+		// OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: bufferedRecords =  Array <pre>" . var_export($this->bufferedRecords, true) . "</pre>", DEBUG_ULTRADEBUG);
+
+		OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: ibegin = $iBegin, recordnum = " . $this->_currentRecordNum, DEBUG_ULTRADEBUG);
+ 
 		// --- Check if results were found
 		if ( $iBegin == $this->_currentRecordNum )
 			return ERROR_NOMORERECORDS;
@@ -1755,6 +1778,42 @@ class LogStreamMongoDB extends LogStream {
 		OutputDebugMessage("LogStreamMongoDB|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
 
+	/*
+	*	Helper function to workaround larg numbers bug from php base_convert() taken from comments
+	*/
+	private function convBaseHelper($numberInput, $fromBaseInput, $toBaseInput)
+	{
+		if ($fromBaseInput==$toBaseInput) 
+			return $numberInput;
+
+		$fromBase = str_split($fromBaseInput,1);
+		$toBase = str_split($toBaseInput,1);
+		$number = str_split($numberInput,1);
+		$fromLen=strlen($fromBaseInput);
+		$toLen=strlen($toBaseInput);
+		$numberLen=strlen($numberInput);
+		$retval='';
+
+		if ($toBaseInput == '0123456789')
+		{
+			$retval=0;
+			for ($i = 1;$i <= $numberLen; $i++)
+				$retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));
+			return $retval;
+		}
+		if ($fromBaseInput != '0123456789')
+			$base10=convBase($numberInput, $fromBaseInput, '0123456789');
+		else
+			$base10 = $numberInput;
+		if ($base10<strlen($toBaseInput))
+			return $toBase[$base10];
+		while($base10 != '0')
+		{
+			$retval = $toBase[bcmod($base10,$toLen)].$retval;
+			$base10 = bcdiv($base10,$toLen,0);
+		}
+		return $retval;
+	}
 // --- End of Class!
 }
 
