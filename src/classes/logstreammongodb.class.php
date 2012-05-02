@@ -817,15 +817,14 @@ class LogStreamMongoDB extends LogStream {
 */
 
 		// --- Create Query Array!
-		$myMongoQuery = array(); 
 		if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
 			return $res;
 
-		// Copy array 
-		$myMongoQuery = $this->_myMongoQuery; 
+		// Create Options array 
+		$myOptions = array( 'condition' => $this->_myMongoQuery ); 
 
-		// Set default for custom fields!
-		$myMongoQuery[ $myDBSortedFieldName ] = 0; 
+		// Set default for counter field!
+		$myMongoInit = array( $myDBSortedFieldName => 0 ); 
 		// ---
 
 		// --- Process Data and consolidate!
@@ -838,7 +837,7 @@ class LogStreamMongoDB extends LogStream {
 			OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
-			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions );
 		}
 		catch ( MongoCursorException $e ) 
 		{
@@ -963,21 +962,21 @@ class LogStreamMongoDB extends LogStream {
 //var_dump($myMongoFields); 
 
 		// --- Create Query Array!
-		$myMongoQuery = array(); 
 		if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
 			return $res;
 
-		// Copy array 
-		$myMongoQuery = $this->_myMongoQuery; 
+		// Create Options array 
+		$myOptions = array( 'condition' => $this->_myMongoQuery ); 
 
-		// Set default for custom fields!
-		$myMongoQuery[ $myDBSortedFieldName ] = 0; // Set default for counter field
+		// Set default for counter field!
+		$myMongoInit = array( $myDBSortedFieldName => 0 ); 
 
 		//TODO, LIMIT not possible currently!
 		// $myMongoQuery[ '$limit' ] = 5; 
 		//var_dump($myMongoQuery); 
 		// ---
 
+/*
 		// Special handling for date fields
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
@@ -987,6 +986,7 @@ class LogStreamMongoDB extends LogStream {
 			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
+*/
 
 		// --- Process Data and consolidate!
 		// Create reduce function
@@ -1020,7 +1020,7 @@ class LogStreamMongoDB extends LogStream {
 			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
-			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoQuery, $groupReduce);
+			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
 		}
 		catch ( MongoCursorException $e ) 
 		{
@@ -1129,15 +1129,17 @@ class LogStreamMongoDB extends LogStream {
 			$mySelectFieldName = $myDBFieldName;
 
 			// --- Create Query Array!
-			$myMongoQuery = array(); 
 			if ( ($res = $this->CreateQueryArray(UID_UNKNOWN)) != SUCCESS )
 				return $res;
+
+			// Create Options array 
+			$myOptions = array( 'condition' => $this->_myMongoQuery ); 
 
 			// Copy array 
 			$myMongoQuery = $this->_myMongoQuery; 
 
-			// Set default for custom fields!
-			$myMongoQuery[ 'TotalCount' ] = 0; 
+			// Set default for counter field!
+			$myMongoInit = array( 'TotalCount' => 0 ); 
 			// ---
 
 			// --- Process Data and consolidate!
@@ -1150,7 +1152,7 @@ class LogStreamMongoDB extends LogStream {
 				OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
 
 				// mongodb group is simular to groupby from MYSQL
-				$myResult = $this->_myMongoCollection->group( array($mySelectFieldName => 1), $myMongoQuery, $groupReduce);
+				$myResult = $this->_myMongoCollection->group( array($mySelectFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
 			}
 			catch ( MongoCursorException $e ) 
 			{
