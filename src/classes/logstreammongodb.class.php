@@ -1191,15 +1191,12 @@ class LogStreamMongoDB extends LogStream {
 			{
 				// Sort Array
 				arsort($aResult,SORT_NUMERIC);
-
 				// Check if we have to truncate the array
 				if ($nRecordLimit != 0 && count($aResult) > $nRecordLimit)
 				{	
-					// Create new stripped array
-					$aStripResult = array (); 
-					for($iCount = 0; $iCount < $nRecordLimit; $iCount++)
-						$aStripResult[$iCount] = $aResult[$iCount]; 
-					
+					// Slice all unecessary entries from array!
+					$aStripResult = array_slice($aResult, 0, $nRecordLimit);
+
 					// Overwrite stripped results
 					$aResult = $aStripResult; 
 				}
