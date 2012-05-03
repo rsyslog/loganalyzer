@@ -1054,13 +1054,21 @@ class LogStreamMongoDB extends LogStream {
 		function (obj, prev) 
 		{ 
 			try {\n
-			prev." . $myDBSortedFieldName . "++;\n"; 
+			prev.$myDBSortedFieldName++;\n
+			if ( prev.$myDBSortedFieldName == 1 ) 
+			{
+			"; 
 			// Add fields!
 			foreach( $myMongoFields as $key => $myfield )
 			{
 				if ( $key != $myDBConsFieldName ) 
-					$groupReduce .= "if ( prev.$key == null )\n prev.$key = obj.$key;\n"; 
+					$groupReduce .= " prev.$key = obj.$key;\n"; 
 			}
+
+			$groupReduce .= "
+			}
+			";
+
 			if ( $bIncludeMinMaxDateFields )
 			{
 				$groupReduce .= "
@@ -1083,8 +1091,8 @@ class LogStreamMongoDB extends LogStream {
 
 		try 
 		{
-			// Output Debug Informations
-			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Recude Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
+			// Uncomment for more Debug Informations
+			// OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Recude Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
 			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
