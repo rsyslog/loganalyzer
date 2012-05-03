@@ -248,11 +248,32 @@ class LogStreamMongoDB extends LogStream {
 	*/
 	public function VerifyIndexes( $arrProperitesIn )
 	{
-		/*
-		TODO!!!
-		needed ? 
-		*/
+		global $dbmapping, $fields;
 
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+//			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) ) 
+			{
+				if ( in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+				{
+					OutputDebugMessage("LogStreamDB|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+					continue;
+				}
+				else
+				{
+					// Index is missing for this field!
+					OutputDebugMessage("LogStreamDB|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+					return ERROR_DB_INDEXESMISSING; 
+				}
+			}
+		}
+		
 		// Successfull
 		return SUCCESS; 
 	}
@@ -272,6 +293,45 @@ class LogStreamMongoDB extends LogStream {
 	*/
 	public function CreateMissingIndexes( $arrProperitesIn )
 	{
+		global $dbmapping, $fields, $querycount;
+	
+		// Get List of Indexes as Array
+		$arrIndexKeys = $this->GetIndexesAsArray(); 
+		$szTableType = $this->_logStreamConfigObj->DBTableType;
+
+		// Loop through all fields to see which one is missing!
+		foreach ( $arrProperitesIn as $myproperty ) 
+		{
+			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) )
+			{
+				if (in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
+					continue;
+				else
+				{
+					try 
+					{
+						// Add Unique Index for DBMapping
+						$this->_myMongoCollection->ensureIndex(array( $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] => 1) /*, array("unique" => true) */ );
+
+						// Index is missing for this field!
+						OutputDebugMessage("LogStreamDB|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_INFO);
+					}
+					catch ( MongoException $e ) 
+					{
+						// Log error!
+						$this->PrintDebugError("CreateMissingIndexes failed with error ' " . $e->getMessage() . " '");
+						 
+						// Return error code
+						return ERROR_DB_QUERYFAILED;
+					}
+					
+	//					// Return failure!
+	//					$this->PrintDebugError("Dynamically Adding INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' failed with Statement: '" . $szSql . "'");
+	//					return ERROR_DB_INDEXFAILED;
+				}
+			}
+		}
+		
 		// Successfull
 		return SUCCESS; 
 	}
@@ -993,31 +1053,38 @@ class LogStreamMongoDB extends LogStream {
 		$groupReduce = "
 		function (obj, prev) 
 		{ 
-			prev." . $myDBSortedFieldName . "++; "; 
+			try {\n
+			prev." . $myDBSortedFieldName . "++;\n"; 
 			// Add fields!
 			foreach( $myMongoFields as $key => $myfield )
 			{
 				if ( $key != $myDBConsFieldName ) 
-					$groupReduce .= "prev." . $key . " = obj." . $key . ";"; 
+					$groupReduce .= "if ( prev.$key == null )\n prev.$key = obj.$key;\n"; 
 			}
 			if ( $bIncludeMinMaxDateFields )
 			{
 				$groupReduce .= "
-				if ( prev.firstoccurrence_date == null || prev.firstoccurrence_date > obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {
-					prev.firstoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . "; 
+				if ( prev.firstoccurrence_date == null || prev.firstoccurrence_date > obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {\n
+					prev.firstoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ";\n
 				}
-				if ( prev.lastoccurrence_date == null || prev.lastoccurrence_date < obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {
-					prev.lastoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . "; 
+				if ( prev.lastoccurrence_date == null || prev.lastoccurrence_date < obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . " ) {\n
+					prev.lastoccurrence_date = obj." . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] . ";\n
 				}";
 			}
 		$groupReduce .= "
+			}
+			catch ( e ){
+				// For now ingore error!
+				theerror = e.toString();
+			}
+			// assert( theerror, \"B3\" )
 		}
 		";
 
 		try 
 		{
 			// Output Debug Informations
-			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Recude Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
 			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
@@ -1035,46 +1102,55 @@ class LogStreamMongoDB extends LogStream {
 		$aResult = array();
 		
 		// Loop through results
-		foreach ($myResult['retval'] as $myid => $myRow)
+		if ( isset($myResult['retval']) ) 
 		{
-
-			// Create new row for resultarray
-			$aNewRow = array();
-			
-			// Handly Datefields for min and max!
-			if ( $bIncludeMinMaxDateFields )
+			foreach ($myResult['retval'] as $myid => $myRow)
 			{
-				if ( isset($myRow['firstoccurrence_date']) && isset($myRow['lastoccurrence_date']) ) 
+
+				// Create new row for resultarray
+				$aNewRow = array();
+				
+				// Handly Datefields for min and max!
+				if ( $bIncludeMinMaxDateFields )
 				{
-					$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myRow['firstoccurrence_date']->sec );
-					$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myRow['lastoccurrence_date']->sec );
-				}
-				else
-				{
-					// Get default date 
-					$myDate = $myRow[$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE]]; 
-					if ( gettype($myDate) == "object" && get_class($myDate) == "MongoDate" ) 
+					if ( isset($myRow['firstoccurrence_date']) && isset($myRow['lastoccurrence_date']) ) 
 					{
-						$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myDate->sec );
-						$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myDate->sec );
+						$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myRow['firstoccurrence_date']->sec );
+						$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myRow['lastoccurrence_date']->sec );
+					}
+					else
+					{
+						// Get default date 
+						$myDate = $myRow[$dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE]]; 
+						if ( gettype($myDate) == "object" && get_class($myDate) == "MongoDate" ) 
+						{
+							$aNewRow['firstoccurrence_date'] = date( "Y-m-d H:i:s ", $myDate->sec );
+							$aNewRow['lastoccurrence_date'] = date( "Y-m-d H:i:s", $myDate->sec );
+						}
+					}
+	//echo "!". gettype($myDate); 
+	//echo "!" . $myDate->sec; 
+	//var_dump ( $myRow ); 
+	//exit;
+				}
+
+				foreach ( $myRow as $myFieldName => $myFieldValue ) 
+				{
+					if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Only Copy NON-Array and NON-Object values!
+					{
+						$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+						$aNewRow[ $myFieldID ] = $myFieldValue;
 					}
 				}
-//echo "!". gettype($myDate); 
-//echo "!" . $myDate->sec; 
-//var_dump ( $myRow ); 
-//exit;
+				// Add new row to result
+				$aResult[] = $aNewRow;
 			}
-
-			foreach ( $myRow as $myFieldName => $myFieldValue ) 
-			{
-				if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Only Copy NON-Array and NON-Object values!
-				{
-					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
-					$aNewRow[ $myFieldID ] = $myFieldValue;
-				}
-			}
-			// Add new row to result
-			$aResult[] = $aNewRow;
+		}
+		else
+		{
+			// Return error code
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: myResult['retval'] was empty, see myResult: " . var_export($myResult, true) . ")", DEBUG_WARN);
+			return ERROR_NOMORERECORDS;
 		}
 
 		// return finished array
@@ -1717,7 +1793,6 @@ class LogStreamMongoDB extends LogStream {
 
 		// Uncomment for debug!
 		// OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: bufferedRecords =  Array <pre>" . var_export($this->bufferedRecords, true) . "</pre>", DEBUG_ULTRADEBUG);
-
 		OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: ibegin = $iBegin, recordnum = " . $this->_currentRecordNum, DEBUG_ULTRADEBUG);
  
 		// --- Check if results were found
@@ -1758,19 +1833,56 @@ class LogStreamMongoDB extends LogStream {
 	}
 
 	/*
+	*	Helper function to return a list of Indexes for the logstream table 
+	*/
+	private function GetIndexesAsArray()
+	{
+		global $querycount;
+
+		// Verify database connection (This also opens the database!)
+		$res = $this->Verify();
+		if ( $res != SUCCESS ) 
+			return $res;
+		
+		// Init Array
+		$arrIndexKeys = array();
+		$aMongoIndexes = $this->_myMongoCollection->getIndexInfo(); 
+		if (is_array($aMongoIndexes) && count($aMongoIndexes) > 0 ) 
+		{
+			// LOOP through indexes
+			foreach($aMongoIndexes as $myIndex)
+			{
+				if ( strpos($myIndex['ns'], $this->_logStreamConfigObj->DBCollection) !== FALSE ) 
+				{
+					// LOOP through keys
+					foreach($myIndex['key'] as $myKeyID => $myKey)
+					{
+						// Add to index keys
+						$arrIndexKeys[] = strtolower($myKeyID); 
+					}
+				}
+			}
+		}
+
+		//echo "<pre>" . var_export($this->_myMongoCollection->getIndexInfo(), true) . "</pre>"; 
+		//echo "<pre>" . var_export($arrIndexKeys, true) . "</pre>"; 
+		//exit;
+
+		// Increment for the Footer Stats 
+		$querycount++;
+
+		// return Array
+		return $arrIndexKeys; 
+	}
+
+	/*
 	*	Helper function to display SQL Errors for now!
 	*/
 	private function PrintDebugError($szErrorMsg)
 	{
 		global $extraErrorDescription; 
-
-		$errdesc = mysql_error();
-		$errno = mysql_errno();
-
 		$errormsg="$szErrorMsg <br>";
-		$errormsg.="Detail error: $errdesc <br>";
-		$errormsg.="Error Code: $errno <br>";
-		
+
 		// Add to additional error output
 		$extraErrorDescription = $errormsg;
 
