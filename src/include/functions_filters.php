@@ -329,6 +329,12 @@ function GetTimeStampFromTimeString($szTimeString)
 		// return new timestamp
 		return mktime($out[4], $out[5], $out[6], $out[2], $out[3], $out[1]);
 	}
+	//Sample: 2008-04-01
+	else if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})$/", $szTimeString, $out) )
+	{
+		// return new timestamp
+		return mktime(0,0,0, $out[2], $out[3], $out[1]);
+	}
 	else
 	{
 		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'", DEBUG_WARN);

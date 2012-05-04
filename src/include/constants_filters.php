@@ -47,9 +47,9 @@ if ( !defined('IN_PHPLOGCON') )
 define('DATEMODE_ALL', 1);
 define('DATEMODE_RANGE', 2);
 define('DATEMODE_LASTX', 3);
-
 define('DATEMODE_RANGE_FROM', 4);
 define('DATEMODE_RANGE_TO', 5);
+define('DATEMODE_RANGE_DATE', 6);
 
 define('DATE_LASTX_HOUR', 1);
 define('DATE_LASTX_12HOURS', 2);
