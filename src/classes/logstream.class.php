@@ -436,7 +436,7 @@ abstract class LogStream {
 				if (	
 						array_key_exists($propertyname, $this->_filters) &&
 						isset($propertyvalue) /* && 
-						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
+						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0)*/ /*Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
 
@@ -560,7 +560,6 @@ abstract class LogStream {
 							case FILTER_TYPE_DATE:
 								// Get Log TimeStamp
 								$nLogTimeStamp = $arrProperitesOut[$propertyname][EVTIME_TIMESTAMP];
-
 								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
 								{
 									// Get current timestamp
