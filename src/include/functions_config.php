@@ -194,8 +194,10 @@ function InitSource(&$mysource)
 			// UNKNOWN, remove config entry!
 			unset($content['Sources'][$iSourceID]);
 
-			// Output CRITICAL WARNING
-			DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
+			// Output Debug Warning only!
+			OutputDebugMessage( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']), DEBUG_ERROR);
+			// DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
+			return ERROR; 
 		}
 
 		// Set generic configuration options

@@ -1866,6 +1866,13 @@ class LogStreamPDO extends LogStream {
 										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
 										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " < '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "'";
 									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_DATE ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $myeventtime[EVTIME_TIMESTAMP]) . "' AND " . 
+																					$dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " < '" . date("Y-m-d H:i:s", ($myeventtime[EVTIME_TIMESTAMP]+86400) ) . "'";
+									}
 
 									break;
 								default:

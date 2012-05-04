@@ -436,7 +436,7 @@ abstract class LogStream {
 				if (	
 						array_key_exists($propertyname, $this->_filters) &&
 						isset($propertyvalue) /* && 
-						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0) /* Negative because it only matters if the propvalure is a string*/
+						!(is_string($propertyvalue) && strlen($propertyvalue) <= 0)*/ /* Negative because it only matters if the propvalure is a string*/
 					)
 				{ 
 
@@ -603,7 +603,16 @@ abstract class LogStream {
 									if ( $nLogTimeStamp > $nToTimeStamp )
 										$bEval = false;
 								}
-
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_DATE ) 
+								{
+									// Get filter timestamp!
+//									echo $myfilter[FILTER_VALUE];
+									$nDateTimeStamp = GetTimeStampFromTimeString($myfilter[FILTER_VALUE]);
+									
+									// If not on logfile day, the Event is outside of our scope!
+									if ( $nLogTimeStamp < $nDateTimeStamp || $nLogTimeStamp > ($nDateTimeStamp+86400) )
+										$bEval = false;
+								}
 								break;
 							default:
 								// TODO!
@@ -944,6 +953,11 @@ abstract class LogStream {
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_LASTX; 
 							break;
+						case "timereported": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_RANGE_DATE; 
+							break;
 						case "processid": 
 							$tmpKeyName = SYSLOG_PROCESSID; 
 							$tmpFilterType = FILTER_TYPE_STRING;
@@ -1090,7 +1104,10 @@ abstract class LogStream {
 						if		( isset($tmpTimeMode) )
 						{
 							$this->_filters[$tmpKeyName][$iNum][FILTER_DATEMODE] = $tmpTimeMode;
+							$this->_filters[$tmpKeyName][$iNum][FILTER_MODE] = $this->SetFilterIncludeMode($tmpArray[FILTER_TMP_VALUE]); // remove FilterMode characters from value
 							$this->_filters[$tmpKeyName][$iNum][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+//echo $this->_filters[$tmpKeyName][$iNum][FILTER_VALUE]; 
+//exit;
 						}
 						else if ( isset($tmpValues) ) 
 						{
