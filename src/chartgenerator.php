@@ -506,20 +506,14 @@ if ( $content['error_occured'] )
 	// Use JpGraph to display errors!
 	$myError = new JpGraphErrObjectImg();
 	$myError->SetTitle($content['LN_GEN_ERRORDETAILS']);
-	$myError->Raise($content['error_details'], true);
+
+	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 )
+		$myError->Raise($content['error_details'] . "\n\nDebug Details: \n" . var_export($content['DEBUGMSG'], true), true);
+	else
+		$myError->Raise($content['error_details'], true);
+
+	// Exit in any case
 	exit;
-
-/*	// QUICK AND DIRTY!
-	$myImage = imagecreatetruecolor( $content['chart_width'], $content['chart_width']);
-	
-	$text_color = imagecolorallocate($myImage, 255, 0, 0);
-	imagestring($myImage, 3, 10, 10, $content['LN_GEN_ERRORDETAILS'], $text_color);
-	imagestring($myImage, 3, 10, 25, $content['error_details'], $text_color);
-
-	header ("Content-type: image/png");
-	imagepng($myImage);		// Outputs the image to the browser
-	imagedestroy($myImage); // Clean Image resource
-*/
 }
 // --- 
 

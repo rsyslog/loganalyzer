@@ -912,21 +912,30 @@ class LogStreamMongoDB extends LogStream {
 		$aResult = array();
 
 		// Loop through results
-		foreach ($myResult['retval'] as $myid => $myRow)
+		if ( isset($myResult['retval']) ) 
 		{
-			// Create new row for resultarray
-			$aNewRow = array();
-
-			foreach ( $myRow as $myFieldName => $myFieldValue ) 
+			foreach ($myResult['retval'] as $myid => $myRow)
 			{
-				if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Process normal values
+				// Create new row for resultarray
+				$aNewRow = array();
+
+				foreach ( $myRow as $myFieldName => $myFieldValue ) 
 				{
-					$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
-					$aNewRow[ $myFieldID ] = $myFieldValue;
+					if ( !is_array($myFieldValue) && !is_object($myFieldValue) ) // Process normal values
+					{
+						$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
+						$aNewRow[ $myFieldID ] = $myFieldValue;
+					}
 				}
+				// Add new row to result
+				$aResult[] = $aNewRow;
 			}
-			// Add new row to result
-			$aResult[] = $aNewRow;
+		}
+		else
+		{
+			// Return error code
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateItemListByField: myResult['retval'] was empty, see myResult: " . var_export($myResult, true) . ")", DEBUG_WARN);
+			return ERROR_NOMORERECORDS;
 		}
 
 		// return finished array
@@ -1092,7 +1101,7 @@ class LogStreamMongoDB extends LogStream {
 		try 
 		{
 			// Uncomment for more Debug Informations
-			// OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Recude Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
+			// OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Reduce Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
 			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
@@ -1200,7 +1209,7 @@ class LogStreamMongoDB extends LogStream {
 	*/
 	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
 	{
-		global $content, $dbmapping;
+		global $content, $dbmapping, $fields;
 
 		// Copy helper variables, this is just for better readability
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
@@ -1230,13 +1239,22 @@ class LogStreamMongoDB extends LogStream {
 			// Create reduce function
 			$groupReduce = "function (obj, prev) { prev.TotalCount++; }";
 
+			// Workarround to reduce Datekeys by DAY. Otherwise we will run into 20000 unique Key limit
+			if ( isset($fields[$szFieldId]['FieldType']) && $fields[$szFieldId]['FieldType'] == FILTER_TYPE_DATE ) // Handle as date!
+				$mongoKey = new MongoCode( 
+					"function(doc) { 
+						return {" . $mySelectFieldName . " : new Date( doc." . $mySelectFieldName . " - (doc." . $mySelectFieldName . " % 86400) )}; 
+					}"); 
+			else
+				$mongoKey = array($mySelectFieldName => 1); 
+
 			try 
 			{
-				// Output Debug Informations
-				OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: Running MongoDB group query", DEBUG_ULTRADEBUG);
+				// Uncomment for more Debug Informations
+				// OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: Running MongoDB group query with Map Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
 
 				// mongodb group is simular to groupby from MYSQL
-				$myResult = $this->_myMongoCollection->group( array($mySelectFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
+				$myResult = $this->_myMongoCollection->group( $mongoKey, $myMongoInit, $groupReduce, $myOptions);
 			}
 			catch ( MongoCursorException $e ) 
 			{
@@ -1251,23 +1269,32 @@ class LogStreamMongoDB extends LogStream {
 			$aResult = array();
 
 			// Loop through results
-			foreach ($myResult['retval'] as $myid => $myRow)
+			if ( isset($myResult['retval']) ) 
 			{
-				if ( !is_array($myRow[$mySelectFieldName]) && !is_object($myRow[$mySelectFieldName]) ) // Process normal values
-					$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
-				else
+				foreach ($myResult['retval'] as $myid => $myRow)
 				{
-					// Special Handling for datetype!
-					if ( gettype($myRow[$mySelectFieldName]) == "object" && get_class($myRow[$mySelectFieldName]) == "MongoDate" ) 
-					{
-						if ( !isset($aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ]) ) 
-							$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] = $myRow['TotalCount'];
-						else
-							$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] += $myRow['TotalCount'];
-					}
+					if ( !is_array($myRow[$mySelectFieldName]) && !is_object($myRow[$mySelectFieldName]) ) // Process normal values
+						$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
 					else
-						$aResult[ "Unknown Type" ] = $myRow['TotalCount'];
+					{
+						// Special Handling for datetype!
+						if ( gettype($myRow[$mySelectFieldName]) == "object" && get_class($myRow[$mySelectFieldName]) == "MongoDate" ) 
+						{
+							if ( !isset($aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ]) ) 
+								$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] = $myRow['TotalCount'];
+							else
+								$aResult[ date("Y-m-d", $myRow[$mySelectFieldName]->sec) ] += $myRow['TotalCount'];
+						}
+						else
+							$aResult[ "Unknown Type" ] = $myRow['TotalCount'];
+					}
 				}
+			}
+			else
+			{
+				// Return error code
+				OutputDebugMessage("LogStreamMongoDB|GetCountSortedByField: myResult['retval'] was empty, see myResult: " . var_export($myResult, true) . ")", DEBUG_WARN);
+				return ERROR_NOMORERECORDS;
 			}
 
 			// return finished array
@@ -1480,6 +1507,20 @@ class LogStreamMongoDB extends LogStream {
 										// add to query array
 										$this->_myMongoQuery[ $szMongoPropID ]['$lte'] = $myMongoDate;
 									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_DATE ) 
+									{
+										// Obtain Event struct for the time!
+										$myeventtime = GetEventTime($myfilter[FILTER_VALUE]);
+
+										// Create MongoDate Object from Timestamp
+										$myMongoDateTo = new MongoDate($myeventtime[EVTIME_TIMESTAMP] + 86400);
+										$myMongoDateFrom = new MongoDate($myeventtime[EVTIME_TIMESTAMP]);
+
+										// Add to query array
+										$this->_myMongoQuery[ $szMongoPropID ]['$lte'] = $myMongoDateTo;
+										$this->_myMongoQuery[ $szMongoPropID ]['$gte'] = $myMongoDateFrom;
+									}
+									
 									break;
 								default:
 									// Nothing to do!
