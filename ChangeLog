@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 3.4.2 (stable), 2012-05-07
+- Fixed a #bugid 303, VerifyChecksumTrigger function in logstreamdb 
+  class did not generate a lowercase triggername.
+- Fixed typo in lang files
+- Changed processid field type to string in logstreamclass. Filtering
+  for non-numeric processids is now possible. 
+- Added support to filter by day (Date field - for example: 
+  timereported:=2012-01-01
+---------------------------------------------------------------------------
 Version 3.5.2 (beta), 2012-04-23
 - Added new Logstream driver for MongoDB. The initial version contains
   all features needed to use MongoDB with Loganalyzer and it's reports. 
