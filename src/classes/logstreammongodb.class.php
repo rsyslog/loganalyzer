@@ -1558,9 +1558,22 @@ class LogStreamMongoDB extends LogStream {
 		if ( ($res = $this->CreateQueryArray($uID)) != SUCCESS )
 			return $res;
 
-		// Append LIMIT clause
-//		$szSql .= " LIMIT " . $this->_currentRecordStart . ", " . $this->_logStreamConfigObj->RecordsPerQuery;
-		$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery, $this->_myMongoFields); // ->limit(10); // $collection->find();
+		try 
+		{
+			// Debug Informations
+			OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: Running FIND ", DEBUG_ULTRADEBUG);
+			
+			// Find Data in MongoCollection 
+			$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery, $this->_myMongoFields); 
+		}
+		catch ( MongoCursorException $e ) 
+		{
+			// Log error!
+			$this->PrintDebugError("ReadNextRecordsFromDB failed with error ' " . $e->getMessage() . " '");
+			 
+			// Return error code
+			return ERROR_DB_QUERYFAILED;
+		}
 
 		// Uncomment for debug!
 		// OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: myCursor->info() = <pre>" . var_export($myCursor->info(), true) . "</pre>", DEBUG_ULTRADEBUG);
@@ -1571,33 +1584,45 @@ class LogStreamMongoDB extends LogStream {
 		// OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
 		$myCursor = $myCursor->sort(array("_id" => -1));
 
-		// Copy rows into the buffer!
-		$iBegin = $this->_currentRecordNum;
-		$mongoidprev = -1; 
-		foreach ($myCursor as $mongoid => $myRow)
+
+		try 
 		{
-//			echo $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789') . "-" .  $mongoid . "<br>"; 
+			// Copy rows into the buffer!
+			$iBegin = $this->_currentRecordNum;
+			$mongoidprev = -1; 
+			foreach ($myCursor as $mongoid => $myRow)
+			{
+	//			echo $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789') . "-" .  $mongoid . "<br>"; 
 
-			// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
-			if ( $myRow === FALSE || !$myRow )
-				break;
-			
-			// Convert MongoID
-			$mongoid = $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789');
-			
-			// Additional Check to stop processing
-			if (	($uID == $mongoid && $myCursor->count() <= 1) ||
-					(strpos($mongoidprev,$mongoid) !== FALSE) /* Force STRING Type comparison, otherwise PHP will try to compare as NUMBER (INT Limit)!*/
-				)
-				break;
+				// Check if result was successfull! Compare the queried uID and the MONGOID to abort processing if the same ID was returned! Otherwise we have dupplicated results at the end
+				if ( $myRow === FALSE || !$myRow )
+					break;
+				
+				// Convert MongoID
+				$mongoid = $this->convBaseHelper($mongoid, '0123456789abcdef', '0123456789');
+				
+				// Additional Check to stop processing
+				if (	($uID == $mongoid && $myCursor->count() <= 1) ||
+						(strpos($mongoidprev,$mongoid) !== FALSE) /* Force STRING Type comparison, otherwise PHP will try to compare as NUMBER (INT Limit)!*/
+					)
+					break;
 
-			// Convert ID from HEX back to DEC
-			$myRow[ "_id" ] = $mongoid; // base_convert($mongoid, 16, 10); 
-			$mongoidprev = $mongoid;	// Helper variable to compare last row
+				// Convert ID from HEX back to DEC
+				$myRow[ "_id" ] = $mongoid; // base_convert($mongoid, 16, 10); 
+				$mongoidprev = $mongoid;	// Helper variable to compare last row
 
-			// Keys will be converted into lowercase!
-			$this->bufferedRecords[$iBegin] = array_change_key_case( $myRow, CASE_LOWER);
-			$iBegin++;
+				// Keys will be converted into lowercase!
+				$this->bufferedRecords[$iBegin] = array_change_key_case( $myRow, CASE_LOWER);
+				$iBegin++;
+			}
+		}
+		catch ( MongoCursorTimeoutException $e ) 
+		{
+			// Log error!
+			$this->PrintDebugError("ReadNextRecordsFromDB Timeout while operation  ' " . $e->getMessage() . " '");
+			 
+			// Return error code
+			return ERROR_DB_TIMEOUTFAILED;
 		}
 
 		// Uncomment for debug!
