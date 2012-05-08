@@ -5,7 +5,7 @@
 //              error messages. All localized error messages are stored
 //              in a separate file under the "lang/" subdirectory.
 // Created:     2006-09-24
-// Ver:         $Id: jpgraph_errhandler.inc.php 1619 2009-07-16 19:15:36Z ljp $
+// Ver:         $Id: jpgraph_errhandler.inc.php 1920 2009-12-08 10:02:26Z ljp $
 //
 // Copyright 2006 (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -132,10 +132,6 @@ class JpGraphError {
     }    
 }
 
-// Setup the default handler
-global $__jpg_OldHandler;
-$__jpg_OldHandler = set_exception_handler(array('JpGraphException','defaultHandler'));
-
 class JpGraphException extends Exception {
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0) {
@@ -179,9 +175,14 @@ class JpGraphExceptionL extends JpGraphException {
     public function __construct($errcode,$a1=null,$a2=null,$a3=null,$a4=null,$a5=null) {
         // make sure everything is assigned properly
         $errtxt = new ErrMsgText();
+        JpGraphError::SetTitle('JpGraph Error: '.$errcode);
         parent::__construct($errtxt->Get($errcode,$a1,$a2,$a3,$a4,$a5), 0);
     }
 }
+
+// Setup the default handler
+global $__jpg_OldHandler;
+$__jpg_OldHandler = set_exception_handler(array('JpGraphException','defaultHandler'));
 
 //
 // First of all set up a default error handler
@@ -335,14 +336,14 @@ class JpGraphErrObjectImg extends JpGraphErrObject {
 
         // Window title
         $m = floor($w/2-5);
-        $l = 100;
+        $l = 110;
         $img->SetColor("lightgray:1.3");
         $img->FilledRectangle($m-$l,2,$m+$l,16);
 
         // Stroke text
         $img->SetColor("darkred");
         $img->SetFont(FF_FONT2,FS_BOLD);
-        $img->StrokeText($m-50,15,$this->iTitle);
+        $img->StrokeText($m-90,15,$this->iTitle);
         $img->SetColor("black");
         $img->SetFont(FF_FONT1,FS_NORMAL);
         $txt = new Text($aMsg,52,25);

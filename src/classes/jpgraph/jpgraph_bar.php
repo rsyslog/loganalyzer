@@ -3,7 +3,7 @@
  // File:        JPGRAPH_BAR.PHP
  // Description: Bar plot extension for JpGraph
  // Created:     2001-01-08
- // Ver:         $Id: jpgraph_bar.php 1763 2009-08-01 08:34:17Z ljp $
+ // Ver:         $Id: jpgraph_bar.php 1905 2009-10-06 18:00:21Z ljp $
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -203,7 +203,7 @@ class BarPlot extends Plot {
     }
 
     function SetFillColor($aColor) {
-        // Do an extra error check if the color is specified as an RG array triple
+        // Do an extra error check if the color is specified as an RGB array triple
         // In that case convert it to a hex string since it will otherwise be
         // interpretated as an array of colors for each individual bar.
 
@@ -389,6 +389,11 @@ class BarPlot extends Plot {
                             $tocolor = $this->grad_tocolor;
                             $style = $this->grad_style;
                         }
+                        else {
+                            $fromcolor = $this->grad_fromcolor[$i % $ng][0];
+                            $tocolor = $this->grad_fromcolor[$i % $ng][1];
+                            $style = $this->grad_fromcolor[$i % $ng][2];
+                        }
                     }
                     else {
                         $fromcolor = $this->grad_fromcolor[$i % $ng][0];
@@ -396,8 +401,8 @@ class BarPlot extends Plot {
                         $style = $this->grad_fromcolor[$i % $ng][2];
                     }
                     $grad->FilledRectangle($pts[2],$pts[3],
-                    $pts[6],$pts[7],
-                    $fromcolor,$tocolor,$style);
+                                           $pts[6],$pts[7],
+                                           $fromcolor,$tocolor,$style);
                 }
                 else {
                     $grad->FilledRectangle($pts[2],$pts[3],
@@ -830,6 +835,7 @@ class AccBarPlot extends BarPlot {
     function Stroke($img,$xscale,$yscale) {
         $pattern=NULL;
         $img->SetLineWeight($this->weight);
+        $grad=null;
         for($i=0; $i < $this->numpoints-1; $i++) {
             $accy = 0;
             $accy_neg = 0;
@@ -918,12 +924,46 @@ class AccBarPlot extends BarPlot {
                 if ($this->plots[$j]->coords[0][$i] == 0 ) continue;
 
                 if( $this->plots[$j]->grad ) {
-                    $grad = new Gradient($img);
-                    $grad->FilledRectangle( $pts[2],$pts[3],
-                                            $pts[6],$pts[7],
-                                            $this->plots[$j]->grad_fromcolor,
-                                            $this->plots[$j]->grad_tocolor,
-                                            $this->plots[$j]->grad_style);
+                    if( $grad === null ) {
+                        $grad = new Gradient($img);
+                    }
+                    if( is_array($this->plots[$j]->grad_fromcolor) ) {
+                        // The first argument (grad_fromcolor) can be either an array or a single color. If it is an array
+                        // then we have two choices. It can either a) be a single color specified as an RGB triple or it can be
+                        // an array to specify both (from, to style) for each individual bar. The way to know the difference is
+                        // to investgate the first element. If this element is an integer [0,255] then we assume it is an RGB
+                        // triple.
+                        $ng = count($this->plots[$j]->grad_fromcolor);
+                        if( $ng === 3 ) {
+                            if( is_numeric($this->plots[$j]->grad_fromcolor[0]) && $this->plots[$j]->grad_fromcolor[0] > 0 &&
+                                 $this->plots[$j]->grad_fromcolor[0] < 256 ) {
+                                // RGB Triple
+                                $fromcolor = $this->plots[$j]->grad_fromcolor;
+                                $tocolor = $this->plots[$j]->grad_tocolor;
+                                $style = $this->plots[$j]->grad_style;
+                            }
+                            else {
+                                $fromcolor = $this->plots[$j]->grad_fromcolor[$i % $ng][0];
+                                $tocolor = $this->plots[$j]->grad_fromcolor[$i % $ng][1];
+                                $style = $this->plots[$j]->grad_fromcolor[$i % $ng][2];
+                            }
+                        }
+                        else {
+                            $fromcolor = $this->plots[$j]->grad_fromcolor[$i % $ng][0];
+                            $tocolor = $this->plots[$j]->grad_fromcolor[$i % $ng][1];
+                            $style = $this->plots[$j]->grad_fromcolor[$i % $ng][2];
+                        }
+                        $grad->FilledRectangle($pts[2],$pts[3],
+                                               $pts[6],$pts[7],
+                                               $fromcolor,$tocolor,$style);
+                    }
+                    else {
+                        $grad->FilledRectangle($pts[2],$pts[3],
+                                               $pts[6],$pts[7],
+                                               $this->plots[$j]->grad_fromcolor,
+                                               $this->plots[$j]->grad_tocolor,
+                                               $this->plots[$j]->grad_style);
+                    }
                 } else {
                     if (is_array($this->plots[$j]->fill_color) ) {
                         $numcolors = count($this->plots[$j]->fill_color);

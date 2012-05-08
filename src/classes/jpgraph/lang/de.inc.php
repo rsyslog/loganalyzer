@@ -5,7 +5,7 @@
 // Created:     2006-03-06
 // Author:      Timo Leopold (timo@leopold-hh.de)
 //              Johan Persson (ljp@localhost.nil)
-// Ver:         $Id: de.inc.php 1709 2009-07-30 08:00:08Z ljp $
+// Ver:         $Id: de.inc.php 1886 2009-10-01 23:30:16Z ljp $
 //
 // Copyright (c)
 //========================================================================
@@ -103,6 +103,7 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 6030 => array('Unbekannte Pfeilrichtung für eine Verbindung.',0),
 6031 => array('Unbekannter Pfeiltyp für eine Verbindung.',0),
 6032 => array('Interner Fehler: Unbekannter Pfadtyp (=%d) für eine Verbindung.',1),
+6033 => array('Array of fonts must contain arrays with 3 elements, i.e. (Family, Style, Size)',0),
 
 /*
 **  jpgraph_gradient
@@ -256,7 +257,7 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 24001 => array('FuncGenerator : Keine Funktion definiert. ',0),
 24002 => array('FuncGenerator : Syntax-Fehler in der Funktionsdefinition ',0),
 24003 => array('DateScaleUtils: Unknown tick type specified in call to GetTicks()',0),
-
+24004 => array('ReadCSV2: Die anzahl der spalten fehler in %s reihe %d',2),
 /*
 **  jpgraph
 */
@@ -403,6 +404,7 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 25129 => array('Anti-alias can not be used with dashed lines. Please disable anti-alias or use solid lines.',0),
 25130 => array('Too small plot area. (%d x %d). With the given image size and margins there is to little space left for the plot. Increase the plot size or reduce the margins.',2),
 
+25131 => array('StrokeBoxedText2() only supports TTF fonts and not built-in bitmap fonts.',0),
 
 /*
 **  jpgraph_led
@@ -524,13 +526,16 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 /*
  * jpgraph_matrix and colormap
 */
-29201 => array('Min range value must be less or equal to max range value for colormaps'),
-29202 => array('The distance between min and max value is too small for numerical precision'),
+29201 => array('Min range value must be less or equal to max range value for colormaps',0),
+29202 => array('The distance between min and max value is too small for numerical precision',0),
 29203 => array('Number of color quantification level must be at least %d',1),
 29204 => array('Number of colors (%d) is invalid for this colormap. It must be a number that can be written as: %d + k*%d',3),
 29205 => array('Colormap specification out of range. Must be an integer in range [0,%d]',1),
-29206 => array('Invalid object added to MatrixGraph'),
-29207 => array('Empty input data specified for MatrixPlot'),
+29206 => array('Invalid object added to MatrixGraph',0),
+29207 => array('Empty input data specified for MatrixPlot',0),
+29208 => array('Unknown side specifiction for matrix labels "%s"',1),
+29209 => array('CSIM Target matrix must be the same size as the data matrix (csim=%d x %d, data=%d x %d)',4),
+29210 => array('CSIM Target for matrix labels does not match the number of labels (csim=%d, labels=%d)',2),
 
 );
 
