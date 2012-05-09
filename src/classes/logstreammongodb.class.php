@@ -1045,20 +1045,8 @@ class LogStreamMongoDB extends LogStream {
 		//var_dump($myMongoQuery); 
 		// ---
 
-/*
-		// Special handling for date fields
-		if ( $nConsFieldType == FILTER_TYPE_DATE )
-		{
-			echo "!"; 
-			exit;
-			// Helper variable for the select statement
-			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
-			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
-		}
-*/
-
 		// --- Process Data and consolidate!
-		// Create reduce function
+		// --- Create reduce function
 		$groupReduce = "
 		function (obj, prev) 
 		{ 
@@ -1097,14 +1085,34 @@ class LogStreamMongoDB extends LogStream {
 			// assert( theerror, \"B3\" )
 		}
 		";
+		// ---
+
+		// --- Create Mongo KEY Array
+		// Workarround to reduce Datekeys by DAY. Otherwise we will run into 20000 unique Key limit
+		if ( $nConsFieldType == FILTER_TYPE_DATE ) // Handle as date!
+			$mongoKey = new MongoCode( 
+				"function(doc) { 
+					return {" . $myDBConsFieldName . " : new Date( doc." . $myDBConsFieldName . " - (doc." . $myDBConsFieldName . " % 86400) )}; 
+				}"); 
+		else
+			$mongoKey = array($myDBConsFieldName => 1); 
+/*			$mongoKey = new MongoCode( 
+				"function() {
+					emit( 
+						" . $myDBConsFieldName . ":this." . $myDBConsFieldName . ", 
+						{count:1, _id:this._id} 
+						);
+				}"); 
+*/
+		// ---
 
 		try 
 		{
 			// Uncomment for more Debug Informations
-			// OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with Reduce Function: <pre>" . $groupReduce . "</pre>", DEBUG_ULTRADEBUG);
+			OutputDebugMessage("LogStreamMongoDB|ConsolidateDataByField: Running MongoDB group query with mongoKey (type $nConsFieldType): <pre>" . var_export($mongoKey, true) . "</pre>", DEBUG_ULTRADEBUG);
 
 			// mongodb group is simular to groupby from MYSQL
-			$myResult = $this->_myMongoCollection->group( array($myDBConsFieldName => 1), $myMongoInit, $groupReduce, $myOptions);
+			$myResult = $this->_myMongoCollection->group( $mongoKey, $myMongoInit, $groupReduce, $myOptions);
 		}
 		catch ( MongoCursorException $e ) 
 		{
