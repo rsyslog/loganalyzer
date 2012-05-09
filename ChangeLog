@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 3.5.3 (beta), 2012-05-09
+- Fixed some issues in the new MongoDB Logstream Class. To name a few, 
+  add resultlimits to speedup performance. Changed and fixed some issues 
+  when grouping data for consolidation. Added support to create Indexes
+  on fields. This should also speedup report generation. 
+- Added support to filter by date string, example: timereported:=2012-01-01
+  A new Datetype hasbeen added to support filtering by date.
+- Updated jpgraph code to latest version which is 3.0.7
+---------------------------------------------------------------------------
 Version 3.4.2 (stable), 2012-05-07
 - Fixed a #bugid 303, VerifyChecksumTrigger function in logstreamdb 
   class did not generate a lowercase triggername.
