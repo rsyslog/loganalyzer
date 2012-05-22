@@ -120,7 +120,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SEARCHID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_SEARCHES . 
@@ -183,7 +183,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SEARCHID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] ); 

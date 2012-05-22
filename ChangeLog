@@ -1,3 +1,18 @@
+Version 3.5.4 (beta), 2012-05-22
+- Merged security fixes into beta branch
+---------------------------------------------------------------------------
+Version 3.4.3 (stable), 2012-05-22
+- Fixed several security vulnerabilities discovered by Filippo Cavallarin. 
+  This contains the following fixes: 
+  - Fixed SQL Injection vulnerability in admin/view.php
+  - Fixed Cross Site scripting issue filter parameter on index.php
+  - Fixed Cross site scripting issue of id parameter on admin/reports.php 
+  - Fixed Cross site scripting issue of id parameter on admin/searches.php
+- Fixed arbitrary file read issue in Disk LogStream class.
+  The config.php file does now contain an array "DiskAllowed" which 
+  contains allowed directories. Only files located within these allowed 
+  directories can be accessed in LogAnalyzer. By default, 
+  only /var/log is allowed.
 ---------------------------------------------------------------------------
 Version 3.5.3 (beta), 2012-05-09
 - Fixed some issues in the new MongoDB Logstream Class. To name a few, 

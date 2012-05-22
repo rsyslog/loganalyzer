@@ -374,6 +374,8 @@ $content['LN_REPORT_FILTERTYPE_STRING'] = "String";
 $content['LN_GEN_SUCCESS_WHILEREPORTGEN'] = "Report was successfully generated";
 $content['LN_GEN_ERROR_REPORTFAILEDTOGENERATE'] = "Failed to generate report, error details: %1";
 $content['LN_GEN_SUCCESS_REPORTWASGENERATED_DETAILS'] = "Successfully generated report: %1";
+$content['LN_ERROR_PATH_NOT_ALLOWED'] = "The file is not located in the allowed directories list (By default /var/log is allowed only)."; 
+$content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'] = "The file '%1' is not located in one of these directories: '%2'"; 
 
 $content['LN_CMD_RUNREPORT'] = "Generating saved report '%1'";
 $content['LN_CMD_REPORTIDNOTFOUND'] = "Invalid Report ID '%1'";

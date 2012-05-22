@@ -89,7 +89,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -181,7 +181,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -245,7 +245,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -312,7 +312,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 
 			// Init Form variables 
 			$content['ISADDSAVEDREPORT'] = "true";
@@ -408,7 +408,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to report!

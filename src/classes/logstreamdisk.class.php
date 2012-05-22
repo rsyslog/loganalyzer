@@ -117,6 +117,29 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error state
 	*/
 	public function Verify() {
+		global $content; 
+		
+		// --- Check if Filename is within allowed directories!
+		$szFileDirName = dirname($this->_logStreamConfigObj->FileName); 
+		$bIsAllowedDir = false; 
+		foreach($content['DiskAllowed'] as $szAllowedDir)
+		{
+			if ( strpos($szAllowedDir, $szFileDirName) !== FALSE ) 
+			{
+				$bIsAllowedDir = true; 
+				break; 
+			}
+		}
+		if ( !$bIsAllowedDir ) 
+		{
+			global $extraErrorDescription;
+			$extraErrorDescription = GetAndReplaceLangStr( $content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'], $this->_logStreamConfigObj->FileName, implode(", ", $content['DiskAllowed']) ); 
+
+			return ERROR_PATH_NOT_ALLOWED;
+		}
+
+		
+		// ---
 
 		// Check if file exists!
 		if(!file_exists($this->_logStreamConfigObj->FileName)) {

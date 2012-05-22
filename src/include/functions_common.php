@@ -66,7 +66,11 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
+<<<<<<< HEAD:src/include/functions_common.php
 $content['BUILDNUMBER'] = "3.5.3";
+=======
+$content['BUILDNUMBER'] = "3.4.3";
+>>>>>>> 4c5e5b7bf5447adbd08054840ed29b0a083b1195:src/include/functions_common.php
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -197,6 +201,10 @@ function InitPhpLogCon()
 
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
+	// --- 
+
+	// --- Init Allowed directories for DiskSources
+	InitDiskAllowedSources();
 	// --- 
 
 	// --- Check and Remove Magic Quotes!
@@ -1362,7 +1370,7 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 			"DBGLEVEL" => $szDbgLevel, 
 			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
 			"DBGLEVELBG" => GetDebugBgColor($szDbgLevel), 
-			"DBGMSG" =>	"$szDbg"
+			"DBGMSG" =>	strip_dangerous_html_tags($szDbg)
 			);
 	}
 
@@ -1932,16 +1940,16 @@ function GetErrorMessage($errorCode)
 			return $content['LN_ERROR_DB_TABLENOTFOUND'];
 		case ERROR_DB_DBFIELDNOTFOUND:
 			return $content['LN_ERROR_DB_DBFIELDNOTFOUND'];
-
 		case ERROR_CHARTS_NOTCONFIGURED:
 			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];
 		case ERROR_FILE_NOMORETIME:
 			return $content['LN_ERROR_FILE_NOMORETIME'];
 		case ERROR_SOURCENOTFOUND:
 			return $content['LN_GEN_ERROR_SOURCENOTFOUND'];
-
 		case ERROR_REPORT_NODATA:
 			return $content['LN_GEN_ERROR_REPORT_NODATA'];
+		case ERROR_PATH_NOT_ALLOWED:
+			return $content['LN_ERROR_PATH_NOT_ALLOWED'];
 
 		default:
 			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );
@@ -1975,6 +1983,43 @@ function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
 	// Move up or down
 	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? -1 : 1;
 }
-// --- 
 
+/**
+*	Helper function to remove dangerous HTML Tags
+*/
+function strip_dangerous_html_tags( $text ) 
+{ 
+	$text = preg_replace( 
+			array( 
+				// Remove invisible content 
+				'@<title[^>]*?>@siu',
+				'@</title>@siu', 
+				'@<head[^>]*?>@siu',
+				'@</head>@siu', 
+				'@<style[^>]*?>@siu', 
+				'@</style>@siu', 
+				'@<script[^>]*?>@siu', 
+				'@/script>@siu', 
+				'@<object[^>]*?>@siu', 
+				'@</object>@siu', 
+				'@<embed[^>]*?>@siu', 
+				'@</embed>@siu', 
+				'@<applet[^>]*?>@siu', 
+				'@</applet>@siu', 
+				'@<noframes[^>]*?>@siu', 
+				'@</noframes>@siu', 
+				'@<noscript[^>]*?>@siu', 
+				'@</noscript>@siu', 
+				'@<noembed[^>]*?>@siu', 
+				'@</noembed>@siu', 
+			), 
+			array( 
+				' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+				' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			), $text ); 
+	
+	return $text; 
+}
+
+// --- 
 ?>
