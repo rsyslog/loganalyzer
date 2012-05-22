@@ -197,8 +197,8 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 $content['TITLE'] = InitPageTitle();
 
 // Append custom title part!
-if ( isset($content['searchstr']) && strlen($content['searchstr']) > 0 ) 
-	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr'] . "'";	// Append search
+if ( isset($content['searchstr_htmlform']) && strlen($content['searchstr_htmlform']) > 0 ) 
+	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr_htmlform'] . "'";	// Append search
 else
 	$content['TITLE'] .= " :: All Syslogmessages";
 // --- END CREATE TITLE

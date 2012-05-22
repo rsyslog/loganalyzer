@@ -1341,7 +1341,7 @@ function OutputDebugMessage($szDbg, $szDbgLevel = DEBUG_INFO)
 			"DBGLEVEL" => $szDbgLevel, 
 			"DBGLEVELTXT" => GetDebugModeString($szDbgLevel), 
 			"DBGLEVELBG" => GetDebugBgColor($szDbgLevel), 
-			"DBGMSG" =>	"$szDbg"
+			"DBGMSG" =>	strip_dangerous_html_tags($szDbg)
 			);
 	}
 
@@ -1954,6 +1954,43 @@ function MultiSortArrayByItemCountAsc( $arrayFirst, $arraySecond )
 	// Move up or down
 	return ($arrayFirst['itemcount'] < $arraySecond['itemcount']) ? -1 : 1;
 }
-// --- 
 
+/**
+*	Helper function to remove dangerous HTML Tags
+*/
+function strip_dangerous_html_tags( $text ) 
+{ 
+	$text = preg_replace( 
+			array( 
+				// Remove invisible content 
+				'@<title[^>]*?>@siu',
+				'@</title>@siu', 
+				'@<head[^>]*?>@siu',
+				'@</head>@siu', 
+				'@<style[^>]*?>@siu', 
+				'@</style>@siu', 
+				'@<script[^>]*?>@siu', 
+				'@/script>@siu', 
+				'@<object[^>]*?>@siu', 
+				'@</object>@siu', 
+				'@<embed[^>]*?>@siu', 
+				'@</embed>@siu', 
+				'@<applet[^>]*?>@siu', 
+				'@</applet>@siu', 
+				'@<noframes[^>]*?>@siu', 
+				'@</noframes>@siu', 
+				'@<noscript[^>]*?>@siu', 
+				'@</noscript>@siu', 
+				'@<noembed[^>]*?>@siu', 
+				'@</noembed>@siu', 
+			), 
+			array( 
+				' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+				' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			), $text ); 
+	
+	return $text; 
+}
+
+// --- 
 ?>
