@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.4.1";
+$content['BUILDNUMBER'] = "3.4.3";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -197,6 +197,10 @@ function InitPhpLogCon()
 
 	// --- Enable PHP Debug Mode 
 	InitPhpDebugMode();
+	// --- 
+
+	// --- Init Allowed directories for DiskSources
+	InitDiskAllowedSources();
 	// --- 
 
 	// --- Check and Remove Magic Quotes!
@@ -1911,16 +1915,16 @@ function GetErrorMessage($errorCode)
 			return $content['LN_ERROR_DB_TABLENOTFOUND'];
 		case ERROR_DB_DBFIELDNOTFOUND:
 			return $content['LN_ERROR_DB_DBFIELDNOTFOUND'];
-
 		case ERROR_CHARTS_NOTCONFIGURED:
 			return $content['LN_ERROR_CHARTS_NOTCONFIGURED'];
 		case ERROR_FILE_NOMORETIME:
 			return $content['LN_ERROR_FILE_NOMORETIME'];
 		case ERROR_SOURCENOTFOUND:
 			return $content['LN_GEN_ERROR_SOURCENOTFOUND'];
-
 		case ERROR_REPORT_NODATA:
 			return $content['LN_GEN_ERROR_REPORT_NODATA'];
+		case ERROR_PATH_NOT_ALLOWED:
+			return $content['LN_ERROR_PATH_NOT_ALLOWED'];
 
 		default:
 			return GetAndReplaceLangStr( $content['LN_ERROR_UNKNOWN'], $errorCode );

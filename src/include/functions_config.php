@@ -617,6 +617,27 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 /*
 *	Helper function to load configured dbmappings from the database
 */
+function InitDiskAllowedSources()
+{
+	global $CFG, $content;
+
+	// Init Source Configs!
+	if ( isset($CFG['DiskAllowed']) )
+	{	
+		// Copy Array to content array
+		$content['DiskAllowed'] = $CFG['DiskAllowed']; 
+	}
+	else
+	{
+		// Set default 
+		$content['DiskAllowed'][] = "/var/log/"; 
+	}
+}
+
+
+/*
+*	Helper function to load configured dbmappings from the database
+*/
 function LoadDBMappingsFromDatabase()
 {
 	// Needed to make global

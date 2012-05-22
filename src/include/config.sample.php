@@ -125,6 +125,10 @@ $CFG['Charts'][] = array ( "DisplayName" => "Severity Occurences", "chart_type" 
 $CFG['Charts'][] = array ( "DisplayName" => "Usage by Day", "chart_type" => CHART_CAKE, "chart_width" => 400, "chart_field" => SYSLOG_DATE, "maxrecords" => 10, "showpercent" => 1, "chart_enabled" => 1 );
 // ---
 
+// --- Configure allowed directories for File base logstream sources
+$CFG['DiskAllowed'][] = "/var/log/"; 
+// ---
+
 // --- Source Options
 /* Example for DiskType Source:
 	$CFG['Sources']['Source1']['ID'] = "Source1";
