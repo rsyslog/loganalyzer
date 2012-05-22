@@ -236,7 +236,7 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 {
 	// If Columns are send using POST we use them, otherwise we try to use from the view itself, if available
 	if ( isset($_POST['Columns']) )
-		$AllColumns = $_POST['Columns'];
+		$AllColumns = DB_RemoveBadChars($_POST['Columns']);
 	else if ( isset($content['COLUMNS']) )
 		$AllColumns = $content['COLUMNS'];
 
@@ -489,12 +489,12 @@ if ( isset($_POST['op']) )
 				if ( isset($_POST['Columns']) && is_array($_POST['Columns']) )
 				{
 					// Copy columns ID's
-					foreach ($_POST['Columns'] as $myColKey)
+					foreach ( $_POST['Columns'] as $myColKey)
 					{
 						if ( isset($content['COLUMNS']) ) 
-							$content['COLUMNS'] .= ", " . $myColKey;
+							$content['COLUMNS'] .= ", " . DB_RemoveBadChars($myColKey);
 						else
-							$content['COLUMNS'] = $myColKey;
+							$content['COLUMNS'] = DB_RemoveBadChars($myColKey);
 					}
 
 					// Add custom search now!
@@ -538,9 +538,9 @@ if ( isset($_POST['op']) )
 						foreach ($_POST['Columns'] as $myColKey)
 						{
 							if ( isset($content['COLUMNS']) ) 
-								$content['COLUMNS'] .= ", " . $myColKey;
+								$content['COLUMNS'] .= ", " . DB_RemoveBadChars($myColKey);
 							else
-								$content['COLUMNS'] = $myColKey;
+								$content['COLUMNS'] = DB_RemoveBadChars($myColKey);
 						}
 
 
