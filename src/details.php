@@ -60,7 +60,13 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 
 // --- CONTENT Vars
 if ( isset($_GET['uid']) ) 
-	$content['uid_current'] = intval($_GET['uid']);
+{
+	// Now check by numeric as uid can be larger than INT values
+	if ( is_numeric($_GET['uid']) ) 
+		$content['uid_current'] = $_GET['uid']; 
+	else
+		$content['uid_current'] = UID_UNKNOWN;
+}
 else
 	$content['uid_current'] = UID_UNKNOWN;
 
@@ -351,11 +357,6 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						else
 							$content['main_pager_last_found'] = false;
 					}
-
-//echo $content['uid_fromgetrequest'] . "!<br>";
-//echo $uID . "!" . $ret . "<br>";
-//echo $content['uid_current'] ."==".  $content['uid_last'] . "<br>";
-
 				}
 				// --- 
 
