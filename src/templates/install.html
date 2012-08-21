@@ -25,14 +25,23 @@
 			showvisibility("HiddenDatabaseTypeOptions");
 			hidevisibility("HiddenDiskTypeOptions");
 
-			hidevisibility("HiddenDBTYpesOptions");
+			hidevisibility("HiddenPDOSourceOptions");
+//			hidevisibility("HiddenDBTYpesOptions");
 		}
 		else if (myfield.value == 3)
 		{
 			showvisibility("HiddenDatabaseTypeOptions");
 			hidevisibility("HiddenDiskTypeOptions");
 
-			showvisibility("HiddenDBTYpesOptions");
+			showvisibility("HiddenPDOSourceOptions");
+//			showvisibility("HiddenDBTYpesOptions");
+		}
+		else if (myfield.value == 4)
+		{
+			showvisibility("HiddenDatabaseTypeOptions");
+			hidevisibility("HiddenDiskTypeOptions");
+
+			hidevisibility("HiddenPDOSourceOptions");
 		}
 	}
 
@@ -453,7 +462,7 @@
 				<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
 				</table>
 
-				<div id="HiddenDBTYpesOptions" class="HiddenContent">
+				<div id="HiddenPDOSourceOptions" class="HiddenContent">
 				<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
 				<tr>
 					<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>

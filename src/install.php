@@ -699,7 +699,10 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		if ( !is_file($_SESSION['SourceDiskFile']) )
 			RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr($content['LN_INSTALL_FAILEDTOOPENSYSLOGFILE'], $_SESSION['SourceDiskFile']) ); 
 	}
-	else if (	$_SESSION['SourceType'] == SOURCE_DB || $_SESSION['SourceType'] == SOURCE_PDO )
+	// DB Params
+	else if (	$_SESSION['SourceType'] == SOURCE_DB || 
+				$_SESSION['SourceType'] == SOURCE_PDO ||
+				$_SESSION['SourceType'] == SOURCE_MONGODB )
 	{
 		if ( isset($_POST['SourceDBType']) )
 			$_SESSION['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']);
@@ -864,6 +867,20 @@ else if ( $content['INSTALL_STEP'] == 8 )
 						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
 						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
 						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
+						"";
+	}
+	else if ( $_SESSION['SourceType'] == SOURCE_MONGODB )
+	{
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_MONGODB;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";
