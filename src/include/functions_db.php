@@ -257,17 +257,41 @@ function DB_RemoveParserSpecialBadChars($myString)
 	return $returnstr;
 }
 
-function DB_RemoveBadChars($myString, $dbEngine = DB_MYSQL, $bForceStripSlahes = false)
+function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = false)
 {
-	if ( $dbEngine == DB_MSSQL ) 
-	{
-		// MSSQL needs special treatment -.-
-		return str_replace("'","''",$myString);
+	// Check if Array
+	if ( is_array($myValue) )
+	{	// Array value
+		$retArray = array(); 
+		foreach( $myValue as $mykey => $myString )
+		{
+			if ( $dbEngine == DB_MSSQL ) 
+			{
+				// MSSQL needs special treatment -.-
+				$retArray[$mykey] = str_replace("'","''",$myString);
+			}
+			else
+			{
+				// Replace with internal PHP Functions!
+				$retArray[$mykey] = addslashes($myString);
+			}
+		}
+
+		// Return fixed array!
+		return $retArray; 
 	}
 	else
-	{
-		// Replace with internal PHP Functions!
-		return addslashes($myString);
+	{	// Single value
+		if ( $dbEngine == DB_MSSQL ) 
+		{
+			// MSSQL needs special treatment -.-
+			return str_replace("'","''",$myValue);
+		}
+		else
+		{
+			// Replace with internal PHP Functions!
+			return addslashes($myValue);
+		}
 	}
 }
 
