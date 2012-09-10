@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------
+Version 3.4.5 (stable), 2012-09-10
+- Merged fix from beta branch in function_db.php. DB_RemoveBadChars 
+  function supports arrays now, this caused invisible notice errors.
+---------------------------------------------------------------------------
 Version 3.4.4 (stable), 2012-06-19
 - Fixed cross-site scripting vulnerability of highlight parameter 
   on index.php page. 
-
 ---------------------------------------------------------------------------
 Version 3.4.3 (stable), 2012-05-22
 - Fixed several security vulnerabilities discovered by Filippo Cavallarin. 
