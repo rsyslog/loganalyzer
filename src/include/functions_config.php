@@ -546,8 +546,9 @@ function InitViewConfigs()
 									'groupid' =>	null, 
 								   );
 	
-	// Set default of 'DefaultViewsID'
-	$CFG['DefaultViewsID'] = "SYSLOG";
+	// Set default of 'DefaultViewsID' only if not set already!
+	if ( !isset($CFG['DefaultViewsID']) ) 
+		$CFG['DefaultViewsID'] = "SYSLOG";
 
 	// Loop through views now and copy into content array!
 	foreach ( $CFG['Views'] as $key => $view )

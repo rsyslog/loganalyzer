@@ -152,7 +152,7 @@ function GetFileLength($szFileName)
 function InitPhpLogCon()
 {
 	// Needed to make global
-	global $gl_root_path, $content;
+	global $gl_root_path, $content, $CFG;
 
 	// Abort if already defined
 	if ( defined('PHPLOGCON_INITIALIZED') )
@@ -885,6 +885,8 @@ function InitConfigurationValues()
 
 			// Load Configured Sources
 			LoadSourcesFromDatabase();
+
+
 		}
 		else
 		{
