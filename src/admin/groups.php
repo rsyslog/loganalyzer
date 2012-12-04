@@ -281,17 +281,15 @@ if ( isset($_GET['op']) )
 				}
 				// ---
 
-				// do the delete!
-				$result = DB_Query( "DELETE FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID'] );
-				if ($result == FALSE)
-				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GROUP_ERROR_DELGROUP'], $content['USERID'] ); 
-				}
-				else
-					DB_FreeQuery($result);
-
-				// TODO: DELETE GROUP SETTINGS, GROUP MEMBERSHIP ...
+				// Delete User objects!
+				PerformSQLDelete( "DELETE FROM " . DB_SOURCES . " WHERE groupid = " . $content['GROUPID'], 'LN_SOURCES_ERROR_DELSOURCE', $content['GROUPID'] );  
+				PerformSQLDelete( "DELETE FROM " . DB_VIEWS . " WHERE groupid = " . $content['GROUPID'], 'LN_VIEWS_ERROR_DELSEARCH', $content['GROUPID'] );  
+				PerformSQLDelete( "DELETE FROM " . DB_SEARCHES . " WHERE groupid = " . $content['GROUPID'], 'LN_SEARCH_ERROR_DELSEARCH', $content['GROUPID'] );  
+				PerformSQLDelete( "DELETE FROM " . DB_CHARTS . " WHERE groupid = " . $content['GROUPID'], 'LN_CHARTS_ERROR_DELCHART', $content['GROUPID'] );  
+				PerformSQLDelete( "DELETE FROM " . DB_GROUPMEMBERS . " WHERE groupid = " . $content['GROUPID'], 'LN_GROUP_ERROR_REMUSERFROMGROUP', $content['GROUPID'] );  
+													 
+				// Finally delete the Groupobject!
+				PerformSQLDelete( "DELETE FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID'], 'LN_GROUP_ERROR_DELGROUP', $content['GROUPID'] );  
 
 				// Do the final redirect
 				RedirectResult( GetAndReplaceLangStr( $content['LN_GROUP_ERROR_HASBEENDEL'], $myrow['groupname'] ) , "groups.php" );
@@ -494,6 +492,23 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	else
 		$content['EMPTYGROUPS'] = "true";
+}
+
+// Helper function to delete SQL Data
+function PerformSQLDelete( $szDeleteStm, $szErrMsg, $szUserID)
+{
+	global $content; 
+	$result = DB_Query( $szDeleteStm );
+	if ($result == FALSE)
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content[$szErrMsg], $szUserID ); 
+		return false; 
+	}
+	else
+		DB_FreeQuery($result);
+	// Success
+	return true; 
 }
 // --- END Custom Code
 

@@ -260,18 +260,15 @@ if ( isset($_GET['op']) )
 						PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_USER_WARNDELETEUSER'], $myrow['username'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
 					}
 					// ---
+					
+					// Delete User objects!
+					PerformSQLDelete( "DELETE FROM " . DB_SOURCES . " WHERE userid = " . $content['USERID'], 'LN_SOURCES_ERROR_DELSOURCE', $content['USERID'] );  
+					PerformSQLDelete( "DELETE FROM " . DB_VIEWS . " WHERE userid = " . $content['USERID'], 'LN_VIEWS_ERROR_DELSEARCH', $content['USERID'] );  
+					PerformSQLDelete( "DELETE FROM " . DB_SEARCHES . " WHERE userid = " . $content['USERID'], 'LN_SEARCH_ERROR_DELSEARCH', $content['USERID'] );  
+					PerformSQLDelete( "DELETE FROM " . DB_CHARTS . " WHERE userid = " . $content['USERID'], 'LN_CHARTS_ERROR_DELCHART', $content['USERID'] );  
 
-					// do the delete!
-					$result = DB_Query( "DELETE FROM " . DB_USERS . " WHERE ID = " . $content['USERID'] );
-					if ($result == FALSE)
-					{
-						$content['ISERROR'] = true;
-						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_USER_ERROR_DELUSER'], $content['USERID'] ); 
-					}
-					else
-						DB_FreeQuery($result);
-
-					// TODO: DELETE PERSONAL SETTINGS, GROUP MEMBERSHIP ...
+					// Finally delete the Userobject!
+					PerformSQLDelete( "DELETE FROM " . DB_USERS . " WHERE ID = " . $content['USERID'], 'LN_USER_ERROR_DELUSER', $content['USERID'] );  
 
 					// Do the final redirect
 					RedirectResult( GetAndReplaceLangStr( $content['LN_USER_ERROR_HASBEENDEL'], $myrow['username'] ) , "users.php" );
@@ -454,6 +451,23 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		// --- 
 	}
 	// --- 
+}
+
+// Helper function to delete SQL Data
+function PerformSQLDelete( $szDeleteStm, $szErrMsg, $szUserID)
+{
+	global $content; 
+	$result = DB_Query( $szDeleteStm );
+	if ($result == FALSE)
+	{
+		$content['ISERROR'] = true;
+		$content['ERROR_MSG'] = GetAndReplaceLangStr( $content[$szErrMsg], $szUserID ); 
+		return false; 
+	}
+	else
+		DB_FreeQuery($result);
+	// Success
+	return true; 
 }
 // --- END Custom Code
 
