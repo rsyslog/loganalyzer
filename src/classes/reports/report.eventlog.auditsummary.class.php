@@ -77,6 +77,9 @@ class Report_auditsummary extends Report {
 		$this->_arrProperties[] = SYSLOG_EVENT_LOGTYPE;
 		$this->_arrProperties[] = SYSLOG_EVENT_SOURCE;
 		$this->_arrProperties[] = SYSLOG_EVENT_USER;
+		$this->_arrProperties[] = MISC_CHECKSUM;
+
+
 
 		// Init Customfilters Array
 		$this->_arrCustomFilters['_maxHosts'] = array (	'InternalID'	=> '_maxHosts', 
