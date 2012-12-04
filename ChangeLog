@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------
+Version 3.6.0 (stable), 2012-12-04
+- Bugfix: Fixed "DiskAllowed" checking in Disklogstream. Filenames are now 
+  correctly checked against allowed folders. This check was added for 
+  security reasons before. 
+- Fixes #bugid 369: http://bugzilla.adiscon.com/show_bug.cgi?id=369
+  The DefaultviewID was accidentally overwritten with default value. 
+- Fixes #bugid 375: http://bugzilla.adiscon.com/show_bug.cgi?id=369
+  User and Group data is now deleted when removing them from the UserDB. 
+- Bugfix: Added missing dependency for the Checksum field in 
+  "EventLog Audit" and "EventLog Logon/Logoff" report.
+---------------------------------------------------------------------------
 Version 3.5.6 (beta), 2012-09-10
 - bugfix: Changed intval() handling in details.php into is_numeric. 
   This fixes problems with 64 Bit unsigned uid's. 
