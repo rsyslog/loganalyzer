@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 3.6.1 (stable), 2012-??-??
+- Cosmetic fix in login.php, fixed static language strings.
+---------------------------------------------------------------------------
 Version 3.6.0 (stable), 2012-12-04
 - Bugfix: Fixed "DiskAllowed" checking in Disklogstream. Filenames are now 
   correctly checked against allowed folders. This check was added for 

@@ -103,7 +103,9 @@ else if ( isset($_GET['op']) && $_GET['op'] == "logoff" )
 
 // --- CONTENT Vars
 $content['REDIR_LOGIN'] = $szRedir;
-$content['TITLE'] = "LogAnalyzer - User Login";	// Title of the Page 
+$content['TITLE'] = InitPageTitle();
+// Append custom title part!
+$content['TITLE'] .= " :: " . $content['LN_LOGIN_TITLE'];
 // --- 
 
 // --- Parsen and Output
