@@ -1426,7 +1426,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			{
 				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
 				$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
 			}
@@ -1434,7 +1434,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			{
 				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
 				$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
 			}
@@ -1442,7 +1442,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			{
 				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
 				$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
 			}
@@ -1450,9 +1450,17 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 			{
 				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_PERFORMANCE_WARNING']; 
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
-				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] ); // GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_IDNOTFOUND'], $content['ReportID'] );
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
 				$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
+			}
+			else 
+			{
+				$content['MSG_WARNING_TITLE'] = $content['LN_REPORTS_SOURCE_WARNING']; 
+				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
+				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_SOURCE_CHECK'], $content['SOURCES'][$mySourceID]['Name'], GetErrorMessage($res) );
+				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
+				$content['MSG_WARNING_FORMURL'] .= "forcecheckoptimize=true"; // Change Checksum field!
 			}
 		}
 		else

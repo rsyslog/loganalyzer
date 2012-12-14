@@ -480,6 +480,8 @@ $content['LN_REPORTS_ADDSAVEDREPORT'] = "Add Savedreport and save changes";
 $content['LN_REPORTS_EDITSAVEDREPORT'] = "Save changes";
 $content['LN_REPORTS_ADDSAVEDREPORTANDRETURN'] = "Add Savedreport and return to reportlist";
 $content['LN_REPORTS_EDITSAVEDREPORTANDRETURN'] = "Save changes and return to reportlist";
+$content['LN_REPORTS_SOURCE_WARNING'] = "Logstream Source Warning";	
+$content['LN_REPORTS_ERROR_FAILED_SOURCE_CHECK'] = "Failed to check the datasource '%1' with error '%2'";
 $content['LN_REPORTS_'] = "";
 
 
