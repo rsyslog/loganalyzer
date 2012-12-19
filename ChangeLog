@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------
-Version 3.6.1 (stable), 2012-??-??
+Version 3.6.1 (stable), 2012-12-19
 - Cosmetic fix in login.php, fixed static language strings.
+- Fixed Cross Site scripting issue in asktheoracle.php 
+  (oracle_query parameter)
 ---------------------------------------------------------------------------
 Version 3.6.0 (stable), 2012-12-04
 - Bugfix: Fixed "DiskAllowed" checking in Disklogstream. Filenames are now 

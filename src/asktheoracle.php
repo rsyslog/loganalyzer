@@ -106,9 +106,9 @@ else
 	$content['showonlinesearches'] = false;
 }
 
-$content['ORACLE_HELP_DETAIL'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_DETAIL'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
-$content['ORACLE_HELP_TEXT'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_TEXT'], $content['oracle_type_readable'], $content['oracle_query'], $content['LN_ORACLE_HELP_TEXT_EXTERNAL'] ) ;
-$content['ORACLE_WHOIS'] = GetAndReplaceLangStr( $content['LN_ORACLE_WHOIS'], $content['oracle_type_readable'], $content['oracle_query'] ) ;
+$content['ORACLE_HELP_DETAIL'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_DETAIL'], $content['oracle_type_readable'], urlencode($content['oracle_query']) ) ;
+$content['ORACLE_HELP_TEXT'] = GetAndReplaceLangStr( $content['LN_ORACLE_HELP_TEXT'], $content['oracle_type_readable'], urlencode($content['oracle_query']), $content['LN_ORACLE_HELP_TEXT_EXTERNAL'] ) ;
+$content['ORACLE_WHOIS'] = GetAndReplaceLangStr( $content['LN_ORACLE_WHOIS'], $content['oracle_type_readable'], urlencode($content['oracle_query']) ) ;
 $content['WhoisUrl'] = "http://kb.monitorware.com/kbsearch.php?sa=whois&oid=" . $content['oracle_kb_type'] . "&origin=phplogcon&q=" . urlencode($content['oracle_query']); 
 
 // Set Field Captions!
@@ -145,7 +145,7 @@ foreach( $content['Sources'] as $mySource )
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
 // Append custom title part!
-$content['TITLE'] .= GetAndReplaceLangStr( $content['LN_ORACLE_TITLE'], $content['oracle_query']);
+$content['TITLE'] .= GetAndReplaceLangStr( $content['LN_ORACLE_TITLE'], urlencode($content['oracle_query']));
 // --- END CREATE TITLE
 
 // --- Parsen and Output
