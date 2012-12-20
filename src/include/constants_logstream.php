@@ -340,7 +340,8 @@ $fields[SYSLOG_MESSAGE]['FieldType'] = FILTER_TYPE_STRING;
 $fields[SYSLOG_MESSAGE]['Sortable'] = false;
 $fields[SYSLOG_MESSAGE]['DefaultWidth'] = "100%";
 $fields[SYSLOG_MESSAGE]['FieldAlign'] = "left";
-$fields[SYSLOG_MESSAGE]['SearchField'] = "";
+// $fields[SYSLOG_MESSAGE]['SearchField'] = "";
+$fields[SYSLOG_MESSAGE]['SearchField'] = SYSLOG_MESSAGE;
 $fields[SYSLOG_MESSAGE]['SearchOnline'] = false; 
 // --- 
 
