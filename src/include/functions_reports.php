@@ -68,7 +68,7 @@ function CreateCronCommand( $myReportID, $mySavedReportID = null )
 		{	
 			// Running on Windows
 			$phpCmd = PHP_BINDIR . "\\php.exe"; 
-			$phpScript = realpath($gl_root_path) . "cron\\cmdreportgen.php";
+			$phpScript = realpath($gl_root_path) . "\\cron\\cmdreportgen.php";
 		} 
 		else 
 		{
