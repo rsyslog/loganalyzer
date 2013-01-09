@@ -120,7 +120,7 @@ class LogStreamDisk extends LogStream {
 		global $content; 
 		
 		// --- Check if Filename is within allowed directories!
-		$szFileDirName = dirname($this->_logStreamConfigObj->FileName); 
+		$szFileDirName = dirname($this->_logStreamConfigObj->FileName) . '/'; 
 		$bIsAllowedDir = false; 
 		foreach($content['DiskAllowed'] as $szAllowedDir)
 		{
