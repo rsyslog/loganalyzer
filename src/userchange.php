@@ -80,7 +80,7 @@ if ( isset($_GET['op']) )
 		else
 		{
 			// DEBUG
-			echo "DEBUG: " . $_SESSION['currentSourceID'] . " - $newViewID";
+			echo "DEBUG: " . $_SESSION['currentSourceID'] . " - " . htmlspecialchars($newViewID);
 			exit;
 		}
 	}
