@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 3.6.2 (stable), 2013-01-09
+- Fixed another DiskAllowed Checked in Disk logstream class, no works as 
+  expected. 
+- Fixed Cross Site Scripting Issue in userchange.php
+  (viewid parameter)
+---------------------------------------------------------------------------
 Version 3.6.1 (stable), 2012-12-19
 - Cosmetic fix in login.php, fixed static language strings.
 - Fixed Cross Site scripting issue in asktheoracle.php 
