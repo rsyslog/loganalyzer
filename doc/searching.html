@@ -38,26 +38,36 @@ type will be combined with AND for the simple reason, if you want to exclude
 &quot;Search1&quot; and &quot;Search2&quot;, you want that both are excluded, and one or the other. 
 
 <p>Below you will see how the syntax looks like:<ul>
-	<li>Search for a partially string match: property:search</li>
-	<li>Search for multiple partially string matches: property:search1,search2</li>
-	<li>Search for a full string match: property:=search1,search2</li>
-	<li>Search for multiple full string matches: property:=search</li>
-	<li>Exclude by a partially string match: property:-search</li>
-	<li>Exclude multiple partially string matches: property:-search1,-search2</li>
-	<li>Exclude by a full string match: property:-=search</li>
-	<li>Exclude multiple full string matches: property:-=search1,-=search2</li>
+	<li>Search for a partially string match: <B>property:search</B></li>
+	<li>Search for multiple partially string matches: <B>property:search1,search2</B></li>
+	<li>Search for a full string match: <B>property:=search1,search2</B></li>
+	<li>Search for multiple full string matches: <B>property:=search</B></li>
+	<li>Exclude by a partially string match: <B>property:-search</B></li>
+	<li>Exclude multiple partially string matches: <B>property:-search1,-search2</B></li>
+	<li>Exclude by a full string match: <B>property:-=search</B></li>
+	<li>Exclude multiple full string matches: <B>property:-=search1,-=search2</B></li>
 </ul>
-<p>&nbsp;<h3>Number Fields</h3>
+</p>
+
+<p>Additionally some Logstream sources support REGEX Searches when supported native. Currently the MySQL LogStream and PDO Logstream (MySQL and PostGRESQL only) support REGEX searches. To use REGEXP in searches, prepend the search phrase with the ~ character. See the samples below:
+</p>
+<p>Search samples with REGEX support: <ul>
+	<li>Search for REGEX string match: <B>property:~search</B></li>
+	<li>Exclude string by REGEX match: <B>property:-~search</B></li>
+</ul>
+</p>
+
+<h3>Number Fields</h3>
 <p>Number fields work similar to string fields, except that there are partially 
 matches, and the search value obviously must be a number. There are a few 
 exceptions where you can use string representations instead of numbers, but 
 these will be explained later. 
 
 <p>Below you will see how the syntax looks like:<ul>
-	<li>Search for a number: property:1234</li>
-	<li>Search for multiple numbers: property:1234,5678</li>
-	<li>Exclude a number from the search: property:-1234</li>
-	<li>Exclude multiple numbers from the search: property:-1234,-5678</li>
+	<li>Search for a number: <B>property:1234</B></li>
+	<li>Search for multiple numbers: <B>property:1234,5678</B></li>
+	<li>Exclude a number from the search: <B>property:-1234</B></li>
+	<li>Exclude multiple numbers from the search: <B>property:-1234,-5678</B></li>
 </ul>
 <p>&nbsp;</p>
 <h3>Date Field</h3>
@@ -71,8 +81,8 @@ last hour (filter value 1), last 12 hours (filter value 2), last 24 hours
 5). </p>
 <ul>
 	<li>This search will filter for events starting at 2007-10-01 and ending at 
-	2008-10-01: datefrom:2007-10-1T00:00:00 dateto:2008-10-1T23:59:59</li>
-	<li>This search will show events from the last 24 hours: datelastx:3</li>
+	2008-10-01: <B>datefrom:2007-10-1T00:00:00 dateto:2008-10-1T23:59:59</B></li>
+	<li>This search will show events from the last 24 hours: <B>datelastx:3</B></li>
 </ul>
 <p>&nbsp;</p>
 <h3>Message Field</h3>
