@@ -474,8 +474,12 @@ abstract class LogStream {
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-												$bEval = false;
+											// Unless REGEX Filter, this has to be done by the Logstream driver
+											if ( !($myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX) )
+											{
+												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+													$bEval = false;
+											}
 										}
 										// Exclude Filter
 										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
