@@ -474,12 +474,8 @@ abstract class LogStream {
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
-											// Unless REGEX Filter, this has to be done by the Logstream driver
-											if ( !($myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX) )
-											{
-												if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
-													$bEval = false;
-											}
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+												$bEval = false;
 										}
 										// Exclude Filter
 										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
@@ -716,6 +712,23 @@ abstract class LogStream {
 
 		// Default return! 
 		return $szFieldName; 
+	}
+
+	/*
+	*	Helper function to check a if a fieldname exists in the mapping
+	*/
+	public function CheckFieldnameInMapping($szTableType, $szFieldName)
+	{
+		global $content, $dbmapping;
+
+		foreach( $dbmapping[$szTableType]['DBMAPPINGS'] as $myFieldID => $myDBMapping ) 
+		{
+			if ( $myDBMapping == $szFieldName ) 
+				return true; // return found!
+		}
+
+		// Default FALSE! 
+		return false; 
 	}
 
 	/*

@@ -159,7 +159,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 			$ret = $stream->Read($uID, $logArray);
 		else						// Unknown UID, so we start from first!
 			$ret = $stream->ReadNext($uID, $logArray);
-		
+
 		// --- If set we move forward / backward!
 		if ( isset($content['skiprecords']) && $content['skiprecords'] >= 1 )
 		{
@@ -208,7 +208,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 					else
 						$content['fields'][$mycolkey]['cssclass'] = "line2";
 
-					if ( $mycolkey == SYSLOG_MESSAGE)
+					if ( $mycolkey == SYSLOG_MESSAGE )
 						$content['fields'][$mycolkey]['menucssclass'] = "cellmenu1_naked";
 					else
 						$content['fields'][$mycolkey]['menucssclass'] = "cellmenu1";
@@ -300,9 +300,36 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 					$content['fields'][$mycolkey]['fieldenabled'] = false;
 
 			}
+			
+			// --- Now Check for dynamic fields!
+			$counter = 0;
+			foreach($logArray as $mydynkey => $mydynvalue)
+			{
+				// Check if field is already in fields array
+				if (  !isset($content['fields'][$mydynkey]) && isset($mydynvalue) && strlen($mydynvalue) > 0 )
+				{
+					$content['dynamicfields'][$mydynkey]['dynfieldkey'] = $mydynkey;
+					$content['dynamicfields'][$mydynkey]['dynfieldvalue'] = $mydynvalue;
+					
+					// --- Set CSS Class
+					if ( $counter % 2 == 0 )
+						$content['dynamicfields'][$mydynkey]['dyncssclass'] = "line1";
+					else
+						$content['dynamicfields'][$mydynkey]['dyncssclass'] = "line2";
+					// ---
 
-//print_r ( $content['fields'] );
-//exit;
+					// Increment helpcounter
+					$counter++;
+				}
+			}
+			// Enable dynamic Fields
+			if ( isset($content['dynamicfields']) )
+				$content['dynamicfieldsenabled'] = "true";
+			// --- 
+
+//	echo "<pre>";
+//	var_dump($content['dynamicfields']);
+//	echo "</pre>";
 			
 			// Enable pager if the count is above 1 or we don't know the record count!
 			if ( $content['main_recordcount'] > 1 || $content['main_recordcount'] == -1 )

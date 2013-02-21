@@ -488,8 +488,25 @@ class LogStreamMongoDB extends LogStream {
 							$arrProperitesOut[$property] = '';
 					}
 					else
+					{
 						$arrProperitesOut[$property] = '';
+//						echo $property . "=" . $this->bufferedRecords[$this->_currentRecordNum][$dbfieldname];
+					}
 				}
+				
+				// --- Add dynamic fields into record! 
+				foreach( $this->bufferedRecords[$this->_currentRecordNum] as $propName => $propValue)
+				{
+					if (	!isset($arrProperitesOut[$propName]) && 
+							!$this->CheckFieldnameInMapping($szTableType, $propName) && 
+							(isset($propValue) && strlen($propValue) > 0)
+						)
+					{	
+						// Add dynamic Property!
+						$arrProperitesOut[$propName] = 	$propValue; 
+					}
+				}
+				// --- 
 
 				// Run optional Message Parsers now
 				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
@@ -1572,7 +1589,12 @@ class LogStreamMongoDB extends LogStream {
 			OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: Running FIND ", DEBUG_ULTRADEBUG);
 			
 			// Find Data in MongoCollection 
-			$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery, $this->_myMongoFields); 
+			$myCursor = $this->_myMongoCollection->find($this->_myMongoQuery)->limit($this->_logStreamConfigObj->RecordsPerQuery)->sort(array("_id" => -1)); // , $this->_myMongoFields); 
+
+//	echo "<pre>";
+//	var_dump(iterator_to_array($myCursor));
+//	echo "</pre>";
+
 		}
 		catch ( MongoCursorException $e ) 
 		{
@@ -1587,11 +1609,9 @@ class LogStreamMongoDB extends LogStream {
 		// OutputDebugMessage("LogStreamMongoDB|ReadNextRecordsFromDB: myCursor->info() = <pre>" . var_export($myCursor->info(), true) . "</pre>", DEBUG_ULTRADEBUG);
 
 		// Limit records
-		$myCursor->limit( $this->_logStreamConfigObj->RecordsPerQuery );
-
+//		$myCursor->limit( $this->_logStreamConfigObj->RecordsPerQuery );
 		// OutputDebugMessage("Cursor verbose: " . var_export($myCursor->explain(), true), DEBUG_DEBUG);
-		$myCursor = $myCursor->sort(array("_id" => -1));
-
+//		$myCursor = $myCursor->sort(array("_id" => -1));
 
 		try 
 		{
@@ -1621,6 +1641,7 @@ class LogStreamMongoDB extends LogStream {
 
 				// Keys will be converted into lowercase!
 				$this->bufferedRecords[$iBegin] = array_change_key_case( $myRow, CASE_LOWER);
+
 				$iBegin++;
 			}
 		}

@@ -116,7 +116,7 @@ $fields[SYSLOG_UID]['FieldType'] = FILTER_TYPE_NUMBER;
 $fields[SYSLOG_UID]['Sortable'] = false;
 $fields[SYSLOG_UID]['DefaultWidth'] = "50";
 $fields[SYSLOG_UID]['FieldAlign'] = "center";
-$fields[SYSLOG_UID]['SearchOnline'] = false; 
+$fields[SYSLOG_UID]['SearchOnline'] = false;
 $fields[SYSLOG_DATE]['FieldID'] = SYSLOG_DATE;
 $fields[SYSLOG_DATE]['FieldDefine'] = 'SYSLOG_DATE';
 $fields[SYSLOG_DATE]['FieldCaption'] = 'Date';
@@ -388,6 +388,7 @@ $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SEVERITY] = "syslog_sever";
 $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "procid"; // not using syslog_tag because of PID in it
 $dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_PROCESSID] = "pid";
 $dbmapping['mongodb']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
+$dbmapping['mongodb']['DBMAPPINGS'][SYSLOG_EVENT_LOGTYPE] = "nteventlogtype";
 
 // Convert all fieldnames to lowercase to avoid problems with case sensitive array keys later 
 foreach( $dbmapping as &$myMapping ) 

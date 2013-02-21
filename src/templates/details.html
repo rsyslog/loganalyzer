@@ -76,13 +76,36 @@
 			<B>{FieldCaption}</B>
 		</td>
 		<td width="100%" align="{FieldAlign}" class="{cssclass}" {fieldbgcolor} valign="top">
-		<B>
-		</B>
 		{fieldvalue}
 		</td>
 	</tr>
 	<!-- ENDIF fieldenabled="true" -->
 	<!-- END fields -->
+	<!-- IF dynamicfieldsenabled="true" -->
+	<tr>
+		<td width="200" class="cellmenu1_naked" align="left" nowrap>
+			<B>{LN_DETAIL_DYNAMIC_FIELDS}</B>
+		</td>
+		<td width="100%" align="center" class="line1" valign="top">
+		<br/>
+
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternative">
+		<!-- BEGIN dynamicfields -->
+		<tr>
+			<td align="left" class="cellmenu2">
+			{dynfieldkey}
+			</td>
+			<td align="left" class="{dyncssclass}">
+				{dynfieldvalue}
+			</td>
+		</tr>
+		<!-- END dynamicfields -->
+		</table>
+
+		<br/>
+		</td>
+	</tr>
+	<!-- ENDIF dynamicfieldsenabled="true" -->
 	</table>
 	<!-- ENDIF messageenabled="true" -->
 

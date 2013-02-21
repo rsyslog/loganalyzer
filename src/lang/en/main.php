@@ -229,6 +229,8 @@ $content['LN_GEN_AUTH_LDAP_OPTIONS'] = "LDAP Authentication Options";
 $content['LN_DETAILS_FORSYSLOGMSG'] = "Details for the syslog messages with id";
 $content['LN_DETAILS_DETAILSFORMSG'] = "Details for message id";
 $content['LN_DETAIL_BACKTOLIST'] = "Back to Listview";
+$content['LN_DETAIL_DYNAMIC_FIELDS'] = "Dynamic fields";
+
 
 // Login Site
 $content['LN_LOGIN_DESCRIPTION'] = "Use this form to login into LogAnalyzer. ";
