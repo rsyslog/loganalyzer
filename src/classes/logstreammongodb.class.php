@@ -705,12 +705,20 @@ class LogStreamMongoDB extends LogStream {
 
 		// Set default rowcount
 		$rowcount = null;
+		
+		if ( $nDateTimeStamp > 0 )
+		{
+			// Create MongoDate Object from Timestamp
+			$myMongoDate = new MongoDate($nDateTimeStamp);
 
-		// Create MongoDate Object from Timestamp
-		$myMongoDate = new MongoDate($nDateTimeStamp);
-
-		// Create Criteria Array
-		$myCriteria = array( $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] => array('$lte' => $myMongoDate) ); 
+			// Create Criteria Array
+			$myCriteria = array( $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_DATE] => array('$lte' => $myMongoDate) ); 
+		}
+		else
+		{
+			// Use EMPTY array to delete all!
+			$myCriteria = array(); 
+		}
 
 		try 
 		{
