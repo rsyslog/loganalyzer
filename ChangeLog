@@ -1,9 +1,14 @@
 ---------------------------------------------------------------------------
-Version 3.6.3 (stable), 2013-??-??
+Version 3.6.3 (stable), 2013-02-25
 - Updated Search documentation
 - Fixed Bug in the ApplyFilters function which applies to all logstreams.
   This caused most REGEX filters to fail, if supported by the 
   LogStream driver.
+- Added support for dynamic fields in MongoDB logstream sources. This 
+  enables Loganalyzer to view data written by rsyslog into 
+  MongoDB from CEE sources.
+- Fixed wrong UID calculation in MongoDB Logstream class.
+- Fixed an issue deleting all data in MongoDB LogStream class.
 ---------------------------------------------------------------------------
 Version 3.6.2 (stable), 2013-01-09
 - Fixed another DiskAllowed Checked in Disk logstream class, no works as 
