@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------
 Version 3.6.4 (stable), 2013-??-??
 - Added MYSQL hint in install script when enabling User Database System. 
+- Using default header encoding in GetStringWithHTMLCodes() function now. 
+  This should solve http://bugzilla.adiscon.com/show_bug.cgi?id=433.
 ---------------------------------------------------------------------------
 Version 3.6.3 (stable), 2013-02-25
 - Updated Search documentation

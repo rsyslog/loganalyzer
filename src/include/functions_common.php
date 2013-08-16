@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.6.3";
+$content['BUILDNUMBER'] = "3.6.4";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1171,10 +1171,10 @@ function ReplaceLineBreaksInString($myStr)
 
 function GetStringWithHTMLCodes($myStr)
 {
+	global $content; 
 
 	// Replace all special characters with valid html representations
-	return htmlentities($myStr, ENT_NOQUOTES, "UTF-8");
-//TODO CONFIGURABLE!
+	return htmlentities($myStr, ENT_NOQUOTES, $content['HeaderDefaultEncoding']); //"UTF-8");
 }
 
 function InitTemplateParser()
