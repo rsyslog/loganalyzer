@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------
-Version 3.6.4 (stable), 2013-??-??
+Version 3.6.4 (stable), 2013-08-16
 - Added MYSQL hint in install script when enabling User Database System. 
 - Using default header encoding in GetStringWithHTMLCodes() function now. 
   This should solve http://bugzilla.adiscon.com/show_bug.cgi?id=433.
+- Added SyslogNG logline parser, thanks to Mulyadi Santosa for 
+  providing the a patch to us. A customized template in SyslogNG is needed: 
+  template("$FACILITY_NUM $LEVEL_NUM $DATE $FULLHOST $MESSAGE\n")
 ---------------------------------------------------------------------------
 Version 3.6.3 (stable), 2013-02-25
 - Updated Search documentation

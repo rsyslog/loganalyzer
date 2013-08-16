@@ -235,6 +235,11 @@ function CreateLogLineTypesList( $selectedType )
 	$content['LOGLINETYPES']["syslog23"]['type'] = "syslog23";
 	$content['LOGLINETYPES']["syslog23"]['DisplayName'] = "RSyslog Format23 (RFC 5424)";
 	if ( $selectedType == $content['LOGLINETYPES']["syslog23"]['type'] ) { $content['LOGLINETYPES']["syslog23"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["syslog23"]['selected'] = ""; }
+
+	// Syslog-NG
+	$content['LOGLINETYPES']["syslogng"]['type'] = "syslogng";
+	$content['LOGLINETYPES']["syslogng"]['DisplayName'] = "Syslog NG Format (Custom)";
+	if ( $selectedType == $content['LOGLINETYPES']["syslogng"]['type'] ) { $content['LOGLINETYPES']["syslogng"]['selected'] = "selected"; } else { $content['LOGLINETYPES']["syslogng"]['selected'] = ""; }
 }
 
 function CreateSourceTypesList( $selectedSource )
