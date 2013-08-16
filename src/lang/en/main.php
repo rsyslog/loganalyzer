@@ -300,6 +300,7 @@ $content['LN_INSTALL_SUCCESSCREATED'] = "Successfully created User";
 $content['LN_INSTALL_RECHECK'] = "ReCheck";
 $content['LN_INSTALL_FINISH'] = "Finish!";
 $content['LN_INSTALL_LDAPCONNECTFAILED'] = "Failed to connect to your LDAP Server '%1'.";
+$content['LN_INSTALL_WARNINGMYSQL'] = "A MYSQL database Server is required for this feature. Other database engines are not supported for the User Database System. However for logsources, there is support for other database systems.";
 $content['LN_INSTALL_'] = "";
 
 // Converter Site

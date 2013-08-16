@@ -1,4 +1,7 @@
 ---------------------------------------------------------------------------
+Version 3.6.4 (stable), 2013-??-??
+- Added MYSQL hint in install script when enabling User Database System. 
+---------------------------------------------------------------------------
 Version 3.6.3 (stable), 2013-02-25
 - Updated Search documentation
 - Fixed Bug in the ApplyFilters function which applies to all logstreams.
