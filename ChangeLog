@@ -1,12 +1,13 @@
 ---------------------------------------------------------------------------
 Version 3.6.5 (stable), 2013-10-08
-- LogStreamDB Driver: Added backticks arround tablenames 
-  in all SQL Statements.
-- LogStreamPDO Driver: Added backticks arround tablenames 
-  in all SQL Statements
+- LogStreamDB Driver, LogStreamPDO Driver, UserDB: 
+  Added backticks arround tablenames in all SQL Statements. 
+  This fixes http://bugzilla.adiscon.com/show_bug.cgi?id=479
 - LogStreamPDO Driver: Fixed hardcoded tablename in trigger 
   create statement
-- UserDB: Added backticks arround tablenames in all SQL Statements
+- Fixed LDAP login problem when special characters like quotes were 
+  used in passwords. 
+  This fixes http://bugzilla.adiscon.com/show_bug.cgi?id=480
 ---------------------------------------------------------------------------
 Version 3.6.4 (stable), 2013-08-16
 - Added MYSQL hint in install script when enabling User Database System. 

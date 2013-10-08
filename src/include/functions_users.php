@@ -137,7 +137,8 @@ function InitUserSession()
 
 function CreateUserName( $username, $password, $is_admin )
 {
-	$md5pass = md5($password);
+	/* DB_RemoveBadChars() needs to be done here to maintain backwards compatibility even if it is not needed here*/
+	$md5pass = md5(DB_RemoveBadChars($password));
 	$result = DB_Query("SELECT username FROM `" . DB_USERS . "` WHERE username = '" . $username . "'");
 	$rows = DB_GetAllRows($result, true);
 
@@ -172,10 +173,11 @@ function CheckUserLogin( $username, $password )
 	else // Normal MYSQL Login!
 	{
 		// TODO: SessionTime and AccessLevel check
-		$md5pass = md5($password);
+		$md5pass = md5(DB_RemoveBadChars($password)); /* DB_RemoveBadChars() needs to be done here to maintain backwards compatibility even if it is not needed here*/
 		$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
 		$result = DB_Query($sqlquery);
 		$myrow = DB_GetSingleRow($result, true);
+		echo $sqlquery; 
 	}
 
 	// The admin field must be set!
@@ -279,7 +281,7 @@ function CheckUserLogin( $username, $password )
 		}
 		*/
 		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
-			DieWithFriendlyErrorMsg( "Debug Error: Could not login user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre><br><B>SQL Statement</B>: " . $sqlselect );
+			DieWithFriendlyErrorMsg( "Debug Error: Could not find user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre>");
 			
 		// Default return false
 		return false;
@@ -383,7 +385,10 @@ function CheckLDAPUserLogin( $username, $password )
 	 
 	// for the moment when a user logs in from LDAP, create it in the DB.
 	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
-	 
+
+	/* DB_RemoveBadChars() needs to be done here to maintain backwards compatibility even if it is not needed here*/
+	$md5pass = md5(DB_RemoveBadChars($password)); 
+
 	// check if the user already exist
 	$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "'";
 	$result = DB_Query($sqlquery);
@@ -391,7 +396,7 @@ function CheckLDAPUserLogin( $username, $password )
 	if (!isset($myrow['is_admin']) )
 	{
 		// Create User | use password to create MD5 Hash, so technically the user could login without LDAP as well
-		$sqlcmd = "INSERT INTO `" . DB_USERS . "` (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . md5($password) . "', 0, 1)"; 
+		$sqlcmd = "INSERT INTO `" . DB_USERS . "` (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . $md5pass . "', 0, 1)"; 
 
 		$result = DB_Query($sqlcmd);
 		DB_FreeQuery($result);
@@ -402,7 +407,7 @@ function CheckLDAPUserLogin( $username, $password )
 	
 	// Construct Row and return
 	$myrowfinal['username'] = $username;
-	$myrowfinal['password'] = md5($password);
+	$myrowfinal['password'] = $md5pass;
 	$myrowfinal['dn'] = $info[0]['dn'];
 	if ( isset($myrow['ID']) ) 
 		$myrowfinal['ID'] = $myrow['ID'];				// Get from SELECT

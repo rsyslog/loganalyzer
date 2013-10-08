@@ -77,7 +77,7 @@ if ( isset($_POST['op']) && $_POST['op'] == "login" )
 		{
 			// Set Username and password
 			$content['uname'] = DB_RemoveBadChars($_POST['uname']);
-			$content['pass'] = DB_RemoveBadChars($_POST['pass']);
+			$content['pass'] = $_POST['pass']; // RAW Copy of password string, otherwise passwords with special characters can be broken. 
 
 			if ( !CheckUserLogin( $content['uname'], $content['pass']) )
 			{
