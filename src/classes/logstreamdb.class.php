@@ -464,7 +464,7 @@ class LogStreamDB extends LogStream {
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+		$szSql = "SHOW COLUMNS FROM `" . $this->_logStreamConfigObj->DBTableName . "` WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -682,7 +682,7 @@ class LogStreamDB extends LogStream {
 		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
 			return $this->_firstPageUID;
 
-		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -714,7 +714,7 @@ class LogStreamDB extends LogStream {
 		if ( strlen($this->_SQLwhereClause) > 0 && !$this->_logStreamConfigObj->DBEnableRowCounting )
 			return $this->_lastPageUID;
 
-		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -777,7 +777,7 @@ class LogStreamDB extends LogStream {
 		if ( $this->_dbhandle != null ) 
 		{
 			// Obtain Stats data for this table!
-			$szSql = "SHOW TABLE STATUS FROM " .  $this->_logStreamConfigObj->DBName; 
+			$szSql = "SHOW TABLE STATUS FROM `" .  $this->_logStreamConfigObj->DBName . "`"; 
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
 			{
@@ -836,7 +836,7 @@ class LogStreamDB extends LogStream {
 		if ( $this->_dbhandle != null ) 
 		{
 			// SHOW TABLE STATUS FROM
-			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
 			{
@@ -898,7 +898,7 @@ class LogStreamDB extends LogStream {
 			// ---
 
 			// DELETE DATA NOW!
-			$szSql = "DELETE FROM " .  $this->_logStreamConfigObj->DBTableName . $szWhere; 
+			$szSql = "DELETE FROM `" .  $this->_logStreamConfigObj->DBTableName . "`" . $szWhere; 
 			OutputDebugMessage("LogStreamDB|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
 			$myQuery = mysql_query($szSql, $this->_dbhandle);
 			if ($myQuery)
@@ -1072,7 +1072,7 @@ class LogStreamDB extends LogStream {
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
 					"count(" . $myDBConsFieldName . ") as itemcount " . 
-					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
@@ -1211,7 +1211,7 @@ class LogStreamDB extends LogStream {
 		$szSql =	"SELECT " . 
 					$myDBQueryFields .  
 					"count(" . $myDBConsFieldName . ") as itemcount " . 
-					" FROM " . $this->_logStreamConfigObj->DBTableName . 
+					" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 					$this->_SQLwhereClause . 
 					" GROUP BY " . $myDBGroupByFieldName . 
 					" ORDER BY " . $myDBSortedFieldName . " " . $szSortingOrder . 
@@ -1299,7 +1299,7 @@ class LogStreamDB extends LogStream {
 			$szSql =	"SELECT " . 
 						$myDBQueryFieldName . ", " . 
 						"count(" . $myDBFieldName . ") as TotalCount " . 
-						" FROM " . $this->_logStreamConfigObj->DBTableName . 
+						" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
 						" ORDER BY TotalCount DESC" . 
@@ -1744,7 +1744,7 @@ class LogStreamDB extends LogStream {
 		}
 
 		// Append FROM 'table'!
-		$sqlString .= " FROM " . $this->_logStreamConfigObj->DBTableName;
+		$sqlString .= " FROM `" . $this->_logStreamConfigObj->DBTableName . "`";
 
 		// Append precreated where clause
 		$sqlString .= $this->_SQLwhereClause;
@@ -1962,7 +1962,7 @@ class LogStreamDB extends LogStream {
 		$arrIndexKeys = array();
 
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
+		$szSql = "SHOW INDEX FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{
@@ -2001,7 +2001,7 @@ class LogStreamDB extends LogStream {
 		$arrFieldKeys = array();
 
 		// Create SQL and Get INDEXES for table!
-		$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
+		$szSql = "SHOW FIELDS FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
 		$myQuery = mysql_query($szSql, $this->_dbhandle);
 		if ($myQuery)
 		{

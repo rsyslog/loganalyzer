@@ -387,24 +387,24 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		$CFG[$szPropName] = $content[$szPropName];
 		
 		// Check if we need to INSERT or UPDATE
-		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+		$result = DB_Query("SELECT propname FROM `" . DB_CONFIG . "` WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 		$rows = DB_GetAllRows($result, true);
 		if ( !isset($rows) )
 		{
 			// New Entry
 			if ( strlen($szDbValue) < 255 ) 
-				$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+				$result = DB_Query("INSERT INTO  `" . DB_CONFIG . "` (propname, propvalue, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
 			else
-				$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue_text, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
+				$result = DB_Query("INSERT INTO  `" . DB_CONFIG . "` (propname, propvalue_text, is_global) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $is_global . ")");
 			DB_FreeQuery($result);
 		}
 		else
 		{
 			// Update Entry
 			if ( strlen($szDbValue) < 255 ) 
-				$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "', propvalue_text = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+				$result = DB_Query("UPDATE `" . DB_CONFIG . "` SET propvalue = '" . $szDbValue . "', propvalue_text = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 			else
-				$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue_text = '" . $szDbValue . "', propvalue = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
+				$result = DB_Query("UPDATE `" . DB_CONFIG . "` SET propvalue_text = '" . $szDbValue . "', propvalue = '' WHERE propname = '" . $szPropName . "' AND is_global = " . $is_global);
 			DB_FreeQuery($result);
 		}
 	}
@@ -425,18 +425,18 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		}
 
 		// Check if we need to INSERT or UPDATE
-		$result = DB_Query("SELECT propname FROM " . DB_CONFIG . " WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+		$result = DB_Query("SELECT propname FROM `" . DB_CONFIG . "` WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
 		$rows = DB_GetAllRows($result, true);
 		if ( !isset($rows) )
 		{
 			// New Entry
-			$result = DB_Query("INSERT INTO  " . DB_CONFIG . " (propname, propvalue, userid) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $userid . ")");
+			$result = DB_Query("INSERT INTO  `" . DB_CONFIG . "` (propname, propvalue, userid) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $userid . ")");
 			DB_FreeQuery($result);
 		}
 		else
 		{
 			// Update Entry
-			$result = DB_Query("UPDATE " . DB_CONFIG . " SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
+			$result = DB_Query("UPDATE `" . DB_CONFIG . "` SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
 			DB_FreeQuery($result);
 		}
 
