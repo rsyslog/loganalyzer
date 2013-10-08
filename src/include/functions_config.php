@@ -404,9 +404,9 @@ function InitReportModules($szRootPath = "")
 										DB_SAVEDREPORTS . ".outputTarget, " . 
 										DB_SAVEDREPORTS . ".outputTargetDetails, " . 
 										DB_SAVEDREPORTS . ".scheduleSettings " . 
-										" FROM " . DB_SAVEDREPORTS . 
-										" WHERE " . DB_SAVEDREPORTS . ".reportid = '" . $myReportID . "' " .  
-										" ORDER BY " . DB_SAVEDREPORTS . ".customTitle";
+										" FROM `" . DB_SAVEDREPORTS . "`" . 
+										" WHERE `" . DB_SAVEDREPORTS . ".reportid` = '" . $myReportID . "' " .  
+										" ORDER BY `" . DB_SAVEDREPORTS . ".customTitle`";
 
 							// Get Views from DB now!
 							$result = DB_Query($sqlquery);
@@ -682,8 +682,8 @@ function LoadDBMappingsFromDatabase()
 				DB_MAPPINGS . ".ID, " . 
 				DB_MAPPINGS . ".DisplayName, " . 
 				DB_MAPPINGS . ".Mappings " . 
-				" FROM " . DB_MAPPINGS . 
-				" ORDER BY " . DB_MAPPINGS . ".DisplayName";
+				" FROM `" . DB_MAPPINGS . "`" . 
+				" ORDER BY `" . DB_MAPPINGS . ".DisplayName`";
 
 	// Get Views from DB now!
 	$result = DB_Query($sqlquery);
@@ -764,8 +764,8 @@ function LoadFieldsFromDatabase()
 				DB_FIELDS . ".SearchOnline, " . 
 				DB_FIELDS . ".Trunscate, " . 
 				DB_FIELDS . ".Sortable " .
-				" FROM " . DB_FIELDS . 
-				" ORDER BY " . DB_FIELDS . ".FieldCaption";
+				" FROM `" . DB_FIELDS . "`" . 
+				" ORDER BY `" . DB_FIELDS . ".FieldCaption`";
 	// ---
 
 	// Get Searches from DB now!
@@ -818,12 +818,12 @@ function LoadSearchesFromDatabase()
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR " . DB_SEARCHES . ".userid = " . $content['SESSION_USERID'] . " ";
+		$szWhereUser = " OR `" . DB_SEARCHES . ".userid` = " . $content['SESSION_USERID'] . " ";
 	else
 		$szWhereUser = "";
 
 	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR " . DB_SEARCHES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+		$szGroupWhere = " OR `" . DB_SEARCHES . ".groupid` IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
 	$sqlquery = " SELECT " . 
@@ -834,13 +834,13 @@ function LoadSearchesFromDatabase()
 				DB_SEARCHES . ".groupid, " .
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
-				" FROM " . DB_SEARCHES . 
-				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SEARCHES . ".userid=" . DB_USERS . ".ID ) " . 
-				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SEARCHES . ".groupid=" . DB_GROUPS . ".ID ) " . 
-				" WHERE (" . DB_SEARCHES . ".userid IS NULL AND " . DB_SEARCHES . ".groupid IS NULL) " . 
+				" FROM `" . DB_SEARCHES . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SEARCHES . ".userid`=`" . DB_USERS . ".ID` ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SEARCHES . ".groupid`=`" . DB_GROUPS . ".ID` ) " . 
+				" WHERE (`" . DB_SEARCHES . ".userid` IS NULL AND `" . DB_SEARCHES . ".groupid` IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_SEARCHES . ".userid, " . DB_SEARCHES . ".groupid, " . DB_SEARCHES . ".DisplayName";
+				" ORDER BY `" . DB_SEARCHES . ".userid`, `" . DB_SEARCHES . ".groupid`, `" . DB_SEARCHES . ".DisplayName`";
 	// ---
 
 	// Get Searches from DB now!
@@ -884,12 +884,12 @@ function LoadChartsFromDatabase()
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR " . DB_CHARTS . ".userid = " . $content['SESSION_USERID'] . " ";
+		$szWhereUser = " OR `" . DB_CHARTS . ".userid` = " . $content['SESSION_USERID'] . " ";
 	else
 		$szWhereUser = "";
 
 	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR " . DB_CHARTS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+		$szGroupWhere = " OR `" . DB_CHARTS . ".groupid` IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
 	$sqlquery = " SELECT " . 
@@ -906,13 +906,13 @@ function LoadChartsFromDatabase()
 				DB_CHARTS . ".groupid, " .
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
-				" FROM " . DB_CHARTS . 
-				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_CHARTS . ".userid=" . DB_USERS . ".ID ) " . 
-				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_CHARTS . ".groupid=" . DB_GROUPS . ".ID ) " . 
-				" WHERE (" . DB_CHARTS . ".userid IS NULL AND " . DB_CHARTS . ".groupid IS NULL) " . 
+				" FROM `" . DB_CHARTS . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_CHARTS . ".userid`=`" . DB_USERS . ".ID` ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_CHARTS . ".groupid`=`" . DB_GROUPS . ".ID` ) " . 
+				" WHERE (`" . DB_CHARTS . ".userid` IS NULL AND `" . DB_CHARTS . ".groupid` IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_CHARTS . ".userid, " . DB_CHARTS . ".groupid, " . DB_CHARTS . ".DisplayName";
+				" ORDER BY `" . DB_CHARTS . ".userid`, `" . DB_CHARTS . ".groupid`, `" . DB_CHARTS . ".DisplayName`";
 	// ---
 
 	// Get Searches from DB now!
@@ -944,12 +944,12 @@ function LoadViewsFromDatabase()
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR " . DB_VIEWS . ".userid = " . $content['SESSION_USERID'] . " ";
+		$szWhereUser = " OR `" . DB_VIEWS . ".userid` = " . $content['SESSION_USERID'] . " ";
 	else
 		$szWhereUser = "";
 
 	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR " . DB_VIEWS . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+		$szGroupWhere = " OR `" . DB_VIEWS . ".groupid` IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
 	$sqlquery = " SELECT " . 
@@ -960,13 +960,13 @@ function LoadViewsFromDatabase()
 				DB_VIEWS . ".groupid, " .
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
-				" FROM " . DB_VIEWS . 
-				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_VIEWS . ".userid=" . DB_USERS . ".ID ) " . 
-				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_VIEWS . ".groupid=" . DB_GROUPS . ".ID ) " . 
-				" WHERE (" . DB_VIEWS . ".userid IS NULL AND " . DB_VIEWS . ".groupid IS NULL) " . 
+				" FROM `" . DB_VIEWS . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_VIEWS . ".userid`=`" . DB_USERS . ".ID` ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_VIEWS . ".groupid`=`" . DB_GROUPS . ".ID` ) " . 
+				" WHERE (`" . DB_VIEWS . ".userid` IS NULL AND `" . DB_VIEWS . ".groupid` IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_VIEWS . ".userid, " . DB_VIEWS . ".groupid, " . DB_VIEWS . ".DisplayName";
+				" ORDER BY `" . DB_VIEWS . ".userid`, `" . DB_VIEWS . ".groupid`, `" . DB_VIEWS . ".DisplayName`";
 	// ---
 
 	// Get Views from DB now!
@@ -1008,25 +1008,25 @@ function LoadSourcesFromDatabase()
 	// --- Create SQL Query
 	// Create Where for USERID
 	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR " . DB_SOURCES . ".userid = " . $content['SESSION_USERID'] . " ";
+		$szWhereUser = " OR `" . DB_SOURCES . ".userid` = " . $content['SESSION_USERID'] . " ";
 	else
 		$szWhereUser = "";
 
 	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR " . DB_SOURCES . ".groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+		$szGroupWhere = " OR `" . DB_SOURCES . ".groupid` IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
 	$sqlquery = " SELECT " . 
 				DB_SOURCES . ".*, " . 
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
-				" FROM " . DB_SOURCES . 
-				" LEFT OUTER JOIN (" . DB_USERS . ") ON (" . DB_SOURCES . ".userid=" . DB_USERS . ".ID ) " . 
-				" LEFT OUTER JOIN (" . DB_GROUPS . ") ON (" . DB_SOURCES . ".groupid=" . DB_GROUPS . ".ID ) " . 
-				" WHERE (" . DB_SOURCES . ".userid IS NULL AND " . DB_SOURCES . ".groupid IS NULL) " . 
+				" FROM `" . DB_SOURCES . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SOURCES . ".userid`=`" . DB_USERS . ".ID` ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SOURCES . ".groupid`=`" . DB_GROUPS . ".ID` ) " . 
+				" WHERE (`" . DB_SOURCES . ".userid` IS NULL AND `" . DB_SOURCES . ".groupid` IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
-				" ORDER BY " . DB_SOURCES . ".userid, " . DB_SOURCES . ".groupid, " . DB_SOURCES . ".Name";
+				" ORDER BY `" . DB_SOURCES . ".userid`, `" . DB_SOURCES . ".groupid`, `" . DB_SOURCES . ".Name`";
 	// ---
 	// Get Sources from DB now!
 	$result = DB_Query($sqlquery);

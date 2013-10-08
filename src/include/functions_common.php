@@ -819,7 +819,7 @@ function InitConfigurationValues()
 		if ( GetConfigSetting("UserDBEnabled", false) )
 		{
 			// Get configuration variables 
-			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE is_global = true");
+			$result = DB_Query("SELECT * FROM `" . DB_CONFIG . "` WHERE is_global = true");
 			
 			if ( $result )
 			{

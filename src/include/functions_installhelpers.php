@@ -102,7 +102,7 @@ function ConvertCustomSearches()
 	foreach($CFG['Search'] as $searchid => &$mySearch)
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . DB_SEARCHES . " (DisplayName, SearchQuery) VALUES ( '" . PrepareValueForDB($mySearch['DisplayName']) . "', '" . PrepareValueForDB($mySearch['SearchQuery']) . "')");
+		$result = DB_Query("INSERT INTO `" . DB_SEARCHES . "` (DisplayName, SearchQuery) VALUES ( '" . PrepareValueForDB($mySearch['DisplayName']) . "', '" . PrepareValueForDB($mySearch['SearchQuery']) . "')");
 		$mySearch['DBID'] = DB_ReturnLastInsertID($result);
 		DB_FreeQuery($result);
 
@@ -120,7 +120,7 @@ function ConvertCustomCharts()
 	foreach($CFG['Charts'] as $chartid => &$myChart)
 	{
 		// New Entry
-		$result = DB_Query("INSERT INTO  " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, maxrecords, showpercent) 
+		$result = DB_Query("INSERT INTO `" . DB_CHARTS . "` (DisplayName, chart_enabled, chart_type, chart_width, chart_field, maxrecords, showpercent) 
 							VALUES ( 
 									'" . PrepareValueForDB($myChart['DisplayName']) . "', 
 									" . intval($myChart['chart_enabled']) . ", 
@@ -157,7 +157,7 @@ function ConvertCustomViews()
 			}
 
 			// New Entry
-			$result = DB_Query("INSERT INTO  " . DB_VIEWS . " (DisplayName, Columns) VALUES ( '" . PrepareValueForDB($myView['DisplayName']) . "', '" . PrepareValueForDB($myView['ColumnsAsString']) . "')");
+			$result = DB_Query("INSERT INTO `" . DB_VIEWS . "` (DisplayName, Columns) VALUES ( '" . PrepareValueForDB($myView['DisplayName']) . "', '" . PrepareValueForDB($myView['ColumnsAsString']) . "')");
 			$myView['DBID'] = DB_ReturnLastInsertID($result);
 			DB_FreeQuery($result);
 		}
@@ -196,7 +196,7 @@ function ConvertCustomSources()
 		// Add New Entry
 		if ( $mySource['SourceType'] == SOURCE_DISK ) 
 		{
-			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile) VALUES ( " . 
+			$result = DB_Query("INSERT INTO `" . DB_SOURCES . "` (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, LogLineType, DiskFile) VALUES ( " . 
 				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
 				"'" . PrepareValueForDB($mySource['Description']) . "', " . 
 				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
@@ -218,7 +218,7 @@ function ConvertCustomSources()
 				$mySource['DBType'] = DB_MYSQL;
 
 			// Perform the insert
-			$result = DB_Query("INSERT INTO  " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
+			$result = DB_Query("INSERT INTO `" . DB_SOURCES . "` (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
 				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
 				"'" . PrepareValueForDB($mySource['Description']) . "', " . 
 				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 

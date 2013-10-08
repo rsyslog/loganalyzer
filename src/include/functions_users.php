@@ -86,7 +86,7 @@ function InitUserSession()
 				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
 
 			// --- Now we obtain user specific general settings from the DB for the user!
-			$result = DB_Query("SELECT * FROM " . DB_CONFIG . " WHERE userid = " . $content['SESSION_USERID']);
+			$result = DB_Query("SELECT * FROM `" . DB_CONFIG . "` WHERE userid = " . $content['SESSION_USERID']);
 			if ( $result )
 			{
 				$rows = DB_GetAllRows($result, true);
@@ -138,7 +138,7 @@ function InitUserSession()
 function CreateUserName( $username, $password, $is_admin )
 {
 	$md5pass = md5($password);
-	$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE username = '" . $username . "'");
+	$result = DB_Query("SELECT username FROM `" . DB_USERS . "` WHERE username = '" . $username . "'");
 	$rows = DB_GetAllRows($result, true);
 
 	if ( isset($rows) )
@@ -151,7 +151,7 @@ function CreateUserName( $username, $password, $is_admin )
 	else
 	{
 		// Create User
-		$result = DB_Query("INSERT INTO " . DB_USERS . " (username, password, is_admin) VALUES ('$username', '$md5pass', $is_admin)");
+		$result = DB_Query("INSERT INTO `" . DB_USERS . "` (username, password, is_admin) VALUES ('$username', '$md5pass', $is_admin)");
 		DB_FreeQuery($result);
 
 		// Success
@@ -173,7 +173,7 @@ function CheckUserLogin( $username, $password )
 	{
 		// TODO: SessionTime and AccessLevel check
 		$md5pass = md5($password);
-		$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
+		$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
 		$result = DB_Query($sqlquery);
 		$myrow = DB_GetSingleRow($result, true);
 	}
@@ -201,7 +201,7 @@ function CheckUserLogin( $username, $password )
 		$sqlquery = "SELECT " . 
 					DB_GROUPMEMBERS . ".groupid, " . 
 					DB_GROUPMEMBERS . ".is_member " . 
-					"FROM " . DB_GROUPMEMBERS . " WHERE userid = " . $content['SESSION_USERID'] . " AND " . DB_GROUPMEMBERS . ".is_member = 1";
+					"FROM `" . DB_GROUPMEMBERS . "` WHERE userid = " . $content['SESSION_USERID'] . " AND `" . DB_GROUPMEMBERS . ".is_member` = 1";
 		$result = DB_Query($sqlquery);
 		$myrows = DB_GetAllRows($result, true);
 		if ( isset($myrows ) && count($myrows) > 0 )
@@ -220,7 +220,7 @@ function CheckUserLogin( $username, $password )
 		// ---
 
 		// ---Set LASTLOGIN Time!
-		$result = DB_Query("UPDATE " . DB_USERS . " SET last_login = " . time() . " WHERE ID = " . $content['SESSION_USERID']);
+		$result = DB_Query("UPDATE `" . DB_USERS . "` SET last_login = " . time() . " WHERE ID = " . $content['SESSION_USERID']);
 		DB_FreeQuery($result);
 		// ---
 
@@ -385,13 +385,13 @@ function CheckLDAPUserLogin( $username, $password )
 	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
 	 
 	// check if the user already exist
-	$sqlquery = "SELECT * FROM " . DB_USERS . " WHERE username = '" . $username . "'";
+	$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "'";
 	$result = DB_Query($sqlquery);
 	$myrow = DB_GetSingleRow($result, true);
 	if (!isset($myrow['is_admin']) )
 	{
 		// Create User | use password to create MD5 Hash, so technically the user could login without LDAP as well
-		$sqlcmd = "INSERT INTO " . DB_USERS . " (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . md5($password) . "', 0, 1)"; 
+		$sqlcmd = "INSERT INTO `" . DB_USERS . "` (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . md5($password) . "', 0, 1)"; 
 
 		$result = DB_Query($sqlcmd);
 		DB_FreeQuery($result);
@@ -487,8 +487,8 @@ function GetGroupsForSelectfield()
 	$sqlquery = "SELECT " . 
 				DB_GROUPS . ".ID as mygroupid, " . 
 				DB_GROUPS . ".groupname " . 
-				"FROM " . DB_GROUPS . 
-				" ORDER BY " . DB_GROUPS . ".groupname";
+				"FROM `" . DB_GROUPS . "`" . 
+				" ORDER BY `" . DB_GROUPS . ".groupname`";
 	$result = DB_Query($sqlquery);
 	$mygroups = DB_GetAllRows($result, true);
 	if ( isset($mygroups) && count($mygroups) > 0 )
