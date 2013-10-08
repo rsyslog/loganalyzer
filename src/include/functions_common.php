@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.6.4";
+$content['BUILDNUMBER'] = "3.6.5";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1932,7 +1932,7 @@ function GetErrorMessage($errorCode)
 		case ERROR_DB_CANNOTSELECTDB:
 			return $content['LN_ERROR_DB_CANNOTSELECTDB'];
 		case ERROR_DB_QUERYFAILED:
-			return $content['LN_ERROR_DB_QUERYFAILED'];
+			return isset($content['LN_ERROR_DB_QUERYFAILED']) ? $content['LN_ERROR_DB_QUERYFAILED'] : $errorCode;
 		case ERROR_DB_NOPROPERTIES:
 			return $content['LN_ERROR_DB_NOPROPERTIES'];
 		case ERROR_DB_INVALIDDBMAPPING:

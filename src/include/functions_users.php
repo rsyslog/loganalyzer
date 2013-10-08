@@ -201,7 +201,7 @@ function CheckUserLogin( $username, $password )
 		$sqlquery = "SELECT " . 
 					DB_GROUPMEMBERS . ".groupid, " . 
 					DB_GROUPMEMBERS . ".is_member " . 
-					"FROM `" . DB_GROUPMEMBERS . "` WHERE userid = " . $content['SESSION_USERID'] . " AND `" . DB_GROUPMEMBERS . ".is_member` = 1";
+					"FROM `" . DB_GROUPMEMBERS . "` WHERE userid = " . $content['SESSION_USERID'] . " AND `" . DB_GROUPMEMBERS . "`.is_member = 1";
 		$result = DB_Query($sqlquery);
 		$myrows = DB_GetAllRows($result, true);
 		if ( isset($myrows ) && count($myrows) > 0 )
@@ -488,7 +488,7 @@ function GetGroupsForSelectfield()
 				DB_GROUPS . ".ID as mygroupid, " . 
 				DB_GROUPS . ".groupname " . 
 				"FROM `" . DB_GROUPS . "`" . 
-				" ORDER BY `" . DB_GROUPS . ".groupname`";
+				" ORDER BY `" . DB_GROUPS . "`.groupname";
 	$result = DB_Query($sqlquery);
 	$mygroups = DB_GetAllRows($result, true);
 	if ( isset($mygroups) && count($mygroups) > 0 )
