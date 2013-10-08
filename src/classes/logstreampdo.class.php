@@ -494,7 +494,7 @@ class LogStreamPDO extends LogStream {
 						-- Insert statements for trigger here
 						UPDATE " . $szTableName . " 
 						SET    " . $myDBTriggerCheckSumField . " = checksum(I." . $myDBTriggerField . ")
-						FROM   systemevents JOIN inserted I on " . $szTableName . "." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " = I." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " 
+						FROM " . $szTableName . " JOIN inserted I on " . $szTableName . "." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " = I." . $dbmapping[$szTableType]['DBMAPPINGS']['SYSLOG_UID'] . " 
 					END
 			";
 		}
