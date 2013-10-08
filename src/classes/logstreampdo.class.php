@@ -378,9 +378,9 @@ class LogStreamPDO extends LogStream {
 			{
 				// Update Table schema now!
 				if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-					$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
+					$szSql = "ALTER TABLE `" . $this->_logStreamConfigObj->DBTableName . "` ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
 				else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
-					$szSql = "CREATE INDEX " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "_idx ON " . $this->_logStreamConfigObj->DBTableName . " (" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . ");"; 
+					$szSql = "CREATE INDEX " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "_idx ON \"" . $this->_logStreamConfigObj->DBTableName . "\" (" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . ");"; 
 				else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL )
 					$szSql = "CREATE INDEX " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "_idx ON " . $this->_logStreamConfigObj->DBTableName . " (" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . ");"; 
 				else
@@ -589,7 +589,7 @@ class LogStreamPDO extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-			$szSql = "SHOW COLUMNS FROM " . $this->_logStreamConfigObj->DBTableName . " WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
+			$szSql = "SHOW COLUMNS FROM `" . $this->_logStreamConfigObj->DBTableName . "` WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
 		else
 			// NOT SUPPORTED or NEEDED
 			return SUCCESS; 
@@ -873,7 +873,7 @@ class LogStreamPDO extends LogStream {
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "`" . $this->_SQLwhereClause;
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ( $myQuery ) 
 		{
@@ -903,7 +903,7 @@ class LogStreamPDO extends LogStream {
 		global $querycount, $dbmapping;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
 
-		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM " .  $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
+		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "`" . $this->_SQLwhereClause;
 		$myQuery = $this->_dbhandle->query($szSql);
 		if ( $myQuery ) 
 		{
@@ -1115,13 +1115,13 @@ class LogStreamPDO extends LogStream {
 		// UPDATE DATA NOW!
 		if	(	$this->_logStreamConfigObj->DBType == DB_MYSQL ) 
 		{
-			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+			$szSql =	"UPDATE `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = crc32(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
 						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
 		}
 		elseif ($this->_logStreamConfigObj->DBType == DB_PGSQL )
 		{
-			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
+			$szSql =	"UPDATE \"" . $this->_logStreamConfigObj->DBTableName . "\"" . 
 						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = hashtext(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_MESSAGE] . ") " . 
 						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
 		}
@@ -2338,7 +2338,7 @@ class LogStreamPDO extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		if (	$this->_logStreamConfigObj->DBType == DB_MYSQL )
-			$szSql = "SHOW INDEX FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SHOW INDEX FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL ) 
 			$szSql = "SELECT c.relname AS \"Key_name\" FROM pg_catalog.pg_class c JOIN pg_catalog.pg_index i ON i.indexrelid = c.oid JOIN pg_catalog.pg_class t ON i.indrelid   = t.oid WHERE c.relkind = 'i' AND t.relname = 'systemevents' AND c.relname LIKE '%idx%'";
 		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL ) 
@@ -2390,7 +2390,7 @@ class LogStreamPDO extends LogStream {
 
 		// Create SQL and Get FIELDS for table!
 		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-			$szSql = "SHOW FIELDS FROM " .  $this->_logStreamConfigObj->DBTableName; 
+			$szSql = "SHOW FIELDS FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_PGSQL )
 			$szSql = "SELECT column_name as \"Field\" FROM information_schema.COLUMNS WHERE table_name = '" . $this->_logStreamConfigObj->DBTableName . "'"; 
 		else if ( $this->_logStreamConfigObj->DBType == DB_MSSQL ) 
