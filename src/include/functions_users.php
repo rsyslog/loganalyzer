@@ -177,7 +177,6 @@ function CheckUserLogin( $username, $password )
 		$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "' and password = '" . $md5pass . "'";
 		$result = DB_Query($sqlquery);
 		$myrow = DB_GetSingleRow($result, true);
-		echo $sqlquery; 
 	}
 
 	// The admin field must be set!
