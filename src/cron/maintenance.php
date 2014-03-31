@@ -179,7 +179,7 @@ function CleanData($optParam1, $optParam2, $optParam3, $optParam4)
 	if ( isset($_SERVER["argv"][2]) )
 	{
 		// Set to SourceID property!
-		$content['SOURCEID'] = intval( $_SERVER["argv"][2] );
+		$content['SOURCEID'] = $_SERVER["argv"][2];
 
 		// Check if exists
 		if ( !isset($content['Sources'][ $content['SOURCEID'] ]) )

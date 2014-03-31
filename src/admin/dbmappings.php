@@ -86,10 +86,10 @@ if ( isset($_GET['op']) )
 		$content['DBMP'] = $dbmapping;
 
 		// View must be loaded as well already!
-		if ( isset($_GET['id']) && isset($content['DBMP'][$_GET['id']]) )
+		if ( isset($_GET['dbmpid']) && isset($content['DBMP'][$_GET['dbmpid']]) )
 		{
 			//PreInit these values 
-			$content['DBMPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['DBMPID'] = DB_RemoveBadChars($_GET['dbmpid']);
 			if ( isset($content['DBMP'][ $content['DBMPID'] ]) )
 			{
 				//Set the FormAdd URL
@@ -110,15 +110,15 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISEDITORNEWDBMP'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_DBMP_ERROR_INVALIDID'], isset($_GET['id']) ? $_GET['id'] : "<unknown>" );
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_DBMP_ERROR_INVALIDID'], isset($_GET['dbmpid']) ? $_GET['dbmpid'] : "<unknown>" );
 		}
 	}
 	else if ($_GET['op'] == "delete") 
 	{
-		if ( isset($_GET['id']) )
+		if ( isset($_GET['dbmpid']) )
 		{
 			//PreInit these values 
-			$content['DBMPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['DBMPID'] = DB_RemoveBadChars($_GET['dbmpid']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_MAPPINGS . " WHERE ID = " . $content['DBMPID'] ); 
@@ -249,7 +249,7 @@ if ( isset($content['ISEDITORNEWDBMP']) && $content['ISEDITORNEWDBMP'] )
 // --- Process POST Form Data
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['DBMPID'] = DB_RemoveBadChars($_POST['id']); } else {$content['DBMPID'] = ""; }
+	if ( isset ($_POST['dbmpid']) ) { $content['DBMPID'] = DB_RemoveBadChars($_POST['dbmpid']); } else {$content['DBMPID'] = ""; }
 	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_StripSlahes($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
 
 	// --- Check mandotary values

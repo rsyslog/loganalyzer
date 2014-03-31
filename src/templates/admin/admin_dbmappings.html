@@ -34,7 +34,7 @@
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
 			<td align="left" class="{cssclass}">
 			<!-- IF ActionsAllowed="true" -->
-			<a href="{BASEPATH}admin/dbmappings.php?op=edit&id={ID}">{DisplayName}</a>
+			<a href="{BASEPATH}admin/dbmappings.php?op=edit&dbmpid={ID}">{DisplayName}</a>
 			<!-- ENDIF ActionsAllowed="true" -->
 			<!-- IF ActionsAllowed!="true" -->
 			<b>{DisplayName}</b>
@@ -45,8 +45,8 @@
 			</td>
 			<td align="center" class="{cssclass}">
 				<!-- IF ActionsAllowed="true" -->
-				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_DBMP_EDIT}"></a>
-				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_DBMP_DELETE}"></a>
+				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=edit&dbmpid={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_DBMP_EDIT}"></a>
+				&nbsp;<a href="{BASEPATH}admin/dbmappings.php?op=delete&dbmpid={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_DBMP_DELETE}"></a>
 				<!-- ENDIF ActionsAllowed="true" -->
 				<!-- IF ActionsAllowed!="true" -->
 				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
@@ -116,7 +116,7 @@
 					<br>
 					<input type="submit" value="{DBMP_SENDBUTTON}">
 					<input type="hidden" name="op" value="{DBMP_FORMACTION}">
-					<input type="hidden" name="id" value="{DBMPID}">
+					<input type="hidden" name="dbmpid" value="{DBMPID}">
 					<br><br>
 				</td>
 			</tr>
