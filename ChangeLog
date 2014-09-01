@@ -1,9 +1,11 @@
 ---------------------------------------------------------------------------
-Version 3.6.6 (stable), 2014-??-??
+Version 3.6.6 (stable), 2014-09-01
 - Fixed bug in databasemapping admin. The form parameter and database 
   fieldname of EventID field were interfering.
 - Fixed a bug in maintenance.php, the ID parameter was forced to 
   an integer. A leftover from earlier loganalyzer days.
+- Fixed Cross Site Scripting Issue in index.php/detail.php for 
+  stringtype fields. 
 ---------------------------------------------------------------------------
 Version 3.6.5 (stable), 2013-10-08
 - LogStreamDB Driver, LogStreamPDO Driver, UserDB: 

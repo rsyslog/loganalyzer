@@ -573,7 +573,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 											// ---
 										}
 										else // Just set field value
-											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = isset($myfield['rawfieldvalue']) ? $myfield['rawfieldvalue'] : $myfield['fieldvalue'];
+											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = isset($myfield['rawfieldvalue']) ? GetStringWithHTMLCodes($myfield['rawfieldvalue']) : GetStringWithHTMLCodes($myfield['fieldvalue']);
 									}
 								}
 

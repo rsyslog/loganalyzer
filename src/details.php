@@ -286,7 +286,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 						if ( $mycolkey == SYSLOG_MESSAGE )
 							$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
 						else	// kindly copy!
-							$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( $logArray[$mycolkey] );
+							$content['fields'][$mycolkey]['fieldvalue'] = ReplaceLineBreaksInString( GetStringWithHTMLCodes($logArray[$mycolkey]) );
 
 						// --- HOOK here to add context links!
 						AddContextLinks($content['fields'][$mycolkey]['fieldvalue']);
