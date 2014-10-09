@@ -70,6 +70,14 @@ if ( isset($_GET['uid']) )
 else
 	$content['uid_current'] = UID_UNKNOWN;
 
+// Helper variable to decide if header and footer has to be included
+$content['layout'] = "full"; 
+if ( isset($_GET['layout']) ) 
+{
+	if ( $_GET['layout'] == "naked" )
+		$content['layout'] = "naked"; 
+}
+
 // Copy UID for later use ...
 $content['uid_fromgetrequest'] = $content['uid_current'];
 

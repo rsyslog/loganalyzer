@@ -533,12 +533,15 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = HighLightString( $content['highlightwords'], $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] );
 
 								// --- HOOK here to add context links!
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvaluenolink'] = $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'];
 								AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
+								AddContextHighlights($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvaluenolink']);
 								// --- 
 
 								if ( GetConfigSetting("ViewEnableDetailPopups", 0, CFGLEVEL_USER) )
 								{
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption'] = GetAndReplaceLangStr( $content['LN_GRID_POPUPDETAILS'], $logArray[SYSLOG_UID]);
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaptionjs'] = EscapeQuotesFromString($content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption']);
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "left"; // Other alignment needed!
 

@@ -9,7 +9,7 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2012 Adiscon GmbH.
+	* Copyright (C) 2008-2014 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -66,7 +66,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.6.6";
+$content['BUILDNUMBER'] = "3.7.0";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1174,6 +1174,13 @@ function ReplaceLineBreaksInString($myStr)
 	return str_replace( "\n", "<br>", $myStr );
 }
 
+function EscapeQuotesFromString($myStr)
+{
+//	return htmlspecialchars($myStr, ENT_QUOTES);
+
+	return str_replace( array( "'", "\""), array ("\\x27", "\\x22"), $myStr );
+}
+
 function GetStringWithHTMLCodes($myStr)
 {
 	global $content; 
@@ -1445,6 +1452,46 @@ function GetMonthFromString($szMonth)
 }
 
 /*
+*	AddContextHighlights
+*/
+function AddContextHighlights(&$sourceTxt)
+{
+	global $szTLDDomains;
+
+	// Return if not enabled!
+	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
+	{
+		// Search for IP's and Add Reverse Lookup first!
+		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+	}
+
+	// check if user disabled Context Links. 
+	if ( GetConfigSetting("EnableContextLinks", 1, CFGLEVEL_USER) == 0 )
+		return; 
+
+	// Create if not set!
+	if ( !isset($szTLDDomains) )
+		CreateTopLevelDomainSearch();
+
+	// Create Search Array
+	$search = array 
+				(
+					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/ie',
+					'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/ie',
+				);
+
+	// Create Replace Array
+	$replace = array 
+				(
+					"'.' . '<font class=\"highlighted\">' . \"\\1.\\2\" . '</font>'  . \"\\3\"",
+					"'<font class=\"highlighted\">' . \"\\1.\\2.\\3.\\4\" . '</font>'", 
+				);
+	
+	// Replace and return!
+	$sourceTxt = preg_replace( $search, $replace, $sourceTxt );
+}
+
+/*
 *	AddContextLinks
 */
 function AddContextLinks(&$sourceTxt)
@@ -1482,9 +1529,6 @@ function AddContextLinks(&$sourceTxt)
 	
 	// Replace and return!
 	$sourceTxt = preg_replace( $search, $replace, $sourceTxt );
-
-//echo $outTxt . " <br>" ;
-//return $outTxt;
 }
 
 /*
@@ -1506,16 +1550,6 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 	// check if it is an IP or domain
 	if ( strlen($szIP) > 0 )
 	{
-/*		// Split IP into array
-		$IPArray = explode(".", $szIP);
-		if ( 
-				(intval($IPArray[0]) == 10	) ||
-				(intval($IPArray[0]) == 127 ) ||
-				(intval($IPArray[0]) == 172 && intval($IPArray[1]) >= 16 && intval($IPArray[1]) <= 31) || 
-				(intval($IPArray[0]) == 192	&& intval($IPArray[1]) == 168) ||
-				(intval($IPArray[0]) == 255	)
-			)
-*/
 		if ( IsInternalIP($szIP) )
 			// Do not create a LINK in this case!
 			$szReturn .= '<b>' . $szIP . '</b>';

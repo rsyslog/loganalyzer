@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------
+Version 3.7.0 (beta), 2014-??-??
+- Included jquery library into Loganalyzer
+- Included jquery-ui library into Loganalyzer
+- Message Popup Window now uses jquery-iu
+- Buttons are now implemented with jquery-ui
+- 
+---------------------------------------------------------------------------
 Version 3.6.6 (stable), 2014-09-02
 - Fixed bug in databasemapping admin. The form parameter and database 
   fieldname of EventID field were interfering.

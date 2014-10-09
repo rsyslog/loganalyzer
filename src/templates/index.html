@@ -1,5 +1,7 @@
 <!-- INCLUDE include_header.html --> 
 
+<div id="dialog" title="Details"><br/></div>
+
 <table border="0" cellspacing="0" cellpadding="2" align="center">
 <tr>
 	<td colspan="5" class="tableBackground">
@@ -10,11 +12,19 @@
 <input type="hidden" name="{varname}" value="{varvalue}">
 <!-- END HIDDENVARS_SOURCE -->
 <tr> 
-	<td nowrap align="center" nowrap valign="middle">
-		<B>&nbsp;{LN_SEARCH_FILTER}</B>
+	<td align="top" nowrap valign="top">
+		<b>{LN_SEARCH_FILTER}</b>
 	</td>
 <!-- IF EnablePredefinedSearches="true" -->
-	<td nowrap valign="top" class="tableBackground">
+	<td nowrap valign="top" nowrap class="tableBackground">
+		<button id="openmenu"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
+		<ul id="menu" style="position:absolute;">
+			<!-- BEGIN Search -->
+			<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
+			<!-- END Search -->
+		</ul>
+
+<!-- BEGIN DISABLED -->
 		<div id="menu">
 		<ul>
 		  <li><img src="{MENU_NAV_CLOSE}" align="left" width="16" height="16" title="{LN_GEN_PREDEFINEDSEARCHES}" class="SelectSavedFilter" OnClick="ToggleDisplayTypeById('menu_presearches');">
@@ -30,6 +40,8 @@
 		  </li>
 		</ul>
 		</div>
+<!-- END DISABLED -->
+
 	</td>
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
@@ -41,10 +53,17 @@
 		<img src="{MENU_HELP_BLUE}" align="left" width="16" height="16" title="{LN_GEN_MOREINFORMATION}" class="SelectSavedFilter" >
 	</a>
 <!-- ENDIF enabledoraclesearchstr="true" -->
+
+		<button id="buttonsearch"><span class="ui-icon ui-icon-search" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH}</span></button>
+		<button id="buttonlucky"><span class="ui-icon ui-icon-star" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{SearchCustomButtonCaption}</span></button>
+		<button id="buttonreset"><span class="ui-icon ui-icon-power" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH_RESET}</span></button>
+		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
+<!-- BEGIN DISABLED -->
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
 		<a href="?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}" target="_top"><input name="lucky" type="button" value="{SearchCustomButtonCaption}" class="SearchFormControl"></a>
 		<input type="button" value="{LN_SEARCH_RESET}" class="SearchFormControl" OnClick="ResetFormValues('searchform');">
 		<input type="button" value="{LN_HIGHLIGHT}" class="SearchFormControl" OnClick="togglevisibility('HightLightArea');">
+<!-- END DISABLED -->
 		<br>
 	</td>
 	<td nowrap align="left" nowrap valign="top">
@@ -317,19 +336,32 @@
 		<!-- ENDIF hasdetails="false" -->
 
 		<!-- IF hasdetails="true" -->
-		<div OnClick="GoToPopupTarget('{detaillink}{additional_url_sourceonly}',this);" style="cursor:pointer" class="syslogdetails" OnMouseMove="movePopupWindow(event,'details_{FieldColumn}_{uid}',500, this);"  OnMouseOver="initPopupWindow(this);" OnMouseOut="FinishPopupWindow(this);">{fieldvalue}<br />
-		<span id="details_{FieldColumn}_{uid}" OnMouseOver="HoveringPopup(event,this);" OnMouseOut="FinishHoveringPopup(event,this);">
-			<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate" OnMouseMove="disableEventPropagation();">
-			<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
-			<!-- BEGIN messagesdetails -->
-			<tr>
-				<td width="150" nowrap class="cellmenu2_naked">{detailfieldtitle}</td>
-				<td width="100%" class="{detailscssclass}">{detailfieldvalue}</td>
-			</tr>
-			<!-- END messagesdetails -->
-			</table>
-		</span>
-		</div>
+		<a href="#" id="dialog-link_{uid}">{fieldvaluenolink}</a>
+		<script> $( "#dialog-link_{uid}" ).click(function( event ) { 
+			$( "#dialog").load('{detaillink}{additional_url_sourceonly}{additional_url}&layout=naked');
+			$( "#dialog" ).dialog( {position: { my: "center top", at: "center bottom", of: "#dialog-link_{uid}" } }); 
+			$( "#dialog" ).dialog( {title: "{popupcaptionjs}"}); 
+			$( "#dialog" ).dialog( "open" ); 
+			$( "#dialog" ).focus(); 
+			event.preventDefault(); });
+		</script>
+
+<!-- BEGIN DISABLED -->
+<div OnClick="GoToPopupTarget('{detaillink}{additional_url_sourceonly}',this);" style="cursor:pointer" class="syslogdetails" OnMouseMove="movePopupWindow(event,'details_{FieldColumn}_{uid}',500, this);"  OnMouseOver="initPopupWindow(this);" OnMouseOut="FinishPopupWindow(this);">{fieldvalue}<br />-->
+<span id="details_{FieldColumn}_{uid}" OnMouseOver="HoveringPopup(event,this);" OnMouseOut="FinishHoveringPopup(event,this);">
+	<table cellpadding="0" cellspacing="1" border="0" width="500" align="left" class="with_border_alternate" OnMouseMove="disableEventPropagation();">
+	<tr><td colspan="2" class="cellmenu1" align="center"><B>{popupcaption}</B></td></tr>
+	<!-- BEGIN messagesdetails -->
+	<tr>
+		<td width="150" nowrap class="cellmenu2_naked">{detailfieldtitle}</td>
+		<td width="100%" class="{detailscssclass}">{detailfieldvalue}</td>
+	</tr>
+	<!-- END messagesdetails -->
+	</table>
+</span>
+</div>
+<!-- END DISABLED -->
+
 		<!-- ENDIF hasdetails="true" -->
 
 	</td>
@@ -426,5 +458,94 @@
 <br><br>
 <!-- ENDIF logstream_warning="false" -->
 
+<script>
+
+// Popup Dialog Code
+$( "#dialog" ).dialog({
+	autoOpen: false,
+	width: 720,
+	height: 300,
+	draggable: true,
+	closeOnEscape: true,
+	modal: true,
+	buttons: [
+		{
+			text: "Ok",
+			click: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+	]
+});
+
+// Popup Menu Code
+var menu = $("ul#menu").menu().hide();
+$("#openmenu").button()
+	.click(function() {
+		// Make use of the general purpose show and position operations
+		// open and place the menu where we want.
+		menu.show().position({
+			  my: "left top",
+			  at: "left bottom",
+			  of: this
+		});
+
+		menu.focus(); 
+
+		// Register a click outside the menu to close it
+		$( document ).on( "click", function() {
+			  menu.hide();
+		});
+
+		// Helper function to close a menu by escape key
+		$( document ).keyup(function(e) {
+			if (e.keyCode == 27) { 
+				menu.hide(); 
+			}   
+		});
+
+		// Helper function to click a link by keypress
+		menu.menu({
+			select: function(event, ui){
+				window.location.href = $(ui.item).find('a').attr('href');
+			}
+		});
+
+		// Make sure to return false here or the click registration
+		// above gets invoked.
+		return false;
+	})
+
+// Buttons
+$("#buttonsearch").button()
+.click(function() {
+		// Perform Button Click now!
+		window.location.href = $(ui.item).find('form').submit();
+		// Make sure to return false here or the click registration above gets invoked.
+		return false;
+})
+$("#buttonlucky").button()
+.click(function() {
+		// Perform Button Click now!
+		window.location.href = "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}";
+		// Make sure to return false here or the click registration above gets invoked.
+		return false;
+})
+$("#buttonreset").button()
+.click(function() {
+		// Reset search form
+		ResetFormValues('searchform');
+		// Make sure to return false here or the click registration above gets invoked.
+		return false;
+})
+$("#buttonhighlight").button()
+.click(function() {
+		// Toggle highlight visibility 
+		togglevisibility('HightLightArea');
+		// Make sure to return false here or the click registration above gets invoked.
+		return false;
+})
+
+</script>
 
 <!-- INCLUDE include_footer.html -->
