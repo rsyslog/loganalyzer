@@ -12,17 +12,18 @@
 <input type="hidden" name="{varname}" value="{varvalue}">
 <!-- END HIDDENVARS_SOURCE -->
 <tr> 
-	<td align="top" nowrap valign="top">
+	<td align="top" nowrap valign="middle">
 		<b>{LN_SEARCH_FILTER}</b>
 	</td>
 <!-- IF EnablePredefinedSearches="true" -->
 	<td nowrap valign="top" nowrap class="tableBackground">
-		<button id="openmenu"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
-		<ul id="menu" style="position:absolute;">
+		<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
+		<ul id="menu_searches" style="position:absolute;z-index:99;">
 			<!-- BEGIN Search -->
 			<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
 			<!-- END Search -->
 		</ul>
+		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches" );</script>
 
 <!-- BEGIN DISABLED -->
 		<div id="menu">
@@ -287,11 +288,26 @@
 		<!-- IF hasbuttons="true" -->
 			
 			<!-- IF hasdropdownbutton="true" -->
+			<button id="button_menu_{FieldColumn}_{uid}"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_AVAILABLESEARCHES}"></span></button>
+			<!-- BEGIN DISABLED -->
 			<div style="position: relative;">
 			<img class="inlinebutton" src="{MENU_NAV_CLOSE}" width="16" height="16" title="{LN_GEN_AVAILABLESEARCHES}" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');">
 			</div>
+			<!-- END DISABLED -->
 			<!-- ENDIF hasdropdownbutton="true" -->
 
+			<ul id="menu_{FieldColumn}_{uid}" style="position:absolute;z-index:99">
+				<li class="ui-widget-header-noborder">{LN_GEN_AVAILABLESEARCHES}</li>
+				<!-- BEGIN buttons -->
+				<li>
+					<img src="{IconSource}" width="16" height="16" vspace="0" style="float:left;"/>
+					<a href="{ButtonUrl}<!-- IF ButtonAppendUrl="true" -->{additional_url_sourceonly}<!-- ENDIF ButtonAppendUrl="true" -->" target="{ButtonTarget}">{DisplayName}</a>
+				</li>
+				<!-- END buttons -->
+			</ul>
+			<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}" );</script>
+
+			<!-- BEGIN DISABLED -->
 			<div id="menu" style="position: absolute;">
 			<ul>
 			  <li>
@@ -307,21 +323,34 @@
 			  </li>
 			</ul>
 			</div>
+			<!-- END DISABLED -->
 
 			<!-- IF searchonline="true" -->
+			<button id="onlinesearch_{FieldColumn}_{uid}"><img style="position:relative; top:0px; left:0px;" src="{MENU_EARTH_FIND}" width="16" height="16"></button>
+			<script> CreateLinkFunction( "#onlinesearch_{FieldColumn}_{uid}", "{SearchOnlineUrl}" );</script>
+			<!-- BEGIN DISABLED -->
 			<a href="{SearchOnlineUrl}" target="_blank"><img style="position:relative; top:0px; left:0px;" src="{MENU_EARTH_FIND}" width="16" height="16" vspace="0" hspace="0"></a>
+			<!-- END DISABLED -->
 			<!-- ENDIF searchonline="true" -->
 			
 		<!-- ENDIF hasbuttons="true" -->
 
 		<!-- IF ismessagefield="true" -->
+		<button id="detaillink_{FieldColumn}_{uid}"><img style="position:relative; top:0px; left:0px;" src="{MENU_LINK_VIEW}" width="16" height="16" title="{LN_GEN_MESSAGEDETAILS}"></button>
+		<script> CreateLinkFunction( "#detaillink_{FieldColumn}_{uid}", "{detaillink}{additional_url_sourceonly}{additional_url}" );</script>
+		<!-- BEGIN DISABLED -->
 		<a href="{detaillink}{additional_url_sourceonly}{additional_url}" class="syslogdetails"><img align="{detailimagealign}" vspace="0" hspace="2" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
+		<!-- END DISABLED -->
 		<!-- ENDIF ismessagefield="true" -->
 
 		<!-- IF hasdetails="false" -->
 			<!-- IF ismessagefield!="true" -->
 				<!-- IF hasbuttons="true" -->
+				<button id="button_menu_{FieldColumn}_{uid}">{fieldvalue}</button>
+				<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}" );</script>
+				<!-- BEGIN DISABLED -->
 				<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">{fieldvalue}</a>
+				<!-- END DISABLED -->
 				<!-- ENDIF hasbuttons="true" -->
 
 				<!-- IF hasbuttons!="true" -->
@@ -478,43 +507,7 @@ $( "#dialog" ).dialog({
 	]
 });
 
-// Popup Menu Code
-var menu = $("ul#menu").menu().hide();
-$("#openmenu").button()
-	.click(function() {
-		// Make use of the general purpose show and position operations
-		// open and place the menu where we want.
-		menu.show().position({
-			  my: "left top",
-			  at: "left bottom",
-			  of: this
-		});
 
-		menu.focus(); 
-
-		// Register a click outside the menu to close it
-		$( document ).on( "click", function() {
-			  menu.hide();
-		});
-
-		// Helper function to close a menu by escape key
-		$( document ).keyup(function(e) {
-			if (e.keyCode == 27) { 
-				menu.hide(); 
-			}   
-		});
-
-		// Helper function to click a link by keypress
-		menu.menu({
-			select: function(event, ui){
-				window.location.href = $(ui.item).find('a').attr('href');
-			}
-		});
-
-		// Make sure to return false here or the click registration
-		// above gets invoked.
-		return false;
-	})
 
 // Buttons
 $("#buttonsearch").button()

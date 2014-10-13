@@ -434,3 +434,61 @@ function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 		objPopup.style.left = (myEvent.clientX - middle) + 'px';
 	}
 }
+
+/*
+*	New JQUERY Helper functions
+*/
+
+function CreateMenuFunction ( szbuttonobjid, szmenuobjid )
+{
+	// Popup Menu Code
+	var menu = $("ul" + szmenuobjid).menu().hide();
+	$(szbuttonobjid).button()
+	.click(function() {
+		// Make use of the general purpose show and position operations
+		// open and place the menu where we want.
+		menu.show().position({
+			  my: "left top",
+			  at: "left bottom",
+			  of: this
+		});
+
+		menu.focus(); 
+
+		// Register a click outside the menu to close it
+		$( document ).on( "click", function() {
+			  menu.hide();
+		});
+
+		// Helper function to close a menu by escape key
+		$( document ).keyup(function(e) {
+			if (e.keyCode == 27) { 
+				menu.hide(); 
+			}   
+		});
+
+		// Helper function to click a link by keypress
+		menu.menu({
+			select: function(event, ui){
+				if ($(ui.item).find('a').attr('href') != null) {
+					window.location.href = $(ui.item).find('a').attr('href');
+				}
+			}
+		});
+
+		// Make sure to return false here or the click registration
+		// above gets invoked.
+		return false;
+	})
+}
+
+function CreateLinkFunction ( szbuttonobjid, szlink )
+{
+	$(szbuttonobjid).button()
+	.click(function() {
+			// Perform Button Click now!
+			window.location.href = szlink;
+			// Make sure to return false here or the click registration above gets invoked.
+			return false;
+	})
+}

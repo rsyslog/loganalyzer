@@ -925,8 +925,13 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 {
 	global $content, $fields, $myStrCharLimit; 
 
-	// Set OnClick Menu for SYSLOG_SYSLOGTAG
-	$fieldGridItem['hasbuttons'] = true;
+	if ( strlen($fieldGridItem['fieldvalue']) <= 0 ) {
+		$fieldGridItem['hasbuttons'] = false;
+		return; 
+	}
+	else
+		// Enable OnClick Menu 
+		$fieldGridItem['hasbuttons'] = true;
 	
 	// Set Field Caption
 	if ( isset($content['fields'][$FieldID]['FieldCaption']) && strlen( $content['fields'][$FieldID]['FieldCaption']) > 0 ) 
