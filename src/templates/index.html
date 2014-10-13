@@ -47,19 +47,43 @@
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
 	<td nowrap align="center" nowrap valign="top">
-		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="SearchFormTextbox">
+		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" style="width:100%; ">
 		<br>
 <!-- IF enabledoraclesearchstr="true" -->
-	<a href="{oraclesearchlink}" target="_top">
-		<img src="{MENU_HELP_BLUE}" align="left" width="16" height="16" title="{LN_GEN_MOREINFORMATION}" class="SelectSavedFilter" >
-	</a>
+		<button id="buttonmoreinfo"><span class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}" style="float:left;"></span><span class="ui-button-text">{LN_GEN_MOREINFORMATION}</span></button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
 <!-- ENDIF enabledoraclesearchstr="true" -->
-
 		<button id="buttonsearch"><span class="ui-icon ui-icon-search" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH}</span></button>
 		<button id="buttonlucky"><span class="ui-icon ui-icon-star" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{SearchCustomButtonCaption}</span></button>
 		<button id="buttonreset"><span class="ui-icon ui-icon-power" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH_RESET}</span></button>
 		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
+<script> 
+	CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
+	// Custom Buttons
+	$("#buttonsearch").button()
+	.click(function() {
+			// Perform Button Click now!
+			window.location.href = $(ui.item).find('form').submit();
+			// Make sure to return false here or the click registration above gets invoked.
+			return false;
+	})
+	$("#buttonreset").button()
+	.click(function() {
+			// Reset search form
+			ResetFormValues('searchform');
+			// Make sure to return false here or the click registration above gets invoked.
+			return false;
+	})
+	$("#buttonhighlight").button()
+	.click(function() {
+			// Toggle highlight visibility 
+			togglevisibility('HightLightArea');
+			// Make sure to return false here or the click registration above gets invoked.
+			return false;
+	})
+</script>
 <!-- BEGIN DISABLED -->
+	</a>
+		<input id="buttonsearch" name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
 		<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
 		<a href="?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}" target="_top"><input name="lucky" type="button" value="{SearchCustomButtonCaption}" class="SearchFormControl"></a>
 		<input type="button" value="{LN_SEARCH_RESET}" class="SearchFormControl" OnClick="ResetFormValues('searchform');">
@@ -68,7 +92,6 @@
 		<br>
 	</td>
 	<td nowrap align="left" nowrap valign="top">
-
 		<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
 		<br>
 		<i>(sample: facility:local0 severity:warning)</i>
@@ -509,37 +532,6 @@ $( "#dialog" ).dialog({
 	]
 });
 
-
-
-// Buttons
-$("#buttonsearch").button()
-.click(function() {
-		// Perform Button Click now!
-		window.location.href = $(ui.item).find('form').submit();
-		// Make sure to return false here or the click registration above gets invoked.
-		return false;
-})
-$("#buttonlucky").button()
-.click(function() {
-		// Perform Button Click now!
-		window.location.href = "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}";
-		// Make sure to return false here or the click registration above gets invoked.
-		return false;
-})
-$("#buttonreset").button()
-.click(function() {
-		// Reset search form
-		ResetFormValues('searchform');
-		// Make sure to return false here or the click registration above gets invoked.
-		return false;
-})
-$("#buttonhighlight").button()
-.click(function() {
-		// Toggle highlight visibility 
-		togglevisibility('HightLightArea');
-		// Make sure to return false here or the click registration above gets invoked.
-		return false;
-})
 
 </script>
 
