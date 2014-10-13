@@ -439,10 +439,16 @@ function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 *	New JQUERY Helper functions
 */
 
-function CreateMenuFunction ( szbuttonobjid, szmenuobjid )
+function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 {
 	// Popup Menu Code
-	var menu = $("ul" + szmenuobjid).menu().hide();
+	var menu = $("ul" + szmenuobjid).menu();
+	
+	if (bHide) {
+		// Hide 
+		menu.hide();
+	}
+	
 	$(szbuttonobjid).button()
 	.click(function() {
 		// Make use of the general purpose show and position operations
@@ -470,8 +476,15 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid )
 		// Helper function to click a link by keypress
 		menu.menu({
 			select: function(event, ui){
-				if ($(ui.item).find('a').attr('href') != null) {
-					window.location.href = $(ui.item).find('a').attr('href');
+				var szHref = $(ui.item).find('a').attr('href'); 
+				if (szHref != null && szHref.length > 0) {
+					alert ( szHref ); 
+					var szTarget = $(ui.item).find('a').attr('target'); 
+					if (szTarget == "_top") {
+						window.location.href = szHref;
+					} else {
+						window.open(szHref, szTarget); 
+					}
 				}
 			}
 		});
@@ -486,9 +499,11 @@ function CreateLinkFunction ( szbuttonobjid, szlink )
 {
 	$(szbuttonobjid).button()
 	.click(function() {
-			// Perform Button Click now!
+		if (szlink != null && szlink.length > 0) {
 			window.location.href = szlink;
-			// Make sure to return false here or the click registration above gets invoked.
-			return false;
+		}
+
+		// Make sure to return false here or the click registration above gets invoked.
+		return false;
 	})
 }

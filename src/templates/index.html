@@ -23,7 +23,7 @@
 			<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
 			<!-- END Search -->
 		</ul>
-		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches" );</script>
+		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", true );</script>
 
 <!-- BEGIN DISABLED -->
 		<div id="menu">
@@ -305,7 +305,7 @@
 				</li>
 				<!-- END buttons -->
 			</ul>
-			<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}" );</script>
+			<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", true );</script>
 
 			<!-- BEGIN DISABLED -->
 			<div id="menu" style="position: absolute;">
@@ -325,13 +325,15 @@
 			</div>
 			<!-- END DISABLED -->
 
+			<!-- BEGIN DISABLED -->
 			<!-- IF searchonline="true" -->
 			<button id="onlinesearch_{FieldColumn}_{uid}"><img style="position:relative; top:0px; left:0px;" src="{MENU_EARTH_FIND}" width="16" height="16"></button>
 			<script> CreateLinkFunction( "#onlinesearch_{FieldColumn}_{uid}", "{SearchOnlineUrl}" );</script>
-			<!-- BEGIN DISABLED -->
+			<!-- BEGIN DISABLED2 -->
 			<a href="{SearchOnlineUrl}" target="_blank"><img style="position:relative; top:0px; left:0px;" src="{MENU_EARTH_FIND}" width="16" height="16" vspace="0" hspace="0"></a>
-			<!-- END DISABLED -->
+			<!-- END DISABLED2 -->
 			<!-- ENDIF searchonline="true" -->
+			<!-- END DISABLED -->
 			
 		<!-- ENDIF hasbuttons="true" -->
 
@@ -347,7 +349,7 @@
 			<!-- IF ismessagefield!="true" -->
 				<!-- IF hasbuttons="true" -->
 				<button id="button_menu_{FieldColumn}_{uid}">{fieldvalue}</button>
-				<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}" );</script>
+				<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", true );</script>
 				<!-- BEGIN DISABLED -->
 				<a href="#search" OnClick="ToggleDisplayTypeById('menu_{FieldColumn}_{uid}');" class="{fieldcssclass}">{fieldvalue}</a>
 				<!-- END DISABLED -->
