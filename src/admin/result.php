@@ -62,7 +62,11 @@ $content['REDIRSECONDS'] =  GetConfigSetting("AdminChangeWaitTime", 2, CFGLEVEL_
 // --- CONTENT Vars
 if ( isset($_GET['redir']) )
 {
-	$content['EXTRA_METATAGS'] = '<meta HTTP-EQUIV="REFRESH" CONTENT="' . $content['REDIRSECONDS'] . '; URL=' . urldecode($_GET['redir']) . '">';
+	// Only automatically redirect if above 0
+	if ( $content['REDIRSECONDS'] > 0 ) 
+		$content['EXTRA_METATAGS'] = '<meta HTTP-EQUIV="REFRESH" CONTENT="' . $content['REDIRSECONDS'] . '; URL=' . urldecode($_GET['redir']) . '">';
+
+	// Set redir string
 	$content['SZREDIR'] = urldecode($_GET['redir']);
 }
 else
@@ -75,7 +79,13 @@ if ( isset($_GET['msg']) )
 else
 	$content['SZMSG'] = $content["LN_ADMIN_UNKNOWNSTATE"]; 
 
-$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "' in " . $content['REDIRSECONDS'] . " seconds";	// Title of the Page 
+if ( $content['REDIRSECONDS'] > 0 ) {
+	$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "' in " . $content['REDIRSECONDS'] . " seconds";	// Title of the Page 
+	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTREDIRECT'], $content['SZREDIR'], $content['REDIRSECONDS']); 
+} else {
+	$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "'";	// Title of the Page 
+	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTCLICK'], $content['SZREDIR']); 
+}
 // --- 
 
 // --- Parsen and Output

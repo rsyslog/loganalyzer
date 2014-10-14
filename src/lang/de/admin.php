@@ -59,7 +59,9 @@ $content['LN_ADMIN_CLEARDATA'] = "Wenn Sie alte Datenbankeintr&auml;ge l&ouml;sc
 $content['LN_UPDATE_AVAILABLE'] = "Update available";
 $content['LN_UPDATE_INSTALLEDVER'] = "Installed version: ";
 $content['LN_UPDATE_AVAILABLEVER'] = "Available version: ";
-$content['LN_UPDATE_LINK'] = "Click here to get the update";
+$content['LN_UPDATE_LINK'] = "Klicken Sie hier um das Update zu bekommen";
+$content['LN_ADMIN_RESULTREDIRECT'] = "Sie werden in %2 Sekunden auf diese <A HREF='%1'>Seite</A> weitergeleitet.";
+$content['LN_ADMIN_RESULTCLICK'] = "Klicken Sie <A HREF='%1'>hier</A> um fortzufahren.";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Globale Anzeige Optionen";

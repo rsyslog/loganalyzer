@@ -60,6 +60,8 @@ $content['LN_UPDATE_AVAILABLE'] = "Update available";
 $content['LN_UPDATE_INSTALLEDVER'] = "Installed version: ";
 $content['LN_UPDATE_AVAILABLEVER'] = "Available version: ";
 $content['LN_UPDATE_LINK'] = "Click here to get the update";
+$content['LN_ADMIN_RESULTREDIRECT'] = "You will be redirected to the <A HREF='%1'>this page</A> on %2 seconds.";
+$content['LN_ADMIN_RESULTCLICK'] = "Click <A HREF='%1'>here</A> to continue.";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";
