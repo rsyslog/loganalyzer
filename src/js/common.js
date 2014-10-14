@@ -478,7 +478,6 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 			select: function(event, ui){
 				var szHref = $(ui.item).find('a').attr('href'); 
 				if (szHref != null && szHref.length > 0) {
-					alert ( szHref ); 
 					var szTarget = $(ui.item).find('a').attr('target'); 
 					if (szTarget == "_top") {
 						window.location.href = szHref;

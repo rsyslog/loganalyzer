@@ -831,3 +831,8 @@ button.ui-button::-moz-focus-inner {
 body .ui-tooltip {
 	border-width: 2px;
 }
+
+/* Custom CSS added by AL */
+.ui-button img {
+	margin:0px;
+}

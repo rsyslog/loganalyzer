@@ -559,6 +559,7 @@ select, input, button, textarea
 .SearchFormTextbox
 {
 	height: 20px;
+	width:100%;
 	margin: 2px;
 	background-color: #E8E7E2; 
 	color:#000000; 
@@ -580,3 +581,26 @@ select, input, button, textarea
 	color: #BB0000 
 }
 
+
+/* Corner radius */
+.title,
+.with_border,
+.with_border_alternate,
+.mainheader,
+.imageborder,
+.topmenu1,
+.topmenu2,
+.topmenu2end,
+.topmenu3,
+.cellmenu1,
+.cellmenu1_naked,
+.cellmenu2,
+.cellmenu2_naked,
+.SearchFormControl,
+.SearchFormTextbox,
+.table_with_border,
+.table_with_border_second,
+.table_with_border_light, 
+select, input, button, textarea {
+	border-radius: 2px;
+}

@@ -47,12 +47,12 @@
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
 	<td nowrap align="center" nowrap valign="top">
-		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" style="width:100%; ">
-		<br>
+		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox">
+		</br>
+		<button id="buttonsearch"><span class="ui-icon ui-icon-search" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH}</span></button>
 <!-- IF enabledoraclesearchstr="true" -->
 		<button id="buttonmoreinfo"><span class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}" style="float:left;"></span><span class="ui-button-text">{LN_GEN_MOREINFORMATION}</span></button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
 <!-- ENDIF enabledoraclesearchstr="true" -->
-		<button id="buttonsearch"><span class="ui-icon ui-icon-search" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH}</span></button>
 		<button id="buttonlucky"><span class="ui-icon ui-icon-star" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{SearchCustomButtonCaption}</span></button>
 		<button id="buttonreset"><span class="ui-icon ui-icon-power" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH_RESET}</span></button>
 		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
