@@ -47,7 +47,7 @@
 		<p>{ERROR_MSG}</p>
 		</div>
 	<br><br>
-	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
+	<a href="javascript:history.back();" target="_top" title="{LN_GEN_ERRORRETURNPREV}">{LN_GEN_ERRORRETURNPREV}</a>
 </center>
 <br><br>
 <!-- ENDIF ISERROR="true" -->
@@ -81,12 +81,12 @@
 			<!-- ENDIF ActionsAllowed!="true" -->
 			
 			</td>
-			<td align="left" class="{cssclass}"><img src="{SourcesTypeImage}" width="16" align="left"> <b>{SourcesTypeText}</b></td>
-			<td align="left" class="{cssclass}"><img src="{SourcesAssignedToImage}" width="16" align="left"> <b>{SourcesAssignedToText}</b></td>
+			<td align="left" class="{cssclass}"><img src="{SourcesTypeImage}" width="16" align="left" title="{SourcesTypeText}"> <b>{SourcesTypeText}</b></td>
+			<td align="left" class="{cssclass}"><img src="{SourcesAssignedToImage}" width="16" align="left" title="{SourcesAssignedToText}"> <b>{SourcesAssignedToText}</b></td>
 			<td align="center" class="{cssclass}">
 				<!-- IF ActionsAllowed="true" -->
-				&nbsp;<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_SOURCES_EDIT}"></a>
-				&nbsp;<a href="{BASEPATH}admin/sources.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_SOURCES_DELETE}"></a>
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_GEN_ERRORRETURNPREV}"></a>
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=delete&id={ID}"><img src="{MENU_DELETE}" width="16" title="{LN_GEN_ERRORRETURNPREV}"></a>
 				<!-- ENDIF ActionsAllowed="true" -->
 				<!-- IF ActionsAllowed!="true" -->
 				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
@@ -96,8 +96,8 @@
 
 			<td align="center" class="{cssclass}">
 				<!-- IF IsDatabaseSource="true" -->
-				&nbsp;<a href="{BASEPATH}admin/sources.php?op=dbstats&id={ID}"><img src="{MENU_CHARTS}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_DBSTATS}');" OnMouseOut="FinishPopupWindowMenu();"></a>
-				&nbsp;<a href="{BASEPATH}admin/sources.php?op=cleardata&id={ID}"><img src="{MENU_TRASH}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_CLEARDATA}');" OnMouseOut="FinishPopupWindowMenu();"></a>
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=dbstats&id={ID}"><img src="{MENU_CHARTS}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_DBSTATS}');" OnMouseOut="FinishPopupWindowMenu();" title="{LN_ADMIN_DBSTATS}"></a>
+				&nbsp;<a href="{BASEPATH}admin/sources.php?op=cleardata&id={ID}"><img src="{MENU_TRASH}" width="16" OnMouseOver="HoverPopupHelp(event, this, '{LN_ADMIN_POPUPHELP}', '{LN_ADMIN_CLEARDATA}');" OnMouseOut="FinishPopupWindowMenu();" title="{LN_ADMIN_CLEARDATA}"></a>
 				<!-- ENDIF IsDatabaseSource="true" -->
 			</td>
 		</tr>

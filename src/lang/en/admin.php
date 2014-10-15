@@ -62,6 +62,7 @@ $content['LN_UPDATE_AVAILABLEVER'] = "Available version: ";
 $content['LN_UPDATE_LINK'] = "Click here to get the update";
 $content['LN_ADMIN_RESULTREDIRECT'] = "You will be redirected to the <A HREF='%1'>this page</A> on %2 seconds.";
 $content['LN_ADMIN_RESULTCLICK'] = "Click <A HREF='%1'>here</A> to continue.";
+$content['LN_ADMIN_GOBACK'] = "Go Back";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Global frontend options";
@@ -141,7 +142,8 @@ $content['LN_USER_ERROR_INVALIDSESSIONS'] = "Invalid User Session.";
 $content['LN_USER_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ID or User not found";
 $content['LN_USER_WARNRADYONLYADMIN'] = "You are about to set your account to readonly! This will prevent you from changing any settings! Are you sure that you want to proceed?";
 $content['LN_USER_ISREADONLY'] = "Readonly User?";
-$content['LN_USER_'] = "";
+$content['LN_USER_SETISADMIN'] = "Toggle IsAdmin State";
+$content['LN_USER_SETISREADONLY'] = "Toggle IsReadOnly State";
 
 // Group center
 $content['LN_GROUP_CENTER'] = "Group Center";
@@ -334,6 +336,7 @@ $content['LN_CHARTS_FILTERSTRING'] = "Custom Filter";
 $content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
 $content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'] = "Error, ChartID with ID '%1' , was not found";
 $content['LN_CHARTS_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ChartID or operation.";
+$content['LN_CHARTS_SETENABLEDSTATE'] = "Toggle Enabled State";
 
 // Fields Options
 $content['LN_FIELDS_CENTER'] = "Fields Options";

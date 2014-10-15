@@ -62,6 +62,7 @@ $content['LN_UPDATE_AVAILABLEVER'] = "Available version: ";
 $content['LN_UPDATE_LINK'] = "Klicken Sie hier um das Update zu bekommen";
 $content['LN_ADMIN_RESULTREDIRECT'] = "Sie werden in %2 Sekunden auf diese <A HREF='%1'>Seite</A> weitergeleitet.";
 $content['LN_ADMIN_RESULTCLICK'] = "Klicken Sie <A HREF='%1'>hier</A> um fortzufahren.";
+$content['LN_ADMIN_GOBACK'] = "Zurückgehen";
 
 // General Options
 $content['LN_ADMIN_GLOBFRONTEND'] = "Globale Anzeige Optionen";
@@ -138,7 +139,8 @@ $content['LN_USER_ADDEDIT'] = "Hinzuf&uuml;gen/Bearbeiten von Benutzern";
 $content['LN_USER_WARNREMOVEADMIN'] = "Sie sind im Begriff sich Ihre Administorenrechte zu nehmen. Sind Sie sicher?";
 $content['LN_USER_WARNDELETEUSER'] = "Sind Sie sicher das Sie den Benutzer '%1' l&ouml;schen wollen? Alle pers. Einstellungen werden ebenfalls gel&ouml;scht.";
 $content['LN_USER_ERROR_INVALIDSESSIONS'] = "Ung&uuml;ltige Benutzer Sitzung.";
-$content['LN_USER_'] = "";
+$content['LN_USER_SETISADMIN'] = "Ändern des IsAdmin Status";
+$content['LN_USER_SETISREADONLY'] = "Ändern des IsReadOnly Status";
 
 // Group center
 $content['LN_GROUP_CENTER'] = "Gruppen Administration";
@@ -321,6 +323,7 @@ $content['LN_CHARTS_FILTERSTRING'] = "Custom Filter";
 $content['LN_CHARTS_FILTERSTRING_HELP'] = "Use the same syntax as in the search field. For example if you want to generate a chart for 'server1', use this filter: source:=server1";
 $content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'] = "Error, ChartID with ID '%1' , was not found";
 $content['LN_CHARTS_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ChartID or operation.";
+$content['LN_CHARTS_SETENABLEDSTATE'] = "Toggle Enabled State";
 
 // Fields Options
 $content['LN_FIELDS_CENTER'] = "Feld Options";
