@@ -433,7 +433,6 @@ $content['LN_REPORTS_HASBEENEDIT'] = "The Savedreport '%1' has been successfully
 $content['LN_REPORTS_SOURCEID'] = "Logstream source";
 $content['LN_REPORTS_ERROR_SAVEDREPORTIDNOTFOUND'] = "There was no savedreport with ID '%1' found.";
 $content['LN_REPORTS_ERROR_INVALIDSAVEDREPORTID'] = "Invalid savedreport id.";
-$content['LN_REPORTS_RUNNOW'] = "Run saved report now!";
 $content['LN_REPORTS_WARNDELETESAVEDREPORT'] = "Are you sure that you want to delete the savedreport '%1'?";
 $content['LN_REPORTS_ERROR_DELSAVEDREPORT'] = "Deleting of the savedreport with id '%1' failed!";
 $content['LN_REPORTS_ERROR_HASBEENDEL'] = "The savedreport '%1' has been successfully deleted!";

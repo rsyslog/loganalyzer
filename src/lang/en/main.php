@@ -405,6 +405,6 @@ $content['LN_REPORTS_INFORMATION'] = "This page shows a list of installed and av
 <br/>Attention! Generating reports can be very time consuming depending on the size of your database.
 ";
 $content['LN_REPORTS_CHECKLOGSTREAMSOURCE'] = "Verify Logstream optimization";
-
+$content['LN_REPORTS_RUNNOW'] = "Run saved report now!";
 
 ?>
