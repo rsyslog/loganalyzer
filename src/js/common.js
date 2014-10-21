@@ -480,6 +480,7 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 				if (szHref != null && szHref.length > 0) {
 					var szTarget = $(ui.item).find('a').attr('target'); 
 					if (szTarget == "_top") {
+						$("#loading_dialog").loading();
 						window.location.href = szHref;
 					} else {
 						window.open(szHref, szTarget); 
@@ -499,10 +500,77 @@ function CreateLinkFunction ( szbuttonobjid, szlink )
 	$(szbuttonobjid).button()
 	.click(function() {
 		if (szlink != null && szlink.length > 0) {
+			$("#loading_dialog").loading();
 			window.location.href = szlink;
 		}
 
 		// Make sure to return false here or the click registration above gets invoked.
 		return false;
 	})
+}
+
+function CreateLoadingHelper ( szLoadingText )
+{
+	(function($) {
+	$.widget("artistan.loading", $.ui.dialog, {
+		options: {
+			// your options
+			spinnerClassSuffix: 'spinner',
+			spinnerHtml: szLoadingText,// allow for spans with callback for timeout...
+			maxHeight: false,
+			maxWidth: false,
+			minHeight: 80,
+			minWidth: 220,
+			height: 120,
+			width: 300,
+			modal: true
+		},
+
+		_create: function() {
+			$.ui.dialog.prototype._create.apply(this);
+			// constructor
+			$(this.uiDialog).children('*').hide();
+			var self = this,
+			options = self.options;
+			self.uiDialogSpinner = $('.ui-dialog-content',self.uiDialog)
+				.html(options.spinnerHtml)
+				.addClass('ui-dialog-'+options.spinnerClassSuffix);
+		},
+		_setOption: function(key, value) {
+			var original = value;
+			$.ui.dialog.prototype._setOption.apply(this, arguments);
+			// process the setting of options
+			var self = this;
+
+			switch (key) {
+				case "innerHeight":
+					// remove old class and add the new one.
+					self.uiDialogSpinner.height(value);
+					break;
+				case "spinnerClassSuffix":
+					// remove old class and add the new one.
+					self.uiDialogSpinner.removeClass('ui-dialog-'+original).addClass('ui-dialog-'+value);
+					break;
+				case "spinnerHtml":
+					// convert whatever was passed in to a string, for html() to not throw up
+					self.uiDialogSpinner.html("" + (value || '&#160;'));
+					break;
+			}
+		},
+		_size: function() {
+			$.ui.dialog.prototype._size.apply(this, arguments);
+		},
+		// other methods
+		loadStart: function(newHtml){
+			if(typeof(newHtml)!='undefined'){
+				this._setOption('spinnerHtml',newHtml);
+			}
+			this.open();
+		},
+		loadStop: function(){
+			this._setOption('spinnerHtml',this.options.spinnerHtml);
+			this.close();
+		}
+	});
+	})(jQuery);
 }

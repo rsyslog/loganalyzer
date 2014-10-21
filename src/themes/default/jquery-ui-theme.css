@@ -418,3 +418,13 @@
 	filter: Alpha(Opacity=30); /* support: IE8 */
 	border-radius: 8px;
 }
+
+.ui-dialog .ui-dialog-content.ui-dialog-spinner{
+    background: url("../../images/ajax-loader.gif") no-repeat scroll 30px 30px transparent;
+    padding: 50px 0 0px 110px;
+    border: 0px solid #999999;
+    font-weight: bold;
+    line-height: 1em;
+    font-size: 1.3em;
+    color: #737373;
+}
