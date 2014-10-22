@@ -83,8 +83,9 @@ else
 }
 
 
-// Init Fontlist
+// Init Fonts and sizes
 InitFontList(); 
+InitFontSizeList(); 
 
 // --- First thing to do is to check the op get parameter!
 // Check for changes first | Abort if Edit is not allowed
@@ -141,8 +142,9 @@ if ( isset($_POST['op']) )
 			// Read default SOURCES | Check if Source exists as well!
 			if ( isset ($_POST['DefaultSourceID']) && isset($content['Sources'][$_POST['DefaultSourceID']] )) { $content['DefaultSourceID'] = $_POST['DefaultSourceID']; }
 
-			// Read default FONT 
+			// Read default FONT  Settings
 			if ( isset ($_POST['DefaultFont']) ) { $content['DefaultFont'] = $_POST['DefaultFont']; }
+			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = $_POST['DefaultFontSize']; }
 
 			// Read checkboxes
 			if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
@@ -206,6 +208,7 @@ if ( isset($_POST['op']) )
 
 			// Read default FONT
 			if ( isset ($_POST['User_DefaultFont']) ) { $USERCFG['DefaultFont'] = $_POST['User_DefaultFont']; }
+			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = $_POST['User_DefaultFontSize']; }
 
 			// Read checkboxes
 			if ( isset ($_POST['User_ViewUseTodayYesterday']) ) { $USERCFG['ViewUseTodayYesterday'] = 1; } else { $USERCFG['ViewUseTodayYesterday'] = 0; } 
@@ -334,6 +337,19 @@ foreach ( $content['FONTS'] as &$myFont )
 }
 // --- 
 
+// --- Init for DefaultFontSize field!
+// copy Fontsizes Array
+$content['FONTSIZES'] = $content['fontsizes'];
+if ( !isset($content['DefaultFontSize']) ) { $content['DefaultFontSize'] = 100; }
+foreach ( $content['FONTSIZES'] as $myFontKey => &$myFontSize )
+{
+	if ( $myFontKey == $content['DefaultFontSize'] )
+		$myFontSize['selected'] = "selected";
+	else
+		$myFontSize['selected'] = "";
+}
+// --- 
+
 // --- Init for DefaultEncoding field!
 // copy Sources Array
 $content['ENCODINGS'] = $encodings;
@@ -442,6 +458,19 @@ if ( $content['ENABLEUSEROPTIONS'] )
 			$myFont['selected'] = "selected";
 		else
 			$myFont['selected'] = "";
+	}
+	// --- 
+
+	// --- Init for DefaultFontSize field!
+	// copy Fontsizes Array
+	$content['USER_FONTSIZES'] = $content['fontsizes'];
+	$DefaultFontSize = GetConfigSetting('DefaultFontSize', $content['DefaultFontSize'], CFGLEVEL_USER);
+	foreach ( $content['USER_FONTSIZES'] as $myFontKey => &$myFontSize )
+	{
+		if ( $myFontKey == $DefaultFontSize )
+			$myFontSize['selected'] = "selected";
+		else
+			$myFontSize['selected'] = "";
 	}
 	// --- 
 

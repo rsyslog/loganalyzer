@@ -986,10 +986,22 @@ function InitConfigurationValues()
 
 	// --- Set dynamic stylesheet options like Font Type and Sizes
 	$userdefaultfont = GetConfigSetting("DefaultFont", "Tahoma", CFGLEVEL_USER);  
-	; 
+	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
+
+
 	$content['DYN_STYLESHEET'] = '<style>
-		body, .ui-widget {
+		body, td, .ui-widget, .ui-widget-content {
 			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
+			font-size: ' . ($userdefaultfontsize/100)*0.75 . 'em; 
+		}
+		a, .linksize {
+			font-size: ' . ($userdefaultfontsize/100)*0.85 . 'em; 
+		}
+		.ui-menu {
+			font-size: ' . ($userdefaultfontsize/100)*1 . 'em; 
+		}
+		.ui-button {
+			font-size: ' . ($userdefaultfontsize/100)*0.85 . 'em; 
 		}
 	</style>'; 
 	// --- 
@@ -1747,6 +1759,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "DefaultViewsID", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "DefaultSourceID", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "DefaultFont", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "DefaultFontSize", true, null, null,$bForceStripSlahes );
 	
 	// GLOBAL ONLY
 	WriteConfigValue( "DebugUserLogin", true, null, null,$bForceStripSlahes );
@@ -1796,6 +1809,8 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "DefaultViewsID", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "DefaultSourceID", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "DefaultFont", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "DefaultFontSize", false, $content['SESSION_USERID'] );
+	
 }
 
 
@@ -2087,8 +2102,24 @@ function InitFontList()
 	$content["fonts"]["Times New Roman"]["Name"]= "Times New Roman"; 
 	$content["fonts"]["Trebuchet MS"]["Name"]	= "Trebuchet MS"; 
 	$content["fonts"]["Verdana"]["Name"]		= "Verdana"; 
-
 }
 
+// Creates a list of supported available fonts!
+function InitFontSizeList()
+{
+	global $content; 
+
+	$content["fontsizes"]["50"]["Name"]			= "50%"; 
+	$content["fontsizes"]["60"]["Name"]			= "60%"; 
+	$content["fontsizes"]["70"]["Name"]			= "70%"; 
+	$content["fontsizes"]["80"]["Name"]			= "80%"; 
+	$content["fontsizes"]["90"]["Name"]			= "90%"; 
+	$content["fontsizes"]["100"]["Name"]		= "100%"; 
+	$content["fontsizes"]["110"]["Name"]		= "110%"; 
+	$content["fontsizes"]["120"]["Name"]		= "120%"; 
+	$content["fontsizes"]["130"]["Name"]		= "130%"; 
+	$content["fontsizes"]["140"]["Name"]		= "140%"; 
+	$content["fontsizes"]["150"]["Name"]		= "150%"; 
+}
 // --- 
 ?>

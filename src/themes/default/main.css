@@ -1,7 +1,7 @@
 /* Generell Tag Classes */
 body
 {
-	font-size: 10px; 
+/*	font-size: 10px; */
 	color: #000000;
 	background-color: #f9f9f9;
 
@@ -16,7 +16,6 @@ body
 
 td 
 { 
-	font-size: 11px; 
 	color: #000000 
 }
 
@@ -74,7 +73,7 @@ img
 	text-align:center;
 	vertical-align:middle;
 }
-A.title, A.title:active, A.title:visited 
+a.title, a.title:active, a.title:visited 
 {
 	font-size: 11px;
 	font-weight:bold;
@@ -82,15 +81,14 @@ A.title, A.title:active, A.title:visited
 	COLOR: #ED9D10;
 	TEXT-DECORATION: none;
 }
-A.title:hover 
+a.title:hover 
 {
 	COLOR: #982D00; 
 	TEXT-DECORATION: none;
 }
 .titleSecond
 {
-	font-size: 10px;
-	font-weight:bold;
+		font-weight:bold;
 
     background-color: #E3D2AE;
     background-image: url(images/bg_4.png);
@@ -106,8 +104,7 @@ A.title:hover
 /* Default Font Classes */
 font
 {
-	font-size: 10px;
-}
+	}
 
 /* Table / Border Classes */
 .table_with_border
@@ -168,8 +165,7 @@ font
 /* Cells for listening */
 .line0
 {
-	font-size: 10px;
-	color: #000000;
+		color: #000000;
 	background-color: #DDDDDD;
 }
 .line0:hover 
@@ -179,7 +175,6 @@ font
 
 .line1
 {
-	font-size: 10px;
 	color: #000000;
 	background-color: #EEEEEE;
 }
@@ -190,8 +185,7 @@ font
 
 .line2
 {
-	font-size: 10px;
-	color: #000000;
+		color: #000000;
 	background-color: #F5F5F5;
 }
 .line2:hover 
@@ -200,20 +194,17 @@ font
 }
 .tableBackground
 {
-	font-size: 10px;
-	color: #000000;
+		color: #000000;
 	background-color: #F5F5F5;
 }
 
 .lineColouredWhite, .lineColouredWhite:hover, a.lineColouredWhite
 {
-	font-size: 10px;
-	color: #FFFFFF;
+		color: #FFFFFF;
 }
 .lineColouredBlack, .lineColouredBlack:hover, a.lineColouredBlack
 {
-	font-size: 10px;
-	color: #000000;
+		color: #000000;
 }
 
 /* TOP Menu Classes */
@@ -370,7 +361,6 @@ font
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:0px;
-	font-size: 10px; 
 	font-weight:bold;
 
 	background-color: #2E79A0;
@@ -386,7 +376,6 @@ font
 	background-color: #2E79A0;
 
 	text-indent:0px;
-	font-size: 10px; 
 	font-weight:bold;
 
 	color: #FFFFFF;
@@ -413,7 +402,6 @@ A.cellmenu1_link:hover
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:0px;
-	font-size: 10px; 
 	font-weight:bold;
 
 	background-color: #9FDAF1;
@@ -424,7 +412,6 @@ A.cellmenu1_link:hover
 .cellmenu2_naked
 {
 	text-indent:0px;
-	font-size: 10px; 
 	font-weight:bold;
 
 	color: #393327;
@@ -518,7 +505,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -532,7 +518,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -547,7 +532,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -556,7 +540,6 @@ select, input, button, textarea
 
 .highlighted 
 { 
-	font-size: 10px; 
 	font-weight: bold;
 
 	color: #BB0000 

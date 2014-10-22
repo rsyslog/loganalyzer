@@ -142,6 +142,25 @@
 		</td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
+	<tr>
+		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEFFONTSIZE}</b></td>
+		<td align="left" class="line1">
+			<select id="DefaultFontSize" name="DefaultFontSize" size="1" {DISABLE_GLOBALEDIT_FORMCONTROL}>
+				<!-- BEGIN FONTSIZES -->
+				<option {selected} value="{Name}">{Name}</option>
+				<!-- END FONTSIZES -->
+			</select>
+		</td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+		<td align="left" class="line1">
+			<select id="User_DefaultFontSize" name="User_DefaultFontSize" size="1">
+				<!-- BEGIN USER_FONTSIZES -->
+				<option {selected} value="{Name}">{Name}</option>
+				<!-- END USER_FONTSIZES -->
+			</select>
+		</td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+	</tr>
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_PREPENDTITLE}</b></td>

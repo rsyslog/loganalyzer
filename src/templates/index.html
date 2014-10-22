@@ -363,7 +363,7 @@
 		<button id="detaillink_{FieldColumn}_{uid}"><img style="position:relative; top:0px; left:0px;" src="{MENU_LINK_VIEW}" width="16" height="16" title="{LN_GEN_MESSAGEDETAILS}"></button>
 		<script> CreateLinkFunction( "#detaillink_{FieldColumn}_{uid}", "{detaillink}{additional_url_sourceonly}{additional_url}" );</script>
 		<!-- BEGIN DISABLED -->
-		<a href="{detaillink}{additional_url_sourceonly}{additional_url}" class="syslogdetails"><img align="{detailimagealign}" vspace="0" hspace="2" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
+		<a href="{detaillink}{additional_url_sourceonly}{additional_url}"><img align="{detailimagealign}" vspace="0" hspace="2" src="{MENU_LINK_VIEW}" width="16" height="16" border="0" title="{LN_GEN_MESSAGEDETAILS}"></a>
 		<!-- END DISABLED -->
 		<!-- ENDIF ismessagefield="true" -->
 
@@ -378,12 +378,12 @@
 				<!-- ENDIF hasbuttons="true" -->
 
 				<!-- IF hasbuttons!="true" -->
-				<b>{fieldvalue}</b>
+				<span class="linksize"><b>{fieldvalue}</b></span>
 				<!-- ENDIF hasbuttons!="true" -->
 			<!-- ENDIF ismessagefield!="true" -->
 
 			<!-- IF ismessagefield="true" -->
-			<a href="{detaillink}{additional_url_sourceonly}{additional_url}" class="syslogdetails" target="_top">{fieldvalue}</a>
+			<a href="{detaillink}{additional_url_sourceonly}{additional_url}" target="_top">{fieldvalue}</a>
 			<!-- ENDIF ismessagefield="true" -->
 
 		<!-- ENDIF hasdetails="false" -->
