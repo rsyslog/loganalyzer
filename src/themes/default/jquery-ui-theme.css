@@ -15,6 +15,7 @@
 /* Component containers
 ----------------------------------*/
 .ui-widget {
+/*	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;*/
 	font-size: 1.1em;
 }
 .ui-widget .ui-widget {

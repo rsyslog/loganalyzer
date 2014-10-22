@@ -123,6 +123,25 @@
 		</td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
+	<tr>
+		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEFFONT}</b></td>
+		<td align="left" class="line1">
+			<select id="DefaultFont" name="DefaultFont" size="1" {DISABLE_GLOBALEDIT_FORMCONTROL}>
+				<!-- BEGIN FONTS -->
+				<option {selected} value="{Name}">{Name}</option>
+				<!-- END FONTS -->
+			</select>
+		</td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+		<td align="left" class="line1">
+			<select id="User_DefaultFont" name="User_DefaultFont" size="1">
+				<!-- BEGIN USER_FONTS -->
+				<option {selected} value="{Name}">{Name}</option>
+				<!-- END USER_FONTS -->
+			</select>
+		</td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+	</tr>
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_PREPENDTITLE}</b></td>

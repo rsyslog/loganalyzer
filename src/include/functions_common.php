@@ -890,8 +890,6 @@ function InitConfigurationValues()
 
 			// Load Configured Sources
 			LoadSourcesFromDatabase();
-
-
 		}
 		else
 		{
@@ -984,6 +982,16 @@ function InitConfigurationValues()
 
 	// --- Read ContextLinks Option, and set default!
 	$content['EnableContextLinks'] = GetConfigSetting("EnableContextLinks", 1);  
+	// --- 
+
+	// --- Set dynamic stylesheet options like Font Type and Sizes
+	$userdefaultfont = GetConfigSetting("DefaultFont", "Tahoma", CFGLEVEL_USER);  
+	; 
+	$content['DYN_STYLESHEET'] = '<style>
+		body, .ui-widget {
+			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
+		}
+	</style>'; 
 	// --- 
 
 	// Init main langauge file now!
@@ -1738,6 +1746,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "DefaultSourceID", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "DefaultFont", true, null, null,$bForceStripSlahes );
 	
 	// GLOBAL ONLY
 	WriteConfigValue( "DebugUserLogin", true, null, null,$bForceStripSlahes );
@@ -1786,6 +1795,7 @@ function SaveUserGeneralSettingsIntoDB()
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "DefaultSourceID", false, $content['SESSION_USERID'] );
+	WriteConfigValue( "DefaultFont", false, $content['SESSION_USERID'] );
 }
 
 
@@ -2056,6 +2066,28 @@ function strip_dangerous_html_tags( $text )
 			), $text ); 
 	
 	return $text; 
+}
+
+// Creates a list of supported available fonts!
+function InitFontList()
+{
+	global $content; 
+
+	$content["fonts"]["Arial"]["Name"]			= "Arial"; 
+	$content["fonts"]["Century"]["Name"]		= "Century"; 
+	$content["fonts"]["Courier"]["Name"]		= "Courier"; 
+	$content["fonts"]["Courier New"]["Name"]	= "Courier New"; 
+	$content["fonts"]["Georgia"]["Name"]		= "Georgia"; 
+	$content["fonts"]["Impact"]["Name"]			= "Impact"; 
+	$content["fonts"]["Lucida Console"]["Name"]	= "Lucida Console"; 
+	$content["fonts"]["serif"]["Name"]			= "serif"; 
+	$content["fonts"]["sans-serif"]["Name"]		= "sans-serif"; 
+	$content["fonts"]["Tahoma"]["Name"]			= "Tahoma"; 
+	$content["fonts"]["Times"]["Name"]			= "Times"; 	
+	$content["fonts"]["Times New Roman"]["Name"]= "Times New Roman"; 
+	$content["fonts"]["Trebuchet MS"]["Name"]	= "Trebuchet MS"; 
+	$content["fonts"]["Verdana"]["Name"]		= "Verdana"; 
+
 }
 
 // --- 

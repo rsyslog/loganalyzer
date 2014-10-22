@@ -82,6 +82,10 @@ else
 	$content['DISABLE_GLOBALEDIT_FORMCONTROL'] = "disabled";
 }
 
+
+// Init Fontlist
+InitFontList(); 
+
 // --- First thing to do is to check the op get parameter!
 // Check for changes first | Abort if Edit is not allowed
 if ( isset($_GET['op']) && isset($_GET['value']) )
@@ -109,8 +113,6 @@ if ( $UserOverwriteOptions == 1 )
 else
 {
 	$content['ENABLEUSEROPTIONS'] = false;
-
-
 }
 // ---
 
@@ -138,6 +140,9 @@ if ( isset($_POST['op']) )
 
 			// Read default SOURCES | Check if Source exists as well!
 			if ( isset ($_POST['DefaultSourceID']) && isset($content['Sources'][$_POST['DefaultSourceID']] )) { $content['DefaultSourceID'] = $_POST['DefaultSourceID']; }
+
+			// Read default FONT 
+			if ( isset ($_POST['DefaultFont']) ) { $content['DefaultFont'] = $_POST['DefaultFont']; }
 
 			// Read checkboxes
 			if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
@@ -198,6 +203,9 @@ if ( isset($_POST['op']) )
 
 			// Read default SOURCES | Check if Source exists as well!
 			if ( isset ($_POST['User_DefaultSourceID']) && isset($content['Sources'][$_POST['User_DefaultSourceID']] )) { $USERCFG['DefaultSourceID'] = $_POST['User_DefaultSourceID']; }
+
+			// Read default FONT
+			if ( isset ($_POST['User_DefaultFont']) ) { $USERCFG['DefaultFont'] = $_POST['User_DefaultFont']; }
 
 			// Read checkboxes
 			if ( isset ($_POST['User_ViewUseTodayYesterday']) ) { $USERCFG['ViewUseTodayYesterday'] = 1; } else { $USERCFG['ViewUseTodayYesterday'] = 0; } 
@@ -300,7 +308,7 @@ foreach ( $content['VIEWS'] as &$myView )
 }
 // --- 
 
-// --- Init for DefaultSource  field!
+// --- Init for DefaultSource field!
 // copy Sources Array
 $content['SOURCES'] = $content['Sources'];
 if ( !isset($content['DefaultSourceID']) ) { $content['DefaultSourceID'] = ''; }
@@ -310,6 +318,19 @@ foreach ( $content['SOURCES'] as &$mySource )
 		$mySource['selected'] = "selected";
 	else
 		$mySource['selected'] = "";
+}
+// --- 
+
+// --- Init for DefaultFont field!
+// copy Fonts Array
+$content['FONTS'] = $content['fonts'];
+if ( !isset($content['DefaultFont']) ) { $content['DefaultFont'] = 'Tahoma'; }
+foreach ( $content['FONTS'] as &$myFont )
+{
+	if ( $myFont['Name'] == $content['DefaultFont'] )
+		$myFont['selected'] = "selected";
+	else
+		$myFont['selected'] = "";
 }
 // --- 
 
@@ -410,6 +431,20 @@ if ( $content['ENABLEUSEROPTIONS'] )
 			$mySource['selected'] = "";
 	}
 	// --- 
+
+	// --- Init for DefaultFont field!
+	// copy Fonts Array
+	$content['USER_FONTS'] = $content['fonts'];
+	$DefaultFont = GetConfigSetting('DefaultFont', $content['DefaultFont'], CFGLEVEL_USER);
+	foreach ( $content['USER_FONTS'] as &$myFont )
+	{
+		if ( $myFont['Name'] == $DefaultFont )
+			$myFont['selected'] = "selected";
+		else
+			$myFont['selected'] = "";
+	}
+	// --- 
+
 }
 
 // --- BEGIN CREATE TITLE

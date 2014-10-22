@@ -54,7 +54,7 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
 
 // --- Define Extra Stylesheet!
-$content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
+$content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
 // --- 
 
 // --- CONTENT Vars

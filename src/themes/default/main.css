@@ -1,7 +1,6 @@
 /* Generell Tag Classes */
-BODY
+body
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	color: #000000;
 	background-color: #f9f9f9;
@@ -15,7 +14,7 @@ BODY
 	scrollbar-darkshadow-color: #98AAB1;
 }
 
-TD 
+td 
 { 
 	font-size: 11px; 
 	color: #000000 
