@@ -992,16 +992,16 @@ function InitConfigurationValues()
 	$content['DYN_STYLESHEET'] = '<style>
 		body, td, select, input, .ui-widget, .ui-widget-content {
 			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
-			font-size: ' . ($userdefaultfontsize/10)*1.00  . 'px; 
+			font-size: ' . ($userdefaultfontsize/10)*1.10  . 'px; 
 		}
 		a, .linksize {
-			font-size: ' . ($userdefaultfontsize/10)*1.0 . 'px; 
+			font-size: ' . ($userdefaultfontsize/10)*1.1 . 'px; 
 		}
 		.ui-menu, .title {
-			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 
+			font-size: ' . ($userdefaultfontsize/10)*1.3 . 'px; 
 		}
 		.ui-button {
-			font-size: ' . ($userdefaultfontsize/10)*1.1 . 'px; 
+			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 
 		}
 	</style>'; 
 	// --- 
