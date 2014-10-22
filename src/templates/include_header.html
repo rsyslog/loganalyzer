@@ -45,7 +45,7 @@
 			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changelang">
-				<select name="langcode" size="1" OnChange="document.langidform.submit();" STYLE="width: 190px">
+				<select name="langcode" size="1" OnChange="document.langidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
 					<!-- BEGIN USERLANG -->
 					<option {is_selected} value="{langcode}">{DisplayName}</option>
 					<!-- END USERLANG -->
@@ -69,7 +69,7 @@
 			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changestyle">
-				<select name="stylename" size="1" OnChange="document.styleidform.submit();" STYLE="width: 190px">
+				<select name="stylename" size="1" OnChange="document.styleidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
 					<!-- BEGIN USERSTYLES -->
 					<option {is_selected} value="{StyleName}">{StyleName}</option>
 					<!-- END USERSTYLES -->
@@ -92,7 +92,7 @@
 		<tr> 
 			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
 			<td align="right">
-				<select name="sourceid" size="1" OnChange="document.sourceidform.submit();" STYLE="width: 190px">
+				<select name="sourceid" size="1" OnChange="document.sourceidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
 					<!-- BEGIN Sources -->
 					<option {selected} value="{ID}">{Name}</option>
 					<!-- END Sources -->
@@ -117,7 +117,7 @@
 			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTVIEW}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changeview">
-				<select name="viewid" size="1" OnChange="document.viewidform.submit();" STYLE="width: 190px">
+				<select name="viewid" size="1" OnChange="document.viewidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
 					<!-- BEGIN Views -->
 					<option {selected} value="{ID}">{DisplayName}</option>
 					<!-- END Views -->
