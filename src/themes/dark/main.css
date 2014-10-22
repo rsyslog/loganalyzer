@@ -1,7 +1,6 @@
 /* Generell Tag Classes */
 BODY
 {
-	font-size: 10px; 
 	color: #F3F3F1; 
 	background-color: #000000;
 
@@ -16,7 +15,6 @@ BODY
 
 TD 
 { 
-	font-size: 11px; 
 	color: #F3F3F1 
 }
 
@@ -60,7 +58,6 @@ a.contextlink:hover
 .title 
 {
 	font-weight: bold;
-	font-size: 11px; 
 
     background-color: #1C1014;
     background-image: url(images/bg_3.png);
@@ -73,10 +70,9 @@ a.contextlink:hover
 	text-align:center;
 	vertical-align:middle;
 }
-A.title, A.title:active, A.title:visited 
+a.title, a.title:active, a.title:visited 
 {
 	font-weight: bold;
-	font-size: 11px; 
 
 	COLOR: #dd6900;
 	TEXT-DECORATION: none;
@@ -88,7 +84,6 @@ A.title:hover
 }
 .titleSecond
 {
-	font-size: 10px; 
 	font-weight: bold;
 
     background-color: #1C1014;
@@ -104,7 +99,6 @@ A.title:hover
 /* Default Font Classes */
 font
 {
-	font-size: 10px; 
 }
 
 /* Table / Border Classes */
@@ -166,7 +160,6 @@ font
 /* Cells for listening */
 .line0
 {
-	font-size: 10px; 
 	color: #B9B597;
 	background-color: #0E161F;
 }
@@ -177,7 +170,6 @@ font
 
 .line1
 {
-	font-size: 10px; 
 	color: #B9B597;
 	background-color: #152331;
 }
@@ -188,7 +180,6 @@ font
 
 .line2
 {
-	font-size: 10px; 
 	color: #B9B597;
 	background-color: #1D3043;
 }
@@ -233,7 +224,6 @@ font
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
 
-	font-size: 10px; 
 
 	color: #FFFFFF;
 	background-color: #38110E;
@@ -248,7 +238,6 @@ font
 }
 .topmenuend
 {
-	font-size: 10px; 
 
 	height: 16px;
 	color: #FFFFFF;
@@ -256,7 +245,6 @@ font
 }
 .topmenuextra
 {
-	font-size: 10px; 
 
 	height: 16px;
 	color: #FFFFFF;
@@ -280,7 +268,6 @@ font
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
 
-	font-size: 10px; 
 
 	color: #FFFFFF;
 	background-color: #49221F;
@@ -307,7 +294,6 @@ font
 	height: 20px;
 	border:0px;
 
-	font-size: 10px; 
 
 	color: #FFFFFF;
 	background-color: #49221F;
@@ -375,7 +361,6 @@ font
 	border-color: #353A3F #050A0F #050A0F #353A3F; 
 
 	text-indent:5px;
-	font-size: 10px; 
 	font-weight: bold;
 
 	background-color: #103B65;
@@ -418,7 +403,6 @@ A.cellmenu1_link:hover
 	border-color: #7777AA #12161A #12161A #7777AA;
 
 	text-indent:5px;
-	font-size: 10px; 
 	font-weight: bold;
 	color: #FFFCE5;
 
@@ -522,7 +506,6 @@ select, input, button, textarea
 	background-color: #0B253C; 
 	color:#FFFFFF; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -536,7 +519,6 @@ select, input, button, textarea
 	background-color: #0B253C; 
 	color:#FFFFFF; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -550,7 +532,6 @@ select, input, button, textarea
 	background-color: #0B253C; 
 	color:#FFFFFF; 
 
-	font-size: 10px; 
 	font-weight: bold;
 
 	border: 1px solid;
@@ -559,7 +540,6 @@ select, input, button, textarea
 
 .highlighted 
 { 
-	font-size: 10px; 
 	font-weight: bold;
 
 	color: #CC6600 
