@@ -4,7 +4,7 @@ BODY
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	color: #000000;
-    background-color: #f9f9f9;
+	background-color: #f9f9f9;
 
 	scrollbar-face-color: #DEE3E7;
 	scrollbar-highlight-color: #FFFFFF;
@@ -17,7 +17,6 @@ BODY
 
 TD 
 { 
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px; 
 	color: #000000 
 }
@@ -25,7 +24,6 @@ TD
 /* Default Link Classes */
 a:link,a:active,a:visited,a.postlink
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	text-decoration:none;
 
@@ -34,7 +32,6 @@ a:link,a:active,a:visited,a.postlink
 }
 a:hover
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	color:#CC0000;
 }
@@ -43,7 +40,6 @@ a:hover
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	background-color: transparent;
 	color:#3814BB;
@@ -51,7 +47,6 @@ a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
 }
 a.contextlink:hover
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	color:#3844FF;
 	text-decoration:none;
@@ -66,7 +61,6 @@ img
 /* Title Classes */
 .title 
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight:bold;
 
@@ -83,7 +77,6 @@ img
 }
 A.title, A.title:active, A.title:visited 
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight:bold;
 
@@ -97,7 +90,6 @@ A.title:hover
 }
 .titleSecond
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-weight:bold;
 
@@ -115,7 +107,6 @@ A.title:hover
 /* Default Font Classes */
 font
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 }
 
@@ -380,7 +371,6 @@ font
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:0px;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight:bold;
 
@@ -397,7 +387,6 @@ font
 	background-color: #2E79A0;
 
 	text-indent:0px;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight:bold;
 
@@ -425,7 +414,6 @@ A.cellmenu1_link:hover
 	border-color: #79AABE #09506C #09506C #79AABE;
 
 	text-indent:0px;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight:bold;
 
@@ -437,7 +425,6 @@ A.cellmenu1_link:hover
 .cellmenu2_naked
 {
 	text-indent:0px;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight:bold;
 
@@ -456,7 +443,6 @@ A.cellmenu1_link:hover
 /* Usefull Text Classes */
 .ErrorMsg 
 {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px; 
 	font-weight: bold;
 
@@ -533,7 +519,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
 
@@ -548,7 +533,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
 
@@ -564,7 +548,6 @@ select, input, button, textarea
 	background-color: #E8E7E2; 
 	color:#000000; 
 
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
 
@@ -574,7 +557,6 @@ select, input, button, textarea
 
 .highlighted 
 { 
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px; 
 	font-weight: bold;
 
