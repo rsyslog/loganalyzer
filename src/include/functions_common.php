@@ -985,7 +985,7 @@ function InitConfigurationValues()
 	// --- 
 
 	// --- Set dynamic stylesheet options like Font Type and Sizes
-	$userdefaultfont = GetConfigSetting("DefaultFont", "Tahoma", CFGLEVEL_USER);  
+	$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
 	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
 
 
