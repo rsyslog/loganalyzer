@@ -1,7 +1,6 @@
 /* Generell Tag Classes */
 body
 {
-/*	font-size: 10px; */
 	color: #000000;
 	background-color: #f9f9f9;
 
@@ -61,7 +60,7 @@ img
 {
 	font-weight:bold;
 
-    background-color: #C6B097;
+    background-color: #fedab3;
     background-image: url(images/bg_3.png);
     background-repeat: repeat-x;
 	color: #032D5D;
@@ -88,7 +87,7 @@ a.title:hover
 {
 		font-weight:bold;
 
-    background-color: #E3D2AE;
+    background-color: #f4e5d5;
     background-image: url(images/bg_4.png);
     background-repeat: repeat-x;
 	color: #1A3745;
@@ -361,7 +360,7 @@ font
 	text-indent:0px;
 	font-weight:bold;
 
-	background-color: #2E79A0;
+	background-color: #2d424c;
     background-image: url(images/bg_1.png);
     background-repeat: repeat-x;
 
@@ -402,7 +401,7 @@ A.cellmenu1_link:hover
 	text-indent:0px;
 	font-weight:bold;
 
-	background-color: #9FDAF1;
+	background-color: #94a5ad;
     background-image: url(images/bg_2.png);
     background-repeat: repeat-x;
 	color: #393327;
@@ -427,9 +426,7 @@ A.cellmenu1_link:hover
 /* Usefull Text Classes */
 .ErrorMsg 
 {
-	font-size: 12px; 
 	font-weight: bold;
-
 	COLOR: #FF0000;
 }
 .PriorityEmergency

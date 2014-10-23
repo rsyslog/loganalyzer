@@ -59,7 +59,7 @@ a.contextlink:hover
 {
 	font-weight: bold;
 
-    background-color: #1C1014;
+    background-color: #3c0100;
     background-image: url(images/bg_3.png);
     background-repeat: repeat-x;
 
@@ -86,7 +86,7 @@ A.title:hover
 {
 	font-weight: bold;
 
-    background-color: #1C1014;
+    background-color: #2a0919;
     background-image: url(images/bg_4.png);
     background-repeat: repeat-x;
 
@@ -315,7 +315,6 @@ font
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
 
-	font: 10px Arial, Verdana, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #3F68AA;
 }
@@ -330,7 +329,6 @@ font
 .topmenu3end
 {
 	height: 16px;
-	font: 10px Arial, Verdana, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #3F68AA;
 }
@@ -363,7 +361,7 @@ font
 	text-indent:5px;
 	font-weight: bold;
 
-	background-color: #103B65;
+	background-color: #3d4957;
     background-image: url(images/bg_1.png);
     background-repeat: repeat-x;
 
@@ -375,7 +373,6 @@ font
 	border-color: #353A3F #050A0F #050A0F #353A3F; 
 
 	text-indent:5px;
-	font-family: 10px Arial, Verdana, Helvetica, sans-serif;
 	color: #FFFCE5;
 
 	background-color: #103B65;
@@ -406,7 +403,7 @@ A.cellmenu1_link:hover
 	font-weight: bold;
 	color: #FFFCE5;
 
-	background-color: #053841;
+	background-color: #24343c;
     background-image: url(images/bg_2.png);
     background-repeat: repeat-x;
 }
@@ -416,7 +413,6 @@ A.cellmenu1_link:hover
 	border-color: #7777AA #12161A #12161A #7777AA;
 
 	text-indent:5px;
-	font: 10px Arial, Verdana, Helvetica, sans-serif;
 	color: #FFFCE5;
 
 	background-color: #053841;
@@ -430,9 +426,7 @@ A.cellmenu1_link:hover
 /* Usefull Text Classes */
 .ErrorMsg 
 {
-	font-size: 12px; 
 	font-weight: bold;
-
 	COLOR: #FF2222;
 }
 .PriorityEmergency

@@ -61,13 +61,13 @@
 		<br><br>
 
 <!-- IF LISTSOURCES="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_SOURCES_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SOURCES_NAME}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_SOURCES_TYPE}</b></td>
-			<td align="center" width="175" class="cellmenu1"><b>{LN_SOURCES_ASSIGNTO}</b></td>
-			<td align="center" width="175" class="cellmenu1" colspan="2"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="6%" class="cellmenu1"><b>{LN_SOURCES_ID}</b></td>
+			<td align="center" width="30%" class="cellmenu1"><b>{LN_SOURCES_NAME}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_SOURCES_TYPE}</b></td>
+			<td align="center" width="22%" class="cellmenu1"><b>{LN_SOURCES_ASSIGNTO}</b></td>
+			<td align="center" width="22%" class="cellmenu1" colspan="2"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN SOURCES -->
 		<tr>
@@ -109,13 +109,13 @@
 <!-- ENDIF LISTSOURCES="true" -->
 
 <!-- IF ISCLEARDATA="true" -->
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DETAILS}</b></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="200"><b>{LN_SOURCES_ID}</b></td>
-			<td align="left" class="line1" width="400">{SOURCEID}</td>
+			<td align="left" class="cellmenu2" width="30%"><b>{LN_SOURCES_ID}</b></td>
+			<td align="left" class="line1" width="70%">{SOURCEID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
@@ -133,7 +133,7 @@
 		<br />
 
 		<form action="{BASEPATH}admin/sources.php?op=cleardata&id={SOURCEID}" method="post">
-			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" nowrap colspan="2"><B>{LN_SOURCES_CLEARDATA}</B></td>
 			</tr>
@@ -141,8 +141,8 @@
 				<td class="titleSecond" colspan="2"><blockquote>{LN_SOURCES_CLEAR_HELPTEXT}</blockquote></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="200" valign="top"><b>{LN_SOURCES_CLEAROPTIONS}</b></td>
-				<td align="left" class="line1" width="400">
+				<td align="left" class="cellmenu2_naked" width="30%" valign="top"><b>{LN_SOURCES_CLEAROPTIONS}</b></td>
+				<td align="left" class="line1" width="70%">
 					<br>
 					<input type="radio" name="subop" value="all">&nbsp;&nbsp;<b>{LN_SOURCES_CLEARALL}</b><br>
 					
@@ -192,13 +192,13 @@
 <!-- ENDIF ISCLEARDATA="true" -->
 
 <!-- IF ISSTATS="true" -->
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DETAILS}</b></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="200"><b>{LN_SOURCES_ID}</b></td>
-			<td align="left" class="line1" width="300">{SOURCEID}</td>
+			<td align="left" class="cellmenu2" width="40%"><b>{LN_SOURCES_ID}</b></td>
+			<td align="left" class="line1" width="60%">{SOURCEID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
@@ -215,22 +215,22 @@
 		</table>
 		<br />
 
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td class="cellmenu1" nowrap><B>{LN_SOURCES_STATSDETAILS}</B></td>
 		</tr>
 		</table>
 
 		<!-- BEGIN STATS -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="500" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="200" class="cellmenu2"><b>{LN_SOURCES_STATSNAME}</b></td>
-			<td align="center" width="300" class="cellmenu2"><b>{LN_SOURCES_STATSVALUE}</b></td>
+			<td align="center" width="40%" class="cellmenu2"><b>{LN_SOURCES_STATSNAME}</b></td>
+			<td align="center" width="60%" class="cellmenu2"><b>{LN_SOURCES_STATSVALUE}</b></td>
 		</tr>
 		<!-- BEGIN STATSDATA -->
 		<tr>
-			<td align="left" width="200" class="{cssclass}"><b>{StatsDisplayName}</b></td>
-			<td align="left" width="300" class="{cssclass}"><pre>{StatsValue}</pre></td>
+			<td align="left" class="{cssclass}"><b>{StatsDisplayName}</b></td>
+			<td align="left" class="{cssclass}"><pre>{StatsValue}</pre></td>
 		</tr>
 		<!-- END STATSDATA -->
 		</table>
@@ -238,29 +238,26 @@
 
 		<br><br>
 		<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
-			
 <!-- ENDIF ISSTATS="true" -->
 
 <!-- IF ISEDITORNEWSOURCE="true" -->
 		<form action="{BASEPATH}admin/sources.php" method="post">
-			
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_SOURCES_NAME}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="Name" size="55" maxlength="255" value="{Name}"></td>
+				<td align="left" class="cellmenu2" width="30%"><b>{LN_SOURCES_NAME}</b></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="Name" maxlength="255" value="{Name}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="250" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
-				<td align="left" class="line1" width="350"><textarea name="Description" cols="50" rows="5">{Description}</textarea></td>
+				<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
+				<td align="left" class="line1"><textarea name="Description" cols="50" rows="5" class="maxwidth">{Description}</textarea></td>
 			</tr>
-			
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_SOURCES_TYPE}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_SOURCES_TYPE}</b></td>
 				<td align="left" class="line1">
-					<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');">
+					<select id="SourceType" name="SourceType" size="1" OnChange="toggleSourceTypeVisibility('SourceType');" class="maxwidth">
 						<!-- BEGIN SOURCETYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
 						<!-- END SOURCETYPES -->
@@ -268,9 +265,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_VIEW}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_VIEW}</b></td>
 				<td align="left" class="line1">
-					<select id="SourceViewID" name="SourceViewID" size="1">
+					<select id="SourceViewID" name="SourceViewID" size="1" class="maxwidth">
 						<!-- BEGIN VIEWS -->
 						<option {selected} value="{ID}">{DisplayName}</option>
 						<!-- END VIEWS -->
@@ -278,11 +275,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_MSGPARSERS}</b></td>
-				<td align="left" class="line1"><input type="text" name="MsgParserList" size="55" maxlength="255" value="{MsgParserList}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_MSGPARSERS}</b></td>
+				<td align="left" class="line1"><input type="text" name="MsgParserList" maxlength="255" value="{MsgParserList}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_NORMALIZEMSG}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_NORMALIZEMSG}</b></td>
 				<td align="left" class="line1"><input type="checkbox" name="MsgNormalize" value="1" {CHECKED_ISNORMALIZEMSG}></td>
 			</tr>
 			<tr>
@@ -290,8 +287,8 @@
 				<td align="left" class="line1"><input type="checkbox" name="MsgSkipUnparseable" value="1" {CHECKED_ISSKIPUNPARSEABLE}></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_SOURCES_FILTERSTRING}</b></td>
-				<td align="left" class="line1" width="100%"><font class="ErrorMsg">{LN_SOURCES_FILTERSTRING_HELP}</font></br><input type="text" name="defaultfilter" size="100" maxlength="1024" value="{defaultfilter}"></td>
+				<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_FILTERSTRING}</b></td>
+				<td align="left" class="line1"><font class="ErrorMsg">{LN_SOURCES_FILTERSTRING_HELP}</font></br><input type="text" name="defaultfilter" class="maxwidth" maxlength="1024" value="{defaultfilter}"></td>
 			</tr>
 
 			<tr>
@@ -302,7 +299,7 @@
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
 				<td align="left" class="line2">
-					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY}>
+					<select name="groupid" size="1" class="maxwidth" {READONLY_ISUSERONLY}>
 						<!-- BEGIN SUBGROUPS -->
 						<option value="{mygroupid}" {group_selected}>{groupname}</option>
 						<!-- END SUBGROUPS -->
@@ -314,10 +311,10 @@
 			<br>
 
 			<div id="HiddenDiskTypeOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_SOURCES_DISKTYPEOPTIONS}</b></td></tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_LOGLINETYPE}</b></td>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_CFG_LOGLINETYPE}</b></td>
 				<td align="left" class="line0" width="350">
 					<select name="SourceLogLineType" size="1">
 						<!-- BEGIN LOGLINETYPES -->
@@ -327,23 +324,23 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_SYSLOGFILE}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_SYSLOGFILE}</b></td>
 				<td align="left" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
 			</tr>
 			</table>
 			</div>
 
 			<div id="HiddenDatabaseTypeOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="with_border">
 			<tr><td align="center" class="cellmenu1" colspan="2"><b>{LN_CFG_DATABASETYPEOPTIONS}</b></td></tr>
 			</table>
 
 			<div id="HiddenPDOSourceOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="with_border">
 			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_CFG_DBSTORAGEENGINE}</b></td>
 				<td align="left" class="line1" width="350">
-					<select name="SourceDBType" size="1">
+					<select name="SourceDBType" size="1" class="maxwidth">
 						<!-- BEGIN DBTYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
 						<!-- END DBTYPES -->
@@ -353,42 +350,39 @@
 			</table>
 			</div>
 
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="with_border">
 			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBTABLETYPE}</b></td>
-				<td align="left" class="line0" width="350">
-					<select name="SourceDBTableType" size="1">
+				<td align="left" class="cellmenu2" width="30%"><b>{LN_CFG_DBTABLETYPE}</b></td>
+				<td align="left" class="line0" width="70%">
+					<select name="SourceDBTableType" size="1" class="maxwidth">
 						<!-- BEGIN DBMAPPINGS -->
 						<option {selected} value="{type}">{DisplayName}</option>
 						<!-- END DBMAPPINGS -->
 					</select>
-				
-<!--				<input type="text" name="SourceDBTableType" size="40" maxlength="255" value="{SourceDBTableType}"> -->
-
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBSERVER}</b></td>
-				<td align="left" class="line0"><input type="text" name="SourceDBServer" size="40" maxlength="255" value="{SourceDBServer}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBSERVER}</b></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBServer" maxlength="255" value="{SourceDBServer}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBNAME}</b></td>
-				<td align="left" class="line1"><input type="text" name="SourceDBName" size="40" maxlength="255" value="{SourceDBName}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBNAME}</b></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBName" maxlength="255" value="{SourceDBName}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBTABLENAME}</b></td>
-				<td align="left" class="line0"><input type="text" name="SourceDBTableName" size="40" maxlength="255" value="{SourceDBTableName}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBTABLENAME}</b></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBTableName" maxlength="255" value="{SourceDBTableName}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBUSER}</b></td>
-				<td align="left" class="line1"><input type="text" name="SourceDBUser" size="40" maxlength="255" value="{SourceDBUser}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBUSER}</b></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBUser" maxlength="255" value="{SourceDBUser}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBPASSWORD}</b></td>
-				<td align="left" class="line0"><input type="password" name="SourceDBPassword" size="40" maxlength="255" value="{SourceDBPassword}"></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBPASSWORD}</b></td>
+				<td align="left" class="line0"><input type="password" name="SourceDBPassword" maxlength="255" value="{SourceDBPassword}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" nowrap><b>{LN_CFG_DBROWCOUNTING}</b></td>
+				<td align="left" class="cellmenu2"><b>{LN_CFG_DBROWCOUNTING}</b></td>
 				<td align="left" class="line1" width="100%">
 					<input type="radio" name="SourceDBEnableRowCounting" value="true" {SourceDBEnableRowCounting_true}> Yes <input type="radio" name="SourceDBEnableRowCounting" value="false" {SourceDBEnableRowCounting_false}> No
 				</td>
@@ -397,15 +391,15 @@
 			</div>
 
 			<div id="HiddenMYSQLSourceOptions" class="ShownContent">
-			<table border="0" cellpadding="1" cellspacing="1" width="600" align="center" class="with_border">
+			<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="with_border">
 			<tr>
-				<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_CFG_DBRECORDSPERQUERY}</b></td>
+				<td align="left" class="cellmenu2" width="250"><b>{LN_CFG_DBRECORDSPERQUERY}</b></td>
 				<td align="left" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQuery}"></td>
 			</tr>
 			</table>
 			</div>
 
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" colspan="2">
 					<input type="submit" value="{SOURCE_SENDBUTTON}">

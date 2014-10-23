@@ -1005,7 +1005,7 @@ function InitConfigurationValues()
 		.ui-menu, .title {
 			font-size: ' . ($userdefaultfontsize/10)*1.3 . 'px; 
 		}
-		.ui-button {
+		.ui-button, .ErrorMsg {
 			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 
 		}
 	</style>'; 

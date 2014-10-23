@@ -36,13 +36,13 @@
 		Donate and help keep the project alive!
 <!-- ENDIF SHOW_DONATEBUTTON="true" -->
 	</td>
-	<td width="350" align="center" valign="top" height="20">
+	<td width="450" align="center" valign="top" height="20">
 
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<form action="{BASEPATH}userchange.php" method="get" name="langidform">
-		<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 		<tr> 
-			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
+			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_GEN_LANGUAGE}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changelang">
 				<select name="langcode" size="1" OnChange="document.langidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
@@ -64,9 +64,9 @@
 
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<form action="{BASEPATH}userchange.php" method="get" name="styleidform">
-		<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 		<tr> 
-			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
+			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_MAIN_SELECTSTYLE}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changestyle">
 				<select name="stylename" size="1" OnChange="document.styleidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
@@ -88,9 +88,9 @@
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<!-- IF IS_ADMINPAGE!="true" -->
 		<form action="{CURRENTURL}" method="get" name="sourceidform">
-		<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 		<tr> 
-			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
+			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
 			<td align="right">
 				<select name="sourceid" size="1" OnChange="document.sourceidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
 					<!-- BEGIN Sources -->
@@ -112,9 +112,9 @@
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<!-- IF IS_ADMINPAGE!="true" -->
 		<form action="{BASEPATH}userchange.php" method="get" name="viewidform">
-		<table width="350" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
+		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
 		<tr> 
-			<td class="cellmenu1" width="150" nowrap><B>&nbsp;{LN_GEN_SELECTVIEW}&nbsp;</B></td>
+			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_GEN_SELECTVIEW}&nbsp;</B></td>
 			<td align="right">
 				<input type="hidden" name="op" value="changeview">
 				<select name="viewid" size="1" OnChange="document.viewidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
