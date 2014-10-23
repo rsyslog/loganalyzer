@@ -1,5 +1,5 @@
 /* Generell Tag Classes */
-BODY
+body
 {
 	color: #F3F3F1; 
 	background-color: #000000;
@@ -13,7 +13,7 @@ BODY
 	scrollbar-darkshadow-color: #000000;
 }
 
-TD 
+td 
 { 
 	color: #F3F3F1 
 }
