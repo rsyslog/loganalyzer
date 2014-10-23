@@ -985,7 +985,12 @@ function InitConfigurationValues()
 	// --- 
 
 	// --- Set dynamic stylesheet options like Font Type and Sizes
-	$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
+	if ( strpos($_SERVER['HTTP_USER_AGENT'], "Windows") !== false ) // Use other default on Windows
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);  
+	else
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
+
+
 	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
 
 
@@ -2120,6 +2125,11 @@ function InitFontSizeList()
 	$content["fontsizes"]["130"]["Name"]		= "130%"; 
 	$content["fontsizes"]["140"]["Name"]		= "140%"; 
 	$content["fontsizes"]["150"]["Name"]		= "150%"; 
+	$content["fontsizes"]["160"]["Name"]		= "160%"; 
+	$content["fontsizes"]["170"]["Name"]		= "170%"; 
+	$content["fontsizes"]["180"]["Name"]		= "180%"; 
+	$content["fontsizes"]["190"]["Name"]		= "190%"; 
+	$content["fontsizes"]["200"]["Name"]		= "200%"; 
 }
 // --- 
 ?>
