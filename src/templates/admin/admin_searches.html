@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,13 +22,13 @@
 		<br><br>
 
 <!-- IF LISTSEARCHES="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_SEARCH_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SEARCH_NAME}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_SEARCH_QUERY}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_SEARCH_TYPE}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="5%" class="cellmenu1"><b>{LN_SEARCH_ID}</b></td>
+			<td align="center" width="25%" class="cellmenu1"><b>{LN_SEARCH_NAME}</b></td>
+			<td align="center" width="30%" class="cellmenu1"><b>{LN_SEARCH_QUERY}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_SEARCH_TYPE}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN SEARCHES -->
 		<tr>
@@ -64,17 +64,17 @@
 
 <!-- IF ISEDITORNEWSEARCH="true" -->
 		<form action="{BASEPATH}admin/searches.php" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_SEARCH_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_SEARCH_NAME}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+				<td align="left" class="cellmenu2" width="30%"><b>{LN_SEARCH_NAME}</b></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_SEARCH_QUERY}</b></td>
-				<td align="left" class="line2"><input type="text" name="SearchQuery" size="55" maxlength="1024" value="{SearchQuery}"></td>
+				<td align="left" class="line2"><input type="text" name="SearchQuery" size="55" maxlength="1024" value="{SearchQuery}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_USERONLY}</b></td>
@@ -84,7 +84,7 @@
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_GEN_GROUPONLY}</b></td>
 				<td align="left" class="line2">
-					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY}>
+					<select name="groupid" size="1" class="maxwidth" {READONLY_ISUSERONLY}>
 						<!-- BEGIN SUBGROUPS -->
 						<option value="{mygroupid}" {group_selected}>{groupname}</option>
 						<!-- END SUBGROUPS -->

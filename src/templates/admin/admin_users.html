@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,13 +22,13 @@
 		<br><br>
 
 <!-- IF LISTUSERS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_USER_ID}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_USER_NAME}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_USER_ISADMIN}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_USER_ISREADONLY}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="10%" class="cellmenu1"><b>{LN_USER_ID}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_USER_NAME}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_USER_ISADMIN}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_USER_ISREADONLY}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN USERS -->
 		<tr>
@@ -52,21 +52,21 @@
 
 <!-- IF ISEDITORNEWUSER="true" -->
 		<form action="{BASEPATH}admin/users.php" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_USER_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_USER_NAME}</b></td>
-				<td align="left" class="line0" width="100%"><input type="text" name="username" size="40" maxlength="64" value="{USERNAME}"></td>
+				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_USER_NAME}</b></td>
+				<td align="left" class="line0" width="70%"><input type="text" name="username" size="40" maxlength="64" value="{USERNAME}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_PASSWORD1}</b></td>
-				<td align="left" class="line1"><input type="password" name="password1" size="40" maxlength="64" value=""></td>
+				<td align="left" class="line1"><input type="password" name="password1" size="40" maxlength="64" value="" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_PASSWORD2}</b></td>
-				<td align="left" class="line0"><input type="password" name="password2" size="40" maxlength="64" value=""></td>
+				<td align="left" class="line0"><input type="password" name="password2" size="40" maxlength="64" value="" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_ISADMIN}</b></td>

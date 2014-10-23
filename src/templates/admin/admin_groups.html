@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,12 +22,12 @@
 		<br><br>
 
 <!-- IF LISTGROUPS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_GROUP_ID}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_GROUP_NAME}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_GROUP_DESCRIPTION}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="5%" class="cellmenu1"><b>{LN_GROUP_ID}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_GROUP_NAME}</b></td>
+			<td align="center" width="50%" class="cellmenu1"><b>{LN_GROUP_DESCRIPTION}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 <!-- IF EMPTYGROUPS="true" -->
 		<tr>
@@ -68,17 +68,17 @@
 
 <!-- IF ISEDITORNEWGROUP="true" -->
 		<form action="{BASEPATH}admin/groups.php" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_GROUP_NAME}</b></td>
-				<td align="left" class="line0" width="100%"><input type="text" name="groupname" size="40" maxlength="64" value="{groupname}"></td>
+				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_GROUP_NAME}</b></td>
+				<td align="left" class="line0" width="75%"><input type="text" name="groupname" size="40" maxlength="64" value="{groupname}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" nowrap><b>{LN_GROUP_DESCRIPTION}</b></td>
-				<td align="left" class="line1"><input type="text" name="groupdescription" size="40" maxlength="255" value="{groupdescription}"></td>
+				<td align="left" class="line1"><input type="text" name="groupdescription" size="40" maxlength="255" value="{groupdescription}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
@@ -96,14 +96,14 @@
 			<input type="hidden" name="id" value="{GROUPID}">
 			<input type="hidden" name="groupname" value="{GROUPNAME}">
 			<input type="hidden" name="op" value="adduser">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_ADDUSER}: '{GROUPNAME}'</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_USER_NAME}</b></td>
-				<td align="left" class="line0" width="100%">
-					<select name="userid" size="1" STYLE="width: 190px">
+				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_USER_NAME}</b></td>
+				<td align="left" class="line0" width="70%">
+					<select name="userid" size="1" class="maxwidth">
 						<!-- BEGIN SUBUSERS -->
 						<option value="{userid}">{username}</option>
 						<!-- END SUBUSERS -->
@@ -126,14 +126,14 @@
 			<input type="hidden" name="id" value="{GROUPID}">
 			<input type="hidden" name="groupname" value="{GROUPNAME}">
 			<input type="hidden" name="op" value="removeuser">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_GROUP_USERDELETE}: '{GROUPNAME}'</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_USER_NAME}</b></td>
-				<td align="left" class="line0" width="100%">
-					<select name="userid" size="1" STYLE="width: 190px">
+				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_USER_NAME}</b></td>
+				<td align="left" class="line0" width="70%">
+					<select name="userid" size="1" class="maxwidth">
 						<!-- BEGIN SUBRMUSERS -->
 						<option value="{userid}">{username}</option>
 						<!-- END SUBRMUSERS -->

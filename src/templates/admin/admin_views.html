@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,13 +22,13 @@
 		<br><br>
 
 <!-- IF LISTVIEWS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_VIEWS_ID}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_VIEWS_NAME}</b></td>
-			<td align="center" width="275" class="cellmenu1"><b>{LN_VIEWS_COLUMNS}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_VIEWS_TYPE}</b></td>
-			<td align="center" width="125" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="10%" class="cellmenu1"><b>{LN_VIEWS_ID}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_VIEWS_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_VIEWS_COLUMNS}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_VIEWS_TYPE}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN VIEWS -->
 		<tr>
@@ -65,13 +65,13 @@
 
 <!-- IF ISEDITORNEWVIEW="true" -->
 		<form action="{BASEPATH}admin/views.php{FormUrlAddOP}" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_VIEWS_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_VIEWS_NAME}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+				<td align="left" class="cellmenu2" width="40%"><b>{LN_VIEWS_NAME}</b></td>
+				<td align="left" class="line1" width="60%"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked"><b>{LN_GEN_USERONLY_LONG}</b></td>
@@ -81,7 +81,7 @@
 			<tr>
 				<td align="left" class="cellmenu2_naked"><b>{LN_GEN_GROUPONLY_LONG}</b></td>
 				<td align="left" class="line2">
-					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY}>
+					<select name="groupid" size="1" STYLE="width: 300px" {READONLY_ISUSERONLY} class="maxwidth">
 						<!-- BEGIN SUBGROUPS -->
 						<option value="{mygroupid}" {group_selected}>{groupname}</option>
 						<!-- END SUBGROUPS -->
@@ -91,23 +91,23 @@
 			<!-- ENDIF ISGROUPSAVAILABLE="true" -->
 			</table>
 			<br>
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="4"><b>{LN_VIEWS_COLUMNLIST}</b></td>
 			</tr>
 			<!-- BEGIN SUBCOLUMNS -->
 			<tr>
-				<td align="left" class="cellmenu2" width="150"><b>{LN_VIEWS_COLUMN} {ZAEHLER}: </b></td>
+				<td align="left" class="cellmenu2" width="20%"><b>{LN_VIEWS_COLUMN} {ZAEHLER}: </b></td>
 			
-				<td align="left" class="{colcssclass}" width="200">
+				<td align="left" class="{colcssclass}" width="30%">
 					<input type="hidden" name="Columns[]" value="{ColFieldID}">
 					<b>{ColCaption}</b>
 				</td>
-				<td align="left" class="{colcssclass}" width="200">
+				<td align="left" class="{colcssclass}" width="30%">
 					<I>{ColInternalID}</I>
 				</td>
 				
-				<td align="center" class="{colcssclass}" width="150">
+				<td align="center" class="{colcssclass}" width="20%">
 					<button name="subop_moveup" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
 					<button name="subop_movedown" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
 					<button name="subop_delete" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
@@ -121,7 +121,7 @@
 			<tr>
 				<td align="center" class="line2" colspan="4">
 
-					<select name="newcolumn" size="1" STYLE="width: 200px">
+					<select name="newcolumn" size="1" class="maxwidth">
 						<!-- BEGIN FIELDS -->
 						<option value="{FieldID}" {group_selected}>{FieldCaption}</option>
 						<!-- END FIELDS -->
@@ -131,7 +131,7 @@
 			</tr>
 			</table>
 			<br>
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" colspan="2" class="line0">
 					<br>

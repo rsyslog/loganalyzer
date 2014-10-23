@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p align="left">{ERROR_MSG}</p>
 		</div>
@@ -21,25 +21,27 @@
 		<td align="center" class="line2">
 		<br><br>
 
-		<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
-			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0" title="{LN_REPORTMENU_LIST}">{LN_REPORTMENU_LIST}</a></td>
-			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0" title="{LN_REPORTMENU_ONLINELIST}">{LN_REPORTMENU_ONLINELIST}</a></td>
+			<td class="topmenu2begin" nowrap align="center" width="10%"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
+			<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0" title="{LN_REPORTMENU_LIST}">{LN_REPORTMENU_LIST}</a></td>
+			<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0" title="{LN_REPORTMENU_ONLINELIST}">{LN_REPORTMENU_ONLINELIST}</a></td>
 			<!-- IF ISADDSAVEDREPORT="true" -->
-			<td class="topmenu2" nowrap align="center" width="250"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" width="16" height="16" vspace="0" title="{REPORTS_DETAILSFOR}">{REPORTS_DETAILSFOR}</a></td>
+			<td class="topmenu2" nowrap align="center" width="40%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" width="16" height="16" vspace="0" title="{REPORTS_DETAILSFOR}">{REPORTS_DETAILSFOR}</a></td>
 			<!-- ENDIF ISADDSAVEDREPORT="true" -->
-			<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+			<!-- IF ISADDSAVEDREPORT!="true" -->
+			<td class="topmenu2" nowrap align="center" width="40%">&nbsp;</td>
+			<!-- ENDIF ISADDSAVEDREPORT!="true" -->
 		</tr>
 		</table>
 
 <!-- IF LISTREPORTS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
-			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
+			<td align="center" width="25%" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="center" width="20%" class="cellmenu1" nowrap><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN REPORTS -->
 		<tr>
@@ -89,13 +91,13 @@
 <!-- ENDIF LISTREPORTS="true" -->
 
 <!-- IF LISTONLINEREPORTS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_REPORTS_INSTALLED}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
-			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
+			<td align="center" width="5%" class="cellmenu1"><b>{LN_REPORTS_INSTALLED}</b></td>
+			<td align="center" width="10%" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
+			<td align="center" width="25%" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="center" width="20%" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
 		</tr>
 		<!-- BEGIN ONLINEREPORTS -->
 		<tr>
@@ -127,17 +129,17 @@
 <!-- ENDIF LISTONLINEREPORTS="true" -->
 
 <!-- IF ISSHOWDETAILS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="3"><b>{LN_REPORTS_DETAILS}</b></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_CAT}</b></td>
-			<td align="left" class="line1" width="350" colspan="2">{Category}</td>
+			<td align="left" class="cellmenu2" width="30%"><b>{LN_REPORTS_CAT}</b></td>
+			<td align="left" class="line1" width="70%" colspan="2">{Category}</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_ID}</b></td>
-			<td align="left" class="line1" width="350" colspan="2">{ReportID}</td>
+			<td align="left" class="cellmenu2"><b>{LN_REPORTS_ID}</b></td>
+			<td align="left" class="line1" colspan="2">{ReportID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_NAME}</b></td>
@@ -267,11 +269,10 @@
 				toggleformelement('filter_daterange_last_x_' + Fieldnumber, false);
 			}
 		}
-
 		</script>
 
 		<!-- IF ISSOURCENOTOPTIMIZED="true" -->
-		<table width="775" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
+		<table width="80%" cellpadding="2" cellspacing="1" border="0" align="center" class="with_border_alternate">
 		<tr>
 			<td align="center" valign="top" class="line1 ErrorMsg">
 			<div class="{MSG_WARNING_CLASS}">{MSG_WARNING_TITLE}</div>
@@ -304,65 +305,65 @@
 			<input type="hidden" name="id" value="{ReportID}">
 			<input type="hidden" name="savedreportid" value="{SavedReportID}">
 <!--			<input type="hidden" name="op" value="addsavedreport">-->
-			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_REPORTS_ADDSAVEDREPORT}: '{DisplayName}'</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
-				<td align="left" class="line1" width="100%"><input type="text" name="report_customtitle" size="80" maxlength="255" value="{customTitle}"></td>
+				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="report_customtitle" size="80" maxlength="255" value="{customTitle}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
-				<td align="left" class="line2" width="100%"><input type="text" name="report_customcomment" size="80" maxlength="255" value="{customComment}"></td>
+				<td align="left" class="cellmenu2" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
+				<td align="left" class="line2"><input type="text" name="report_customcomment" size="80" maxlength="255" value="{customComment}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>
-				<td align="left" class="line1" width="100%"><font class="ErrorMsg">{LN_REPORTS_FILTERSTRING_ONLYEDITIF}</font></br><input type="text" name="report_filterString" size="100" maxlength="1024" value="{filterString_htmlform}"></td>
+				<td align="left" class="cellmenu2_naked" valign="top" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>
+				<td align="left" class="line1"><font class="ErrorMsg">{LN_REPORTS_FILTERSTRING_ONLYEDITIF}</font></br><input type="text" name="report_filterString" size="100" maxlength="1024" value="{filterString_htmlform}" class="maxwidth"></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_REPORTS_FILTEREDITOR}</b></td>
-				<td align="left" class="line1" width="100%">
+				<td align="left" class="cellmenu2_naked" valign="top" nowrap><b>{LN_REPORTS_FILTEREDITOR}</b></td>
+				<td align="left" class="line1">
 
-				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="550" class="with_border_alternate">
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" class="with_border_alternate">
 				<tr>
 					<td align="center" class="cellmenu1" colspan="4"><b>{LN_REPORTS_FILTERLIST}</b></td>
 				</tr>
 				<!-- BEGIN SUBFILTERS -->
 				<tr>
-					<td align="left" class="{colcssclass}" width="200">
+					<td align="left" class="{colcssclass}" width="35%">
 						<input type="hidden" name="Filters[]" value="{FilterFieldID}">
 						<b>{FilterFieldName} (<I>{FilterFieldID}</I>)</b>
 					</td>
-					<td align="left" class="{colcssclass}" width="100">
-						<select name="newcomparison_{ROWCNT}" size="1" STYLE="width: 100px" OnChange="toggleDatefiltervisibility('savedreportform', {ROWCNT});">
+					<td align="left" class="{colcssclass}" width="15%">
+						<select name="newcomparison_{ROWCNT}" size="1" class="maxwidth" OnChange="toggleDatefiltervisibility('savedreportform', {ROWCNT});">
 							<!-- BEGIN Comparisons -->
 							<option value="{ComparisonBit}" {cp_selected}>{ComparisonCaption}</option>
 							<!-- END Comparisons -->
 						</select>
 					</td>
-					<td align="left" class="{colcssclass}" width="200">
+					<td align="left" class="{colcssclass}" width="40%">
 					<!-- IF FilterType!="2" -->
-						<input type="text" name="FilterValue_{ROWCNT}" size="32" maxlength="255" value="{FilterValue}">
+						<input type="text" name="FilterValue_{ROWCNT}" size="32" maxlength="255" value="{FilterValue}" class="maxwidth">
 					<!-- ENDIF FilterType!="2" -->
 					<!-- IF FilterType="2" -->
 						<div id="HiddenDateDetailsOptions_{ROWCNT}" class="HiddenContent">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
 						<tr>
 							<td align="left" width="100%">
-								<select name="filter_daterange_year_{ROWCNT}" size="1" STYLE="width: 60px">
+								<select name="filter_daterange_year_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_year_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_year_list -->
 								</select>
 								 - 
-								<select name="filter_daterange_month_{ROWCNT}" size="1" STYLE="width: 50px">
+								<select name="filter_daterange_month_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_month_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_month_list -->
 								</select>
 								 - 
-								<select name="filter_daterange_day_{ROWCNT}" size="1" STYLE="width: 50px">
+								<select name="filter_daterange_day_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_day_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_day_list -->
@@ -371,19 +372,19 @@
 						</tr>
 						<tr>
 							<td align="left" width="100%">
-								<select name="filter_daterange_hour_{ROWCNT}" size="1" STYLE="width: 60px">
+								<select name="filter_daterange_hour_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_hour_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_hour_list -->
 								</select>
 								 - 
-								<select name="filter_daterange_minute_{ROWCNT}" size="1" STYLE="width: 50px">
+								<select name="filter_daterange_minute_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_minute_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_minute_list -->
 								</select>
 								 - 
-								<select name="filter_daterange_second_{ROWCNT}" size="1" STYLE="width: 50px">
+								<select name="filter_daterange_second_{ROWCNT}" size="1" STYLE="width: 30%">
 									<!-- BEGIN filter_daterange_second_list -->
 									<option {selected} value="{value}">{value}</option>
 									<!-- END filter_daterange_second_list -->
@@ -397,7 +398,7 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
 						<tr>
 							<td align="left" width="100%">
-								<select name="filter_daterange_last_x_{ROWCNT}" size="1">
+								<select name="filter_daterange_last_x_{ROWCNT}" size="1" class="maxwidth">
 									<!-- BEGIN MyFilter_daterange_last_x_list -->
 									<option {selected} value="{LastXID}">{LastXDisplayName}</option>
 									<!-- END MyFilter_daterange_last_x_list -->
@@ -413,7 +414,7 @@
 						</script>
 					<!-- ENDIF FilterType="2" -->
 					</td>
-					<td align="center" class="{colcssclass}" width="50">
+					<td align="center" class="{colcssclass}" width="10%">
 						<button name="subop_edit" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_REPORTS_FILTER_EDIT}"></button>
 						<button name="subop_delete" type="submit" value="{ROWCNT}" class="borderlessbuttons" title="{LN_REPORTS_FILTER_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_REPORTS_FILTER_REMOVE}"></button>
 					</td>
@@ -422,7 +423,7 @@
 				<tr>
 					<td align="center" class="line2" colspan="4">
 
-						<select name="newfilter" size="1" STYLE="width: 200px">
+						<select name="newfilter" size="1" class="maxwidth">
 							<!-- BEGIN FIELDS -->
 							<option value="{FieldID}" {group_selected}>{FieldCaption}</option>
 							<!-- END FIELDS -->
@@ -435,21 +436,21 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="150" valign="top" nowrap><b>{LN_REPORTS_ADVANCEDFILTERS}</b></td>
-				<td align="left" class="line1" width="100%">
+				<td align="left" class="cellmenu2_naked" valign="top" nowrap><b>{LN_REPORTS_ADVANCEDFILTERS}</b></td>
+				<td align="left" class="line1">
 
-				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="550" class="with_border_alternate">
+				<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" class="with_border_alternate">
 				<tr>
 					<td align="center" class="cellmenu1" colspan="4"><b>{LN_REPORTS_ADVANCEDFILTERLIST}</b></td>
 				</tr>
 				<!-- BEGIN CUSTOMFILTERS -->
 				<tr>
 					<!-- IF filtertype="1" -->
-					<td align="left" class="{colcssclass}" width="400">
+					<td align="left" class="{colcssclass}" width="70%">
 						<b>{fieldcaption}</b><br/>(<I>{fielddescription}</I>)
 					</td>
-					<td align="left" class="{colcssclass}" width="150">
-						<input type="text" name="{fieldname}" size="30" maxlength="255" value="{fieldvalue}">
+					<td align="left" class="{colcssclass}" width="30%">
+						<input type="text" name="{fieldname}" size="30" maxlength="255" value="{fieldvalue}" class="maxwidth">
 					</td>
 					<!-- ENDIF filtertype="1" -->
 					<!-- IF filtertype="3" -->
@@ -465,9 +466,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
-				<td align="left" class="line2" width="100%">
-					<select name="SourceID" size="1" STYLE="width: 415px">
+				<td align="left" class="cellmenu2" nowrap><b>{LN_REPORTS_SOURCEID}</b></td>
+				<td align="left" class="line2">
+					<select name="SourceID" size="1" class="maxwidth">
 						<!-- BEGIN SOURCES -->
 						<option value="{SourceID}" {sourceselected}>{Name}</option>
 						<!-- END SOURCES -->
@@ -477,9 +478,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTFORMAT}</b></td>
-				<td align="left" class="line1" width="100%">
-					<select name="outputFormat" size="1" STYLE="width: 415px">
+				<td align="left" class="cellmenu2" nowrap><b>{LN_REPORTS_OUTPUTFORMAT}</b></td>
+				<td align="left" class="line1">
+					<select name="outputFormat" size="1" class="maxwidth">
 						<!-- BEGIN OUTPUTFORMATS -->
 						<option value="{formatid}" {formatselected}>{formatdisplayname}</option>
 						<!-- END OUTPUTFORMATS -->
@@ -487,9 +488,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_REPORTS_OUTPUTTARGET}</b></td>
-				<td align="left" class="line1" width="100%">
-					<select name="outputTarget" size="1" STYLE="width: 415px" OnChange="toggleOutputtargetvisibility('savedreportform');">
+				<td align="left" class="cellmenu2" nowrap><b>{LN_REPORTS_OUTPUTTARGET}</b></td>
+				<td align="left" class="line1">
+					<select name="outputTarget" size="1" class="maxwidth" OnChange="toggleOutputtargetvisibility('savedreportform');">
 						<!-- BEGIN OUTPUTTARGETS -->
 						<option value="{targetid}" {targetselected}>{targetdisplayname}</option>
 						<!-- END OUTPUTTARGETS -->
@@ -499,21 +500,21 @@
 			</table>
 
 			<div id="HiddenOutputFormatFile" class="HiddenContent">
-			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
-				<td align="left" class="cellmenu2" width="150" valign="top" nowrap><b>{LN_REPORTS_OUTPUTTARGET_FILE}</b></td>
-				<td align="left" class="line1" width="100%">
-					<input type="text" name="outputTarget_filename" size="80" maxlength="1024" value="{outputTarget_filename}">
+				<td align="left" class="cellmenu2" width="30%" valign="top" nowrap><b>{LN_REPORTS_OUTPUTTARGET_FILE}</b></td>
+				<td align="left" class="line1" width="70%">
+					<input type="text" name="outputTarget_filename" size="80" maxlength="1024" value="{outputTarget_filename}" class="maxwidth">
 				</td>
 			</tr>
 			</table>
 			</div>
 
-			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<!-- IF enableCronCommand="true" -->
 			<tr>
-				<td align="left" class="cellmenu2_naked" width="150" nowrap><b>{LN_REPORTS_CRONCMD}</b></td>
-				<td align="left" class="line2" width="100%"><input readonly type="text" size="100" maxlength="255" value="{cronCommand}"></td>
+				<td align="left" class="cellmenu2_naked" width="30%" nowrap><b>{LN_REPORTS_CRONCMD}</b></td>
+				<td align="left" class="line2" width="70%"><input readonly type="text" size="100" maxlength="255" value="{cronCommand}" class="maxwidth"></td>
 			</tr>
 			<!-- ENDIF enableCronCommand="true" -->
 			<tr>

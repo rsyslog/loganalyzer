@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,12 +22,12 @@
 		<br><br>
 
 <!-- IF LISTFIELDS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_FIELDS_NAME}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_FIELDS_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_FIELDS_DEFINE}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_FIELDS_NAME}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_FIELDS_ID}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_FIELDS_DEFINE}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN FIELDS -->
 		<tr>
@@ -54,25 +54,25 @@
 
 <!-- IF ISEDITORNEWFIELD="true" -->
 		<form action="{BASEPATH}admin/fields.php" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_FIELDS_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_FIELDS_ID}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="Newid" size="55" maxlength="64" value="{FieldID}" {DisableInternalFields}></td>
+				<td align="left" class="cellmenu2" width="30%"><b>{LN_FIELDS_ID}</b></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="Newid" size="55" maxlength="64" value="{FieldID}" {DisableInternalFields} class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_FIELDS_DEFINE}</b></td>
-				<td align="left" class="line2"><input type="text" name="NewFieldDefine" size="55" maxlength="255" value="{FieldDefine}"  {DisableInternalFields}></td>
+				<td align="left" class="line2"><input type="text" name="NewFieldDefine" size="55" maxlength="255" value="{FieldDefine}"  {DisableInternalFields} class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_FIELDS_NAME}</b></td>
-				<td align="left" class="line2"><input type="text" name="FieldCaption" size="55" maxlength="255" value="{FieldCaption}"></td>
+				<td align="left" class="line2"><input type="text" name="FieldCaption" size="55" maxlength="255" value="{FieldCaption}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_FIELDS_SEARCHFIELD}</b></td>
-				<td align="left" class="line2"><input type="text" name="SearchField" size="55" maxlength="255" value="{SearchField}"></td>
+				<td align="left" class="line2"><input type="text" name="SearchField" size="55" maxlength="255" value="{SearchField}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_SEARCHONLINE}</b></td>
@@ -82,7 +82,7 @@
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_TYPE}</b></td>
 				<td align="left" class="line1">
-					<select id="FieldType" name="NewFieldType" size="1" OnChange="toggleSourceTypeVisibility('FieldType');" {DisableInternalFields}>
+					<select id="FieldType" name="NewFieldType" size="1" OnChange="toggleSourceTypeVisibility('FieldType');" {DisableInternalFields} class="maxwidth">
 						<!-- BEGIN FILTERTYPES -->
 						<option {selected} value="{type}">{DisplayName}</option>
 						<!-- END FILTERTYPES -->
@@ -92,7 +92,7 @@
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_FIELDS_ALIGN}</b></td>
 				<td align="left" class="line1">
-					<select id="FieldAlign" name="FieldAlign" size="1" OnChange="toggleSourceTypeVisibility('FieldAlign');">
+					<select id="FieldAlign" name="FieldAlign" size="1" OnChange="toggleSourceTypeVisibility('FieldAlign');" class="maxwidth">
 						<!-- BEGIN ALIGMENTS -->
 						<option {selected} value="{type}">{DisplayName}</option>
 						<!-- END ALIGMENTS -->
@@ -101,7 +101,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_FIELDS_DEFAULTWIDTH}</b></td>
-				<td align="left" class="line2"><input type="text" name="DefaultWidth" size="55" maxlength="255" value="{DefaultWidth}"></td>
+				<td align="left" class="line2"><input type="text" name="DefaultWidth" size="55" maxlength="255" value="{DefaultWidth}" class="maxwidth"></td>
 			</tr>
 
 			<tr>

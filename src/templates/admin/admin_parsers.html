@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -21,22 +21,21 @@
 		<td align="center" class="line2">
 		<br><br>
 
-		<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
-			<td class="topmenu2" nowrap align="center" width="200"><a class="topmenu1_link" href="{BASEPATH}admin/parsers.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0" title="{LN_PARSERSMENU_LIST}">{LN_PARSERSMENU_LIST}</a></td>
-			<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/message-parsers" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0" title="{LN_PARSERS_ONLINELIST}">{LN_PARSERS_ONLINELIST}</a></td>
-			<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+			<td class="topmenu2begin" nowrap align="center" width="10%"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
+			<td class="topmenu2" nowrap align="center" width="45%"><a class="topmenu1_link" href="{BASEPATH}admin/parsers.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" width="16" height="16" vspace="0" title="{LN_PARSERSMENU_LIST}">{LN_PARSERSMENU_LIST}</a></td>
+			<td class="topmenu2" nowrap align="center" width="45%"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/message-parsers" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" width="16" height="16" vspace="0" title="{LN_PARSERS_ONLINELIST}">{LN_PARSERS_ONLINELIST}</a></td>
 		</tr>
 		</table>
 
 <!-- IF LISTPARSERS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_PARSERS_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_PARSERS_NAME}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_PARSERS_DESCRIPTION}</b></td>
-			<td align="center" width="125" class="cellmenu1" colspan="3" nowrap><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_PARSERS_ID}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_PARSERS_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_PARSERS_DESCRIPTION}</b></td>
+			<td align="center" width="20%" class="cellmenu1" colspan="3" nowrap><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN PARSERS -->
 		<tr>
@@ -65,20 +64,20 @@
 <!-- ENDIF LISTPARSERS="true" -->
 
 <!-- IF ISSHOWDETAILS="true" -->
-		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="2"><b>{LN_PARSERS_DETAILS}</b></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250"><b>{LN_PARSERS_ID}</b></td>
-			<td align="left" class="line1" width="350">{ParserID}</td>
+			<td align="left" class="cellmenu2" width="30%"><b>{LN_PARSERS_ID}</b></td>
+			<td align="left" class="line1" width="70%">{ParserID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_PARSERS_NAME}</b></td>
 			<td align="left" class="line2">{DisplayName}</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_PARSERS_DESCRIPTION}</b></td>
+			<td align="left" class="cellmenu2" valign="top"><b>{LN_PARSERS_DESCRIPTION}</b></td>
 			<td align="left" class="line1">{Description}</td>
 		</tr>
 		<!-- IF EnableCustomField="true" -->

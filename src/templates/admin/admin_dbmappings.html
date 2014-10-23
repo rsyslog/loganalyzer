@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p>{ERROR_MSG}</p>
 		</div>
@@ -22,12 +22,12 @@
 		<br><br>
 
 <!-- IF LISTDBMAPPINGS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="750" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_DBMP_ID}</b></td>
-			<td align="center" width="150" class="cellmenu1"><b>{LN_DBMP_NAME}</b></td>
-			<td align="center" width="275" class="cellmenu1"><b>{LN_DBMP_DBMAPPINGS}</b></td>
-			<td align="center" width="125" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_DBMP_ID}</b></td>
+			<td align="center" width="25%" class="cellmenu1"><b>{LN_DBMP_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_DBMP_DBMAPPINGS}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_GEN_ACTIONS}</b></td>
 		</tr>
 		<!-- BEGIN DBMP -->
 		<tr>
@@ -63,33 +63,33 @@
 
 <!-- IF ISEDITORNEWDBMP="true" -->
 		<form action="{BASEPATH}admin/dbmappings.php{FormUrlAddOP}" method="post">
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="2"><b>{LN_DBMP_ADDEDIT}</b></td>
 			</tr>
 			<tr>
-				<td align="left" class="cellmenu2" width="250"><b>{LN_DBMP_NAME}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}"></td>
+				<td align="left" class="cellmenu2" width="30%"><b>{LN_DBMP_NAME}</b></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}" class="maxwidth"></td>
 			</tr>
 			</table>
 			<br>
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="700" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" class="cellmenu1" colspan="4"><b>{LN_DBMP_DBMAPPINGSLIST}</b></td>
 			</tr>
 			<!-- BEGIN SUBMAPPINGS -->
 			<tr>
-				<td align="left" class="cellmenu2" width="150"><b>{LN_DBMP_MAPPING} {ZAEHLER}: </b></td>
+				<td align="left" class="cellmenu2" width="15%"><b>{LN_DBMP_MAPPING} {ZAEHLER}: </b></td>
 			
-				<td align="left" class="{colcssclass}" width="275">
+				<td align="left" class="{colcssclass}" width="40%">
 					<input type="hidden" name="Mappings[]" value="{MappingFieldID}">
 					<b>{MappingCaption} (<I>{MappingInternalID}</I>)</b>
 				</td>
-				<td align="left" class="{colcssclass}" width="225">
-					<input type="text" name="{MappingFieldID}" size="24" maxlength="255" value="{MappingDbFieldName}">
+				<td align="left" class="{colcssclass}" width="25%">
+					<input type="text" name="{MappingFieldID}" size="24" maxlength="255" value="{MappingDbFieldName}" class="maxwidth">
 				</td>
 				
-				<td align="center" class="{colcssclass}" width="150">
+				<td align="center" class="{colcssclass}" width="20%">
 					<button name="subop_edit" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_EDIT}"><img src="{MENU_EDIT}" width="16" alt="{LN_DBMP_MAPPING_EDIT}"></button>
 					<button name="subop_moveup" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_MOVEUP}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_DBMP_MAPPING_REMOVE}"></button>
 					<button name="subop_movedown" type="submit" value="{MappingFieldID}" class="borderlessbuttons" title="{LN_DBMP_MAPPING_MOVEDOWN}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_DBMP_MAPPING_REMOVE}"></button>
@@ -100,7 +100,7 @@
 			<tr>
 				<td align="center" class="line2" colspan="4">
 
-					<select name="newmapping" size="1" STYLE="width: 200px">
+					<select name="newmapping" size="1" class="maxwidth">
 						<!-- BEGIN FIELDS -->
 						<option value="{FieldID}" {group_selected}>{FieldCaption}</option>
 						<!-- END FIELDS -->
@@ -110,7 +110,7 @@
 			</tr>
 			</table>
 			<br>
-			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="600" class="with_border_alternate">
+			<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 			<tr>
 				<td align="center" colspan="2" class="line0">
 					<br>
