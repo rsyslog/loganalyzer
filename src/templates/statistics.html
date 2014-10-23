@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p align="left">{ERROR_MSG}</p>
 		<p>
@@ -33,11 +33,11 @@
 <!-- IF chart_enabled="1" -->
 {rowbegin}
 	<br><br>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" valign="top" width="{chart_width}" class="table_with_border_light">
+	<table cellpadding="0" cellspacing="0" border="1" align="center" valign="top" width="80%" class="table_with_border_light">
 	<tr><td class="cellmenu1" align="center" colspan="2"><B>{DisplayName}</B></td></tr>
 	<tr>
-		<td class="cellmenu2" width="150" nowrap><B>{LN_CHART_TYPE}</B></td>
-		<td class="line1" width="100%">&nbsp;{CHART_TYPE_DISPLAYNAME}</td>
+		<td class="cellmenu2" width="30%" nowrap><B>{LN_CHART_TYPE}</B></td>
+		<td class="line1" width="70%">&nbsp;{CHART_TYPE_DISPLAYNAME}</td>
 	</tr>
 	<tr>
 		<td class="cellmenu2" nowrap><B>{LN_CHART_FIELD}</B></td>
@@ -55,8 +55,12 @@
 		<td class="cellmenu2" nowrap><B>{LN_CHART_SHOWPERCENT}</B></td>
 		<td class="line1">&nbsp;{showpercent_display}</td>
 	</tr>
-	<tr><td class="{cssclass}" colspan="2">
-		<iframe name="Chart{CHART_ID}" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" src="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}" width="{chart_width}" height="{chart_width}"></iframe>
+	<tr><td class="{cssclass}" colspan="2" align="center">
+		<div id="Chart{CHART_ID}"></div>
+		<script> 
+			$( "#Chart{CHART_ID}").html('<center></br><img src="images/ajax-loader.gif"></br></br></center>');   
+			$( "#Chart{CHART_ID}").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}');
+		</script>
 	</td></tr>
 	</table>
 	<br><br>

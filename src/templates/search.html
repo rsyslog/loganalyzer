@@ -14,7 +14,7 @@
 <!-- BEGIN HIDDENVARS_SOURCE -->
 <input type="hidden" name="{varname}" value="{varvalue}">
 <!-- END HIDDENVARS_SOURCE -->
-<table width="600" cellpadding="0" cellspacing="0" border="0" align="center">
+<table width="80%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
 	<td class="table_with_border">
 
@@ -24,8 +24,8 @@
 			<strong>{LN_FILTER_DATE}</strong></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATEMODE}</b></td>
-			<td align="right" class="line0" width="100%">
+			<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_FILTER_DATEMODE}</b></td>
+			<td align="right" class="line0" width="70%">
 				<select name="filter_datemode" size="1" OnChange="toggleDatefiltervisibility('filterdateform');">
 					<!-- BEGIN datemodes -->
 					<option {selected} value={ID}>{DisplayName}</option>
@@ -38,8 +38,8 @@
 		<div id="HiddenDateFromOptions" class="HiddenContent">
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATEFROM}</b></td>
-			<td align="right" class="line1" width="100%">
+			<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_FILTER_DATEFROM}</b></td>
+			<td align="right" class="line1" width="70%">
 				<select name="filter_daterange_from_year" size="1">
 					<!-- BEGIN filter_daterange_from_year_list -->
 					<option {selected} value="{value}">{value}</option>
@@ -60,8 +60,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_DATETO}</b></td>
-			<td align="right" class="line0" width="100%">
+			<td align="left" class="cellmenu2" nowrap><b>{LN_FILTER_DATETO}</b></td>
+			<td align="right" class="line0">
 				<select name="filter_daterange_to_year" size="1">
 					<!-- BEGIN filter_daterange_to_year_list -->
 					<option {selected} value="{value}">{value}</option>
@@ -82,8 +82,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_TIMEFROM}</b></td>
-			<td align="right" class="line1" width="100%">
+			<td align="left" class="cellmenu2" nowrap><b>{LN_FILTER_TIMEFROM}</b></td>
+			<td align="right" class="line1">
 				<select name="filter_daterange_from_hour" size="1">
 					<!-- BEGIN filter_daterange_from_hour_list -->
 					<option {selected} value="{value}">{value}</option>
@@ -104,8 +104,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_TIMETO}</b></td>
-			<td align="right" class="line1" width="100%">
+			<td align="left" class="cellmenu2" nowrap><b>{LN_FILTER_TIMETO}</b></td>
+			<td align="right" class="line1">
 				<select name="filter_daterange_to_hour" size="1">
 					<!-- BEGIN filter_daterange_to_hour_list -->
 					<option {selected} value="{value}">{value}</option>
@@ -131,8 +131,8 @@
 		<div id="HiddenDateLastXOptions" class="HiddenContent">
 		<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="100%" align="center">
 		<tr>
-			<td align="left" class="cellmenu2" width="250" nowrap><b>{LN_FILTER_DATELASTX}</b></td>
-			<td align="right" class="line1" width="100%">
+			<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_FILTER_DATELASTX}</b></td>
+			<td align="right" class="line1" width="70%">
 				<select name="filter_daterange_last_x" size="1">
 					<!-- BEGIN filter_daterange_last_x_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
@@ -174,7 +174,7 @@
 		<tr>
 			<td align="left" class="cellmenu2_naked" width="50%" nowrap colspan="2"><b>{LN_FILTER_MESSAGETYPE}</b></td>
 			<td align="left" class="line0" nowrap colspan="2">
-				<select name="filter_messagetype[]" size="3" multiple>
+				<select name="filter_messagetype[]" size="3" multiple class="maxwidth">
 					<!-- BEGIN filter_messagetype_list -->
 					<option {selected} value="{ID}">{DisplayName}</option>
 					<!-- END filter_messagetype_list -->
@@ -187,7 +187,6 @@
 </tr>
 <tr>
 	<td class="table_with_border">
-
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
 		<tr>
 			<td colspan="2" align="center" valign="top" class="title">
@@ -195,11 +194,10 @@
 		</tr>
 		<tr>
 			<td align="center" class="line0" width="100%">
-			<input maxlength="2048" name="filter_message" size="70" title="Search" value="">
+			<input maxlength="2048" name="filter_message" size="70" title="Search" value="" class="maxwidth">
 			</td>
 		</tr>
 		</table>
-
 	</td>
 </tr>
 <tr>
@@ -207,15 +205,15 @@
 
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SYSLOGTAG}</b></td>
-			<td align="right" class="line1" nowrap>
-				<input maxlength="2048" name="filter_syslogtag" size="50" title="Search" value="">
+			<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_FILTER_SYSLOGTAG}</b></td>
+			<td align="right" class="line1" width="100%" nowrap>
+				<input maxlength="2048" name="filter_syslogtag" size="50" title="Search" value="" class="maxwidth">
 			</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="150" nowrap><b>{LN_FILTER_SOURCE}</b></td>
+			<td align="left" class="cellmenu2" nowrap><b>{LN_FILTER_SOURCE}</b></td>
 			<td align="right" class="line1" nowrap>
-				<input maxlength="2048" name="filter_source" size="50" title="Search" value="">
+				<input maxlength="2048" name="filter_source" size="50" title="Search" value="" class="maxwidth">
 			</td>
 		</tr>
 		</table>

@@ -3,7 +3,7 @@
 <!-- IF ISERROR="true" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p align="left">{ERROR_MSG}</p>
 		<p>
@@ -31,13 +31,15 @@
 
 	<table border="0" cellpadding="2" cellspacing="0" bgcolor="#DDDDDD" width="100%" class="with_border_alternate">
 	<tr>
-		<td class="topmenu2begin" nowrap align="center" width="16"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
-		<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" title="{LN_REPORTS_ADMIN}" width="16" height="16" vspace="0">{LN_REPORTS_ADMIN}</a></td>
-		<td class="topmenu2" nowrap align="center" width="150"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" title="{LN_REPORTMENU_ONLINELIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
+		<td class="topmenu2begin" nowrap align="center" width="10%"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0"></td>
+		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" title="{LN_REPORTS_ADMIN}" width="16" height="16" vspace="0">{LN_REPORTS_ADMIN}</a></td>
+		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" title="{LN_REPORTMENU_ONLINELIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
 		<!-- IF ISADDSAVEDREPORT="true" -->
-		<td class="topmenu2" nowrap align="center" width="250"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" title="{REPORTS_DETAILSFOR}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
+		<td class="topmenu2" nowrap align="center" width="40%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" title="{REPORTS_DETAILSFOR}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
 		<!-- ENDIF ISADDSAVEDREPORT="true" -->
-		<td class="topmenu2end" nowrap align="center" width="max">&nbsp;</td>
+		<!-- IF ISADDSAVEDREPORT!="true" -->
+		<td class="topmenu2" nowrap align="center" width="40%">&nbsp;</td>
+		<!-- ENDIF ISADDSAVEDREPORT!="true" -->
 	</tr>
 	</table>
 
@@ -50,10 +52,10 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border_alternative">
 		<!-- BEGIN REPORTS -->
 {rowbegin}
-		<table cellpadding="2" cellspacing="0" border="0" align="center" valign="top" width="350" class="table_with_border_light">
+		<table cellpadding="2" cellspacing="0" border="0" align="center" valign="top" width="80%" class="table_with_border_light">
 		<tr>
-			<td align="center" width="100" class="cellmenu1" nowrap><b>{LN_REPORTS_NAME}</b></td>
-			<td align="center" width="100%" class="cellmenu1"><a href="{BASEPATH}admin/reports.php?op=details&id={ID}" class="cellmenu1_link">{DisplayName}</a></td>
+			<td align="center" width="30%" class="cellmenu1" nowrap><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="70%" class="cellmenu1"><a href="{BASEPATH}admin/reports.php?op=details&id={ID}" class="cellmenu1_link">{DisplayName}</a></td>
 		</tr>
 		<tr>
 			<td align="center" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
@@ -73,7 +75,7 @@
 			<td align="center" width="100%" class="line2">
 			
 			<!-- IF HASSAVEDREPORTS="true" -->
-			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="400" class="with_border_alternative">
+			<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="100%" class="with_border_alternative">
 			<!-- BEGIN SAVEDREPORTS -->
 			<tr>
 				<td align="left" class="{srcssclass}" colspan="2">
@@ -98,13 +100,13 @@
 		</table>
 
 <!-- IF LISTONLINEREPORTS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
-			<td align="center" width="50" class="cellmenu1"><b>{LN_REPORTS_INSTALLED}</b></td>
-			<td align="center" width="100" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
-			<td align="center" width="200" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
-			<td align="center" width="300" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
-			<td align="center" width="125" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
+			<td align="center" width="5%" class="cellmenu1"><b>{LN_REPORTS_INSTALLED}</b></td>
+			<td align="center" width="15%" class="cellmenu1"><b>{LN_REPORTS_ID}</b></td>
+			<td align="center" width="20%" class="cellmenu1"><b>{LN_REPORTS_NAME}</b></td>
+			<td align="center" width="40%" class="cellmenu1"><b>{LN_REPORTS_DESCRIPTION}</b></td>
+			<td align="center" width="20%" class="cellmenu1" nowrap><b>{LN_REPORTS_LINKS}</b></td>
 		</tr>
 		<!-- BEGIN ONLINEREPORTS -->
 		<tr>
@@ -136,17 +138,17 @@
 <!-- ENDIF LISTONLINEREPORTS="true" -->
 
 <!-- IF ISSHOWDETAILS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="775" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
 		<tr>
 			<td align="center" class="cellmenu1" colspan="3"><b>{LN_REPORTS_DETAILS}</b></td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_CAT}</b></td>
-			<td align="left" class="line1" width="350" colspan="2">{Category}</td>
+			<td align="left" class="cellmenu2" width="30%"><b>{LN_REPORTS_CAT}</b></td>
+			<td align="left" class="line1" width="70%" colspan="2">{Category}</td>
 		</tr>
 		<tr>
-			<td align="left" class="cellmenu2" width="250"><b>{LN_REPORTS_ID}</b></td>
-			<td align="left" class="line1" width="350" colspan="2">{ReportID}</td>
+			<td align="left" class="cellmenu2"><b>{LN_REPORTS_ID}</b></td>
+			<td align="left" class="line1" colspan="2">{ReportID}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_NAME}</b></td>

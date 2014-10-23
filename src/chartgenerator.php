@@ -59,6 +59,7 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 
 // --- READ CONTENT Vars
 $content['error_occured'] = false;
+$content['chart_success'] = false;
 
 if ( isset($_GET['type']) ) 
 	$content['chart_type'] = intval($_GET['type']);
@@ -501,6 +502,21 @@ if ( !$content['error_occured'] )
 	}
 }
 
+// --- 
+// Output error if necessary
+if ( $content['error_occured'] )
+{
+	// Create template Parser and output results
+	$content['TITLE'] .= " :: " . $content['LN_GEN_ERRORDETAILS'];
+	InitTemplateParser();
+	$page -> parser($content, "chartgenerator.html");
+	$page -> output(); 
+	// Exit in any case
+	exit;
+}
+// --- 
+
+/*
 if ( $content['error_occured'] )
 {
 	// Use JpGraph to display errors!
@@ -516,6 +532,7 @@ if ( $content['error_occured'] )
 	exit;
 }
 // --- 
+*/
 
 // --- Output the image
 //$graph->Stroke();

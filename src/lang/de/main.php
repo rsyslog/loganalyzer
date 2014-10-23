@@ -67,7 +67,7 @@ $content['LN_ERROR_FILE_NOT_READABLE'] = "Die Syslog Datei ist nicht lesbar, les
 $content['LN_ERROR_UNKNOWN'] = "Ein unbekannter oder unerwarteter Fehler ist aufgetreten. (Fehler Code '%1')";
 $content['LN_ERROR_FILE_EOF'] = "Ende der Datei erreicht";
 $content['LN_ERROR_FILE_BOF'] = "Anfang der Datei erreicht";
-$content['LN_ERROR_FILE_CANT_CLOSE'] = "Das Schliessen der Datei ist nicht mÖglich";
+$content['LN_ERROR_FILE_CANT_CLOSE'] = "Das Schliessen der Datei ist nicht möglich";
 $content['LN_ERROR_UNDEFINED'] = "Unerwarteter Fehler";
 $content['LN_ERROR_EOS'] = "Ende des Datenstroms erreicht";
 $content['LN_ERROR_FILTER_NOT_MATCH'] = "Der Filter ergab keine übereinstimmung im Ergbenis";
@@ -89,14 +89,14 @@ $content['LN_GEN_ERROR_SOURCENOTFOUND'] = "Die Quelle mit der ID '%1' konnte nic
 $content['LN_GEN_MOREINFORMATION'] = "Mehr Informationen";
 $content['LN_FOOTER_PAGERENDERED'] = "Siete gerenderet in";
 $content['LN_FOOTER_DBQUERIES'] = "DB Abfragen";
-$content['LN_FOOTER_GZIPENABLED'] = "GZIP ermÖglichen";
+$content['LN_FOOTER_GZIPENABLED'] = "GZIP ermöglichen";
 $content['LN_FOOTER_SCRIPTTIMEOUT'] = "Max. Skript Laufzeit";
 $content['LN_FOOTER_SECONDS'] = "Sekunden";
 $content['LN_WARNING_LOGSTREAMTITLE'] = "Log-Datenstrom Warnung";
-$content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'] = "Beim lesen des Log-Datenstroms, hat das PHP-Skript die max. Laufzeit erreicht und wurde abgebrochen.<br><br> Falls Sie dennoch die Ausführung ermÖglichen wollen, bitte erhÖhen Sie die max. LogAnalyzer Skript Laufzeit in Ihrer config.php. Falls das Benutzersystem installiert ist, kÖnnen Sie dies im Bereich Administration einstellen.";
+$content['LN_WARNING_LOGSTREAMDISK_TIMEOUT'] = "Beim lesen des Log-Datenstroms, hat das PHP-Skript die max. Laufzeit erreicht und wurde abgebrochen.<br><br> Falls Sie dennoch die Ausführung ermöglichen wollen, bitte erhöhen Sie die max. LogAnalyzer Skript Laufzeit in Ihrer config.php. Falls das Benutzersystem installiert ist, können Sie dies im Bereich Administration einstellen.";
 $content['LN_WARNING_DBUPGRADE'] = "Datenbank Upgrade erforderlich";
 $content['LN_WARNING_DBUPGRADE_TEXT'] = "Die aktuell installierte Datenbankversion ist '%1'.<br>Ein Update auf Version '%2' ist verfügbar.";
-$content['LN_ERROR_REDIRECTABORTED'] = 'Automatiche Rückkehr zur Seite <a href="%1">page</a> wurde abgebrochen, da ein interner Fehler aufgetrete ist. Bitte beachten Sie die weiteren Informationen zu diesem Fehler über dieser Meldung und/oder nehmen Sie Kontakt zum Support-Forum auf, falls Sie Hilfe benÖtigen.';
+$content['LN_ERROR_REDIRECTABORTED'] = 'Automatiche Rückkehr zur Seite <a href="%1">page</a> wurde abgebrochen, da ein interner Fehler aufgetrete ist. Bitte beachten Sie die weiteren Informationen zu diesem Fehler über dieser Meldung und/oder nehmen Sie Kontakt zum Support-Forum auf, falls Sie Hilfe benötigen.';
 $content['LN_DEBUGLEVEL'] = "Debug Level";
 $content['LN_DEBUGMESSAGE'] = "Debug Meldung";
 $content['LN_GEN_REPORT_OUTPUT_HTML'] = "HTML Format";
@@ -147,7 +147,7 @@ $content['LN_VIEW_VISITLINK'] = "Öffne Link '%1' in neuem Fenster";
 
 $content['LN_HIGHLIGHT'] = "Hervorhebung >>";
 $content['LN_HIGHLIGHT_OFF'] = "Hervorhebung <<";
-$content['LN_HIGHLIGHT_WORDS'] = "Hervorgehobene WÖrter durch ein Komma voneinander trennen";
+$content['LN_HIGHLIGHT_WORDS'] = "Hervorgehobene Wörter durch ein Komma voneinander trennen";
 
 $content['LN_AUTORELOAD'] = "Auto. neu laden";
 $content['LN_AUTORELOAD_DISABLED'] = "Auto. neu laden deaktiviert";
@@ -187,7 +187,7 @@ $content['LN_CFG_DBNAME'] = "Datenbank Name";
 $content['LN_CFG_DBPREF'] = "Tabellen Präfix";
 $content['LN_CFG_DBUSER'] = "Datenbank Benutzer";
 $content['LN_CFG_DBPASSWORD'] = "Datenbank Passwort";
-$content['LN_CFG_PARAMMISSING'] = "Die folgenden Parameter kÖnnen nicht gefunden werden: ";
+$content['LN_CFG_PARAMMISSING'] = "Die folgenden Parameter können nicht gefunden werden: ";
 $content['LN_CFG_SOURCETYPE'] = "Quell-Typ";
 $content['LN_CFG_DISKTYPEOPTIONS'] = "Disk-Typ Optionen";
 $content['LN_CFG_LOGLINETYPE'] = "Logzeilentyp";
@@ -202,7 +202,7 @@ $content['LN_CFG_VIEW'] = "Anzeige auswählen";
 $content['LN_CFG_DBUSERLOGINREQUIRED'] = "Erfordert eine Benutzer-Anmeldung";
 $content['LN_CFG_MSGPARSERS'] = "Meldungs Parser (Komma getrent)";
 $content['LN_CFG_NORMALIZEMSG'] = "Standard Meldunganzeige mit Parser";
-$content['LN_CFG_SKIPUNPARSEABLE'] = "überspringe nicht lesbare Meldungen (Nur mÖglich, wenn ein Parsen konfiguriert wurde!)";
+$content['LN_CFG_SKIPUNPARSEABLE'] = "überspringe nicht lesbare Meldungen (Nur möglich, wenn ein Parsen konfiguriert wurde!)";
 $content['LN_CFG_DBRECORDSPERQUERY'] = "Anzahl der Datenbankabfragen";
 
 // Details page
@@ -211,7 +211,7 @@ $content['LN_DETAILS_DETAILSFORMSG'] = "Details für Nachrichten-ID";
 $content['LN_DETAIL_BACKTOLIST'] = "Zurück zur Listenansicht";
 
 // Login Site
-$content['LN_LOGIN_DESCRIPTION'] = "Bitte geben Sie Ihren Benutzernamen und Ihr dazugehÖriges Passwort ein, um sich bei LogAnalyzer anzumelden. ";
+$content['LN_LOGIN_DESCRIPTION'] = "Bitte geben Sie Ihren Benutzernamen und Ihr dazugehöriges Passwort ein, um sich bei LogAnalyzer anzumelden. ";
 $content['LN_LOGIN_TITLE'] = "Anmeldung";
 $content['LN_LOGIN_USERNAME'] = "Benutzername";
 $content['LN_LOGIN_PASSWORD'] = "Passwort";
@@ -315,11 +315,11 @@ $content['LN_STATS_WARNINGDISPLAY'] = "Das Erstellen von Grafiken über eine gro
 $content['LN_ORACLE_TITLE'] = "Fragen Sie das Orakel nach '%1'";
 $content['LN_ORACLE_HELP_FOR'] = "Das sind die Links welche das Orakel für Sie ermittelt hat";
 $content['LN_ORACLE_HELP_TEXT'] = "<br><h3>Sie haben das Orakel nach mehr Informationen über '%1' - '%2' gefragt.</h3>
-<p align=\"left\">Diese Seite ermÖglicht es Ihnen eine Suche über verschiedene Log-Quellen zu starten. %3
+<p align=\"left\">Diese Seite ermöglicht es Ihnen eine Suche über verschiedene Log-Quellen zu starten. %3
 <br>Die Idee ist es, einfach nach Informationen über spezifizierte Angaben allerorts zu suchen, egal wo diese vorkommen.
 </p>
 ";
-$content['LN_ORACLE_HELP_TEXT_EXTERNAL'] = "Es wird eine Suche über externe Datenquellen ermÖglichti.";
+$content['LN_ORACLE_HELP_TEXT_EXTERNAL'] = "Es wird eine Suche über externe Datenquellen ermöglicht.";
 $content['LN_ORACLE_HELP_DETAIL'] = "Link übersicht für '%1' - '%2'";
 $content['LN_ORACLE_SEARCH'] = "Suche"; // in '%1' Field";
 $content['LN_ORACLE_SOURCENAME'] = "Quellen Name";
