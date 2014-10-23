@@ -544,7 +544,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaptionjs'] = EscapeQuotesFromString($content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption']);
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "left"; // Other alignment needed!
-
+/* DetailPopup Code not needed anymore 
 									foreach($content['syslogmessages'][$counter]['values'] as $mykey => $myfield)
 									{
 										// Set Caption!
@@ -578,6 +578,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 										else // Just set field value
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailfieldvalue'] = isset($myfield['rawfieldvalue']) ? GetStringWithHTMLCodes($myfield['rawfieldvalue']) : GetStringWithHTMLCodes($myfield['fieldvalue']);
 									}
+*/
 								}
 
 								if ( strlen($content['searchstr']) > 0 )

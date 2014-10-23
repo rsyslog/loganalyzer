@@ -121,7 +121,6 @@ $content['LN_MENU_NORMALVIEW'] = "Standard Anzeige";
 $content['LN_MENU_STATISTICS'] = "Statistiken";
 $content['LN_MENU_CLICKTOEXPANDMENU'] = "Klicken Sie das Icon um das Menü anzuzeigen";
 
-
 // Index Site
 $content['LN_ERROR_INSTALLFILEREMINDER'] = "Warnung! Sie haben das Installationsskript 'install.php' noch nicht aus dem LogAnalyzer Hauptordner entfernt!";
 $content['LN_TOP_NUM'] = "No.";
@@ -140,7 +139,7 @@ $content['LN_VIEW_FILTERFOR'] = "Filtere Meldungen nach ";
 $content['LN_VIEW_SEARCHFOR'] = "Suche online nach ";
 $content['LN_VIEW_SEARCHFORGOOGLE'] = "Durchsuche Google nach ";
 $content['LN_GEN_MESSAGEDETAILS'] = "Meldungsdetails";
-$content['LN_VIEW_ADDTOFILTER'] = "Fü '%1' zur Filterliste hinzu";
+$content['LN_VIEW_ADDTOFILTER'] = "Füge '%1' zur Filterliste hinzu";
 $content['LN_VIEW_EXCLUDEFILTER'] = "Entferne '%1' von der Filterliste";
 $content['LN_VIEW_FILTERFORONLY'] = "Filtere nur nach '%1'";
 $content['LN_VIEW_SHOWALLBUT'] = "Anzeige aller Meldungen, ausgenommen '%1'";
