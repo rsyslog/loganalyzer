@@ -27,7 +27,7 @@
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
 	<td nowrap align="center" nowrap valign="top">
-		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox">
+		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" onkeypress="MoveToButtonOnKeypress('buttonsearch', window.event);">
 		</br>
 		<button id="buttonsearch"><span class="ui-icon ui-icon-search" title="{LN_SEARCH}"  style="float:left;"></span><span class="ui-button-text">{LN_SEARCH}</span></button>
 <!-- IF enabledoraclesearchstr="true" -->
@@ -41,8 +41,8 @@
 			// Custom Buttons
 			$("#buttonsearch").button()
 			.click(function() {
-					// Perform Button Click now!
-					window.location.href = $(ui.item).find('form').submit();
+					// Perform Form Submit!  Click now!
+					$("#searchform").submit();
 					// Make sure to return false here or the click registration above gets invoked.
 					return false;
 			})

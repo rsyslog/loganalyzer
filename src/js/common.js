@@ -438,7 +438,6 @@ function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 /*
 *	New JQUERY Helper functions
 */
-
 function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 {
 	// Popup Menu Code
@@ -573,4 +572,16 @@ function CreateLoadingHelper ( szLoadingText )
 		}
 	});
 	})(jQuery);
+}
+
+function MoveToButtonOnKeypress ( szButton, event )
+{
+	if (event.keyCode == 13) {
+		event.preventDefault(); 
+		$( "#" + szButton ).focus();
+		$( "#" + szButton ).click();
+		$("#loading_dialog").loading();
+		return false; 
+	}
+
 }
