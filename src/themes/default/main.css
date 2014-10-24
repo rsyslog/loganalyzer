@@ -67,7 +67,6 @@ img
 
 	border: 1px solid;
 	border-color: #ACBED6 #3B679B #3B679B #ACBED6;
-	height: 20px;
 	text-align:center;
 	vertical-align:middle;
 }
@@ -92,7 +91,6 @@ a.title:hover
     background-repeat: repeat-x;
 	color: #1A3745;
 
-	height: 18px;
 	text-align:center;
 	vertical-align:middle;
 }
@@ -147,7 +145,6 @@ font
 
 .mainfooter
 { 
-	height: 20px;
 	background-color:#DDDDDD;
 	border-top: #97A8B9 1px solid;
 	border-bottom: #6592BD 1px solid;
@@ -205,67 +202,13 @@ font
 }
 
 /* TOP Menu Classes */
-.topmenu1begin
-{
-	height: 16px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #4E6485;
-}
-.topmenu1
-{
-	height: 16px;
-	border:1px ridge;
-	border-color: #79AABE #09506C #79AABE #79AABE;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #4E6485;
-}
-.topmenu1:hover 
-{ 
-	color: #FFFF99;
-	border:1px inset;
-	border-color: #79AABE #09506C #79AABE #79AABE;
-	background-color: #6A88B8;
-	text-decoration: none;
-}
-.topmenuend
-{
-	height: 16px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #4E6485;
-}
-.topmenuextra
-{
-	height: 16px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #B8D4E0;
-}
-.topmenu2begin
-{
-	height: 16px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #7A92A6;
-}
 .topmenu2
 {
-	height: 16px;
 	border:1px ridge;
 	border-color: #BDEEFF #79AABE #09506C #09506C;
 	padding: 2px 2px 0px 2px;
 	vertical-align: middle;
 
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	background-color: #7A92A6;
 }
@@ -281,60 +224,14 @@ font
 {
 	color: #FFDD22;
 }
-.topmenu2_link:hover, A.topmenu2_link:hover 
+.topmenu2_link:hover, a.topmenu2_link:hover 
 {
 	color: #FFFF99;
 	text-decoration: none;
-}
-.topmenu2end
-{
-	height: 16px;
-	border:1px inset;
-	border-color: #BDEEFF #79AABE #09506C #09506C;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #7A92A6;
-}
-.topmenu3begin
-{
-	height: 16px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #D4DAE3;
-}
-.topmenu3
-{
-	height: 16px;
-	border:1px ridge;
-	border-color: #BDEEFF #79AABE #09506C #09506C;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	font: 10px Arial, Verdana, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #D4DAE3;
-}
-.topmenu3:hover 
-{ 
-	color: #FFFF99;
-	border:1px inset;
-	border-color: #BDEEFF #79AABE #09506C #09506C;
-	background-color: #ACCBFD;
-	text-decoration: none;
-}
-.topmenu3end
-{
-	height: 16px;
-	font: 10px Arial, Verdana, Helvetica, sans-serif;
-	color: #FFFFFF;
-	background-color: #D4DAE3;
 }
 .topmenu1_link, a.topmenu1_link, a.topmenu1_link:visited, .topmenu2_link, a.topmenu2_link, a.topmenu2_link:visited, .topmenu3_link, a.topmenu3_link, a.topmenu3_link:visited 
 {
 	vertical-align: middle;
-	height: 16px;
 
 	color: #FFDD22;
 	font-weight:bold;
@@ -348,8 +245,6 @@ font
 	font-weight:bold;
 	text-decoration: none;
 }
-
-
 
 /* Cell Columns */
 .cellmenu1
@@ -520,7 +415,6 @@ select, input, button, textarea
 
 .SearchFormTextbox
 {
-	height: 20px;
 	width:100%;
 	margin: 2px;
 	background-color: #E8E7E2; 

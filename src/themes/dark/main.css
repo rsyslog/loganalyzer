@@ -66,7 +66,6 @@ a.contextlink:hover
 	COLOR: #E5F377;
 	border: 1px solid;
 	border-color: #58363E #2C1B1F #2C1B1F #58363E;
-	height: 20px;
 	text-align:center;
 	vertical-align:middle;
 }
@@ -91,7 +90,6 @@ A.title:hover
     background-repeat: repeat-x;
 
 	COLOR: #E5F377;
-	height: 18px;
 	text-align:center;
 	vertical-align:middle;
 }
@@ -145,7 +143,6 @@ font
 
 .mainfooter
 { 
-	height: 20px;
 	background-color:#1C2021;
 	border-top: #050A0F 1px solid;
 	border-bottom: #050A0F 1px solid;
@@ -207,62 +204,8 @@ font
 }
 
 /* TOP Menu Classes */
-.topmenu1begin
-{
-	height: 20px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #38110E;
-}
-.topmenu1
-{
-	height: 20px;
-	border:1px ridge;
-	border-color: #D79993 #290604 #290604 #D79993;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-
-	color: #FFFFFF;
-	background-color: #38110E;
-}
-.topmenu1:hover 
-{ 
-	color: #FFFF99;
-	border:1px inset;
-	border-color: #D79993 #290604 #290604 #D79993;
-	background-color: #492D2B;
-	text-decoration: none;
-}
-.topmenuend
-{
-
-	height: 16px;
-	color: #FFFFFF;
-	background-color: #290604;
-}
-.topmenuextra
-{
-
-	height: 16px;
-	color: #FFFFFF;
-	background-color: #053841;
-}
-
-.topmenu2begin
-{
-	height: 20px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #49221F;
-}
 .topmenu2
 {
-	height: 20px;
 	border:1px ridge;
 	border-color: #D79993 #290604 #290604 #D79993;
 	padding: 2px 2px 0px 2px;
@@ -289,54 +232,9 @@ font
 	color: #FFFF99;
 	text-decoration: none;
 }
-.topmenu2end
-{
-	height: 20px;
-	border:0px;
-
-
-	color: #FFFFFF;
-	background-color: #49221F;
-}
-.topmenu3begin
-{
-	height: 16px;
-	border:0px;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	background-color: #3F68AA;
-}
-.topmenu3
-{
-	height: 16px;
-	border:1px ridge;
-	border-color: #09506C #557986 #09506C #09506C;
-	padding: 2px 2px 0px 2px;
-	vertical-align: middle;
-
-	color: #FFFFFF;
-	background-color: #3F68AA;
-}
-.topmenu3:hover 
-{ 
-	color: #FFFF99;
-	border:1px inset;
-	border-color: #09506C #557986 #09506C #09506C;
-	background-color: #294572;
-	text-decoration: none;
-}
-.topmenu3end
-{
-	height: 16px;
-	color: #FFFFFF;
-	background-color: #3F68AA;
-}
-
 .topmenu1_link, a.topmenu1_link, a.topmenu1_link:visited, .topmenu2_link, a.topmenu2_link, a.topmenu2_link:visited, .topmenu3_link, a.topmenu3_link, a.topmenu3_link:visited 
 {
 	vertical-align: middle;
-	height: 16px;
 
 	color: #FFDD22;
 	font-weight:bold;
@@ -354,7 +252,6 @@ font
 /* Cell Columns */
 .cellmenu1
 {
-/*	height: 15px; */
 	border:1px solid;
 	border-color: #353A3F #050A0F #050A0F #353A3F; 
 
@@ -395,7 +292,6 @@ A.cellmenu1_link:hover
 
 .cellmenu2
 {
-	height: 16px;
 	border:1px ridge;
 	border-color: #7777AA #12161A #12161A #7777AA;
 
@@ -520,7 +416,6 @@ select, input, button, textarea
 
 .SearchFormTextbox
 {
-	height: 20px;
 	margin: 2px;
 	background-color: #0B253C; 
 	color:#FFFFFF; 
