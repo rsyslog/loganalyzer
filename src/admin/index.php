@@ -82,7 +82,6 @@ else
 	$content['DISABLE_GLOBALEDIT_FORMCONTROL'] = "disabled";
 }
 
-
 // Init Fonts and sizes
 InitFontList(); 
 InitFontSizeList(); 
@@ -230,7 +229,6 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_ViewEntriesPerPage']) && is_numeric($_POST['User_ViewEntriesPerPage']) ) { $USERCFG['ViewEntriesPerPage'] = $_POST['User_ViewEntriesPerPage']; }
 			if ( isset ($_POST['User_ViewEnableAutoReloadSeconds']) && is_numeric($_POST['User_ViewEnableAutoReloadSeconds']) ) { $USERCFG['ViewEnableAutoReloadSeconds'] = $_POST['User_ViewEnableAutoReloadSeconds']; }
 			if ( isset ($_POST['User_AdminChangeWaitTime']) && is_numeric($_POST['User_AdminChangeWaitTime']) ) { $USERCFG['AdminChangeWaitTime'] = $_POST['User_AdminChangeWaitTime']; }
-// TODO!!!!!!!!!!!111111111			
 
 			// Read Text fields
 			if ( isset ($_POST['User_PrependTitle']) ) { $USERCFG['PrependTitle'] = $_POST['User_PrependTitle']; }
@@ -271,7 +269,6 @@ if (isset($content['MiscDebugToSyslog']) && $content['MiscDebugToSyslog'] == 1) 
 // --- 
 
 // --- Init for Style field!
-
 // copy STYLES Array
 $content['GLOBAL_STYLES'] = $content['STYLES'];
 $defaultStyleID = GetConfigSetting('ViewDefaultTheme', "default", CFGLEVEL_GLOBAL);
@@ -363,8 +360,6 @@ foreach ( $content['ENCODINGS'] as &$myEncoding)
 		$myEncoding['selected'] = "";
 }
 // --- 
-
-
 
 // Do if User wants extra options
 if ( $content['ENABLEUSEROPTIONS'] )
@@ -486,6 +481,5 @@ InitTemplateParser();
 $page -> parser($content, "admin/admin_index.html");
 $page -> output(); 
 // --- 
-
 
 ?>

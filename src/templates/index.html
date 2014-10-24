@@ -1,4 +1,4 @@
-<!-- INCLUDE include_header.html --> 
+<!-- INCLUDE include_header.html -->
 
 <div id="dialog" title="Details"><br/></div>
 <table border="0" cellspacing="0" cellpadding="2" align="center">
@@ -393,7 +393,7 @@
 <!-- IF syslogmessagesenabled="false" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</div>
 		<p align="left">{detailederror}</p>
 		<p>
@@ -411,7 +411,7 @@
 <!-- IF logstream_warning="false" -->
 <br><br>
 <center>
-	<div class="table_with_border_second ErrorMsg" style="width:600px">
+	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityWarning">{LN_WARNING_LOGSTREAMTITLE}</div>
 		<p align="left">{logstream_warning_details}</p>
 		<p>
@@ -427,7 +427,6 @@
 <!-- ENDIF logstream_warning="false" -->
 
 <script>
-
 // Popup Dialog Code
 $( "#dialog" ).dialog({
 	autoOpen: false,
