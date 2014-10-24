@@ -1,0 +1,3 @@
+Author: Andre Lorbach
+Link: http://loganalyzer.adiscon.com
+DisplayName: High Contrast
