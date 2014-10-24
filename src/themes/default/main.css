@@ -25,12 +25,12 @@ a:link,a:active,a:visited,a.postlink
 	text-decoration:none;
 
 	background-color: transparent;
-	color:#38140E;
+	color:#005989;
 }
 a:hover
 {
 	font-weight: bold;
-	color:#CC0000;
+	color:#002C5B;
 }
 /*---*/
 
@@ -39,13 +39,13 @@ a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
 {
 	font-weight: bold;
 	background-color: transparent;
-	color:#3814BB;
+	color:#E50A00;
 	text-decoration:underline;
 }
 a.contextlink:hover
 {
 	font-weight:bold;
-	color:#3844FF;
+	color:#923325;
 	text-decoration:none;
 }
 /*---*/

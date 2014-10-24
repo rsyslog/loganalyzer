@@ -24,9 +24,9 @@
 <!-- ENDIF isupdateavailable="true" -->
 	
 <form action="" method="post">
-	<table border="0" cellpadding="1" cellspacing="1" bgcolor="#DDDDDD" width="80%" align="center">
+	<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="table_with_border">
 	<tr>
-		<td colspan="2" class="line1">&nbsp;</td>
+		<td colspan="2">&nbsp;</td>
 		<td align="center" class="cellmenu1_naked" width="33%" nowrap rowspan="2" valign="middle">
 <!-- IF ENABLEUSEROPTIONS="true" -->
 		<button id="buttonenableuseropt"><img src="{MENU_USEROPTIONS}" width="16" height="16" style="float:left;"></span><span class="ui-button-text">{LN_GEN_DISABLEUSEROPTIONS}</span></button>
@@ -106,7 +106,7 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEFSOURCE}</b></td>
-		<td align="left" class="line1">
+		<td align="left" class="line2">
 			<select id="DefaultSourceID" name="DefaultSourceID" size="1" class="maxwidth" {DISABLE_GLOBALEDIT_FORMCONTROL}>
 				<!-- BEGIN SOURCES -->
 				<option {selected} value="{ID}">{Name}</option>
@@ -114,7 +114,7 @@
 			</select>
 		</td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1">
+		<td align="left" class="line2">
 			<select id="User_DefaultSourceID" name="User_DefaultSourceID" size="1" class="maxwidth">
 				<!-- BEGIN USER_SOURCES -->
 				<option {selected} value="{ID}">{Name}</option>
@@ -144,7 +144,7 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DEFFONTSIZE}</b></td>
-		<td align="left" class="line1">
+		<td align="left" class="line2">
 			<select id="DefaultFontSize" name="DefaultFontSize" size="1" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">
 				<!-- BEGIN FONTSIZES -->
 				<option {selected} value="{Name}">{Name}</option>
@@ -152,7 +152,7 @@
 			</select>
 		</td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1">
+		<td align="left" class="line2">
 			<select id="User_DefaultFontSize" name="User_DefaultFontSize" size="1" class="maxwidth">
 				<!-- BEGIN USER_FONTSIZES -->
 				<option {selected} value="{Name}">{Name}</option>
@@ -171,9 +171,9 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_MSGCHARLIMIT}</b></td>
-		<td align="left" class="line1" ><input type="text" name="ViewMessageCharacterLimit" size="16" maxlength="12" value="{ViewMessageCharacterLimit}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="ViewMessageCharacterLimit" size="16" maxlength="12" value="{ViewMessageCharacterLimit}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="text" name="User_ViewMessageCharacterLimit" size="16" maxlength="12" value="{User_ViewMessageCharacterLimit}" class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="User_ViewMessageCharacterLimit" size="16" maxlength="12" value="{User_ViewMessageCharacterLimit}" class="maxwidth"></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -186,9 +186,9 @@
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_ENTRIESPERPAGE}</b></td>
-		<td align="left" class="line1" ><input type="text" name="ViewEntriesPerPage" size="16" maxlength="12" value="{ViewEntriesPerPage}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="ViewEntriesPerPage" size="16" maxlength="12" value="{ViewEntriesPerPage}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="text" name="User_ViewEntriesPerPage" size="16" maxlength="12" value="{User_ViewEntriesPerPage}" class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="User_ViewEntriesPerPage" size="16" maxlength="12" value="{User_ViewEntriesPerPage}" class="maxwidth"></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -200,9 +200,9 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_ADMINCHANGEWAITTIME}</b></td>
-		<td align="left" class="line1" ><input type="text" name="AdminChangeWaitTime" size="16" maxlength="12" value="{AdminChangeWaitTime}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="AdminChangeWaitTime" size="16" maxlength="12" value="{AdminChangeWaitTime}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="text" name="User_AdminChangeWaitTime" size="16" maxlength="12" value="{User_AdminChangeWaitTime}" class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="User_AdminChangeWaitTime" size="16" maxlength="12" value="{User_AdminChangeWaitTime}" class="maxwidth"></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	
@@ -216,9 +216,9 @@
 
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_CUSTBTNCAPT}</b></td>
-		<td align="left" class="line1" ><input type="text" name="SearchCustomButtonCaption" size="35" maxlength="255" value="{SearchCustomButtonCaption}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="SearchCustomButtonCaption" size="35" maxlength="255" value="{SearchCustomButtonCaption}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="text" name="User_SearchCustomButtonCaption" size="35" maxlength="255" value="{User_SearchCustomButtonCaption}" class="maxwidth"></td>
+		<td align="left" class="line2" ><input type="text" name="User_SearchCustomButtonCaption" size="35" maxlength="255" value="{User_SearchCustomButtonCaption}" class="maxwidth"></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -230,9 +230,9 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_USETODAY}</b></td>
-		<td align="left" class="line1" ><input type="checkbox" name="ViewUseTodayYesterday" value="yes" {ViewUseTodayYesterday_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="ViewUseTodayYesterday" value="yes" {ViewUseTodayYesterday_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="checkbox" name="User_ViewUseTodayYesterday" value="yes" {User_ViewUseTodayYesterday_checked}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="User_ViewUseTodayYesterday" value="yes" {User_ViewUseTodayYesterday_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -245,9 +245,9 @@
 	
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_CONTEXTLINKS}</b></td>
-		<td align="left" class="line1" ><input type="checkbox" name="EnableContextLinks" value="yes" {EnableContextLinks_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="EnableContextLinks" value="yes" {EnableContextLinks_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="checkbox" name="User_EnableContextLinks" value="yes" {User_EnableContextLinks_checked}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="User_EnableContextLinks" value="yes" {User_EnableContextLinks_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -259,9 +259,9 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_SUPPRESSDUPMSG}</b></td>
-		<td align="left" class="line1" ><input type="checkbox" name="SuppressDuplicatedMessages" value="yes" {SuppressDuplicatedMessages_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="SuppressDuplicatedMessages" value="yes" {SuppressDuplicatedMessages_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="checkbox" name="User_SuppressDuplicatedMessages" value="yes" {User_SuppressDuplicatedMessages_checked}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="User_SuppressDuplicatedMessages" value="yes" {User_SuppressDuplicatedMessages_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -273,9 +273,9 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_INLINESEARCHICONS}</b></td>
-		<td align="left" class="line1" ><input type="checkbox" name="InlineOnlineSearchIcons" value="yes" {InlineOnlineSearchIcons_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="InlineOnlineSearchIcons" value="yes" {InlineOnlineSearchIcons_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 <!-- IF ENABLEUSEROPTIONS="true" -->
-		<td align="left" class="line1" ><input type="checkbox" name="User_InlineOnlineSearchIcons" value="yes" {User_InlineOnlineSearchIcons_checked}></td>
+		<td align="left" class="line2" ><input type="checkbox" name="User_InlineOnlineSearchIcons" value="yes" {User_InlineOnlineSearchIcons_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
 	<tr>
@@ -328,7 +328,7 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2"><b>{LN_ADMIN_DEFAULTENCODING}</b></td>
-		<td align="left" class="line1" colspan="2">
+		<td align="left" class="line2" colspan="2">
 			<select id="HeaderDefaultEncoding" name="HeaderDefaultEncoding" size="1" {DISABLE_GLOBALEDIT_FORMCONTROL}>
 				<!-- BEGIN ENCODINGS -->
 				<option {selected} value="{ID}">{DisplayName}</option>
@@ -338,24 +338,24 @@
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2"><b>{LN_GEN_DEBUGUSERLOGIN}</b></td>
-		<td align="left" class="line2" colspan="2"><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line1" colspan="2"><input type="checkbox" name="DebugUserLogin" value="yes" {DebugUserLogin_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2"><b>{LN_GEN_DEBUGTOSYSLOG}</b></td>
-		<td align="left" class="line1" colspan="2"><input type="checkbox" name="MiscDebugToSyslog" value="yes" {MiscDebugToSyslog_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+		<td align="left" class="line2" colspan="2"><input type="checkbox" name="MiscDebugToSyslog" value="yes" {MiscDebugToSyslog_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
 	</tr>
 	
 	<tr>
 		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTHTMLHEADER}</b></td>
-		<td align="left" class="line2" colspan="2"><textarea name="InjectHtmlHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectHtmlHeader}</textarea></td>
+		<td align="left" class="line1" colspan="2"><textarea name="InjectHtmlHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectHtmlHeader}</textarea></td>
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTBODYHEADER}</b></td>
-		<td align="left" class="line1" colspan="2"><textarea name="InjectBodyHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectBodyHeader}</textarea></td>
+		<td align="left" class="line2" colspan="2"><textarea name="InjectBodyHeader" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectBodyHeader}</textarea></td>
 	</tr>
 	<tr>
 		<td align="left" class="cellmenu2_naked" valign="_top"><b>{LN_GEN_INJECTBODYFOOTER}</b></td>
-		<td align="left" class="line2" colspan="2"><textarea name="InjectBodyFooter" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectBodyFooter}</textarea></td>
+		<td align="left" class="line1" colspan="2"><textarea name="InjectBodyFooter" cols="85" rows="3" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth">{InjectBodyFooter}</textarea></td>
 	</tr>
 	<tr>
 	<tr>

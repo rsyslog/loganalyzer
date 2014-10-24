@@ -2,10 +2,6 @@
 
 <div id="dialog" title="Details"><br/></div>
 <table border="0" cellspacing="0" cellpadding="2" align="center">
-<tr>
-	<td colspan="5" class="tableBackground">
-	</td>
-</tr>
 <form action="" method="get" id="searchform" name="searchform">
 <!-- BEGIN HIDDENVARS_SOURCE -->
 <input type="hidden" name="{varname}" value="{varvalue}">
@@ -15,7 +11,7 @@
 		<b>{LN_SEARCH_FILTER}</b>
 	</td>
 <!-- IF EnablePredefinedSearches="true" -->
-	<td nowrap valign="top" nowrap class="tableBackground">
+	<td nowrap valign="top" nowrap>
 		<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
 		<ul id="menu_searches" style="position:absolute;z-index:99;">
 			<!-- BEGIN Search -->
@@ -70,36 +66,34 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="5" class="tableBackground">
-
-	<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
-	<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
-	<tr>
-		<td colspan="2" align="center" valign="top" class="cellmenu2">
-		<strong>{LN_HIGHLIGHT_WORDS}</strong></td>
-	</tr>
-	<tr>
-		<td align="left" class="line1" nowrap>
-			<input maxlength="2048" name="highlight" size="75" title="Search" value="{highlightstr_htmlform}">
-			<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
-		</td>
-	</tr>
-	<!-- IF EXPAND_HIGHLIGHT="true" -->
-	<tr>
-		<td align="center" class="line0" nowrap>
-			<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
-			<tr>
-			<!-- BEGIN highlightwords -->
-				<td class="{cssclass}" align="center"><b>{highlight_html}</b></td>
-			<!-- END highlightwords -->
-			</tr>
-			</table>
-		</td>
-	</tr>
-	<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
-	</table>
-	</span>
-
+	<td colspan="5">
+		<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
+		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
+		<tr>
+			<td colspan="2" align="center" valign="top" class="cellmenu2">
+			<strong>{LN_HIGHLIGHT_WORDS}</strong></td>
+		</tr>
+		<tr>
+			<td align="left" class="line1" nowrap>
+				<input maxlength="2048" name="highlight" size="75" title="Search" value="{highlightstr_htmlform}">
+				<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
+			</td>
+		</tr>
+		<!-- IF EXPAND_HIGHLIGHT="true" -->
+		<tr>
+			<td align="center" class="line0" nowrap>
+				<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+				<tr>
+				<!-- BEGIN highlightwords -->
+					<td class="{cssclass}" align="center"><b>{highlight_html}</b></td>
+				<!-- END highlightwords -->
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
+		</table>
+		</span>
 	</td>
 </tr>
 </form>
@@ -148,7 +142,7 @@
 
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
-	<td nowrap width="100%" class="line2" align="left">
+	<td nowrap width="100%" class="tableBackground" align="left">
 <!-- IF main_currentpagenumber_found="true" -->
 	{LN_GEN_PAGE} {main_currentpagenumber}
 <!-- ENDIF main_currentpagenumber_found="true" -->
