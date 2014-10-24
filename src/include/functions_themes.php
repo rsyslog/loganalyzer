@@ -79,20 +79,27 @@ function CreateThemesList()
 	$alldirectories = list_directories( $gl_root_path . "themes/");
 	for($i = 0; $i < count($alldirectories); $i++)
 	{
-		// --- web_theme
-		$content['STYLES'][$i]['StyleName'] = $alldirectories[$i];
-		if ( $content['web_theme'] == $alldirectories[$i] )
-			$content['STYLES'][$i]['selected'] = "selected";
-		else
-			$content['STYLES'][$i]['selected'] = "";
-		// ---
+		// Init Theme Settings
+		$themename = $alldirectories[$i]; 
+		$content['STYLES'][$themename]['StyleName'] = $themename;
+		
+		// Init stuff from abvout
+		InitThemeAbout($themename); 
+		
+		// Copy to userstyles array
+		$content['USERSTYLES'][$themename] = $content['STYLES'][$themename]; 
 
-		// --- user_theme
-		$content['USERSTYLES'][$i]['StyleName'] = $alldirectories[$i];
-		if ( $content['user_theme'] == $alldirectories[$i] )
-			$content['USERSTYLES'][$i]['is_selected'] = "selected";
+		// --- web_theme
+		if ( $content['web_theme'] == $themename )
+			$content['STYLES'][$themename]['selected'] = "selected";
 		else
-			$content['USERSTYLES'][$i]['is_selected'] = "";
+			$content['STYLES'][$themename]['selected'] = "";
+		// ---
+		// --- user_theme
+		if ( $content['user_theme'] == $themename )
+			$content['USERSTYLES'][$themename]['is_selected'] = "selected";
+		else
+			$content['USERSTYLES'][$themename]['is_selected'] = "";
 		// ---
 	}
 }
@@ -111,6 +118,12 @@ function InitThemeAbout( $themename )
 {
 	global $content, $gl_root_path;
 	$szAboutFile = $gl_root_path . "themes/" . $themename . "/about.txt";
+
+	// Init variables
+	$content['STYLES'][$themename]['Author'] = "";
+	$content['STYLES'][$themename]['Link'] = "";
+	$content['STYLES'][$themename]['DisplayName'] = $themename;
+
 	if ( is_file( $szAboutFile ) )
 	{	//Read About Info!
 		$aboutfile  = fopen($szAboutFile, 'r');
@@ -119,16 +132,40 @@ function InitThemeAbout( $themename )
 			while (!feof ($aboutfile))
 			{
 				$tmpline = fgets($aboutfile, 1024);
+				if ( strpos($tmpline, ":") !== false ) 
+				{
+					// Split array
+					$aLine = explode(":", $tmpline);
+					switch ( $aLine[0] ) 
+					{
+						case "Author":
+							$content['STYLES'][$themename]['Author'] = trim($aLine[1]);
+							break; 
+						case "Link":
+							$content['STYLES'][$themename]['Link'] = trim($aLine[1]);
+							break;
+						case "DisplayName": 
+							$content['STYLES'][$themename]['DisplayName'] = trim($aLine[1]);
+							break; 
+					}
+				}
+/*
 				if (!isset($content["theme_madeby"]) )
 					$content["theme_madeby"] = substr( trim($tmpline), 0, 25);
 				else if (!isset($content["theme_madebylink"]) )
 					$content["theme_madebylink"] = substr( trim($tmpline), 0, 256);
+				else if (!isset($content["theme_name"]) )
+					$content["theme_name"] = substr( trim($tmpline), 0, 256);
 				else
 				{
 					$content["theme_madebyenable"] = "true";
 					break;
 				}
+*/
 			}
+			
+			// Enable madeby display
+			$content["theme_madebyenable"] = "true";
 		}
 		fclose($aboutfile);
 	}

@@ -945,9 +945,11 @@ function InitConfigurationValues()
 	else
 		$content['user_theme'] = $content['web_theme'];
 
+/*
 	// Init Theme About Info ^^
 	InitThemeAbout($content['user_theme']);
 	// ---
+*/
 
 	// --- Handle HTML Injection stuff
 	if ( strlen(GetConfigSetting("InjectHtmlHeader", false)) > 0 ) 

@@ -1,2 +1,3 @@
-Andre Lorbach
-http://www.adiscon.com
+Author: Andre Lorbach
+Link: http://www.adiscon.com
+DisplayName: Dark
