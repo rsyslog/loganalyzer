@@ -124,6 +124,12 @@ if ( isset($_GET['defaultfilter']) )
 	$content['chart_defaultfilter'] = $_GET['defaultfilter'];
 else
 	$content['chart_defaultfilter'] = "";
+
+if ( isset($_GET['basepath']) )
+	$content['custombasepath'] = $_GET['basepath'];
+else
+	$content['custombasepath'] = "";
+
 // ---
 
 // --- BEGIN CREATE TITLE
@@ -205,7 +211,7 @@ if ( !$content['error_occured'] )
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
 					if ( isset($fields[$content['chart_field']]['SearchField']) && strlen($myKey) > 0 ) 
-						$chartImageMapLinks[] = $content['BASEPATH'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) . "&search=Search";
+						$chartImageMapLinks[] = $content['custombasepath'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) . "&search=Search";
 					else
 						$chartImageMapLinks[] = "";
 
@@ -536,7 +542,7 @@ if ( $content['error_occured'] )
 
 // --- Output the image
 //$graph->Stroke();
-$graph->StrokeCSIM( basename(__FILE__), '', 0); 
+$graph->StrokeCSIM( $content['custombasepath'] . basename(__FILE__), '', 0); 
 // --- 
 
 ?>

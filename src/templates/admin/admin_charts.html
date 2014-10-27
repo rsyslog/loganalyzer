@@ -1,4 +1,5 @@
 <!-- INCLUDE include_header.html --> 
+<div id="dialog" title="Chartgenerator"><br/></div>
 
 <!-- IF ISERROR="true" -->
 <br><br>
@@ -22,7 +23,7 @@
 		<br><br>
 
 <!-- IF LISTCHARTS="true" -->
-		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate">
+		<table border="0" cellpadding="2" cellspacing="1" bgcolor="#DDDDDD" width="80%" class="with_border_alternate" ID="chartoptions">
 		<tr>
 			<td align="center" width="5%" class="cellmenu1"><b>{LN_CHARTS_ID}</b></td>
 			<td align="center" width="25%" class="cellmenu1"><b>{LN_CHARTS_NAME}</b></td>
@@ -54,8 +55,19 @@
 				&nbsp;<img src="{MENU_EDIT_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
 				&nbsp;<img src="{MENU_DELETE_DISABLED}" width="16" title="{LN_GEN_DISABLED}">
 				<!-- ENDIF ActionsAllowed!="true" -->
+				<!--
 				&nbsp;<a href="{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
-				
+				-->
+				&nbsp;<a href="#" id="dialog-chart_{ID}"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
+				<script> $( "#dialog-chart_{ID}" ).click(function( event ) { 
+					$( "#dialog").html('<center></br><img src="{BASEPATH}images/ajax-loader.gif"></br></br></center>');
+					$( "#dialog").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}&basepath={BASEPATH}');
+					$( "#dialog").dialog("option","position",$("#dialog").dialog("option","position"));
+					$( "#dialog").dialog( {title: "Chartgenerator"}); 
+					$( "#dialog").dialog( "open" ); 
+					$( "#dialog").focus(); 
+					event.preventDefault(); });
+				</script>
 			</td>
 		</tr>
 		<!-- END CHARTS -->
@@ -153,5 +165,33 @@
 		</td>
 	</tr>
 </table>
+
+<script>
+// Popup Dialog Code
+$( "#dialog" ).dialog({
+	autoOpen: false,
+	resizable: false,
+	width: 'auto', 
+	minHeight: 400,
+	minWidth: 400, 
+	draggable: true,
+	closeOnEscape: true,
+	modal: true,
+	buttons: [
+		{
+			text: "Ok",
+			click: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+	]
+});
+
+/*
+$(window).resize(function() {
+	$(".ui-dialog-content").dialog("option", "position", $("#dialog").dialog("option","position"));
+});
+*/
+</script>
 
 <!-- INCLUDE include_footer.html -->
