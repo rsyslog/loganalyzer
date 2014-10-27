@@ -53,7 +53,7 @@ img
 	font-weight:bold;
 
     background-color: #FFB742;
-	color: #003889;
+	color: #00255B;
 
 	text-align:center;
 	vertical-align:middle;
@@ -62,7 +62,7 @@ a.title, a.title:active, a.title:visited
 {
 	font-weight:bold;
 
-	color: #003889;
+	color: #00255B;
 	TEXT-DECORATION: none;
 }
 a.title:hover 
@@ -184,23 +184,23 @@ a.title:hover
 { 
 	border:1px inset;
 	border-color: #BDEEFF #79AABE #09506C #09506C;
-	background-color: #0083E5;
+	background-color: #003E79;
 	text-decoration: none;
 }
 .topmenu2_link, A.topmenu2_link
 {
-	color: #FFDD22;
+	color: #FFFF55;
 }
 .topmenu2_link:hover, A.topmenu2_link:hover 
 {
-	color: #FFFF99;
+	color: #FFFFFF;
 	text-decoration: none;
 }
 .topmenu1_link, a.topmenu1_link, a.topmenu1_link:visited, .topmenu2_link, a.topmenu2_link, a.topmenu2_link:visited, .topmenu3_link, a.topmenu3_link, a.topmenu3_link:visited 
 {
 	vertical-align: middle;
 
-	color: #FFDD22;
+	color: #FFFF55;
 	font-weight:bold;
 	text-decoration: none;
 }
@@ -208,7 +208,7 @@ a.title:hover
 {
 	vertical-align: middle;
 
-	color: #FFFF99;
+	color: #FFFFFF;
 	font-weight:bold;
 	text-decoration: none;
 }
@@ -260,7 +260,7 @@ a.cellmenu1_link:hover
 	text-indent:0px;
 	font-weight:bold;
 
-	background-color: #256392;
+	background-color: #0A4CAD;
 	color: #FFFFFF;
 }
 .cellmenu2_naked
@@ -271,7 +271,7 @@ a.cellmenu1_link:hover
 	text-indent:0px;
 	font-weight:bold;
 
-	background-color: #256392;
+	background-color: #0A4CAD;
 	color: #FFFFFF;
 }
 
@@ -279,7 +279,7 @@ a.cellmenu1_link:hover
 .ErrorMsg 
 {
 	font-weight: bold;
-	COLOR: #FF0000;
+	COLOR: #770000;
 }
 .PriorityEmergency
 {
@@ -308,14 +308,14 @@ a.cellmenu1_link:hover
 .PriorityError
 {
 	color: #FFFFFF;
-	background-color: #CC0000;
+	background-color: #990000;
 	border-top: black 1px solid;
 	border-bottom: black 1px solid;
 	border-right: gray 1px solid;
 }
 .PriorityWarning
 {
-	color: #FFFFFF;
+	color: #000000;
 	background-color: #FFAA00;
 	border-top: black 1px solid;
 	border-bottom: black 1px solid;

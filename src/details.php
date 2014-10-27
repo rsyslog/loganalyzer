@@ -211,10 +211,14 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 	//				$content['fields'][$mycolkey]['FieldValue'] = $logArray[$mycolkey];
 
 					// --- Set CSS Class
-					if ( $counter % 2 == 0 )
+					if ( $counter % 2 == 0 ) {
 						$content['fields'][$mycolkey]['cssclass'] = "line1";
-					else
+						$content['fields'][$mycolkey]['cssclassfont'] = "line1";
+					}
+					else {
 						$content['fields'][$mycolkey]['cssclass'] = "line2";
+						$content['fields'][$mycolkey]['cssclassfont'] = "line2";
+					}
 
 					if ( $mycolkey == SYSLOG_MESSAGE )
 						$content['fields'][$mycolkey]['menucssclass'] = "cellmenu1_naked";

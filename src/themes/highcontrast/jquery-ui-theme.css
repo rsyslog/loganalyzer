@@ -37,7 +37,7 @@
 }
 .ui-widget-header {
 	border: 1px solid #4297d7;
-	background: #005DE5;
+	background: #073A82;
 	color: #ffffff;
 	font-weight: bold;
 }
@@ -47,7 +47,7 @@
 
 .ui-widget-header-noborder {
 	border: 0px; 
-	background: #005DE5;
+	background: #073A82;
 	color: #ffffff;
 	font-weight: bold;
 }
@@ -61,7 +61,7 @@
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
 	border: 1px solid #756b9c;
-	background: #0083E5;
+	background: #0A4CAD;
 	font-weight: bold;
 	color: #ffffff;
 }
@@ -78,7 +78,7 @@
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
 	border: 1px solid #79b7e7;
-	background: #005DE5;
+	background: #00255B;
 	font-weight: bold;
 	color: #FFFFFF;
 }
