@@ -2128,10 +2128,14 @@ function InitFontSettings()
 		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);  
 	else
 		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
-
-
 	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
 
+	/* Set Defaults if not set already! */
+	if ( strlen($userdefaultfont) <= 0 ) 
+		$userdefaultfont = "Arial"; 
+	if ( strlen($userdefaultfont) <= 0 ) 
+		$userdefaultfontsize = "100"; 
+	
 	$content['DYN_STYLESHEET'] = '<style>
 		body, td, select, input, .ui-widget, .ui-widget-content {
 			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
