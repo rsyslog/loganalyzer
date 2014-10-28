@@ -41,6 +41,7 @@ if ( !defined('IN_PHPLOGCON') )
 // --- Basic Includes
 require_once($gl_root_path . 'classes/enums.class.php');
 require_once($gl_root_path . 'classes/msgparser.class.php');
+require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
