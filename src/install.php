@@ -61,6 +61,9 @@ $content['user_theme'] = "default";
 $configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
 $content['HeaderDefaultEncoding'] = ENC_ISO_8859_1; // Set Default encoding!  
 
+// New Set Font settingdefaults
+InitFontSettings(); 
+
 //ini_set('error_reporting', E_ALL); // DEBUG ENABLE
 // ***					*** //
 

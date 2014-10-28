@@ -38,6 +38,7 @@ if ( !defined('IN_PHPLOGCON') )
 // --- 
 
 // --- Basic Includes
+require_once($gl_root_path . 'include/constants_errors.php');
 include_once($gl_root_path . 'include/constants_general.php');
 include_once($gl_root_path . 'include/constants_logstream.php');
 
@@ -896,8 +897,11 @@ function InitConfigurationValues()
 		}
 	}
 
-	// --- Language Handling
+	// --- Init Fonttype and size by config setting
+	InitFontSettings(); 
+	// ---
 
+	// --- Language Handling
 	// Set gen language default
 	$content['gen_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_GLOBAL); 
 	
@@ -982,33 +986,6 @@ function InitConfigurationValues()
 
 	// --- Read ContextLinks Option, and set default!
 	$content['EnableContextLinks'] = GetConfigSetting("EnableContextLinks", 1);  
-	// --- 
-
-	// --- Set dynamic stylesheet options like Font Type and Sizes
-	if ( strpos($_SERVER['HTTP_USER_AGENT'], "Windows") !== false ) // Use other default on Windows
-		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);  
-	else
-		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
-
-
-	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
-
-
-	$content['DYN_STYLESHEET'] = '<style>
-		body, td, select, input, .ui-widget, .ui-widget-content {
-			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
-			font-size: ' . ($userdefaultfontsize/10)*1.10  . 'px; 
-		}
-		a, .linksize {
-			font-size: ' . ($userdefaultfontsize/10)*1.1 . 'px; 
-		}
-		.ui-menu, .title {
-			font-size: ' . ($userdefaultfontsize/10)*1.3 . 'px; 
-		}
-		.ui-button, .ErrorMsg, .topmenu2 {
-			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 
-		}
-	</style>'; 
 	// --- 
 
 	// Init main langauge file now!
@@ -1131,7 +1108,7 @@ function DieWithErrorMsg( $szerrmsg )
 
 function DieWithFriendlyErrorMsg( $szerrmsg, $szLink = "", $szLinkLable = "" )
 {
-	global $RUNMODE, $content, $gl_root_path;
+	global $RUNMODE, $content, $gl_root_path, $DEBUGMODE;
 	if		( $RUNMODE == RUNMODE_COMMANDLINE )
 	{
 		print("\n\n\t\tError occured\n");
@@ -1148,10 +1125,16 @@ function DieWithFriendlyErrorMsg( $szerrmsg, $szLink = "", $szLinkLable = "" )
 			"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
 			"<H3>Error occured</H3>" . 
 			"</td></tr>" . 
-			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Error:</td>" . 
 			"<td class=\"tableBackground\" align=\"left\"><br>" .
 			$szerrmsg . 
 			"<br><br></td></tr>"; 
+		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['detailederror']) && strlen($content['detailederror']) > 0) {
+			echo "<tr><td class=\"cellmenu1_naked\" align=\"left\">Details:</td>" . 
+			"<td class=\"tableBackground\" align=\"left\"><br>" .
+			$content['detailederror'] . 
+			"<br><br></td></tr>"; 
+		}
 		if ( strlen($szLink) > 0 && strlen($szLinkLable) > 0 )
 			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"$gl_root_path$szLink\" target=\"\">$szLinkLable</a></tr></td>";
 		echo 
@@ -2132,4 +2115,39 @@ function InitFontSizeList()
 	$content["fontsizes"]["200"]["Name"]		= "200%"; 
 }
 // --- 
+
+/* 
+Helper function to set dynamic css 
+*/
+function InitFontSettings()
+{
+	global $content; 
+
+	// --- Set dynamic stylesheet options like Font Type and Sizes
+	if ( strpos($_SERVER['HTTP_USER_AGENT'], "Windows") !== false ) // Use other default on Windows
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);  
+	else
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
+
+
+	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
+
+	$content['DYN_STYLESHEET'] = '<style>
+		body, td, select, input, .ui-widget, .ui-widget-content {
+			font-family: ' . $userdefaultfont . ', Verdana, Arial, Helvetica, sans-serif;
+			font-size: ' . ($userdefaultfontsize/10)*1.10  . 'px; 
+		}
+		a, .linksize {
+			font-size: ' . ($userdefaultfontsize/10)*1.1 . 'px; 
+		}
+		.ui-menu, .title {
+			font-size: ' . ($userdefaultfontsize/10)*1.3 . 'px; 
+		}
+		.ui-button, .ErrorMsg, .topmenu2 {
+			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 
+		}
+	</style>'; 
+	// --- 
+}
+
 ?>
