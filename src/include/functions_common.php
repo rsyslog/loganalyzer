@@ -2133,7 +2133,7 @@ function InitFontSettings()
 	/* Set Defaults if not set already! */
 	if ( strlen($userdefaultfont) <= 0 ) 
 		$userdefaultfont = "Arial"; 
-	if ( strlen($userdefaultfont) <= 0 ) 
+	if ( strlen($userdefaultfontsize) <= 0 ) 
 		$userdefaultfontsize = "100"; 
 	
 	$content['DYN_STYLESHEET'] = '<style>
