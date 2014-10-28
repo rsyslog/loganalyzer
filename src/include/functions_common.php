@@ -5,8 +5,6 @@
 	* -----------------------------------------------------------------	*
 	* Common needed functions											*
 	*																	*
-	* -> 		*
-	*																	*
 	* All directives are explained within this file						*
 	*
 	* Copyright (C) 2008-2014 Adiscon GmbH.
@@ -66,7 +64,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "3.7.0";
+$content['BUILDNUMBER'] = "4.0.1";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;

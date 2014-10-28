@@ -1,10 +1,21 @@
 ---------------------------------------------------------------------------
-Version 3.7.0 (beta), 2014-??-??
+Version 4.0.1 (beta), 2014-??-??
 - Included jquery library into Loganalyzer
 - Included jquery-ui library into Loganalyzer
-- Message Popup Window now uses jquery-iu
-- Buttons are now implemented with jquery-ui
-- 
+- Message Popup Window is a jquery-iu dialog now.
+- Almost all Buttons and Menus are based on jquery-ui now. 
+- Added support to set a custom font and fontsize
+- Added new style/theme called "High Contrast", which can be used 
+  for people with debility of sight. 
+- Setting Page Reloadtime to 0 will now disable the automatic reload. 
+- Chart (Statistics) are loading with jquery now. 
+- Chart erroroutput is now HTML. 
+- Cleaned up layout of all admin templates
+- Fixed Tab-Order in Search template. 
+- Added missing Alt-Text to some images in htmlcode. 
+- Added loading overlay to jquery menu and link click functions.
+- Cleanup stylesheets and removed unused csscode. 
+- Changed german language files to UTF8
 ---------------------------------------------------------------------------
 Version 3.6.6 (stable), 2014-09-02
 - Fixed bug in databasemapping admin. The form parameter and database 
