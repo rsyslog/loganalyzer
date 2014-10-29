@@ -22,7 +22,8 @@ function CheckAlphaPNGImage(ImageName, ImageTrans)
 		document.images[ImageName].src = ImageTrans;
 }
 
-function NewWindow(Location, WindowName,X_width,Y_height,Option) {
+function NewWindow(Location, WindowName,X_width,Y_height,Option)
+{
 	var windowReference;
 	var Addressbar = "location=NO";		//Default
 	var OptAddressBar = "AddressBar";	//Default für Adressbar
@@ -34,7 +35,6 @@ function NewWindow(Location, WindowName,X_width,Y_height,Option) {
 	',height=' + Y_height);
 	if (!windowReference.opener)
 		windowReference.opener = self;
-
 }
 
 /*
@@ -336,9 +336,6 @@ function FinishPopupWindowMenu()
 function movePopupWindowMenu(myEvent, ObjName, parentObj)
 {
 	var obj = document.getElementById(ObjName);
-	
-//	var PopupContentWidth = 0;
-//	var middle = PopupContentWidth / 2;
 	var middle = -10;
 
 	if (myPopupHovering == false && obj != null && parentObj != null)
@@ -391,8 +388,6 @@ function HoverPopupHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 	obj = document.getElementById("popupcontent");
 	obj.innerHTML = HoverContent;
 
-//	var PopupContentWidth = 0;
-///	var middle = PopupContentWidth / 2;
 	var middle = -5;
 
 	if (myPopupHovering == false && parentObj != null)
@@ -423,8 +418,6 @@ function HoverPopupMenuHelp( myEvent, parentObj, myPopupTitle, HoverContent )
 	obj = document.getElementById("popupcontent");
 	obj.innerHTML = HoverContent;
 
-//	var PopupContentWidth = 0;
-//	var middle = PopupContentWidth / 2;
 	var middle = -5;
 
 	if (myPopupHovering == false && parentObj != null)

@@ -319,7 +319,7 @@
 		<script> $( "#dialog-link_{uid}" ).click(function( event ) { 
 			$( "#dialog").html('<center></br><img src="{BASEPATH}images/ajax-loader.gif"></br></br></center>');
 			$( "#dialog").load('{detaillink}{additional_url_sourceonly}{additional_url}&layout=naked');
-			$( "#dialog" ).dialog( {position: { my: "center top", at: "center bottom", of: "#dialog-link_{uid}" } }); 
+			$( "#dialog" ).dialog( {position: { my: "left top", at: "center bottom", of: "#dialog-link_{uid}" } }); 
 			$( "#dialog" ).dialog( {title: "{popupcaptionjs}"}); 
 			$( "#dialog" ).dialog( "open" ); 
 			$( "#dialog" ).focus(); 
