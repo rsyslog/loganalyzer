@@ -447,9 +447,15 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 		// Hide 
 		menu.hide();
 	}
-	
+
 	$(szbuttonobjid).button()
 	.click(function() {
+
+		/* Hide all other Menus first!*/
+		$('ul[id^="menu"]').each(function () {
+			$(this).hide();
+		});
+
 		// Make use of the general purpose show and position operations
 		// open and place the menu where we want.
 		menu.show().position({
@@ -462,14 +468,14 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 
 		// Register a click outside the menu to close it
 		$( document ).on( "click", function() {
-			  menu.hide();
+			menu.hide();
 		});
 
 		// Helper function to close a menu by escape key
 		$( document ).keyup(function(e) {
 			if (e.keyCode == 27) { 
 				menu.hide(); 
-			}   
+			}
 		});
 
 		// Helper function to click a link by keypress
@@ -488,8 +494,7 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 			}
 		});
 
-		// Make sure to return false here or the click registration
-		// above gets invoked.
+		// Make sure to return false here or the click registration above gets invoked.
 		return false;
 	})
 }
