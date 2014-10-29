@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-Version 4.0.1 (beta), 2014-10-29
+Version 4.1.1 (beta), 2014-10-29
 - Included jquery library into Loganalyzer
 - Included jquery-ui library into Loganalyzer
 - Message Popup Window is a jquery-iu dialog now.
