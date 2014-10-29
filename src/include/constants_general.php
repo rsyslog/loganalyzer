@@ -170,7 +170,7 @@ define('SYSLOG_DEBUG', 7);
 $severity_colors[SYSLOG_EMERG] = "#840A15";
 $severity_colors[SYSLOG_ALERT] = "#BA0716";
 $severity_colors[SYSLOG_CRIT] = "#CE0819";
-$severity_colors[SYSLOG_ERR] = "#FF0A1F";
+$severity_colors[SYSLOG_ERR] = "#BB0A1F";
 $severity_colors[SYSLOG_WARNING] = "#EF8200";
 $severity_colors[SYSLOG_NOTICE] = "#14AD42";
 $severity_colors[SYSLOG_INFO] = "#0C9C91";
