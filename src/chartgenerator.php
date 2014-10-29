@@ -484,10 +484,6 @@ if ( !$content['error_occured'] )
 				if ( isset($extraErrorDescription) )
 					$content['error_details'] .= "\n\n" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 			}
-
-
-//$fields[SYSLOG_UID]['FieldID']
-
 		}
 		else
 		{
@@ -511,15 +507,7 @@ if ( !$content['error_occured'] )
 // --- 
 // Output error if necessary
 if ( $content['error_occured'] )
-{
-	// Create template Parser and output results
-	$content['TITLE'] .= " :: " . $content['LN_GEN_ERRORDETAILS'];
-	InitTemplateParser();
-	$page -> parser($content, "chartgenerator.html");
-	$page -> output(); 
-	// Exit in any case
-	exit;
-}
+	OutpuCustomErrorMessage(); 
 // --- 
 
 /*
@@ -540,9 +528,28 @@ if ( $content['error_occured'] )
 // --- 
 */
 
-// --- Output the image
-//$graph->Stroke();
-$graph->StrokeCSIM( $content['custombasepath'] . basename(__FILE__), '', 0); 
+// --- Output the image with HTML Code
+// Use Exception handling here to Show error's as well!
+try {
+	$graph->StrokeCSIM( $content['custombasepath'] . basename(__FILE__), '', 0); 
+}
+catch(JpGraphException $e) {
+	$content['error_occured'] = true;
+	$content['error_details'] = $e->GetMessage();
+	OutpuCustomErrorMessage(); 
+}
 // --- 
 
+function OutpuCustomErrorMessage() {
+	global $page, $content; 
+
+	// Create template Parser and output results
+	$content['TITLE'] .= " :: " . $content['LN_GEN_ERRORDETAILS'];
+	InitTemplateParser();
+	$page -> parser($content, "chartgenerator.html");
+	$page -> output(); 
+
+	// Exit in any case
+	exit;
+}
 ?>

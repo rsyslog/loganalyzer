@@ -88,7 +88,7 @@ define('READ_CACHE',true);
 // Determine if the error handler should be image based or purely
 // text based. Image based makes it easier since the script will
 // always return an image even in case of errors.
-define('USE_IMAGE_ERROR_HANDLER',true);
+define('USE_IMAGE_ERROR_HANDLER',false);
 
 // Should the library examine the global php_errmsg string and convert
 // any error in it to a graphical representation. This is handy for the
