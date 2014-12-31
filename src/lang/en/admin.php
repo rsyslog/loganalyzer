@@ -232,6 +232,7 @@ $content['LN_DBMP_NAME'] = "Database Mappingname";
 $content['LN_DBMP_DBMAPPINGS'] = "Database Mappings";
 $content['LN_DBMP_ADD'] = "Add new Database Mapping";
 $content['LN_DBMP_EDIT'] = "Edit Database Mapping";
+$content['LN_DBMP_DELETE'] = "Delete Database Mapping";
 $content['LN_DBMP_ERROR_IDNOTFOUND'] = "A Database Mapping with ID '%1' could not be found.";
 $content['LN_DBMP_ERROR_INVALIDID'] = "The Database Mapping with ID '%1' is not a valid Database Mapping.";
 $content['LN_DBMP_WARNDELETEMAPPING'] = "Are you sure that you want to delete the Database Mapping '%1'? This cannot be undone!";
