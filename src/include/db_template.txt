@@ -170,6 +170,8 @@ CREATE TABLE `logcon_dbmappings` (
 -- 
 -- Table structure for table `logcon_savedreports`
 -- 
+
+DROP TABLE IF EXISTS `logcon_savedreports`;
 CREATE TABLE `logcon_savedreports` (
   `ID` int(11) NOT NULL auto_increment,
   `reportid` varchar(255) NOT NULL,
