@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `logcon_users` (
   `password` varchar(32) NOT NULL,
   `is_admin` tinyint(1) NOT NULL default '0',
   `is_readonly` tinyint(1) NOT NULL DEFAULT '0', 
-  `last_login` int(4) NOT NULL,
+  `last_login` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table for the phplogcon users' AUTO_INCREMENT=1 ;
 
@@ -170,6 +170,8 @@ CREATE TABLE `logcon_dbmappings` (
 -- 
 -- Table structure for table `logcon_savedreports`
 -- 
+
+DROP TABLE IF EXISTS `logcon_savedreports`;
 CREATE TABLE `logcon_savedreports` (
   `ID` int(11) NOT NULL auto_increment,
   `reportid` varchar(255) NOT NULL,
