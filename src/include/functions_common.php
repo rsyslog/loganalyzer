@@ -702,6 +702,7 @@ function InitFrontEndVariables()
 {
 	global $content;
 
+	$content['IMG_SPACER'] = $content['BASEPATH'] . "images/spacer.gif";
 	$content['MENU_FOLDER_OPEN'] = $content['BASEPATH'] . "images/icons/folder_closed.png";
 	$content['MENU_FOLDER_CLOSED'] = $content['BASEPATH'] . "images/icons/folder.png";
 	$content['MENU_HOMEPAGE'] = $content['BASEPATH'] . "images/icons/home.png";

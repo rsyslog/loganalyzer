@@ -25,12 +25,12 @@
 	<td nowrap align="center" nowrap valign="top">
 		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" onkeypress="MoveToButtonOnKeypress('buttonsearch', event);">
 		</br>
-		<button id="buttonsearch"><img align="left" width="16" height="16" vspace="0" class="ui-icon ui-icon-search" title="{LN_SEARCH}">&nbsp;{LN_SEARCH}</button>
+		<button id="buttonsearch"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-search" title="{LN_SEARCH}">&nbsp;{LN_SEARCH}</button>
 <!-- IF enabledoraclesearchstr="true" -->
-		<button id="buttonmoreinfo"><img align="left" width="16" height="16" vspace="0" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
+		<button id="buttonmoreinfo"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
 <!-- ENDIF enabledoraclesearchstr="true" -->
-		<button id="buttonlucky"><img align="left" width="16" height="16" vspace="0" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</span></button>
-		<button id="buttonreset"><img align="left" width="16" height="16" vspace="0" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</span></button>
+		<button id="buttonlucky"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</span></button>
+		<button id="buttonreset"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</span></button>
 		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
 		<script> 
 			CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
