@@ -56,7 +56,7 @@ class LogStreamMongoDB extends LogStream {
 	private $_previousPageUID = -1;
 	private $_lastPageUID = -1;
 	private $_firstPageUID = -1;
-	private $_currentPageNumber = 0;
+	private $_currentPageNumber = -1;
 
 	private $_SQLwhereClause = "";
 	private $_myDBQuery = null;
@@ -113,7 +113,7 @@ class LogStreamMongoDB extends LogStream {
 //			return $res;
 
 		// Success, this means we init the Pagenumber to ONE!
-		$this->_currentPageNumber = 1;
+//		$this->_currentPageNumber = 1;
 		
 		// reached this point means success!
 		return SUCCESS;

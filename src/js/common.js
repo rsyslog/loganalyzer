@@ -435,7 +435,7 @@ function CreateMenuFunction ( szbuttonobjid, szmenuobjid, bHide )
 {
 	// Popup Menu Code
 	var menu = $("ul" + szmenuobjid).menu();
-	
+
 	if (bHide) {
 		// Hide 
 		menu.hide();

@@ -316,7 +316,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$content['main_recordcount_found'] = false;
 			
 			$content['main_currentpagenumber'] = $stream->GetCurrentPageNumber();
-			if ( $content['main_currentpagenumber'] >= 0 )
+			if ( $content['main_currentpagenumber'] > 0 )
 				$content['main_currentpagenumber_found'] = true;
 			else
 				$content['main_currentpagenumber_found'] = false;
