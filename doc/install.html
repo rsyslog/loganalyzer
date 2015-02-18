@@ -226,6 +226,9 @@ script now.
 <P>In most environments the webserver has only access to the web
 directory. If you want to read files e.g. from /var/log/ you have to
 grant the necessary permisson to your webserver.</P>
+<P>A note for linux systems that have <strong>SELinux</strong> enabled, you will 
+most likely get an access denied error when trying to access logs in /var/log 
+regardless if the file permissions are correct. </P>
 <P>Of course, you always need to make sure that the user the web
 server runs under also has the correct file permissions. Be careful
 when doing this, you may create a security vulnerability by granting
