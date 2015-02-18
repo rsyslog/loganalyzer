@@ -13,12 +13,12 @@
 <!-- IF EnablePredefinedSearches="true" -->
 	<td nowrap valign="top" nowrap>
 		<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
-		<ul id="menu_searches" style="position:absolute;z-index:99;">
+		<ul id="menu_searches" style="position:absolute;z-index:99;display:none;">
 			<!-- BEGIN Search -->
 			<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
 			<!-- END Search -->
 		</ul>
-		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", true );</script>
+		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", false );</script>
 	</td>
 <!-- ENDIF EnablePredefinedSearches="true" -->
 	<td align="center" nowrap valign="top">
@@ -279,7 +279,7 @@
 			<button id="button_menu_{FieldColumn}_{uid}"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_AVAILABLESEARCHES}"></span></button>
 			<!-- ENDIF hasdropdownbutton="true" -->
 
-			<ul id="menu_{FieldColumn}_{uid}" style="position:absolute;z-index:99">
+			<ul id="menu_{FieldColumn}_{uid}" style="position:absolute;z-index:99;display:none;">
 				<li class="ui-widget-header-noborder">{LN_GEN_AVAILABLESEARCHES}</li>
 				<!-- BEGIN buttons -->
 				<li>
@@ -288,7 +288,7 @@
 				</li>
 				<!-- END buttons -->
 			</ul>
-			<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", true );</script>
+			<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", false );</script>
 		<!-- ENDIF hasbuttons="true" -->
 
 		<!-- IF ismessagefield="true" -->
@@ -300,7 +300,7 @@
 			<!-- IF ismessagefield!="true" -->
 				<!-- IF hasbuttons="true" -->
 				<button id="button_menu_{FieldColumn}_{uid}">{fieldvalue}</button>
-				<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", true );</script>
+				<script> CreateMenuFunction( "#button_menu_{FieldColumn}_{uid}", "#menu_{FieldColumn}_{uid}", false );</script>
 				<!-- ENDIF hasbuttons="true" -->
 
 				<!-- IF hasbuttons!="true" -->

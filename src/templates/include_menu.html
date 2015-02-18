@@ -4,7 +4,7 @@
 <button id="button_menu_stats"><img align="left" src="{MENU_CHARTS}" width="16" height="16" vspace="0" title="{LN_MENU_STATISTICS}">&nbsp;{LN_MENU_STATISTICS}</button>
 <button id="button_menu_reports"><img align="left" src="{MENU_CHARTPRESENTATION}" width="16" height="16" vspace="0" title="{LN_MENU_REPORTS}">&nbsp;{LN_MENU_REPORTS}</button>
 <button id="button_menu_help"><img align="left" src="{MENU_HELP}" width="16" height="16" vspace="0" title="{LN_MENU_HELP}">&nbsp;{LN_MENU_HELP}</button>
-<ul id="menu_help" style="position:absolute;z-index:99;">
+<ul id="menu_help" style="position:absolute;z-index:99;display:none;">
 	<li><a href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_DOC}">&nbsp;{LN_MENU_DOC}</a></li>
 	<li><a href="http://kb.monitorware.com/phplogcon-f39.html" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_FORUM}">&nbsp;{LN_MENU_FORUM}</a></li>
 	<li><a href="http://wiki.rsyslog.com/index.php/PhpLogCon_FAQ" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_WIKI}">&nbsp;{LN_MENU_WIKI}</a></li>
@@ -31,6 +31,6 @@
 	CreateLinkFunction( "#button_menu_showevt", "{BASEPATH}index.php?{additional_url}"); 
 	CreateLinkFunction( "#button_menu_stats", "{BASEPATH}statistics.php"); 
 	CreateLinkFunction( "#button_menu_reports", "{BASEPATH}reports.php"); 
-	CreateMenuFunction( "#button_menu_help", "#menu_help", true );
+	CreateMenuFunction( "#button_menu_help", "#menu_help", false );
 	CreateLinkFunction( "#button_menu_searchkb", "http://kb.monitorware.com/search.php"); 
 </script>
