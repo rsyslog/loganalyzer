@@ -501,7 +501,8 @@ class Report_eventsummary extends Report {
 					$tmpMyEvent['FirstEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['firstoccurrence_date'] );
 					$tmpMyEvent['LastEvent_Date_Formatted'] = GetFormatedDate( $tmpMyEvent['lastoccurrence_date'] );
 					$tmpMyEvent['syslogseverity_text'] = $content['filter_severity_list'][ $tmpMyEvent['syslogseverity'] ]["DisplayName"]; 
-					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
+					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 					   
+					$tmpMyEvent['htmlmsg'] = htmlspecialchars($tmpMyEvent[SYSLOG_MESSAGE]); 
 				}
 			}
 			// --- 

@@ -435,6 +435,7 @@ class Report_syslogsummary extends Report {
 					$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
 					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
 					$tmpMyEvent['syslogfacility_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogfacility']);
+					$tmpMyEvent['htmlmsg'] = htmlspecialchars($tmpMyEvent[SYSLOG_MESSAGE]); 
 				}
 			}
 			// --- 

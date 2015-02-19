@@ -92,7 +92,7 @@
 	</tr>
 	<tr>
 		<td class="cellmenu1" align="center" valign="top" nowrap colspan="2" width="200">{ln_report_description}</td>
-		<td class="cellmenu1" align="left" nowrap colspan="4">{msg:wordwrap:32}</td>
+		<td class="cellmenu1" align="left" nowrap colspan="4">{htmlmsg:wordwrap:32}</td>
 	</tr>
 	<!-- END cons_msgs -->
 	</table>
