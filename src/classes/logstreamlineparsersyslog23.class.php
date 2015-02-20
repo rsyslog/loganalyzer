@@ -79,7 +79,12 @@ class LogStreamLineParsersyslog23 extends LogStreamLineParser {
 			$arrArguments[SYSLOG_HOST] = $out[4];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[5];
 			$arrArguments[SYSLOG_PROCESSID] = $out[6];
-			$arrArguments[SYSLOG_MESSAGE] = $out[9];
+			// Init MessageField
+			$arrArguments[SYSLOG_MESSAGE] = ""; 
+			if ( $out[8] != "-" ) // Add structured data if useful
+				$arrArguments[SYSLOG_MESSAGE] .= "!!!!" . $out[8];
+			// Add Message Text
+			$arrArguments[SYSLOG_MESSAGE] .= $out[9];
 		}
 		// Sample: <22>1 2011-03-03T15:27:06.501740+01:00 debian507x64 postfix 2454 - -  daemon started -- version 2.5.5, configuration /etc/postfix
 		// Sample: <46>1 2011-03-03T15:27:05.366981+01:00 debian507x64 rsyslogd - - -  [origin software="rsyslogd" swVersion="4.6.4" x-pid="2344" x-info="http://www.rsyslog.com"] (re)start
@@ -92,7 +97,29 @@ class LogStreamLineParsersyslog23 extends LogStreamLineParser {
 			$arrArguments[SYSLOG_HOST] = $out[4];
 			$arrArguments[SYSLOG_SYSLOGTAG] = $out[5];
 			$arrArguments[SYSLOG_PROCESSID] = $out[6];
-			$arrArguments[SYSLOG_MESSAGE] = $out[9];
+			// Init MessageField
+			$arrArguments[SYSLOG_MESSAGE] = ""; 
+			if ( $out[8] != "-" ) // Add structured data if useful
+				$arrArguments[SYSLOG_MESSAGE] .= "!!!!" . $out[8];
+			// Add Message Text
+			$arrArguments[SYSLOG_MESSAGE] .= $out[9];
+		}
+		// Sample: <166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+		else if ( preg_match("/<([0-9]{1,3})>([0-9]) ([0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,3}(?:.|..)) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?)$/", $szLine, $out ) )
+		{
+			// Copy parsed properties!
+			$arrArguments[SYSLOG_FACILITY] = $out[1] >> 3;
+			$arrArguments[SYSLOG_SEVERITY] = $out[1] & 0x0007;
+			$arrArguments[SYSLOG_DATE] = GetEventTime($out[3]);
+			$arrArguments[SYSLOG_HOST] = $out[4];
+			$arrArguments[SYSLOG_SYSLOGTAG] = $out[5];
+			$arrArguments[SYSLOG_PROCESSID] = $out[6];
+			// Init MessageField
+			$arrArguments[SYSLOG_MESSAGE] = ""; 
+			if ( $out[8] != "-" ) // Add structured data if useful
+				$arrArguments[SYSLOG_MESSAGE] .= "!!!!" . $out[8];
+			// Add Message Text
+			$arrArguments[SYSLOG_MESSAGE] .= $out[9];
 		}
 		else
 		{
