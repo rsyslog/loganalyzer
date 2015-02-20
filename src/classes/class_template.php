@@ -196,11 +196,16 @@ class Template {
 					// FIXED BY ANDRE | Do not convert OBJECTS into strings!
 					if ( !is_object($k) && !is_object($v) ) 
 					{
+						// Helper variable
+						global $tmpValue; 
+						$tmpValue = $v; 
+
 						// Replace normal variables
 						$template = str_replace('{'.$k.'}',  "$v",  $template);
 
 						// Replace variables with options, use Callback function!
-						$template = preg_replace( '/{'.$k.':(.*?):(.*?)}/ie', 'InsertTemplateVariable("$v", "\\1", "\\2")', $template );
+						// $template = preg_replace( '/{'.$k.':(.*?):(.*?)}/ie', 'InsertTemplateVariable("$v", "\\1", "\\2")', $template );
+						$template = preg_replace_callback( '/{'.$k.':(.*?):(.*?)}/i', "InsertTemplateVariable", $template );
 					}
 				}
 			}
@@ -306,24 +311,34 @@ class Template {
 	}
 }
 
-function InsertTemplateVariable($szValue, $szOperation, $szOption)
+function InsertTemplateVariableHelper($szValue, $matches)
 {
-	// Set Default
-	$szResult = $szValue; 
+
+}
+
+function InsertTemplateVariable($matches) // $szValue, $szOperation, $szOption)
+{
+	// Helper variable because of preg_replace_callback
+	global $tmpValue; 
+
+	// Set Defaults
+	$szResult = $tmpValue; 
+	$szOperation = $matches[1]; 
+	$szOption = $matches[2]; 
 
 	switch ( $szOperation ) 
 	{
 		case "trunscate": 
-			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
-				$szResult = substr($szValue, 0, $szOption) . " ..."; 
+			if ( is_numeric($szOption) && strlen($tmpValue) > $szOption) 
+				$szResult = substr($tmpValue, 0, $szOption) . " ..."; 
 			break;
 		case "forcelinebreak": 
-			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
-				$szResult = wordwrap($szValue, $szOption, "<br>", true); 
+			if ( is_numeric($szOption) && strlen($tmpValue) > $szOption) 
+				$szResult = wordwrap($tmpValue, $szOption, "<br>", true); 
 			break;
 		case "wordwrap": 
-			if ( is_numeric($szOption) && strlen($szValue) > $szOption) 
-				$szResult = wordwrap($szValue, $szOption, " ", true); 
+			if ( is_numeric($szOption) && strlen($tmpValue) > $szOption) 
+				$szResult = wordwrap($tmpValue, $szOption, " ", true); 
 			break;
 		default: 
 			// Nothing

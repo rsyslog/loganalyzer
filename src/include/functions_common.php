@@ -1471,7 +1471,8 @@ function AddContextHighlights(&$sourceTxt)
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
-		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		// oldcode ! $sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		$sourceTxt = preg_replace_callback( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/i', 'ReverseResolveIP', $sourceTxt );
 	}
 
 	// check if user disabled Context Links. 
@@ -1485,15 +1486,15 @@ function AddContextHighlights(&$sourceTxt)
 	// Create Search Array
 	$search = array 
 				(
-					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/ie',
-					'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/ie',
+					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/i',
+					'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/i',
 				);
 
 	// Create Replace Array
 	$replace = array 
 				(
-					"'.' . '<font class=\"highlighted\">' . \"\\1.\\2\" . '</font>'  . \"\\3\"",
-					"'<font class=\"highlighted\">' . \"\\1.\\2.\\3.\\4\" . '</font>'", 
+					".<font class=\"highlighted\">\\1.\\2</font>\\3",
+					"<font class=\"highlighted\">\\1.\\2.\\3.\\4</font>", 
 				);
 	
 	// Replace and return!
@@ -1511,7 +1512,8 @@ function AddContextLinks(&$sourceTxt)
 	if ( GetConfigSetting("EnableIPAddressResolve", 0, CFGLEVEL_USER) == 1 )
 	{
 		// Search for IP's and Add Reverse Lookup first!
-		$sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		// $sourceTxt = preg_replace( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ie', "'\\1\\2.\\3.\\4.\\5' . ReverseResolveIP('\\2.\\3.\\4.\\5', '<font class=\"highlighted\"> {', '} </font>')", $sourceTxt );
+		$sourceTxt = preg_replace_callback( '/([^\[])\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/i', "ReverseResolveIP", $sourceTxt );
 	}
 
 	// check if user disabled Context Links. 
@@ -1522,30 +1524,21 @@ function AddContextLinks(&$sourceTxt)
 	if ( !isset($szTLDDomains) )
 		CreateTopLevelDomainSearch();
 
-	// Create Search Array
-	$search = array 
-				(
-					'/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/ie',
-/* (?:127)| */		'/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/ie',
-				);
-
-	// Create Replace Array
-	$replace = array 
-				(
-					"'.' . InsertLookupLink(\"\", \"\\1.\\2\", \"\", \"\\3\")",
-					"InsertLookupLink(\"\\1.\\2.\\3.\\4\", \"\", \"\", \"\")", 
-				);
-	
 	// Replace and return!
-	$sourceTxt = preg_replace( $search, $replace, $sourceTxt );
+	$sourceTxt = preg_replace_callback( '/\.([\w\d\_\-]+)\.(' . $szTLDDomains . ')([^a-zA-Z0-9\.])/i', "InsertLookupLinkDomain", $sourceTxt );
+	$sourceTxt = preg_replace_callback( '/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/i', "InsertLookupLinkIP", $sourceTxt );
 }
 
 /*
 *	Helper to create a Lookup Link!
 */
-function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
+function InsertLookupLinkIP( $matches ) // $szIP, $szDomain, $prepend, $append )
 {
 	global $content, $uID;
+
+	$szIP = $matches[1] . "." . $matches[2] . "." . $matches[3] . "." . $matches[4]; 
+	$prepend = "";
+	$append = "";
 
 	// Create string
 	$szReturn = $prepend;
@@ -1556,27 +1549,47 @@ function InsertLookupLink( $szIP, $szDomain, $prepend, $append )
 	else
 		$includeLinkUID = "";
 	
-	// check if it is an IP or domain
-	if ( strlen($szIP) > 0 )
-	{
-		if ( IsInternalIP($szIP) )
-			// Do not create a LINK in this case!
-			$szReturn .= '<b>' . $szIP . '</b>';
-		else
-			// Normal LINK!
-			$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
+	if ( IsInternalIP($szIP) )
+		// Do not create a LINK in this case!
+		$szReturn .= '<b>' . $szIP . '</b>';
+	else
+		// Normal LINK!
+		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=ip&origin=phplogcon&q=' . $szIP . '" target="_top" class="contextlink">' . $szIP . '</a>';
 
-		// Add InfoSearch Link
-		$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
-	}
-	else if ( strlen($szDomain) > 0 ) 
-	{
-		$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
+	// Add InfoSearch Link
+	$szReturn .= '<a href="asktheoracle.php?type=ip&query=' . $szIP . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 
-		// Add InfoSearch Link
-		$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
+	// Append the append string now
+	$szReturn .= $append;
 
-	}
+	// return result
+	return $szReturn;
+}
+
+/*
+*	Helper to create a Lookup Link!
+*/
+function InsertLookupLinkDomain( $matches ) // $szIP, $szDomain, $prepend, $append )
+{
+	global $content, $uID;
+
+	$szDomain = $matches[1] . "." . $matches[2]; 
+	$prepend = "."; 
+	$append = $matches[3]; 
+
+	// Create string
+	$szReturn = $prepend;
+
+	// Set IUD property if available
+	if ( isset($uID) )
+		$includeLinkUID = "&uid=" . $uID;
+	else
+		$includeLinkUID = "";
+	
+	$szReturn .= '<a href="http://kb.monitorware.com/kbsearch.php?sa=whois&oid=name&origin=phplogcon&q=' . $szDomain . '" target="_top" class="contextlink">' . $szDomain . '</a>';
+
+	// Add InfoSearch Link
+	$szReturn .= '<a href="asktheoracle.php?type=domain&query=' . $szDomain . $includeLinkUID . '" target="_top"><img src="' . $content['MENU_HELP_BLUE'] . '" width="16" height="16" title="' . $content['LN_GEN_MOREINFORMATION'] . '"></a>';
 
 	// Append the append string now
 	$szReturn .= $append;
@@ -1611,18 +1624,26 @@ function IsInternalIP($szIPAddress)
 /*
 *	Reserve Resolve IP Address!
 */
-function ReverseResolveIP( $szIP, $prepend, $append )
+function ReverseResolveIP( $matches ) // $szIP, $prepend, $append )
 {
 	global $gl_starttime, $content; 
+
+	// Callback functions seem to always call sessionstart
+	@session_start();
+
+	// Set Properties here now!
+	$szIP = $matches[2] . "." . $matches[3] . "." . $matches[4] . "." . $matches[5]; 
+	$prepend = $matches[1] . $szIP . '<font class=\"highlighted\"> {'; 
+	$append = '} </font>'; 
 
 	// Substract 5 seconds we need to finish processing!
 	$scriptruntime = intval(microtime_float() - $gl_starttime);
 	if ( $content['MaxExecutionTime'] > 0 && $scriptruntime > ($content['MaxExecutionTime']-5) )
-		return "";
+		return $matches[0];
 
 	// Abort if these IP's are postet
 	if ( strpos($szIP, "0.0.0.0") !== false | strpos($szIP, "127.") !== false | strpos($szIP, "255.255.255.255") !== false ) 
-		return "";
+		return $matches[0];
 	else
 	{
 		// Resolve name if needed
@@ -1631,12 +1652,15 @@ function ReverseResolveIP( $szIP, $prepend, $append )
 		
 		// Abort if IP and RESOLVED name are the same ^^!
 		if ( $_SESSION['dns_cache'][$szIP] == $szIP || strlen($_SESSION['dns_cache'][$szIP]) <= 0 )
-			return;
+			return $matches[0];
 
 		// Create string
 		$szReturn  = $prepend;
 		$szReturn .= $_SESSION['dns_cache'][$szIP];
 		$szReturn .= $append;
+
+//		echo $szReturn; 
+//		exit; 
 
 		// return result
 		return $szReturn;
@@ -1664,6 +1688,7 @@ function StartPHPSession()
 	{
 		// This will start the session
 		@session_start();
+
 
 		if ( !isset($_SESSION['SESSION_STARTED']) )
 			$_SESSION['SESSION_STARTED'] = "true";
