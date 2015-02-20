@@ -461,13 +461,14 @@ function WriteHTML($html)
 				$attr=array();
 				if (!empty($contents))
 				{
-  				foreach($contents[0] as $v)
-  				{
-  				    if(ereg('^([^=]*)=["\']?([^"\']*)["\']?$',$v,$a3))
-    					{
-    						$attr[strtoupper($a3[1])]=$a3[2];
-     					}
-  				}
+					foreach($contents[0] as $v)
+					{
+						// FIXED BY ANDRE
+						//if(ereg('^([^=]*)=["\']?([^"\']*)["\']?$',$v,$a3))
+						if(preg_match('/^([^=]*)=["\']?([^"\']*)["\']?$/',$v,$a3))
+							$attr[strtoupper($a3[1])]=$a3[2];
+						// FIXED BY ANDRE
+					}
 				}
 				$this->OpenTag($tag,$attr);
 			}
