@@ -72,6 +72,20 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 }
 // --- 
 
+// --- FIX MSIE8 Button Values
+if (isset($_POST['op']))
+{
+	if (strpos($_POST['op'], $content['LN_REPORTS_ADDSAVEDREPORTANDRETURN']) !== false )
+		$_POST['op'] = "addsavedreport_return"; 
+	else if (strpos($_POST['op'], $content['LN_REPORTS_EDITSAVEDREPORTANDRETURN']) !== false )
+		$_POST['op'] = "editsavedreport_return"; 
+	else if (strpos($_POST['op'], $content['LN_REPORTS_ADDSAVEDREPORT']) !== false )
+		$_POST['op'] = "addsavedreport"; 
+	else if (strpos($_POST['op'], $content['LN_REPORTS_EDITSAVEDREPORT']) !== false )
+		$_POST['op'] = "editsavedreport"; 
+}
+// ---
+
 // --- BEGIN Custom Code
 $content['OPTIONAL_TITLE'] = "";
 

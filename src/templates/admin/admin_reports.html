@@ -222,17 +222,17 @@
 			if (myform.elements['outputTarget'].value == REPORT_TARGET_STDOUT)
 			{
 				hidevisibility('HiddenOutputFormatFile');
-				toggleformelement('outputFormat_filename', false);
+				toggleformelement('HiddenOutputFormatFile', false);
 			}
 			else if (myform.elements['outputTarget'].value == REPORT_TARGET_FILE)
 			{
 				togglevisibility('HiddenOutputFormatFile');
-				toggleformelement('outputFormat_filename', true);
+				toggleformelement('HiddenOutputFormatFile', true);
 			}
 			else if (myform.elements['outputTarget'].value == REPORT_TARGET_EMAIL)
 			{
 				hidevisibility('HiddenOutputFormatFile');
-				toggleformelement('outputFormat_filename', false);
+				toggleformelement('HiddenOutputFormatFile', false);
 			}
 		}
 
