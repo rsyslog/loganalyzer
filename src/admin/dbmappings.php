@@ -93,7 +93,7 @@ if ( isset($_GET['op']) )
 			if ( isset($content['DBMP'][ $content['DBMPID'] ]) )
 			{
 				//Set the FormAdd URL
-				$content['FormUrlAddOP'] = "?op=edit&id=" . $content['DBMPID'];
+				$content['FormUrlAddOP'] = "?op=edit&dbmpid=" . $content['DBMPID'];
 
 				$mymapping = $content['DBMP'][ $content['DBMPID'] ];
 				$content['DisplayName'] = $mymapping['DisplayName'] ;
