@@ -2155,4 +2155,25 @@ function InitFontSettings()
 	// --- 
 }
 
+function ReplaceDollarChar($myValue)
+{
+	if ( is_array($myValue) )
+	{	// Array value
+		$retArray = array(); 
+		foreach( $myValue as $mykey => $myString )
+		{
+			// Add slashes before $ characters
+			$retArray[$mykey] = addcslashes ( $retArray[$mykey], "$" ); 
+		}
+
+		// Return fixed array!
+		return $retArray; 
+	}
+	else
+	{
+		// Add slashes before $ characters
+		return addcslashes( $myValue, "$" );
+	}
+}
+
 ?>

@@ -799,27 +799,27 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	$patterns[] = "/\\\$CFG\['LDAPBindDN'\] = (.*?);/";
 	$patterns[] = "/\\\$CFG\['LDAPBindPassword'\] = (.*?);/";
 
-	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . $_SESSION['ViewMessageCharacterLimit'] . ";";
-	$replacements[] = "\$CFG['ViewStringCharacterLimit'] = " . $_SESSION['ViewStringCharacterLimit'] . ";";
-	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . $_SESSION['ViewEntriesPerPage'] . ";";
-	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . $_SESSION['ViewEnableDetailPopups'] . ";";
-	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . $_SESSION['EnableIPAddressResolve'] . ";";
-	$replacements[] = "\$CFG['UserDBEnabled'] = " . $_SESSION['UserDBEnabled_value'] . ";";
-	$replacements[] = "\$CFG['UserDBServer'] = '" . $_SESSION['UserDBServer'] . "';";
-	$replacements[] = "\$CFG['UserDBPort'] = " . $_SESSION['UserDBPort'] . ";";
-	$replacements[] = "\$CFG['UserDBName'] = '" . $_SESSION['UserDBName'] . "';";
-	$replacements[] = "\$CFG['UserDBPref'] = '" . $_SESSION['UserDBPref'] . "';";
-	$replacements[] = "\$CFG['UserDBUser'] = '" . $_SESSION['UserDBUser'] . "';";
-	$replacements[] = "\$CFG['UserDBPass'] = '" . $_SESSION['UserDBPass'] . "';";
-	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . $_SESSION['UserDBLoginRequired_value'] . ";";
-	$replacements[] = "\$CFG['UserDBAuthMode'] = " . $_SESSION['UserDBAuthMode'] . ";";
-	$replacements[] = "\$CFG['LDAPServer'] = '" . $_SESSION['LDAPServer'] . "';";
-	$replacements[] = "\$CFG['LDAPPort'] = " . $_SESSION['LDAPPort'] . ";";
-	$replacements[] = "\$CFG['LDAPBaseDN'] = '" . $_SESSION['LDAPBaseDN'] . "';";
-	$replacements[] = "\$CFG['LDAPSearchFilter'] = '" . $_SESSION['LDAPSearchFilter'] . "';";
-	$replacements[] = "\$CFG['LDAPUidAttribute'] = '" . $_SESSION['LDAPUidAttribute'] . "';";
-	$replacements[] = "\$CFG['LDAPBindDN'] = '" . $_SESSION['LDAPBindDN'] . "';";
-	$replacements[] = "\$CFG['LDAPBindPassword'] = '" . $_SESSION['LDAPBindPassword'] . "';";
+	$replacements[] = "\$CFG['ViewMessageCharacterLimit'] = " . ReplaceDollarChar($_SESSION['ViewMessageCharacterLimit']) . ";";
+	$replacements[] = "\$CFG['ViewStringCharacterLimit'] = " . ReplaceDollarChar($_SESSION['ViewStringCharacterLimit']) . ";";
+	$replacements[] = "\$CFG['ViewEntriesPerPage'] = " . ReplaceDollarChar($_SESSION['ViewEntriesPerPage']) . ";";
+	$replacements[] = "\$CFG['ViewEnableDetailPopups'] = " . ReplaceDollarChar($_SESSION['ViewEnableDetailPopups']) . ";";
+	$replacements[] = "\$CFG['EnableIPAddressResolve'] = " . ReplaceDollarChar($_SESSION['EnableIPAddressResolve']) . ";";
+	$replacements[] = "\$CFG['UserDBEnabled'] = " . ReplaceDollarChar($_SESSION['UserDBEnabled_value']) . ";";
+	$replacements[] = "\$CFG['UserDBServer'] = '" . ReplaceDollarChar($_SESSION['UserDBServer']) . "';";
+	$replacements[] = "\$CFG['UserDBPort'] = " . ReplaceDollarChar($_SESSION['UserDBPort']) . ";";
+	$replacements[] = "\$CFG['UserDBName'] = '" . ReplaceDollarChar($_SESSION['UserDBName']) . "';";
+	$replacements[] = "\$CFG['UserDBPref'] = '" . ReplaceDollarChar($_SESSION['UserDBPref']) . "';";
+	$replacements[] = "\$CFG['UserDBUser'] = '" . ReplaceDollarChar($_SESSION['UserDBUser']) . "';";
+	$replacements[] = "\$CFG['UserDBPass'] = '" . ReplaceDollarChar($_SESSION['UserDBPass']) . "';";
+	$replacements[] = "\$CFG['UserDBLoginRequired'] = " . ReplaceDollarChar($_SESSION['UserDBLoginRequired_value']) . ";";
+	$replacements[] = "\$CFG['UserDBAuthMode'] = " . ReplaceDollarChar($_SESSION['UserDBAuthMode']) . ";";
+	$replacements[] = "\$CFG['LDAPServer'] = '" . ReplaceDollarChar($_SESSION['LDAPServer']) . "';";
+	$replacements[] = "\$CFG['LDAPPort'] = " . ReplaceDollarChar($_SESSION['LDAPPort']) . ";";
+	$replacements[] = "\$CFG['LDAPBaseDN'] = '" . ReplaceDollarChar($_SESSION['LDAPBaseDN']) . "';";
+	$replacements[] = "\$CFG['LDAPSearchFilter'] = '" . ReplaceDollarChar($_SESSION['LDAPSearchFilter']) . "';";
+	$replacements[] = "\$CFG['LDAPUidAttribute'] = '" . ReplaceDollarChar($_SESSION['LDAPUidAttribute']) . "';";
+	$replacements[] = "\$CFG['LDAPBindDN'] = '" . ReplaceDollarChar($_SESSION['LDAPBindDN']) . "';";
+	$replacements[] = "\$CFG['LDAPBindPassword'] = '" . ReplaceDollarChar($_SESSION['LDAPBindPassword']) . "';";
 	
 	//User Database	Options
 	if ( isset($_SESSION['UserDBEnabled']) && $_SESSION['UserDBEnabled'] )
@@ -830,14 +830,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	//Add the first source! 
 	$firstsource =	"\$CFG['DefaultSourceID'] = 'Source1';\n\n" . 
 					"\$CFG['Sources']['Source1']['ID'] = 'Source1';\n" . 
-					"\$CFG['Sources']['Source1']['Name'] = '" . $_SESSION['SourceName'] . "';\n" . 
-					"\$CFG['Sources']['Source1']['ViewID'] = '" . $_SESSION['SourceViewID'] . "';\n";
+					"\$CFG['Sources']['Source1']['Name'] = '" . ReplaceDollarChar($_SESSION['SourceName']) . "';\n" . 
+					"\$CFG['Sources']['Source1']['ViewID'] = '" . ReplaceDollarChar($_SESSION['SourceViewID']) . "';\n";
 	
 	if ( $_SESSION['SourceType'] == SOURCE_DISK ) 
 	{
 		$firstsource .= "\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;\n" . 
-						"\$CFG['Sources']['Source1']['LogLineType'] = '" . $_SESSION['SourceLogLineType'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DiskFile'] = '" . $_SESSION['SourceDiskFile'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['LogLineType'] = '" . ReplaceDollarChar($_SESSION['SourceLogLineType']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DiskFile'] = '" . ReplaceDollarChar($_SESSION['SourceDiskFile']) . "';\n" . 
 						"";
 	}
 	else if ( $_SESSION['SourceType'] == SOURCE_DB )
@@ -846,14 +846,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		CreateDBTypesList($_SESSION['SourceDBType']);
 
 		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DB;\n" . 
-						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
-						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableType']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . ReplaceDollarChar($content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext']) . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . ReplaceDollarChar($_SESSION['SourceDBServer']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . ReplaceDollarChar($_SESSION['SourceDBName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . ReplaceDollarChar($_SESSION['SourceDBUser']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . ReplaceDollarChar($_SESSION['SourceDBPassword']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . ReplaceDollarChar($_SESSION['SourceDBEnableRowCounting']) . ";\n" . 
 						"";
 	}
 	else if ( $_SESSION['SourceType'] == SOURCE_PDO )
@@ -862,14 +862,14 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		CreateDBTypesList($_SESSION['SourceDBType']);
 
 		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_PDO;\n" . 
-						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBType'] = " . $content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext'] . ";\n" . 
-						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . $_SESSION['SourceDBEnableRowCounting'] . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableType']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . ReplaceDollarChar($content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext']) . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . ReplaceDollarChar($_SESSION['SourceDBServer']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . ReplaceDollarChar($_SESSION['SourceDBName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . ReplaceDollarChar($_SESSION['SourceDBUser']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . ReplaceDollarChar($_SESSION['SourceDBPassword']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . ReplaceDollarChar($_SESSION['SourceDBEnableRowCounting']) . ";\n" . 
 						"";
 	}
 	else if ( $_SESSION['SourceType'] == SOURCE_MONGODB )
@@ -878,12 +878,12 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		CreateDBTypesList($_SESSION['SourceDBType']);
 
 		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_MONGODB;\n" . 
-						"\$CFG['Sources']['Source1']['DBTableType'] = '" . $_SESSION['SourceDBTableType'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBServer'] = '" . $_SESSION['SourceDBServer'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBName'] = '" . $_SESSION['SourceDBName'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBUser'] = '" . $_SESSION['SourceDBUser'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBPassword'] = '" . $_SESSION['SourceDBPassword'] . "';\n" . 
-						"\$CFG['Sources']['Source1']['DBTableName'] = '" . $_SESSION['SourceDBTableName'] . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableType']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . ReplaceDollarChar($_SESSION['SourceDBServer']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . ReplaceDollarChar($_SESSION['SourceDBName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . ReplaceDollarChar($_SESSION['SourceDBUser']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . ReplaceDollarChar($_SESSION['SourceDBPassword']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableName']) . "';\n" . 
 						"";
 	}
 	$patterns[] = "/\/\/ --- \%Insert Source Here\%/";

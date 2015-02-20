@@ -281,7 +281,8 @@ function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = 
 		return $retArray; 
 	}
 	else
-	{	// Single value
+	{	
+		// Single value
 		if ( $dbEngine == DB_MSSQL ) 
 		{
 			// MSSQL needs special treatment -.-
