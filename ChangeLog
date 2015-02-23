@@ -1,4 +1,24 @@
 ---------------------------------------------------------------------------
+Version 4.1.2 (beta), 2015-02-23
+- Corrected error handling in chartgenerator.
+- Fixed minor issues in database layout template.
+- Fixed missing buttons in database mapping admin panel. 
+- Fixed MSIE8 Display Issue with buttons on main page. 
+- Fixed some strings in german translation. 
+- Increased javascript script performance for Firefox, MSIE and Opera. 
+- Removed broken Page Number display support. 
+- Fixed #bugid 532, report generation problem with special html characters. 
+- Fixed #bugid 533 in dbmapping admin panel. 
+- Fixed Installation #bugid 518 when $ character was used in any setting.
+- Fixed #bugid 494 and 311, added support for detecting more timestamps 
+  in RFC5424 Parser. Also adding structured data to the 
+  message field if available.
+- Fixed #bugid 320, added workaround for report admin panel 
+  when using MSIE8, as it incorrectly handles buttons.
+- Fixed multiple PHP 5.5 deprecated issues with preg_replace calls.
+- Fixed DNS Cache which did not work properly in some PHP versions. 
+- Fixed deprecated issues in html2pdf converte. 
+---------------------------------------------------------------------------
 Version 4.1.1 (beta), 2014-10-29
 - Included jquery library into Loganalyzer
 - Included jquery-ui library into Loganalyzer
