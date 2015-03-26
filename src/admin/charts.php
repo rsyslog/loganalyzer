@@ -514,6 +514,11 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['cssclass'] = "line2";
 		$i++;
 		// --- 
+
+		// --- Check if Enable/Disable Button was clicked and add Autofocus code!
+		if ( isset($content['CHARTID']) && $content['CHARTID'] == $myChart['ID'] )
+			$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('chartenablebutton" . $myChart['ID'] . "').focus(); };</script>"; 
+		// --- 
 	}
 	// --- 
 }

@@ -449,6 +449,19 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		else
 			$content['USERS'][$i]['cssclass'] = "line2";
 		// --- 
+
+		// --- Check if Enable/Disable Button was clicked and add Autofocus code!
+		if (	isset($_GET['miniop']) && 
+				isset($content['USERID']) && 
+				$content['USERID'] == $content['USERS'][$i]['ID'] )
+		{
+			if ( $_GET['miniop'] == "setisadmin" ) 
+				$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('userisadminbutton" . $content['USERS'][$i]['ID'] . "').focus(); };</script>"; 
+			else if ( $_GET['miniop'] == "setisreadonly" ) 
+				$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('userisreadonlybutton" . $content['USERS'][$i]['ID'] . "').focus(); };</script>"; 
+		}
+		// --- 
+
 	}
 	// --- 
 }
