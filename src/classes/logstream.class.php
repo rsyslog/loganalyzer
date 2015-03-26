@@ -1073,7 +1073,7 @@ abstract class LogStream {
 									break;
 								}
 							}
-							if ( isset($fields[$tmpKeyName]) && isset($fields[$tmpKeyName]['SearchField']) )
+							if ( isset($tmpKeyName) && isset($fields[$tmpKeyName]) && isset($fields[$tmpKeyName]['SearchField']) )
 							{
 								$tmpFilterType = $fields[$tmpKeyName]['FieldType'];
 								
@@ -1111,7 +1111,7 @@ abstract class LogStream {
 					}
 
 					// Add to detected filter array
-					if ( $this->_arrFilterProperties == null || !in_array($tmpKeyName, $this->_arrFilterProperties) )
+					if ( isset($tmpKeyName) && ($this->_arrFilterProperties == null || !in_array($tmpKeyName, $this->_arrFilterProperties)) )
 						$this->_arrFilterProperties[] = $tmpKeyName; 
 
 					// Ignore if unknown filter!
