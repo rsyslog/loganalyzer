@@ -351,6 +351,9 @@ if ( isset($_POST['op']) )
 				array_splice($content['SUBMAPPINGS'], $iArrayNum-1, 0, $EntryTwoMove);
 			}
 			// --- 
+
+			// Add Focus to MoveUp Button again
+			AddWindowLoadFocus("subop_moveup_" . $szColId); 
 		}
 		else if ( isset($_POST['subop_movedown']) )
 		{
@@ -381,6 +384,9 @@ if ( isset($_POST['op']) )
 				array_splice($content['SUBMAPPINGS'], $iArrayNum+1, 0, $EntryTwoMove);
 			}
 			// --- 
+
+			// Add Focus to MoveDown Button again
+			AddWindowLoadFocus("subop_movedown_" . $szColId); 
 		}
 		else // Now SUBOP means normal processing!
 		{

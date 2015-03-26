@@ -108,13 +108,11 @@
 				</td>
 				
 				<td align="center" class="{colcssclass}" width="20%">
-					<button name="subop_moveup" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
-					<button name="subop_movedown" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
-					<button name="subop_delete" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
-					
+					<button name="subop_moveup" id="subop_moveup_{ColFieldID}" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_UP}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
+					<button name="subop_movedown" id="subop_movedown_{ColFieldID}" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_MOVE_DOWN}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
+					<button name="subop_delete" id="subop_delete_{ColFieldID}" type="submit" value="{ColFieldID}" class="borderlessbuttons" title="{LN_VIEWS_COLUMN_REMOVE}"><img src="{MENU_DELETE}" width="16" alt="{LN_VIEWS_COLUMN_REMOVE}"></button>
 <!--					&nbsp;<input type="submit" style="background-image:url({MENU_DELETE}); background-repeat:no-repeat; background-position:center;" class="borderless" name="subop_delete" value="{ColFieldID}">
-					&nbsp;<input type="image" src="{MENU_DELETE}" alt="{LN_VIEWS_COLUMN_REMOVE}" class="borderless" width="16" name="subop_delete_{ColFieldID}">
--->
+					&nbsp;<input type="image" src="{MENU_DELETE}" alt="{LN_VIEWS_COLUMN_REMOVE}" class="borderless" width="16" name="subop_delete_{ColFieldID}">-->
 				</td>
 			</tr>
 			<!-- END SUBCOLUMNS -->
