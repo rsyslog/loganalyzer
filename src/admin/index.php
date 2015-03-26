@@ -98,16 +98,16 @@ if ( isset($_GET['op']) && isset($_GET['value']) )
 			// Set UserOption 
 			$USERCFG['UserOverwriteOptions'] = 1;
 
-			// Add some javascript to FOcus the enable/disable user button
-			$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('buttonenableuseropt').focus(); };</script>"; 
+			// Focus the enable user button
+			AddWindowLoadFocus("buttonenableuseropt"); 
 		}
 		else
 		{
 			// Set UserOption 
 			$USERCFG['UserOverwriteOptions'] = 0;
 
-			// Add some javascript to FOcus the enable/disable user button
-			$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('buttondisableuseropt').focus(); };</script>"; 
+			// Focus the disable user button
+			AddWindowLoadFocus("buttondisableuseropt"); 
 		}
 
 

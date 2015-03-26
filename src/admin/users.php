@@ -456,9 +456,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$content['USERID'] == $content['USERS'][$i]['ID'] )
 		{
 			if ( $_GET['miniop'] == "setisadmin" ) 
-				$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('userisadminbutton" . $content['USERS'][$i]['ID'] . "').focus(); };</script>"; 
+				AddWindowLoadFocus("userisadminbutton" . $content['USERS'][$i]['ID']); 
 			else if ( $_GET['miniop'] == "setisreadonly" ) 
-				$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('userisreadonlybutton" . $content['USERS'][$i]['ID'] . "').focus(); };</script>"; 
+				AddWindowLoadFocus("userisreadonlybutton" . $content['USERS'][$i]['ID']); 
 		}
 		// --- 
 

@@ -1530,6 +1530,18 @@ function AddContextLinks(&$sourceTxt)
 }
 
 /*
+*	AddContextLinks
+*/
+function AddWindowLoadFocus($szFieldID)
+{
+	global $content;
+
+	// Add Javascript to Focus a specific element
+	$content['EXTRA_JAVASCRIPT'] .= "<script>window.onload = function(){ document.getElementById('" . $szFieldID . "').focus(); };</script>"; 
+}
+
+
+/*
 *	Helper to create a Lookup Link!
 */
 function InsertLookupLinkIP( $matches ) // $szIP, $szDomain, $prepend, $append )
