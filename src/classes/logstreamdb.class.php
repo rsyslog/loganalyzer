@@ -1092,6 +1092,9 @@ class LogStreamDB extends LogStream {
 		// read data records
 		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
 		{
+			// Keys need to be converted into lowercase!
+			$myRow = array_change_key_case($myRow, CASE_LOWER);
+
 			// Create new row
 			$aNewRow = array();
 
@@ -1231,6 +1234,9 @@ class LogStreamDB extends LogStream {
 		// read data records
 		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
 		{
+			// Keys need to be converted into lowercase!
+			$myRow = array_change_key_case($myRow, CASE_LOWER);
+
 			// Create new row
 			$aNewRow = array();
 
@@ -1315,7 +1321,13 @@ class LogStreamDB extends LogStream {
 
 			// read data records
 			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
-				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['TotalCount'];
+			{
+				// Keys need to be converted into lowercase!
+				$myRow = array_change_key_case($myRow, CASE_LOWER);
+
+				// Set TotalCount Result
+				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
+			}
 
 			// return finished array
 			if ( count($aResult) > 0 )
@@ -1622,7 +1634,7 @@ class LogStreamDB extends LogStream {
 			if ( $myRow === FALSE || !$myRow  )
 				break;
 			
-			// Keys will be converted into lowercase!
+			// Keys need to be converted into lowercase!
 			$this->bufferedRecords[$iBegin] = array_change_key_case($myRow, CASE_LOWER);
 			$iBegin++;
 		}
