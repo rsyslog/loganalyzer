@@ -48,6 +48,7 @@ $content['LN_DELETENO'] = "No";
 $content['LN_GEN_ACTIONS'] = "Available Actions";
 $content['LN_ADMIN_SEND'] = "Send changes";
 $content['LN_GEN_USERONLY'] = "User only";
+$content['LN_GEN_USERONLYNAME'] = "User '%1'";
 $content['LN_GEN_GROUPONLY'] = "Group only";
 $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "For me only <br>(Only available to your user)";

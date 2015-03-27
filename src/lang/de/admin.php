@@ -48,6 +48,7 @@ $content['LN_DELETENO'] = "Nein";
 $content['LN_GEN_ACTIONS'] = "Mögliche Aktionen";
 $content['LN_ADMIN_SEND'] = "Änderungen speichern";
 $content['LN_GEN_USERONLY'] = "Nur Benutzer";
+$content['LN_GEN_USERONLYNAME'] = "Benutzer '%1'";
 $content['LN_GEN_GROUPONLY'] = "Nur Gruppen";
 $content['LN_GEN_GLOBAL'] = "Global";
 $content['LN_GEN_USERONLY_LONG'] = "Eigene Einstellungen <br>(Nur für Ihren Benutzer)";

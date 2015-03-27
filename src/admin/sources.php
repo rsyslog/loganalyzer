@@ -44,13 +44,6 @@ include($gl_root_path . 'include/functions_filters.php');
 define('IS_ADMINPAGE', true);
 $content['IS_ADMINPAGE'] = true;
 InitPhpLogCon();
-InitSourceConfigs();
-InitFrontEndDefaults();	// Only in WebFrontEnd
-InitFilterHelpers();	// Helpers for frontend filtering!
-
-// Init admin langauge file now!
-IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
-// --- 
 
 // --- Deny if User is READONLY!
 if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] == 1 )
@@ -67,6 +60,21 @@ if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] 
 		)
 		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_READONLY'] );
 }
+// --- 
+
+// --- Special Case for ADMIN Users, they should see ALL sources in admin panel!
+if (	GetConfigSetting("UserDBEnabled", false) && 
+		isset($_SESSION['SESSION_ISADMIN']) && 
+		$_SESSION['SESSION_ISADMIN'] == 1 ) 
+	LoadSourcesFromDatabase(true); 
+// --- 
+
+InitSourceConfigs();
+InitFrontEndDefaults();	// Only in WebFrontEnd
+InitFilterHelpers();	// Helpers for frontend filtering!
+
+// Init admin langauge file now!
+IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
 // --- BEGIN Custom Code
@@ -895,7 +903,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			if ( $mySource['userid'] != null )
 			{
 				$mySource['SourcesAssignedToImage']	= $content["MENU_ADMINUSERS"];
-				$mySource['SourcesAssignedToText']	= $content["LN_GEN_USERONLY"];
+				$mySource['SourcesAssignedToText']	= GetAndReplaceLangStr( $content["LN_GEN_USERONLYNAME"], $mySource['username'] );
 			}
 			else if ( $mySource['groupid'] != null )
 			{

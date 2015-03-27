@@ -1000,22 +1000,35 @@ function LoadViewsFromDatabase()
 	}
 }
 
-function LoadSourcesFromDatabase()
+function LoadSourcesFromDatabase($ForceloadAllSources = false)
 {
 	// Needed to make global
 	global $CFG, $content;
 
 	// --- Create SQL Query
 	// Create Where for USERID
-	if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
-		$szWhereUser = " OR `" . DB_SOURCES . "`.userid = " . $content['SESSION_USERID'] . " ";
-	else
+	$szWhereNoUserOrGroups = " WHERE (`" . DB_SOURCES . "`.userid IS NULL AND `" . DB_SOURCES . "`.groupid IS NULL) "; 
+	if ( $ForceloadAllSources ) 
+	{
+		// Remove any WHERE stuff and show ALL sources
+		$szWhereNoUserOrGroups = ""; 
 		$szWhereUser = "";
-
-	if ( isset($content['SESSION_GROUPIDS']) )
-		$szGroupWhere = " OR `" . DB_SOURCES . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
-	else
 		$szGroupWhere = "";
+	}
+	else
+	{
+		if ( isset($content['SESSION_LOGGEDIN']) && $content['SESSION_LOGGEDIN'] )
+			$szWhereUser = " OR `" . DB_SOURCES . "`.userid = " . $content['SESSION_USERID'] . " ";
+		else
+			$szWhereUser = "";
+
+		if ( isset($content['SESSION_GROUPIDS']) )
+			$szGroupWhere = " OR `" . DB_SOURCES . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
+		else
+			$szGroupWhere = "";
+	}
+
+	// Create SQL Query 
 	$sqlquery = " SELECT " . 
 				DB_SOURCES . ".*, " . 
 				DB_USERS . ".username, " .
@@ -1023,7 +1036,7 @@ function LoadSourcesFromDatabase()
 				" FROM `" . DB_SOURCES . "`" . 
 				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SOURCES . "`.userid=`" . DB_USERS . "`.ID ) " . 
 				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SOURCES . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
-				" WHERE (`" . DB_SOURCES . "`.userid IS NULL AND `" . DB_SOURCES . "`.groupid IS NULL) " . 
+				$szWhereNoUserOrGroups . 
 				$szWhereUser . 
 				$szGroupWhere . 
 				" ORDER BY `" . DB_SOURCES . "`.userid, `" . DB_SOURCES . "`.groupid, `" . DB_SOURCES . "`.Name";
