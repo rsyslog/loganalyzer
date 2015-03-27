@@ -483,8 +483,11 @@ function InitSourceConfigs()
 		{
 			$tmpVar = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
 			if ( isset($content['Sources'][ $tmpVar ]) ) 
+			{
 				// Set Source to preconfigured sourceID!
 				$_SESSION['currentSourceID'] = $tmpVar;
+				$currentSourceID = $tmpVar;
+			}
 			else
 				// No Source stored in session, then to so now!
 				$_SESSION['currentSourceID'] = $currentSourceID;
