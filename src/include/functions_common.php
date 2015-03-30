@@ -914,11 +914,19 @@ function InitConfigurationValues()
 	}
 	else if ( isset($content['gen_lang']) && VerifyLanguage($content['gen_lang']))
 	{
-		$content['user_lang'] = $content['gen_lang'];
-		$LANG = $content['user_lang'];
+		// Get use language
+		$content['user_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_USER); 
+		if ( isset($content['user_lang']) )
+			$LANG = $content['user_lang'];
+		else
+		{
+			$content['user_lang'] = $content['gen_lang'];
+			$LANG = $content['user_lang'];
+		}
 	}
 	else	// Failsave!
 	{
+		// Get use language
 		$content['user_lang'] = GetConfigSetting("ViewDefaultLanguage", "en", CFGLEVEL_USER) /*"en"*/;
 		$LANG = $content['user_lang'];
 		$content['gen_lang'] = $content['user_lang'];
