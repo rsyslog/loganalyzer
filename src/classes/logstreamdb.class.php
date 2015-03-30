@@ -1050,7 +1050,7 @@ class LogStreamDB extends LogStream {
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
 			// Helper variable for the select statement
-			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+			$mySelectFieldName = $myDBGroupByFieldName . "grouped";
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
 
@@ -1192,7 +1192,7 @@ class LogStreamDB extends LogStream {
 		if ( $nConsFieldType == FILTER_TYPE_DATE )
 		{
 			// Helper variable for the select statement
-			$mySelectFieldName = $myDBGroupByFieldName . "Grouped";
+			$mySelectFieldName = $myDBGroupByFieldName . "grouped";
 			$myDBQueryFieldName = "DATE( " . $myDBConsFieldName . ") AS " . $myDBGroupByFieldName ;
 		}
 
@@ -1289,7 +1289,7 @@ class LogStreamDB extends LogStream {
 			if ( $nFieldType == FILTER_TYPE_DATE )
 			{
 				// Helper variable for the select statement
-				$mySelectFieldName = $mySelectFieldName . "Grouped";
+				$mySelectFieldName = $mySelectFieldName . "grouped";
 				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
 			}
 
@@ -1304,11 +1304,11 @@ class LogStreamDB extends LogStream {
 			// Create SQL String now!
 			$szSql =	"SELECT " . 
 						$myDBQueryFieldName . ", " . 
-						"count(" . $myDBFieldName . ") as TotalCount " . 
+						"count(" . $myDBFieldName . ") as totalcount " . 
 						" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY TotalCount DESC" . 
+						" ORDER BY totalcount DESC" . 
 						" LIMIT " . $nRecordLimit;
 
 			// Perform Database Query
@@ -1325,7 +1325,7 @@ class LogStreamDB extends LogStream {
 				// Keys need to be converted into lowercase!
 				$myRow = array_change_key_case($myRow, CASE_LOWER);
 
-				// Set TotalCount Result
+				// Set totalcount Result
 				$aResult[ $myRow[$mySelectFieldName] ] = $myRow['totalcount'];
 			}
 
