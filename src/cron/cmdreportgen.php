@@ -73,6 +73,7 @@ define('IN_PHPLOGCON_COMMANDLINE', true);
 $content['IN_PHPLOGCON_COMMANDLINE'] = true;
 InitPhpLogCon();
 InitFilterHelpers();	// Helpers for frontend filtering!
+LoadSourcesFromDatabase(true); // Make sure we load ALL sources from DB!
 InitSourceConfigs();
 
 // Firts of all init List of Reports!

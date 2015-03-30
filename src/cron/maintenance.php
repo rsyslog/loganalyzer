@@ -44,6 +44,7 @@ include_once($gl_root_path . 'include/functions_frontendhelpers.php');
 define('IN_PHPLOGCON_COMMANDLINE', true);
 $content['IN_PHPLOGCON_COMMANDLINE'] = true;
 InitPhpLogCon();
+LoadSourcesFromDatabase(true); // Make sure we load ALL sources from DB!
 InitSourceConfigs();
 
 // Init admin langauge file now!
