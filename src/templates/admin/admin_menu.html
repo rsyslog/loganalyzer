@@ -1,7 +1,9 @@
 <button id="button_menu_adminbegin"><img align="left" src="{MENU_BULLET_BLUE}" width="16" height="16"></button>
 <button id="button_menu_pref"><img align="left" src="{MENU_PREFERENCES}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_GENOPT}">&nbsp;{LN_ADMINMENU_GENOPT}</button>
 <button id="button_menu_data"><img align="left" src="{MENU_DATAEDIT}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_SOURCEOPT}">&nbsp;{LN_ADMINMENU_SOURCEOPT}</button>
+<!-- IF SESSION_ISADMIN="1" -->
 <button id="button_menu_fields"><img align="left" src="{MENU_FIELDS}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_FIELDOPT}">&nbsp;{LN_ADMINMENU_FIELDOPT}</button>
+<!-- ENDIF SESSION_ISADMIN="1" -->
 <button id="button_menu_view"><img align="left" src="{MENU_DOCUMENTVIEW}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_VIEWSOPT}">&nbsp;{LN_ADMINMENU_VIEWSOPT}</button>
 <button id="button_menu_find"><img align="left" src="{MENU_TEXT_FIND}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_SEARCHOPT}">&nbsp;{LN_ADMINMENU_SEARCHOPT}</button>
 <button id="button_menu_charts"><img align="left" src="{MENU_CHARTS}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_CHARTOPT}">&nbsp;{LN_ADMINMENU_CHARTOPT}</button>
@@ -11,7 +13,6 @@
 	CreateLinkFunction( "#button_menu_adminbegin", ""); 
 	CreateLinkFunction( "#button_menu_pref", "{BASEPATH}admin/index.php"); 
 	CreateLinkFunction( "#button_menu_data", "{BASEPATH}admin/sources.php"); 
-	CreateLinkFunction( "#button_menu_fields", "{BASEPATH}admin/fields.php"); 
 	CreateLinkFunction( "#button_menu_view", "{BASEPATH}admin/views.php"); 
 	CreateLinkFunction( "#button_menu_find", "{BASEPATH}admin/searches.php"); 
 	CreateLinkFunction( "#button_menu_charts", "{BASEPATH}admin/charts.php"); 
@@ -23,6 +24,7 @@
 <button id="button_menu_user"><img align="left" src="{MENU_ADMINUSERS}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_USEROPT}">&nbsp;{LN_ADMINMENU_USEROPT}</button>
 <button id="button_menu_group"><img align="left" src="{MENU_ADMINGROUPS}" width="16" height="16" vspace="0" title="{LN_ADMINMENU_GROUPOPT}">&nbsp;{LN_ADMINMENU_GROUPOPT}</button>
 <script> 
+	CreateLinkFunction( "#button_menu_fields", "{BASEPATH}admin/fields.php"); 
 	CreateLinkFunction( "#button_menu_dbmap", "{BASEPATH}admin/dbmappings.php"); 
 	CreateLinkFunction( "#button_menu_user", "{BASEPATH}admin/users.php"); 
 	CreateLinkFunction( "#button_menu_group", "{BASEPATH}admin/groups.php"); 

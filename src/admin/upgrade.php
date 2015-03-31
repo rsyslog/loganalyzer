@@ -55,6 +55,10 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // ***					*** //
 
+// Only if the user is an admin!
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+	DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+
 // --- BEGIN Custom Code
 if ( isset($content['database_forcedatabaseupdate']) && $content['database_forcedatabaseupdate'] == "yes" ) 
 {

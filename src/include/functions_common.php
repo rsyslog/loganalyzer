@@ -855,7 +855,6 @@ function InitConfigurationValues()
 			
 			if ( !$content['SESSION_LOGGEDIN'] ) 
 			{
-
 				// Check if user needs to be logged in
 				if ( GetConfigSetting("UserDBLoginRequired", false) )
 				{
@@ -870,6 +869,15 @@ function InitConfigurationValues()
 				{
 					// Language System not initialized yet
 					DieWithFriendlyErrorMsg( "You need to be logged in in order to access the admin pages.", "login.php", "Click here to login" );
+				}
+			}
+			else
+			{	
+				// Set Admin Panel Button Status
+				if ( $content['SESSION_ISADMIN'] == 0) 
+				{
+					if ( GetConfigSetting("DisableAdminUsers", 0, CFGLEVEL_GLOBAL) == 1)
+						$content['SHOW_ADMINPANEL'] = "false"; 
 				}
 			}
 
@@ -1801,6 +1809,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "MiscMaxExecutionTime", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "UseProxyServerForRemoteQueries", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "HeaderDefaultEncoding", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "DisableAdminUsers", true, null, null,$bForceStripSlahes );
 
 	// Custom HTML Code 
 	WriteConfigValue( "InjectHtmlHeader", true, null, null,$bForceStripSlahes );

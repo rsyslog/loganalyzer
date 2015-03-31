@@ -55,6 +55,14 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // Init admin langauge file now!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 
+// --- Deny if DisableAdminUsers is enabled and User is not ADMIN 
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+{
+	if ( GetConfigSetting("DisableAdminUsers", 0, CFGLEVEL_GLOBAL) == 1 )
+		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+}
+// --- 
+
 // --- Deny if User is READONLY!
 if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] == 1 )
 {
@@ -172,6 +180,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['InlineOnlineSearchIcons']) ) { $content['InlineOnlineSearchIcons'] = 1; } else { $content['InlineOnlineSearchIcons'] = 0; } 
 			if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
 			if ( isset ($_POST['MiscDebugToSyslog']) ) { $content['MiscDebugToSyslog'] = 1; } else { $content['MiscDebugToSyslog'] = 0; } 
+			if ( isset ($_POST['DisableAdminUsers']) ) { $content['DisableAdminUsers'] = 1; } else { $content['DisableAdminUsers'] = 0; } 
 
 			// Read Text number fields
 			if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
@@ -279,6 +288,7 @@ if (isset($content['InlineOnlineSearchIcons']) && $content['InlineOnlineSearchIc
 
 if (isset($content['DebugUserLogin']) && $content['DebugUserLogin'] == 1) { $content['DebugUserLogin_checked'] = "checked"; } else { $content['DebugUserLogin_checked'] = ""; }
 if (isset($content['MiscDebugToSyslog']) && $content['MiscDebugToSyslog'] == 1) { $content['MiscDebugToSyslog_checked'] = "checked"; } else { $content['MiscDebugToSyslog_checked'] = ""; }
+if (isset($content['DisableAdminUsers']) && $content['DisableAdminUsers'] == 1) { $content['DisableAdminUsers_checked'] = "checked"; } else { $content['DisableAdminUsers_checked'] = ""; }
 // --- 
 
 // --- Init for Style field!

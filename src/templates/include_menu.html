@@ -16,7 +16,9 @@
 	<button id="button_menu_login"><img align="left" src="{MENU_ADMINLOGOFF}" width="16" height="16" vspace="0" title="{LN_MENU_LOGIN}">&nbsp;{LN_MENU_LOGIN}</button><script>CreateLinkFunction( "#button_menu_login", "{BASEPATH}login.php"); </script>
 	<!-- ENDIF SESSION_LOGGEDIN!="true" -->
 	<!-- IF SESSION_LOGGEDIN="true" -->
-	<button id="button_menu_admcnt"><img align="left" src="{MENU_ADMINENTRY}" width="16" height="16" vspace="0" title="{LN_MENU_ADMINCENTER}">&nbsp;{LN_MENU_ADMINCENTER}</button><script>CreateLinkFunction( "#button_menu_admcnt", "{BASEPATH}admin/index.php"); </script>
+		<!-- IF SHOW_ADMINPANEL="true" -->
+		<button id="button_menu_admcnt"><img align="left" src="{MENU_ADMINENTRY}" width="16" height="16" vspace="0" title="{LN_MENU_ADMINCENTER}">&nbsp;{LN_MENU_ADMINCENTER}</button><script>CreateLinkFunction( "#button_menu_admcnt", "{BASEPATH}admin/index.php"); </script>
+	<!-- ENDIF SHOW_ADMINPANEL="true" -->
 	<button id="button_menu_logoff"><img align="left" src="{MENU_ADMINLOGOFF}" width="16" height="16" vspace="0" title="{LN_MENU_LOGOFF}">&nbsp;{LN_MENU_LOGOFF}</button><script>CreateLinkFunction( "#button_menu_logoff", "{BASEPATH}login.php?op=logoff"); </script>
 	<button id="button_menu_end"><img align="left" src="{MENU_ADMINUSERS}" width="16" height="16" vspace="0" title="{LN_MENU_LOGGEDINAS} {SESSION_USERNAME}">&nbsp;{LN_MENU_LOGGEDINAS} "{SESSION_USERNAME}"</button><script>CreateLinkFunction( "#button_menu_end", ""); </script>
 	<!-- ENDIF SESSION_LOGGEDIN="true" -->

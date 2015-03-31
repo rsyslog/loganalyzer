@@ -52,6 +52,14 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/admin.php' );
 // --- 
 
+// --- Deny if DisableAdminUsers is enabled and User is not ADMIN 
+if ( !isset($_SESSION['SESSION_ISADMIN']) || $_SESSION['SESSION_ISADMIN'] == 0 ) 
+{
+	if ( GetConfigSetting("DisableAdminUsers", 0, CFGLEVEL_GLOBAL) == 1 )
+		DieWithFriendlyErrorMsg( $content['LN_ADMIN_ERROR_NOTALLOWED'] );
+}
+// --- 
+
 // --- Deny if User is READONLY!
 if ( !isset($_SESSION['SESSION_ISREADONLY']) || $_SESSION['SESSION_ISREADONLY'] == 1 )
 {

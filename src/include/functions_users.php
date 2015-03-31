@@ -85,6 +85,9 @@ function InitUserSession()
 			if ( isset($_SESSION['SESSION_GROUPIDS']) )
 				$content['SESSION_GROUPIDS'] = $_SESSION['SESSION_GROUPIDS'];
 
+			// Set some variable defaults here
+			$content['SHOW_ADMINPANEL'] = "true"; 
+
 			// --- Now we obtain user specific general settings from the DB for the user!
 			$result = DB_Query("SELECT * FROM `" . DB_CONFIG . "` WHERE userid = " . $content['SESSION_USERID']);
 			if ( $result )
