@@ -1,6 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head>
 <title>Using text log files with LogAnalyzer</title>
+<style type="text/css">
+.auto-style1 {
+	margin-left: 40px;
+}
+</style>
 </head>
 <body>
 <h1>Using text log files with LogAnalyzer</h1>
@@ -54,7 +59,22 @@ The beauty of text log files is that you do not need to reconfigure the whole
 logging system to do so. All that is needed is to disable the web site inside
 the http server.
 
-<p>[<a href="manual.html">manual index</a>] [<a href="http://loganalyzer.adiscon.com">LogAnalyzer site</a>]</p>
+<h2>Support of Dynamic Logfilenames (and Pathes)</h2>
+<p>Since Loganalyzer Version 2.7.0, dynamic logfilenames are supported. You can 
+add date replacement variables into the filename property which will 
+automatically be applied using the current systemtime. For example if you have 
+logfiles located in subfolders named by Year, month and date like this: <strong>
+/var/log/servername/2015/01/30/syslog</strong>, the configured filename property 
+would be this: <strong>/var/log/Servers/ServerName/%Y/%m/%d/syslog</strong>. 
+Below is a list of possible replacements.
+
+<p class="auto-style1">%y = Year with two digits (e.g. 2002 becomes &quot;02&quot;)<br>%Y 
+= Year with 4 digits<br>%m = Month with two digits (e.g. March becomes &quot;03&quot;)<br>
+%M = Minute with two digits<br>%d = Day of month with two digits (e.g. March, 
+1st becomes &quot;01&quot;)<br>%h = Hour as two digits<br>%S = Seconds as two digits. It 
+is hardly believed that this ever be used in reality. <br>%w = Weekday as one 
+digit. 0 means Sunday, 1 Monday and so on.<br>%W = Weekday as three-character 
+string. Possible values are &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;.<p>[<a href="manual.html">manual index</a>] [<a href="http://loganalyzer.adiscon.com">LogAnalyzer site</a>]</p>
 <p><font size="2">This documentation is part of the
 <a href="http://loganalyzer.adiscon.com">Adiscon LogAnalyzer</a> project.<br>
 Copyright &copy; 2008-2011 by <a href="http://www.adiscon.com/">Adiscon</a>.
