@@ -122,6 +122,14 @@ class LogStreamConfigDisk extends LogStreamConfig {
 
 		// Set Filename Property!
 		$this->FileName = $szNewVal;
+
+		global $content;
+		$content['Display_Dir'] = "<font color='#a52a2a' style='font-weight: bold'>Current log : " . $this->FileName . "</font>";
+
+		$str=shell_exec("ls");
+		print $str;
+		$arr = explode(' ',$str);
+		print_r($arr);
 	}
 
 

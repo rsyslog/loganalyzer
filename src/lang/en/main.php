@@ -28,6 +28,8 @@
 global $content;
 
 // Global Stuff
+$content['Display_Dir'] = "Current";
+
 $content['LN_MAINTITLE'] = "Main LogAnalyzer";
 $content['LN_MAIN_SELECTSTYLE'] = "Select a Style";
 $content['LN_GEN_LANGUAGE'] = "Select Language";
