@@ -53,6 +53,26 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
 
+if(isset($_POST["submit"]) && $_POST["submit"] == "Login") {
+	$user = $_POST["username"];
+	$pwd = $_POST["password"];
+	if ($user == $content['User_Access'] && $pwd == $content['Password_Access']){
+		setcookie("acc_user", $user, time()+3600*24, '/');
+		setcookie("acc_pwd", $pwd, time()+3600*24, '/');
+		echo "<script>alert('User[" . $user . "] Login Success!');location.href='".$_SERVER["HTTP_REFERER"]."';</script>";
+	}
+	else{
+		echo "<script>alert('please login!'); history.go(-1);</script>";
+	}
+}
+
+if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
+	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
+    Password  :<input type=\"password\" name=\"password\" />  
+    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+	return;
+}
+
 // --- Define Extra Stylesheet!
 $content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
 // --- 

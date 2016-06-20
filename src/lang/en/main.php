@@ -29,6 +29,8 @@ global $content;
 
 // Global Stuff
 $content['Display_Dir'] = "Current";
+$content['User_Access'] = "aaa";
+$content['Password_Access'] = "aaaaaa";
 
 $content['LN_MAINTITLE'] = "Main LogAnalyzer";
 $content['LN_MAIN_SELECTSTYLE'] = "Select a Style";
