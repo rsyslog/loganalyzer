@@ -51,6 +51,13 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // --- 
 
+if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
+	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
+    Password  :<input type=\"password\" name=\"password\" />  
+    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+	return;
+}
+
 // --- BEGIN Custom Code
 
 // Firts of all init List of Reports!
