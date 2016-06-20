@@ -121,17 +121,71 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		}
 
 		// Set Filename Property!
-		$this->FileName = $szNewVal;
+		//$this->FileName = $szNewVal;
+		$this->Display($szNewVal);
 
-		global $content;
-		$content['Display_Dir'] = "<font color='#a52a2a' style='font-weight: bold'>Current log : " . $this->FileName . "</font>";
-
-		$str=shell_exec("ls");
-		print $str;
+		/*$str=shell_exec("ls");
 		$arr = explode(' ',$str);
-		print_r($arr);
+		print_r($arr);*/
 	}
 
+	private function Display( $szNewVal ){
+		global $content;
+
+		$pattern = "([\d]+)";
+		preg_match_all($pattern, $szNewVal, $ret, PREG_SET_ORDER);
+		foreach ($ret as $r) {
+			$sortVal = $r[0];
+		}
+		$dir = str_replace($sortVal . ".log", "", $szNewVal);
+		if(isset($_GET['date'])){
+			$sortVal = $_GET['date'];
+		}
+
+		$this->FileName = $dir .$sortVal . ".log";
+
+		$show = "<font style='font-weight: bold'>Current Dir : </font><font color='#4169e1' style='font-weight: bold'>" . $dir . "</font>";;
+		$show = $show . "</br><font style='font-weight: bold'>Current Log : </font><font color='#4169e1' style='font-weight: bold'>" . $sortVal . "</font>";;
+		$show = $show . "</br>" . $this->GetLogList($dir);
+		$content['Display_Dir'] = $show;
+	}
+
+	private function GetLogList($dir){
+		//$dir = dirname(__FILE__) . $dir;
+		$handle = opendir($dir.".");
+		$array_file = array();
+		while (false !== ($file = readdir($handle)))
+		{
+			if ($file != "." && $file != "..") {
+				$array_file[] = $file;
+			}
+		}
+		closedir($handle);
+		sort($array_file);
+		return $this->ShowTable($array_file);
+	}
+
+	private function ShowTable($array_file){
+		$table = "<table border='1' width='100%'>";
+		$size = count($array_file);
+
+		for ($x = 0; $x < $size; ) {
+			$table = $table . "<tr>";
+			for ($c = 0; $c <= 11; $c++) {
+				if($x < $size){
+					$log_date = str_replace(".log", "", $array_file[$x]);
+					$log_link = "<a href='index.php?date=" . $log_date . "'>" . $log_date . "</a>";
+					$table = $table . "<td style='font-weight: bold;color: #982D00'>" . $log_link . "</td>";
+					$x++;
+				} else{
+					$table = $table . "<td></td>";
+				}
+			}
+			$table = $table . "</tr>";
+		}
+		$table = $table . "</table>";
+		return $table;
+	}
 
 }
 ?>
