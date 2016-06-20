@@ -144,8 +144,8 @@ class LogStreamConfigDisk extends LogStreamConfig {
 
 		$this->FileName = $dir .$sortVal . ".log";
 
-		$show = "<font style='font-weight: bold'>Current Dir : </font><font color='#4169e1' style='font-weight: bold'>" . $dir . "</font>";;
-		$show = $show . "</br><font style='font-weight: bold'>Current Log : " . $sortVal . "</font>";;
+		//$show = "<font style='font-weight: bold'>Current Dir : </font><font color='#4169e1' style='font-weight: bold'>" . $dir . "</font>";;
+		$show = "<font style='font-weight: bold' color='#4169e1'>Current Log : " . $sortVal . "</font>";;
 		$show = $show . "</br>" . $this->GetLogList($dir);
 		$content['Display_Dir'] = $show;
 	}
