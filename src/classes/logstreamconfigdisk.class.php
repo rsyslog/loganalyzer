@@ -145,7 +145,7 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		$this->FileName = $dir .$sortVal . ".log";
 
 		$show = "<font style='font-weight: bold'>Current Dir : </font><font color='#4169e1' style='font-weight: bold'>" . $dir . "</font>";;
-		$show = $show . "</br><font style='font-weight: bold'>Current Log : </font><font color='#4169e1' style='font-weight: bold'>" . $sortVal . "</font>";;
+		$show = $show . "</br><font style='font-weight: bold'>Current Log : " . $sortVal . "</font>";;
 		$show = $show . "</br>" . $this->GetLogList($dir);
 		$content['Display_Dir'] = $show;
 	}
@@ -174,8 +174,8 @@ class LogStreamConfigDisk extends LogStreamConfig {
 			for ($c = 0; $c <= 11; $c++) {
 				if($x < $size){
 					$log_date = str_replace(".log", "", $array_file[$x]);
-					$log_link = "<a href='index.php?date=" . $log_date . "'>" . $log_date . "</a>";
-					$table = $table . "<td style='font-weight: bold;color: #982D00'>" . $log_link . "</td>";
+					$log_link = "<a href='index.php?date=" . $log_date . "'><font color='#a52a2a' style='font-weight: bold'>" . $log_date . "</font></a>";
+					$table = $table . "<td>" . $log_link . "</td>";
 					$x++;
 				} else{
 					$table = $table . "<td></td>";
