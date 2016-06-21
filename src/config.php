@@ -169,6 +169,8 @@ $CFG['DiskAllowed'][] = "/var/log/";
 	$CFG['Sources']['Source2']['DBTableName'] = "systemevents";
 	$CFG['Sources']['Source2']['ViewID'] = "SYSLOG";
 */
+$content['User_Access'] = "aaa";
+$content['Password_Access'] = "aaaaaa";
 
 $CFG['DefaultSourceID'] = 'Source1';
 
