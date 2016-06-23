@@ -44,8 +44,6 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	public $LineParserType = "syslog"; // Default = Syslog!
 	public $_lineParser = null;
 
-	public $DisplayDir = '';
-
 	public function LogStreamFactory($o)
 	{
 		// An instance is created, then include the logstreamdisk class as well!
@@ -129,14 +127,13 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		echo $content['aaa'];*/
 		// Set Filename Property!
 		$this->FileName = $szNewVal;
-		$this->SetDisplay($szNewVal);
 		/*echo($this->FileName);
 		echo("</br>");*/
 	}
 
 	public function Display(){
 		global $content;
-		$content['Display_Dir'] = $this->DisplayDir;
+		$this->SetDisplay($this->FileName);
 	}
 
 	private function SetDisplay( $szNewVal ){
@@ -152,13 +149,13 @@ class LogStreamConfigDisk extends LogStreamConfig {
 			$sortVal = $_GET['date'];
 		}
 
-		//$this->FileName = $dir .$sortVal . ".log";
+		$this->FileName = $dir .$sortVal . ".log";
 
 		$show = $this->SetCurrentColor("Current Dir : " . $dir);
 		$show = $show . $this->SetCurrentColor("Current Log : " . $sortVal);
 		$show = $show . $this->GetLogList($dir);
 		$this->DisplayDir = $show;
-		//$content['Display_Dir'] = $show;
+		$content['Display_Dir'] = $show;
 	}
 
 	private function SetCurrentColor( $text ){
