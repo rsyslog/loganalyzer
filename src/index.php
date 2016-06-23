@@ -3,10 +3,10 @@
 	*********************************************************************
 	* LogAnalyzer - http://loganalyzer.adiscon.com
 	* -----------------------------------------------------------------
-	* Main Index File											
-	*																	
-	* -> Loads the main LogAnalyzer Site									
-	*																	
+	* Main Index File
+	*
+	* -> Loads the main LogAnalyzer Site
+	*
 	* All directives are explained within this file
 	*
 	* Copyright (C) 2008-2010 Adiscon GmbH.
@@ -27,8 +27,8 @@
 	* along with LogAnalyzer. If not, see <http://www.gnu.org/licenses/>.
 	*
 	* A copy of the GPL can be found in the file "COPYING" in this
-	* distribution				
-	* 
+	* distribution
+	*
 	* Adiscon LogAnalyzer is also available under a commercial license.
 	* For details, contact info@adiscon.com or visit
 	* http://loganalyzer.adiscon.com/commercial
@@ -75,14 +75,14 @@ if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc
 
 // --- Define Extra Stylesheet!
 $content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
-// --- 
+// ---
 
 // --- CONTENT Vars
-if ( isset($_GET['uid']) ) 
+if ( isset($_GET['uid']) )
 {
 	// Now check by numeric as uid can be larger than INT values
-	if ( is_numeric($_GET['uid']) ) 
-		$content['uid_current'] = $_GET['uid']; 
+	if ( is_numeric($_GET['uid']) )
+		$content['uid_current'] = $_GET['uid'];
 	else
 		$content['uid_current'] = UID_UNKNOWN;
 }
@@ -108,7 +108,7 @@ if ( isset($_GET['direction']) )
 	// Copy to content array
 	$content['direction'] = $_GET['direction'];
 }
-else 
+else
 	$content['direction'] = "";
 
 // Check for reading direction
@@ -116,10 +116,10 @@ if ( $content['direction'] == "desc" )
 	$content['read_direction'] = EnumReadDirection::Forward;
 else
 	$content['read_direction'] = EnumReadDirection::Backward;
-// --- 
+// ---
 
-// If direction is DESC, should we SKIP one? 
-if ( isset($_GET['skipone']) && $_GET['skipone'] == "true" ) 
+// If direction is DESC, should we SKIP one?
+if ( isset($_GET['skipone']) && $_GET['skipone'] == "true" )
 	$content['skipone'] = true;
 else
 	$content['skipone'] = false;
@@ -172,7 +172,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 		$content['highlightstr'] = $_GET['highlight'];
 		$content['highlightstr_htmlform'] = htmlspecialchars($_GET['highlight']);
 	}
-	
+
 	// Message is just appended
 	if ( isset($myfilter) && strlen($myfilter) > 0 )
 	{
@@ -180,7 +180,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 		$content['searchstr_htmlform'] = htmlspecialchars($myfilter);
 	}
 
-	if ( strlen($content['highlightstr']) > 0 ) 
+	if ( strlen($content['highlightstr']) > 0 )
 	{
 		$searchArray = array("\\", "/", ".", ">");
 		$replaceArray = array("\\\\", "\/", "\.", ">");
@@ -198,9 +198,9 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 		{
 			// Split array into words
 			$tmparray = explode( ",", $content['highlightstr'] );
-			foreach( $tmparray as $word ) 
+			foreach( $tmparray as $word )
 				$content['highlightwords'][]['highlight_html'] = htmlspecialchars($word);
-			
+
 			// Assign other variables needed for this array entry
 			for ($i = 0; $i < count($content['highlightwords']); $i++)
 			{
@@ -209,7 +209,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 				$content['highlightwords'][$i]['htmlcode'] = '<span class="' . $content['highlightwords'][$i]['cssclass'] . '">' . $content['highlightwords'][$i]['highlight']. '</span>';
 			}
 		}
-		
+
 		// Default expand Highlight Arrea!
 		$content['EXPAND_HIGHLIGHT'] = "true";
 	}
@@ -221,13 +221,13 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 		$content['oraclesearchlink'] = $content['BASEPATH'] . "asktheoracle.php?type=searchstr&query=" . urlencode($content['searchstr']) . "&uid=" . $content['uid_current'];
 	}
 }
-// --- 
+// ---
 
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
 
 // Append custom title part!
-if ( isset($content['searchstr_htmlform']) && strlen($content['searchstr_htmlform']) > 0 ) 
+if ( isset($content['searchstr_htmlform']) && strlen($content['searchstr_htmlform']) > 0 )
 	$content['TITLE'] .= " :: Results for the search '" . $content['searchstr_htmlform'] . "'";	// Append search
 else
 	$content['TITLE'] .= " :: All Syslogmessages";
@@ -239,15 +239,16 @@ else
 // Do not BLOCK other Site Calls
 WriteClosePHPSession();
 
-if ( isset($content['Sources'][$currentSourceID]) ) 
+if ( isset($content['Sources'][$currentSourceID]) )
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
+	$stream_config->Display();
 
-	// Create LogStream Object 
+	// Create LogStream Object
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
-	
+
 	// Copy current used columns here!
 	$content['Columns'] = $content['Views'][$currentViewID]['Columns'];
 
@@ -268,10 +269,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$content['fields'][$mycolkey]['colspan'] = '';
 		}
 	}
-	// --- 
+	// ---
 
 	$res = $stream->Open( $content['Columns'], true );
-	if ( $res == SUCCESS ) 
+	if ( $res == SUCCESS )
 	{
 		// TODO Implement ORDER
 		$stream->SetReadDirection($content['read_direction']);
@@ -281,7 +282,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 		$counter = 0;
 
 		// If uID is known, we need to init READ first - this will also seek for available records first!
-		if ($uID != UID_UNKNOWN) 
+		if ($uID != UID_UNKNOWN)
 		{
 			// First read will also set the start position of the Stream!
 			$ret = $stream->Read($uID, $logArray);
@@ -298,7 +299,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				// Ok the current ID is our NEXT ID in this reading direction, so we save it!
 				$content['uid_next'] = $uID;
 
-				if ( $content['skipone'] ) 
+				if ( $content['skipone'] )
 				{
 					// Skip this entry and move to the next
 					$stream->ReadNext($uID, $logArray);
@@ -313,7 +314,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$ret = $stream->ReadNext($uID, $logArray);
 			} while ($ret == ERROR_MSG_SKIPMESSAGE);
 		}
-		
+
 		// check for error return state!
 		if ( $ret != SUCCESS )
 		{
@@ -334,7 +335,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				$content['main_recordcount_found'] = true;
 			else
 				$content['main_recordcount_found'] = false;
-			
+
 			$content['main_currentpagenumber'] = $stream->GetCurrentPageNumber();
 			if ( $content['main_currentpagenumber'] > 0 )
 				$content['main_currentpagenumber_found'] = true;
@@ -353,7 +354,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			{
 				// --- Extra stuff for suppressing messages
 				if (
-						GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
+						GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1
 						&&
 						isset($logArray[SYSLOG_MESSAGE])
 					)
@@ -374,25 +375,25 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							{
 								$ret = $stream->ReadNext($uID, $logArray);
 							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
-							// --- 
+							// ---
 
 							// Skip entry
 							continue;
 						}
 					}
 				}
-				// --- 
+				// ---
 
 				// --- Set CSS Class
 				if ( $counter % 2 == 0 )
 					$content['syslogmessages'][$counter]['cssclass'] = "line1";
 				else
 					$content['syslogmessages'][$counter]['cssclass'] = "line2";
-				// --- 
+				// ---
 
 				// --- Copy other needed properties
 				$content['syslogmessages'][$counter]['MiscShowDebugGridCounter'] = $content['MiscShowDebugGridCounter'];
-				// --- 
+				// ---
 
 				// --- Now we populate the values array!
 				foreach($content['Columns'] as $mycolkey)
@@ -409,13 +410,13 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "TOP";
 
-						// Set default link 
+						// Set default link
 						$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
-						
+
 						// Now handle fields types differently
 						if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
 						{
-							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]);
 						}
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_NUMBER )
 						{
@@ -499,12 +500,12 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_EVENT_CATEGORY);
 							}
 							// WebServer Type fields
-							else if ( $mycolkey == SYSLOG_WEBLOG_STATUS ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_STATUS )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, SYSLOG_WEBLOG_STATUS);
 							}
-							else 
+							else
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_NUMBER, $mycolkey);
@@ -513,17 +514,17 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING )
 						{
 							// Set some basic variables first
-							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];		// May contain the field value trunscated 
+							$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $logArray[$mycolkey];		// May contain the field value trunscated
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = $logArray[$mycolkey];	// helper variable used for Popups!
 							$content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue'] = PrepareStringForSearch($logArray[$mycolkey]); // Convert into filter format for submenus
 
 							// --- Check for reached string character limit
-							if ( $mycolkey != SYSLOG_MESSAGE ) 
+							if ( $mycolkey != SYSLOG_MESSAGE )
 							{
 								if ( $myStrCharLimit > 0 )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = GetStringWithHTMLCodes(strlen($logArray[$mycolkey]) > $myStrCharLimit ? substr($logArray[$mycolkey], 0, $myStrCharLimit) . "..." : $logArray[$mycolkey]);
 							}
-							// --- 
+							// ---
 
 							// Special Handling for the Syslog Message!
 							if ( $mycolkey == SYSLOG_MESSAGE )
@@ -556,7 +557,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvaluenolink'] = $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'];
 								AddContextLinks($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue']);
 								AddContextHighlights($content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvaluenolink']);
-								// --- 
+								// ---
 
 								if ( GetConfigSetting("ViewEnableDetailPopups", 0, CFGLEVEL_USER) )
 								{
@@ -564,7 +565,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaptionjs'] = EscapeQuotesFromString($content['syslogmessages'][$counter]['values'][$mycolkey]['popupcaption']);
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "true";
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "left"; // Other alignment needed!
-/* DetailPopup Code not needed anymore 
+/* DetailPopup Code not needed anymore
 									foreach($content['syslogmessages'][$counter]['values'] as $mykey => $myfield)
 									{
 										// Set Caption!
@@ -578,7 +579,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailscssclass'] = "line1";
 										else
 											$content['syslogmessages'][$counter]['values'][$mycolkey]['messagesdetails'][$myIndex]['detailscssclass'] = "line2";
-										// --- 
+										// ---
 
 										// If message field, we need to handle differently!
 										if ( $mykey == SYSLOG_MESSAGE )
@@ -606,73 +607,73 @@ if ( isset($content['Sources'][$currentSourceID]) )
 									// Set OnClick Menu for SYSLOG_MESSAGE
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasbuttons'] = true;
 									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdropdownbutton'] = true;
-									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array( 
-										'ButtonUrl' => '?uid=' . $uID, 
-										'ButtonTarget' => '_top', 
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['buttons'][] = array(
+										'ButtonUrl' => '?uid=' . $uID,
+										'ButtonTarget' => '_top',
 										'ButtonAppendUrl' => true,
-										'DisplayName' => $content['LN_VIEW_MESSAGECENTERED'], 
+										'DisplayName' => $content['LN_VIEW_MESSAGECENTERED'],
 										'IconSource' => $content['MENU_BULLET_GREEN']
 										);
 								}
 							}
-							else if ( $mycolkey == SYSLOG_SYSLOGTAG ) 
+							else if ( $mycolkey == SYSLOG_SYSLOGTAG )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_SYSLOGTAG);
 							}
-							else if ( $mycolkey == SYSLOG_HOST ) 
+							else if ( $mycolkey == SYSLOG_HOST )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_HOST);
 							}
 							/* Eventlog based fields */
-							else if ( $mycolkey == SYSLOG_EVENT_LOGTYPE ) 
+							else if ( $mycolkey == SYSLOG_EVENT_LOGTYPE )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_LOGTYPE);
 							}
-							else if ( $mycolkey == SYSLOG_EVENT_SOURCE ) 
+							else if ( $mycolkey == SYSLOG_EVENT_SOURCE )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_SOURCE);
 							}
-							else if ( $mycolkey == SYSLOG_EVENT_USER ) 
+							else if ( $mycolkey == SYSLOG_EVENT_USER )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_EVENT_USER);
 							}
 							// WebServer Type fields
-							else if ( $mycolkey == SYSLOG_WEBLOG_USER ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_USER )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USER);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_METHOD ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_METHOD )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_METHOD);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_URL ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_URL )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_URL);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_QUERYSTRING ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_QUERYSTRING )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_QUERYSTRING);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_PVER ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_PVER )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_PVER);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_REFERER ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_REFERER )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_REFERER);
 							}
-							else if ( $mycolkey == SYSLOG_WEBLOG_USERAGENT ) 
+							else if ( $mycolkey == SYSLOG_WEBLOG_USERAGENT )
 							{
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_WEBLOG_USERAGENT);
@@ -689,7 +690,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 				// Increment Counter
 				$counter++;
-				
+
 				// --- Extra Loop to get the next entry!
 
 				// temporary store the current last $uID
@@ -699,7 +700,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				{
 					$ret = $stream->ReadNext($uID, $logArray);
 				} while ( $ret == ERROR_MSG_SKIPMESSAGE );
-				// --- 
+				// ---
 			} while ( $counter < $content['CurrentViewEntriesPerPage'] && ($ret == SUCCESS) );
 //print_r ( $content['syslogmessages'] );
 
@@ -711,15 +712,15 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			{
 				// Enable Pager in any case here!
 				$content['main_pagerenabled'] = true;
-				
+
 /*
 				// temporary store the current last $uID
 				$lastUid = $uID;
 
-				// --- Handle uid_next page button 
+				// --- Handle uid_next page button
 				if ( $content['read_direction'] == EnumReadDirection::Backward )
 				{
-					if ( $stream->ReadNext($uID, $logArray) == SUCCESS && isset($uID) ) 
+					if ( $stream->ReadNext($uID, $logArray) == SUCCESS && isset($uID) )
 					{
 						$content['uid_next'] = $uID;
 						$content['main_pager_next_found'] = true;
@@ -728,20 +729,20 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						$content['main_pager_next_found'] = false;
 //echo $content['uid_next'] . "!!!";
 				}
-				// --- 
+				// ---
 */
 
 /*
-				// --- Handle uid_previous page button 
+				// --- Handle uid_previous page button
 				if ( $content['uid_current'] != UID_UNKNOWN )
 				{
 					if ( $content['read_direction'] == EnumReadDirection::Forward )
 					{
-						if ( $ret == SUCCESS ) 
+						if ( $ret == SUCCESS )
 						{
 							// Try to read the next one!
 							$ret = $stream->ReadNext($uID, $tmp);
-							if ( $ret == SUCCESS ) 
+							if ( $ret == SUCCESS )
 								$content['main_pager_previous_found'] = true;
 							else
 								$content['main_pager_previous_found'] = false;
@@ -755,17 +756,17 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				else
 					$content['main_pager_previous_found'] = false;
 				//echo $content['uid_previous'];
-				// --- 
+				// ---
 */
 
-				// --- Handle uid_previous page button 
+				// --- Handle uid_previous page button
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
-					if ( $ret == SUCCESS ) 
+					if ( $ret == SUCCESS )
 					{
 						// Try to read the next one!
 						$ret = $stream->ReadNext($uID, $tmp);
-						if ( $ret == SUCCESS ) 
+						if ( $ret == SUCCESS )
 							$content['main_pager_previous_found'] = true;
 						else
 							$content['main_pager_previous_found'] = false;
@@ -775,19 +776,19 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				}
 				else
 				{
-					if ( $content['uid_current'] == $content['uid_previous'] ) 
+					if ( $content['uid_current'] == $content['uid_previous'] )
 						$content['main_pager_previous_found'] = false;
 					else
 						$content['main_pager_previous_found'] = true;
 				}
 
 
-				// --- 
+				// ---
 
-				// --- Handle uid_last and uid_next page button 
+				// --- Handle uid_last and uid_next page button
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
-					if ( $content['uid_current'] == $content['uid_last'] ) 
+					if ( $content['uid_current'] == $content['uid_last'] )
 					{
 						$content['main_pager_last_found'] = false;
 						$content['main_pager_next_found'] = false;
@@ -804,7 +805,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				else
 				{
 					// If last error code was nomorerecords, there are no more pages
-					if ( $ret == ERROR_NOMORERECORDS ) 
+					if ( $ret == ERROR_NOMORERECORDS )
 					{
 						$content['main_pager_last_found'] = false;
 						$content['main_pager_next_found'] = false;
@@ -817,7 +818,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 						$content['main_pager_next_found'] = true;
 					}
 				}
-				// --- 
+				// ---
 
 //!!!!!!!!
 /*
@@ -827,14 +828,14 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				else
 					$content['main_pager_last_found'] = false;
 				//echo $content['uid_last'];
-				
+
 				// Handle next button only if Forward is used now!
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
-					if ( $content['uid_current'] == $content['uid_last'] ) 
+					if ( $content['uid_current'] == $content['uid_last'] )
 						// Last page already !
 						$content['main_pager_next_found'] = false;
-					else	
+					else
 						// User clicked back, so there is a next page for sure
 						$content['main_pager_next_found'] = true;
 
@@ -842,10 +843,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					$content['uid_current'] = $lastUid;
 				}
 */
-				// --- 
-				
-				// --- Handle uid_first page button 
-				if ( $content['uid_current'] == $content['uid_first'] ) 
+				// ---
+
+				// --- Handle uid_first page button
+				if ( $content['uid_current'] == $content['uid_first'] )
 				{
 					$content['main_pager_first_found'] = false;
 					$content['main_pager_previous_found'] = false; // If there is no FIRST, there is no going back!
@@ -854,21 +855,21 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					$content['main_pager_first_found'] = false;
 				else
 					$content['main_pager_first_found'] = true;
-				// --- 
+				// ---
 
 //				$content['uid_first']
 /*
-				// --- Handle uid_first page button 
-				if (	$content['main_pager_previous_found'] == false || 
-						$content['uid_current'] == UID_UNKNOWN || 
-						$content['uid_current'] == $content['uid_first'] ) 
+				// --- Handle uid_first page button
+				if (	$content['main_pager_previous_found'] == false ||
+						$content['uid_current'] == UID_UNKNOWN ||
+						$content['uid_current'] == $content['uid_first'] )
 				{
 					$content['main_pager_first_found'] = false;
 					$content['main_pager_previous_found'] = false; // If there is no FIRST, there is no going back!
 				}
 				else
 					$content['main_pager_first_found'] = true;
-				// --- 
+				// ---
 */
 			}
 			else	// Disable pager in this case!
@@ -876,7 +877,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 			if ( $content['read_direction'] == EnumReadDirection::Forward )
 			{
-				// Back Button was clicked, so we need to flip the array 
+				// Back Button was clicked, so we need to flip the array
 //				print_r( $content['syslogmessages'] );
 				$content['syslogmessages'] = array_reverse ( $content['syslogmessages'] );
 //				print_r( $content['syslogmessages'] );
@@ -906,13 +907,13 @@ else
 	$content['detailederror'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_SOURCENOTFOUND'], $currentSourceID);
 	$content['detailederror_code'] = ERROR_SOURCENOTFOUND;
 }
-// --- 
+// ---
 
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "index.html");
-$page -> output(); 
-// --- 
+$page -> output();
+// ---
 
 // --- BEGIN Define Helper functions
 function HighLightString($highlightArray, $strmsg)
@@ -920,7 +921,7 @@ function HighLightString($highlightArray, $strmsg)
 	if ( isset($highlightArray) )
 	{
 		// TODO OPTIMIZE - USING FONT TAG as SPAN is HIDDEN if MESSAGE POPUP is ENABNLED!
-		foreach( $highlightArray as $highlightword ) 
+		foreach( $highlightArray as $highlightword )
 			$strmsg = preg_replace( "/(" . $highlightword['highlight'] . ")/i", '<font class="' . $highlightword['cssclass'] . '">\\1</font>', $strmsg );
 	}
 
@@ -944,31 +945,31 @@ function PrepareStringForSearch($myString)
 
 function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 {
-	global $content, $fields, $myStrCharLimit; 
+	global $content, $fields, $myStrCharLimit;
 
 	if ( strlen($fieldGridItem['fieldvalue']) <= 0 ) {
 		$fieldGridItem['hasbuttons'] = false;
-		return; 
+		return;
 	}
 	else
-		// Enable OnClick Menu 
+		// Enable OnClick Menu
 		$fieldGridItem['hasbuttons'] = true;
-	
+
 	// Set Field Caption
-	if ( isset($content['fields'][$FieldID]['FieldCaption']) && strlen( $content['fields'][$FieldID]['FieldCaption']) > 0 ) 
+	if ( isset($content['fields'][$FieldID]['FieldCaption']) && strlen( $content['fields'][$FieldID]['FieldCaption']) > 0 )
 		$szFieldDisplayName = $content['fields'][$FieldID]['FieldCaption'];
 	else
 		$szFieldDisplayName = $FieldID;
-	
+
 	// Set FieldSearch Value
-	if ( $fieldType == FILTER_TYPE_STRING && isset($fieldGridItem['encodedfieldvalue']) ) 
+	if ( $fieldType == FILTER_TYPE_STRING && isset($fieldGridItem['encodedfieldvalue']) )
 	{
 		$szEncodedFieldValue = urlencode($fieldGridItem['encodedfieldvalue']);
 	}
 	else
 		$szEncodedFieldValue = $fieldGridItem['fieldvalue'];
 
-	// Set FieldSearchName 
+	// Set FieldSearchName
 	if ( isset($fields[$FieldID]['SearchField']) )
 		$szSearchFieldName = $fields[$FieldID]['SearchField'];
 	else
@@ -977,65 +978,65 @@ function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 	// Menu Option to append filter
 	if ( strlen($content['searchstr']) > 0 )
 	{
-		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
-			'ButtonTarget' => '_top', 
+		$fieldGridItem['buttons'][] = array(
+			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'],
+			'ButtonTarget' => '_top',
 			'ButtonAppendUrl' => true,
-			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']), 
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_ADDTOFILTER'], $fieldGridItem['fieldvalue']),
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
-		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
-			'ButtonTarget' => '_top', 
+		$fieldGridItem['buttons'][] = array(
+			'ButtonUrl' => '?filter=' . urlencode($content['searchstr']) . '+' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'],
+			'ButtonTarget' => '_top',
 			'ButtonAppendUrl' => true,
-			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_EXCLUDEFILTER'], $fieldGridItem['fieldvalue']), 
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_EXCLUDEFILTER'], $fieldGridItem['fieldvalue']),
 			'IconSource' => $content['MENU_BULLET_GREEN']
 			);
 	}
-	
+
 	// More Menu entries
-	$fieldGridItem['buttons'][] = array( 
-		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
-		'ButtonTarget' => '_top', 
+	$fieldGridItem['buttons'][] = array(
+		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'],
+		'ButtonTarget' => '_top',
 		'ButtonAppendUrl' => true,
-		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']), 
+		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_FILTERFORONLY'], $fieldGridItem['fieldvalue']),
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
-	$fieldGridItem['buttons'][] = array( 
-		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'], 
-		'ButtonTarget' => '_top', 
+	$fieldGridItem['buttons'][] = array(
+		'ButtonUrl' => '?filter=' . $szSearchFieldName . '%3A-%3D' . $szEncodedFieldValue . '&search=Search' . $content['additional_url_sourceonly'],
+		'ButtonTarget' => '_top',
 		'ButtonAppendUrl' => true,
-		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_SHOWALLBUT'], $fieldGridItem['fieldvalue']), 
+		'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_SHOWALLBUT'], $fieldGridItem['fieldvalue']),
 		'IconSource' => $content['MENU_BULLET_BLUE']
 		);
 
 	// Add Online Search Button
 	if ( isset($fields[$FieldID]['SearchOnline']) && $fields[$FieldID]['SearchOnline'] && strlen($fieldGridItem['fieldvalue']) > 0 )
 	{
-		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue, 
-			'ButtonTarget' => '_top', 
+		$fieldGridItem['buttons'][] = array(
+			'ButtonUrl' => 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue,
+			'ButtonTarget' => '_top',
 			'ButtonAppendUrl' => true,
-			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $szFieldDisplayName . " '" . $fieldGridItem['fieldvalue'] . "'", 
+			'DisplayName' => $content['LN_VIEW_SEARCHFOR'] . " " . $szFieldDisplayName . " '" . $fieldGridItem['fieldvalue'] . "'",
 			'IconSource' => $content['MENU_NETWORK']
 			);
 
 		if ( GetConfigSetting("InlineOnlineSearchIcons", 1, CFGLEVEL_USER) == 1 )
 		{
 			// Enable SearchOnline Icon
-			$fieldGridItem['searchonline'] = true; 
-			$fieldGridItem['SearchOnlineUrl'] = 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue; 
+			$fieldGridItem['searchonline'] = true;
+			$fieldGridItem['SearchOnlineUrl'] = 'http://kb.monitorware.com/kbsearch.php?sa=Search&origin=phplogcon&oid=' . $FieldID . '&q=' . $szEncodedFieldValue;
 		}
 	}
-	
+
 	// Search for links within the fieldcontent!
 	if ( $fieldType == FILTER_TYPE_STRING && preg_match("#([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", $fieldGridItem['rawfieldvalue'], $szLink) >= 1 )
 	{
-		$fieldGridItem['buttons'][] = array( 
-			'ButtonUrl' => $szLink[0], 
-			'ButtonTarget' => '_blank', 
+		$fieldGridItem['buttons'][] = array(
+			'ButtonUrl' => $szLink[0],
+			'ButtonTarget' => '_blank',
 			'ButtonAppendUrl' => false,
-			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_VISITLINK'], strlen($szLink[0]) > $myStrCharLimit ? substr($szLink[0], 0, $myStrCharLimit) . "..." : $szLink[0] ), 
+			'DisplayName' => GetAndReplaceLangStr($content['LN_VIEW_VISITLINK'], strlen($szLink[0]) > $myStrCharLimit ? substr($szLink[0], 0, $myStrCharLimit) . "..." : $szLink[0] ),
 			'IconSource' => $content['MENU_NETWORK']
 			);
 	}
