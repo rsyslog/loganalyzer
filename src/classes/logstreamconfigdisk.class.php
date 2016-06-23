@@ -132,7 +132,6 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	}
 
 	public function Display(){
-		global $content;
 		$this->SetDisplay($this->FileName);
 	}
 
