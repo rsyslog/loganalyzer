@@ -139,6 +139,20 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		$content['Display_Dir'] = $show;
 	}
 
+	public function ChangeLogPath($date){
+		if(empty($date)){
+			return;
+		}
+		//echo "sortVal : " . $sortVal . "<br>";
+		$dir = $this->GetCurrentDir();
+		//echo "dir : " . $dir . "<br>";
+		$this->FileName = $dir .$date . ".log";
+		$show = $this->BuildDisplayContent($dir, $date);
+
+		global $content;
+		$content['Display_Dir'] = $show;
+	}
+
 	public function SyncLogPath(){
 		if(!isset($_GET['date'])){
 			return;
@@ -169,21 +183,6 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	}
 
 	private function GetDisplay(){
-
-
-		/*$pattern = "([\d]+)";
-		preg_match_all($pattern, $szNewVal, $ret, PREG_SET_ORDER);
-		foreach ($ret as $r) {
-			$sortVal = $r[0];
-		}
-		$dir = str_replace($sortVal . ".log", "", $szNewVal);
-		if(isset($_GET['date'])){
-			$sortVal = $_GET['date'];
-		}
-
-		$this->CurrentDir = $dir;
-		$this->FileName = $dir .$sortVal . ".log";*/
-
 		$sortVal = $this->GetSortName();
 		if(isset($_GET['date'])){
 			$sortVal = $_GET['date'];
@@ -191,6 +190,13 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		$dir = $this->GetCurrentDir();
 		$this->FileName = $dir .$sortVal . ".log";
 
+		/*$show = $this->SetCurrentColor("Current Dir : " . $dir);
+		$show = $show . $this->SetCurrentColor("Current Log : " . $sortVal);
+		$show = $show . $this->GetLogList($dir);*/
+		return $this->BuildDisplayContent($dir, $sortVal);
+	}
+
+	private function BuildDisplayContent($dir, $sortVal){
 		$show = $this->SetCurrentColor("Current Dir : " . $dir);
 		$show = $show . $this->SetCurrentColor("Current Log : " . $sortVal);
 		$show = $show . $this->GetLogList($dir);

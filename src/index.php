@@ -245,6 +245,25 @@ if ( isset($content['Sources'][$currentSourceID]) )
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 	$stream_config->Display();
 
+	StartPHPSession();
+	//echo $_GET['date'] . ":_GET['date']<br>";
+	//echo $content['searchstr'] . "content['searchstr']<br>";
+	//echo $_SESSION['log_date'] . ": _SESSION['log_date']<br>";
+	if ( isset( $_GET['date'] ) && strlen( $_GET['date'] ) > 0 ){
+		$_SESSION['log_date'] = $_GET['date'];
+	} else {
+		if ( isset( $_SESSION['log_date'] ) ){
+			if ( empty( $content['searchstr'] ) ){
+				unset( $_SESSION['log_date'] );
+			} else {
+				if ( strlen( $content['searchstr'] ) > 0 && strlen( $_SESSION['log_date'] ) > 0 ){
+					$stream_config->ChangeLogPath( $_SESSION['log_date'] );
+				}
+			}
+		}
+	}
+	WriteClosePHPSession();
+
 	// Create LogStream Object
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
