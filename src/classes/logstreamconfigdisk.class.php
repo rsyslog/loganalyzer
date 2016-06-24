@@ -44,6 +44,8 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	public $LineParserType = "syslog"; // Default = Syslog!
 	public $_lineParser = null;
 
+	private $CurrentDir = "";
+
 	public function LogStreamFactory($o)
 	{
 		// An instance is created, then include the logstreamdisk class as well!
@@ -132,13 +134,44 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	}
 
 	public function Display(){
-		$this->SetDisplay($this->FileName);
+		global $content;
+		$show = $this->GetDisplay();
+		$content['Display_Dir'] = $show;
 	}
 
-	private function SetDisplay( $szNewVal ){
-		global $content;
+	public function SyncLogPath(){
+		if(!isset($_GET['date'])){
+			return;
+		}
+		$sortVal = $_GET['date'];
+		//echo "sortVal : " . $sortVal . "<br>";
+		$dir = $this->GetCurrentDir();
+		//echo "dir : " . $dir . "<br>";
+		$this->FileName = $dir .$sortVal . ".log";
+	}
 
+	private function GetCurrentDir(){
+		if(!empty($this->CurrentDir)){
+			return $this->CurrentDir;
+		}
+		$sortVal = $this->GetSortName();
+		$this->CurrentDir = str_replace($sortVal . ".log", "", $this->FileName);
+		return $this->CurrentDir;
+	}
+
+	private function GetSortName(){
 		$pattern = "([\d]+)";
+		preg_match_all($pattern, $this->FileName, $ret, PREG_SET_ORDER);
+		foreach ($ret as $r) {
+			$sortVal = $r[0];
+		}
+		return $sortVal;
+	}
+
+	private function GetDisplay(){
+
+
+		/*$pattern = "([\d]+)";
 		preg_match_all($pattern, $szNewVal, $ret, PREG_SET_ORDER);
 		foreach ($ret as $r) {
 			$sortVal = $r[0];
@@ -148,13 +181,20 @@ class LogStreamConfigDisk extends LogStreamConfig {
 			$sortVal = $_GET['date'];
 		}
 
+		$this->CurrentDir = $dir;
+		$this->FileName = $dir .$sortVal . ".log";*/
+
+		$sortVal = $this->GetSortName();
+		if(isset($_GET['date'])){
+			$sortVal = $_GET['date'];
+		}
+		$dir = $this->GetCurrentDir();
 		$this->FileName = $dir .$sortVal . ".log";
 
 		$show = $this->SetCurrentColor("Current Dir : " . $dir);
 		$show = $show . $this->SetCurrentColor("Current Log : " . $sortVal);
 		$show = $show . $this->GetLogList($dir);
-		$this->DisplayDir = $show;
-		$content['Display_Dir'] = $show;
+		return $show;
 	}
 
 	private function SetCurrentColor( $text ){

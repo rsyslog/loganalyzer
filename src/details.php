@@ -141,6 +141,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
+	$stream_config->SyncLogPath();
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
