@@ -103,7 +103,7 @@ $CFG['PopupMenuTimeout'] = 3000;			// This variable defines the default timeout 
 $CFG['PhplogconLogoUrl'] = "";				// Put an Url to a custom toplogo you want to use.
 $CFG['InlineOnlineSearchIcons'] = 1;		// Show online search icons
 $CFG['UseProxyServerForRemoteQueries'] = "";// If empty no proxy server will be used. If set to a proxy server url like 127.0.0.1:8080, LogAnalyzer will use this server for url queries like the updatecheck. 
-$CFG['HeaderDefaultEncoding'] = GB2312;//ENC_ISO_8859_1;	// Set default character encoding
+$CFG['HeaderDefaultEncoding'] = "UTF-8";//ENC_ISO_8859_1;	// Set default character encoding
 $CFG['DefaultFont'] = "Arial";				// Sets the default Font to be used in Loganalyzer
 $CFG['DefaultFontSize'] = "100";			// Sets the percentage font size, default is 100 (Percent). Can be changed up to 200 and down to 50 with good results.  
 // ---
@@ -175,11 +175,68 @@ $content['Password_Access'] = "aaaaaa";
 $CFG['DefaultSourceID'] = 'Source1';
 
 $CFG['Sources']['Source1']['ID'] = 'Source1';
-$CFG['Sources']['Source1']['Name'] = 'Source1';
+$CFG['Sources']['Source1']['Name'] = 'tomcat-catalina';
 $CFG['Sources']['Source1']['ViewID'] = 'SYSLOG';
 $CFG['Sources']['Source1']['SourceType'] = SOURCE_DISK;
 $CFG['Sources']['Source1']['LogLineType'] = 'syslog';
-$CFG['Sources']['Source1']['DiskFile'] = 'E:\%Y%m%d.log';/*E:\20160617.log*/
+$CFG['Sources']['Source1']['DiskFile'] = '/var/log/catalina-out/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source2']['ID'] = 'Source2';
+$CFG['Sources']['Source2']['Name'] = 'tomcat-localhost';
+$CFG['Sources']['Source2']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source2']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source2']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source2']['DiskFile'] = '/var/log/localhost/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source3']['ID'] = 'Source3';
+$CFG['Sources']['Source3']['Name'] = 'tomcat-access';
+$CFG['Sources']['Source3']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source3']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source3']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source3']['DiskFile'] = '/var/log/localhost-access/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source4']['ID'] = 'Source4';
+$CFG['Sources']['Source4']['Name'] = 'error-web';
+$CFG['Sources']['Source4']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source4']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source4']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source4']['DiskFile'] = '/var/log/error/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source5']['ID'] = 'Source5';
+$CFG['Sources']['Source5']['Name'] = 'crond';
+$CFG['Sources']['Source5']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source5']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source5']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source5']['DiskFile'] = '/var/log/crond/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source6']['ID'] = 'Source6';
+$CFG['Sources']['Source6']['Name'] = 'CROND';
+$CFG['Sources']['Source6']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source6']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source6']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source6']['DiskFile'] = '/var/log/CROND/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source7']['ID'] = 'Source7';
+$CFG['Sources']['Source7']['Name'] = 'kernel';
+$CFG['Sources']['Source7']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source7']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source7']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source7']['DiskFile'] = '/var/log/kernel/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source8']['ID'] = 'Source8';
+$CFG['Sources']['Source8']['Name'] = 'rsyslogd';
+$CFG['Sources']['Source8']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source8']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source8']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source8']['DiskFile'] = '/var/log/rsyslogd/%Y%m%d.log';/*E:\20160617.log*/
+
+$CFG['Sources']['Source9']['ID'] = 'Source9';
+$CFG['Sources']['Source9']['Name'] = 'postfix';
+$CFG['Sources']['Source9']['ViewID'] = 'SYSLOG';
+$CFG['Sources']['Source9']['SourceType'] = SOURCE_DISK;
+$CFG['Sources']['Source9']['LogLineType'] = 'syslog';
+$CFG['Sources']['Source9']['DiskFile'] = '/var/log/postfix/%Y%m%d.log';/*E:\20160617.log*/
+// --- 
 
 // --- 
 
