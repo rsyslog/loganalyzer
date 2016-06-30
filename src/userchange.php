@@ -44,10 +44,7 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 InitPhpLogCon();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 // ***					*** //
-if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
-	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
-    Password  :<input type=\"password\" name=\"password\" />  
-    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
 	return;
 }
 // --- BEGIN Custom Code

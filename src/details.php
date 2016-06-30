@@ -52,10 +52,7 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
-if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
-	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
-    Password  :<input type=\"password\" name=\"password\" />  
-    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
 	return;
 }
 // --- Define Extra Stylesheet!
@@ -141,8 +138,11 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
-	$stream_config->SyncLogPath();
 
+	if ( isset( $content['Allow_Change_Log'] ) && $content['Allow_Change_Log'] == ALLOW_CHANGE ) {
+		$stream_config->SyncLogPath();
+	}
+	
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
