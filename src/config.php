@@ -171,6 +171,8 @@ $CFG['DiskAllowed'][] = "/var/log/";
 */
 $content['User_Access'] = "aaa";
 $content['Password_Access'] = "aaaaaa";
+$content['Display_Dir'] = "";
+$content['Allow_Change_Log'] = ALLOW_CHANGE;
 
 $CFG['DefaultSourceID'] = 'Source1';
 
@@ -236,7 +238,7 @@ $CFG['Sources']['Source9']['ViewID'] = 'SYSLOG';
 $CFG['Sources']['Source9']['SourceType'] = SOURCE_DISK;
 $CFG['Sources']['Source9']['LogLineType'] = 'syslog';
 $CFG['Sources']['Source9']['DiskFile'] = '/var/log/postfix/%Y%m%d.log';/*E:\20160617.log*/
-// --- 
+// ---
 
 // --- 
 

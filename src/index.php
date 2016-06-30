@@ -56,22 +56,17 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 if(isset($_POST["submit"]) && $_POST["submit"] == "Login") {
 	$user = $_POST["username"];
 	$pwd = $_POST["password"];
+	$result = "<script>alert('please login!'); history.go(-1);</script>";
 	if ($user == $content['User_Access'] && $pwd == $content['Password_Access']){
 		setcookie("acc_user", $user, time()+3600*24, '/');
 		setcookie("acc_pwd", $pwd, time()+3600*24, '/');
-		echo "<script>alert('User[" . $user . "] Login Success!');location.href='".$_SERVER["HTTP_REFERER"]."';</script>";
+		$result = "<script>alert('User[" . $user . "] Login Success!');location.href='".$_SERVER["HTTP_REFERER"]."';</script>";
 	}
-	else{
-		echo "<script>alert('please login!'); history.go(-1);</script>";
-	}
+	//echo $result;
+	return $result;
 }
 
-if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
-	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
-    Password  :<input type=\"password\" name=\"password\" />  
-    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
-	return;
-}
+echo DisplayPage();
 
 // --- Define Extra Stylesheet!
 $content['EXTRA_STYLESHEET'] = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
@@ -243,26 +238,28 @@ if ( isset($content['Sources'][$currentSourceID]) )
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
-	$stream_config->Display();
+	if ( isset( $content['Allow_Change_Log'] ) && $content['Allow_Change_Log'] == ALLOW_CHANGE ){
+		$stream_config->Display();
 
-	StartPHPSession();
-	//echo $_GET['date'] . ":_GET['date']<br>";
-	//echo $content['searchstr'] . "content['searchstr']<br>";
-	//echo $_SESSION['log_date'] . ": _SESSION['log_date']<br>";
-	if ( isset( $_GET['date'] ) && strlen( $_GET['date'] ) > 0 ){
-		$_SESSION['log_date'] = $_GET['date'];
-	} else {
-		if ( isset( $_SESSION['log_date'] ) ){
-			if ( empty( $content['searchstr'] ) ){
-				unset( $_SESSION['log_date'] );
-			} else {
-				if ( strlen( $content['searchstr'] ) > 0 && strlen( $_SESSION['log_date'] ) > 0 ){
-					$stream_config->ChangeLogPath( $_SESSION['log_date'] );
+		StartPHPSession();
+		//echo $_GET['date'] . ":_GET['date']<br>";
+		//echo $content['searchstr'] . "content['searchstr']<br>";
+		//echo $_SESSION['log_date'] . ": _SESSION['log_date']<br>";
+		if ( isset( $_GET['date'] ) && strlen( $_GET['date'] ) > 0 ){
+			$_SESSION['log_date'] = $_GET['date'];
+		} else {
+			if ( isset( $_SESSION['log_date'] ) ){
+				if ( empty( $content['searchstr'] ) ){
+					unset( $_SESSION['log_date'] );
+				} else {
+					if ( strlen( $content['searchstr'] ) > 0 && strlen( $_SESSION['log_date'] ) > 0 ){
+						$stream_config->ChangeLogPath( $_SESSION['log_date'] );
+					}
 				}
 			}
 		}
+		WriteClosePHPSession();
 	}
-	WriteClosePHPSession();
 
 	// Create LogStream Object
 	$stream = $stream_config->LogStreamFactory($stream_config);

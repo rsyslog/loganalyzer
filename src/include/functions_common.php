@@ -110,6 +110,15 @@ function InitBasicPhpLogCon()
 	InitViewConfigs();
 }
 
+function DisplayPage(){
+	global $content;
+	if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
+		return "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
+    			Password  :<input type=\"password\" name=\"password\" />  
+    			<input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+	}
+}
+
 function InitUserSystemPhpLogCon()
 {
 	// global vars needed
