@@ -45,6 +45,9 @@ if ( !defined('IN_PHPLOGCON') )
 //---Allow_Change_Log
 define('ALLOW_CHANGE', "Y");
 define('NO_ALLOW_CHANGE', "N");
+//---View_Need_Login
+define('NEED_LOGIN', 1);
+define('NO_NEED_LOGIN', 0);
 
 // --- Some custom defines
 define('RUNMODE_COMMANDLINE', 1);

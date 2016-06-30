@@ -173,6 +173,7 @@ $content['User_Access'] = "aaa";
 $content['Password_Access'] = "aaaaaa";
 $content['Display_Dir'] = "";
 $content['Allow_Change_Log'] = ALLOW_CHANGE;
+$content['View_Need_Login'] = 1;
 
 $CFG['DefaultSourceID'] = 'Source1';
 
