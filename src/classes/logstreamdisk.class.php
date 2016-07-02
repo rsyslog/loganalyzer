@@ -184,7 +184,7 @@ class LogStreamDisk extends LogStream {
 			$orig_offset -= self::_BUFFER_length;
 			if ($orig_offset <= 0) {
 				// ok, we have to adjust the buffer pointer
-				$this->_p_buffer += $orig_offset; // note orig_offset is negative, see if
+				$this->_p_buffer += $orig_offset-1; // note orig_offset is negative, see if
 				$orig_offset = 0;
 			}
 			fseek($this->_fp, $orig_offset);
