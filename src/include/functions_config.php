@@ -49,13 +49,13 @@ function InitSource(&$mysource)
 {
 	global $CFG, $content, $gl_root_path, $currentSourceID;
 
-	if ( isset($mysource['SourceType']) )
+	if ( isset($mysource['SourceType']) ) 
 	{
 		// Set Array Index, TODO: Check for invalid characters!
 		$iSourceID = $mysource['ID'];
-
+		
 		// --- Set defaults if not set!
-		if ( !isset($mysource['LogLineType']) )
+		if ( !isset($mysource['LogLineType']) ) 
 		{
 			$CFG['Sources'][$iSourceID]['LogLineType'] = "syslog";
 			$content['Sources'][$iSourceID]['LogLineType'] = "syslog";
@@ -107,12 +107,12 @@ function InitSource(&$mysource)
 		$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
 		$szDefaultViewID = strlen($tmpVar) > 0 ? $tmpVar : "SYSLOG";
 
-		if ( isset($_SESSION[$iSourceID . "-View"]) )
+		if ( isset($_SESSION[$iSourceID . "-View"]) ) 
 		{
 			// check if view is valid
 			$UserSessionViewID = $_SESSION[$iSourceID . "-View"];
 
-			if ( isset($content['Views'][$UserSessionViewID]) )
+			if ( isset($content['Views'][$UserSessionViewID]) ) 
 			{
 				// Overwrite configured view!
 				$content['Sources'][$iSourceID]['ViewID'] = $_SESSION[$iSourceID . "-View"];
@@ -131,8 +131,8 @@ function InitSource(&$mysource)
 		}
 
 		// Only for the display box
-		$content['Sources'][$iSourceID]['selected'] = "";
-
+		$content['Sources'][$iSourceID]['selected'] = ""; 
+		
 		// Create Config instance!
 		if ( $mysource['SourceType'] == SOURCE_DISK )
 		{
@@ -157,7 +157,7 @@ function InitSource(&$mysource)
 				$mysource['ObjRef']->DBType = DB_MYSQL;
 
 			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
-
+			
 			// Legacy handling for tabletype!
 			if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
 				$mysource['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
@@ -207,20 +207,20 @@ function InitSource(&$mysource)
 //			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
 		}
 		else
-		{
+		{	
 			// UNKNOWN, remove config entry!
 			unset($content['Sources'][$iSourceID]);
 
 			// Output Debug Warning only!
 			OutputDebugMessage( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']), DEBUG_ERROR);
 			// DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_GEN_CRITERROR_UNKNOWNTYPE'], $mysource['SourceType']) );
-			return ERROR;
+			return ERROR; 
 		}
 
 		// Set generic configuration options
 		$mysource['ObjRef']->_pageCount = GetConfigSetting("ViewEntriesPerPage", 50);
 
-		if ( isset($mysource['MsgParserList']) )
+		if ( isset($mysource['MsgParserList']) ) 
 			$mysource['ObjRef']->SetMsgParserList( $mysource['MsgParserList'] );
 		if ( isset($mysource['MsgNormalize']) )
 			$mysource['ObjRef']->SetMsgNormalize( $mysource['MsgNormalize'] );
@@ -230,12 +230,12 @@ function InitSource(&$mysource)
 			$mysource['ObjRef']->SetDefaultfilter( $mysource['defaultfilter'] );
 
 		// Set default SourceID here!
-		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) )
+		if ( isset($content['Sources'][$iSourceID]) && !isset($currentSourceID) ) 
 			$currentSourceID = $iSourceID;
 
 		// Copy Object REF into CFG and content Array as well!
 		$content['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef'];
-		$CFG['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef'];
+		$CFG['Sources'][$iSourceID]['ObjRef'] = $mysource['ObjRef']; 
 	}
 }
 
@@ -248,40 +248,40 @@ function InitMessageParsers()
 	global $content, $gl_root_path;
 
 	$szDirectory = $gl_root_path . 'classes/msgparsers/'; // msgparser.' . $szParser . '.class.php';
-	$aFiles = list_files($szDirectory, true);
+	$aFiles = list_files($szDirectory, true); 
 	if ( isset($aFiles) && count($aFiles) > 0 )
 	{
-		foreach( $aFiles as $myFile )
+		foreach( $aFiles as $myFile ) 
 		{
 			// Check if file is valid msg parser!
 			if ( preg_match("/msgparser\.(.*?)\.class\.php$/", $myFile, $out ) )
 			{
 				// Set ParserID!
-				$myParserID = $out[1];
+				$myParserID = $out[1]; 
 
 				// Check if parser file include exists
-				$szIncludeFile = $szDirectory . $myFile;
+				$szIncludeFile = $szDirectory . $myFile; 
 				if ( file_exists($szIncludeFile) )
 				{
 					// Try to include
 					if ( include_once($szIncludeFile) )
 					{
 						// Set ParserClassName
-						$szParserClass = "MsgParser_" . $myParserID;
+						$szParserClass = "MsgParser_" . $myParserID; 
 ///						echo $szParserClass . "<br>";
-
+						
 						// Create Instance and get properties
 						$tmpParser = new $szParserClass(); // Create an instance
-						$szParserName = $tmpParser->_ClassName;
+						$szParserName = $tmpParser->_ClassName; 
 						$szParserDescription = $tmpParser->_ClassDescription;
 						$szParserHelpArticle = $tmpParser->_ClassHelpArticle;
-
+						
 
 						// check for required fields!
-						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 )
+						if ( $tmpParser->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
 						{
 							$bCustomFields = true;
-							$aCustomFieldList = $tmpParser->_ClassRequiredFields;
+							$aCustomFieldList = $tmpParser->_ClassRequiredFields; 
 //							print_r ( $aCustomFieldList );
 						}
 						else
@@ -292,13 +292,13 @@ function InitMessageParsers()
 
 						// Add entry to msg parser list!
 						$content['PARSERS'][$myParserID] = array (
-							"ID" => $myParserID,
-							"DisplayName" => $szParserName,
-							"Description" => $szParserDescription,
-							"CustomFields" => $bCustomFields,
-							"CustomFieldsList" => $aCustomFieldList,
-							"ParserHelpArticle" => $szParserHelpArticle,
-						);
+														"ID" => $myParserID, 
+														"DisplayName" => $szParserName, 
+														"Description" => $szParserDescription, 
+														"CustomFields" => $bCustomFields, 
+														"CustomFieldsList" => $aCustomFieldList, 
+														"ParserHelpArticle" => $szParserHelpArticle, 
+														);
 					}
 					else
 					{
@@ -322,33 +322,33 @@ function InitMessageParsers()
 function InitReportModules($szRootPath = "")
 {
 	global $content, $gl_root_path;
-
+	
 	// Check for parameter
-	if ( strlen($szRootPath) == 0 )
-		$szRootPath = $gl_root_path;
-	$szDirectory = $szRootPath . 'classes/reports/';
-	$aFiles = list_files($szDirectory, true);
+	if ( strlen($szRootPath) == 0 ) 
+		$szRootPath = $gl_root_path; 
+	$szDirectory = $szRootPath . 'classes/reports/'; 
+	$aFiles = list_files($szDirectory, true); 
 	if ( isset($aFiles) && count($aFiles) > 0 )
 	{
-		foreach( $aFiles as $myFile )
+		foreach( $aFiles as $myFile ) 
 		{
 			// Check if file is valid msg parser!
 			if ( preg_match("/report\.(.*?)\.(.*?)\.class\.php$/", $myFile, $out ) )
 			{
 				// Set ParserID!
-				$myReportCat = $out[1];
-				$myReportID = $out[2];
+				$myReportCat = $out[1]; 
+				$myReportID = $out[2]; 
 
 				// Check if parser file include exists
-				$szIncludeFile = $szDirectory . $myFile;
+				$szIncludeFile = $szDirectory . $myFile; 
 				if ( file_exists($szIncludeFile) )
 				{
 					// Try to include
 					if ( include_once($szIncludeFile) )
 					{
 						// Set ParserClassName
-						$szReportClass = "Report_" . $myReportID;
-
+						$szReportClass = "Report_" . $myReportID; 
+						
 						// Create Instance and get properties
 						$tmpReport = new $szReportClass(); // Create an instance
 						$szReportName = $tmpReport->_reportTitle;
@@ -358,55 +358,55 @@ function InitReportModules($szRootPath = "")
 						$bNeedsInit = $tmpReport->_reportNeedsInit;
 						$bInitialized = $tmpReport->_reportInitialized;
 						$aRequiredFieldsList = $tmpReport->GetRequiredProperties();
-
-						/*
-                                                // check for required fields!
-                                                if ( $tmpReport->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
-                                                {
-                                                    $bCustomFields = true;
-                                                    $aCustomFieldList = $tmpParser->_ClassRequiredFields; 
-                        //							print_r ( $aCustomFieldList );
-                                                }
-                                                else
-                                                {
-                                                    $bCustomFields = false;
-                                                    $aCustomFieldList = null;
-                                                }
-                                                */
+						
+/*
+						// check for required fields!
+						if ( $tmpReport->_ClassRequiredFields != null && count($tmpParser->_ClassRequiredFields) > 0 ) 
+						{
+							$bCustomFields = true;
+							$aCustomFieldList = $tmpParser->_ClassRequiredFields; 
+//							print_r ( $aCustomFieldList );
+						}
+						else
+						{
+							$bCustomFields = false;
+							$aCustomFieldList = null;
+						}
+						*/
 
 						// Add entry to report modules list!
 						$content['REPORTS'][$myReportID] = array (
-							"ID" => $myReportID,
-							"Category" => $myReportCat,
-							"DisplayName" => $szReportName,
-							"Description" => $szReportDescription,
-							"ReportVersion" => $szReportVersion,
-							"ReportHelpArticle" => $szReportHelpArticle,
-							"NeedsInit" => $bNeedsInit,
-							"Initialized" => $bInitialized,
-							"ObjRef" => $tmpReport,
+														"ID" => $myReportID, 
+														"Category" => $myReportCat, 
+														"DisplayName" => $szReportName, 
+														"Description" => $szReportDescription, 
+														"ReportVersion" => $szReportVersion, 
+														"ReportHelpArticle" => $szReportHelpArticle, 
+														"NeedsInit" => $bNeedsInit, 
+														"Initialized" => $bInitialized, 
+														"ObjRef" => $tmpReport, 
 //														"CustomFields" => $bCustomFields, 
-							"RequiredFieldsList" => $aRequiredFieldsList,
-						);
+														"RequiredFieldsList" => $aRequiredFieldsList, 
+														);
 
 						// --- Now Search and populate savedReports | but only if DB Version is 9 or higher.
 						if ( $content['database_installedversion'] >= 9 )
 						{
 							// --- Create SQL Query
-							$sqlquery = " SELECT " .
-								DB_SAVEDREPORTS . ".ID as SavedReportID, " .
-								DB_SAVEDREPORTS . ".sourceid, " .
-								DB_SAVEDREPORTS . ".customTitle, " .
-								DB_SAVEDREPORTS . ".customComment, " .
-								DB_SAVEDREPORTS . ".filterString, " .
-								DB_SAVEDREPORTS . ".customFilters, " .
-								DB_SAVEDREPORTS . ".outputFormat, " .
-								DB_SAVEDREPORTS . ".outputTarget, " .
-								DB_SAVEDREPORTS . ".outputTargetDetails, " .
-								DB_SAVEDREPORTS . ".scheduleSettings " .
-								" FROM `" . DB_SAVEDREPORTS . "`" .
-								" WHERE `" . DB_SAVEDREPORTS . "`.reportid = '" . $myReportID . "' " .
-								" ORDER BY `" . DB_SAVEDREPORTS . "`.customTitle";
+							$sqlquery = " SELECT " . 
+										DB_SAVEDREPORTS . ".ID as SavedReportID, " . 
+										DB_SAVEDREPORTS . ".sourceid, " . 
+										DB_SAVEDREPORTS . ".customTitle, " . 
+										DB_SAVEDREPORTS . ".customComment, " . 
+										DB_SAVEDREPORTS . ".filterString, " . 
+										DB_SAVEDREPORTS . ".customFilters, " . 
+										DB_SAVEDREPORTS . ".outputFormat, " . 
+										DB_SAVEDREPORTS . ".outputTarget, " . 
+										DB_SAVEDREPORTS . ".outputTargetDetails, " . 
+										DB_SAVEDREPORTS . ".scheduleSettings " . 
+										" FROM `" . DB_SAVEDREPORTS . "`" . 
+										" WHERE `" . DB_SAVEDREPORTS . "`.reportid = '" . $myReportID . "' " .  
+										" ORDER BY `" . DB_SAVEDREPORTS . "`.customTitle";
 
 							// Get Views from DB now!
 							$result = DB_Query($sqlquery);
@@ -421,10 +421,10 @@ function InitReportModules($szRootPath = "")
 								{
 									// Set default properties if not set!
 									if (!isset($mySavedReport['outputTarget']) || strlen($mySavedReport['outputTarget']) <= 0 )
-										$mySavedReport['outputTarget'] = REPORT_TARGET_STDOUT;
+										$mySavedReport['outputTarget'] = REPORT_TARGET_STDOUT; 
 
 									// Add saved report into global array
-									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['SavedReportID'] ] = $mySavedReport;
+									$content['REPORTS'][$myReportID]['SAVEDREPORTS'][ $mySavedReport['SavedReportID'] ] = $mySavedReport; 
 								}
 							}
 
@@ -460,7 +460,7 @@ function InitSourceConfigs()
 
 	// Init Source Configs!
 	if ( isset($CFG['Sources']) )
-	{
+	{	
 		foreach( $CFG['Sources'] as &$mysource )
 		{
 			// Init each source using this function!
@@ -482,7 +482,7 @@ function InitSourceConfigs()
 		else
 		{
 			$tmpVar = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
-			if ( isset($content['Sources'][ $tmpVar ]) )
+			if ( isset($content['Sources'][ $tmpVar ]) ) 
 				// Set Source to preconfigured sourceID!
 				$_SESSION['currentSourceID'] = $tmpVar;
 			else
@@ -490,17 +490,17 @@ function InitSourceConfigs()
 				$_SESSION['currentSourceID'] = $currentSourceID;
 		}
 	}
-
+	
 	// Set for the selection box in the header
 	$content['Sources'][$currentSourceID]['selected'] = "selected";
 
 	// Set Description properties!
-	if ( isset($content['Sources'][$currentSourceID]['Description']) && strlen($content['Sources'][$currentSourceID]['Description']) > 0 )
+	if ( isset($content['Sources'][$currentSourceID]['Description']) && strlen($content['Sources'][$currentSourceID]['Description']) > 0 ) 
 	{
 		$content['SourceDescriptionEnabled'] = true;
-		$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description'];
+		$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description']; 
 	}
-
+	
 
 	// --- Additional handling needed for the current view!
 	global $currentViewID;
@@ -510,7 +510,7 @@ function InitSourceConfigs()
 	$content['Views'][ $currentViewID ]['selected'] = "selected";
 
 	// If DEBUG Mode is enabled, we prepend the UID field into the col list!
-
+	
 	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['Views'][$currentViewID]) )
 		array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
 	// ---
@@ -522,32 +522,32 @@ function InitSourceConfigs()
 function InitViewConfigs()
 {
 	global $CFG, $content, $currentViewID;
-
+	
 	// Predefined LogAnalyzer Views 
-	$CFG['Views']['SYSLOG']= array(
-		'ID' =>			"SYSLOG",
-		'DisplayName' =>"Syslog Fields",
-		'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ),
-		'userid' =>		null,
-		'groupid' =>	null,
-	);
-	$CFG['Views']['EVTRPT']= array(
-		'ID' =>			"EVTRPT",
-		'DisplayName' =>"EventLog Fields",
-		'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ),
-		'userid' =>		null,
-		'groupid' =>	null,
-	);
-	$CFG['Views']['WEBLOG']= array(
-		'ID' =>			"WEBLOG",
-		'DisplayName' =>"Webserver Fields",
-		'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_WEBLOG_URL, SYSLOG_WEBLOG_USERAGENT, SYSLOG_WEBLOG_STATUS, SYSLOG_WEBLOG_BYTESSEND, SYSLOG_MESSAGE ),
-		'userid' =>		null,
-		'groupid' =>	null,
-	);
-
+	$CFG['Views']['SYSLOG']= array( 
+									'ID' =>			"SYSLOG", 
+									'DisplayName' =>"Syslog Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	$CFG['Views']['EVTRPT']= array( 
+									'ID' =>			"EVTRPT", 
+									'DisplayName' =>"EventLog Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_SEVERITY, SYSLOG_EVENT_LOGTYPE, SYSLOG_EVENT_SOURCE, SYSLOG_EVENT_ID, SYSLOG_EVENT_USER, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	$CFG['Views']['WEBLOG']= array( 
+									'ID' =>			"WEBLOG", 
+									'DisplayName' =>"Webserver Fields", 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_HOST, SYSLOG_WEBLOG_URL, SYSLOG_WEBLOG_USERAGENT, SYSLOG_WEBLOG_STATUS, SYSLOG_WEBLOG_BYTESSEND, SYSLOG_MESSAGE ), 
+									'userid' =>		null, 
+									'groupid' =>	null, 
+								   );
+	
 	// Set default of 'DefaultViewsID' only if not set already!
-	if ( !isset($CFG['DefaultViewsID']) )
+	if ( !isset($CFG['DefaultViewsID']) ) 
 		$CFG['DefaultViewsID'] = "SYSLOG";
 
 	// Loop through views now and copy into content array!
@@ -563,12 +563,12 @@ function AppendLegacyColumns()
 	global $CFG, $content;
 
 	// Init View from legacy Columns 
-	$CFG['Views']['LEGACY']= array(
-		'ID' =>			"LEGACY",
-		'DisplayName' =>"Legacy Columns Configuration",
-		'Columns' =>	$CFG['Columns'],
-	);
-
+	$CFG['Views']['LEGACY']= array( 
+									'ID' =>			"LEGACY", 
+									'DisplayName' =>"Legacy Columns Configuration", 
+									'Columns' =>	$CFG['Columns'], 
+								   );
+	
 	// set default to legacy of no default view is specified!
 	$tmpVar = GetConfigSetting("DefaultViewsID", "", CFGLEVEL_USER);
 	if ( strlen($tmpVar) <= 0 )
@@ -587,7 +587,7 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 	{
 		// Include the main config
 		include_once($gl_root_path . 'config.php');
-
+		
 		// Easier DB Access
 		$tblPref = GetConfigSetting("UserDBPref", "logcon");
 		define('DB_CONFIG',			$tblPref . "config");
@@ -617,14 +617,14 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 			$content['ShowPageRenderStats'] = "true";
 			InitPageRenderStats();
 		}
-
+		
 		// return result
 		return true;
 	}
 	else
 	{
 		// if handled ourselfe, we die in CheckForInstallPhp.
-		if ( $bHandleMissing == true )
+		if ( $bHandleMissing == true ) 
 		{
 			// Check for installscript!
 			CheckForInstallPhp();
@@ -644,14 +644,14 @@ function InitDiskAllowedSources()
 
 	// Init Source Configs!
 	if ( isset($CFG['DiskAllowed']) )
-	{
+	{	
 		// Copy Array to content array
-		$content['DiskAllowed'] = $CFG['DiskAllowed'];
+		$content['DiskAllowed'] = $CFG['DiskAllowed']; 
 	}
 	else
 	{
 		// Set default 
-		$content['DiskAllowed'][] = "/var/log/";
+		$content['DiskAllowed'][] = "/var/log/"; 
 	}
 }
 
@@ -678,12 +678,12 @@ function LoadDBMappingsFromDatabase()
 	// ---
 
 	// --- Create SQL Query
-	$sqlquery = " SELECT " .
-		DB_MAPPINGS . ".ID, " .
-		DB_MAPPINGS . ".DisplayName, " .
-		DB_MAPPINGS . ".Mappings " .
-		" FROM `" . DB_MAPPINGS . "`" .
-		" ORDER BY `" . DB_MAPPINGS . "`.DisplayName";
+	$sqlquery = " SELECT " . 
+				DB_MAPPINGS . ".ID, " . 
+				DB_MAPPINGS . ".DisplayName, " . 
+				DB_MAPPINGS . ".Mappings " . 
+				" FROM `" . DB_MAPPINGS . "`" . 
+				" ORDER BY `" . DB_MAPPINGS . "`.DisplayName";
 
 	// Get Views from DB now!
 	$result = DB_Query($sqlquery);
@@ -695,7 +695,7 @@ function LoadDBMappingsFromDatabase()
 		{
 			// Split into array
 			$tmpMappings = explode( ",", $myMappings['Mappings'] );
-
+			
 			//Loop through mappings
 			foreach ($tmpMappings as &$myMapping )
 			{
@@ -704,7 +704,7 @@ function LoadDBMappingsFromDatabase()
 
 				// check if field is valid
 				$fieldId = trim($tmpMapping[0]);
-				if ( isset($fields[$fieldId]) )
+				if ( isset($fields[$fieldId]) ) 
 				{
 					// Assign mappings
 					$myMappings['DBMAPPINGS'][$fieldId] = trim($tmpMapping[1]);
@@ -740,32 +740,32 @@ function LoadFieldsFromDatabase()
 		// Set Field to be internal!
 		$myField['IsInternalField'] = true;
 		$myField['FieldFromDB'] = false;
-
+		
 		// Set some other defaults!
-		if ( !isset($myField['Trunscate']) )
+		if ( !isset($myField['Trunscate']) ) 
 			$myField['Trunscate'] = 30;
-		if ( !isset($myField['SearchOnline']) )
+		if ( !isset($myField['SearchOnline']) ) 
 			$myField['SearchOnline'] = false;
-		if ( !isset($myField['SearchField']) )
+		if ( !isset($myField['SearchField']) ) 
 			$myField['SearchField'] = $myField['FieldID'];
-
+		
 	}
 	// ---
 
 	// --- Create SQL Query
-	$sqlquery = " SELECT " .
-		DB_FIELDS . ".FieldID, " .
-		DB_FIELDS . ".FieldDefine, " .
-		DB_FIELDS . ".FieldCaption, " .
-		DB_FIELDS . ".FieldType, " .
-		DB_FIELDS . ".FieldAlign, " .
-		DB_FIELDS . ".SearchField, " .
-		DB_FIELDS . ".DefaultWidth, " .
-		DB_FIELDS . ".SearchOnline, " .
-		DB_FIELDS . ".Trunscate, " .
-		DB_FIELDS . ".Sortable " .
-		" FROM `" . DB_FIELDS . "`" .
-		" ORDER BY `" . DB_FIELDS . "`.FieldCaption";
+	$sqlquery = " SELECT " . 
+				DB_FIELDS . ".FieldID, " . 
+				DB_FIELDS . ".FieldDefine, " . 
+				DB_FIELDS . ".FieldCaption, " . 
+				DB_FIELDS . ".FieldType, " . 
+				DB_FIELDS . ".FieldAlign, " . 
+				DB_FIELDS . ".SearchField, " . 
+				DB_FIELDS . ".DefaultWidth, " . 
+				DB_FIELDS . ".SearchOnline, " . 
+				DB_FIELDS . ".Trunscate, " . 
+				DB_FIELDS . ".Sortable " .
+				" FROM `" . DB_FIELDS . "`" . 
+				" ORDER BY `" . DB_FIELDS . "`.FieldCaption";
 	// ---
 
 	// Get Searches from DB now!
@@ -779,14 +779,14 @@ function LoadFieldsFromDatabase()
 			// Read and Set from db!
 			$fieldId = $myField['FieldID'];
 			$fieldDefine = $myField['FieldDefine'];
-
+			
 			// Set define needed in certain code places!
-			if ( !defined($fieldDefine) )
+			if ( !defined($fieldDefine) ) 
 			{
 				define($fieldDefine, $fieldId);
 				$fields[$fieldId]['IsInternalField'] = false;
 			}
-
+			
 			// Copy values
 			$fields[$fieldId]['FieldID'] = $myField['FieldID'];
 			$fields[$fieldId]['FieldDefine'] = $myField['FieldDefine'];
@@ -826,21 +826,21 @@ function LoadSearchesFromDatabase()
 		$szGroupWhere = " OR `" . DB_SEARCHES . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT " .
-		DB_SEARCHES . ".ID, " .
-		DB_SEARCHES . ".DisplayName, " .
-		DB_SEARCHES . ".SearchQuery, " .
-		DB_SEARCHES . ".userid, " .
-		DB_SEARCHES . ".groupid, " .
-		DB_USERS . ".username, " .
-		DB_GROUPS . ".groupname " .
-		" FROM `" . DB_SEARCHES . "`" .
-		" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SEARCHES . "`.userid=`" . DB_USERS . "`.ID ) " .
-		" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SEARCHES . "`.groupid=`" . DB_GROUPS . "`.ID ) " .
-		" WHERE (`" . DB_SEARCHES . "`.userid IS NULL AND `" . DB_SEARCHES . "`.groupid IS NULL) " .
-		$szWhereUser .
-		$szGroupWhere .
-		" ORDER BY `" . DB_SEARCHES . "`.userid, `" . DB_SEARCHES . "`.groupid, `" . DB_SEARCHES . "`.DisplayName";
+	$sqlquery = " SELECT " . 
+				DB_SEARCHES . ".ID, " . 
+				DB_SEARCHES . ".DisplayName, " . 
+				DB_SEARCHES . ".SearchQuery, " . 
+				DB_SEARCHES . ".userid, " .
+				DB_SEARCHES . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM `" . DB_SEARCHES . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SEARCHES . "`.userid=`" . DB_USERS . "`.ID ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SEARCHES . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" WHERE (`" . DB_SEARCHES . "`.userid IS NULL AND `" . DB_SEARCHES . "`.groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY `" . DB_SEARCHES . "`.userid, `" . DB_SEARCHES . "`.groupid, `" . DB_SEARCHES . "`.DisplayName";
 	// ---
 
 	// Get Searches from DB now!
@@ -850,14 +850,14 @@ function LoadSearchesFromDatabase()
 	{
 		// Overwrite existing Charts array
 		unset($CFG['Search']);
-
+		
 		// Loop through all data rows 
 		foreach ($myrows as &$mySearch )
 		{
 			// Append to Chart Array
 			$CFG['Search'][ $mySearch['ID'] ] = $mySearch;
 		}
-
+		
 		// Copy to content array!
 		$content['Search'] = $CFG['Search'];
 
@@ -892,27 +892,27 @@ function LoadChartsFromDatabase()
 		$szGroupWhere = " OR `" . DB_CHARTS . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT " .
-		DB_CHARTS . ".ID, " .
-		DB_CHARTS . ".DisplayName, " .
-		DB_CHARTS . ".chart_enabled, " .
-		DB_CHARTS . ".chart_type, " .
-		DB_CHARTS . ".chart_width, " .
-		DB_CHARTS . ".chart_field, " .
-		DB_CHARTS . ".chart_defaultfilter, " .
-		DB_CHARTS . ".maxrecords, " .
-		DB_CHARTS . ".showpercent, " .
-		DB_CHARTS . ".userid, " .
-		DB_CHARTS . ".groupid, " .
-		DB_USERS . ".username, " .
-		DB_GROUPS . ".groupname " .
-		" FROM `" . DB_CHARTS . "`" .
-		" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_CHARTS . "`.userid=`" . DB_USERS . "`.ID ) " .
-		" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_CHARTS . "`.groupid=`" . DB_GROUPS . "`.ID ) " .
-		" WHERE (`" . DB_CHARTS . "`.userid IS NULL AND `" . DB_CHARTS . "`.groupid IS NULL) " .
-		$szWhereUser .
-		$szGroupWhere .
-		" ORDER BY `" . DB_CHARTS . "`.userid, `" . DB_CHARTS . "`.groupid, `" . DB_CHARTS . "`.DisplayName";
+	$sqlquery = " SELECT " . 
+				DB_CHARTS . ".ID, " . 
+				DB_CHARTS . ".DisplayName, " . 
+				DB_CHARTS . ".chart_enabled, " . 
+				DB_CHARTS . ".chart_type, " . 
+				DB_CHARTS . ".chart_width, " . 
+				DB_CHARTS . ".chart_field, " . 
+				DB_CHARTS . ".chart_defaultfilter, " . 
+				DB_CHARTS . ".maxrecords, " . 
+				DB_CHARTS . ".showpercent, " . 
+				DB_CHARTS . ".userid, " .
+				DB_CHARTS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM `" . DB_CHARTS . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_CHARTS . "`.userid=`" . DB_USERS . "`.ID ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_CHARTS . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" WHERE (`" . DB_CHARTS . "`.userid IS NULL AND `" . DB_CHARTS . "`.groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY `" . DB_CHARTS . "`.userid, `" . DB_CHARTS . "`.groupid, `" . DB_CHARTS . "`.DisplayName";
 	// ---
 
 	// Get Searches from DB now!
@@ -922,14 +922,14 @@ function LoadChartsFromDatabase()
 	{
 		// Overwrite existing Charts array
 		unset($CFG['Charts']);
-
+		
 		// Loop through all data rows 
 		foreach ($myrows as &$myChart )
 		{
 			// Append to Chart Array
 			$CFG['Charts'][ $myChart['ID'] ] = $myChart;
 		}
-
+		
 		// Copy to content array!
 		$content['Charts'] = $CFG['Charts'];
 	}
@@ -952,21 +952,21 @@ function LoadViewsFromDatabase()
 		$szGroupWhere = " OR `" . DB_VIEWS . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT " .
-		DB_VIEWS . ".ID, " .
-		DB_VIEWS . ".DisplayName, " .
-		DB_VIEWS . ".Columns, " .
-		DB_VIEWS . ".userid, " .
-		DB_VIEWS . ".groupid, " .
-		DB_USERS . ".username, " .
-		DB_GROUPS . ".groupname " .
-		" FROM `" . DB_VIEWS . "`" .
-		" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_VIEWS . "`.userid=`" . DB_USERS . "`.ID ) " .
-		" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_VIEWS . "`.groupid=`" . DB_GROUPS . "`.ID ) " .
-		" WHERE (`" . DB_VIEWS . "`.userid IS NULL AND `" . DB_VIEWS . "`.groupid IS NULL) " .
-		$szWhereUser .
-		$szGroupWhere .
-		" ORDER BY `" . DB_VIEWS . "`.userid, `" . DB_VIEWS . "`.groupid, `" . DB_VIEWS . "`.DisplayName";
+	$sqlquery = " SELECT " . 
+				DB_VIEWS . ".ID, " . 
+				DB_VIEWS . ".DisplayName, " . 
+				DB_VIEWS . ".Columns, " . 
+				DB_VIEWS . ".userid, " .
+				DB_VIEWS . ".groupid, " .
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM `" . DB_VIEWS . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_VIEWS . "`.userid=`" . DB_USERS . "`.ID ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_VIEWS . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" WHERE (`" . DB_VIEWS . "`.userid IS NULL AND `" . DB_VIEWS . "`.groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY `" . DB_VIEWS . "`.userid, `" . DB_VIEWS . "`.groupid, `" . DB_VIEWS . "`.DisplayName";
 	// ---
 
 	// Get Views from DB now!
@@ -979,17 +979,17 @@ function LoadViewsFromDatabase()
 
 		// ReINIT Views Array
 		InitViewConfigs();
-
+		
 		// Unpack the Columns and append to Views Array
 		foreach ($myrows as &$myView )
 		{
 			// Split into array
 			$myView['Columns'] = explode( ",", $myView['Columns'] );
-
+			
 			// remove spaces
 			foreach ($myView['Columns'] as &$myCol )
 				$myCol = trim($myCol);
-
+			
 			// Append to Views Array
 			$CFG['Views'][ $myView['ID'] ] = $myView;
 		}
@@ -1016,17 +1016,17 @@ function LoadSourcesFromDatabase()
 		$szGroupWhere = " OR `" . DB_SOURCES . "`.groupid IN (" . $content['SESSION_GROUPIDS'] . ")";
 	else
 		$szGroupWhere = "";
-	$sqlquery = " SELECT " .
-		DB_SOURCES . ".*, " .
-		DB_USERS . ".username, " .
-		DB_GROUPS . ".groupname " .
-		" FROM `" . DB_SOURCES . "`" .
-		" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SOURCES . "`.userid=`" . DB_USERS . "`.ID ) " .
-		" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SOURCES . "`.groupid=`" . DB_GROUPS . "`.ID ) " .
-		" WHERE (`" . DB_SOURCES . "`.userid IS NULL AND `" . DB_SOURCES . "`.groupid IS NULL) " .
-		$szWhereUser .
-		$szGroupWhere .
-		" ORDER BY `" . DB_SOURCES . "`.userid, `" . DB_SOURCES . "`.groupid, `" . DB_SOURCES . "`.Name";
+	$sqlquery = " SELECT " . 
+				DB_SOURCES . ".*, " . 
+				DB_USERS . ".username, " .
+				DB_GROUPS . ".groupname " .
+				" FROM `" . DB_SOURCES . "`" . 
+				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SOURCES . "`.userid=`" . DB_USERS . "`.ID ) " . 
+				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SOURCES . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" WHERE (`" . DB_SOURCES . "`.userid IS NULL AND `" . DB_SOURCES . "`.groupid IS NULL) " . 
+				$szWhereUser . 
+				$szGroupWhere . 
+				" ORDER BY `" . DB_SOURCES . "`.userid, `" . DB_SOURCES . "`.groupid, `" . DB_SOURCES . "`.Name";
 	// ---
 	// Get Sources from DB now!
 	$result = DB_Query($sqlquery);
@@ -1035,14 +1035,14 @@ function LoadSourcesFromDatabase()
 	{
 		// Overwrite existing Sources array
 		unset($CFG['Sources']);
-
+		
 		// Append to Source Array
 		foreach ($myrows as &$mySource )
 		{
 			// Append to Source Array
 			$CFG['Sources'][ $mySource['ID'] ] = $mySource; //['ID'];
 		}
-
+		
 		// Copy to content array!
 		$content['Sources'] = $CFG['Sources'];
 	}

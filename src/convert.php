@@ -55,11 +55,11 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 
 // --- PreCheck if conversion is allowed!
-if (
-
-	GetConfigSetting("UserDBEnabled", false) &&
-	GetConfigSetting("UserDBConvertAllowed", false)
-)
+if ( 
+		
+		GetConfigSetting("UserDBEnabled", false) &&
+		GetConfigSetting("UserDBConvertAllowed", false) 
+	) 
 {
 	// Setup static values
 	define('MAX_STEPS', 6);
@@ -78,7 +78,7 @@ $content['TITLE'] = "LogAnalyzer :: " . $content['LN_CONVERT_TITLE'];
 if ( isset($_GET['step']) )
 {
 	$content['CONVERT_STEP'] = intval(DB_RemoveBadChars($_GET['step']));
-	if ( $content['CONVERT_STEP'] > MAX_STEPS )
+	if ( $content['CONVERT_STEP'] > MAX_STEPS ) 
 		$content['CONVERT_STEP'] = 1;
 }
 else
@@ -116,19 +116,19 @@ $content['LN_CONVERT_TITLETOP'] = GetAndReplaceLangStr( $content['LN_CONVERT_TIT
 
 // --- Start Setup Processing
 if ( $content['CONVERT_STEP'] == 2 )
-{
+{	
 	// Check the database connect
 	$link_id = mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass") );
-	if (!$link_id)
+	if (!$link_id) 
 		RevertOneStep( $content['CONVERT_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], GetConfigSetting("UserDBServer") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
-
+	
 	// Try to select the DB!
 	$db_selected = mysql_select_db(GetConfigSetting("UserDBName"), $link_id);
-	if(!$db_selected)
+	if(!$db_selected) 
 		RevertOneStep( $content['CONVERT_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], GetConfigSetting("UserDBName") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
 }
 else if ( $content['CONVERT_STEP'] == 3 )
-{
+{	
 	// Predefine sql helper vars
 	$content['sql_sucess'] = 0;
 	$content['sql_failed'] = 0;
@@ -149,10 +149,10 @@ else if ( $content['CONVERT_STEP'] == 3 )
 
 	// Replace stats_ with the custom one ;)
 	$totaldbdefs = str_replace( "`logcon_", "`" . GetConfigSetting("UserDBPref"), $totaldbdefs );
-
+	
 	// Now split by sql command
 	$mycommands = split( ";\n", $totaldbdefs );
-
+	
 //		// check for different linefeed
 //		if ( count($mycommands) <= 1 )
 //			$mycommands = split( ";\n", $totaldbdefs );
@@ -160,7 +160,7 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	//Still only one? Abort
 	if ( count($mycommands) <= 1 )
 	{
-		$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt");
+		$content['failedstatements'][ $content['sql_failed'] ]['myerrmsg'] = GetAndReplaceLangStr( $content['LN_INSTALL_ERRORINSQLCOMMANDS'], $content['BASEPATH'] . "include/db_template.txt"); 
 		$content['failedstatements'][ $content['sql_failed'] ]['mystatement'] = "";
 		$content['sql_failed']++;
 	}
@@ -236,10 +236,10 @@ else if ( $content['CONVERT_STEP'] == 5 )
 	else
 		$_SESSION['MAIN_Password2'] = "";
 
-	if (
-		strlen($_SESSION['MAIN_Password1']) < 4 ||
-		$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2']
-	)
+	if (	
+			strlen($_SESSION['MAIN_Password1']) < 4 ||
+			$_SESSION['MAIN_Password1'] != $_SESSION['MAIN_Password2'] 
+		)
 		RevertOneStep( $content['CONVERT_STEP']-1, $content['LN_INSTALL_PASSWORDNOTMATCH'] );
 
 	// --- Now execute all commands
@@ -250,7 +250,7 @@ else if ( $content['CONVERT_STEP'] == 5 )
 
 	// Everything is fine, lets go create the User!
 	CreateUserName( $_SESSION['MAIN_Username'], $_SESSION['MAIN_Password1'], 1 );
-
+	
 	// Show User success!
 	$content['MAIN_Username'] = $_SESSION['MAIN_Username'];
 	$content['createduser'] = true;
@@ -265,7 +265,7 @@ else if ( $content['CONVERT_STEP'] == 6 )
 	ConvertCustomViews();
 	ConvertCustomSources();
 	ConvertCustomCharts();
-
+	
 	// Import General Settings in the last step!
 	ConvertGeneralSettings();
 }
@@ -274,7 +274,7 @@ else if ( $content['CONVERT_STEP'] == 6 )
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "convert.html");
-$page -> output();
+$page -> output(); 
 // ---
 
 // --- Helper functions
