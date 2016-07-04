@@ -45,8 +45,8 @@ class LogStreamConfigDisk extends LogStreamConfig {
 	public $_lineParser = null;
 
 	private $CurrentDir = "";
-
-	public function LogStreamFactory($o)
+	
+	public function LogStreamFactory($o) 
 	{
 		// An instance is created, then include the logstreamdisk class as well!
 		global $gl_root_path;
@@ -54,17 +54,17 @@ class LogStreamConfigDisk extends LogStreamConfig {
 
 		// Create and set LineParser Instance
 		$this->_lineParser = $this->CreateLineParser();
-
+		
 		// return LogStreamDisk instance
 		return new LogStreamDisk($o);
 	}
 
-	private function CreateLineParser()
+	private function CreateLineParser() 
 	{
 		// We need to include Line Parser on demand!
 		global $gl_root_path;
 		require_once($gl_root_path . 'classes/logstreamlineparser.class.php');
-
+		
 		// Probe if file exists then include it!
 		$strIncludeFile = $gl_root_path . 'classes/logstreamlineparser' . $this->LineParserType . '.class.php';
 		$strClassName = "LogStreamLineParser" . $this->LineParserType;
@@ -91,31 +91,31 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		if ( strpos($szNewVal, "%") !== false )
 		{
 			OutputDebugMessage("LogStreamConfigDisk|SetFileName: Filename before replacing: " . $szNewVal, DEBUG_DEBUG);
-
+			
 			// Create search and replace array
-			$search = array (
-				"%y", /* Year with two digits (e.g. 2002 becomes "02") */
-				"%Y", /* Year with 4 digits */
-				"%m", /* Month with two digits (e.g. March becomes "03") */
-				"%M", /* Minute with two digits */
-				"%d", /* Day of month with two digits (e.g. March, 1st becomes "01") */
-				"%h", /* Hour as two digits */
-				"%S", /* Seconds as two digits. It is hardly believed that this ever be used in reality.    */
-				"%w", /* Weekday as one digit. 0 means Sunday, 1 Monday and so on. */
-				"%W", /* Weekday as three-character string. Possible values are "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat". */
-			);
+			$search = array ( 
+						"%y", /* Year with two digits (e.g. 2002 becomes "02") */
+						"%Y", /* Year with 4 digits */
+						"%m", /* Month with two digits (e.g. March becomes "03") */
+						"%M", /* Minute with two digits */
+						"%d", /* Day of month with two digits (e.g. March, 1st becomes "01") */
+						"%h", /* Hour as two digits */
+						"%S", /* Seconds as two digits. It is hardly believed that this ever be used in reality.    */
+						"%w", /* Weekday as one digit. 0 means Sunday, 1 Monday and so on. */
+						"%W", /* Weekday as three-character string. Possible values are "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat". */
+						);
 			$replace = array (
-				date("y"),
-				date("Y"),
-				date("m"),
-				date("i"),
-				date("d"),
-				date("H"),
-				date("s"),
-				date("w"),
-				date("D"),
-			);
-
+						date("y"),
+						date("Y"), 
+						date("m"), 
+						date("i"), 
+						date("d"), 
+						date("H"), 
+						date("s"), 
+						date("w"), 
+						date("D"), 
+						);
+			
 			// Do the replacing
 			$szNewVal = str_replace( $search, $replace, $szNewVal );
 
