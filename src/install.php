@@ -66,9 +66,7 @@ InitFontSettings();
 
 //ini_set('error_reporting', E_ALL); // DEBUG ENABLE
 // ***					*** //
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- CONTENT Vars
 $content['TITLE'] = "LogAnalyzer :: " . $content['LN_INSTALL_TITLE'];
 // --- 

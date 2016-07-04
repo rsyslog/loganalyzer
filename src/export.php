@@ -52,9 +52,7 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- READ CONTENT Vars
 if ( isset($_GET['uid']) ) 
 	$content['uid_current'] = intval($_GET['uid']);

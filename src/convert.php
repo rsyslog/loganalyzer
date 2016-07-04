@@ -55,9 +55,6 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 
 // --- PreCheck if conversion is allowed!
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
 
 if ( 
 		

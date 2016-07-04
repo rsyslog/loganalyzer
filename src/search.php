@@ -57,10 +57,6 @@ InitFilterHelpers();
 $content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content['BASEPATH'] . "js/searchhelpers.js'></script>";
 // ---
 
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
-
 // --- CONTENT Vars
 
 // Init Sorting variables

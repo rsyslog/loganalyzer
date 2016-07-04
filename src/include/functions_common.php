@@ -110,19 +110,6 @@ function InitBasicPhpLogCon()
 	InitViewConfigs();
 }
 
-function IsDisplayPage($acc_user, $acc_pwd){
-	global $content;
-	if ( isset( $content['View_Need_Login'] ) && $content['View_Need_Login'] == NEED_LOGIN ){
-		if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $acc_user || $_COOKIE['acc_pwd'] != $acc_pwd){
-			echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
-    			Password  :<input type=\"password\" name=\"password\" />  
-    			<input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
-			return false;
-		}
-	}
-	return true;
-}
-
 function InitUserSystemPhpLogCon()
 {
 	// global vars needed

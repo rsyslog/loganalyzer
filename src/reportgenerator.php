@@ -56,9 +56,7 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 // Firts of all init List of Reports!
 InitReportModules();
 // ---
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- READ CONTENT Vars
 $content['error_occured'] = false;
 $content['report_success'] = false;

@@ -169,17 +169,9 @@ $CFG['DiskAllowed'][] = "/var/log/";
 	$CFG['Sources']['Source2']['DBTableName'] = "systemevents";
 	$CFG['Sources']['Source2']['ViewID'] = "SYSLOG";
 */
-$content['User_Access'] = "aaa";
-$content['Password_Access'] = "aaaaaa";
+
 $content['Display_Dir'] = "";
 $content['Allow_Change_Log'] = ALLOW_CHANGE;
-$content['View_Need_Login'] = NEED_LOGIN;
-
-$content['iZ25itoqi9zZ'] = "158";
-$content['iZ255nkwq1lZ'] = "164";
-$content['iZ257kmu02vZ'] = "225";
-$content['iZ25oc6qp9gZ'] = "181";
-$content['iZ25too7l5xZ'] = "201";
 
 $CFG['DefaultSourceID'] = 'Source1';
 

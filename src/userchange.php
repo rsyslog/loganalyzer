@@ -44,9 +44,7 @@ include($gl_root_path . 'include/functions_frontendhelpers.php');
 InitPhpLogCon();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 // ***					*** //
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- BEGIN Custom Code
 if ( isset($_SERVER['HTTP_REFERER']) )
 	$szRedir = $_SERVER['HTTP_REFERER']; 

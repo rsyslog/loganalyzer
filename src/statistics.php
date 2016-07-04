@@ -55,9 +55,7 @@ InitFilterHelpers();	// Helpers for frontend filtering!
 
 // --- CONTENT Vars
 // ---
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- BEGIN Custom Code
 
 if ( isset($content['Charts']) ) 

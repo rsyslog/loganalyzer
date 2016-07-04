@@ -51,10 +51,6 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // --- 
 
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
-
 // --- BEGIN Custom Code
 
 // Firts of all init List of Reports!

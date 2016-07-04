@@ -50,9 +50,7 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
-if( !IsDisplayPage($content['User_Access'], $content['Password_Access']) ){
-	return;
-}
+
 // --- Define Extra Stylesheet!
 //$content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
 //$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
