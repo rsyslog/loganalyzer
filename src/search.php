@@ -50,12 +50,12 @@ InitFrontEndDefaults();	// Only in WebFrontEnd
 // IncludeLanguageFile( $gl_root_path . '/lang/' . $LANG . '/main.php' );
 
 // Helpers for frontend filtering!
-InitFilterHelpers();	
+InitFilterHelpers();
 // ***					*** //
 
 // --- Extra Javascript?
 $content['EXTRA_JAVASCRIPT'] = "<script type='text/javascript' src='" . $content['BASEPATH'] . "js/searchhelpers.js'></script>";
-// ---
+// --- 
 
 // --- CONTENT Vars
 
@@ -74,7 +74,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		$mysearch = $_GET['search'];
 
 	// Evaluate search now
-	if ( $mysearch == $content['LN_SEARCH_PERFORMADVANCED']) 
+	if ( $mysearch == $content['LN_SEARCH_PERFORMADVANCED'])
 	{
 		if ( isset($_GET['filter_datemode']) )
 		{
@@ -82,17 +82,17 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			if ( $filters['filter_datemode'] == DATEMODE_RANGE )
 			{
 				// Read range values 
-				if ( isset($_GET['filter_daterange_from_year']) ) 
+				if ( isset($_GET['filter_daterange_from_year']) )
 					$filters['filter_daterange_from_year'] = intval($_GET['filter_daterange_from_year']);
-				if ( isset($_GET['filter_daterange_from_month']) ) 
+				if ( isset($_GET['filter_daterange_from_month']) )
 					$filters['filter_daterange_from_month'] = intval($_GET['filter_daterange_from_month']);
-				if ( isset($_GET['filter_daterange_from_day']) ) 
+				if ( isset($_GET['filter_daterange_from_day']) )
 					$filters['filter_daterange_from_day'] = intval($_GET['filter_daterange_from_day']);
-				if ( isset($_GET['filter_daterange_to_year']) ) 
+				if ( isset($_GET['filter_daterange_to_year']) )
 					$filters['filter_daterange_to_year'] = intval($_GET['filter_daterange_to_year']);
-				if ( isset($_GET['filter_daterange_to_month']) ) 
+				if ( isset($_GET['filter_daterange_to_month']) )
 					$filters['filter_daterange_to_month'] = intval($_GET['filter_daterange_to_month']);
-				if ( isset($_GET['filter_daterange_to_day']) ) 
+				if ( isset($_GET['filter_daterange_to_day']) )
 					$filters['filter_daterange_to_day'] = intval($_GET['filter_daterange_to_day']);
 
 				// Read range values and prepend leading zeroes for values < 10
@@ -100,58 +100,58 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 				{
 					$filters['filter_daterange_from_hour'] = intval($_GET['filter_daterange_from_hour']);
 					if ($filters['filter_daterange_from_hour'] < 10)
-					    $filters['filter_daterange_from_hour'] = '0' . $filters['filter_daterange_from_hour'];
+						$filters['filter_daterange_from_hour'] = '0' . $filters['filter_daterange_from_hour'];
 				}
 				if ( isset($_GET['filter_daterange_from_minute']) )
 				{
 					$filters['filter_daterange_from_minute'] = intval($_GET['filter_daterange_from_minute']);
 					if ($filters['filter_daterange_from_minute'] < 10)
-					    $filters['filter_daterange_from_minute'] = '0' . $filters['filter_daterange_from_minute'];
+						$filters['filter_daterange_from_minute'] = '0' . $filters['filter_daterange_from_minute'];
 				}
 				if ( isset($_GET['filter_daterange_from_second']) )
 				{
 					$filters['filter_daterange_from_second'] = intval($_GET['filter_daterange_from_second']);
 					if ($filters['filter_daterange_from_second'] < 10)
-					    $filters['filter_daterange_from_second'] = '0' . $filters['filter_daterange_from_second'];
+						$filters['filter_daterange_from_second'] = '0' . $filters['filter_daterange_from_second'];
 				}
 				if ( isset($_GET['filter_daterange_to_hour']) )
 				{
 					$filters['filter_daterange_to_hour'] = intval($_GET['filter_daterange_to_hour']);
 					if ($filters['filter_daterange_to_hour'] < 10)
-					    $filters['filter_daterange_to_hour'] = '0' . $filters['filter_daterange_to_hour']; 
+						$filters['filter_daterange_to_hour'] = '0' . $filters['filter_daterange_to_hour'];
 				}
 				if ( isset($_GET['filter_daterange_to_minute']) )
 				{
 					$filters['filter_daterange_to_minute'] = intval($_GET['filter_daterange_to_minute']);
 					if ($filters['filter_daterange_to_minute'] < 10)
-					    $filters['filter_daterange_to_minute'] = '0' . $filters['filter_daterange_to_minute'];
+						$filters['filter_daterange_to_minute'] = '0' . $filters['filter_daterange_to_minute'];
 				}
 				if ( isset($_GET['filter_daterange_to_second']) )
 				{
 					$filters['filter_daterange_to_second'] = intval($_GET['filter_daterange_to_second']);
 					if ($filters['filter_daterange_to_second'] < 10)
-					    $filters['filter_daterange_to_second'] = '0' . $filters['filter_daterange_to_second']; 
+						$filters['filter_daterange_to_second'] = '0' . $filters['filter_daterange_to_second'];
 				}
-				
-				// Append to searchstring
-				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" . 
-														$filters['filter_daterange_from_month'] . "-" . 
-														$filters['filter_daterange_from_day'] . "T" . 
-														$filters['filter_daterange_from_hour'] . ":" . 
-														$filters['filter_daterange_from_minute'] . ":" . 
-														$filters['filter_daterange_from_second'] . " ";
 
-				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" . 
-														$filters['filter_daterange_to_month'] . "-" . 
-														$filters['filter_daterange_to_day'] . "T" . 
-														$filters['filter_daterange_to_hour'] . ":" . 
-														$filters['filter_daterange_to_minute'] . ":" . 
-														$filters['filter_daterange_to_second'] . " ";
+				// Append to searchstring
+				$content['searchstr'] .= "datefrom:" .	$filters['filter_daterange_from_year'] . "-" .
+					$filters['filter_daterange_from_month'] . "-" .
+					$filters['filter_daterange_from_day'] . "T" .
+					$filters['filter_daterange_from_hour'] . ":" .
+					$filters['filter_daterange_from_minute'] . ":" .
+					$filters['filter_daterange_from_second'] . " ";
+
+				$content['searchstr'] .= "dateto:" .	$filters['filter_daterange_to_year'] . "-" .
+					$filters['filter_daterange_to_month'] . "-" .
+					$filters['filter_daterange_to_day'] . "T" .
+					$filters['filter_daterange_to_hour'] . ":" .
+					$filters['filter_daterange_to_minute'] . ":" .
+					$filters['filter_daterange_to_second'] . " ";
 
 			}
 			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
 			{
-				if ( isset($_GET['filter_daterange_last_x']) ) 
+				if ( isset($_GET['filter_daterange_last_x']) )
 				{
 					$filters['filter_daterange_last_x'] = intval($_GET['filter_daterange_last_x']);
 					$content['searchstr'] .= "datelastx:" .	$filters['filter_daterange_last_x'] . " ";
@@ -162,11 +162,11 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		if ( isset($_GET['filter_facility']) && count($_GET['filter_facility']) < count($content['filter_facility_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
-			foreach ($_GET['filter_facility'] as $tmpfacility) 
+			foreach ($_GET['filter_facility'] as $tmpfacility)
 			{
 				if ( strlen($tmpStr) > 0 )
 					$tmpStr .= ",";
-				$tmpStr .= $tmpfacility;  
+				$tmpStr .= $tmpfacility;
 			}
 			$content['searchstr'] .= "facility:" . $tmpStr . " ";
 		}
@@ -174,11 +174,11 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		if ( isset($_GET['filter_severity']) && count($_GET['filter_severity']) < count($content['filter_severity_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
-			foreach ($_GET['filter_severity'] as $tmpfacility) 
+			foreach ($_GET['filter_severity'] as $tmpfacility)
 			{
 				if ( strlen($tmpStr) > 0 )
 					$tmpStr .= ",";
-				$tmpStr .= $tmpfacility;  
+				$tmpStr .= $tmpfacility;
 			}
 			$content['searchstr'] .= "severity:" . $tmpStr . " ";
 		}
@@ -186,15 +186,15 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 		if ( isset($_GET['filter_messagetype']) && count($_GET['filter_messagetype']) < count($content['filter_messagetype_list']) ) // If we have more elements as in the filter list array, this means all are enabled
 		{
 			$tmpStr = "";
-			foreach ($_GET['filter_messagetype'] as $tmpmsgtype) 
+			foreach ($_GET['filter_messagetype'] as $tmpmsgtype)
 			{
 				if ( strlen($tmpStr) > 0 )
 					$tmpStr .= ",";
-				$tmpStr .= $tmpmsgtype;  
+				$tmpStr .= $tmpmsgtype;
 			}
 			$content['searchstr'] .= "messagetype:" . $tmpStr . " ";
 		}
-		
+
 
 		// Spaces need to be converted!
 		if ( isset($_GET['filter_syslogtag']) && strlen($_GET['filter_syslogtag']) > 0 )
@@ -204,7 +204,7 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			else
 				$content['searchstr'] .= "syslogtag:" . str_replace(" ", ",", $_GET['filter_syslogtag']) . " ";
 		}
-		
+
 		// Spaces need to be converted!
 		if ( isset($_GET['filter_source']) && strlen($_GET['filter_source']) > 0 )
 		{
@@ -213,12 +213,12 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 			else
 				$content['searchstr'] .= "source:" . str_replace(" ", ",", $_GET['filter_source']) . " ";
 		}
-		
+
 		// Message is just appended
 		if ( isset($_GET['filter_message']) && strlen($_GET['filter_message']) > 0 )
 			$content['searchstr'] .= $_GET['filter_message'];
 	}
-	
+
 	// Append sourceid if needed
 	if ( isset($_GET['sourceid']) && isset($content['Sources'][ $_GET['sourceid'] ]) )
 		$sourceidstr = "&sourceid=" . $_GET['sourceid'];
@@ -240,7 +240,7 @@ $content['TITLE'] .= " :: Search";
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "search.html");
-$page -> output(); 
+$page -> output();
 // --- 
 
 ?>

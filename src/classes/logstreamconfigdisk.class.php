@@ -52,9 +52,6 @@ class LogStreamConfigDisk extends LogStreamConfig {
 		global $gl_root_path;
 		require_once($gl_root_path . 'classes/logstreamdisk.class.php');
 
-		/*echo($gl_root_path);
-		echo("</br>");*/
-
 		// Create and set LineParser Instance
 		$this->_lineParser = $this->CreateLineParser();
 
@@ -125,12 +122,8 @@ class LogStreamConfigDisk extends LogStreamConfig {
 			OutputDebugMessage("LogStreamConfigDisk|SetFileName: Filename after replacing: " . $szNewVal, DEBUG_DEBUG);
 		}
 
-		/*global $content;
-		echo $content['aaa'];*/
 		// Set Filename Property!
 		$this->FileName = $szNewVal;
-		/*echo($this->FileName);
-		echo("</br>");*/
 	}
 
 	public function Display(){
