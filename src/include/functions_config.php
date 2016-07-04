@@ -527,7 +527,8 @@ function InitViewConfigs()
 	$CFG['Views']['SYSLOG']= array( 
 									'ID' =>			"SYSLOG", 
 									'DisplayName' =>"Syslog Fields", 
-									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ), 
+									'Columns' =>	array ( SYSLOG_DATE, SYSLOG_FACILITY, SYSLOG_SEVERITY, SYSLOG_HOST, SYSLOG_SYSLOGTAG, SYSLOG_PROCESSID, SYSLOG_MESSAGETYPE, SYSLOG_MESSAGE ),
+									//'Columns' =>	array ( SYSLOG_HOST, SYSLOG_MESSAGE ),
 									'userid' =>		null, 
 									'groupid' =>	null, 
 								   );

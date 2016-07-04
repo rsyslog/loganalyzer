@@ -623,6 +623,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 							}
 							else if ( $mycolkey == SYSLOG_HOST )
 							{
+								//$host = $content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'];
+								//echo $content[$host] . "<br>";
+								//$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = $content[$host];
 								// Add context menu
 								AddOnClickMenu( $content['syslogmessages'][$counter]['values'][$mycolkey], FILTER_TYPE_STRING, SYSLOG_HOST);
 							}
