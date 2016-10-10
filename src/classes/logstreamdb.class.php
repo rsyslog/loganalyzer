@@ -70,8 +70,8 @@ class LogStreamDB extends LogStream {
 		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
 		{
 			// Probe if a function exists!
-			if ( !function_exists("mysql_connect") )
-				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysql_connect' does not exist.");
+			if ( !function_exists("mysqli_connect") )
+				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysqli_connect' does not exist.");
 		}
 	}
 	public function LogStreamDB($streamConfigObj) {
@@ -132,7 +132,7 @@ class LogStreamDB extends LogStream {
 	public function Close()
 	{
 		if ($this->_dbhandle) 
-			mysql_close($this->_dbhandle);
+			mysqli_close($this->_dbhandle);
 		$this->_dbhandle = null;
 		return SUCCESS;
 	}
@@ -147,7 +147,7 @@ class LogStreamDB extends LogStream {
 		if ( $this->_dbhandle == null ) 
 		{
 			// Forces to open a new link in all cases!
-			$this->_dbhandle = @mysql_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword, true);
+			$this->_dbhandle = @mysqli_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword);
 			if (!$this->_dbhandle) 
 			{
 				if ( isset($php_errormsg) )
@@ -162,7 +162,7 @@ class LogStreamDB extends LogStream {
 		}
 		
 		// Select the database now!
-		$bRet = @mysql_select_db($this->_logStreamConfigObj->DBName, $this->_dbhandle);
+		$bRet = @mysqli_select_db($this->_dbhandle, $this->_logStreamConfigObj->DBName);
 		if(!$bRet) 
 		{
 			if ( isset($php_errormsg) )
@@ -176,7 +176,7 @@ class LogStreamDB extends LogStream {
 		}
 		
 		// Check if the table exists!
-		$numTables = @mysql_num_rows( mysql_query("SHOW TABLES LIKE '%" . $this->_logStreamConfigObj->DBTableName . "%'"));
+		$numTables = @mysqli_num_rows( mysqli_query($this->_dbhandle, "SHOW TABLES LIKE '%" . $this->_logStreamConfigObj->DBTableName . "%'"));
 		if( $numTables <= 0 )
 			return ERROR_DB_TABLENOTFOUND;
 
@@ -315,7 +315,7 @@ class LogStreamDB extends LogStream {
 				OutputDebugMessage("LogStreamDB|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
 				
 				// Add missing INDEX now!
-				$myQuery = mysql_query($szSql, $this->_dbhandle);
+				$myQuery = mysqli_query($this->_dbhandle, $szSql);
 				if (!$myQuery)
 				{
 					// Return failure!
@@ -413,7 +413,7 @@ class LogStreamDB extends LogStream {
 		OutputDebugMessage("LogStreamDB|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
 		
 		// Add missing INDEX now!
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if (!$myQuery)
 		{
 			// Return failure!
@@ -443,7 +443,7 @@ class LogStreamDB extends LogStream {
 						$dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "` INT(11) UNSIGNED NOT NULL DEFAULT '0'"; 
 
 		// Update Table schema now!
-		$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szUpdateSql);
 		if (!$myQuery)
 		{
 			// Return failure!
@@ -468,11 +468,11 @@ class LogStreamDB extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		$szSql = "SHOW COLUMNS FROM `" . $this->_logStreamConfigObj->DBTableName . "` WHERE Field = '" . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . "'"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Get result!
-			$myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC);
+			$myRow = mysqli_fetch_array($myQuery,  MYSQLI_ASSOC);
 			if (strpos( strtolower($myRow['Type']), "unsigned") === false ) 
 			{
 				// return error code!
@@ -480,7 +480,7 @@ class LogStreamDB extends LogStream {
 			}
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -686,15 +686,15 @@ class LogStreamDB extends LogStream {
 			return $this->_firstPageUID;
 
 		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
+			$myRow = mysqli_fetch_row($myQuery);
 			$this->_firstPageUID = $myRow[0];
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -718,15 +718,15 @@ class LogStreamDB extends LogStream {
 			return $this->_lastPageUID;
 
 		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
+			$myRow = mysqli_fetch_row($myQuery);
 			$this->_lastPageUID = $myRow[0];
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -781,11 +781,11 @@ class LogStreamDB extends LogStream {
 		{
 			// Obtain Stats data for this table!
 			$szSql = "SHOW TABLE STATUS FROM `" .  $this->_logStreamConfigObj->DBName . "`"; 
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			$myQuery = mysqli_query($this->_dbhandle, $szSql);
 			if ($myQuery)
 			{
 				// Loop through results
-				while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+				while ($myRow = mysqli_fetch_array($myQuery,  MYSQLI_ASSOC))
 				{
 					// Set tablename!
 					$tableName = $myRow['Name'];
@@ -809,7 +809,7 @@ class LogStreamDB extends LogStream {
 				}
 
 				// Free query now
-				mysql_free_result ($myQuery); 
+				mysqli_free_result ($myQuery); 
 
 				// Increment for the Footer Stats 
 				$querycount++;
@@ -840,15 +840,15 @@ class LogStreamDB extends LogStream {
 		{
 			// SHOW TABLE STATUS FROM
 			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			$myQuery = mysqli_query($this->_dbhandle, $szSql);
 			if ($myQuery)
 			{
 				// Obtain RowCount!
-				$myRow		= mysql_fetch_row($myQuery); 
+				$myRow		= mysqli_fetch_row($myQuery); 
 				$rowcount = $myRow[0];
 
 				// Free query now
-				mysql_free_result ($myQuery); 
+				mysqli_free_result ($myQuery); 
 
 				// Increment for the Footer Stats 
 				$querycount++;
@@ -903,24 +903,24 @@ class LogStreamDB extends LogStream {
 			// DELETE DATA NOW!
 			$szSql = "DELETE FROM `" .  $this->_logStreamConfigObj->DBTableName . "`" . $szWhere; 
 			OutputDebugMessage("LogStreamDB|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			$myQuery = mysqli_query($this->_dbhandle, $szSql);
 			if ($myQuery)
 			{
 				// Get affected rows and return!
-				$rowcount = mysql_affected_rows();
+				$rowcount = mysqli_affected_rows($this->_dbhandle);
 				
 				// Reset AUTO_INCREMENT if all records were deleted!
 				if ( $nDateTimeStamp == 0 ) 
 				{
 					$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " AUTO_INCREMENT=0";
-					$myQuery = mysql_query($szSql, $this->_dbhandle);
+					$myQuery = mysqli_query($this->_dbhandle, $szSql);
 					// error occured, output DEBUG message
 					if (!$myQuery)
 						$this->PrintDebugError("CleanupLogdataByDate failed to reset AUTO_INCREMENT for '" . $this->_logStreamConfigObj->DBTableName . "' table. ");
 				}
 
 				// Free result not needed here!
-				//mysql_free_result ($myQuery); 
+				//mysqli_free_result ($myQuery); 
 			}
 			else
 			{
@@ -953,11 +953,11 @@ class LogStreamDB extends LogStream {
 		OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 		
 		// Running SQL Query
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Debug Output
-			OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysql_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
+			OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysqli_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
 
 			// Return success
 			return SUCCESS; 
@@ -989,7 +989,7 @@ class LogStreamDB extends LogStream {
 			$szSql =	"UPDATE " . $this->_logStreamConfigObj->DBTableName . 
 						" SET " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = " . $arrProperitesIn[MISC_CHECKSUM] . 
 						" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . " = " . $arrProperitesIn[SYSLOG_UID]; 
-			$myQuery = mysql_query($szSql, $this->_dbhandle);
+			$myQuery = mysqli_query($this->_dbhandle, $szSql);
 			if ($myQuery)
 			{
 				// Return success
@@ -1085,7 +1085,7 @@ class LogStreamDB extends LogStream {
 		OutputDebugMessage("LogStreamDB|ConsolidateItemListByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
+		$myquery = mysqli_query($this->_dbhandle, $szSql);
 		if ( !$myquery ) 
 			return ERROR_DB_QUERYFAILED;
 		
@@ -1093,7 +1093,7 @@ class LogStreamDB extends LogStream {
 		$aResult = array();
 
 		// read data records
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		while ($myRow = mysqli_fetch_array($myquery,  MYSQLI_ASSOC))
 		{
 			// Keys need to be converted into lowercase!
 			$myRow = array_change_key_case($myRow, CASE_LOWER);
@@ -1227,7 +1227,7 @@ class LogStreamDB extends LogStream {
 		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
-		$myquery = mysql_query($szSql, $this->_dbhandle);
+		$myquery = mysqli_query($this->_dbhandle, $szSql);
 		if ( !$myquery ) 
 			return ERROR_DB_QUERYFAILED;
 
@@ -1235,7 +1235,7 @@ class LogStreamDB extends LogStream {
 		$aResult = array();
 
 		// read data records
-		while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+		while ($myRow = mysqli_fetch_array($myquery,  MYSQLI_ASSOC))
 		{
 			// Keys need to be converted into lowercase!
 			$myRow = array_change_key_case($myRow, CASE_LOWER);
@@ -1315,7 +1315,7 @@ class LogStreamDB extends LogStream {
 						" LIMIT " . $nRecordLimit;
 
 			// Perform Database Query
-			$myquery = mysql_query($szSql, $this->_dbhandle);
+			$myquery = mysqli_query($this->_dbhandle, $szSql);
 			if ( !$myquery ) 
 				return ERROR_DB_QUERYFAILED;
 			
@@ -1323,7 +1323,7 @@ class LogStreamDB extends LogStream {
 			$aResult = array();
 
 			// read data records
-			while ($myRow = mysql_fetch_array($myquery,  MYSQL_ASSOC))
+			while ($myRow = mysqli_fetch_array($myquery,  MYSQLI_ASSOC))
 			{
 				// Keys need to be converted into lowercase!
 				$myRow = array_change_key_case($myRow, CASE_LOWER);
@@ -1604,7 +1604,7 @@ class LogStreamDB extends LogStream {
 		if ( $this->_myDBQuery != null )
 		{
 			// Free Query ressources
-			mysql_free_result ($this->_myDBQuery); 
+			mysqli_free_result ($this->_myDBQuery); 
 			$this->_myDBQuery = null;
 		}
 
@@ -1631,7 +1631,7 @@ class LogStreamDB extends LogStream {
 		
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
-		while ($myRow = mysql_fetch_array($this->_myDBQuery,  MYSQL_ASSOC))
+		while ($myRow = mysqli_fetch_array($this->_myDBQuery,  MYSQLI_ASSOC))
 		{
 			// Check if result was successfull!
 			if ( $myRow === FALSE || !$myRow  )
@@ -1648,7 +1648,7 @@ class LogStreamDB extends LogStream {
 		// --- 
 
 		// Free Query ressources
-//		mysql_free_result ($myquery); 
+//		mysqli_free_result ($myquery); 
 
 		// Only obtain count if enabled and not done before
 		if ( $this->_logStreamConfigObj->DBEnableRowCounting && $this->_totalRecordCount == -1 ) 
@@ -1681,16 +1681,16 @@ class LogStreamDB extends LogStream {
 		// ---
 
 		// Perform Database Query
-		$this->_myDBQuery = mysql_query($szSql, $this->_dbhandle);
+		$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ( !$this->_myDBQuery ) 
 		{
 			// Check if a field is missing!
-			if ( mysql_errno() == 1054 ) 
+			if ( mysqli_errno($this->_dbhandle) == 1054 ) 
 			{
 				// Handle missing field and try again!
 				if ( $this->HandleMissingField() == SUCCESS ) 
 				{
-					$this->_myDBQuery = mysql_query($szSql, $this->_dbhandle);
+					$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
 					if ( !$this->_myDBQuery ) 
 					{
 						$this->PrintDebugError("Invalid SQL: ".$szSql);
@@ -1712,7 +1712,7 @@ class LogStreamDB extends LogStream {
 			if ( $this->_currentRecordStart > 0 ) 
 			{
 				// Throw away 
-				$myRow = mysql_fetch_array($this->_myDBQuery,  MYSQL_ASSOC);
+				$myRow = mysqli_fetch_array($this->_myDBQuery,  MYSQLI_ASSOC);
 			}
 		}
 
@@ -1811,8 +1811,8 @@ class LogStreamDB extends LogStream {
 	{
 		global $extraErrorDescription; 
 
-		$errdesc = mysql_error();
-		$errno = mysql_errno();
+		$errdesc = mysqli_error($this->_dbhandle);
+		$errno = mysqli_errno($this->_dbhandle);
 
 		$errormsg="$szErrorMsg <br>";
 		$errormsg.="Detail error: $errdesc <br>";
@@ -1830,10 +1830,10 @@ class LogStreamDB extends LogStream {
 	*/
 	private function GetRowCountByString($szQuery)
 	{
-		if ($myQuery = mysql_query($szQuery)) 
+		if ($myQuery = mysqli_query($this->_dbhandle, $szQuery)) 
 		{   
-			$num_rows = mysql_num_rows($myQuery);
-			mysql_free_result ($myQuery); 
+			$num_rows = mysqli_num_rows($myQuery);
+			mysqli_free_result ($myQuery); 
 		}
 		return $num_rows;
 	}
@@ -1843,7 +1843,7 @@ class LogStreamDB extends LogStream {
 	*/
 	private function GetRowCountByQueryID($myQuery)
 	{
-		$num_rows = mysql_num_rows($myQuery);
+		$num_rows = mysqli_num_rows($myQuery);
 		return $num_rows;
 	}
 
@@ -1852,10 +1852,10 @@ class LogStreamDB extends LogStream {
 	*/
 	private function GetRowCountFromTable()
 	{
-		if ( $myquery = mysql_query("Select FOUND_ROWS();", $this->_dbhandle) ) 
+		if ( $myquery = mysqli_query($this->_dbhandle, "Select FOUND_ROWS();") ) 
 		{
 			// Get first and only row!
-			$myRow = mysql_fetch_array($myquery);
+			$myRow = mysqli_fetch_array($myquery);
 			
 			// copy row count
 			$numRows = $myRow[0];
@@ -1865,28 +1865,6 @@ class LogStreamDB extends LogStream {
 
 		// return result!
 		return $numRows;
-
-		/* OLD slow code!
-		global $dbmapping,$querycount;
-		$szTableType = $this->_logStreamConfigObj->DBTableType;
-
-		// Create Statement and perform query!
-		$szSql = "SELECT count(" . $dbmapping[$szTableType][SYSLOG_UID] . ") FROM " . $this->_logStreamConfigObj->DBTableName . $this->_SQLwhereClause;
-		if ($myQuery = mysql_query($szSql, $this->_dbhandle)) 
-		{
-			// obtain first and only row
-			$myRow = mysql_fetch_row($myQuery);
-			$numRows = $myRow[0];
-
-			// Increment for the Footer Stats 
-			$querycount++;
-
-			// Free query now
-			mysql_free_result ($myQuery); 
-		}
-		else
-			$numRows = -1;
-		*/
 	}
 
 	/*
@@ -1897,7 +1875,7 @@ class LogStreamDB extends LogStream {
 		global $dbmapping, $fields;
 
 		// Get Err description
-		$errdesc = mysql_error();
+		$errdesc = mysqli_error($this->_dbhandle);
 		
 		// Try to get missing field from SQL Error of not specified as argument
 		if ( $szMissingField == null ) 
@@ -1940,7 +1918,7 @@ class LogStreamDB extends LogStream {
 				if ( strlen($szUpdateSql) > 0 )
 				{
 					// Update Table schema now!
-					$myQuery = mysql_query($szUpdateSql, $this->_dbhandle);
+					$myQuery = mysqli_query($this->_dbhandle, $szUpdateSql);
 					if (!$myQuery)
 					{
 						// Return failure!
@@ -1978,18 +1956,18 @@ class LogStreamDB extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		$szSql = "SHOW INDEX FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+			while ($myRow = mysqli_fetch_array($myQuery,  MYSQLI_ASSOC))
 			{
 				// Add to index keys
 				$arrIndexKeys[] = strtolower($myRow['Key_name']); 
 			}
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -2017,18 +1995,18 @@ class LogStreamDB extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		$szSql = "SHOW FIELDS FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+			while ($myRow = mysqli_fetch_array($myQuery,  MYSQLI_ASSOC))
 			{
 				// Add to index keys
 				$arrFieldKeys[] = strtolower($myRow['Field']); 
 			}
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -2056,11 +2034,11 @@ class LogStreamDB extends LogStream {
 
 		// Create SQL and Get INDEXES for table!
 		$szSql = "SHOW TRIGGERS"; 
-		$myQuery = mysql_query($szSql, $this->_dbhandle);
+		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Loop through results
-			while ($myRow = mysql_fetch_array($myQuery,  MYSQL_ASSOC))
+			while ($myRow = mysqli_fetch_array($myQuery,  MYSQLI_ASSOC))
 			{
 //				print_r (  $myRow ); 
 				// Add to index keys
@@ -2068,7 +2046,7 @@ class LogStreamDB extends LogStream {
 			}
 
 			// Free query now
-			mysql_free_result ($myQuery); 
+			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;

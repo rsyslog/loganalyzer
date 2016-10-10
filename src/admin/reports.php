@@ -478,8 +478,15 @@ if ( isset($_GET['op']) )
 							$mySource['sourceselected'] = "";
 					}
 					
-					// Check if logstream is optimized!
-					CheckConfiguredLogStreamSource($myReport, $content['SourceID']); 
+					// Check if sourceid is valid 
+					if ( !isset($content['SourceID']) ) {
+						$content['ISERROR'] = true;
+						$content['ERROR_CODE'] = ERROR_SOURCENOTFOUND; 
+						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_GEN_ERROR_SOURCENOTFOUND'], $mySource['ID']);
+					} else {
+						// Check if logstream is optimized!
+						CheckConfiguredLogStreamSource($myReport, $content['SourceID']); 
+					}
 
 					// Create Outputlist
 					$content['outputFormat'] = $mySavedReport['outputFormat']; 
@@ -846,7 +853,7 @@ if ( isset($content['ISADDSAVEDREPORT']) && $content['ISADDSAVEDREPORT'] )
 	}
 
 	//	echo $content['SourceID'];
-	if ( isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
+	if ( isset($content['SourceID']) && isset($content['Sources'][$content['SourceID']]['ObjRef']) ) 
 	{
 		// Obtain and get the Config Object
 		$stream_config = $content['Sources'][$content['SourceID']]['ObjRef']; 
@@ -1019,12 +1026,11 @@ if ( isset($_POST['op']) )
 		if ( isset($_POST['report_customtitle']) ) { $content['customTitle'] = DB_RemoveBadChars($_POST['report_customtitle']); } else {$content['report_customtitle'] = ""; }
 		if ( isset($_POST['report_customcomment']) ) { $content['customComment'] = DB_RemoveBadChars($_POST['report_customcomment']); } else {$content['report_customcomment'] = ""; }
 
-
-//		if ( isset($_POST['report_filterString']) ) { $content['filterString'] = DB_RemoveBadChars($_POST['report_filterString']); } else {$content['report_filterString'] = ""; }
-
-//echo $szFilterString . "!" . $content['filterString'];
-//exit;
-
+		// Check for $content['ERROR_CODE']
+		if ( isset($content['ERROR_CODE']) && $content['ERROR_CODE'] == ERROR_SOURCENOTFOUND ) {
+			// Disable Error Display in this case
+			unset($content['ISERROR']); 
+		}
 
 		if ( isset($_POST['outputFormat']) ) { $content['outputFormat'] = DB_RemoveBadChars($_POST['outputFormat']); }
 		if ( isset($_POST['outputTarget']) ) { $content['outputTarget'] = DB_RemoveBadChars($_POST['outputTarget']); }

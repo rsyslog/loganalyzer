@@ -369,5 +369,6 @@ $content['LN_REPORTS_INFORMATION'] = "This page shows a list of installed and av
 ";
 $content['LN_REPORTS_CHECKLOGSTREAMSOURCE'] = "Verify Logstream optimization";
 $content['LN_REPORTS_RUNNOW'] = "Run saved report now!";
+$content['LN_REPORTS_ERROR_ERRORCHECKINGSOURCE'] = "Error while checking Savedreport Source: %1";
 
 ?>
