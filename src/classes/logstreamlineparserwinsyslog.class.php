@@ -53,6 +53,9 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 
 	// Constructor
 	public function LogStreamLineParserwinsyslog() {
+		self::__construct();
+	}
+	public function __construct () {
 		return; // Nothing
 	}
 

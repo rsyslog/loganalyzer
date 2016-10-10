@@ -54,6 +54,9 @@ class LogStreamLineParsermisc extends LogStreamLineParser {
 
 	// Constructor
 	public function LogStreamLineParsermisc() {
+		self::__construct();
+	}
+	public function __construct () {
 		return; // Nothing
 	}
 
