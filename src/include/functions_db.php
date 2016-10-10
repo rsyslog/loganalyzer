@@ -61,7 +61,7 @@ function DB_Connect()
 	if ($userdbconn) 
 		return;
 
-	$userdbconn = @mysql_connect( GetConfigSetting("UserDBServer") . ":" . GetConfigSetting("UserDBPort"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
+	$userdbconn = @mysqli_connect( GetConfigSetting("UserDBServer") . ":" . GetConfigSetting("UserDBPort"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"));
 	if (!$userdbconn) 
 	{
 		// Create Error Msg
@@ -75,7 +75,7 @@ function DB_Connect()
 	//TODO: Check variables first
 	
 	// --- Now, check Mysql DB Version!
-	$strmysqlver = mysql_get_server_info();
+	$strmysqlver = mysqli_get_server_info($userdbconn);
 	if ( strpos($strmysqlver, "-") !== false )
 	{
 		$sttmp = explode("-", $strmysqlver );
@@ -94,7 +94,7 @@ function DB_Connect()
 	}
 	// ---
 
-	$db_selected = mysql_select_db( GetConfigSetting("UserDBName"), $userdbconn );
+	$db_selected = mysqli_select_db( $userdbconn, GetConfigSetting("UserDBName") );
 	if(!$db_selected) 
 		DB_PrintError("Cannot use database '" .GetConfigSetting("UserDBName") . "'", true);
 	// :D Success connecting to db
@@ -105,7 +105,7 @@ function DB_Connect()
 function DB_Disconnect()
 {
 	global $userdbconn;
-	mysql_close($userdbconn);
+	mysqli_close($userdbconn);
 }
 
 function DB_Query($query_string, $bProcessError = true, $bCritical = false)
@@ -116,7 +116,7 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 	// ---
 
 	global $userdbconn, $querycount;
-	$query_id = mysql_query($query_string,$userdbconn);
+	$query_id = mysqli_query($userdbconn, $query_string);
 	if (!$query_id && $bProcessError) 
 		DB_PrintError("Invalid SQL: ".$query_string, $bCritical);
 
@@ -133,8 +133,8 @@ function DB_FreeQuery($query_id)
 		return;
 	// ---
 
-	if ($query_id != false && $query_id != 1 )
-		mysql_free_result($query_id);
+	if ($query_id !== FALSE  )
+		mysqli_free_result($query_id);
 }
 
 function DB_GetRow($query_id) 
@@ -144,7 +144,7 @@ function DB_GetRow($query_id)
 		return;
 	// ---
 
-	$tmp = mysql_fetch_row($query_id);
+	$tmp = mysqli_fetch_row($query_id);
 	$results[] = $tmp;
 	return $results[0];
 }
@@ -156,9 +156,9 @@ function DB_GetSingleRow($query_id, $bClose)
 		return;
 	// ---
 
-	if ($query_id != false && $query_id != 1 )
+	if ($query_id !== FALSE )
 	{
-		$row = mysql_fetch_array($query_id,  MYSQL_ASSOC);
+		$row = mysqli_fetch_array($query_id,  MYSQLI_ASSOC);
 
 		if ( $bClose )
 			DB_FreeQuery ($query_id); 
@@ -177,9 +177,9 @@ function DB_GetAllRows($query_id, $bClose)
 		return;
 	// ---
 
-	if ($query_id != false && $query_id != 1 )
+	if ($query_id !== FALSE )
 	{
-		while ($row  =  mysql_fetch_array($query_id,  MYSQL_ASSOC))
+		while ($row  =  mysqli_fetch_array($query_id,  MYSQLI_ASSOC))
 			$var[]  =  $row;
 		
 		if ( $bClose )
@@ -203,22 +203,25 @@ function DB_GetMysqlStats()
 	// ---
 
 	global $userdbconn;
-	$status = explode('  ', mysql_stat($userdbconn));
+	$status = explode('  ', mysqli_stat($userdbconn));
 	return $status;
 }
 
 function DB_ReturnSimpleErrorMsg()
 {
+	global $userdbconn;
+
 	// Return Mysql Error
-	return "Mysql Error " . mysql_errno() . " - Description: " . mysql_error();
+	return "Mysql Error " . mysqli_errno($userdbconn) . " - Description: " . mysqli_error($userdbconn);
 }
 
 function DB_PrintError($MyErrorMsg, $DieOrNot)
 {
 	global $content, $n,$HTTP_COOKIE_VARS, $errdesc, $errno, $linesep;
+	global $userdbconn;
 
-	$errdesc = mysql_error();
-	$errno = mysql_errno();
+	$errdesc = mysqli_error($userdbconn);
+	$errno = mysqli_errno($userdbconn);
 
 	// Define global variable so we know an error has occured!
 	if ( !defined('PHPLOGCON_INERROR') )
@@ -313,7 +316,7 @@ function DB_ReturnLastInsertID($myResult = false)
 	// ---
 
 	global $userdbconn;
-	return mysql_insert_id($userdbconn);
+	return mysqli_insert_id($userdbconn);
 }
 
 function DB_GetRowCount($query)
@@ -323,10 +326,11 @@ function DB_GetRowCount($query)
 		return;
 	// ---
 
-	if ($result = mysql_query($query)) 
+	global $userdbconn;
+	if ($result = mysqli_query($userdbconn, $query)) 
 	{   
-		$num_rows = mysql_num_rows($result);
-		mysql_free_result ($result); 
+		$num_rows = mysqli_num_rows($result);
+		mysqli_free_result ($result); 
 	}
 	return $num_rows;
 }
@@ -339,7 +343,7 @@ function DB_GetRowCountByResult($myresult)
 	// ---
 
 	if ($myresult) 
-		return mysql_num_rows($myresult);
+		return mysqli_num_rows($myresult);
 }
 
 function DB_Exec($query)
@@ -349,7 +353,8 @@ function DB_Exec($query)
 		return;
 	// ---
 
-	if(mysql_query($query)) 
+	global $userdbconn;
+	if(mysqli_query($userdbconn, $query)) 
 		return true;
 	else 
 		return false; 
@@ -472,8 +477,8 @@ function GetRowsAffected()
 	if ( GetConfigSetting("UserDBEnabled", false) == false ) 
 		return;
 	// ---
-
-	return mysql_affected_rows();
+	global $userdbconn;
+	return mysqli_affected_rows($userdbconn);
 }
 
 ?>
