@@ -18,7 +18,7 @@
 	*																	*
 	* All directives are explained within this file						*
 	*
-	* Copyright (C) 2008-2010 Adiscon GmbH.
+	* Copyright (C) 2008-2016 Adiscon GmbH.
 	*
 	* This file is part of LogAnalyzer.
 	*
@@ -59,7 +59,11 @@ class Template {
 	var $extension  = '';
 	var $template,  $vars,  $page;
 
-	function Template ($fname = '') {
+	public function Template ($fname = '') {
+		self::__construct($fname);
+	}
+
+	public function __construct ($fname = '') {
 		if ($fname)
 			$this->filename  =  $fname;
 	}
