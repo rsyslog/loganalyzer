@@ -64,9 +64,7 @@ class Report_auditsummary extends Report {
 	private $_events_hostactions = 1;							// Enable analysis of individual Host actions
 
 	// Constructor
-	public function Report_auditsummary() {
-//		$this->_logStreamConfigObj = $streamConfigObj;
-
+	public function __construct () {
 		// Fill fields we need for this report
 		$this->_arrProperties[] = SYSLOG_UID;
 		$this->_arrProperties[] = SYSLOG_DATE;
@@ -187,9 +185,9 @@ class Report_auditsummary extends Report {
 														FILTER_TYPE		=> FILTER_TYPE_BOOL, 
 														'DefaultValue'	=> 1, 
 												); 
-
-		
-
+	}
+	public function Report_auditsummary() {
+		self::__construct();
 	}
 
 	/**

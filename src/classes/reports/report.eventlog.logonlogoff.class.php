@@ -62,9 +62,7 @@ class Report_logonlogoff extends Report {
 	private $_colorThreshold = 10;									// Threshold for coloured display of Eventcounter
 
 	// Constructor
-	public function Report_logonlogoff() {
-//		$this->_logStreamConfigObj = $streamConfigObj;
-
+	public function __construct () {
 		// Fill fields we need for this report
 		$this->_arrProperties[] = SYSLOG_UID;
 		$this->_arrProperties[] = SYSLOG_DATE;
@@ -104,9 +102,9 @@ class Report_logonlogoff extends Report {
 														'MinValue'		=> 1,
 /*														'MaxValue'		=> 0,*/
 												); 
-
-		
-
+	}
+	public function Report_logonlogoff() {
+		self::__construct();
 	}
 
 	/**
