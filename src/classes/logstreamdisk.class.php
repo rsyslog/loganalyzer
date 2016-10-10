@@ -64,6 +64,9 @@ class LogStreamDisk extends LogStream {
 
 	// Constructor
 	public function LogStreamDisk($streamConfigObj) {
+		self::__construct($streamConfigObj);
+	}
+	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 	}
 

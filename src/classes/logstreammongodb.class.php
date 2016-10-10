@@ -69,6 +69,10 @@ class LogStreamMongoDB extends LogStream {
 
 	// Constructor
 	public function LogStreamMongoDB($streamConfigObj) {
+		self::__construct($streamConfigObj);
+	}
+
+	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
 		// Probe if a function exists!

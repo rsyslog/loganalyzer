@@ -65,6 +65,9 @@ class LogStreamDB extends LogStream {
 
 	// Constructor
 	public function LogStreamDB($streamConfigObj) {
+		self::__construct($streamConfigObj);
+	}
+	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
 		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )

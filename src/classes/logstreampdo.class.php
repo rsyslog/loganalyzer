@@ -61,20 +61,15 @@ class LogStreamPDO extends LogStream {
 
 	// Constructor
 	public function LogStreamPDO($streamConfigObj) {
+		self::__construct($streamConfigObj);
+	}
+
+	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
 		// Verify if Extension is enabled 
 		if ( extension_loaded('pdo') == 0 )
 			DieWithFriendlyErrorMsg("Error, PDO Extensions are not enabled or installed! This Source can not operate.");
-		
-		/*
-		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-		{
-			// Probe if a function exists!
-			if ( !function_exists("mysql_connect") )
-				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysql_connect' does not exist.");
-		}
-		*/
 	}
 
 	/**
