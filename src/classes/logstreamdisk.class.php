@@ -63,11 +63,11 @@ class LogStreamDisk extends LogStream {
 	private $_lastPageUID = -1;
 
 	// Constructor
-	public function LogStreamDisk($streamConfigObj) {
-		self::__construct($streamConfigObj);
-	}
 	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
+	}
+	public function LogStreamDisk($streamConfigObj) {
+		self::__construct($streamConfigObj);
 	}
 
 	/**

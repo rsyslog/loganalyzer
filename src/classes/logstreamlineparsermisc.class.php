@@ -53,11 +53,11 @@ class LogStreamLineParsermisc extends LogStreamLineParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
-	public function LogStreamLineParsermisc() {
-		self::__construct();
-	}
 	public function __construct () {
 		return; // Nothing
+	}
+	public function LogStreamLineParsermisc() {
+		self::__construct();
 	}
 
 	/**

@@ -153,7 +153,6 @@ if ( !$content['error_occured'] )
 		$stream = $stream_config->LogStreamFactory($stream_config);
 		$stream->SetFilter($content['chart_defaultfilter']);
 
-
 		// Set Columns we want to open!
 		$content['ChartColumns'] = array();
 		// First add filter fields to array
@@ -261,6 +260,8 @@ if ( !$content['error_occured'] )
 
 					// Create
 					$p1 = new PiePlot3D($YchartData);
+					$graph->Add($p1);
+
 					$p1->SetLegends($XchartData);
 					$p1->SetEdge('#333333', 1);
 					$p1->SetTheme('earth'); /*   "earth"    * "pastel"    * "sand"    * "water" */
@@ -286,11 +287,10 @@ if ( !$content['error_occured'] )
 
 					// Adjust other Pie Properties
 					$p1->SetLabelMargin(5);
-					$p1->SetCenter(0.4,0.65);
+					$p1->SetCenter(0.5,0.45);
 					$p1->SetSize(0.3); 
 					$p1->SetAngle(60); 
 
-					$graph->Add($p1);
 				}
 				else if ( $content['chart_type'] == CHART_BARS_VERTICAL )
 				{
@@ -304,6 +304,7 @@ if ( !$content['error_occured'] )
 					$graph->SetScale("textlin");
 					$graph->SetMarginColor('white');
 					$graph->SetBox();					// Box around plotarea
+					$graph->img->SetAlphaBlending(true); 
 
 					// Setup X-AXIS
 //					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,10);
@@ -318,11 +319,8 @@ if ( !$content['error_occured'] )
 					else
 						$graph->xaxis->SetLabelAngle(0);
 
-//					$graph->xaxis->scale->SetGrace(30); // So the value is readable
-
 					// Setup Y-AXIS
 					$graph->yaxis->scale->SetGrace(10); // So the value is readable
-//					$graph->yaxis->SetLabelFormat('%d %%'); 
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
@@ -339,8 +337,6 @@ if ( !$content['error_occured'] )
 					// Set Graph footer
 					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
 					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
-//					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -352,34 +348,35 @@ if ( !$content['error_occured'] )
 
 					// Create and Add bar pot
 					$bplot = new BarPlot($YchartData);
+					$graph->Add($bplot);
+					
+					// Fill properties of barpot
 					$bplot->SetWidth(0.6);
 					$fcol='#440000';
 					$tcol='#FF9090';
 					$bplot->SetFillGradient($fcol,$tcol,GRAD_LEFT_REFLECTION);
-					$graph->Add($bplot);
 
 					// Display value in bars
 					$bplot->value->Show();
 					$bplot->value->SetFont(FF_VERA,FS_NORMAL,8);
-//					$bplot->value->SetAlign('left','center');
-//					$bplot->value->SetColor("black","darkred");
 					$bplot->value->SetFormat('%d');
 					
 					// Add links
 					$bplot->SetCSIMTargets($chartImageMapLinks, $chartImageMapAlts, $chartImageMapTargets);
 
-
 // TODO: Make Optional!
 					// Create and Add filled line plot
 					$lplot = new LinePlot($YchartData);
-					$lplot->SetFillColor('skyblue@0.7');
-					$lplot->SetColor('navy@0.7');
+					$graph->Add($lplot);
+					// Fill properties of line plot
 					$lplot->SetBarCenter();
 					$lplot->mark->SetType(MARK_SQUARE);
+					$lplot->mark->SetSize(6);
+					$lplot->SetFillColor('#7395b0@0.5');
+					$lplot->SetColor('#7395b0@0.5');
 					$lplot->mark->SetColor('blue@0.7');
 					$lplot->mark->SetFillColor('lightblue');
-					$lplot->mark->SetSize(6);
-					$graph->Add($lplot);
+
 				}
 				else if ( $content['chart_type'] == CHART_BARS_HORIZONTAL )
 				{
@@ -409,8 +406,6 @@ if ( !$content['error_occured'] )
 					$graph->yaxis->SetLabelFormat('%d');
 					$graph->yaxis->SetLabelSide(SIDE_RIGHT);
 					$graph->yaxis->SetTickSide(SIDE_LEFT);
-//					$graph->yaxis->SetTitleSide(SIDE_RIGHT);
-//					$graph->yaxis->SetTitleMargin(35);
 					$graph->yaxis->SetPos('max');
 					$graph->yaxis->SetTextLabelInterval(2);
 
@@ -430,8 +425,6 @@ if ( !$content['error_occured'] )
 					// Set Graph footer
 					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
 					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
-//					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -443,17 +436,17 @@ if ( !$content['error_occured'] )
 
 					// Create and Add bar pot
 					$bplot = new BarPlot($YchartData);
+					$graph->Add($bplot);
+
+					// Fill properties of barpot
 					$bplot->SetWidth(0.6);
 					$fcol='#440000';
 					$tcol='#FF9090';
 					$bplot->SetFillGradient($fcol,$tcol,GRAD_LEFT_REFLECTION);
-					$graph->Add($bplot);
 
 					// Display value in bars
 					$bplot->value->Show();
 					$bplot->value->SetFont(FF_VERA,FS_NORMAL, 8);
-//					$bplot->value->SetAlign('left','center');
-//					$bplot->value->SetColor("black","darkred");
 					$bplot->value->SetFormat('%d');
 
 					// Add links
@@ -462,14 +455,15 @@ if ( !$content['error_occured'] )
 // TODO: Make Optional!
 					// Create and Add filled line plot
 					$lplot = new LinePlot($YchartData);
-					$lplot->SetFillColor('skyblue@0.7');
-					$lplot->SetColor('navy@0.7');
+					$graph->Add($lplot);
+					// Fill properties of line plot
 					$lplot->SetBarCenter();
 					$lplot->mark->SetType(MARK_SQUARE);
+					$lplot->mark->SetSize(6);
+					$lplot->SetFillColor('#7395b0@0.5');
+					$lplot->SetColor('#7395b0@0.5');
 					$lplot->mark->SetColor('blue@0.7');
 					$lplot->mark->SetFillColor('lightblue');
-					$lplot->mark->SetSize(6);
-					$graph->Add($lplot);
 				}
 				else
 				{

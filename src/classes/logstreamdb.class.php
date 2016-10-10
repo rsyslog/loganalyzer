@@ -64,9 +64,6 @@ class LogStreamDB extends LogStream {
 	private $_myDBQuery = null;
 
 	// Constructor
-	public function LogStreamDB($streamConfigObj) {
-		self::__construct($streamConfigObj);
-	}
 	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
@@ -76,6 +73,9 @@ class LogStreamDB extends LogStream {
 			if ( !function_exists("mysql_connect") )
 				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysql_connect' does not exist.");
 		}
+	}
+	public function LogStreamDB($streamConfigObj) {
+		self::__construct($streamConfigObj);
 	}
 
 	/**

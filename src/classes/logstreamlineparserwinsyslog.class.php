@@ -52,11 +52,11 @@ class LogStreamLineParserwinsyslog extends LogStreamLineParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
-	public function LogStreamLineParserwinsyslog() {
-		self::__construct();
-	}
 	public function __construct () {
 		return; // Nothing
+	}
+	public function LogStreamLineParserwinsyslog() {
+		self::__construct();
 	}
 
 	/**

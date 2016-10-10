@@ -137,5 +137,11 @@ define('CACHE_FILE_MOD',0664);
 // in GD. Turned off by default for speed
 define('USE_BRESENHAM',false);
 
+// Default theme class name
+define('DEFAULT_THEME_CLASS', 'UniversalTheme');
+
+define('SUPERSAMPLING', true);
+define('SUPERSAMPLING_SCALE', 1);
+
 
 ?>

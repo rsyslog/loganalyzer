@@ -59,13 +59,12 @@ class Template {
 	var $extension  = '';
 	var $template,  $vars,  $page;
 
-	public function Template ($fname = '') {
-		self::__construct($fname);
-	}
-
-	public function __construct ($fname = '') {
+	function __construct ($fname = '') {
 		if ($fname)
 			$this->filename  =  $fname;
+	}
+	function Template ($fname = '') {
+		self::__construct($fname);
 	}
 
 	function set_path ($path) {

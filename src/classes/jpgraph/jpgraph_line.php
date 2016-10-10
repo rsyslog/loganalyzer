@@ -5,7 +5,7 @@
  // Created:  	 2001-01-08
  // Ver:  		 $Id: jpgraph_line.php 1921 2009-12-11 11:46:39Z ljp $
  //
- // Copyright (c) Aditus Consulting. All rights reserved.
+ // Copyright (c) Asial Corporation. All rights reserved.
  //========================================================================
  */
 
@@ -35,11 +35,14 @@ class LinePlot extends Plot{
 
     //---------------
     // CONSTRUCTOR
-    function LinePlot($datay,$datax=false) {
+    function __construct($datay,$datax=false) {
         parent::__construct($datay,$datax);
         $this->mark = new PlotMark() ;
         $this->color = ColorFactory::getColor();
         $this->fill_color = $this->color;
+	}
+    function LinePlot($datay,$datax=false) {
+		self::__construct($datay,$datax);
     }
     //---------------
     // PUBLIC METHODS

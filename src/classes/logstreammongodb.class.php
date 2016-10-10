@@ -68,16 +68,15 @@ class LogStreamMongoDB extends LogStream {
 	private $_myMongoQuery = null; 
 
 	// Constructor
-	public function LogStreamMongoDB($streamConfigObj) {
-		self::__construct($streamConfigObj);
-	}
-
 	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
 		// Probe if a function exists!
 		if ( !function_exists("bson_encode") )
 			DieWithFriendlyErrorMsg("Error, MongoDB PHP Driver Extensions is not installed! Please see <a href\"http://www.php.net/manual/en/mongo.installation.php\">http://www.php.net/manual/en/mongo.installation.php</a> for installation details.");
+	}
+	public function LogStreamMongoDB($streamConfigObj) {
+		self::__construct($streamConfigObj);
 	}
 
 	/**
