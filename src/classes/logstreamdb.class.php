@@ -1086,8 +1086,10 @@ class LogStreamDB extends LogStream {
 
 		// Perform Database Query
 		$myquery = mysqli_query($this->_dbhandle, $szSql);
-		if ( !$myquery ) 
+		if ( !$myquery ) {
+			$this->PrintDebugError("Invalid SQL: ".$szSql);
 			return ERROR_DB_QUERYFAILED;
+		}
 		
 		// Initialize Array variable
 		$aResult = array();
@@ -1228,8 +1230,10 @@ class LogStreamDB extends LogStream {
 
 		// Perform Database Query
 		$myquery = mysqli_query($this->_dbhandle, $szSql);
-		if ( !$myquery ) 
+		if ( !$myquery ) {
+			$this->PrintDebugError("Invalid SQL: ".$szSql);
 			return ERROR_DB_QUERYFAILED;
+		}
 
 		// Initialize Array variable
 		$aResult = array();
@@ -1247,14 +1251,6 @@ class LogStreamDB extends LogStream {
 			{
 				$myFieldID = $this->GetFieldIDbyDatabaseMapping($szTableType, $myFieldName); 
 				$aNewRow[ $myFieldID ] = $myFieldValue;
-
-/*				if ( $myFieldName == $dbmapping[$szTableType]['DBMAPPINGS'][$szConsFieldId] )
-					$aNewRow[$szConsFieldId] = $myFieldValue;
-				else
-				{
-					$aNewRow[$myFieldName] = $myFieldValue;
-*/
-//				}
 			}
 			// Add new row to result
 			$aResult[] = $aNewRow;
@@ -1316,8 +1312,10 @@ class LogStreamDB extends LogStream {
 
 			// Perform Database Query
 			$myquery = mysqli_query($this->_dbhandle, $szSql);
-			if ( !$myquery ) 
+			if ( !$myquery ) {
+				$this->PrintDebugError("Invalid SQL: ".$szSql);
 				return ERROR_DB_QUERYFAILED;
+			}
 			
 			// Initialize Array variable
 			$aResult = array();
@@ -1691,8 +1689,7 @@ class LogStreamDB extends LogStream {
 				if ( $this->HandleMissingField() == SUCCESS ) 
 				{
 					$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
-					if ( !$this->_myDBQuery ) 
-					{
+					if ( !$this->_myDBQuery ) {
 						$this->PrintDebugError("Invalid SQL: ".$szSql);
 						return ERROR_DB_QUERYFAILED;
 					}
