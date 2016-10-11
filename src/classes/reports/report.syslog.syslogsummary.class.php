@@ -179,8 +179,10 @@ class Report_syslogsummary extends Report {
 			if ( is_array($content["report_computers"]) && count($content["report_computers"]) > 0 )
 			{
 				// Create plain hosts list for Consolidate function
-				foreach ( $content["report_computers"] as $tmpComputer ) 
+				foreach ( $content["report_computers"] as $tmpComputer ) {
 					$arrHosts[] = $tmpComputer[SYSLOG_HOST]; 
+					$tmpComputer[SYSLOG_HOST] = htmlspecialchars($tmpComputer[SYSLOG_HOST]); // XSS Fix: Remove HTML Characters!
+				}
 			}
 			else
 				return ERROR_REPORT_NODATA; 
@@ -356,7 +358,7 @@ class Report_syslogsummary extends Report {
 				$this->_streamObj->AppendFilter( $fields[SYSLOG_HOST]['SearchField'] . ":=" . $myHost ); 
 
 				// Set Host Item Basics if not set yet
-				$content["report_consdata"][ $myHost ][SYSLOG_HOST] = $myHost; 
+				$content["report_consdata"][ $myHost ][SYSLOG_HOST] = htmlspecialchars($myHost); // XSS Fix: Remove HTML Characters!
 
 				// Get Data for single host
 				$content["report_consdata"][ $myHost ]['cons_msgs'] = $this->_streamObj->ConsolidateDataByField( MISC_CHECKSUM, $this->_maxMsgsPerHost, MISC_CHECKSUM, SORTING_ORDER_DESC, null, true, true );
@@ -433,7 +435,7 @@ class Report_syslogsummary extends Report {
 					$tmpMyEvent['syslogfacility_text'] = $this->GetFacilityDisplayName($tmpMyEvent['syslogfacility']); //$content['filter_facility_list'][ $tmpMyEvent['syslogfacility'] ]["DisplayName"]; 
 					$tmpMyEvent['syslogseverity_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogseverity']); 
 					$tmpMyEvent['syslogfacility_bgcolor'] = $this->GetSeverityBGColor($tmpMyEvent['syslogfacility']);
-					$tmpMyEvent['htmlmsg'] = htmlspecialchars($tmpMyEvent[SYSLOG_MESSAGE]); 
+					$tmpMyEvent['htmlmsg'] = htmlspecialchars($tmpMyEvent[SYSLOG_MESSAGE]); // XSS Fix: Remove HTML Characters!
 				}
 			}
 			// --- 
