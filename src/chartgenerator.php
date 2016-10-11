@@ -214,7 +214,7 @@ if ( !$content['error_occured'] )
 					else
 						$chartImageMapLinks[] = "";
 
-					$chartImageMapAlts[] =  $fields[$content['chart_field']]['FieldCaption'] . ": " . $myKey;
+					$chartImageMapAlts[] =  $fields[$content['chart_field']]['FieldCaption'] . ": " . htmlspecialchars($myKey);
 					$chartImageMapTargets[] ="_top";
 				}
 
