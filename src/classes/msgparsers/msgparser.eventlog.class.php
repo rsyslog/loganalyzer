@@ -54,8 +54,11 @@ class MsgParser_eventlog extends MsgParser {
 	public $_ClassHelpArticle = "http://www.monitorware.com/en/Articles/";
 
 	// Constructor
-	public function MsgParser_eventlog() {
+	public function __construct () {
 		return; // Nothing
+	}
+	public function MsgParser_eventlog() {
+		self::__construct();
 	}
 
 	/**

@@ -54,11 +54,12 @@ class MsgParser_wireless extends MsgParser {
 		);
 
 	// Constructor
-	public function MsgParser_wireless() {
-
-// TODO AUTOMATICALLY PERFORM FIELD INSERTS!
-
+	public function __construct () {
+		// TODO AUTOMATICALLY PERFORM FIELD INSERTS!
 		return; // Nothing
+	}
+	public function MsgParser_wireless() {
+		self::__construct();
 	}
 
 	/**

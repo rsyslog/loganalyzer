@@ -56,8 +56,11 @@ class MsgParser_apache2common extends MsgParser {
 	public $_ClassHelpArticle = "http://www.monitorware.com/Common/en/Articles/setup_mwagent_webserverlogging_phplogcon_mysql.php";
 
 	// Constructor
-	public function MsgParser_apache2common() {
+	public function __construct () {
 		return; // Nothing
+	}
+	public function MsgParser_apache2common() {
+		self::__construct();
 	}
 
 	/**
