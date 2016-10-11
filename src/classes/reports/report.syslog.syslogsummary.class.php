@@ -154,7 +154,6 @@ class Report_syslogsummary extends Report {
 				{
 					$tmpReportData['DisplayName'] = $this->GetSeverityDisplayName( $tmpReportData[SYSLOG_SEVERITY] );
 					$tmpReportData['bgcolor'] = $this->GetSeverityBGColor( $tmpReportData[SYSLOG_SEVERITY] ); // $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
-
 					$iTotalEvents += $tmpReportData['itemcount']; 
 				}
 
@@ -369,9 +368,9 @@ class Report_syslogsummary extends Report {
 					foreach ( $content["report_consdata"][ $myHost ]['cons_msgs'] as &$myConsData )
 					{
 						// Set Basic data entries
-						if (!isset( $content['filter_facility_list'][$myConsData[SYSLOG_FACILITY]] )) 
+						if (!isset($myConsData[SYSLOG_FACILITY]) || !isset( $content['filter_facility_list'][$myConsData[SYSLOG_FACILITY]] )) 
 							$myConsData[SYSLOG_FACILITY] = SYSLOG_LOCAL0; // Set default in this case
-						if (!isset( $content['filter_severity_list'][$myConsData[SYSLOG_SEVERITY]] )) 
+						if (!isset($myConsData[SYSLOG_SEVERITY]) || !isset( $content['filter_severity_list'][$myConsData[SYSLOG_SEVERITY]] )) 
 							$myConsData[SYSLOG_SEVERITY] = SYSLOG_NOTICE; // Set default in this case
 					}
 				}

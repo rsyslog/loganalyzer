@@ -827,7 +827,7 @@ class LogStreamDisk extends LogStream {
 						$myFieldData = $logArray[$szConsFieldId];
 
 					if ( isset($aResult[ $myFieldData ]) )
-						$aResult[ $myFieldData ]['ItemCount']++;
+						$aResult[ $myFieldData ]['itemcount']++;
 					else
 					{
 						// Initialize entry if we haven't exceeded the RecordLImit yet!
@@ -835,15 +835,16 @@ class LogStreamDisk extends LogStream {
 						{
 							// Init entry
 							$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
-							$aResult[ $myFieldData ]['ItemCount'] = 1;
+							$aResult[ $myFieldData ]['itemcount'] = 1;
 						}
 						else
 						{
 							// Count record to others 
 							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
-								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount']++;
-							else
-								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount'] = 1;
+								$aResult[ $content['LN_STATS_OTHERS'] ]['itemcount']++;
+							else {
+								$aResult[ $content['LN_STATS_OTHERS'] ]['itemcount'] = 1;
+							}
 						}
 					}
 				}
@@ -924,8 +925,8 @@ class LogStreamDisk extends LogStream {
 
 					if ( isset($aResult[ $myFieldData ]) )
 					{
-						$aResult[ $myFieldData ]['ItemCount']++;
-						$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+						$aResult[ $myFieldData ]['itemcount']++;
+						$aResult[ $myFieldData ]['lastoccurrence_date'] = $logArray[SYSLOG_DATE];
 					}
 					else
 					{
@@ -946,18 +947,18 @@ class LogStreamDisk extends LogStream {
 							else
 								$aResult[ $myFieldData ][$szSortFieldId] = $logArray[$szSortFieldId];
 
-							$aResult[ $myFieldData ]['ItemCount'] = 1;
+							$aResult[ $myFieldData ]['itemcount'] = 1;
 
-							$aResult[ $myFieldData ]['FirstOccurrence_Date'] = $logArray[SYSLOG_DATE]; 
-							$aResult[ $myFieldData ]['LastOccurrence_Date'] = $logArray[SYSLOG_DATE];
+							$aResult[ $myFieldData ]['firstoccurrence_date'] = $logArray[SYSLOG_DATE]; 
+							$aResult[ $myFieldData ]['lastoccurrence_date'] = $logArray[SYSLOG_DATE];
 						}
 						else
 						{
 							// Count record to others 
 							if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
-								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount']++;
+								$aResult[ $content['LN_STATS_OTHERS'] ]['itemcount']++;
 							else
-								$aResult[ $content['LN_STATS_OTHERS'] ]['ItemCount'] = 1;
+								$aResult[ $content['LN_STATS_OTHERS'] ]['itemcount'] = 1;
 						}
 					}
 				}
@@ -980,7 +981,7 @@ class LogStreamDisk extends LogStream {
 			// finally return result!
 			if ( count($aResult) > 0 ) 
 				return $aResult;
-			else
+			else 
 				return ERROR_NOMORERECORDS;
 		}
 		else
