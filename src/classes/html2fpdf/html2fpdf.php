@@ -141,8 +141,8 @@ var $usepre; //! bool
 var $usetableheader; //! bool
 var $shownoimg; //! bool
 
-function HTML2FPDF($orientation='P',$unit='mm',$format='A4')
-{
+// Constructor
+public function __construct($orientation='P',$unit='mm',$format='A4') {
 //! @desc Constructor
 //! @return An object (a class instance)
 	//Call parent constructor
@@ -227,6 +227,9 @@ function HTML2FPDF($orientation='P',$unit='mm',$format='A4')
   $this->usetableheader=false;
   $this->usecss=true;
   $this->usepre=true;
+}
+function HTML2FPDF($orientation='P',$unit='mm',$format='A4') {
+	self::__construct($orientation,$unit,$format);
 }
 
 function setBasePath($str)

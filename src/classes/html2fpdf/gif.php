@@ -120,9 +120,8 @@ class CGIFLZW
 
 	///////////////////////////////////////////////////////////////////////////
 
-	// CONSTRUCTOR
-	function CGIFLZW()
-	{
+	// Constructor
+	public function __construct() {
 		$this->MAX_LZW_BITS = 12;
 		unSet($this->Next);
 		unSet($this->Vals);
@@ -133,6 +132,9 @@ class CGIFLZW
 		$this->Vals  = range(0, (1 << $this->MAX_LZW_BITS)       - 1);
 		$this->Stack = range(0, (1 << ($this->MAX_LZW_BITS + 1)) - 1);
 		$this->Buf   = range(0, 279);
+	}
+	function CGIFLZW() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -336,10 +338,12 @@ class CGIFCOLORTABLE
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFCOLORTABLE()
-	{
+	public function __construct() {
 		unSet($this->m_nColors);
 		unSet($this->m_arColors);
+	}
+	function CGIFCOLORTABLE() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -439,8 +443,7 @@ class CGIFFILEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFFILEHEADER()
-	{
+	public function __construct() {
 		unSet($this->m_lpVer);
 		unSet($this->m_nWidth);
 		unSet($this->m_nHeight);
@@ -451,6 +454,9 @@ class CGIFFILEHEADER
 		unSet($this->m_nBgColor);
 		unSet($this->m_nPixelRatio);
 		unSet($this->m_colorTable);
+	}
+	function CGIFFILEHEADER() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -515,8 +521,7 @@ class CGIFIMAGEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFIMAGEHEADER()
-	{
+	public function __construct() {
 		unSet($this->m_nLeft);
 		unSet($this->m_nTop);
 		unSet($this->m_nWidth);
@@ -526,6 +531,9 @@ class CGIFIMAGEHEADER
 		unSet($this->m_bSorted);
 		unSet($this->m_nTableSize);
 		unSet($this->m_colorTable);
+	}
+	function CGIFIMAGEHEADER() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -584,9 +592,7 @@ class CGIFIMAGE
 	var $m_lzw;
 
 	///////////////////////////////////////////////////////////////////////////
-
-	function CGIFIMAGE()
-	{
+	public function __construct() {
 		unSet($this->m_disp);
 		unSet($this->m_bUser);
 		unSet($this->m_bTrans);
@@ -596,6 +602,9 @@ class CGIFIMAGE
 		unSet($this->m_data);
 		$this->m_gih = new CGIFIMAGEHEADER();
 		$this->m_lzw = new CGIFLZW();
+	}
+	function CGIFIMAGE() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -753,12 +762,14 @@ class CGIF
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIF()
-	{
+	public function __construct() {
 		$this->m_gfh     = new CGIFFILEHEADER();
 		$this->m_img     = new CGIFIMAGE();
 		$this->m_lpData  = "";
 		$this->m_bLoaded = false;
+	}
+	function CGIF() {
+		self::__construct(); 
 	}
 
 	///////////////////////////////////////////////////////////////////////////

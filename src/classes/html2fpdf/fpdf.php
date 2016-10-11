@@ -81,8 +81,8 @@ var $AliasNbPages;       //alias for total number of pages
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
-function FPDF($orientation='P',$unit='mm',$format='A4')
-{
+// Constructor
+public function __construct ($orientation='P',$unit='mm',$format='A4') {
 	//Some checks
 	$this->_dochecks();
 	//Initialization of properties
@@ -170,6 +170,9 @@ function FPDF($orientation='P',$unit='mm',$format='A4')
 	$this->SetDisplayMode('fullwidth');
 	//Compression
 	$this->SetCompression(true);
+}
+public function FPDF($orientation='P',$unit='mm',$format='A4') {
+	self::__construct($orientation,$unit,$format);
 }
 
 function SetMargins($left,$top,$right=-1)
