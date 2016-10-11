@@ -236,7 +236,7 @@ class Report_auditsummary extends Report {
 
 				foreach ($content["report_summary"] as &$tmpReportData )
 				{
-					$tmpReportData['DisplayName'] = $tmpReportData[SYSLOG_HOST];
+					$tmpReportData['DisplayName'] = htmlspecialchars($tmpReportData[SYSLOG_HOST]);
 					$tmpReportData['bgcolor'] = "#BBBBBB"; // $severity_colors[ $tmpReportData[SYSLOG_SEVERITY] ];
 
 					$iTotalEvents += $tmpReportData['itemcount']; 
@@ -432,9 +432,6 @@ class Report_auditsummary extends Report {
 			// TimeStats
 			$nowtime = microtime_float();
 			$content["report_rendertime"] .= number_format($nowtime - $gl_starttime, 2, '.', '') . "s ";
-
-			// Update all Checksums first!
-//not needed			$this->_streamObj->UpdateAllMessageChecksum(); 
 
 			// TimeStats
 			$nowtime = microtime_float();
