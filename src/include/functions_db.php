@@ -133,7 +133,7 @@ function DB_FreeQuery($query_id)
 		return;
 	// ---
 
-	if ($query_id !== FALSE  )
+	if ($query_id !== FALSE && $query_id !== TRUE )
 		mysqli_free_result($query_id);
 }
 
