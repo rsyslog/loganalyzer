@@ -365,90 +365,97 @@ if ( isset($_GET['op']) )
 					$content['SourceType'] == SOURCE_PDO || 
 					$content['SourceType'] == SOURCE_MONGODB ) 
 			{
-				// Create LogStream Object 
-				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
-
-				// Verify if datasource is available
-				$res = $stream->Verify();
-				if ( $res != SUCCESS ) 
-				{
+				if ( !isset($tmpSource['ObjRef']) ) {
 					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
-					if ( isset($extraErrorDescription) )
-						$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELDATA'], $content['SOURCEID'] ); 
 				}
-				else
-				{
-					// Display Stats
-					$content['ISCLEARDATA'] = true;
-
-					// Gather Database Stats
-					$content['ROWCOUNT'] = $stream->GetLogStreamTotalRowCount();
-					if ( isset($content['ROWCOUNT']) )
+				else {
+					// Create LogStream Object 
+					$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+					// Verify if datasource is available
+					$res = $stream->Verify();
+					if ( $res != SUCCESS ) 
 					{
-						// Check for suboperations
-						if ( isset($_POST['subop']) )
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+						if ( isset($extraErrorDescription) )
+							$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+					}
+					else
+					{
+						// Display Stats
+						$content['ISCLEARDATA'] = true;
+
+						// Gather Database Stats
+						$content['ROWCOUNT'] = $stream->GetLogStreamTotalRowCount();
+						if ( isset($content['ROWCOUNT']) )
 						{
-							if		( $_POST['subop'] == "all" ) 
+							// Check for suboperations
+							if ( isset($_POST['subop']) )
 							{
-								$timestamp = 0;
-							}
-							else if ( $_POST['subop'] == "since" && isset($_POST['olderthan']) ) 
-							{
-								// Take current time and subtract Seconds
-								$nSecondsSubtract = $_POST['olderthan'];
-								$timestamp = time() - $nSecondsSubtract;
-							}
-							else if ( $_POST['subop'] == "date" && isset($_POST['olderdate_year']) && isset($_POST['olderdate_month']) && isset($_POST['olderdate_day']) ) 
-							{
-								// Generate Timestamp
-								$timestamp = mktime( 0, 0, 0, intval($_POST['olderdate_month']), intval($_POST['olderdate_day']), intval($_POST['olderdate_year']) );
-							}
-							// Continue with delete only inif wherequery is set!
-							if ( isset($timestamp) ) 
-							{
-								// --- Ask for deletion first!
-								if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+								if		( $_POST['subop'] == "all" ) 
 								{
-									// This will print an additional secure check which the user needs to confirm and exit the script execution.
-									PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETEDATA'], $content['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+									$timestamp = 0;
 								}
-								// ---
-
-								// Now perform the data cleanup!
-								$content['affectedrows'] = $stream->CleanupLogdataByDate($timestamp);
-
-								if ( !isset($content['affectedrows']) )
+								else if ( $_POST['subop'] == "since" && isset($_POST['olderthan']) ) 
 								{
-									$content['ISERROR'] = true;
-									$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELDATA'], $content['SOURCEID'] ); 
+									// Take current time and subtract Seconds
+									$nSecondsSubtract = $_POST['olderthan'];
+									$timestamp = time() - $nSecondsSubtract;
+								}
+								else if ( $_POST['subop'] == "date" && isset($_POST['olderdate_year']) && isset($_POST['olderdate_month']) && isset($_POST['olderdate_day']) ) 
+								{
+									// Generate Timestamp
+									$timestamp = mktime( 0, 0, 0, intval($_POST['olderdate_month']), intval($_POST['olderdate_day']), intval($_POST['olderdate_year']) );
+								}
+								// Continue with delete only inif wherequery is set!
+								if ( isset($timestamp) ) 
+								{
+									// --- Ask for deletion first!
+									if ( (!isset($_GET['verify']) || $_GET['verify'] != "yes") )
+									{
+										// This will print an additional secure check which the user needs to confirm and exit the script execution.
+										PrintSecureUserCheck( GetAndReplaceLangStr( $content['LN_SOURCES_WARNDELETEDATA'], $content['DisplayName'] ), $content['LN_DELETEYES'], $content['LN_DELETENO'] );
+									}
+									// ---
+
+									// Now perform the data cleanup!
+									$content['affectedrows'] = $stream->CleanupLogdataByDate($timestamp);
+
+									if ( !isset($content['affectedrows']) )
+									{
+										$content['ISERROR'] = true;
+										$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_DELDATA'], $content['SOURCEID'] ); 
+									}
+									else
+									{
+										// Do the final redirect
+										RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENDELDATA'], $content['DisplayName'], $content['affectedrows'] ) , "sources.php" );
+									}
 								}
 								else
 								{
-									// Do the final redirect
-									RedirectResult( GetAndReplaceLangStr( $content['LN_SOURCES_HASBEENDELDATA'], $content['DisplayName'], $content['affectedrows'] ) , "sources.php" );
+									$content['ISERROR'] = true;
+									$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDCLEANUP'], $content['DisplayName'] ); 
 								}
 							}
 							else
 							{
-								$content['ISERROR'] = true;
-								$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_INVALIDCLEANUP'], $content['DisplayName'] ); 
+								// Allow Deleting by Date
+								$content['DELETE_ALLOWDETAIL'] = true;
+
+								// Create Lists
+								CreateOlderThanList( 3600 );
+								CreateOlderDateFields();
 							}
-						}
-						else
-						{
-							// Allow Deleting by Date
-							$content['DELETE_ALLOWDETAIL'] = true;
 
-							// Create Lists
-							CreateOlderThanList( 3600 );
-							CreateOlderDateFields();
 						}
-
+						else 
+							$content['ROWCOUNT'] = "Unknown";
 					}
-					else 
-						$content['ROWCOUNT'] = "Unknown";
 				}
+
+
 			}
 			else
 			{
@@ -493,47 +500,56 @@ if ( isset($_GET['op']) )
 				$tmpSource['ObjRef']->FileName = $tmpSource['DiskFile'];
 			}
 
+			// Init the source in case it hasn't
+			InitSource($tmpSource);
+
 			// Create LogStream Object 
-			$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
-			$res = $stream->Verify();
-			if ( $res != SUCCESS ) 
-			{
+			if ( !isset($tmpSource['ObjRef']) ) {
 				$content['ISERROR'] = true;
-				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
-				if ( isset($extraErrorDescription) )
-					$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
+				$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOSTATSDATA'], $content['SOURCEID'] ); 
 			}
-			else
-			{
-				// Gather Database Stats
-				$content['STATS'] = $stream->GetLogStreamStats();
-				if ( isset($content['STATS']) )
+			else {
+				$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
+				$res = $stream->Verify();
+				if ( $res != SUCCESS ) 
 				{
-					// Display Stats
-					$content['ISSTATS'] = true;
-
-					foreach( $content['STATS'] as &$myStats )
-					{
-						$i = 0;
-						foreach( $myStats['STATSDATA'] as &$myStatsData )
-						{
-							// --- Set CSS Class
-							if ( $i % 2 == 0 )
-								$myStatsData['cssclass'] = "line1";
-							else
-								$myStatsData['cssclass'] = "line2";
-							$i++;
-							// --- 
-						}
-					}
-
+					$content['ISERROR'] = true;
+					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
+					if ( isset($extraErrorDescription) )
+						$content['ERROR_MSG'] .= "<br><br>" . GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_EXTRAMSG'], $extraErrorDescription);
 				}
 				else
 				{
-					$content['ISERROR'] = true;
-					$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOSTATSDATA'], $content['SOURCEID'] ); 
+					// Gather Database Stats
+					$content['STATS'] = $stream->GetLogStreamStats();
+					if ( isset($content['STATS']) )
+					{
+						// Display Stats
+						$content['ISSTATS'] = true;
+
+						foreach( $content['STATS'] as &$myStats )
+						{
+							$i = 0;
+							foreach( $myStats['STATSDATA'] as &$myStatsData )
+							{
+								// --- Set CSS Class
+								if ( $i % 2 == 0 )
+									$myStatsData['cssclass'] = "line1";
+								else
+									$myStatsData['cssclass'] = "line2";
+								$i++;
+								// --- 
+							}
+						}
+
+					}
+					else
+					{
+						$content['ISERROR'] = true;
+						$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_NOSTATSDATA'], $content['SOURCEID'] ); 
+					}
+	//				print_r ( $content['STATS'] );
 				}
-//				print_r ( $content['STATS'] );
 			}
 			// ---
 		}
