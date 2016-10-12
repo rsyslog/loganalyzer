@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 4.1.5 (stable), 2016-10-12
+- Fixed compaitiblity issues related to PHP7.
+- Updated JPGraph to 4.0.1 (to fix PHP7 support).
+- Changed all mysql_* API calls to mysqli_* API. 
+- Fixed several possible XSS exploit issues in report modules and 
+  chart generator.
+- Updated JQUERY to v1.12.4 and fixed issues with the loading widget. 
+- Fixed case sensitive speling issue in logstream disk helper functions. 
+- Fixed a bug when using the clear data function in UserDB Sources Admin.
+---------------------------------------------------------------------------
 Version 4.1.3 (beta), 2015-03-26
 - Fixed REGEX Filtering issue, see #bugid 536.
 - Added Autofocus functions for formelemts in certain admin panel areas. 
