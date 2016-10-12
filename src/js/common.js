@@ -511,6 +511,8 @@ function CreateLoadingHelper ( szLoadingText )
 	(function($) {
 	$.widget("artistan.loading", $.ui.dialog, {
 		options: {
+			/* show: "fade", 
+			hide: "fade",*/
 			// your options
 			spinnerClassSuffix: 'spinner',
 			spinnerHtml: szLoadingText,// allow for spans with callback for timeout...
@@ -520,7 +522,7 @@ function CreateLoadingHelper ( szLoadingText )
 			minWidth: 220,
 			height: 120,
 			width: 300,
-			modal: true
+			modal: false,
 		},
 
 		_create: function() {
