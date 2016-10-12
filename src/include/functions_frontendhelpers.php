@@ -170,7 +170,14 @@ function CreateCurrentUrl()
 					strpos($queries[$i], "skipone") === false
 				) 
 			{
-				$tmpvars = explode ("=", $queries[$i]);
+				// --- Using regex to split query properly 
+				// Thanks to TK - 2016-01-20
+				preg_match('/^([^=]*)=(.*)$/', $queries[$i], $m);
+				if ( isset($m[1]) && isset($m[2]) )
+					$tmpvars = array($m[1], $m[2]);
+				// OLD Code $tmpvars = explode ("=", $queries[$i]);
+				// --- 
+
 				if ( isset($tmpvars[1]) ) // Only if value param is set!
 				{
 					// For forms!
