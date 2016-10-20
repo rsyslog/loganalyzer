@@ -374,14 +374,14 @@ else if ( $content['INSTALL_STEP'] == 4 )
 			}
 
 			// Now Check database connect
-			$link_id = mysql_connect( $_SESSION['UserDBServer'], $_SESSION['UserDBUser'], $_SESSION['UserDBPass']);
+			$link_id = mysqli_connect( $_SESSION["UserDBServer"], $_SESSION["UserDBUser"], $_SESSION["UserDBPass"], $_SESSION["UserDBName"], $_SESSION["UserDBPort"]);
 			if (!$link_id) 
-				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $_SESSION['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg() );
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], $_SESSION['UserDBServer']) . "<br>" . DB_ReturnSimpleErrorMsg($link_id) );
 			
 			// Try to select the DB!
-			$db_selected = mysql_select_db($_SESSION['UserDBName'], $link_id);
+			$db_selected = mysqli_select_db($link_id, $_SESSION['UserDBName']);
 			if(!$db_selected) 
-				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $_SESSION['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg());
+				RevertOneStep( $content['INSTALL_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], $_SESSION['UserDBName']) . "<br>" . DB_ReturnSimpleErrorMsg($link_id));
 		}
 	}
 	// ---

@@ -207,12 +207,14 @@ function DB_GetMysqlStats()
 	return $status;
 }
 
-function DB_ReturnSimpleErrorMsg()
+function DB_ReturnSimpleErrorMsg($dbConn = NULL)
 {
 	global $userdbconn;
+	if ( $dbConn == NULL ) 
+		$dbConn = $userdbconn;
 
 	// Return Mysql Error
-	return "Mysql Error " . mysqli_errno($userdbconn) . " - Description: " . mysqli_error($userdbconn);
+	return "Mysql Error " . mysqli_errno($dbConn) . " - Description: " . mysqli_error($dbConn);
 }
 
 function DB_PrintError($MyErrorMsg, $DieOrNot)
