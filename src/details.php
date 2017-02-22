@@ -52,7 +52,12 @@ InitSourceConfigs();
 InitFrontEndDefaults();	// Only in WebFrontEnd
 InitFilterHelpers();	// Helpers for frontend filtering!
 // ---
-
+if (!isset($_COOKIE['acc_user']) || !isset($_COOKIE['acc_pwd']) || $_COOKIE['acc_user'] != $content['User_Access'] || $_COOKIE['acc_pwd'] != $content['Password_Access']){
+	echo "<form action=\"index.php\" method=\"post\"> Login User:<input type=\"text\" name=\"username\" />  
+    Password  :<input type=\"password\" name=\"password\" />  
+    <input type=\"submit\" name=\"submit\" value=\"Login\" />  </form>";
+	return;
+}
 // --- Define Extra Stylesheet!
 //$content['EXTRA_STYLESHEET']  = '<link rel="stylesheet" href="css/highlight.css" type="text/css">' . "\r\n";
 //$content['EXTRA_STYLESHEET'] .= '<link rel="stylesheet" href="css/menu.css" type="text/css">';
@@ -136,6 +141,7 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
+	$stream_config->SyncLogPath();
 
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
