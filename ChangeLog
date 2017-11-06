@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------
+Version 4.1.6 (stable), 2017-11-06
+- Fixed mysqli_connect call in UserDB functions. 
+- Replaced mysql with mysqli functions in install.php script.
+  Closes github issue #17
+---------------------------------------------------------------------------
 Version 4.1.5 (stable), 2016-10-12
 - Fixed compaitiblity issues related to PHP7.
 - Updated JPGraph to 4.0.1 (to fix PHP7 support).
