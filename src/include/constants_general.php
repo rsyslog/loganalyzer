@@ -42,6 +42,9 @@ if ( !defined('IN_PHPLOGCON') )
 	exit;
 }
 // --- 
+//---Allow_Change_Log
+define('ALLOW_CHANGE', "Y");
+define('NO_ALLOW_CHANGE', "N");
 
 // --- Some custom defines
 define('RUNMODE_COMMANDLINE', 1);

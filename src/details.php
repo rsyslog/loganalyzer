@@ -137,6 +137,10 @@ if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
+	if ( isset( $content['Allow_Change_Log'] ) && $content['Allow_Change_Log'] == ALLOW_CHANGE ) {
+		$stream_config->SyncLogPath();
+	}
+	
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);

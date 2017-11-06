@@ -224,6 +224,10 @@ if ( isset($content['Sources'][$currentSourceID]) )
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
 
+	if ( isset( $content['Allow_Change_Log'] ) && $content['Allow_Change_Log'] == ALLOW_CHANGE ){
+		$stream_config->Display();
+	}
+	
 	// Create LogStream Object 
 	$stream = $stream_config->LogStreamFactory($stream_config);
 	$stream->SetFilter($content['searchstr']);
