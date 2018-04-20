@@ -118,12 +118,12 @@ $content['LN_CONVERT_TITLETOP'] = GetAndReplaceLangStr( $content['LN_CONVERT_TIT
 if ( $content['CONVERT_STEP'] == 2 )
 {	
 	// Check the database connect
-	$link_id = mysql_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass") );
+	$link_id =	mysqli_connect( GetConfigSetting("UserDBServer"), GetConfigSetting("UserDBUser"), GetConfigSetting("UserDBPass"), GetConfigSetting("UserDBName"), GetConfigSetting("UserDBPort") );
 	if (!$link_id) 
 		RevertOneStep( $content['CONVERT_STEP']-1, GetAndReplaceLangStr( $content['LN_INSTALL_ERRORCONNECTFAILED'], GetConfigSetting("UserDBServer") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
 	
 	// Try to select the DB!
-	$db_selected = mysql_select_db(GetConfigSetting("UserDBName"), $link_id);
+	$db_selected = mysqli_select_db($link_id, GetConfigSetting("UserDBName"));
 	if(!$db_selected) 
 		RevertOneStep( $content['CONVERT_STEP']-1,GetAndReplaceLangStr( $content['LN_INSTALL_ERRORACCESSDENIED'], GetConfigSetting("UserDBName") . "<br>" . DB_ReturnSimpleErrorMsg() ) );
 }
@@ -151,7 +151,9 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	$totaldbdefs = str_replace( "`logcon_", "`" . GetConfigSetting("UserDBPref"), $totaldbdefs );
 	
 	// Now split by sql command
-	$mycommands = split( ";\n", $totaldbdefs );
+	//		$mycommands = split( ";\n", $totaldbdefs ); DEPRECEATED CALL!
+	// Now split by sql command
+	$mycommands = preg_split('/;\n/', $totaldbdefs, -1, PREG_SPLIT_NO_EMPTY);
 	
 //		// check for different linefeed
 //		if ( count($mycommands) <= 1 )
