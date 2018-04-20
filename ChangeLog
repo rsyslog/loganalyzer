@@ -2,6 +2,7 @@
 Version 4.1.7 (stable), xxxx-xx-xx
 - Fixed mysql calls and php7 compatibility issues in convert.php
 - Login template: Fixed length limit of username / password
+- jpgraph: Added workarround when imageantialias function is missing
 ---------------------------------------------------------------------------
 Version 4.1.6 (stable), 2017-11-06
 - Fixed mysqli_connect call in UserDB functions. 

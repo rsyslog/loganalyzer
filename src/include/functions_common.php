@@ -2230,4 +2230,13 @@ function ReplaceDollarChar($myValue)
 	}
 }
 
+/* workarround when imageantialias is missing */
+if (!function_exists('imageantialias')) {
+	function imageantialias($image, $enabled)
+	{
+		return true;
+	}
+}
+
+
 ?>
