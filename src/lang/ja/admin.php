@@ -266,6 +266,7 @@ $content['LN_SOURCES_TYPE'] = "ソース種別";
 $content['LN_SOURCES_ASSIGNTO'] = "割り当て";
 $content['LN_SOURCES_DISK'] = "Diskfile";
 $content['LN_SOURCES_DB'] = "MySQL データベース";
+$content['LN_SOURCES_CLICKHOUSE'] = "ClickHouse";
 $content['LN_SOURCES_PDO'] = "PDO データソース";
 $content['LN_SOURCES_MONGODB'] = "MongoDB データソース";
 $content['LN_SOURCES_ADD'] = "新しいソースを追加する";

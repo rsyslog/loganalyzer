@@ -43,6 +43,7 @@ $content['LN_GEN_PAGE'] = "Seite";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Vordefinierte Suchkriterien";
 $content['LN_GEN_SOURCE_DISK'] = "Datei";
 $content['LN_GEN_SOURCE_DB'] = "Datenbank";
+$content['LN_GEN_SOURCE_ClickHouse'] = "ClickHouse Datenbank";
 $content['LN_GEN_RECORDSPERPAGE'] = "Zeilen pro Seite";
 $content['LN_GEN_PRECONFIGURED'] = "Vorkonfiguriert";
 $content['LN_GEN_AVAILABLESEARCHES'] = "Verfügbare Suchabfragen";

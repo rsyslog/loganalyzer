@@ -171,6 +171,35 @@ function InitSource(&$mysource)
 			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
 			if ( isset($mysource['DBRecordsPerQuery']) ) { $mysource['ObjRef']->RecordsPerQuery = $mysource['DBRecordsPerQuery']; }
 		}
+		else if ( $mysource['SourceType'] == SOURCE_CLICKHOUSE )
+		{
+			// Perform necessary include
+			require_once($gl_root_path . 'classes/logstreamconfigclickhouse.class.php');
+
+			$mysource['ObjRef'] = new LogStreamConfigClickHouse();
+			$mysource['ObjRef']->DBServer = $mysource['DBServer'];
+			$mysource['ObjRef']->DBName = $mysource['DBName'];
+			// Workaround a little bug from the installer script
+			if ( isset($mysource['DBType']) )
+				$mysource['ObjRef']->DBType = $mysource['DBType'];
+			else
+				$mysource['ObjRef']->DBType = DB_MYSQL;
+
+			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
+			
+			// Legacy handling for tabletype!
+			if ( isset($mysource['DBTableType']) && strtolower($mysource['DBTableType']) == "winsyslog" )
+				$mysource['ObjRef']->DBTableType = "monitorware"; // Convert to MonitorWare!
+			else
+				$mysource['ObjRef']->DBTableType = strtolower($mysource['DBTableType']);
+
+			// Optional parameters!
+			if ( isset($mysource['DBPort']) ) { $mysource['ObjRef']->DBPort = $mysource['DBPort']; }
+			if ( isset($mysource['DBUser']) ) { $mysource['ObjRef']->DBUser = $mysource['DBUser']; }
+			if ( isset($mysource['DBPassword']) ) { $mysource['ObjRef']->DBPassword = $mysource['DBPassword']; }
+			if ( isset($mysource['DBEnableRowCounting']) ) { $mysource['ObjRef']->DBEnableRowCounting = $mysource['DBEnableRowCounting']; }
+			if ( isset($mysource['DBRecordsPerQuery']) ) { $mysource['ObjRef']->RecordsPerQuery = $mysource['DBRecordsPerQuery']; }
+		}
 		else if ( $mysource['SourceType'] == SOURCE_PDO )
 		{
 			// Perform necessary include

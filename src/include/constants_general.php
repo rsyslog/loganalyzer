@@ -72,6 +72,7 @@ define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
 define('SOURCE_PDO', '3');
 define('SOURCE_MONGODB', '4');
+define('SOURCE_CLICKHOUSE', '5');
 // --- 
 
 // --- Exportformat defines

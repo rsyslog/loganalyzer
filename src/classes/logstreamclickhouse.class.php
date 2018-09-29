@@ -5,7 +5,7 @@
 	* -----------------------------------------------------------------	*
 	* Some constants													*
 	*																	*
-	* LogStreamDB provides access to the data in database. In the most
+	* LogStreamClickHouse provides access to the data in database. In the most
 	* cases this will be plain text files. If we need access to e.g.
 	* zipped files, this will be handled by a separate driver.
 	*
@@ -47,7 +47,7 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'include/constants_errors.php');
 // --- 
 
-class LogStreamDB extends LogStream {
+class LogStreamClickHouse extends LogStream {
 	private $_dbhandle = null;
 	
 	// Helper to store the database records
@@ -74,7 +74,7 @@ class LogStreamDB extends LogStream {
 				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysqli_connect' does not exist.");
 		}
 	}
-	public function LogStreamDB($streamConfigObj) {
+	public function LogStreamClickHouse($streamConfigObj) {
 		self::__construct($streamConfigObj);
 	}
 
@@ -202,13 +202,13 @@ class LogStreamDB extends LogStream {
 //			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
 			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrFieldKeys) )
 			{
-				OutputDebugMessage("LogStreamDB|VerifyFields: Found Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				OutputDebugMessage("LogStreamClickHouse|VerifyFields: Found Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
 				continue;
 			}
 			else
 			{
 				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyFields: Missing Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				OutputDebugMessage("LogStreamClickHouse|VerifyFields: Missing Field for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
 				return ERROR_DB_DBFIELDNOTFOUND; 
 			}
 		}
@@ -235,13 +235,13 @@ class LogStreamDB extends LogStream {
 //			echo $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "<br>";
 			if ( isset($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty]) && in_array($dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrIndexKeys) )
 			{
-				OutputDebugMessage("LogStreamDB|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
+				OutputDebugMessage("LogStreamClickHouse|VerifyIndexes: Found INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_ULTRADEBUG);
 				continue;
 			}
 			else
 			{
 				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
+				OutputDebugMessage("LogStreamClickHouse|VerifyIndexes: Missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "'", DEBUG_WARN);
 				return ERROR_DB_INDEXESMISSING; 
 			}
 		}
@@ -277,14 +277,14 @@ class LogStreamDB extends LogStream {
 			else
 			{
 				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: Missing TRIGGER '" . $szTriggerName . "' for Table '" . $szTableName . "'", DEBUG_WARN);
+				OutputDebugMessage("LogStreamClickHouse|VerifyChecksumTrigger: Missing TRIGGER '" . $szTriggerName . "' for Table '" . $szTableName . "'", DEBUG_WARN);
 				return ERROR_DB_TRIGGERMISSING; 
 			}
 		}
 		else
 		{
 			// Index is missing for this field!
-			OutputDebugMessage("LogStreamDB|VerifyChecksumTrigger: No TRIGGERS found in your database", DEBUG_WARN);
+			OutputDebugMessage("LogStreamClickHouse|VerifyChecksumTrigger: No TRIGGERS found in your database", DEBUG_WARN);
 			return ERROR_DB_TRIGGERMISSING; 
 		}
 	}
@@ -312,7 +312,7 @@ class LogStreamDB extends LogStream {
 				$szSql = "ALTER TABLE " . $this->_logStreamConfigObj->DBTableName . " ADD INDEX ( " . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . " )"; 
 
 				// Index is missing for this field!
-				OutputDebugMessage("LogStreamDB|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
+				OutputDebugMessage("LogStreamClickHouse|CreateMissingIndexes: Createing missing INDEX for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty] . "' - " . $szSql, DEBUG_INFO);
 				
 				// Add missing INDEX now!
 				$myQuery = mysqli_query($this->_dbhandle, $szSql);
@@ -351,7 +351,7 @@ class LogStreamDB extends LogStream {
 				if ( $this->HandleMissingField( $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], $arrProperitesIn ) == SUCCESS )
 				{
 					// Index is missing for this field!
-					OutputDebugMessage("LogStreamDB|CreateMissingFields: Createing missing FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], DEBUG_INFO);
+					OutputDebugMessage("LogStreamClickHouse|CreateMissingFields: Createing missing FIELD for '" . $dbmapping[$szTableType]['DBMAPPINGS'][$myproperty], DEBUG_INFO);
 				}
 				else
 				{
@@ -410,7 +410,7 @@ class LogStreamDB extends LogStream {
 		$szSql = $this->GetCreateMissingTriggerSQL( $szDBTriggerField, $szDBTriggerCheckSumField ); 
 		
 		// Index is missing for this field!
-		OutputDebugMessage("LogStreamDB|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
+		OutputDebugMessage("LogStreamClickHouse|CreateMissingTrigger: Creating missing TRIGGER for '" . $szTableName . "' - $szDBTriggerCheckSumField = crc32(NEW.$szDBTriggerField)" . $szSql, DEBUG_INFO);
 		
 		// Add missing INDEX now!
 		$myQuery = mysqli_query($this->_dbhandle, $szSql);
@@ -902,7 +902,7 @@ class LogStreamDB extends LogStream {
 
 			// DELETE DATA NOW!
 			$szSql = "DELETE FROM `" .  $this->_logStreamConfigObj->DBTableName . "`" . $szWhere; 
-			OutputDebugMessage("LogStreamDB|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+			OutputDebugMessage("LogStreamClickHouse|CleanupLogdataByDate: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
 			$myQuery = mysqli_query($this->_dbhandle, $szSql);
 			if ($myQuery)
 			{
@@ -950,14 +950,14 @@ class LogStreamDB extends LogStream {
 					" WHERE " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " IS NULL OR " . $dbmapping[$szTableType]['DBMAPPINGS'][MISC_CHECKSUM] . " = 0"; 
 
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		OutputDebugMessage("LogStreamClickHouse|UpdateAllMessageChecksum: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 		
 		// Running SQL Query
 		$myQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ($myQuery)
 		{
 			// Debug Output
-			OutputDebugMessage("LogStreamDB|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysqli_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
+			OutputDebugMessage("LogStreamClickHouse|UpdateAllMessageChecksum: Successfully updated Checksum of '" . mysqli_affected_rows($this->_dbhandle) . "' datarecords", DEBUG_INFO);
 
 			// Return success
 			return SUCCESS; 
@@ -1082,7 +1082,7 @@ class LogStreamDB extends LogStream {
 					$szLimitSql ;
 
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|ConsolidateItemListByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		OutputDebugMessage("LogStreamClickHouse|ConsolidateItemListByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
 		$myquery = mysqli_query($this->_dbhandle, $szSql);
@@ -1226,7 +1226,7 @@ class LogStreamDB extends LogStream {
 					$szLimitSql ;
 
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
+		OutputDebugMessage("LogStreamClickHouse|ConsolidateDataByField: Running Created SQL Query:<br>" . $szSql, DEBUG_ULTRADEBUG);
 
 		// Perform Database Query
 		$myquery = mysqli_query($this->_dbhandle, $szSql);
@@ -1717,7 +1717,7 @@ class LogStreamDB extends LogStream {
 		$querycount++;
 		
 		// Output Debug Informations
-		OutputDebugMessage("LogStreamDB|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
+		OutputDebugMessage("LogStreamClickHouse|CreateMainSQLQuery: Created SQL Query:<br>" . $szSql, DEBUG_DEBUG);
 
 		// return success state if reached this point!
 		return SUCCESS;
@@ -1819,7 +1819,7 @@ class LogStreamDB extends LogStream {
 		$extraErrorDescription = $errormsg;
 
 		//Output!
-		OutputDebugMessage("LogStreamDB|PrintDebugError: $errormsg", DEBUG_ERROR);
+		OutputDebugMessage("LogStreamClickHouse|PrintDebugError: $errormsg", DEBUG_ERROR);
 	}
 	
 	/*

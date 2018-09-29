@@ -43,6 +43,7 @@ $content['LN_GEN_PAGE'] = "ページ";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "ファイル";
 $content['LN_GEN_SOURCE_DB'] = "MySQL ネイティブ";
+$content['LN_GEN_SOURCE_CLICKHOUSE'] = "ClickHouse";
 $content['LN_GEN_SOURCE_PDO'] = "データベース (PDO)";
 $content['LN_GEN_SOURCE_MONGODB'] = "MongoDB ネイティブ";
 $content['LN_GEN_RECORDSPERPAGE'] = "件";

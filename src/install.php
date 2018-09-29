@@ -635,6 +635,7 @@ else if ( $content['INSTALL_STEP'] == 7 )
 	CreateLogLineTypesList($content['SourceLogLineType']);
 	if ( isset($_SESSION['SourceDiskFile']) ) { $content['SourceDiskFile'] = $_SESSION['SourceDiskFile']; } else { $content['SourceDiskFile'] = "/var/log/syslog"; }
 
+	// TODO: Pascal: Do I have to do anything here?
 	// SOURCE_DB specific
 	if ( isset($_SESSION['SourceDBType']) ) { $content['SourceDBType'] = $_SESSION['SourceDBType']; } else { $content['SourceDBType'] = DB_MYSQL; }
 	CreateDBTypesList($content['SourceDBType']);
@@ -705,7 +706,8 @@ else if ( $content['INSTALL_STEP'] == 8 )
 	// DB Params
 	else if (	$_SESSION['SourceType'] == SOURCE_DB || 
 				$_SESSION['SourceType'] == SOURCE_PDO ||
-				$_SESSION['SourceType'] == SOURCE_MONGODB )
+				$_SESSION['SourceType'] == SOURCE_MONGODB ||
+				$_SESSION['SourceType'] == SOURCE_CLICKHOUSE )
 	{
 		if ( isset($_POST['SourceDBType']) )
 			$_SESSION['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']);
@@ -846,6 +848,22 @@ else if ( $content['INSTALL_STEP'] == 8 )
 		CreateDBTypesList($_SESSION['SourceDBType']);
 
 		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_DB;\n" . 
+						"\$CFG['Sources']['Source1']['DBTableType'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableType']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBType'] = " . ReplaceDollarChar($content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext']) . ";\n" . 
+						"\$CFG['Sources']['Source1']['DBServer'] = '" . ReplaceDollarChar($_SESSION['SourceDBServer']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBName'] = '" . ReplaceDollarChar($_SESSION['SourceDBName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBUser'] = '" . ReplaceDollarChar($_SESSION['SourceDBUser']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBPassword'] = '" . ReplaceDollarChar($_SESSION['SourceDBPassword']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBTableName'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableName']) . "';\n" . 
+						"\$CFG['Sources']['Source1']['DBEnableRowCounting'] = " . ReplaceDollarChar($_SESSION['SourceDBEnableRowCounting']) . ";\n" . 
+						"";
+	}
+	else if ( $_SESSION['SourceType'] == SOURCE_CLICKHOUSE )
+	{
+		// Need to create the LIST first!
+		CreateDBTypesList($_SESSION['SourceDBType']);
+
+		$firstsource .=	"\$CFG['Sources']['Source1']['SourceType'] = SOURCE_CLICKHOUSE;\n" . 
 						"\$CFG['Sources']['Source1']['DBTableType'] = '" . ReplaceDollarChar($_SESSION['SourceDBTableType']) . "';\n" . 
 						"\$CFG['Sources']['Source1']['DBType'] = " . ReplaceDollarChar($content['DBTYPES'][$_SESSION['SourceDBType']]['typeastext']) . ";\n" . 
 						"\$CFG['Sources']['Source1']['DBServer'] = '" . ReplaceDollarChar($_SESSION['SourceDBServer']) . "';\n" . 

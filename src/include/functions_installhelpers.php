@@ -235,6 +235,34 @@ function ConvertCustomSources()
 				" " . PrepareValueForDB($mySource['DBEnableRowCounting']) . " " . 
 				")");
 		}
+		else if ( $mySource['SourceType'] == SOURCE_CLICKHOUSE ) 
+		{
+			// Set Default for number fields
+			if ( !isset($mySource['DBEnableRowCounting']) ) 
+				$mySource['DBEnableRowCounting'] = 0;
+			else // Force to number
+				$mySource['DBEnableRowCounting'] = intval($mySource['DBEnableRowCounting']);
+			if ( !isset($mySource['DBType']) ) 
+				$mySource['DBType'] = DB_MYSQL;
+
+			// Perform the insert
+			$result = DB_Query("INSERT INTO `" . DB_SOURCES . "` (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 
+				"'" . PrepareValueForDB($mySource['Name']) . "', " . 
+				"'" . PrepareValueForDB($mySource['Description']) . "', " . 
+				" " . PrepareValueForDB($mySource['SourceType']) . " , " . 
+				"'" . PrepareValueForDB($mySource['MsgParserList']) . "', " . 
+				" " . PrepareValueForDB($mySource['MsgNormalize']) . " , " . 
+				"'" . PrepareValueForDB($mySource['ViewID']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBTableType']) . "', " . 
+				" " . PrepareValueForDB($mySource['DBType']) . " , " . 
+				"'" . PrepareValueForDB($mySource['DBServer']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBName']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBUser']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBPassword']) . "', " . 
+				"'" . PrepareValueForDB($mySource['DBTableName']) . "', " . 
+				" " . PrepareValueForDB($mySource['DBEnableRowCounting']) . " " . 
+				")");
+		}
 		else
 			DieWithFriendlyErrorMsg( GetAndReplaceLangStr($content['LN_CONVERT_ERROR_SOURCEIMPORT'], $mySource['SourceType']) );
 		
