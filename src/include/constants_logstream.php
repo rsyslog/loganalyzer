@@ -366,6 +366,16 @@ $dbmapping['monitorware']['DBMAPPINGS'][MISC_SYSTEMID] = "SystemID";
 $dbmapping['monitorware']['DBMAPPINGS'][MISC_CHECKSUM] = "Checksum";
 //$dbmapping['monitorware']['DBMAPPINGS'][SYSLOG_PROCESSID] = "ProcessID";
 
+// --- Default ClickHouse Mapping
+$dbmapping['clickhouse']['ID'] = "clickhouse";
+$dbmapping['clickhouse']['DisplayName'] = "ClickHouse";
+$dbmapping['clickhouse']['DBMAPPINGS'][SYSLOG_UID] = "ID";
+$dbmapping['clickhouse']['DBMAPPINGS'][SYSLOG_MESSAGE] = "Message";
+$dbmapping['clickhouse']['DBMAPPINGS'][SYSLOG_FACILITY] = "Facility";
+$dbmapping['clickhouse']['DBMAPPINGS'][SYSLOG_SEVERITY] = "Severity";
+$dbmapping['clickhouse']['DBMAPPINGS'][SYSLOG_SYSLOGTAG] = "tag";
+
+
 $dbmapping['syslogng']['ID'] = "syslogng";
 $dbmapping['syslogng']['DisplayName'] = "SyslogNG";
 $dbmapping['syslogng']['DBMAPPINGS'][SYSLOG_UID] = "seq";

@@ -45,6 +45,7 @@ if ( !defined('IN_PHPLOGCON') )
 
 // --- Required Includes!
 require_once($gl_root_path . 'include/constants_errors.php');
+require_once($gl_root_path . 'classes/phpClickHouse/include.php');
 // --- 
 
 class LogStreamClickHouse extends LogStream {
@@ -67,12 +68,6 @@ class LogStreamClickHouse extends LogStream {
 	public function __construct ($streamConfigObj) {
 		$this->_logStreamConfigObj = $streamConfigObj;
 
-		if ( $this->_logStreamConfigObj->DBType == DB_MYSQL )
-		{
-			// Probe if a function exists!
-			if ( !function_exists("mysqli_connect") )
-				DieWithFriendlyErrorMsg("Error, MYSQL Extensions are not enabled! Function 'mysqli_connect' does not exist.");
-		}
 	}
 	public function LogStreamClickHouse($streamConfigObj) {
 		self::__construct($streamConfigObj);
@@ -88,7 +83,7 @@ class LogStreamClickHouse extends LogStream {
 	{
 		global $dbmapping;
 
-		// Initialise Basic stuff within the Classs
+		// Initialise Basic stuff within the Class
 		$this->RunBasicInits();
 
 		// Verify database connection (This also opens the database!)
@@ -99,7 +94,7 @@ class LogStreamClickHouse extends LogStream {
 		// Copy the Property Array 
 		$this->_arrProperties = $arrProperties;
 		
-		// Check if DB Mapping exists
+		// Check if DB Mapping exists TODO: Default database field mapping?
 		if ( !isset($dbmapping[ $this->_logStreamConfigObj->DBTableType ]) )
 			return ERROR_DB_INVALIDDBMAPPING;
 
@@ -131,8 +126,6 @@ class LogStreamClickHouse extends LogStream {
 	*/
 	public function Close()
 	{
-		if ($this->_dbhandle) 
-			mysqli_close($this->_dbhandle);
 		$this->_dbhandle = null;
 		return SUCCESS;
 	}
@@ -146,8 +139,15 @@ class LogStreamClickHouse extends LogStream {
 		// Try to connect to the database
 		if ( $this->_dbhandle == null ) 
 		{
-			// Forces to open a new link in all cases!
-			$this->_dbhandle = @mysqli_connect($this->_logStreamConfigObj->DBServer,$this->_logStreamConfigObj->DBUser,$this->_logStreamConfigObj->DBPassword);
+			// Create config
+			$config = [
+				'host' => $this->_logStreamConfigObj->DBServer,
+				'port' => $this->_logStreamConfigObj->DBPort,
+				'username' => $this->_logStreamConfigObj->DBUser,
+				'password' => $this->_logStreamConfigObj->DBPassword
+			];
+			// Open Connection
+			$this->_dbhandle = new ClickHouseDB\Client($config);
 			if (!$this->_dbhandle) 
 			{
 				if ( isset($php_errormsg) )
@@ -162,8 +162,7 @@ class LogStreamClickHouse extends LogStream {
 		}
 		
 		// Select the database now!
-		$bRet = @mysqli_select_db($this->_dbhandle, $this->_logStreamConfigObj->DBName);
-		if(!$bRet) 
+		if(!$this->_dbhandle->database($this->_logStreamConfigObj->DBName)) 
 		{
 			if ( isset($php_errormsg) )
 			{
@@ -176,8 +175,8 @@ class LogStreamClickHouse extends LogStream {
 		}
 		
 		// Check if the table exists!
-		$numTables = @mysqli_num_rows( mysqli_query($this->_dbhandle, "SHOW TABLES LIKE '%" . $this->_logStreamConfigObj->DBTableName . "%'"));
-		if( $numTables <= 0 )
+		$tables = $this->_dbhandle->isExists($this->_logStreamConfigObj->DBName, $this->_logStreamConfigObj->DBTableName);
+		if(!$tables)
 			return ERROR_DB_TABLENOTFOUND;
 
 		// reached this point means success ;)!
@@ -686,15 +685,12 @@ class LogStreamClickHouse extends LogStream {
 			return $this->_firstPageUID;
 
 		$szSql = "SELECT MAX(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
-		$myQuery = mysqli_query($this->_dbhandle, $szSql);
+		$myQuery = $this->_dbhandle->select($szSql);
 		if ($myQuery)
 		{
 			// obtain first and only row
-			$myRow = mysqli_fetch_row($myQuery);
-			$this->_firstPageUID = $myRow[0];
+			$this->firstPageUID = $myQuery->fetchone();
 
-			// Free query now
-			mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -718,15 +714,15 @@ class LogStreamClickHouse extends LogStream {
 			return $this->_lastPageUID;
 
 		$szSql = "SELECT MIN(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") FROM `" .  $this->_logStreamConfigObj->DBTableName . "` " . $this->_SQLwhereClause;
-		$myQuery = mysqli_query($this->_dbhandle, $szSql);
+
+		$myQuery = $this->_dbhandle->select($szSql);
 		if ($myQuery)
 		{
 			// obtain first and only row
-			$myRow = mysqli_fetch_row($myQuery);
-			$this->_lastPageUID = $myRow[0];
+			$this->firstPageUID = $myQuery->fetchone();
 
 			// Free query now
-			mysqli_free_result ($myQuery); 
+			//mysqli_free_result ($myQuery); 
 
 			// Increment for the Footer Stats 
 			$querycount++;
@@ -840,15 +836,14 @@ class LogStreamClickHouse extends LogStream {
 		{
 			// SHOW TABLE STATUS FROM
 			$szSql = "SELECT count(" . $dbmapping[$szTableType]['DBMAPPINGS'][SYSLOG_UID] . ") as Counter FROM `" .  $this->_logStreamConfigObj->DBTableName . "`"; 
-			$myQuery = mysqli_query($this->_dbhandle, $szSql);
+			$myQuery = $this->_dbhandle->select($szSql);
 			if ($myQuery)
 			{
 				// Obtain RowCount!
-				$myRow		= mysqli_fetch_row($myQuery); 
-				$rowcount = $myRow[0];
+				$rowcount = $myQuery->fetchone();
 
 				// Free query now
-				mysqli_free_result ($myQuery); 
+				//mysqli_free_result ($myQuery); 
 
 				// Increment for the Footer Stats 
 				$querycount++;
@@ -1353,6 +1348,7 @@ class LogStreamClickHouse extends LogStream {
 	*	This function expects the filters to already being set earlier. 
 	*	Otherwise no usual WHERE Clause can be created!
 	*/
+	// TODO: Create SQL Clause
 	private function CreateSQLWhereClause()
 	{
 		if ( $this->_filters != null )
@@ -1602,7 +1598,7 @@ class LogStreamClickHouse extends LogStream {
 		if ( $this->_myDBQuery != null )
 		{
 			// Free Query ressources
-			mysqli_free_result ($this->_myDBQuery); 
+			//mysqli_free_result ($this->_myDBQuery); 
 			$this->_myDBQuery = null;
 		}
 
@@ -1619,7 +1615,6 @@ class LogStreamClickHouse extends LogStream {
 
 		// Clear SQL Query first!
 		$this->DestroyMainSQLQuery();
-
 		// return error if there was one!
 		if ( ($res = $this->CreateMainSQLQuery($uID)) != SUCCESS )
 			return $res;
@@ -1629,15 +1624,16 @@ class LogStreamClickHouse extends LogStream {
 		
 		// Copy rows into the buffer!
 		$iBegin = $this->_currentRecordNum;
-		while ($myRow = mysqli_fetch_array($this->_myDBQuery,  MYSQLI_ASSOC))
+
+		// Pascal: Hier werden die einzelnen Datensätze geholt, die while-Schleife sorgt dafür, dass keine
+		// Datensätze doppelt gelesen werden
+		while($iBegin < $this->_myDBQuery->countAll())
 		{
-			// Check if result was successfull!
-			if ( $myRow === FALSE || !$myRow  )
-				break;
-			
-			// Keys need to be converted into lowercase!
-			$this->bufferedRecords[$iBegin] = array_change_key_case($myRow, CASE_LOWER);
-			$iBegin++;
+			$rows = $this->_myDBQuery->rows();
+			foreach($rows as $myRow) {
+				$this->bufferedRecords[$iBegin] = array_change_key_case($myRow, CASE_LOWER);
+				$iBegin++;
+			}
 		}
 
 		// --- Check if results were found
@@ -1679,38 +1675,19 @@ class LogStreamClickHouse extends LogStream {
 		// ---
 
 		// Perform Database Query
-		$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
-		if ( !$this->_myDBQuery ) 
-		{
-			// Check if a field is missing!
-			if ( mysqli_errno($this->_dbhandle) == 1054 ) 
-			{
-				// Handle missing field and try again!
-				if ( $this->HandleMissingField() == SUCCESS ) 
-				{
-					$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
-					if ( !$this->_myDBQuery ) {
-						$this->PrintDebugError("Invalid SQL: ".$szSql);
-						return ERROR_DB_QUERYFAILED;
-					}
-				}
-				else // Failed to add field dynamically
-					return ERROR_DB_QUERYFAILED;
-			}
-			else
-			{
-				$this->PrintDebugError("Invalid SQL: ".$szSql);
-				return ERROR_DB_QUERYFAILED;
-			}
+		try {
+			$this->_myDBQuery = $this->_dbhandle->select($szSql);
 		}
-		else
+		catch(ClickHouseDB\Exception\QueryException $E) {
+			$this->PrintDebugError("Error: " . $E->getMessage() . "\nOK\n");
+			return ERROR_DB_QUERYFAILED;
+		}
+
+		// Skip one entry in this case
+		if ( $this->_currentRecordStart > 0 ) 
 		{
-			// Skip one entry in this case
-			if ( $this->_currentRecordStart > 0 ) 
-			{
-				// Throw away 
-				$myRow = mysqli_fetch_array($this->_myDBQuery,  MYSQLI_ASSOC);
-			}
+			// Throw away 
+			$myRow = $this->_myDBQuery->fetchOne();
 		}
 
 		// Increment for the Footer Stats 
@@ -1808,12 +1785,7 @@ class LogStreamClickHouse extends LogStream {
 	{
 		global $extraErrorDescription; 
 
-		$errdesc = mysqli_error($this->_dbhandle);
-		$errno = mysqli_errno($this->_dbhandle);
-
 		$errormsg="$szErrorMsg <br>";
-		$errormsg.="Detail error: $errdesc <br>";
-		$errormsg.="Error Code: $errno <br>";
 		
 		// Add to additional error output
 		$extraErrorDescription = $errormsg;
@@ -1827,10 +1799,9 @@ class LogStreamClickHouse extends LogStream {
 	*/
 	private function GetRowCountByString($szQuery)
 	{
-		if ($myQuery = mysqli_query($this->_dbhandle, $szQuery)) 
+		if ($myQuery = $this->_dbhandle->select($szQuery)) 
 		{   
-			$num_rows = mysqli_num_rows($myQuery);
-			mysqli_free_result ($myQuery); 
+			$num_rows = $myQuery->count();
 		}
 		return $num_rows;
 	}
@@ -1840,7 +1811,7 @@ class LogStreamClickHouse extends LogStream {
 	*/
 	private function GetRowCountByQueryID($myQuery)
 	{
-		$num_rows = mysqli_num_rows($myQuery);
+		$num_rows = $myQuery->count();
 		return $num_rows;
 	}
 
@@ -1849,13 +1820,9 @@ class LogStreamClickHouse extends LogStream {
 	*/
 	private function GetRowCountFromTable()
 	{
-		if ( $myquery = mysqli_query($this->_dbhandle, "Select FOUND_ROWS();") ) 
+		if ( $myquery = $this->_dbhandle->select("Select FOUND_ROWS();") ) 
 		{
-			// Get first and only row!
-			$myRow = mysqli_fetch_array($myquery);
-			
-			// copy row count
-			$numRows = $myRow[0];
+			$numRows = $myquery->count();
 		}
 		else
 			$numRows = -1;

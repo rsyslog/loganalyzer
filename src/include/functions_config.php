@@ -183,7 +183,7 @@ function InitSource(&$mysource)
 			if ( isset($mysource['DBType']) )
 				$mysource['ObjRef']->DBType = $mysource['DBType'];
 			else
-				$mysource['ObjRef']->DBType = DB_MYSQL;
+				$mysource['ObjRef']->DBType = DB_ClickHouse;
 
 			$mysource['ObjRef']->DBTableName = $mysource['DBTableName'];
 			

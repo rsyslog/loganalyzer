@@ -40,11 +40,11 @@ if ( !defined('IN_PHPLOGCON') )
 
 class LogStreamConfigClickHouse extends LogStreamConfig {
 	public $DBServer = '127.0.0.1';
-	public $DBPort = 3306;
+	public $DBPort = 8123;
 	public $DBName = '';
 	public $DBUser = '';
 	public $DBPassword = '';
-	public $DBType = DB_MYSQL;				// Default = MYSQL!
+	public $DBType = DB_ClickHouse;				// Default = MYSQL!
 	public $DBTableType = 'winsyslog';		// Default = WINSYSLOG DB Layout!
 	public $DBTableName = 'systemevents';	// Default Tabelname from WINSYSLOG
 	public $DBEnableRowCounting = true;		// Default RowCounting is enabled!

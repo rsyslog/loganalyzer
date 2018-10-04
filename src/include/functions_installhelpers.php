@@ -243,7 +243,7 @@ function ConvertCustomSources()
 			else // Force to number
 				$mySource['DBEnableRowCounting'] = intval($mySource['DBEnableRowCounting']);
 			if ( !isset($mySource['DBType']) ) 
-				$mySource['DBType'] = DB_MYSQL;
+				$mySource['DBType'] = DB_ClickHouse;
 
 			// Perform the insert
 			$result = DB_Query("INSERT INTO `" . DB_SOURCES . "` (Name, Description, SourceType, MsgParserList, MsgNormalize, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting) VALUES ( " . 

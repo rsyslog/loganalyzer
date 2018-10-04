@@ -103,6 +103,7 @@ define('DB_DB2', 5);
 define('DB_FIREBIRD', 6);
 define('DB_INFORMIX', 7);
 define('DB_SQLITE', 8);
+define('DB_ClickHouse', 9);
 // --- 
 
 // --- Define supported AUTH Methods
