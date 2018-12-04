@@ -58,9 +58,9 @@ $content['pass'] = "";
 
 // Set Referer
 if ( isset($_GET['referer']) )
-	$szRedir = $_GET['referer'];
+	$szRedir = htmlspecialchars($_GET['referer']);
 else if ( isset($_POST['referer']) )
-	$szRedir = $_POST['referer'];
+	$szRedir = htmlspecialchars($_POST['referer']);
 else
 	$szRedir = "index.php"; // Default
 
