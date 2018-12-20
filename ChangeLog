@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------
+Version 4.1.8 (stable), 2019-xx-xx
+- Add new driver for DBMS ClickHouse
+
+---------------------------------------------------------------------------
 Version 4.1.7 (stable), 2018-12-04
 - Fixed mysql calls and php7 compatibility issues in convert.php.
 - Login template: Fixed length limit of username / password.
