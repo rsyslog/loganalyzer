@@ -130,6 +130,7 @@ if ( isset($_GET['op']) )
 		CreateLogLineTypesList($content['SourceLogLineType']);
 		$content['SourceDiskFile'] = "/var/log/syslog";
 
+		// Pascal: Variables can be added here when needed
 		// SOURCE_DB specific
 		$content['SourceDBType'] = DB_MYSQL;
 		CreateDBTypesList($content['SourceDBType']);
@@ -219,6 +220,7 @@ if ( isset($_GET['op']) )
 				CreateLogLineTypesList($content['SourceLogLineType']);
 				$content['SourceDiskFile'] = $mysource['DiskFile'];
 
+				// Pascal: Logstream Variables can be added here
 				// SOURCE_DB specific
 				$content['SourceDBType'] = $mysource['DBType'];
 				CreateDBTypesList($content['SourceDBType']);
@@ -363,7 +365,8 @@ if ( isset($_GET['op']) )
 			// Fix Filename manually for FILE LOGSTREAM!
 			if (	$content['SourceType'] == SOURCE_DB || 
 					$content['SourceType'] == SOURCE_PDO || 
-					$content['SourceType'] == SOURCE_MONGODB ) 
+					$content['SourceType'] == SOURCE_MONGODB || 
+					$content['SourceType'] == SOURCE_CLICKHOUSE ) 
 			{
 				if ( !isset($tmpSource['ObjRef']) ) {
 					$content['ISERROR'] = true;
@@ -580,7 +583,8 @@ if ( isset($_POST['op']) )
 		// DB Params
 		else if (	$content['SourceType'] == SOURCE_DB || 
 					$content['SourceType'] == SOURCE_PDO || 
-					$content['SourceType'] == SOURCE_MONGODB 
+					$content['SourceType'] == SOURCE_MONGODB || 
+					$content['SourceType'] == SOURCE_CLICKHOUSE 
 			) 
 		{
 			if ( isset($_POST['SourceDBType']) ) { $content['SourceDBType'] = DB_RemoveBadChars($_POST['SourceDBType']); }
@@ -678,7 +682,8 @@ if ( isset($_POST['op']) )
 		// DB Params
 		else if (	$content['SourceType'] == SOURCE_DB || 
 					$content['SourceType'] == SOURCE_PDO ||
-					$content['SourceType'] == SOURCE_MONGODB 
+					$content['SourceType'] == SOURCE_MONGODB ||
+					$content['SourceType'] == SOURCE_CLICKHOUSE 
 			) 
 		{
 			if ( !isset($content['SourceDBType']) ) 
@@ -746,7 +751,8 @@ if ( isset($_POST['op']) )
 		// DB Params
 		else if (	$tmpSource['SourceType'] == SOURCE_DB || 
 					$tmpSource['SourceType'] == SOURCE_PDO || 
-					$tmpSource['SourceType'] == SOURCE_MONGODB 
+					$tmpSource['SourceType'] == SOURCE_MONGODB || 
+					$tmpSource['SourceType'] == SOURCE_CLICKHOUSE 
 				) 
 		{
 			$tmpSource['DBType']				= DB_StripSlahes($content['SourceDBType']);
@@ -805,7 +811,8 @@ if ( isset($_POST['op']) )
 			}
 			else if (	$content['SourceType'] == SOURCE_DB || 
 						$content['SourceType'] == SOURCE_PDO ||
-						$content['SourceType'] == SOURCE_MONGODB
+						$content['SourceType'] == SOURCE_MONGODB ||
+						$content['SourceType'] == SOURCE_CLICKHOUSE
 				) 
 			{
 				$sqlquery = "INSERT INTO " . DB_SOURCES . " (Name, Description, SourceType, MsgParserList, MsgNormalize, MsgSkipUnparseable, defaultfilter, ViewID, DBTableType, DBType, DBServer, DBName, DBUser, DBPassword, DBTableName, DBEnableRowCounting, DBRecordsPerQuery, userid, groupid) 
@@ -868,7 +875,8 @@ if ( isset($_POST['op']) )
 				}
 				else if (	$content['SourceType'] == SOURCE_DB || 
 							$content['SourceType'] == SOURCE_PDO || 
-							$content['SourceType'] == SOURCE_MONGODB 
+							$content['SourceType'] == SOURCE_MONGODB || 
+							$content['SourceType'] == SOURCE_CLICKHOUSE 
 					) 
 				{
 					$sqlquery =	"UPDATE " . DB_SOURCES . " SET 
@@ -967,6 +975,14 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		{
 			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_DB"];
 			$mySource['SourcesTypeText'] = $content["LN_SOURCES_DB"];
+			
+			// Enabled Database Maintenance functions
+			$mySource['IsDatabaseSource'] = true;
+		}
+		else if ( $mySource['SourceType'] == SOURCE_CLICKHOUSE )
+		{
+			$mySource['SourcesTypeImage'] = $content["MENU_SOURCE_CLICKHOUSE"];
+			$mySource['SourcesTypeText'] = $content["LN_SOURCES_CLICKHOUSE"];
 			
 			// Enabled Database Maintenance functions
 			$mySource['IsDatabaseSource'] = true;

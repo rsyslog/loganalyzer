@@ -255,6 +255,11 @@ function CreateSourceTypesList( $selectedSource )
 	$content['SOURCETYPES'][SOURCE_DB]['DisplayName'] = $content['LN_GEN_SOURCE_DB'];
 	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_DB]['type'] ) { $content['SOURCETYPES'][SOURCE_DB]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_DB]['selected'] = ""; }
 
+	// SOURCE_CLICKHOUSE ( MYSQL NATIVE )
+	$content['SOURCETYPES'][SOURCE_CLICKHOUSE]['type'] = SOURCE_CLICKHOUSE;
+	$content['SOURCETYPES'][SOURCE_CLICKHOUSE]['DisplayName'] = $content['LN_GEN_SOURCE_CLICKHOUSE'];
+	if ( $selectedSource == $content['SOURCETYPES'][SOURCE_CLICKHOUSE]['type'] ) { $content['SOURCETYPES'][SOURCE_CLICKHOUSE]['selected'] = "selected"; } else { $content['SOURCETYPES'][SOURCE_CLICKHOUSE]['selected'] = ""; }
+
 	// SOURCE_PDO ( PDO DB Wrapper)
 	$content['SOURCETYPES'][SOURCE_PDO]['type'] = SOURCE_PDO;
 	$content['SOURCETYPES'][SOURCE_PDO]['DisplayName'] = $content['LN_GEN_SOURCE_PDO'];
@@ -603,7 +608,8 @@ function CheckAndSetRunMode()
 		$content['GD_IS_ENABLED'] = true;
 	else 
 		$content['GD_IS_ENABLED'] = false;
-	
+
+	// Pascal: If extra clickhouse api is used it needs to be checked here
 	// Check MYSQL Extension
 	if ( in_array("mysql", $loadedExtensions) ) { $content['MYSQL_IS_ENABLED'] = true; } else { $content['MYSQL_IS_ENABLED'] = false; }
 	// Check PDO Extension
@@ -741,6 +747,7 @@ function InitFrontEndVariables()
 	$content['MENU_MOVE_DOWN'] = $content['BASEPATH'] . "images/icons/nav_down_blue.png";
 	$content['MENU_SOURCE_DISK'] = $content['BASEPATH'] . "images/icons/document_text.png";
 	$content['MENU_SOURCE_DB'] = $content['BASEPATH'] . "images/icons/data_table.png";
+	$content['MENU_SOURCE_CLICKHOUSE'] = $content['BASEPATH'] . "images/icons/data_table.png";
 	$content['MENU_SOURCE_PDO'] = $content['BASEPATH'] . "images/icons/data_gear.png";
 	$content['MENU_SOURCE_MONGODB'] = $content['BASEPATH'] . "images/icons/mongodb.png";
 	$content['MENU_MAXIMIZE'] = $content['BASEPATH'] . "images/icons/table_selection_all.png";

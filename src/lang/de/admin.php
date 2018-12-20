@@ -260,6 +260,7 @@ $content['LN_SOURCES_TYPE'] = "Typ der Quelle";
 $content['LN_SOURCES_ASSIGNTO'] = "Zugewiesen zu";
 $content['LN_SOURCES_DISK'] = "Festplatten Datei";
 $content['LN_SOURCES_DB'] = "MySQL Datenbank";
+$content['LN_SOURCES_CLICKHOUSE'] = "ClickHouse Datenbank";
 $content['LN_SOURCES_PDO'] = "PDO Datenquelle";
 $content['LN_SOURCES_ADD'] = "Hinzufügen einer Quelle";
 $content['LN_SOURCES_ADDEDIT'] = "Hinzufügen/Bearbeiten einer Quelle";

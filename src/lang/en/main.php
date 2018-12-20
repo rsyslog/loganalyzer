@@ -43,6 +43,7 @@ $content['LN_GEN_PAGE'] = "Page";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";
 $content['LN_GEN_SOURCE_DISK'] = "Diskfile";
 $content['LN_GEN_SOURCE_DB'] = "MYSQL Native";
+$content['LN_GEN_SOURCE_CLICKHOUSE'] = "ClickHouse DB";
 $content['LN_GEN_SOURCE_PDO'] = "Database (PDO)";
 $content['LN_GEN_SOURCE_MONGODB'] = "MongoDB Native";
 $content['LN_GEN_RECORDSPERPAGE'] = "records per page";

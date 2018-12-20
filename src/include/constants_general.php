@@ -72,6 +72,7 @@ define('SOURCE_DISK', '1');
 define('SOURCE_DB', '2');
 define('SOURCE_PDO', '3');
 define('SOURCE_MONGODB', '4');
+define('SOURCE_CLICKHOUSE', '5');
 // --- 
 
 // --- Exportformat defines
@@ -102,6 +103,7 @@ define('DB_DB2', 5);
 define('DB_FIREBIRD', 6);
 define('DB_INFORMIX', 7);
 define('DB_SQLITE', 8);
+define('DB_ClickHouse', 9);
 // --- 
 
 // --- Define supported AUTH Methods

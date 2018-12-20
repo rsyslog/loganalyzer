@@ -62,8 +62,9 @@ function CleanData($optParam1, $optParam2, $optParam3, $optParam4)
 	// Get Source reference!
 	$mySource = $content['Sources'][ $content['SOURCEID'] ];
 
+	// Pascal: Correct if cron scripts for clickhouse should be supported
 	// Check Source Type
-	if ( $mySource['SourceType'] == SOURCE_DB || $mySource['SourceType'] == SOURCE_PDO ) 
+	if ( $mySource['SourceType'] == SOURCE_DB || $mySource['SourceType'] == SOURCE_PDO || $mySource['SourceType'] == SOURCE_CLICKHOUSE ) 
 	{
 		// Include LogStream facility
 		include($gl_root_path . 'classes/logstream.class.php');

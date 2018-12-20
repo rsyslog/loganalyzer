@@ -264,6 +264,7 @@ $content['LN_SOURCES_TYPE'] = "Source Type";
 $content['LN_SOURCES_ASSIGNTO'] = "Assigned To";
 $content['LN_SOURCES_DISK'] = "Diskfile";
 $content['LN_SOURCES_DB'] = "MySQL Database";
+$content['LN_SOURCES_CLICKHOUSE'] = "ClickHouse Database";
 $content['LN_SOURCES_PDO'] = "PDO Datasource";
 $content['LN_SOURCES_MONGODB'] = "MongoDB Datasource";
 $content['LN_SOURCES_ADD'] = "Add new Source";
