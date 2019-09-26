@@ -1141,7 +1141,7 @@ if ( isset($_POST['op']) )
 				// Add custom search now!
 				$sqlquery = "INSERT INTO " . DB_SAVEDREPORTS . " (reportid, sourceid, customTitle, customComment, filterString, customFilters, outputFormat, outputTarget, outputTargetDetails, scheduleSettings) 
 				VALUES ('" . $content['ReportID'] . "', 
-						" . $content['SourceID'] . ", 
+						'" . $content['SourceID'] . "', 
 						'" . $content['customTitle'] . "', 
 						'" . $content['customComment'] . "', 
 						'" . $content['filterString'] . "', 
@@ -1155,7 +1155,7 @@ if ( isset($_POST['op']) )
 				$result = DB_Query($sqlquery);
 
 				// Get INSERTID from query!
-				$lastInsertID = mysql_insert_id(); 
+				$lastInsertID = DB_ReturnLastInsertID(); 
 				
 				// free ressources
 				DB_FreeQuery($result);

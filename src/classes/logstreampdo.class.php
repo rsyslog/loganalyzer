@@ -2167,19 +2167,6 @@ class LogStreamPDO extends LogStream {
 	*/
 	private function GetRowCountFromTable()
 	{
-/*
-		if ( $myquery = mysql_query("Select FOUND_ROWS();", $this->_dbhandle) ) 
-		{
-			// Get first and only row!
-			$myRow = mysql_fetch_array($myquery);
-			
-			// copy row count
-			$numRows = $myRow[0];
-		}
-		else
-			$numRows = -1;
-*/
-
 		/* OLD slow code! */
 		global $dbmapping,$querycount;
 		$szTableType = $this->_logStreamConfigObj->DBTableType;
