@@ -1,0 +1,6 @@
+-- New Database Structure Updates
+ALTER TABLE `logcon_fields` CHANGE Sortable Sortable TINYINT(1) NOT NULL DEFAULT '0';
+
+-- Insert data
+
+-- Updated Data
