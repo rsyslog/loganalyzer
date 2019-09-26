@@ -151,8 +151,6 @@ else if ( $content['CONVERT_STEP'] == 3 )
 	$totaldbdefs = str_replace( "`logcon_", "`" . GetConfigSetting("UserDBPref"), $totaldbdefs );
 	
 	// Now split by sql command
-	//		$mycommands = split( ";\n", $totaldbdefs ); DEPRECEATED CALL!
-	// Now split by sql command
 	$mycommands = preg_split('/;\n/', $totaldbdefs, -1, PREG_SPLIT_NO_EMPTY);
 	
 //		// check for different linefeed

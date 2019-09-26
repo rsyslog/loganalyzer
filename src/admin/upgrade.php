@@ -115,12 +115,12 @@ if ( isset($content['database_forcedatabaseupdate']) && $content['database_force
 				$totaldbdefs = str_replace( "`logcon_", "`" . $tblPref, $totaldbdefs );
 			
 				// Now split by sql command
-				$mycommands = split( ";\r\n", $totaldbdefs );
+				$mycommands = preg_split('/;\n/', $totaldbdefs );
 			
 				// check for different linefeed
 				if ( count($mycommands) <= 1 )
-					$mycommands = split( ";\n", $totaldbdefs );
-	
+					$mycommands = preg_split('/;\n/', $totaldbdefs );
+
 				//Still only one? Abort
 				if ( count($mycommands) <= 1 )
 				{
