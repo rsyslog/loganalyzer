@@ -2187,10 +2187,10 @@ function InitFontSettings()
 
 	// --- Set dynamic stylesheet options like Font Type and Sizes
 	if ( isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], "Windows") !== false ) // Use other default on Windows
-		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);  
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Trebuchet MS", CFGLEVEL_USER);
 	else
-		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);  
-	$userdefaultfontsize = GetConfigSetting("DefaultFontSize", "100", CFGLEVEL_USER);  
+		$userdefaultfont = GetConfigSetting("DefaultFont", "Arial", CFGLEVEL_USER);
+	$userdefaultfontsize = intval(GetConfigSetting("DefaultFontSize", 100, CFGLEVEL_USER));
 
 	/* Set Defaults if not set already! */
 	if ( strlen($userdefaultfont) <= 0 ) 

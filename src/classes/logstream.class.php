@@ -467,7 +467,7 @@ abstract class LogStream {
 							case FILTER_TYPE_STRING:
 								// Do not FILTER for REGEX Values here!
 								if ( $myfilter[FILTER_MODE] & FILTER_MODE_SEARCHREGEX )
-									continue; 
+									break; 
 
 								// Only filter if value is non zero
 								if ( strlen($propertyvalue) > 0 && strlen($myfilter[FILTER_VALUE]) > 0 )
