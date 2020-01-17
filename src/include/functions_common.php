@@ -1278,6 +1278,15 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 	}
 }
 
+function SecureRedirect( $szRedir ) 
+{
+	// Remove any domains from URI	
+	$szRedir = parse_url($szRedir, PHP_URL_PATH);
+	if (strlen($szRedir) == 0)
+		$szRedir = "index.php";
+	return $szRedir; 
+}
+
 function RedirectPage( $newpage )
 {
 	header("Location: $newpage");

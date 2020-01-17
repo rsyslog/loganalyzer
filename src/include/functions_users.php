@@ -464,6 +464,7 @@ function RedirectToUserLogin()
 	$referer = $_SERVER['PHP_SELF'];
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
 		$referer .= "?" . $_SERVER['QUERY_STRING'];
+	$referer = SecureRedirect($referer); 
 
 	header("Location: " . $content['BASEPATH'] . "login.php?referer=" . urlencode($referer) );
 	exit;
@@ -477,6 +478,7 @@ function RedirectToDatabaseUpgrade()
 	$referer = $_SERVER['PHP_SELF'];
 	if ( isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0 )
 		$referer .= "?" . $_SERVER['QUERY_STRING'];
+	$referer = SecureRedirect($referer); 
 
 	header("Location: " . $content['BASEPATH'] . "admin/upgrade.php?referer=" . urlencode($referer) );
 	exit;

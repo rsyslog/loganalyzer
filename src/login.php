@@ -63,6 +63,7 @@ else if ( isset($_POST['referer']) )
 	$szRedir = htmlspecialchars($_POST['referer']);
 else
 	$szRedir = "index.php"; // Default
+$szRedir = SecureRedirect($szRedir); 
 
 if ( isset($_POST['op']) && $_POST['op'] == "login" )
 {

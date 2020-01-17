@@ -50,7 +50,7 @@ if ( isset($_SERVER['HTTP_REFERER']) )
 	$szRedir = $_SERVER['HTTP_REFERER']; 
 else
 	$szRedir = "index.php"; // Default
-
+$szRedir = SecureRedirect($szRedir); 
 
 if ( isset($_GET['op']) )
 {
