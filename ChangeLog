@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------
+Version 4.1.9 (stable), 2020-01-17
+- UserDB: Corrrected sourceid type of reports database with database 
+  update (v12) thanks to spacecabbie on github.
+- Fixed Links in Helpmenu (thanks to spacecabbie on github).
+- Secured redirect code in login form, thanks for reporting to: 
+  Amal Thamban , Kamal Paul
+---------------------------------------------------------------------------
 Version 4.1.8 (stable), 2019-09-26
 - Add new driver for DBMS ClickHouse
 - php7.x: fixed multiple compatibility issues.
