@@ -65,7 +65,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "4.1.8";
+$content['BUILDNUMBER'] = "4.1.9";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1276,6 +1276,15 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 				return false; 
 		}
 	}
+}
+
+function SecureRedirect( $szRedir ) 
+{
+	// Remove any domains from URI	
+	$szRedir = parse_url($szRedir, PHP_URL_PATH);
+	if (strlen($szRedir) == 0)
+		$szRedir = "index.php";
+	return $szRedir; 
 }
 
 function RedirectPage( $newpage )
