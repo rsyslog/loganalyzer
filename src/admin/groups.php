@@ -331,9 +331,10 @@ if ( isset($_POST['op']) )
 			else
 			{
 				// Add new Group now!
-				$result = DB_Query("INSERT INTO " . DB_GROUPS . " (groupname, groupdescription) 
+				$result = DB_Query("INSERT INTO " . DB_GROUPS . " (groupname, groupdescription, grouptype) 
 				VALUES ( '" . $content['groupname'] . "', 
-						 '" . $content['groupdescription'] . "' )");
+					 '" . $content['groupdescription'] . "',
+                             		0 )");
 				DB_FreeQuery($result);
 				
 				// Do the final redirect
