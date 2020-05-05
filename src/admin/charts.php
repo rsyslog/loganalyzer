@@ -432,7 +432,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 	// --- Process Sources
 	$i = 0; // Help counter!
-	foreach ($content['CHARTS'] as &$myChart )
+	foreach ($content['CHARTS'] as $chartid => &$myChart )
 	{
 		// --- Set Image for Type
 		// NonNUMERIC are config files Sources, can not be editied
@@ -467,8 +467,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		}
 		else
 		{
-			// define empty ID to update the template correctly.
-			$myChart['ID'] = "";
+			// if not defined ID we use chartid how ID
+			if (! isset($myChart['ID']) ) { $myChart['ID'] = $chartid; }
 			
 			// Disallow EDIT
 			$myChart['ActionsAllowed'] = false;
@@ -508,7 +508,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['set_enabled'] = 1;
 		}
 
-		
+
 		// ---
 		
 		// --- Set Chart default Filterstring
