@@ -290,10 +290,10 @@ $content['LN_SOURCES_ERROR_NOCLEARSUPPORT'] = "Esta fuente de flujo de registro 
 $content['LN_SOURCES_ROWCOUNT'] = "Recuento Total de Filas";
 $content['LN_SOURCES_CLEARDATA'] = "Las siguientes opciones de mantenimiento de la base de datos están disponibles";
 $content['LN_SOURCES_CLEAROPTIONS'] = "Seleccione cómo desea borrar los datos.";
-$content['LN_SOURCES_CLEARALL'] = "Limpiar (Borrar) todos los datos.";
+$content['LN_SOURCES_CLEARALL'] = "Borrar todos los datos.";
 $content['LN_SOURCES_CLEAR_HELPTEXT'] = "¡Atención! ¡Tenga cuidado con la eliminación de datos, cualquier acción realizada aquí no se puede deshacer!";
-	$content['LN_SOURCES_CLEARSINCE'] = "Clear all data older than ... ";
-	$content['LN_SOURCES_CLEARDATE'] = "Clear all data which is older than ... ";
+$content['LN_SOURCES_CLEARSINCE'] = "Borrar todos los datos anteriores a ... ";
+$content['LN_SOURCES_CLEARDATE'] = "Borrar todos los datos que sean anteriores a la fecha ... ";
 $content['LN_SOURCES_CLEARDATA_SEND'] = "Borrar el rango de datos seleccionado";
 $content['LN_SOURCES_ERROR_INVALIDCLEANUP'] = "Tipo de limpieza de datos no válido";
 $content['LN_SOURCES_WARNDELETEDATA'] = "¿Está seguro de que desea borrar los datos de registro en la Fuente '%1'? ¡Esto no se puede deshacer!";
@@ -337,7 +337,7 @@ $content['LN_CHARTS_ASSIGNTO'] = "Asignado a";
 $content['LN_CHARTS_PREVIEW'] = "Vista previa del Gráfico en una nueva ventana";
 $content['LN_CHARTS_FILTERSTRING'] = "Filtro Personalizado";
 	$content['LN_CHARTS_FILTERSTRING_HELP'] = "Use la misma sintaxis que en el campo de búsqueda. Por ejemplo, si desea generar un gráfico para 'servidor1', use este filter: source:=server1";
-	$content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'] = "Error, ChartID with ID '%1' , was not found";
+$content['LN_CHARTS_ERROR_CHARTIDNOTFOUND'] = "Error, no se encontró el Gráfico con ID '%1'";
 	$content['LN_CHARTS_ERROR_SETTINGFLAG'] = "Error setting flag, invalid ChartID or operation.";
 	$content['LN_CHARTS_SETENABLEDSTATE'] = "Toggle Enabled State";
 
@@ -400,18 +400,18 @@ $content['LN_CHARTS_FILTERSTRING'] = "Filtro Personalizado";
 	$content['LN_PARSERS_'] = "";
 
 // Command Line stuff
-	$content['LN_CMD_NOOP'] = "Operation parameter is missing";
-	$content['LN_CMD_NOLOGSTREAM'] = "The logstream source parameter is missing";
-	$content['LN_CMD_LOGSTREAMNOTFOUND'] = "Logstream Source with ID '%1' could not be found in the Database!";
-	$content['LN_CMD_COULDNOTGETROWCOUNT'] = "Could not obtain rowcount from logstream source '%1'";
-	$content['LN_CMD_SUBPARAM1MISSING'] = "Subparameter 1 is missing, it should be set to 'all', 'since' or 'date'. For more details see the documentation.";
-	$content['LN_CMD_WRONGSUBOPORMISSING'] = "Either the sub-operation is wrong, or another parameter is missing";
-	$content['LN_CMD_FAILEDTOCLEANDATA'] = "Failed to cleandata for the logstream '%1'.";
-	$content['LN_CMD_CLEANINGDATAFOR'] = "Cleaning data for logstream source '%1'.";
-	$content['LN_CMD_ROWSFOUND'] = "Successfully connected and found '%1' rows in the logstream source.";
-	$content['LN_CMD_DELETINGOLDERTHEN'] = "Performing deletion of data entries older then '%1'.";
-	$content['LN_CMD_DELETEDROWS'] = "Successfully Deleted '%1' rows in the logstream source.'";
-	$content['LN_CMD_'] = "";
+$content['LN_CMD_NOOP'] = "Falta el parámetro de operación";
+$content['LN_CMD_NOLOGSTREAM'] = "Falta el parámetro fuente de flujo de registro";
+$content['LN_CMD_LOGSTREAMNOTFOUND'] = "¡No se pudo encontrar la fuente de flujo de registro con ID '%1' en la base de datos!";
+	$content['LN_CMD_COULDNOTGETROWCOUNT'] = "No se pudo obtener el recuento de filas de la fuente de flujo de registro '%1'";
+$content['LN_CMD_SUBPARAM1MISSING'] = "Falta el subparámetro 1, debe establecerse en 'all', 'since' o 'date'. Para más detalles ver la documentación.";
+$content['LN_CMD_WRONGSUBOPORMISSING'] = "O la suboperación es incorrecta o falta otro parámetro";
+$content['LN_CMD_FAILEDTOCLEANDATA'] = "Error al limpiar datos para el flujo de registro '%1'.";
+$content['LN_CMD_CLEANINGDATAFOR'] = "Datos de limpieza para la fuente de flujo de registro '%1'.";
+$content['LN_CMD_ROWSFOUND'] = "Conexión realizada con éxito y encontradas '%1' filas en la fuente de flujo de registro.";
+$content['LN_CMD_DELETINGOLDERTHEN'] = "Realizar la eliminación de entradas de datos anteriores a '%1'.";
+$content['LN_CMD_DELETEDROWS'] = "Se eliminaron correctamente '%1' filas en la fuente de flujo de registro.";
+$content['LN_CMD_'] = "";
 
 // Report Options
 	$content['LN_REPORTS_EDIT'] = "Edit Report";
