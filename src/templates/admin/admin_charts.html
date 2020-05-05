@@ -43,7 +43,14 @@
 				<b>{DisplayName}</b>
 				<!-- ENDIF ActionsAllowed!="true" -->
 			</td>
-			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/charts.php?miniop=setenabled&id={ID}&newval={set_enabled}" id="chartenablebutton{ID}"><img src="{ChartEnabledImage}" width="16" align="center" title="{LN_CHARTS_SETENABLEDSTATE}"></a></td>
+			<td align="center" class="{cssclass}">
+				<!-- IF ActionsAllowed="true" -->
+				<a href="{BASEPATH}admin/charts.php?miniop=setenabled&id={ID}&newval={set_enabled}" id="chartenablebutton{ID}"><img src="{ChartEnabledImage}" width="16" align="center" title="{LN_CHARTS_SETENABLEDSTATE}"></a>
+				<!-- ENDIF ActionsAllowed="true" -->
+				<!-- IF ActionsAllowed!="true" -->
+				<img src="{MENU_SELECTION_ENABLED_DISABLED}" width="16" align="center" title="{LN_GEN_DISABLED}">
+				<!-- ENDIF ActionsAllowed!="true" -->
+			</td>
 			<td align="left" class="{cssclass}"><img src="{ChartTypeImage}" width="16" align="left"> <b>{ChartTypeText}</b></td>
 			<td align="left" class="{cssclass}"><img src="{ChartAssignedToImage}" width="16" align="left"> <b>{ChartAssignedToText}</b></td>
 			<td align="center" class="{cssclass}">
