@@ -436,7 +436,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	{
 		// --- Set Image for Type
 		// NonNUMERIC are config files Sources, can not be editied
-		if ( is_numeric($myChart['ID']) )
+		if ( ( isset($myChart['ID']) ) && ( is_numeric($myChart['ID']) ) )
 		{
 			// Allow EDIT
 			$myChart['ActionsAllowed'] = true;
@@ -467,6 +467,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		}
 		else
 		{
+			// define empty ID to update the template correctly.
+			$myChart['ID'] = "";
+			
 			// Disallow EDIT
 			$myChart['ActionsAllowed'] = false;
 
@@ -507,9 +510,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 		
 		// ---
-
+		
 		// --- Set Chart default Filterstring
-		if ( strlen($myChart['chart_defaultfilter']) > 0 )
+		if ( ( isset($myChart['chart_defaultfilter']) ) && ( strlen($myChart['chart_defaultfilter']) > 0 ) )
 			$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
 		else 
 			$myChart['chart_defaultfilter_urldecoded'] = "";
