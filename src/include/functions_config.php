@@ -952,8 +952,16 @@ function LoadChartsFromDatabase()
 	$myrows = DB_GetAllRows($result, true);
 	if ( isset($myrows ) && count($myrows) > 0 )
 	{
-		// Overwrite existing Charts array
-		unset($CFG['Charts']);
+		// Overwrite the existing graphics matrix but only the records of 
+		// the database, those of the configuration file we keep.
+		$not_remove = array();
+		foreach($CFG['Charts'] as $chartid => $myChart)
+		{
+			if (! is_numeric($chartid) ) {
+				$not_remove[$chartid] = $myChart;
+			}
+		}
+		$CFG['Charts'] = $not_remove;
 		
 		// Loop through all data rows 
 		foreach ($myrows as &$myChart )

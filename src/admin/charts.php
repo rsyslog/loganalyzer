@@ -432,11 +432,11 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 
 	// --- Process Sources
 	$i = 0; // Help counter!
-	foreach ($content['CHARTS'] as &$myChart )
+	foreach ($content['CHARTS'] as $chartid => &$myChart )
 	{
 		// --- Set Image for Type
 		// NonNUMERIC are config files Sources, can not be editied
-		if ( is_numeric($myChart['ID']) )
+		if ( ( isset($myChart['ID']) ) && ( is_numeric($myChart['ID']) ) )
 		{
 			// Allow EDIT
 			$myChart['ActionsAllowed'] = true;
@@ -467,6 +467,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 		}
 		else
 		{
+			// if not defined ID we use chartid how ID
+			if (! isset($myChart['ID']) ) { $myChart['ID'] = $chartid; }
+			
 			// Disallow EDIT
 			$myChart['ActionsAllowed'] = false;
 
@@ -505,11 +508,11 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['set_enabled'] = 1;
 		}
 
-		
-		// ---
 
+		// ---
+		
 		// --- Set Chart default Filterstring
-		if ( strlen($myChart['chart_defaultfilter']) > 0 )
+		if ( ( isset($myChart['chart_defaultfilter']) ) && ( strlen($myChart['chart_defaultfilter']) > 0 ) )
 			$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
 		else 
 			$myChart['chart_defaultfilter_urldecoded'] = "";
