@@ -232,8 +232,12 @@ if ( isset($_POST['op']) )
 		$myrow = DB_GetSingleRow($result, true);
 		if ( !isset($myrow['FieldID']) )
 		{
+			//TODO: Trunscate NOT USED YET, it is currently set to 30 to avoid error mysql.
+			//		check "parsers.php" when using Truncate
+			$content['Trunscate'] = 30;
+
 			// Add custom Field now!
-			$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline) 
+			$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline, Trunscate) 
 			VALUES (
 					'" . $content['FieldID'] . "', 
 					'" . $content['FieldCaption'] . "',
@@ -242,7 +246,8 @@ if ( isset($_POST['op']) )
 					'" . $content['FieldAlign'] . "', 
 					" . $content['DefaultWidth'] . ", 
 					" . $content['FieldType'] . ", 
-					" . $content['SearchOnline'] . " 
+					" . $content['SearchOnline'] . ",
+					" . $content['Trunscate'] . "
 					)";
 			$result = DB_Query($sqlquery);
 			DB_FreeQuery($result);
