@@ -1251,8 +1251,9 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 	// If english is not selected, we load ENGLISH first - then overwrite with configured language
 	if ( $LANG != "en" ) {
 		//Fix #56
-		$langengfile = str_replace( "/".$LANG."/", "/".$LANG_EN."/", $langfile );
-		$langengfile = str_replace( ".".$LANG.".", ".".$LANG_EN.".", $langengfile );
+		$arr_LANG		= array(sprintf('/%s/', $LANG),    sprintf('.%s.', $LANG));
+		$arr_LANG_EN	= array(sprintf('/%s/', $LANG_EN), sprintf('.%s.', $LANG_EN));
+		$langengfile	= str_replace($arr_LANG, $arr_LANG_EN, $langfile);
 	}
 	else
 		$langengfile = $langfile;
