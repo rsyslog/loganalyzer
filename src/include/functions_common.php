@@ -1253,6 +1253,10 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 		$langengfile = str_replace( $LANG, $LANG_EN, $langfile );
 	else
 		$langengfile = $langfile;
+	
+	//Fix #56
+	$langengfile = str_replace( "/classen/", "/classes/", $langengfile );
+	
 	if ( file_exists($langengfile) )
 		include( $langengfile );
 	else
