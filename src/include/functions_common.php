@@ -1249,13 +1249,13 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 	global $LANG, $LANG_EN; 
 
 	// If english is not selected, we load ENGLISH first - then overwrite with configured language
-	if ( $LANG != "en" ) 
-		$langengfile = str_replace( $LANG, $LANG_EN, $langfile );
+	if ( $LANG != "en" ) {
+		//Fix #56
+		$langengfile = str_replace( "/".$LANG."/", "/".$LANG_EN."/", $langfile );
+		$langengfile = str_replace( ".".$LANG.".", ".".$LANG_EN.".", $langengfile );
+	}
 	else
 		$langengfile = $langfile;
-	
-	//Fix #56
-	$langengfile = str_replace( "/classen/", "/classes/", $langengfile );
 	
 	if ( file_exists($langengfile) )
 		include( $langengfile );
