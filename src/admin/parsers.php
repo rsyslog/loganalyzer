@@ -233,8 +233,12 @@ if ( isset($_GET['op']) )
 						// check if field is in define list!
 						if ( !array_key_exists($myField['FieldID'], $fields) ) 
 						{
+							//TODO: Trunscate NOT USED YET, it is currently set to 30 to avoid error mysql.
+							//		check "fields.php" when using Truncate
+							$content['Trunscate'] = 30;
+
 							// Add field into DB!
-							$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline) 
+							$sqlquery = "INSERT INTO " . DB_FIELDS . " (FieldID, FieldCaption, FieldDefine, SearchField, FieldAlign, DefaultWidth, FieldType, SearchOnline, Trunscate) 
 							VALUES (
 									'" . $myField['FieldID'] . "', 
 									'" . $myField['FieldCaption'] . "',
@@ -243,7 +247,8 @@ if ( isset($_GET['op']) )
 									'" . $myField['FieldAlign'] . "', 
 									" . $myField['DefaultWidth'] . ", 
 									" . $myField['FieldType'] . ", 
-									" . $myField['SearchOnline'] . " 
+									" . $myField['SearchOnline'] . ",
+									" . $content['Trunscate'] . "
 									)";
 							$result = DB_Query($sqlquery);
 							DB_FreeQuery($result);
