@@ -723,6 +723,7 @@ function InitFrontEndVariables()
 	$content['MENU_SEARCH'] = $content['BASEPATH'] . "images/icons/view.png";
 	$content['MENU_SELECTION_DISABLED'] = $content['BASEPATH'] . "images/icons/selection.png";
 	$content['MENU_SELECTION_ENABLED'] = $content['BASEPATH'] . "images/icons/selection_delete.png";
+	$content['MENU_SELECTION_ENABLED_DISABLED'] = $content['BASEPATH'] . "images/icons/selection_delete_disabled.png";
 	$content['MENU_TEXT_FIND'] = $content['BASEPATH'] . "images/icons/text_find.png";
 	$content['MENU_EARTH_FIND'] = $content['BASEPATH'] . "images/icons/earth_find.png";
 	$content['MENU_FIND'] = $content['BASEPATH'] . "images/icons/find.png";

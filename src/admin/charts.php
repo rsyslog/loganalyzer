@@ -507,8 +507,6 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['ChartEnabledImage']	= $content["MENU_SELECTION_DISABLED"];
 			$myChart['set_enabled'] = 1;
 		}
-
-
 		// ---
 		
 		// --- Set Chart default Filterstring
