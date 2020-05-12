@@ -175,7 +175,7 @@ DROP TABLE IF EXISTS `logcon_savedreports`;
 CREATE TABLE `logcon_savedreports` (
   `ID` int(11) NOT NULL auto_increment,
   `reportid` varchar(255) NOT NULL,
-  `sourceid` int(11) NOT NULL,
+  `sourceid` varchar(11) NOT NULL,
   `customTitle` varchar(255) NOT NULL,
   `customComment` text NOT NULL,
   `filterString` text NOT NULL,
