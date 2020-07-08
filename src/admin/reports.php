@@ -1185,7 +1185,7 @@ if ( isset($_POST['op']) )
 				else
 				{
 					$sqlquery =	"UPDATE " . DB_SAVEDREPORTS . " SET 
-									sourceid = " . $content['SourceID'] . ", 
+									sourceid = '" . $content['SourceID'] . "', 
 									customTitle = '" . $content['customTitle'] . "', 
 									customComment = '" . $content['customComment'] . "', 
 									filterString = '" . $content['filterString'] . "', 
