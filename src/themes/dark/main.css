@@ -302,6 +302,8 @@ A.cellmenu1_link:hover
 	background-color: #24343c;
     background-image: url(images/bg_2.png);
     background-repeat: repeat-x;
+	
+	padding: 0px 10px 0px 5px;
 }
 .cellmenu2_naked
 {

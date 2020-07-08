@@ -124,7 +124,7 @@
 					<!-- IF direction="desc" -->
 					<input type="hidden" name="direction" value="desc">
 					<!-- ENDIF direction="desc" -->
-					<select name="exporttype" size="1" OnChange="document.exportform.submit();" STYLE="width: 150px">
+					<select name="exporttype" size="1" OnChange="document.exportform.submit();">
 						<option selected value="">{LN_GEN_SELECTEXPORT}</option>
 						<!-- BEGIN EXPORTTYPES -->
 						<option value="{ID}">{DisplayName}</option>
@@ -149,14 +149,14 @@
 	</td>
 
 <!-- IF ViewEnableAutoReloadSeconds_visible="true" -->
-	<td nowrap width="105" class="cellmenu2">{LN_AUTORELOAD}:</td>
-	<td nowrap width="50" class="line2">
+	<td nowrap class="cellmenu2">{LN_AUTORELOAD}:</td>
+	<td nowrap class="line2">
 		<form action="userchange.php" method="get" name="autoreload">
 		<input type="hidden" name="op" value="autoreload">
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();"  STYLE="width: 100px">
+			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
 				<!-- BEGIN reloadtimes -->
 				<option {Selected} value="{ID}">{DisplayName}</option>
 				<!-- END reloadtimes -->
@@ -169,19 +169,19 @@
 <!-- ENDIF ViewEnableAutoReloadSeconds_visible="true" -->
 
 <!-- IF main_recordcount_found="true" -->
-	<td nowrap width="130" class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
-	<td nowrap width="50" class="line2"><B>{main_recordcount}</B></td>
+	<td nowrap class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
+	<td nowrap class="line2" STYLE="padding: 0px 15px 0px 0px;"><B>{main_recordcount}</B></td>
 <!-- ENDIF main_recordcount_found="true" -->
 
 <!-- IF main_pagerenabled="true" -->
-		<td nowrap width="120" class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
-		<td nowrap width="50" class="line2">
+		<td nowrap class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
+		<td nowrap class="line2">
 		<form action="userchange.php" method="get" name="pageingsize">
 		<input type="hidden" name="op" value="changepagesize">
 		<table border="0" cellspacing="0" cellpadding="0" align="right">
 		<tr> 
 			<td>
-				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();"  STYLE="width: 100px">
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
 					<!-- BEGIN pagesizes -->
 					<option {Selected} value="{ID}">{DisplayName}</option>
 					<!-- END pagesizes -->
@@ -192,7 +192,7 @@
 		</form>
 		</td>
 
-		<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+		<td class="cellmenu2" nowrap>Pager:</td>
 		<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_first_found="true" -->
 		<a href="?{additional_url_sortingonly}&uid=-1{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
@@ -341,7 +341,7 @@
 <tr>
 	<td nowrap width="100%"class="line2" align="left">&nbsp;</td>
 
-	<td class="cellmenu2" nowrap><B>Pager: &nbsp; </B></td>
+	<td class="cellmenu2" nowrap>Pager:</td>
 	<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_first_found="true" -->
 		<a href="?{additional_url_sortingonly}&uid=-1{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
