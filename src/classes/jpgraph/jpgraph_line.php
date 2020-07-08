@@ -40,9 +40,6 @@ class LinePlot extends Plot{
         $this->mark = new PlotMark() ;
         $this->color = ColorFactory::getColor();
         $this->fill_color = $this->color;
-	}
-    function LinePlot($datay,$datax=false) {
-		self::__construct($datay,$datax);
     }
     //---------------
     // PUBLIC METHODS
