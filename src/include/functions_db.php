@@ -438,16 +438,15 @@ function WriteConfigValue($szPropName, $is_global = true, $userid = false, $grou
 		if ( !isset($rows) )
 		{
 			// New Entry
-			$result = DB_Query("INSERT INTO  `" . DB_CONFIG . "` (propname, propvalue, userid) VALUES ( '" . $szPropName . "', '" . $szDbValue . "', " . $userid . ")");
-			DB_FreeQuery($result);
+			$sql_query = sprintf("INSERT INTO `%s` (propname, propvalue, userid, is_global) VALUES ( '%s', '%s', %d, %d )", DB_CONFIG, $szPropName, $szDbValue, $userid, ($is_global ? 1 : 0) );
 		}
 		else
 		{
 			// Update Entry
-			$result = DB_Query("UPDATE `" . DB_CONFIG . "` SET propvalue = '" . $szDbValue . "' WHERE propname = '" . $szPropName . "' AND userid = " . $userid);
-			DB_FreeQuery($result);
+			$sql_query = sprintf("UPDATE `%s` SET propvalue = '%s' WHERE propname = '%s' AND userid = %d", DB_CONFIG, $szDbValue, $szPropName, $userid);
 		}
-
+		$result = DB_Query($sql_query);
+		DB_FreeQuery($result);
 	}
 	else if ( $groupid != false ) 
 		DieWithFriendlyErrorMsg( "Critical Error occured in WriteConfigValue, writing GROUP specific properties is not supported yet!" );
