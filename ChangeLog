@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------
+Version 4.1.11 (stable), 2020-07-09
+- ThirdParty: Updated jpgraph to 4.3.1 (2020-04-24)
+- Thanks to Jaiver Pastor for the following fixes and changes: 
+- AdminCenter: fix mysql error for field is_global 
+  (doesn't have a default value).
+- Fixed IncludeLanguageFile helper function when using custom language. 
+- Added Spanish translation (completed).
+- Fixed minor design issue in other languages.
+- Fixed default db_template to include database changes from v4.1.9. 
+---------------------------------------------------------------------------
 Version 4.1.10 (stable), 2020-02-21
 - Improve Footer Links
 ---------------------------------------------------------------------------
