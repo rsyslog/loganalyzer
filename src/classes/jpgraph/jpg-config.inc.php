@@ -3,9 +3,9 @@
 // File:        JPG-CONFIG.INC
 // Description: Configuration file for JpGraph library
 // Created:     2004-03-27
-// Ver:         $Id: jpg-config.inc.php 1749 2009-07-31 10:58:41Z ljp $
+// Ver:         $Id: jpg-config.inc.php 1871 2009-09-29 05:56:39Z ljp $
 //
-// Copyright (c) Aditus Consulting. All rights reserved.
+// Copyright (c) Asial Corporation. All rights reserved.
 //========================================================================
 
 
@@ -36,10 +36,9 @@
 //
 //------------------------------------------------------------------------
 // define('CACHE_DIR','/tmp/jpgraph_cache/');
-// define('TTF_DIR','/usr/share/fonts/truetype/');
-// define('MBTTF_DIR','/usr/share/fonts/truetype/');
+// define('TTF_DIR','/usr/share/fonts/TrueType/');
+// define('MBTTF_DIR','/usr/share/fonts/TrueType/');
 DEFINE("TTF_DIR", $gl_root_path . "BitstreamVeraFonts/");
-
 
 //-------------------------------------------------------------------------
 // Cache directory specification for use with CSIM graphs that are
@@ -88,7 +87,7 @@ define('READ_CACHE',true);
 // Determine if the error handler should be image based or purely
 // text based. Image based makes it easier since the script will
 // always return an image even in case of errors.
-define('USE_IMAGE_ERROR_HANDLER',false);
+define('USE_IMAGE_ERROR_HANDLER',true);
 
 // Should the library examine the global php_errmsg string and convert
 // any error in it to a graphical representation. This is handy for the
@@ -131,17 +130,10 @@ define('CACHE_FILE_GROUP','www');
 // (Set to '' will give the default persmissions for the 'PHP-user')
 define('CACHE_FILE_MOD',0664);
 
-// Decide if we should use the bresenham circle algorithm or the
-// built in Arc(). Bresenham gives better visual apperance of circles
-// but is more CPU intensive and slower then the built in Arc() function
-// in GD. Turned off by default for speed
-define('USE_BRESENHAM',false);
-
 // Default theme class name
 define('DEFAULT_THEME_CLASS', 'UniversalTheme');
 
 define('SUPERSAMPLING', true);
 define('SUPERSAMPLING_SCALE', 1);
-
 
 ?>

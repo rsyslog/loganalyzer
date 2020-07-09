@@ -238,25 +238,25 @@ if ( !$content['error_occured'] )
 
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
-					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
+					$graph->tabtitle->SetFont(FF_DV_SANSSERIF,FS_BOLD,9);
 					$graph->tabtitle->SetPos('left'); 
 					
 					// Set Graph footer
 					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+					$graph->footer->left->SetFont( FF_DV_SANSSERIF, FS_NORMAL, 7); 
 //					$graph->footer->right->Set ( GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-//					$graph->footer->right->SetFont( FF_VERA, FS_NORMAL, 8); 
+//					$graph->footer->right->SetFont( FF_DV_SANSSERIF, FS_NORMAL, 8); 
 //					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d")) ); 
-//					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 8); 
+//					$graph->footer->left->SetFont( FF_DV_SANSSERIF, FS_NORMAL, 8); 
 //					$graph->footer->right->SetColor("darkred");
 
 					// Show 0 label on Y-axis (default is not to show)
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
 					// Set Fonts for graph!
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,8);
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
-					$graph->legend->SetFont(FF_VERA,FS_NORMAL,8);
+					$graph->xaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
+					$graph->yaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
+					$graph->legend->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
 
 					// Create
 					$p1 = new PiePlot3D($YchartData);
@@ -282,7 +282,7 @@ if ( !$content['error_occured'] )
 					// Set label properties
 					$p1->SetLabelPos(1.0);
 					$p1->SetSliceColors(array('#FFF584','#CBFF84','#FF6B9E','#FF9584','#EAFF84','#7BFF51','#51FFA6','#51FF52','#6BCFFF','#5170FF','#519CFF','#EAE3AD','#FFF184','#8584FF','#E698FF','#C384FF','#FF84EC','#FF98A3','#E5C285','#FFDA98' ));
-					$p1->value->SetFont(FF_VERA, FS_NORMAL, 8);
+					$p1->value->SetFont(FF_DV_SANSSERIF, FS_NORMAL, 8);
 					$p1->value->SetColor("black");
 
 					// Adjust other Pie Properties
@@ -307,7 +307,7 @@ if ( !$content['error_occured'] )
 					$graph->img->SetAlphaBlending(true); 
 
 					// Setup X-AXIS
-//					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,10);
+//					$graph->xaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,10);
 					$graph->xaxis->SetTickLabels($XchartData);
 					
 					if ( count($XchartData) > 5 ) 
@@ -326,17 +326,17 @@ if ( !$content['error_occured'] )
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
 					// Set Fonts for graph!
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,7);
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
+					$graph->xaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,7);
+					$graph->yaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
 
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
-					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
+					$graph->tabtitle->SetFont(FF_DV_SANSSERIF,FS_BOLD,9);
 					$graph->tabtitle->SetPos('left'); 
 
 					// Set Graph footer
 					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+					$graph->footer->left->SetFont( FF_DV_SANSSERIF, FS_NORMAL, 7); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -358,7 +358,7 @@ if ( !$content['error_occured'] )
 
 					// Display value in bars
 					$bplot->value->Show();
-					$bplot->value->SetFont(FF_VERA,FS_NORMAL,8);
+					$bplot->value->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
 					$bplot->value->SetFormat('%d');
 					
 					// Add links
@@ -392,6 +392,12 @@ if ( !$content['error_occured'] )
 					$graph->SetMarginColor('white');
 					$graph->SetBox();					// Box around plotarea
 
+					$graph->xgrid->Show();
+					$graph->xgrid->SetLineStyle("solid");
+					$graph->xaxis->SetTickLabels(array('A','B','C','D'));
+					$graph->xgrid->SetColor('#E3E3E3');
+
+
 					// Setup X-AXIS
 					$graph->xaxis->SetTickLabels($XchartData);
 					$graph->xaxis->SetLabelAngle(0);
@@ -413,18 +419,18 @@ if ( !$content['error_occured'] )
 					$graph->yscale->ticks->SupressZeroLabel(false);
 
 					// Set Fonts for graph!
-					$graph->xaxis->SetFont(FF_VERA,FS_NORMAL,7);
-					$graph->yaxis->SetFont(FF_VERA,FS_NORMAL,8);
+					$graph->xaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,7);
+					$graph->yaxis->SetFont(FF_DV_SANSSERIF,FS_NORMAL,8);
 
 					// Setup the tab title
 					$graph->tabtitle->Set( GetAndReplaceLangStr($content['LN_STATS_CHARTTITLE'], $content['maxrecords'], $fields[$content['chart_field']]['FieldCaption']) );
-					$graph->tabtitle->SetFont(FF_VERA,FS_BOLD,9);
+					$graph->tabtitle->SetFont(FF_DV_SANSSERIF,FS_BOLD,9);
 					$graph->tabtitle->SetPos('right');
 					$graph->tabtitle->SetTabAlign('right');
 
 					// Set Graph footer
 					$graph->footer->left->Set ("LogAnalyzer v" . $content['BUILDNUMBER'] . "\n" . GetAndReplaceLangStr($content['LN_STATS_GENERATEDAT'], date("Y-m-d"))  );
-					$graph->footer->left->SetFont( FF_VERA, FS_NORMAL, 7); 
+					$graph->footer->left->SetFont( FF_DV_SANSSERIF, FS_NORMAL, 7); 
 
 					// Setup the X and Y grid
 					$graph->ygrid->SetFill(true,'#DDDDDD@0.5','#BBBBBB@0.5');
@@ -446,7 +452,7 @@ if ( !$content['error_occured'] )
 
 					// Display value in bars
 					$bplot->value->Show();
-					$bplot->value->SetFont(FF_VERA,FS_NORMAL, 8);
+					$bplot->value->SetFont(FF_DV_SANSSERIF,FS_NORMAL, 8);
 					$bplot->value->SetFormat('%d');
 
 					// Add links
