@@ -1107,9 +1107,9 @@ function DieWithErrorMsg( $szerrmsg )
 			"<H3>Critical Error occured</H3>" . 
 			"</td></tr>" . 
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" . 
+			"<td class=\"tableBackground\" align=\"left\">" . 
 			$szerrmsg . 
-			"<br><br></td></tr></table>");
+			"</td></tr></table>");
 		
 		// Print Detail error's if available
 		if ( isset($content['detailederror']) )

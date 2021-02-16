@@ -925,6 +925,11 @@ function PrepareStringForSearch($myString)
 function AddOnClickMenu(&$fieldGridItem, $fieldType, $FieldID)
 {
 	global $content, $fields, $myStrCharLimit; 
+	
+	
+	if ( !isset($fields[$FieldID]['SearchOnline']) )
+		return;
+	
 
 	if ( strlen($fieldGridItem['fieldvalue']) <= 0 ) {
 		$fieldGridItem['hasbuttons'] = false;

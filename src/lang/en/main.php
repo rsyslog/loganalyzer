@@ -29,9 +29,9 @@ global $content;
 
 // Global Stuff
 $content['LN_MAINTITLE'] = "Main LogAnalyzer";
-$content['LN_MAIN_SELECTSTYLE'] = "Select a Style";
-$content['LN_GEN_LANGUAGE'] = "Select Language";
-$content['LN_GEN_SELECTSOURCE'] = "Select Source";
+$content['LN_MAIN_SELECTSTYLE'] = "Style";
+$content['LN_GEN_LANGUAGE'] = "Language";
+$content['LN_GEN_SELECTSOURCE'] = "Source/Project";
 $content['LN_GEN_MOREPAGES'] = "More than one Page available";
 $content['LN_GEN_FIRSTPAGE'] = "First Page";
 $content['LN_GEN_LASTPAGE'] = "Last Page";
@@ -82,8 +82,8 @@ $content['LN_ERROR_DB_INVALIDDBMAPPING'] = "Invalid datafield mappings";
 $content['LN_ERROR_DB_INVALIDDBDRIVER'] = "Invalid database driver selected";
 $content['LN_ERROR_DB_TABLENOTFOUND'] = "Could not find the configured table, maybe misspelled or the tablenames are case sensitive";
 $content['LN_ERROR_DB_DBFIELDNOTFOUND'] = "Database Field mapping for at least one field could not be found.";
-$content['LN_GEN_SELECTEXPORT'] = "&gt; Select Exportformat &lt;";
-$content['LN_GEN_EXPORT_CVS'] = "CSV (Comma separated)";
+$content['LN_GEN_SELECTEXPORT'] = "Select Exportformat";
+$content['LN_GEN_EXPORT_CVS'] = "CSV";
 $content['LN_GEN_EXPORT_XML'] = "XML";
 $content['LN_GEN_EXPORT_PDF'] = "PDF";
 $content['LN_GEN_ERROR_EXPORING'] = "Error exporting data";
@@ -138,10 +138,10 @@ $content['LN_TOP_UID'] = "uID";
 $content['LN_GRID_POPUPDETAILS'] = "Details for Syslogmessage with ID '%1'";
 
 $content['LN_SEARCH_USETHISBLA'] = "Use the form below and your advanced search will appear here";
-$content['LN_SEARCH_FILTER'] = "Search (filter):";
-$content['LN_SEARCH_ADVANCED'] = "Advanced Search";
+$content['LN_SEARCH_FILTER'] = "Search";
+$content['LN_SEARCH_ADVANCED'] = "Advanced";
 $content['LN_SEARCH'] = "Search";
-$content['LN_SEARCH_RESET'] = "Reset search";
+$content['LN_SEARCH_RESET'] = "Reset";
 $content['LN_SEARCH_PERFORMADVANCED'] = "Perform Advanced Search";
 $content['LN_VIEW_MESSAGECENTERED'] = "Back to unfiltered view with this message at top";
 $content['LN_VIEW_RELATEDMSG'] = "View related syslog messages";
@@ -155,8 +155,8 @@ $content['LN_GEN_MESSAGEDETAILS'] = "Message Details";
 	$content['LN_VIEW_SHOWALLBUT'] = "Show all except '%1'";
 	$content['LN_VIEW_VISITLINK'] = "Open Link '%1' in new window";
 
-$content['LN_HIGHLIGHT'] = "Highlight >>";
-$content['LN_HIGHLIGHT_OFF'] = "Highlight <<";
+$content['LN_HIGHLIGHT']       = "Highlight";
+$content['LN_HIGHLIGHT_OFF']   = "Highlight <<";
 $content['LN_HIGHLIGHT_WORDS'] = "Highlight words comma separated";
 
 $content['LN_AUTORELOAD'] = "Set auto reload";
