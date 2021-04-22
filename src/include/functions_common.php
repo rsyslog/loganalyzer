@@ -65,7 +65,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "4.1.11";
+$content['BUILDNUMBER'] = "4.1.12";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;

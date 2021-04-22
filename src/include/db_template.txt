@@ -81,7 +81,7 @@ CREATE TABLE `logcon_sources` (
   `DBTableName` varchar(64) default NULL,
   `DBEnableRowCounting` tinyint(1) default NULL,
   `DBRecordsPerQuery` int(11) NOT NULL default '100',
-  `defaultfilter` VARCHAR(1024) NOT NULL, 
+  `defaultfilter` VARCHAR(1024) NULL, 
   `userid` int(11) default NULL,
   `groupid` int(11) default NULL,
   PRIMARY KEY  (`ID`)
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `logcon_charts` (
   `chart_type` int(11) NOT NULL,
   `chart_width` int(11) NOT NULL,
   `chart_field` varchar(255) NOT NULL,
-  `chart_defaultfilter` VARCHAR(1024) NOT NULL, 
+  `chart_defaultfilter` VARCHAR(1024) NULL, 
   `maxrecords` int(11) NOT NULL,
   `showpercent` tinyint(1) NOT NULL,
   `userid` int(11) default NULL,
