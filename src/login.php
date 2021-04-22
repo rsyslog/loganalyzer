@@ -65,8 +65,7 @@ else
 	$szRedir = "index.php"; // Default
 $szRedir = SecureRedirect($szRedir); 
 
-if ( isset($_POST['op']) && $_POST['op'] == "login" )
-{
+if ( isset($_POST['op']) && $_POST['op'] == "login" ) {
 	// Perform login!
 	if ( $_POST['op'] == "login" )
 	{
@@ -74,29 +73,24 @@ if ( isset($_POST['op']) && $_POST['op'] == "login" )
 			 (isset($_POST['uname']) && strlen($_POST['uname']) > 0) 
 				&& 
 			 (isset($_POST['pass']) && strlen($_POST['pass']) > 0)
-			)
-		{
-			// Set Username and password
-			$content['uname'] = DB_RemoveBadChars($_POST['uname']);
-			$content['pass'] = $_POST['pass']; // RAW Copy of password string, otherwise passwords with special characters can be broken. 
+			) {
+			// Copy Username and password for template system
+			$content['uname'] = htmlspecialchars(DB_RemoveBadChars($_POST['uname'])); // URL Decode the username to avoid XSS issues!
+			$content['pass'] = htmlspecialchars($_POST['pass']); // RAW Copy of password string, otherwise passwords with special characters can be broken.
 
-			if ( !CheckUserLogin( $content['uname'], $content['pass']) )
-			{
+			// Use raw properties for database login check
+			if ( !CheckUserLogin( DB_RemoveBadChars($_POST['uname']), $_POST['pass']) ) {
 				$content['ISERROR'] = "true";
 				$content['ERROR_MSG'] = $content['LN_LOGIN_ERRWRONGPASSWORD'];
 			}
 			else
 				RedirectPage( urldecode($szRedir) );
-		}
-		else
-		{
+		} else {
 			$content['ISERROR'] = "true";
 			$content['ERROR_MSG'] = $content['LN_LOGIN_USERPASSMISSING'];
 		}
 	}
-}
-else if ( isset($_GET['op']) && $_GET['op'] == "logoff" )
-{
+} else if ( isset($_GET['op']) && $_GET['op'] == "logoff" ) {
 	// logoff in this case
 	DoLogOff();
 }

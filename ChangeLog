@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------
+Version 4.1.12 (stable), 2021-04-29
+---------------------------------------------------------------------------
+- Secured username field against XSS attacks, thanks for reporting to:
+  Michael Strametz of SySS Cyber Security GmbH (Austria).
+- UserDB: Allow NULL value for defaultfilter fields, updated to v13
+---------------------------------------------------------------------------
 Version 4.1.11 (stable), 2020-07-09
 - ThirdParty: Updated jpgraph to 4.3.1 (2020-04-24)
 - Thanks to Javier Pastor for the following fixes and changes: 
