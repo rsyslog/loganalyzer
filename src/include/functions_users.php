@@ -283,7 +283,7 @@ function CheckUserLogin( $username, $password )
 		}
 		*/
 		if ( GetConfigSetting("DebugUserLogin", 0) == 1 )
-			DieWithFriendlyErrorMsg( "Debug Error: Could not find user '" . $username . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre>");
+			DieWithFriendlyErrorMsg( "Debug Error: Could not find user '" . htmlspecialchars($username) . "' <br><br><B>Sessionarray</B> <pre>" . var_export($_SESSION, true) . "</pre>");
 			
 		// Default return false
 		return false;

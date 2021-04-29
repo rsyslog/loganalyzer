@@ -1,0 +1,7 @@
+-- New Database Structure Updates
+ALTER TABLE `logcon_sources` CHANGE `defaultfilter` `defaultfilter` VARCHAR(1024) NULL;
+ALTER TABLE `logcon_charts` CHANGE `chart_defaultfilter` `chart_defaultfilter` VARCHAR(1024) NULL;
+
+-- Insert data
+
+-- Updated Data
