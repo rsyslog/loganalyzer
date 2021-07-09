@@ -1,3 +1,2 @@
-Author: Andre Lorbach
-Link: http://www.adiscon.com
-DisplayName: Default
+Author: Jürgen Weber: http://www.adiscon.com
+DisplayName: NLog

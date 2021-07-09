@@ -3,12 +3,7 @@
 <button id="button_menu_showevt"><img align="left" src="{MENU_HOMEPAGE}" width="16" height="16" vspace="0" title="{LN_MENU_SHOWEVENTS}">&nbsp;{LN_MENU_SHOWEVENTS}</button>
 <button id="button_menu_stats"><img align="left" src="{MENU_CHARTS}" width="16" height="16" vspace="0" title="{LN_MENU_STATISTICS}">&nbsp;{LN_MENU_STATISTICS}</button>
 <button id="button_menu_reports"><img align="left" src="{MENU_CHARTPRESENTATION}" width="16" height="16" vspace="0" title="{LN_MENU_REPORTS}">&nbsp;{LN_MENU_REPORTS}</button>
-<button id="button_menu_help"><img align="left" src="{MENU_HELP}" width="16" height="16" vspace="0" title="{LN_MENU_HELP}">&nbsp;{LN_MENU_HELP}</button>
-<ul id="menu_help" style="position:absolute;z-index:99;display:none;">
-	<li><a href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_DOC}">&nbsp;{LN_MENU_DOC}</a></li>
-	<li><a href="https://loganalyzer.adiscon.com/support/" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_PROSERVICES}">&nbsp;{LN_MENU_PROSERVICES}</a></li>
-</ul>
-<button id="button_menu_searchkb"><img align="left" src="{MENU_KB}" width="16" height="16" vspace="0" title="{LN_MENU_SEARCHINKB}">&nbsp;{LN_MENU_SEARCHINKB}</button>
+
 <!-- IF UserDBEnabled="true" -->
 	<!-- IF SESSION_LOGGEDIN!="true" -->
 	<button id="button_menu_login"><img align="left" src="{MENU_ADMINLOGOFF}" width="16" height="16" vspace="0" title="{LN_MENU_LOGIN}">&nbsp;{LN_MENU_LOGIN}</button><script>CreateLinkFunction( "#button_menu_login", "{BASEPATH}login.php"); </script>
@@ -21,6 +16,14 @@
 	<button id="button_menu_end"><img align="left" src="{MENU_ADMINUSERS}" width="16" height="16" vspace="0" title="{LN_MENU_LOGGEDINAS} {SESSION_USERNAME}">&nbsp;{LN_MENU_LOGGEDINAS} "{SESSION_USERNAME}"</button><script>CreateLinkFunction( "#button_menu_end", ""); </script>
 	<!-- ENDIF SESSION_LOGGEDIN="true" -->
 <!-- ENDIF UserDBEnabled="true" -->
+
+<button id="button_menu_help"><img align="left" src="{MENU_HELP}" width="16" height="16" vspace="0" title="{LN_MENU_HELP}">&nbsp;{LN_MENU_HELP}</button>
+<ul id="menu_help" style="position:absolute;z-index:99;display:none;">
+	<li><a href="{PHPLOGCON_HELPLINK}" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_DOC}">&nbsp;{LN_MENU_DOC}</a></li>
+	<li><a href="https://loganalyzer.adiscon.com/support/" target="phplogcon_help"><img align="left" src="{MENU_BULLET_YELLOW}" width="16" height="16" vspace="0" title="{LN_MENU_PROSERVICES}">&nbsp;{LN_MENU_PROSERVICES}</a></li>
+</ul>
+<button id="button_menu_searchkb"><img align="left" src="{MENU_KB}" width="16" height="16" vspace="0" title="{LN_MENU_SEARCHINKB}">&nbsp;{LN_MENU_SEARCHINKB}</button>
+
 <!-- IF IS_NOLOGINPAGE!="true" -->
 	<button id="button_menu_minmax"><img align="left" src="{MAXIMAGE}" width="16" height="16" vspace="0" title="{MAXLANGTEXT}">&nbsp;{MAXLANGTEXT}</button><script>CreateLinkFunction( "#button_menu_minmax", "{MAXURL}"); </script>
 <!-- ENDIF IS_NOLOGINPAGE!="true" -->

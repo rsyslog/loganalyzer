@@ -1,146 +1,217 @@
 <!-- INCLUDE include_header.html -->
 
-<div id="dialog" title="Details"><br/></div>
-<table border="0" cellspacing="0" cellpadding="2" align="center">
-<form action="" method="get" id="searchform" name="searchform">
-<!-- BEGIN HIDDENVARS_SOURCE -->
-<input type="hidden" name="{varname}" value="{varvalue}">
-<!-- END HIDDENVARS_SOURCE -->
-<tr> 
-	<td align="top" nowrap valign="middle">
-		<b>{LN_SEARCH_FILTER}</b>
-	</td>
-<!-- IF EnablePredefinedSearches="true" -->
-	<td nowrap valign="top" nowrap>
-		<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
-		<ul id="menu_searches" style="position:absolute;z-index:99;display:none;">
-			<!-- BEGIN Search -->
-			<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
-			<!-- END Search -->
-		</ul>
-		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", false );</script>
-	</td>
-<!-- ENDIF EnablePredefinedSearches="true" -->
-	<td align="center" nowrap valign="top">
-	<td nowrap align="center" nowrap valign="top">
-		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" onkeypress="MoveToButtonOnKeypress('buttonsearch', event);">
-		</br>
-		<button id="buttonsearch"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-search" title="{LN_SEARCH}">&nbsp;{LN_SEARCH}</button>
-<!-- IF enabledoraclesearchstr="true" -->
-		<button id="buttonmoreinfo"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
-<!-- ENDIF enabledoraclesearchstr="true" -->
-		<button id="buttonlucky"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</span></button>
-		<button id="buttonreset"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</span></button>
-		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
-		<script> 
-			CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
-			// Custom Buttons
-			$("#buttonsearch").button()
-			.click(function() {
-					// Perform Form Submit!  Click now!
-					$("#searchform").submit();
-					// Make sure to return false here or the click registration above gets invoked.
-					return false;
-			})
-			$("#buttonreset").button()
-			.click(function() {
-					// Reset search form
-					ResetFormValues('searchform');
-					// Make sure to return false here or the click registration above gets invoked.
-					return false;
-			})
-			$("#buttonhighlight").button()
-			.click(function() {
-					// Toggle highlight visibility 
-					togglevisibility('HightLightArea');
-					// Make sure to return false here or the click registration above gets invoked.
-					return false;
-			})
-		</script>
-		<br>
-	</td>
-	<td nowrap align="left" nowrap valign="top">
-		<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
-		<br>
-		<i>(sample: facility:local0 severity:warning)</i>
-	</td>
-</tr>
-<tr>
-	<td colspan="5">
-		<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
-		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
-		<tr>
-			<td colspan="2" align="center" valign="top" class="cellmenu2">
-			<strong>{LN_HIGHLIGHT_WORDS}</strong></td>
-		</tr>
-		<tr>
-			<td align="left" class="line1" nowrap>
-				<input maxlength="2048" name="highlight" size="75" title="Search" value="{highlightstr_htmlform}">
-				<input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl">
-			</td>
-		</tr>
-		<!-- IF EXPAND_HIGHLIGHT="true" -->
-		<tr>
-			<td align="center" class="line0" nowrap>
-				<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
-				<tr>
-				<!-- BEGIN highlightwords -->
-					<td class="{cssclass}" align="center"><b>{highlight_html}</b></td>
-				<!-- END highlightwords -->
-				</tr>
-				</table>
-			</td>
-		</tr>
-		<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
-		</table>
-		</span>
-	</td>
-</tr>
-</form>
+<div id="dialog" title="Details">
+<br/></div>
+
+<table id="TitlePanel" class="title" width="100%">
+<tr><td>
+<B>Event Log</B>
+</tr></td>
 </table>
 
-<!-- IF EXPAND_HIGHLIGHT="true" -->
-<script language="javascript">
-	// Manually expand Hightlight field
-	togglevisibility('HightLightArea');
-</script>
-<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
+<div  id="ProjectPanel">
+	<table><tr><td>
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
-<tr>
-	<td class="title" width="100%" nowrap><B>Recent syslog messages</B></td>
-<!-- IF EXPORT_ENABLED="true" -->
-		<td class="line2" align="left" nowrap>
-			<form action="{BASEPATH}export.php" method="get" name="exportform">
-			<table border="0" cellspacing="0" cellpadding="0" align="left">
-			<tr> 
-				<td align="right">
-					<input type="hidden" name="op" value="export">
-					<input type="hidden" name="uid" value="{uid_original}">
-					<input type="hidden" name="filter" value="{searchstr_htmlform}">
-					<!-- IF skipone="true" -->
-					<input type="hidden" name="skipone" value="true">
-					<!-- ENDIF skipone="true" -->
-					<!-- IF direction="desc" -->
-					<input type="hidden" name="direction" value="desc">
-					<!-- ENDIF direction="desc" -->
-					<select name="exporttype" size="1" OnChange="document.exportform.submit();">
-						<option selected value="">{LN_GEN_SELECTEXPORT}</option>
-						<!-- BEGIN EXPORTTYPES -->
-						<option value="{ID}">{DisplayName}</option>
-						<!-- END EXPORTTYPES -->
-					</select>
-				</td>
-				<td nowrap width="16"><input type="image" src="{MENU_EXPORT}" width="16" height="16" alt="{LN_GEN_EXPORT}" class="borderless"></td>
+		<form action="{CURRENTURL}" method="get" name="sourceidform">
+			<B>{LN_GEN_SELECTSOURCE}</B>		
+			<select name="sourceid" size="1" OnChange="document.sourceidform.submit();$('#loading_dialog').loading();">
+				<!-- BEGIN Sources -->
+				<option {selected} value="{ID}">{Name}</option>
+				<!-- END Sources -->
+			</select>
+		</form>
+
+	</td><td>	
+
+		
+		<form action="{BASEPATH}userchange.php" method="get" name="viewidform">
+			<B>{LN_GEN_SELECTVIEW}</B>
+			<input type="hidden" name="op" value="changeview">
+			<select name="viewid" size="1" OnChange="document.viewidform.submit();$('#loading_dialog').loading();">
+				<!-- BEGIN Views -->
+				<option {selected} value="{ID}">{DisplayName}</option>
+				<!-- END Views -->
+			</select>
+		</form>
+
+	</td><td>	
+	
+		<!-- IF EXPORT_ENABLED="true" -->
+		<form action="{BASEPATH}export.php" method="get" name="exportform">
+			<b>{LN_GEN_SELECTEXPORT}</b>
+			<input type="hidden" name="op" value="export">
+			<input type="hidden" name="uid" value="{uid_original}">
+			<input type="hidden" name="filter" value="{searchstr_htmlform}">
+			<!-- IF skipone="true" -->
+			<input type="hidden" name="skipone" value="true">
+			<!-- ENDIF skipone="true" -->
+			<!-- IF direction="desc" -->
+			<input type="hidden" name="direction" value="desc">
+			<!-- ENDIF direction="desc" -->
+			<select name="exporttype" size="1" OnChange="document.exportform.submit();" style="width:100px">
+				<!-- BEGIN EXPORTTYPES -->
+				<option value="{ID}">{DisplayName}</option>
+				<!-- END EXPORTTYPES -->
+			</select>
+			<input type="image" src="{MENU_EXPORT}" width="16" height="16" alt="{LN_GEN_EXPORT}" valign="middle" style="vertical-align:middle;border-style:none">
+		</form>
+		<!-- ENDIF EXPORT_ENABLED="true" -->
+	
+	</td><td>	
+
+		<!-- IF ViewEnableAutoReloadSeconds_visible="true" -->
+		<form action="userchange.php" method="get" name="autoreload">
+			<input type="hidden" name="op" value="autoreload">		
+			<b>{LN_AUTORELOAD}:</b>
+			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
+				<!-- BEGIN reloadtimes -->
+				<option {Selected} value="{ID}">{DisplayName}</option>
+				<!-- END reloadtimes -->
+			</select>
+		</form>
+		<!-- ENDIF ViewEnableAutoReloadSeconds_visible="true" -->
+
+	</td></tr></table>
+</div>
+
+
+<div id="SearchPanel">
+	<form action="" method="get" id="searchform" name="searchform">
+	<!-- BEGIN HIDDENVARS_SOURCE -->
+	<input type="hidden" name="{varname}" value="{varvalue}">
+	<!-- END HIDDENVARS_SOURCE -->
+	
+	<table>
+	<tr> 
+		<td width="120px">
+			<b>{LN_SEARCH_FILTER}</b>&nbsp;&nbsp;&nbsp;&nbsp;<a href="search.php" target="_top">{LN_SEARCH_ADVANCED}</a>
+		</td>
+		<td>
+			<input id="txtSearch" maxlength="2048" name="filter" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" onkeypress="MoveToButtonOnKeypress('buttonsearch', event);">
+		</td>	
+		<!-- IF EnablePredefinedSearches="true" -->
+		<td nowrap>
+			<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
+			<ul id="menu_searches" style="position:absolute;z-index:99;display:none;">
+				<!-- BEGIN Search -->
+				<li><a href="?{SearchQuery}{additional_url_sourceonly}" target="_top">{DisplayName}</a></li>
+				<!-- END Search -->
+			</ul>
+			<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", false );</script>
+		</td>
+	<!-- ENDIF EnablePredefinedSearches="true" -->
+		<td><button id="buttonsearch"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-search" title="{LN_SEARCH}"></button></td>
+		<td><button id="buttonreset"><img src="{IMG_SPACER}"  align="left" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}"></button></td>	
+		<td>
+		<!-- IF enabledoraclesearchstr="true" -->
+				<button id="buttonmoreinfo"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
+		<!-- ENDIF enabledoraclesearchstr="true" -->
+		</td>
+		<td>
+		<td>
+			<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
+			<script> 
+				CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
+				// Custom Buttons
+				$("#buttonsearch").button()
+				.click(function() {
+						// Perform Form Submit!  Click now!
+						$("#searchform").submit();
+						// Make sure to return false here or the click registration above gets invoked.
+						return false;
+				})
+				$("#buttonreset").button()
+				.click(function() {
+						// Reset search form
+						ResetFormValues('searchform');
+						// Make sure to return false here or the click registration above gets invoked.
+						return false;
+				})
+				$("#buttonhighlight").button()
+				.click(function() {
+						// Toggle highlight visibility 
+						togglevisibility('HightLightArea');
+						// Make sure to return false here or the click registration above gets invoked.
+						return false;
+				})
+			</script>
+		</td>
+		<td><small>(sample: facility:local0 severity:warning)</small></td>
+	</tr>
+	</table>
+	
+		
+	<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
+	<table>
+	<tr>
+		<td width="120px"><strong>{LN_HIGHLIGHT}</strong></td>
+		<td><input id="txtHighlight" maxlength="2048" name="highlight" title="Search" value="{highlightstr_htmlform}" class="ui-widget-content SearchFormTextbox"></td>
+		<td><input name="search" type="submit" value="{LN_SEARCH}" class="SearchFormControl ui-icon ui-icon-search"></td>
+		
+		<!-- IF EXPAND_HIGHLIGHT="true" -->
+		<td nowrap>
+			<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center">
+			<tr>
+			<!-- BEGIN highlightwords -->
+				<td class="{cssclass}" align="center"><b>{highlight_html}</b></td>
+			<!-- END highlightwords -->
 			</tr>
 			</table>
-			</form>
 		</td>
-<!-- ENDIF EXPORT_ENABLED="true" -->
-</tr>
-</table>
+		<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
+		<td><small>({LN_HIGHLIGHT_WORDS})</small></td>
+	</tr>
+	</table>
+	</span>
 
-<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+	</form>	
+</div>
+
+<div id="PagerTop">
+
+<!-- IF main_pagerenabled="true" -->
+		
+		<!-- IF main_pager_first_found="true" -->
+			<a href="?{additional_url_sortingonly}&uid=-1{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
+		<!-- ENDIF main_pager_first_found="true" -->
+		<!-- IF main_pager_first_found!="true" -->
+			<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
+		<!-- ENDIF main_pager_first_found!="true" -->
+		
+		
+		<!-- IF main_pager_previous_found="true" -->
+			<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc&skipone=true{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
+		<!-- ENDIF main_pager_previous_found="true" -->
+		<!-- IF main_pager_previous_found!="true" -->
+			<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
+		<!-- ENDIF main_pager_previous_found!="true" -->
+				
+
+		<!-- BEGIN syslogpages -->
+		<a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>
+		<!-- END syslogpages -->
+
+		
+		<!-- IF main_pager_next_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
+		<!-- ENDIF main_pager_next_found="true" -->
+		<!-- IF main_pager_next_found!="true" -->
+		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
+		<!-- ENDIF main_pager_next_found!="true" -->
+		
+		
+		<!-- IF main_pager_last_found="true" -->
+		<a href="?{additional_url_sortingonly}&uid=-1&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
+		<!-- ENDIF main_pager_last_found="true" -->
+		<!-- IF main_pager_last_found!="true" -->
+		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
+		<!-- ENDIF main_pager_last_found!="true" -->
+
+		<!-- ENDIF main_pagerenabled="true" -->
+</div>
+
+
+<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" class="with_border">
 <tr>
 	<td nowrap width="100%" class="tableBackground" align="left">
 <!-- IF main_currentpagenumber_found="true" -->
@@ -148,92 +219,9 @@
 <!-- ENDIF main_currentpagenumber_found="true" -->
 	</td>
 
-<!-- IF ViewEnableAutoReloadSeconds_visible="true" -->
-	<td nowrap class="cellmenu2">{LN_AUTORELOAD}:</td>
-	<td nowrap class="line2">
-		<form action="userchange.php" method="get" name="autoreload">
-		<input type="hidden" name="op" value="autoreload">
-		<table border="0" cellspacing="0" cellpadding="0" align="right">
-		<tr> 
-			<td>
-			<select name="autoreloadtime" size="1" OnChange="document.autoreload.submit();">
-				<!-- BEGIN reloadtimes -->
-				<option {Selected} value="{ID}">{DisplayName}</option>
-				<!-- END reloadtimes -->
-			</select>
-			</td>
-		</tr>
-		</table>
-		</form>
-	</td>
-<!-- ENDIF ViewEnableAutoReloadSeconds_visible="true" -->
 
-<!-- IF main_recordcount_found="true" -->
-	<td nowrap class="cellmenu2">{LN_GEN_RECORDCOUNT}:</td>
-	<td nowrap class="line2" STYLE="padding: 0px 15px 0px 0px;"><B>{main_recordcount}</B></td>
-<!-- ENDIF main_recordcount_found="true" -->
 
-<!-- IF main_pagerenabled="true" -->
-		<td nowrap class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
-		<td nowrap class="line2">
-		<form action="userchange.php" method="get" name="pageingsize">
-		<input type="hidden" name="op" value="changepagesize">
-		<table border="0" cellspacing="0" cellpadding="0" align="right">
-		<tr> 
-			<td>
-				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();">
-					<!-- BEGIN pagesizes -->
-					<option {Selected} value="{ID}">{DisplayName}</option>
-					<!-- END pagesizes -->
-				</select>
-			</td>
-		</tr>
-		</table>
-		</form>
-		</td>
 
-		<td class="cellmenu2" nowrap>Pager:</td>
-		<td class="line0" width="20" nowrap>
-	<!-- IF main_pager_first_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid=-1{additional_url}" target="_top"><img src="{MENU_PAGER_BEGIN}" width="16" height="16" title="{LN_GEN_FIRSTPAGE}"></a>
-	<!-- ENDIF main_pager_first_found="true" -->
-	<!-- IF main_pager_first_found!="true" -->
-		<img src="{MENU_PAGER_BEGIN_GREY}" width="16" height="16">
-	<!-- ENDIF main_pager_first_found!="true" -->
-		</td>
-
-		<td class="line1" width="20" nowrap>
-	<!-- IF main_pager_previous_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_current}&direction=desc&skipone=true{additional_url}" target="_top"><img src="{MENU_PAGER_PREVIOUS}" width="16" title="{LN_GEN_PREVIOUSPAGE}"></a>
-	<!-- ENDIF main_pager_previous_found="true" -->
-	<!-- IF main_pager_previous_found!="true" -->
-		<img src="{MENU_PAGER_PREVIOUS_GREY}" width="16" height="16">
-	<!-- ENDIF main_pager_previous_found!="true" -->
-		</td>
-
-	<!-- BEGIN syslogpages -->
-		<td class="{cssclass}" nowrap><a href="?{additional_url_sortingonly}&uid={mypagebegin}{additional_url}" target="_top">{mypagenumber}</a>&nbsp;</td>
-	<!-- END syslogpages -->
-
-		<td class="line0" width="20" nowrap>
-	<!-- IF main_pager_next_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid={uid_next}{additional_url}" target="_top"><img src="{MENU_PAGER_NEXT}" width="16" title="{LN_GEN_NEXTPAGE}"></a>
-	<!-- ENDIF main_pager_next_found="true" -->
-	<!-- IF main_pager_next_found!="true" -->
-		<img src="{MENU_PAGER_NEXT_GREY}" width="16" height="16">
-	<!-- ENDIF main_pager_next_found!="true" -->
-		</td>
-	
-		<td class="line1" width="20" nowrap>
-	<!-- IF main_pager_last_found="true" -->
-		<a href="?{additional_url_sortingonly}&uid=-1&direction=desc{additional_url}" target="_top"><img src="{MENU_PAGER_END}" width="16" title="{LN_GEN_LASTPAGE}"></a>
-	<!-- ENDIF main_pager_last_found="true" -->
-	<!-- IF main_pager_last_found!="true" -->
-		<img src="{MENU_PAGER_END_GREY}" width="16" height="16">
-	<!-- ENDIF main_pager_last_found!="true" -->
-		</td>
-<!--	<td nowrap width="200" class="line2"><I>&nbsp;{LN_GEN_MOREPAGES}</I></td> -->
-<!-- ENDIF main_pagerenabled="true" -->
 </tr>
 </table>
 
@@ -241,12 +229,17 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
 	<td class="titleSecond" width="100%" align="left">{SourceDescription}</td>
+	<td>
+		<!-- IF main_recordcount_found="true" -->
+		({main_recordcount})
+		<!-- ENDIF main_recordcount_found="true" -->
+	<td>
 </tr>
 </table>
 <!-- ENDIF SourceDescriptionEnabled="true" -->
 
 <!-- IF syslogmessagesenabled="true" -->
-<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate" style="display:none" id="fullcontenttable">
+<table  id="fullcontenttable" width="100%" cellpadding="0" cellspacing="1" border="0" align="center" class="with_border_alternate" style="display:none">
 <tr>
 	<!-- IF MiscShowDebugGridCounter="1" -->
 	<td class="cellmenu1"><B>Debug</B></td>
@@ -340,7 +333,18 @@
 <table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
 <tr>
 	<td nowrap width="100%"class="line2" align="left">&nbsp;</td>
-
+	
+	<td nowrap class="cellmenu2">{LN_GEN_PAGERSIZE}:</td>
+	<td nowrap class="line0">
+			<form action="userchange.php" method="get" name="pageingsize">
+				<input type="hidden" name="op" value="changepagesize">
+				<select name="pagesizeid" size="1" OnChange="document.pageingsize.submit();" style="float:left">
+					<!-- BEGIN pagesizes -->
+					<option {Selected} value="{ID}">{DisplayName}</option>
+					<!-- END pagesizes -->
+				</select>
+			</form>
+	</td>
 	<td class="cellmenu2" nowrap>Pager:</td>
 	<td class="line0" width="20" nowrap>
 	<!-- IF main_pager_first_found="true" -->
@@ -443,5 +447,11 @@ $( "#dialog" ).dialog({
 /* Show Table now! */
 $( "#fullcontenttable" ).show(); 
 </script>
+<!-- IF EXPAND_HIGHLIGHT="true" -->
+<script language="javascript">
+	// Manually expand Hightlight field
+	togglevisibility('HightLightArea');
+</script>
+<!-- ENDIF EXPAND_HIGHLIGHT="true" -->
 
 <!-- INCLUDE include_footer.html -->
