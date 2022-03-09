@@ -106,7 +106,7 @@ if ( isset($content['Charts']) )
 			// --- 
 
 			// --- Set Chart default Filterstring
-			if ( strlen($myChart['chart_defaultfilter']) > 0 )
+			if ( isset($myChart['chart_defaultfilter']) && strlen($myChart['chart_defaultfilter']) > 0 )
 				$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
 			else 
 				$myChart['chart_defaultfilter_urldecoded'] = "";
