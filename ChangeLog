@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------
+Version 4.1.13 (stable), 2022-10-19
+---------------------------------------------------------------------------
+- UserDB: Fixed "Could not delete data in the '1' source" error in
+  sources admin, thanks to github user @Conan1231
+- statistics: Fix undefinded chart_defaultfilter, thanks to
+  github user @vsc55
+- PHP8 Compatibility: Fix issues regarding PHP8 support
+- jpgraph: Updated to 4.4.1 for PHP8 compatibility
+---------------------------------------------------------------------------
 Version 4.1.12 (stable), 2021-04-29
 ---------------------------------------------------------------------------
 - Secured username field against XSS attacks, thanks for reporting to:
