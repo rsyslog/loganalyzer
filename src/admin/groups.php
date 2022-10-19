@@ -118,7 +118,7 @@ if ( isset($_GET['op']) )
 						" WHERE " . DB_GROUPMEMBERS . ".groupid = " . $content['GROUPID'];
 			$result = DB_Query($sqlquery);
 			$tmparray = DB_GetAllRows($result, true);
-			if ( count($tmparray) > 0 )
+			if ( isset($tmparray) && count($tmparray) > 0 )
 			{
 				// Add UserID's to where clause!
 				foreach ($tmparray as $datarow)
@@ -449,7 +449,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	$result = DB_Query($sqlquery);
 	$content['GROUPS'] = DB_GetAllRows($result, true);
 
-	if ( count($content['GROUPS']) > 0 ) 
+	if ( isset($content['GROUPS']) && count($content['GROUPS']) > 0 )
 	{
 		// --- Process Groups
 		for($i = 0; $i < count($content['GROUPS']); $i++)
@@ -476,7 +476,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$result = DB_Query($sqlquery);
 			$content['GROUPS'][$i]['USERS'] = DB_GetAllRows($result, true);
 
-			if ( count($content['GROUPS'][$i]['USERS']) > 0 ) 
+			if ( isset($content['GROUPS'][$i]['USERS']) && count($content['GROUPS'][$i]['USERS']) > 0 )
 			{
 				// Enable Groupmembers
 				$content['GROUPS'][$i]['GROUPMEMBERS'] = true;
