@@ -355,7 +355,8 @@ if ( isset($_GET['op']) )
 			
 			// --- Init the source
 			$tmpSource = $content['Sources'][ $content['SOURCEID'] ];
-
+			InitSource($tmpSource);
+			
 			// Copy some default properties
 			$content['DisplayName'] = $tmpSource['Name'];
 			$content['SourceType'] = $tmpSource['SourceType'];
