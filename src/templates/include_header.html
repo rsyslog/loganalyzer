@@ -36,7 +36,7 @@
 		Donate and help keep the project alive!
 <!-- ENDIF SHOW_DONATEBUTTON="true" -->
 	</td>
-	<td width="450" align="center" valign="top" height="20">
+	<td width="450" align="center" valign="middle">
 
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<form action="{BASEPATH}userchange.php" method="get" name="langidform">
@@ -55,13 +55,8 @@
 		</table>
 		</form>
 	<!-- ENDIF IS_LOGINPAGE!="true" -->
-
-	</td>
-	<td rowspan="4" width="10" align="center" nowrap>&nbsp;</td>
-</tr>
-<tr> 
-	<td width="100%" align="center" valign="top" height="20">
-
+	
+	
 	<!-- IF IS_LOGINPAGE!="true" -->
 		<form action="{BASEPATH}userchange.php" method="get" name="styleidform">
 		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
@@ -81,78 +76,33 @@
 	<!-- ENDIF IS_LOGINPAGE!="true" -->
 
 	</td>
-</tr>
-<tr> 
-	<td width="100%" align="center" valign="top" height="20">
-
-	<!-- IF IS_LOGINPAGE!="true" -->
-		<!-- IF IS_ADMINPAGE!="true" -->
-		<form action="{CURRENTURL}" method="get" name="sourceidform">
-		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
-		<tr> 
-			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_GEN_SELECTSOURCE}&nbsp;</B></td>
-			<td align="right">
-				<select name="sourceid" size="1" OnChange="document.sourceidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
-					<!-- BEGIN Sources -->
-					<option {selected} value="{ID}">{Name}</option>
-					<!-- END Sources -->
-				</select>
-			</td>
-		</tr>
-		</table>
-		</form>
-		<!-- ENDIF IS_ADMINPAGE!="true" -->
-	<!-- ENDIF IS_LOGINPAGE!="true" -->
-
-	</td>
-</tr>
-<tr> 
-	<td width="100%" align="center" valign="top" height="100%">
-
-	<!-- IF IS_LOGINPAGE!="true" -->
-		<!-- IF IS_ADMINPAGE!="true" -->
-		<form action="{BASEPATH}userchange.php" method="get" name="viewidform">
-		<table width="450" border="0" cellspacing="0" cellpadding="0" class="with_border" align="right">
-		<tr> 
-			<td class="cellmenu1" width="250" nowrap><B>&nbsp;{LN_GEN_SELECTVIEW}&nbsp;</B></td>
-			<td align="right">
-				<input type="hidden" name="op" value="changeview">
-				<select name="viewid" size="1" OnChange="document.viewidform.submit();$('#loading_dialog').loading();" STYLE="width: 190px">
-					<!-- BEGIN Views -->
-					<option {selected} value="{ID}">{DisplayName}</option>
-					<!-- END Views -->
-				</select>
-			</td>
-		</tr>
-		</table>
-		</form>
-		<!-- ENDIF IS_ADMINPAGE!="true" -->
-	<!-- ENDIF IS_LOGINPAGE!="true" -->
-	
-	</td>
+	<td rowspan="4" width="10" align="center" nowrap>&nbsp;</td>
 </tr>
 </table>
 <!-- ENDIF MAXIMIZED!="true" -->
 
-<table width="100%" border="0" cellspacing="3" cellpadding="0" class="table_with_border">
-<tr> 
-	<td>
-	<!-- IF IS_ADMINPAGE!="true" -->
-		<!-- INCLUDE include_menu.html -->
-	<!-- ENDIF IS_ADMINPAGE!="true" -->
-	<!-- IF IS_ADMINPAGE="true" -->
-		<!-- INCLUDE include_menu.html -->
-	</td>
-</tr>
-<tr> 
-	<td>
-		<!-- INCLUDE admin/admin_menu.html -->
-	<!-- ENDIF IS_ADMINPAGE="true" -->
-	</td>
-</tr>
-</table>
+<div id="MainMenuPanel">
+	<table>
+	<tr> 
+		<td>
+		<!-- IF IS_ADMINPAGE!="true" -->
+			<!-- INCLUDE include_menu.html -->
+		<!-- ENDIF IS_ADMINPAGE!="true" -->
+		<!-- IF IS_ADMINPAGE="true" -->
+			<!-- INCLUDE include_menu.html -->
+		</td>
+	</tr>
+	<tr> 
+		<td>
+			<!-- INCLUDE admin/admin_menu.html -->
+		<!-- ENDIF IS_ADMINPAGE="true" -->
+		</td>
+	</tr>
+	</table>
+</div>
 
-<table class="popupdetails with_border" id="popupdetails" OnMouseOver="HoveringPopup(event,this);" OnMouseOut="FinishHoveringPopup(event,this);" OnMouseMove="disableEventPropagation();" cellpadding="2" cellspacing="0" border="0">
+
+<table id="popupdetails" class="popupdetails with_border" OnMouseOver="HoveringPopup(event,this);" OnMouseOut="FinishHoveringPopup(event,this);" OnMouseMove="disableEventPropagation();" cellpadding="2" cellspacing="0" border="0">
 <tr><td width="100%" class="cellmenu1" id="popuptitle" align="center" nowrap>&nbsp;</td></tr>
 <tr>
 	<td width="100%" class="popupcontent" id="popupcontent">&nbsp;</td>
@@ -173,3 +123,5 @@
 	</center>
 	<br>
 	<!-- ENDIF dbupgrade_warning="false" -->
+</tr>
+</table>

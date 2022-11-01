@@ -1,3 +1,32 @@
+#fullcontenttable {
+font-weight:normal !important;
+text-align:left;
+}
+
+#fullcontenttable .ui-button{
+background:none !important;
+background-image:none !important;
+border-style:none;
+white-space:normal !important;
+font-weight:normal !important;
+text-align:left;
+}
+
+#fullcontenttable .ui-button-text{
+padding:0px !important;
+}
+
+#fullcontenttable *{
+text-indent:0px !important;
+}
+
+
+button[id*="syslogseverity"]{
+	color:white;
+	text-align:left;
+}
+
+
 /* Generic Style definitions */
 .ExpansionPlus
 {
