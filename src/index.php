@@ -122,7 +122,7 @@ $content['main_pager_last_found'] = false;
 // Init Sorting variables
 $content['sorting'] = "";
 $content['searchstr'] = "";
-$content['searchstr_htmlform'] = "";
+$content['searchstr_htmlform'] = "datelastx:6";
 $content['highlightstr'] = "";
 $content['highlightstr_htmlform'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
@@ -202,7 +202,6 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filte
 	}
 }
 // --- 
-
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
 
@@ -215,6 +214,10 @@ else
 
 
 // --- BEGIN Custom Code
+//by default limit search to some sane range
+if (empty($content['searchstr'])){
+	$content['searchstr'] = $content['searchstr_htmlform'];
+}
 
 // Do not BLOCK other Site Calls
 WriteClosePHPSession();
@@ -365,9 +368,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 				// --- Set CSS Class
 				if ( $counter % 2 == 0 )
-					$content['syslogmessages'][$counter]['cssclass'] = "line1";
+					$content['syslogmessages'][$counter]['cssclass'] = "line1_".$logArray[SYSLOG_SEVERITY];
 				else
-					$content['syslogmessages'][$counter]['cssclass'] = "line2";
+					$content['syslogmessages'][$counter]['cssclass'] = "line2_".$logArray[SYSLOG_SEVERITY];
 				// --- 
 
 				// --- Copy other needed properties

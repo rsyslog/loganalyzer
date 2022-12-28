@@ -1496,9 +1496,10 @@ class LogStreamDB extends LogStream {
 									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
 									{
 										// Get current timestamp
-										$nNowTimeStamp = time();
+										
+										$nNowTimeStamp = time() - (60 * 60 * intval($myfilter[FILTER_VALUE]));
 
-										if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+										/*if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
 											$nNowTimeStamp -= 60 * 60; // One Hour!
 										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
 											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
@@ -1513,7 +1514,7 @@ class LogStreamDB extends LogStream {
 											// Set filter to unknown and Abort in this case!
 											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
 											break;
-										}
+										}*/
 										
 										// Append filter
 										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";

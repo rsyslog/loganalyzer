@@ -169,6 +169,8 @@ define('SYSLOG_WARNING', 4);
 define('SYSLOG_NOTICE', 5);
 define('SYSLOG_INFO', 6);
 define('SYSLOG_DEBUG', 7);
+define('SYSLOG_TRACE', 8);
+
 $severity_colors[SYSLOG_EMERG] = "#840A15";
 $severity_colors[SYSLOG_ALERT] = "#BA0716";
 $severity_colors[SYSLOG_CRIT] = "#CE0819";
@@ -177,6 +179,8 @@ $severity_colors[SYSLOG_WARNING] = "#EF8200";
 $severity_colors[SYSLOG_NOTICE] = "#14AD42";
 $severity_colors[SYSLOG_INFO] = "#0C9C91";
 $severity_colors[SYSLOG_DEBUG] = "#119BDE";
+$severity_colors[SYSLOG_TRACE] = "#C0C381";
+
 // --- 
 
 // --- MonitorWare InfoUnit Defines | Messagetypes

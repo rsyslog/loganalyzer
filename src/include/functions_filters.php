@@ -237,7 +237,7 @@ function InitFilterHelpers()
 	if ( isset($_SESSION['filter_severity']) ) 
 		$filters['filter_severity'] = intval($_SESSION['filter_severity']);
 	else
-		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG );
+		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG, SYSLOG_TRACE );
 
 	$iCount = count($content['filter_severity_list']);
 	for ( $i = 0; $i < $iCount; $i++ )
