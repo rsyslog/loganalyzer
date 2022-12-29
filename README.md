@@ -10,3 +10,4 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
 
 # todo
  - "Maximize view" - reloads page and resets search filter, hide toolbars with js instead
+ - changing "Autoreload" does the same as "Max. view"
