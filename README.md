@@ -9,4 +9,4 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - change datelastx behaviour - use number as hours indicator, i.e. datelastx:3 is 3 hours limit
 
 # todo
- - "Maximize view" - reloads page, hide toolbars with js instead
+ - "Maximize view" - reloads page and resets search filter, hide toolbars with js instead
