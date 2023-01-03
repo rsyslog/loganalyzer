@@ -7,3 +7,8 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - add loglevel style colors and change color for full line; 
  - limit empty search to 6h; 
  - change datelastx behaviour - use number as hours indicator, i.e. datelastx:3 is 3 hours limit
+
+# todo
+ - "Maximize view" - reloads page and resets search filter, hide toolbars with js instead
+ - changing "Autoreload" does the same as "Max. view"
+ - allow to manually configure log levels (severity) instead of using constants
