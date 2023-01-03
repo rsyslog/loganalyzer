@@ -752,7 +752,7 @@ abstract class LogStream {
 			// Use RegEx for intelligent splitting
 			$szFilterRgx = '/[\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
 			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-//DEBUG			print_r (  $tmpEntries );
+			//echo "DEBUG:<pre>"; print_r ($tmpEntries ); echo "</pre>";
 
 			foreach($tmpEntries as $myEntry) 
 			{
@@ -761,10 +761,10 @@ abstract class LogStream {
 					continue;
 
 				if ( 
-						($pos = strpos($myEntry, ":")) !== false 
+					($pos = strpos($myEntry, ":")) !== false 
 							&&
-						($pos > 0 && substr($myEntry, $pos-1,1) != '\\') /* Only if character before is no backslash! */
-					)
+					($pos > 0 && substr($myEntry, $pos-1,1) != '\\') /* Only if character before is no backslash! */
+				   )
 				{
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
@@ -777,12 +777,76 @@ abstract class LogStream {
 					// Check for multiple values!
 					if ( strpos($tmpArray[FILTER_TMP_VALUE], ",") )
 					{
-						// Split by comma and fill tmp Value array
-						$tmpValueArray = explode(",", $tmpArray[FILTER_TMP_VALUE]);
-						foreach($tmpValueArray as $myValueEntry)
-						{
-							// Append to temp array
-							$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+						//echo $tmpArray[FILTER_TMP_VALUE]."<br>";
+						$tmpArrayFilt = $tmpArray[FILTER_TMP_VALUE];
+						//don't parse quoted filter part - use it as a whole, i.e. param:"t1.1,t1.2",k2,k3 - search for (param like "%t1.1,t1.2%" or param like "%k2% or param like "%k3%")
+						//replace number range, i.e. 1-8, to 1,2,...,8
+						$myValueEntry = "";
+						$prevChar = "";
+						$quoteStart = false;
+						$numberRange = false;
+						$rangeStart = 0;
+						for ($i = 0; $i < strlen($tmpArrayFilt); $i++){
+							$strChar = $tmpArrayFilt[$i]; 
+							//echo $strChar."<br>";
+
+							if($numberRange){
+								//echo "#range#end#";
+								$range = $rangeStart;
+								for($j = $rangeStart; $j < intval($strChar); $j++){
+									$range .= ($j == $rangeStart)?(""):(",").$j;
+								}
+								$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($range), FILTER_TMP_VALUE => $range);
+
+								$myValueEntry = '';
+								$rangeStart = 0;
+								$numberRange = false;
+
+							}//not filter start, not quoted, and is not negation, then it's a range
+							// TODO handle partial range, i.e. property:3-,-1,-4 = ignore 1,4 and find range from 3 to max_syslog_severity
+							else if($strChar === '-' && !$quoteStart && $prevChar !== ',' && $i !== 0 /*!filter start':'*/){
+								//echo "#range#start#".$prevChar;
+								$nextChar = $tmpArrayFilt[$i+1];
+								if(!is_numeric($nextChar)){//handle incomplete range as a singleton
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($prevChar), FILTER_TMP_VALUE => $prevChar);
+								}else{
+									$numberRange = true;
+                                                                	$rangeStart = intval($prevChar);
+								}
+
+							}//is not a separator inside quite, thus handle as usual
+							else if($strChar === ',' && !$quoteStart){
+								//echo "#comma#";
+								//if(!empty($myValueEntry)){
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+									$myValueEntry = "";
+								//}
+                                                                $prevChar = $strChar;
+
+							}//it's not escaped quote, handle it specially
+							else if($strChar === '"' && $prevChar !== '\\'){
+								//echo "#quote#";
+							  	if($quoteStart){//quoted str parsed; add filter into array as is 
+									//echo "#qend#".$myValueEntry."<br>";
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );	
+							    		$myValueEntry = "";
+									$prevChar = "";
+									$quoteStart = false;
+								}else{ 
+									//echo "#qstart#";
+									$quoteStart = true;
+									//$prevChar = $strChar;
+								}
+							}else{//build filter string
+								//echo "#concat#";
+								$myValueEntry .= $strChar;
+								$prevChar = $strChar;
+								if(($i+1) == strlen($tmpArrayFilt)){//on last char insert filter instantly
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+								}	
+
+							}
+							
 						}
 					}
 
@@ -865,13 +929,6 @@ abstract class LogStream {
 									}
 								}
 
-/* OBSELETE CODE 
-								foreach( $tmpValues as $mykey => $szValue ) 
-								{
-									// First set Filter Mode
-									$tmpValues[$mykey][FILTER_TMP_MODE] = $this->SetFilterIncludeMode($szValue);
-								}
-*/
 							}
 							else
 							{
