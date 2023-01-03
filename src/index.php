@@ -122,10 +122,13 @@ $content['main_pager_last_found'] = false;
 // Init Sorting variables
 $content['sorting'] = "";
 $content['searchstr'] = "";
-$content['searchstr_htmlform'] = "datelastx:6";
+$content['searchstr_htmlform'] = "datelastx:6 severity:-8";
 $content['highlightstr'] = "";
 $content['highlightstr_htmlform'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
+
+// hide header by default
+$_SESSION['SESSION_MAXIMIZED'] = true;
 
 // --- Read and process filters from search dialog!
 if ( (isset($_POST['search']) || isset($_GET['search'])) || (isset($_POST['filter']) || isset($_GET['filter'])) )

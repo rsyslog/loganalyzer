@@ -3,6 +3,10 @@
 Adiscon LogAnalyzer, a web frontend to log data from the same folks the created rsyslog
 
 # changes
+ - Maximize view by default
+ - fix chart double adding same key into search
+ - allow to configure ORDER BY clause
+ - add custom filter to chart value redirection link if such exists
  - support number ranges in filter, i.e. severity:3-6 -> where severity in (3,4,5,6)
  - support quoted filters, i.e. syslogtag:-="dhcp,info",-="wireless,info",-"system%,account" ->  where (syslogtag <> 'dhcp,info' AND syslogtag <> 'wireless,info' AND syslogtag NOT LIKE '%system%,account%' )
  - support TRACE syslog level; 

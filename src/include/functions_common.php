@@ -510,6 +510,8 @@ function CreateReloadTimesList()
 	$tmpReloadSeconds = GetConfigSetting("ViewEnableAutoReloadSeconds", "", CFGLEVEL_USER);
 	if ( $tmpReloadSeconds > 0 )
 	{
+		//by default select predefined value
+		$_SESSION['AUTORELOAD_ID'] = 1; 
 		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $tmpReloadSeconds . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $tmpReloadSeconds ); $iCounter++;
 	}
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 5 ); $iCounter++;
