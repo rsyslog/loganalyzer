@@ -62,6 +62,7 @@ class LogStreamDB extends LogStream {
 
 	private $_SQLwhereClause = "";
 	private $_myDBQuery = null;
+	private $_SQLcustomLimitHaltSearchAfter = null; //if set, then search will stop after getting this records
 
 	// Constructor
 	public function __construct ($streamConfigObj) {
@@ -545,6 +546,12 @@ class LogStreamDB extends LogStream {
 				$ret = $this->ReadNextRecordsFromDB($uID);
 			else
 			{
+				// Override default value if custom limit is less - act as tail without paging
+				// NB it won't work if custom limit gt page limit
+				$limit = $this->_SQLcustomLimitHaltSearchAfter;
+				if(isset($limit) && $this->_currentRecordNum >= $limit)
+					$ret = ERROR_NOMORERECORDS;
+
 				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 				{
 					// We need to load new records, so clear the old ones first!
@@ -590,7 +597,6 @@ class LogStreamDB extends LogStream {
 				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
 				{
 					$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
-
 					// Check if we have to skip the message!
 					if ( $retParser == ERROR_MSG_SKIPMESSAGE )
 						$ret = $retParser;
@@ -618,7 +624,7 @@ class LogStreamDB extends LogStream {
 
 		// This additional filter check will take care on dynamic fields from the message parser!
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
-
+		
 		// reached here means return result!
 		return $ret;
 	}
@@ -1350,7 +1356,7 @@ class LogStreamDB extends LogStream {
 
 
 	/*
-	*	============= Beginn of private functions =============
+	*	============= Begin of private functions =============
 	*/
 
 	/*
@@ -1361,6 +1367,11 @@ class LogStreamDB extends LogStream {
 	{
 		if ( $this->_filters != null )
 		{
+			//if filter limit set, then apply it to a query
+			if( isset($this->_filters['limit']) ){
+				$this->_SQLcustomLimitHaltSearchAfter= $this->_filters['limit'][FILTER_VALUE];
+			}
+
 			global $dbmapping;
 			$szTableType = $this->_logStreamConfigObj->DBTableType;
 
@@ -1379,8 +1390,8 @@ class LogStreamDB extends LogStream {
 				}
 			}
 			// ---
-			  //echo 'DEBUG <pre>'; print_r($arrayQueryProperties); echo '</pre>'; 
-			 //echo 'DEBUG <pre>'; print_r($this->_filters); echo '</pre>';
+			//echo 'DEBUG <pre>'; print_r($arrayQueryProperties); echo '</pre>'; 
+			//echo 'DEBUG <pre>'; print_r($this->_filters); echo '</pre>';
 			// Loop through all available properties
 			foreach( $arrayQueryProperties as $propertyname )
 			{
@@ -1502,7 +1513,7 @@ class LogStreamDB extends LogStream {
 									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
 									{
 										// Get current timestamp
-										$nNowTimeStamp = time() - (60 * 60 * intval($myfilter[FILTER_VALUE]));
+										$nNowTimeStamp = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
 
 										// Append filter
 										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
@@ -1573,8 +1584,11 @@ class LogStreamDB extends LogStream {
 					}
 				}
 			}
-
-//echo $this->_SQLwhereClause."<br>";
+			
+			// print direct debug only on search page 
+			//if(strpos($_SERVER['REQUEST_URI'], "export.php") === false && strpos($_SERVER['REQUEST_URI'], "chartgenerator.php") === false){
+			//	echo "DEBUG: ".$this->_SQLwhereClause."<br>";
+			//}
 			//$dbmapping[$szTableType][SYSLOG_UID]
 		}
 		else // No filters means nothing to do!
@@ -1663,9 +1677,14 @@ class LogStreamDB extends LogStream {
 		$szSql = $this->CreateSQLStatement($uID);
 
 		// --- Append LIMIT 
-		$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+		// Override default value if custom is less - act as tail without paging
+		$limit = $this->_SQLcustomLimitHaltSearchAfter;
+		if ( isset($limit) === true && ($limit < $this->_logStreamConfigObj->RecordsPerQuery)){
+			$szSql .= " LIMIT " . $limit;
+		}else
+			$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
 		// ---
-
+		
 		// Perform Database Query
 		$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ( !$this->_myDBQuery ) 

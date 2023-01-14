@@ -245,7 +245,7 @@ if ( !$content['error_occured'] )
 							// Now handle fields types differently
 							if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_DATE )
 							{
-								$content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey]); 
+								$content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = GetFormatedDate($logArray[$mycolkey], true); 
 							}
 							else if ( $content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_NUMBER )
 							{
@@ -333,28 +333,33 @@ else
 
 	$szOutputFileName = "ExportMessages";
 	$szOutputFileExtension = ".txt";
-	if		( $content['exportformat'] == EXPORT_CVS ) 
-	{
+	$szOPFieldSeparator = " ";
+	$szOPFirstLineFieldNames = true;
+	$szOPQuoteValues = false;
+	if( $content['exportformat'] == EXPORT_CVS ){
 		// Set MIME TYPE and File Extension
-		$szOutputMimeType = "text/csv";
-		$szOutputFileExtension = ".csv";
+		$szOutputMimeType 	= "text/csv";
+		$szOutputFileExtension 	= ".csv";
+		$szOPFieldSeparator 	= ",";
+		$szOPQuoteValues 	= true;
+	}
 
-		// Set Column line in cvs file!
-		foreach($content['Columns'] as $mycolkey)
-		{
-			if ( isset($fields[$mycolkey]) )
+	if ( $content['exportformat'] == EXPORT_CVS || $content['exportformat'] == EXPORT_PLAIN) {
+		if($szOPFirstLineFieldNames === true){
+			foreach($content['Columns'] as $mycolkey)
 			{
-				// Prepend Comma if needed
-				if (strlen($szOutputContent) > 0)
-					$szOutputContent .= ",";  
+				if ( isset($fields[$mycolkey]) )
+				{
+					// Prepend Comma if needed
+					if (strlen($szOutputContent) > 0)  $szOutputContent .= $szOPFieldSeparator;  
 
-				// Append column name
-				$szOutputContent .= $fields[$mycolkey]['FieldCaption'];
+					// Append column name
+					$szOutputContent .= $fields[$mycolkey]['FieldCaption'];
+				}
 			}
-		}
 		
-		// Append line break
-		$szOutputContent .= "\n";
+			$szOutputContent .= "\n";
+		}
 
 		// Append messages into output
 		foreach ( $content['syslogmessages'] as $myIndex => $mySyslogMessage )
@@ -364,19 +369,23 @@ else
 			// --- Process columns
 			foreach($mySyslogMessage as $myColkey => $mySyslogField)
 			{
-				// Prepend Comma if needed
-				if (strlen($szLine) > 0)
-					$szLine .= ",";
+				// Prepend separator if needed
+				if (strlen($szLine) > 0)   $szLine .= $szOPFieldSeparator;
 
 				// Append field contents
-				$szLine .= '"' . str_replace('"', '\\"', $mySyslogField['fieldvalue']) . '"';
+				if($szOPQuoteValues === true) {
+					$szLine .= '"' . str_replace('"', '\\"', $mySyslogField['fieldvalue']) . '"';
+				}else{
+					$szLine .= $mySyslogField['fieldvalue'];
+				}
 			}
-			// --- 
+			// ---
 
 			// Append line!
 			$szOutputContent .= $szLine . "\n";
 		}
-	}
+	 
+	} 
 	else if	( $content['exportformat'] == EXPORT_XML ) 
 	{
 		// Set MIME TYPE and File Extension

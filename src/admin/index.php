@@ -167,6 +167,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = $_POST['DefaultFontSize']; }
 
 			// Read checkboxes
+			if ( isset ($_POST['ExportUseTodayYesterday']) ) { $content['ExportUseTodayYesterday'] = 1; } else { $content['ExportUseTodayYesterday'] = 0; }
+			if ( isset ($_POST['SESSION_MAXIMIZED']) ) { $content['SESSION_MAXIMIZED'] = 1; } else { $content['SESSION_MAXIMIZED'] = 0; }
 			if ( isset ($_POST['ViewUseTodayYesterday']) ) { $content['ViewUseTodayYesterday'] = 1; } else { $content['ViewUseTodayYesterday'] = 0; } 
 			if ( isset ($_POST['ViewEnableDetailPopups']) ) { $content['ViewEnableDetailPopups'] = 1; } else { $content['ViewEnableDetailPopups'] = 0; } 
 			if ( isset ($_POST['EnableContextLinks']) ) { $content['EnableContextLinks'] = 1; } else { $content['EnableContextLinks'] = 0; } 
@@ -195,6 +197,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = $_POST['PrependTitle']; }
 			if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = $_POST['SearchCustomButtonCaption']; }
 			if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = $_POST['SearchCustomButtonSearch']; }
+			if ( isset ($_POST['EventEmptySearchDefaultFilter']) ) { $content['EventEmptySearchDefaultFilter'] = $_POST['EventEmptySearchDefaultFilter']; }
 
 			if ( isset ($_POST['InjectHtmlHeader']) ) { $content['InjectHtmlHeader'] = $_POST['InjectHtmlHeader']; }
 			if ( isset ($_POST['InjectBodyHeader']) ) { $content['InjectBodyHeader'] = $_POST['InjectBodyHeader']; }
@@ -256,6 +259,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_PrependTitle']) ) { $USERCFG['PrependTitle'] = $_POST['User_PrependTitle']; }
 			if ( isset ($_POST['User_SearchCustomButtonCaption']) ) { $USERCFG['SearchCustomButtonCaption'] = $_POST['User_SearchCustomButtonCaption']; }
 			if ( isset ($_POST['User_SearchCustomButtonSearch']) ) { $USERCFG['SearchCustomButtonSearch'] = $_POST['User_SearchCustomButtonSearch']; }
+			if ( isset ($_POST['User_EventEmptySearchDefaultFilter']) ) { $USERCFG['EventEmptySearchDefaultFilter'] = $_POST['User_EventEmptySearchDefaultFilter']; }
+
 
 			// Save configuration variables now
 			SaveUserGeneralSettingsIntoDB();
@@ -273,6 +278,9 @@ if ( !isset($content['InlineOnlineSearchIcons']) ) { $content['InlineOnlineSearc
 if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime'] = 2; }
 
 // Set checkbox States
+if (isset($content['ExportUseTodayYesterday']) && $content['ExportUseTodayYesterday'] == 1) { $content['ExportUseTodayYesterday_checked'] = "checked"; } else { $content['ExportUseTodayYesterday_checked'] = ""; }
+if (isset($content['SESSION_MAXIMIZED']) && $content['SESSION_MAXIMIZED'] == 1) { $content['SESSION_MAXIMIZED_checked'] = "checked"; } else { $content['SESSION_MAXIMIZED_checked'] = ""; }
+
 if (isset($content['ViewUseTodayYesterday']) && $content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
 if (isset($content['ViewEnableDetailPopups']) && $content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
 if (isset($content['EnableContextLinks']) && $content['EnableContextLinks'] == 1) { $content['EnableContextLinks_checked'] = "checked"; } else { $content['EnableContextLinks_checked'] = ""; }
@@ -388,6 +396,9 @@ foreach ( $content['ENCODINGS'] as &$myEncoding)
 if ( $content['ENABLEUSEROPTIONS'] )
 {
 	// Set checkbox States
+	if ( GetConfigSetting('ExportUseTodayYesterday', $content['ExportUseTodayYesterday'], CFGLEVEL_USER) == 1) { $content['User_ExportUseTodayYesterday_checked'] = "checked"; } else { $content['User_ExportUseTodayYesterday_checked'] = ""; }
+	if ( GetConfigSetting('SESSION_MAXIMIZED', $content['SESSION_MAXIMIZED'], CFGLEVEL_USER) == 1) { $content['User_SESSION_MAXIMIZED_checked'] = "checked"; } else { $content['User_SESSION_MAXIMIZED_checked'] = ""; }
+
 	if ( GetConfigSetting('ViewUseTodayYesterday', $content['ViewUseTodayYesterday'], CFGLEVEL_USER) == 1) { $content['User_ViewUseTodayYesterday_checked'] = "checked"; } else { $content['User_ViewUseTodayYesterday_checked'] = ""; }
 	if ( GetConfigSetting('ViewEnableDetailPopups', $content['ViewEnableDetailPopups'], CFGLEVEL_USER) == 1) { $content['User_ViewEnableDetailPopups_checked'] = "checked"; } else { $content['User_ViewEnableDetailPopups_checked'] = ""; }
 	if ( GetConfigSetting('EnableContextLinks', $content['EnableContextLinks'], CFGLEVEL_USER) == 1) { $content['User_EnableContextLinks_checked'] = "checked"; } else { $content['User_EnableContextLinks_checked'] = ""; }
@@ -412,6 +423,8 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	$content['User_AdminChangeWaitTime'] = GetConfigSetting('AdminChangeWaitTime', $content['AdminChangeWaitTime'], CFGLEVEL_USER);
 	$content['User_SearchCustomButtonCaption'] = GetConfigSetting('SearchCustomButtonCaption', $content['SearchCustomButtonCaption'], CFGLEVEL_USER);
 	$content['User_SearchCustomButtonSearch'] = GetConfigSetting('SearchCustomButtonSearch', $content['SearchCustomButtonSearch'], CFGLEVEL_USER);
+	$content['User_EventEmptySearchDefaultFilter'] = GetConfigSetting('EventEmptySearchDefaultFilter', $content['EventEmptySearchDefaultFilter'], CFGLEVEL_USER);
+
 	// ---
 
 	// --- Init for ViewDefaultTheme field!

@@ -109,7 +109,7 @@ $content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "NOTICE", "selected" => "" );
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "INFO", "selected" => "" );
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "DEBUG", "selected" => "" );
-$content['filter_severity_list'][] = array( "ID" => SYSLOG_TRACE, "DisplayName" => "TRACE", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => CUSTOM_TRACE, "DisplayName" => "TRACE", "selected" => "" );
 
 // --- 
 

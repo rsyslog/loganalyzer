@@ -511,7 +511,7 @@ function CreateReloadTimesList()
 	if ( $tmpReloadSeconds > 0 )
 	{
 		//by default select predefined value
-		$_SESSION['AUTORELOAD_ID'] = 1; 
+		$_SESSION['AUTORELOAD_ID'] = GetConfigSetting("Default_AUTORELOAD_ID", 0, CFGLEVEL_USER); 
 		$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => $content['LN_AUTORELOAD_PRECONFIGURED'] . " (" . $tmpReloadSeconds . " " . $content['LN_AUTORELOAD_SECONDS'] . ") ", "Value" => $tmpReloadSeconds ); $iCounter++;
 	}
 	$content['reloadtimes'][$iCounter] = array( "ID" => $iCounter, "Selected" => "", "DisplayName" => " 5 " . $content['LN_AUTORELOAD_SECONDS'], "Value" => 5 ); $iCounter++;
@@ -537,6 +537,7 @@ function CreateExportFormatList()
 	global $content;
 	
 	// Add basic formats!
+    $content['EXPORTTYPES'][EXPORT_PLAIN] = array( "ID" => EXPORT_PLAIN, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_PLAIN'] );
 	$content['EXPORTTYPES'][EXPORT_CVS] = array( "ID" => EXPORT_CVS, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_CVS'] );
 	$content['EXPORTTYPES'][EXPORT_XML] = array( "ID" => EXPORT_XML, "Selected" => "", "DisplayName" => $content['LN_GEN_EXPORT_XML'] );
 
@@ -1798,6 +1799,9 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "ViewDefaultLanguage", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewDefaultTheme", true, null, null,$bForceStripSlahes );
 
+	WriteConfigValue( "ExportUseTodayYesterday", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "SESSION_MAXIMIZED", true, null, null,$bForceStripSlahes );
+	
 	WriteConfigValue( "ViewUseTodayYesterday", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewEnableDetailPopups", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "EnableContextLinks", true, null, null,$bForceStripSlahes );
@@ -1820,6 +1824,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 	WriteConfigValue( "PrependTitle", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "SearchCustomButtonCaption", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "SearchCustomButtonSearch", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "EventEmptySearchDefaultFilter", true, null, null,$bForceStripSlahes );
 	
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", true, null, null,$bForceStripSlahes );
@@ -1849,6 +1854,9 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "ViewDefaultLanguage", false, $content['SESSION_USERID']);
 	WriteConfigValue( "ViewDefaultTheme", false, $content['SESSION_USERID'] );
 
+	WriteConfigValue( "ExportUseTodayYesterday", false, $content['SESSION_USERID']);
+	WriteConfigValue( "SESSION_MAXIMIZED", false, $content['SESSION_USERID']);
+	
 	WriteConfigValue( "ViewUseTodayYesterday", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableDetailPopups", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "EnableContextLinks", false, $content['SESSION_USERID'] );
@@ -1871,7 +1879,8 @@ function SaveUserGeneralSettingsIntoDB()
 	WriteConfigValue( "PrependTitle", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SearchCustomButtonCaption", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "SearchCustomButtonSearch", false, $content['SESSION_USERID'] );
-	
+	WriteConfigValue( "EventEmptySearchDefaultFilter", false, $content['SESSION_USERID'] );
+
 	// Extra Fields
 	WriteConfigValue( "DefaultViewsID", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "DefaultSourceID", false, $content['SESSION_USERID'] );

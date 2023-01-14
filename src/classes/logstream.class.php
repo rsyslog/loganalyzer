@@ -472,19 +472,21 @@ abstract class LogStream {
 								// Only filter if value is non zero
 								if ( strlen($propertyvalue) > 0 && strlen($myfilter[FILTER_VALUE]) > 0 )
 								{
+									//check for % inside keyword and handle it accordingly, i.e. "key1%key2"
+									$strPosLike = strpos($myfilter[FILTER_VALUE], "%");
 									// If Syslog message, we have AND handling!
 									if ( $propertyname == SYSLOG_MESSAGE )
 									{
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false && $strPosLike === false ) 
 												$bEval = false;
 										}
 										// Exclude Filter
 										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false && $strPosLike !== false) 
 												$bEval = false;
 										}
 									}
@@ -566,25 +568,12 @@ abstract class LogStream {
 								$nLogTimeStamp = $arrProperitesOut[$propertyname][EVTIME_TIMESTAMP];
 								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
 								{
-									// Get current timestamp
-									$nNowTimeStamp = time();
+									//datelastx:x handle x as hours instead of constant
+									//Get range timestamp
+									$nLastXTime = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
 
-									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
-										$nLastXTime = 60 * 60; // One Hour!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
-										$nLastXTime = 60 * 60 * 12; // 12 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
-										$nLastXTime = 60 * 60 * 24; // 24 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
-										$nLastXTime = 60 * 60 * 24 * 7; // 7 days
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
-										$nLastXTime = 60 * 60 * 24 * 31; // 31 days
-									else
-										// WTF default? 
-										$nLastXTime = 86400;
-									
-									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.
-									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )
+									// If Nowtime + LastX is higher then the log timestamp, then this logline is too old for us.
+									if ( $nLastXTime > $nLogTimeStamp )
 										$bEval = false;
 								}
 								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
@@ -768,7 +757,7 @@ abstract class LogStream {
 				{
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
-//print_r (  $tmpArray );
+					//echo "DEBUG: <pre>"; print_r (  $tmpArray ); echo "</pre>";
 					
 					// Continue if empty filter!
 					if ( strlen(trim($tmpArray[FILTER_TMP_VALUE])) == 0 ) 
@@ -792,12 +781,9 @@ abstract class LogStream {
 
 							if($numberRange){
 								//echo "#range#end#";
-								$range = $rangeStart;
-								for($j = $rangeStart; $j < intval($strChar); $j++){
-									$range .= ($j == $rangeStart)?(""):(",").$j;
+								for($j = $rangeStart; $j < intval($strChar)+1; $j++){
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($j), FILTER_TMP_VALUE => $j);
 								}
-								$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($range), FILTER_TMP_VALUE => $range);
-
 								$myValueEntry = '';
 								$rangeStart = 0;
 								$numberRange = false;
@@ -848,11 +834,27 @@ abstract class LogStream {
 							}
 							
 						}
+					}else{
+						//parse severity number range, i.e. 1-8 into 1,2,3,4,5,6,7,8
+						if($tmpArray[FILTER_TMP_KEY] == "severity" && !isset($tmpValues) && strpos($tmpArray[FILTER_TMP_VALUE],"-")){
+ 							$rangeBounds = explode("-", $tmpArray[FILTER_TMP_VALUE]);
+							for($j = intval($rangeBounds[0]); $j < intval($rangeBounds[1])+1; $j++){
+								$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($j), FILTER_TMP_VALUE => $j);
+							}
+						}
 					}
 
 					// Handle filter based
 					switch( $tmpArray[FILTER_TMP_KEY] )
 					{
+						case "limit":
+							$defaultPageLimit = GetConfigSetting("ViewEntriesPerPage", 50, CFGLEVEL_USER);
+							if($tmpArray[FILTER_TMP_VALUE] < $defaultPageLimit){
+								$this->_filters["limit"][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+							}else 
+								$this->_filters["limit"][FILTER_VALUE] = $defaultPageLimit;
+							break;
+
 						case "facility": 
 							$tmpKeyName = SYSLOG_FACILITY; 
 							$tmpFilterType = FILTER_TYPE_NUMBER;
@@ -1285,7 +1287,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "+");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate +
+			//truncate +
 			$szValue = substr( $szValue, 1);
 			$myBits = FILTER_MODE_INCLUDE;
 		}
@@ -1303,7 +1305,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "=");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate -
+			//truncate -
 			$szValue = substr( $szValue, 1);
 
 			// Add BIT if not NUMBER FIELD!
@@ -1315,7 +1317,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "~");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate -
+			//truncate -
 			$szValue = substr( $szValue, 1);
 			// Add BIT if not NUMBER FIELD!
 			if ( $myFilterType != FILTER_TYPE_NUMBER )

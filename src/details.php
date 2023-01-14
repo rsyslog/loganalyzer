@@ -117,7 +117,7 @@ if ( isset($_GET['direction']) )
 }
 
 // Read filter property in
-	if		( isset($_POST['filter']) )
+	if	( isset($_POST['filter']) )
 		$myfilter = $_POST['filter'];
 	else if ( isset($_GET['filter']) )
 		$myfilter = $_GET['filter'];
