@@ -10,6 +10,9 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - CFG[Default_AUTORELOAD_ID] - control default autoreload mode
  - cfg[SESSION_MAXIMIZED] - control maximized mode
  - filter: support "limit:int" tag - disable paging and query less than configured for page (LogStreamDB->_SQLcustomLimitHaltSearchAfter)
+ 
+![limit_10](https://user-images.githubusercontent.com/8426197/212502393-d05d0cb9-4baf-4008-838b-ce078b6eeb8b.png)
+
  - filter: datelastx - handle as float number
  - export: allow to EXPORT_PLAIN text format	
  - custom bug fixes
@@ -20,6 +23,9 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - fix bug: chart double adding same key into search
  - allow to configure ORDER BY clause
  - add custom filter to chart value redirection link if such exists
+ 
+![chart_custom](https://user-images.githubusercontent.com/8426197/210448944-9a67c91c-1ca7-4f00-99ac-a5eebd566927.png)
+
  - filter: support number ranges, i.e. severity:3-6 -> where severity in (3,4,5,6)
  - filter: support quoted filters, i.e. syslogtag:-="dhcp,info",-="wireless,info",-"system%,account" ->  where (syslogtag <> 'dhcp,info' AND syslogtag <> 'wireless,info' AND syslogtag NOT LIKE '%system%,account%' )
  - filter: support TRACE severity level; 
