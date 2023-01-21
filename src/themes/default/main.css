@@ -23,9 +23,8 @@ a:link,a:active,a:visited,a.postlink
 {
 	font-weight: bold;
 	text-decoration:none;
-
 	background-color: transparent;
-	color:#ffffff;
+	color:#005989;
 }
 a:hover
 {
@@ -33,6 +32,13 @@ a:hover
 	color:#002C5B;
 }
 /*---*/
+
+/* Gridline Link Classes */
+td .gridline a:link,td .gridline a:active,td .gridline a:visited,td .gridline a.postlink
+{
+        color:#ffffff;
+}
+
 
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
