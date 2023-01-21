@@ -1,8 +1,8 @@
 /* 
 Helper Javascript Constants
 */
-const DATEMODE_ALL = 1, DATEMODE_RANGE = 2, DATEMODE_LASTX = 3;
-const DATE_LASTX_HOUR = 1, DATE_LASTX_12HOURS = 2, DATE_LASTX_24HOURS = 3, DATE_LASTX_7DAYS = 4,DATE_LASTX_31DAYS = 5;
+const DATEMODE_ALL = 1, DATEMODE_RANGE = 2, DATEMODE_LASTXX = 33;
+const DATE_LASTX_HOUR = 1, DATE_LASTX_12HOURS = 12, DATE_LASTX_24HOURS = 24, DATE_LASTX_7DAYS = 168, DATE_LASTX_31DAYS = 744;
 
 /*
 Helper Javascript functions
@@ -54,7 +54,7 @@ function toggleDatefiltervisibility(FormName)
 
 		toggleformelement('filter_daterange_last_x', false);
 	}
-	else if (myform.elements['filter_datemode'].value == DATEMODE_LASTX)
+	else if (myform.elements['filter_datemode'].value == DATEMODE_LASTXX)
 	{
 		togglevisibility('HiddenDateLastXOptions');
 		hidevisibility('HiddenDateFromOptions');
@@ -99,9 +99,9 @@ function CalculateSearchPreview(szSearchFormName, szPreviewArea)
 									+ mySearchform.elements['filter_daterange_to_minute'].value + ":"
 									+ mySearchform.elements['filter_daterange_to_second'].value + " ";
 	}
-	else if (mySearchform.elements['filter_datemode'].value == DATEMODE_LASTX)
+	else if (mySearchform.elements['filter_datemode'].value == DATEMODE_LASTXX)
 	{
-		szOutString += "datelastx:" + mySearchform.elements['filter_daterange_last_x'].value + " ";
+		szOutString += "datelastxx:" + mySearchform.elements['filter_daterange_last_x'].value + " ";
 	}
 
 	// --- Syslog Facility

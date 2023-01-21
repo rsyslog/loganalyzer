@@ -149,12 +149,12 @@ if ( (isset($_POST['search']) || isset($_GET['search'])) )
 														$filters['filter_daterange_to_second'] . " ";
 
 			}
-			else if ( $filters['filter_datemode'] == DATEMODE_LASTX )
+			else if ( $filters['filter_datemode'] == DATEMODE_LASTXX )
 			{
 				if ( isset($_GET['filter_daterange_last_x']) ) 
 				{
 					$filters['filter_daterange_last_x'] = intval($_GET['filter_daterange_last_x']);
-					$content['searchstr'] .= "datelastx:" .	$filters['filter_daterange_last_x'] . " ";
+					$content['searchstr'] .= "datelastxx:" .	$filters['filter_daterange_last_x'] . " ";
 				}
 			}
 		}

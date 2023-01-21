@@ -3,6 +3,17 @@
 ![loganalizer_example](https://user-images.githubusercontent.com/8426197/209875963-b7438f3b-9052-4e8f-9f22-05794e1e54a5.png)
 Adiscon LogAnalyzer, a web frontend to log data from the same folks the created rsyslog
 
+# todo
+ - export: add checkbox to export full filtered history (now exports only current page)
+ - export: place ts into export filename (range from-to)
+ - BUG: "Suppress duplicated messages" doesn't work
+ - filter: allow to specify AFTER:n BEFORE:n (if possible/fast to implement) <- include records before and after match
+ - export: configure columns for file export (allow to remove unnecessary columns) <- exclude list of columns
+ - BUG: sometimes spinner on index page is drawn in the middle of page irrespective of it's size, but should be drawn in the middle of screen
+ 
+# changes 230121
+ - datelastx - keep for backward compatibility (for saved searches); add datelastxx
+
 # changes 230114
  - fix bug: WHERE ( message LIKE '%LTE%unreachable%' ) give no result on filter page, yet works for charts, i.e. input = msg:LTE%unreachable (todo# in chart records have wrong date today merged with yesterday)
  - cfg[EventEmptySearchDefaultFilter] - config to use in case filter is empty (first load)
@@ -31,11 +42,6 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - filter: support TRACE severity level; 
  - gui: add loglevel style colors and change color for full line; 
  - filter: change datelastx behaviour - use number as hours indicator, i.e. datelastx:3 is 3 hours limit
-
-# todo
- - export: add checkbox to export full filtered history (now exports selected page only)
- - export: configure columns for file export (allow to remove unnecessary columns) <- exclude list of columns
- - export: place ts into export filename (range from-to)
  
  #obsolete
  - filter: allow to OR msg, i.e. key1 &key2 |key3;

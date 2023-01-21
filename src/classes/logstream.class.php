@@ -566,9 +566,35 @@ abstract class LogStream {
 							case FILTER_TYPE_DATE:
 								// Get Log TimeStamp
 								$nLogTimeStamp = $arrProperitesOut[$propertyname][EVTIME_TIMESTAMP];
-								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+								
+								//FIXME keep for backward compatibility
+								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX )
 								{
-									//datelastx:x handle x as hours instead of constant
+									// Get current timestamp
+									$nNowTimeStamp = time();	
+																			
+									//Get range timestamp
+									$nLastXTime = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
+									if	( $myfilter[FILTER_VALUE] == 1 /*DATE_LASTX_HOUR*/ )		
+										$nLastXTime = 60 * 60; // One Hour!
+									else if	( $myfilter[FILTER_VALUE] == 2 /*DATE_LASTX_12HOURS*/ )
+										$nLastXTime = 60 * 60 * 12; // 12 Hours!		
+									else if	( $myfilter[FILTER_VALUE] == 3 /*DATE_LASTX_24HOURS*/ )		
+										$nLastXTime = 60 * 60 * 24; // 24 Hours!		
+									else if	( $myfilter[FILTER_VALUE] == 4 /*DATE_LASTX_7DAYS*/ )		
+										$nLastXTime = 60 * 60 * 24 * 7; // 7 days		
+									else if	( $myfilter[FILTER_VALUE] == 5 /*DATE_LASTX_31DAYS*/ )		
+										$nLastXTime = 60 * 60 * 24 * 31; // 31 days		
+									else		
+										// WTF default? 		
+										$nLastXTime = 86400;		
+
+									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.		
+									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )		
+										$bEval = false;
+								}								
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTXX ) 
+								{//handle x as hours
 									//Get range timestamp
 									$nLastXTime = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
 
@@ -1027,10 +1053,15 @@ abstract class LogStream {
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_RANGE_TO; 
 							break;
-						case "datelastx": 
+						case "datelastx": //FIXME keep for backward compatibility
 							$tmpKeyName = SYSLOG_DATE; 
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_LASTX; 
+							break;
+						case "datelastxx": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_LASTXX; 
 							break;
 						case "timereported": 
 							$tmpKeyName = SYSLOG_DATE; 

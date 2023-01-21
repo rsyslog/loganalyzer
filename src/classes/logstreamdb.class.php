@@ -1510,9 +1510,34 @@ class LogStreamDB extends LogStream {
 										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
 									}
 									
+									//FIXME keep for backward compatibility
 									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
-									{
-										// Get current timestamp
+									{										
+										// Get current timestamp												
+										$nNowTimeStamp = time();												
+										if	( $myfilter[FILTER_VALUE] == 1 /*DATE_LASTX_HOUR*/ )		
+											$nNowTimeStamp -= 60 * 60; // One Hour!		
+										else if	( $myfilter[FILTER_VALUE] == 2 /*DATE_LASTX_12HOURS*/)		
+											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!		
+										else if	( $myfilter[FILTER_VALUE] == 3 /*DATE_LASTX_24HOURS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!		
+										else if	( $myfilter[FILTER_VALUE] == 4 /*DATE_LASTX_7DAYS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days		
+										else if	( $myfilter[FILTER_VALUE] == 5 /*DATE_LASTX_31DAYS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days		
+										else 		
+										{		
+											// Set filter to unknown and Abort in this case!		
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;		
+											break;		
+										}		
+
+										// Append filter
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTXX ) 
+									{//handle x as hours
+										// Calculate offset timestamp
 										$nNowTimeStamp = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
 
 										// Append filter

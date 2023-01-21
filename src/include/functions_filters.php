@@ -60,9 +60,9 @@ function InitFilterHelpers()
 	$content['datemodes'][1]['ID'] = DATEMODE_RANGE;
 	$content['datemodes'][1]['DisplayName'] = $content['LN_DATEMODE_RANGE'];
 	if ( $filters['filter_datemode'] == DATEMODE_RANGE ) { $content['datemodes'][1]['selected'] = "selected"; } else { $content['datemodes'][1]['selected'] = ""; }
-	$content['datemodes'][2]['ID'] = DATEMODE_LASTX;
+	$content['datemodes'][2]['ID'] = DATEMODE_LASTXX;
 	$content['datemodes'][2]['DisplayName'] = $content['LN_DATEMODE_LASTX'];
-	if ( $filters['filter_datemode'] == DATEMODE_LASTX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
+	if ( $filters['filter_datemode'] == DATEMODE_LASTXX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
 	
 	// Init Date Range Parameters
 	global $currentTime, $currentDay, $currentMonth, $currentYear, $tomorrowTime, $tomorrowDay, $tomorrowMonth, $tomorrowYear; 
