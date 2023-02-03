@@ -371,9 +371,9 @@ if ( isset($content['Sources'][$currentSourceID]) )
 
 				// --- Set CSS Class
 				if ( $counter % 2 == 0 )
-					$content['syslogmessages'][$counter]['cssclass'] = "line1_".$logArray[SYSLOG_SEVERITY];
+					$content['syslogmessages'][$counter]['cssclass'] = "line1" . (isset($logArray[SYSLOG_SEVERITY]) && strlen($logArray[SYSLOG_SEVERITY]) > 0 ? "_" . $logArray[SYSLOG_SEVERITY] : "");
 				else
-					$content['syslogmessages'][$counter]['cssclass'] = "line2_".$logArray[SYSLOG_SEVERITY];
+					$content['syslogmessages'][$counter]['cssclass'] = "line2" . (isset($logArray[SYSLOG_SEVERITY]) && strlen($logArray[SYSLOG_SEVERITY]) > 0 ? "_" . $logArray[SYSLOG_SEVERITY] : "");
 				// --- 
 
 				// --- Copy other needed properties
