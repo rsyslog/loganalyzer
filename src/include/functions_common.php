@@ -1795,6 +1795,7 @@ function SaveGeneralSettingsIntoDB($bForceStripSlahes = false)
 
 	WriteConfigValue( "ExportUseTodayYesterday", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "SESSION_MAXIMIZED", true, null, null,$bForceStripSlahes );
+	WriteConfigValue( "ViewColoredCells", true, null, null,$bForceStripSlahes );
 	
 	WriteConfigValue( "ViewUseTodayYesterday", true, null, null,$bForceStripSlahes );
 	WriteConfigValue( "ViewEnableDetailPopups", true, null, null,$bForceStripSlahes );
@@ -1850,6 +1851,7 @@ function SaveUserGeneralSettingsIntoDB()
 
 	WriteConfigValue( "ExportUseTodayYesterday", false, $content['SESSION_USERID']);
 	WriteConfigValue( "SESSION_MAXIMIZED", false, $content['SESSION_USERID']);
+	WriteConfigValue( "ViewColoredCells", false, $content['SESSION_USERID']);
 	
 	WriteConfigValue( "ViewUseTodayYesterday", false, $content['SESSION_USERID'] );
 	WriteConfigValue( "ViewEnableDetailPopups", false, $content['SESSION_USERID'] );
