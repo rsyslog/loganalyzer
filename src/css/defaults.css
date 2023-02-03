@@ -142,3 +142,134 @@
     font-size: 1.3em;
     color: #737373;
 }
+
+/* Cells for listening */
+/*emergency*/
+.line1_0{
+	color: #000000; background-color: #840A15;
+}
+.line2_0{
+	color: #000000; background-color: #be0e1d;
+}
+.line1_0:hover, .line2_0:hover {
+	background-color:#CD636E;
+}
+td .line1_0 a, td .line1_0 a:link, td .line1_0 a:active, td .line1_0 a:visited,
+td .line2_0 a, td .line2_0 a:link, td .line2_0 a:active, td .line2_0 a:visited {
+	color: #ffffff;
+}
+/*alert*/
+.line1_1{
+	color: #000000; background-color: #BA0716;
+}
+.line2_1{
+	color: #000000; background-color: #dd081a;
+}
+.line1_1:hover, .line2_1:hover {
+	background-color:#CD636E;
+}
+td .line1_1 a, td .line1_1 a:link, td .line1_1 a:active, td .line1_1 a:visited,
+td .line2_1 a, td .line2_1 a:link, td .line2_1 a:active, td .line2_1 a:visited {
+	color: #ffffff;
+}
+/*critical*/
+.line1_2{
+	color: #000000; background-color: #CE0819;
+}
+.line2_2{
+	color: #000000; background-color: #f83a4a;
+}
+.line1_2:hover, .line2_2:hover {
+	color: #ffff55;
+	background-color:#CD636E;
+}
+td .line1_2 a, td .line1_2 a:link, td .line1_2 a:active, td .line1_2 a:visited,
+td .line2_2 a, td .line2_2 a:link, td .line2_2 a:active, td .line2_2 a:visited {
+	color: #ffffff;
+}
+/*error*/
+.line1_3{
+	color: #ffff99; background-color: #BB0A1F;
+}
+.line2_3{
+	color: #ffff99; background-color: #f20d28;
+}
+.line1_3:hover, .line2_3:hover {
+	color: #ffff55;
+	background-color:#CD636E;
+}
+td .line1_3 a, td .line1_3 a:link, td .line1_3 a:active, td .line1_3 a:visited,
+td .line2_3 a, td .line2_3 a:link, td .line2_3 a:active, td .line2_3 a:visited {
+	color: #ffffff;
+}
+/*warning*/
+.line1_4{
+	color: #000000; background-color: #EF8200;
+}
+.line2_4{
+	color: #000000; background-color: #ff8c00;
+}
+.line1_4:hover, .line2_4:hover {
+	background-color:#ffc680;
+}
+td .line1_4 a, td .line1_4 a:link, td .line1_4 a:active, td .line1_4 a:visited,
+td .line2_4 a, td .line2_4 a:link, td .line2_4 a:active, td .line2_4 a:visited {
+	color: #000000;
+}
+/*notice*/
+.line1_5{
+	color: #000000; background-color: #14AD42;
+}
+.line2_5{
+	color: #000000; background-color: #18cd4e;
+}
+.line1_5:hover, .line2_5:hover {
+	background-color:#76ef9a;
+}
+td .line1_5 a, td .line1_5 a:link, td .line1_5 a:active, td .line1_5 a:visited,
+td .line2_5 a, td .line2_5 a:link, td .line2_5 a:active, td .line2_5 a:visited {
+	color: #000000;
+}
+/*info*/
+.line1_6{
+	color: #000000; background-color: #0C9C91;
+}
+.line2_6{
+	color: #000000; background-color: #0ebeaf;
+}
+.line1_6:hover, .line2_6:hover {
+	background-color:#2aefde;
+}
+td .line1_6 a, td .line1_6 a:link, td .line1_6 a:active, td .line1_6 a:visited,
+td .line2_6 a, td .line2_6 a:link, td .line2_6 a:active, td .line2_6 a:visited {
+	color: #000000;
+}
+/*debug*/
+.line1_7{
+	color: #000000; background-color: #666699;
+}
+.line2_7{
+	color: #000000; background-color: #8585ad;
+}
+.line1_7:hover, .line2_7:hover {
+	background-color:#a3a3c2;
+}
+td .line1_7 a, td .line1_7 a:link, td .line1_7 a:active, td .line1_7 a:visited,
+td .line2_7 a, td .line2_7 a:link, td .line2_7 a:active, td .line2_7 a:visited {
+	color: #000000;
+}
+/*trace*/
+.line1_8{
+	color: #000000; background-color: #c2c2c0;
+}
+.line2_8{
+	color: #000000; background-color: #cdcdcb;
+}
+.line1_8:hover, .line2_8:hover {
+	background-color:#f3f3f2;
+	background-color:#dadad8;
+}
+td .line1_8 a, td .line1_8 a:link, td .line1_8 a:active, td .line1_8 a:visited,
+td .line2_8 a, td .line2_8 a:link, td .line2_8 a:active, td .line2_8 a:visited {
+	color: #000000;
+}

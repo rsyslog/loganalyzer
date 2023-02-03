@@ -58,7 +58,10 @@ $DEBUGMODE = DEBUG_INFO;
 
 // Enable error tracking
 @ini_set( "track_errors", "On" );
-// --- 
+
+// Try to enable a little more memory in case we do some more filtering
+@ini_set('memory_limit', '512M');
+// ---
 
 // Default language
 $LANG_EN = "en";	// Used for fallback
@@ -627,20 +630,11 @@ function CheckAndSetRunMode()
 */
 function RemoveMagicQuotes()
 {
-	if(function_exists("get_magic_quotes_gpc")  && get_magic_quotes_gpc()) {
-		$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-		while (list($key, $val) = each($process)) {
-			foreach ($val as $k => $v) {
-				unset($process[$key][$k]);
-				if (is_array($v)) {
-					$process[$key][stripslashes($k)] = $v;
-					$process[] = &$process[$key][stripslashes($k)];
-				} else {
-					$process[$key][stripslashes($k)] = stripslashes($v);
-				}
-			}
-		}
-		unset($process);
+	if(function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc()) {
+		RemoveMagicQuotes_deep($_GET);
+		RemoveMagicQuotes_deep($_POST);
+		RemoveMagicQuotes_deep($_COOKIE);
+		RemoveMagicQuotes_deep($_REQUEST);
 	}
 }
 
