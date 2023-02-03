@@ -228,6 +228,14 @@
 		<td align="left" class="line1" ><input type="text" name="User_SearchCustomButtonSearch" size="35" maxlength="255" value="{User_SearchCustomButtonSearch}" class="maxwidth"></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
+        <tr>
+                <td align="left" class="cellmenu2" nowrap><b>{LN_GEN_EMPTYSRCHFILTR}</b></td>
+                <td align="left" class="line1" ><input type="text" name="EventEmptySearchDefaultFilter" size="35" maxlength="255" value="{EventEmptySearchDefaultFilter}" {DISABLE_GLOBALEDIT_FORMCONTROL} class="maxwidth"></td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+                <td align="left" class="line1" ><input type="text" name="User_EventEmptySearchDefaultFilter" size="35" maxlength="255" value="{User_EventEmptySearchDefaultFilter}" class="maxwidth"></td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+        </tr>
+
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_USETODAY}</b></td>
 		<td align="left" class="line2" ><input type="checkbox" name="ViewUseTodayYesterday" value="yes" {ViewUseTodayYesterday_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
@@ -235,6 +243,22 @@
 		<td align="left" class="line2" ><input type="checkbox" name="User_ViewUseTodayYesterday" value="yes" {User_ViewUseTodayYesterday_checked}></td>
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
 	</tr>
+        <tr>
+                <td align="left" class="cellmenu2" nowrap><b>{LN_GEN_EXPORT_USETODAY}</b></td>
+                <td align="left" class="line2" ><input type="checkbox" name="ExportUseTodayYesterday" value="yes" {ExportUseTodayYesterday_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+                <td align="left" class="line2" ><input type="checkbox" name="User_ExportUseTodayYesterday" value="yes" {User_ExportUseTodayYesterday_checked}></td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+        </tr>
+        <tr>
+                <td align="left" class="cellmenu2" nowrap><b>{LN_GEN_SESSION_MAX}</b></td>
+                <td align="left" class="line2" ><input type="checkbox" name="SESSION_MAXIMIZED" value="yes" {SESSION_MAXIMIZED_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+                <td align="left" class="line2" ><input type="checkbox" name="User_SESSION_MAXIMIZED" value="yes" {User_SESSION_MAXIMIZED_checked}></td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+        </tr>
+
+
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_DETAILPOPUPS}</b></td>
 		<td align="left" class="line1" ><input type="checkbox" name="ViewEnableDetailPopups" value="yes" {ViewEnableDetailPopups_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>

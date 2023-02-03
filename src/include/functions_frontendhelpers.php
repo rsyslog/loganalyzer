@@ -220,17 +220,19 @@ function CreateCurrentUrl()
 	// done
 }
 
-function GetFormatedDate($evttimearray)
+function GetFormatedDate($evttimearray, $onExport = false)
 {
 	global $content;
 
 	if ( is_array($evttimearray) )
 	{
 		if ( 
-				GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
-				&&
-				( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
-			)
+			($onExport == true && GetConfigSetting("ExportUseTodayYesterday", 0, CFGLEVEL_USER) == 1)   
+			|| ( 
+				$onExport == false && GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
+				&& ( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
+			 )
+		  )	
 		{
 			if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
 				return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );

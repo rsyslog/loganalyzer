@@ -98,6 +98,11 @@ else
 	$content['error_details'] = $content['LN_GEN_ERROR_MISSINGCHARTFIELD'];
 }
 
+if ( isset($_GET['orderby']) )
+{
+        $content['chart_orderby'] = $_GET['orderby'];
+}else { $content['chart_orderby'] = NULL; }
+
 if ( isset($_GET['maxrecords']) ) 
 {
 	// read and verify value
@@ -148,7 +153,7 @@ if ( !$content['error_occured'] )
 	{
 		// Obtain and get the Config Object
 		$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];
-
+		//echo "filter:".$content['chart_defaultfilter']."<br>";
 		// Create LogStream Object 
 		$stream = $stream_config->LogStreamFactory($stream_config);
 		$stream->SetFilter($content['chart_defaultfilter']);
@@ -160,7 +165,7 @@ if ( !$content['error_occured'] )
 		if ( $aFilterFields != null ) 
 			$content['ChartColumns'] = $aFilterFields; 
 
-		// Append mandetory fields
+		// Append mandatory fields
 		if ( !in_array(SYSLOG_UID, $content['ChartColumns']) )
 			$content['ChartColumns'][] = SYSLOG_UID;
 		if ( !in_array($content['chart_field'], $content['ChartColumns']) )
@@ -182,9 +187,9 @@ if ( !$content['error_occured'] )
 					// Split key and value
 					$tmpArray = explode(":", $myFilter, 2);
 
-					// Check if keyfield is valid and add to our Columns array if available
+					// Check if keyfield is valid and add to our Columns array only if it's not there yet 
 					$newField = $stream->ReturnFilterKeyBySearchField($tmpArray[FILTER_TMP_KEY]);
-					if ( $newField )
+					if ( $newField && !in_array($newField,$content['ChartColumns']))
 						$content['ChartColumns'][] = $newField;
 				}
 			}
@@ -195,8 +200,8 @@ if ( !$content['error_occured'] )
 		if ( $res == SUCCESS )
 		{
 			// Obtain data from the logstream!
-			$chartData = $stream->GetCountSortedByField($content['chart_field'], $content['chart_fieldtype'], $content['maxrecords']);
-
+			$chartData = $stream->GetCountSortedByField($content['chart_field'], $content['chart_fieldtype'], $content['maxrecords'], $content['chart_orderby']);
+//echo "<pre>";echo print_r($chartData); echo "</pre><br>";
 			// If data is valid, we have an array!
 			if ( is_array($chartData) && count($chartData) > 0 )
 			{
@@ -210,7 +215,7 @@ if ( !$content['error_occured'] )
 					$YchartData[] = intval($myData);
 					$XchartData[] = strlen($myKey) > 0 ? $myKey : "Unknown";
 					if ( isset($fields[$content['chart_field']]['SearchField']) && strlen($myKey) > 0 ) 
-						$chartImageMapLinks[] = $content['custombasepath'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) . "&search=Search";
+						$chartImageMapLinks[] = $content['custombasepath'] . "index.php?filter=" . $fields[$content['chart_field']]['SearchField'] . "%3A%3D" . urlencode($szEncodedKeyStr) .(empty($content['chart_defaultfilter'])?"":urlencode(" ".$content['chart_defaultfilter'])). "&search=Search";
 					else
 						$chartImageMapLinks[] = "";
 

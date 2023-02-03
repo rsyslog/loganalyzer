@@ -472,19 +472,21 @@ abstract class LogStream {
 								// Only filter if value is non zero
 								if ( strlen($propertyvalue) > 0 && strlen($myfilter[FILTER_VALUE]) > 0 )
 								{
+									//check for % inside keyword and handle it accordingly, i.e. "key1%key2"
+									$strPosLike = strpos($myfilter[FILTER_VALUE], "%");
 									// If Syslog message, we have AND handling!
 									if ( $propertyname == SYSLOG_MESSAGE )
 									{
 										// Include Filter
 										if ( $myfilter[FILTER_MODE] & FILTER_MODE_INCLUDE ) 
 										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false ) 
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) === false && $strPosLike === false ) 
 												$bEval = false;
 										}
 										// Exclude Filter
 										else if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE ) 
 										{
-											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false ) 
+											if ( stripos($propertyvalue, $myfilter[FILTER_VALUE]) !== false && $strPosLike !== false) 
 												$bEval = false;
 										}
 									}
@@ -564,27 +566,40 @@ abstract class LogStream {
 							case FILTER_TYPE_DATE:
 								// Get Log TimeStamp
 								$nLogTimeStamp = $arrProperitesOut[$propertyname][EVTIME_TIMESTAMP];
-								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
+								
+								//FIXME keep for backward compatibility
+								if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX )
 								{
 									// Get current timestamp
-									$nNowTimeStamp = time();
-
-									if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
+									$nNowTimeStamp = time();	
+																			
+									//Get range timestamp
+									$nLastXTime = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
+									if	( $myfilter[FILTER_VALUE] == 1 /*DATE_LASTX_HOUR*/ )		
 										$nLastXTime = 60 * 60; // One Hour!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
-										$nLastXTime = 60 * 60 * 12; // 12 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
-										$nLastXTime = 60 * 60 * 24; // 24 Hours!
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
-										$nLastXTime = 60 * 60 * 24 * 7; // 7 days
-									else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
-										$nLastXTime = 60 * 60 * 24 * 31; // 31 days
-									else
-										// WTF default? 
-										$nLastXTime = 86400;
-									
-									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.
-									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )
+									else if	( $myfilter[FILTER_VALUE] == 2 /*DATE_LASTX_12HOURS*/ )
+										$nLastXTime = 60 * 60 * 12; // 12 Hours!		
+									else if	( $myfilter[FILTER_VALUE] == 3 /*DATE_LASTX_24HOURS*/ )		
+										$nLastXTime = 60 * 60 * 24; // 24 Hours!		
+									else if	( $myfilter[FILTER_VALUE] == 4 /*DATE_LASTX_7DAYS*/ )		
+										$nLastXTime = 60 * 60 * 24 * 7; // 7 days		
+									else if	( $myfilter[FILTER_VALUE] == 5 /*DATE_LASTX_31DAYS*/ )		
+										$nLastXTime = 60 * 60 * 24 * 31; // 31 days		
+									else		
+										// WTF default? 		
+										$nLastXTime = 86400;		
+
+									// If Nowtime + LastX is higher then the log timestamp, the this logline is to old for us.		
+									if ( ($nNowTimeStamp - $nLastXTime) > $nLogTimeStamp )		
+										$bEval = false;
+								}								
+								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTXX ) 
+								{//handle x as hours
+									//Get range timestamp
+									$nLastXTime = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
+
+									// If Nowtime + LastX is higher then the log timestamp, then this logline is too old for us.
+									if ( $nLastXTime > $nLogTimeStamp )
 										$bEval = false;
 								}
 								else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_RANGE_FROM ) 
@@ -752,7 +767,7 @@ abstract class LogStream {
 			// Use RegEx for intelligent splitting
 			$szFilterRgx = '/[\s]++(?=(?:(?:[^"]*+"){2})*+[^"]*+$)(?=(?:(?:[^\']*+\'){2})*+[^\']*+$)(?=(?:[^()]*+\([^()]*+\))*+[^()]*+$)/x';
 			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-//DEBUG			print_r (  $tmpEntries );
+			//echo "DEBUG:<pre>"; print_r ($tmpEntries ); echo "</pre>";
 
 			foreach($tmpEntries as $myEntry) 
 			{
@@ -761,14 +776,14 @@ abstract class LogStream {
 					continue;
 
 				if ( 
-						($pos = strpos($myEntry, ":")) !== false 
+					($pos = strpos($myEntry, ":")) !== false 
 							&&
-						($pos > 0 && substr($myEntry, $pos-1,1) != '\\') /* Only if character before is no backslash! */
-					)
+					($pos > 0 && substr($myEntry, $pos-1,1) != '\\') /* Only if character before is no backslash! */
+				   )
 				{
 					// Split key and value
 					$tmpArray = explode(":", $myEntry, 2);
-//print_r (  $tmpArray );
+					//echo "DEBUG: <pre>"; print_r (  $tmpArray ); echo "</pre>";
 					
 					// Continue if empty filter!
 					if ( strlen(trim($tmpArray[FILTER_TMP_VALUE])) == 0 ) 
@@ -777,18 +792,95 @@ abstract class LogStream {
 					// Check for multiple values!
 					if ( strpos($tmpArray[FILTER_TMP_VALUE], ",") )
 					{
-						// Split by comma and fill tmp Value array
-						$tmpValueArray = explode(",", $tmpArray[FILTER_TMP_VALUE]);
-						foreach($tmpValueArray as $myValueEntry)
-						{
-							// Append to temp array
-							$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+						//echo $tmpArray[FILTER_TMP_VALUE]."<br>";
+						$tmpArrayFilt = $tmpArray[FILTER_TMP_VALUE];
+						//don't parse quoted filter part - use it as a whole, i.e. param:"t1.1,t1.2",k2,k3 - search for (param like "%t1.1,t1.2%" or param like "%k2% or param like "%k3%")
+						//replace number range, i.e. 1-8, to 1,2,...,8
+						$myValueEntry = "";
+						$prevChar = "";
+						$quoteStart = false;
+						$numberRange = false;
+						$rangeStart = 0;
+						for ($i = 0; $i < strlen($tmpArrayFilt); $i++){
+							$strChar = $tmpArrayFilt[$i]; 
+							//echo $strChar."<br>";
+
+							if($numberRange){
+								//echo "#range#end#";
+								for($j = $rangeStart; $j < intval($strChar)+1; $j++){
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($j), FILTER_TMP_VALUE => $j);
+								}
+								$myValueEntry = '';
+								$rangeStart = 0;
+								$numberRange = false;
+
+							}//not filter start, not quoted, and is not negation, then it's a range
+							// TODO handle partial range, i.e. property:3-,-1,-4 = ignore 1,4 and find range from 3 to max_syslog_severity
+							else if($strChar === '-' && !$quoteStart && $prevChar !== ',' && $i !== 0 /*!filter start':'*/){
+								//echo "#range#start#".$prevChar;
+								$nextChar = $tmpArrayFilt[$i+1];
+								if(!is_numeric($nextChar)){//handle incomplete range as a singleton
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($prevChar), FILTER_TMP_VALUE => $prevChar);
+								}else{
+									$numberRange = true;
+                                                                	$rangeStart = intval($prevChar);
+								}
+
+							}//is not a separator inside quite, thus handle as usual
+							else if($strChar === ',' && !$quoteStart){
+								//echo "#comma#";
+								//if(!empty($myValueEntry)){
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+									$myValueEntry = "";
+								//}
+                                                                $prevChar = $strChar;
+
+							}//it's not escaped quote, handle it specially
+							else if($strChar === '"' && $prevChar !== '\\'){
+								//echo "#quote#";
+							  	if($quoteStart){//quoted str parsed; add filter into array as is 
+									//echo "#qend#".$myValueEntry."<br>";
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );	
+							    		$myValueEntry = "";
+									$prevChar = "";
+									$quoteStart = false;
+								}else{ 
+									//echo "#qstart#";
+									$quoteStart = true;
+									//$prevChar = $strChar;
+								}
+							}else{//build filter string
+								//echo "#concat#";
+								$myValueEntry .= $strChar;
+								$prevChar = $strChar;
+								if(($i+1) == strlen($tmpArrayFilt)){//on last char insert filter instantly
+									$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($myValueEntry), FILTER_TMP_VALUE => $myValueEntry );
+								}	
+
+							}
+							
+						}
+					}else{
+						//parse severity number range, i.e. 1-8 into 1,2,3,4,5,6,7,8
+						if($tmpArray[FILTER_TMP_KEY] == "severity" && !isset($tmpValues) && strpos($tmpArray[FILTER_TMP_VALUE],"-")){
+ 							$rangeBounds = explode("-", $tmpArray[FILTER_TMP_VALUE]);
+							for($j = intval($rangeBounds[0]); $j < intval($rangeBounds[1])+1; $j++){
+								$tmpValues[] = array( FILTER_TMP_MODE => $this->SetFilterIncludeMode($j), FILTER_TMP_VALUE => $j);
+							}
 						}
 					}
 
 					// Handle filter based
 					switch( $tmpArray[FILTER_TMP_KEY] )
 					{
+						case "limit":
+							$defaultPageLimit = GetConfigSetting("ViewEntriesPerPage", 50, CFGLEVEL_USER);
+							if($tmpArray[FILTER_TMP_VALUE] < $defaultPageLimit){
+								$this->_filters["limit"][FILTER_VALUE] = $tmpArray[FILTER_TMP_VALUE];
+							}else 
+								$this->_filters["limit"][FILTER_VALUE] = $defaultPageLimit;
+							break;
+
 						case "facility": 
 							$tmpKeyName = SYSLOG_FACILITY; 
 							$tmpFilterType = FILTER_TYPE_NUMBER;
@@ -865,13 +957,6 @@ abstract class LogStream {
 									}
 								}
 
-/* OBSELETE CODE 
-								foreach( $tmpValues as $mykey => $szValue ) 
-								{
-									// First set Filter Mode
-									$tmpValues[$mykey][FILTER_TMP_MODE] = $this->SetFilterIncludeMode($szValue);
-								}
-*/
 							}
 							else
 							{
@@ -968,10 +1053,15 @@ abstract class LogStream {
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_RANGE_TO; 
 							break;
-						case "datelastx": 
+						case "datelastx": //FIXME keep for backward compatibility
 							$tmpKeyName = SYSLOG_DATE; 
 							$tmpFilterType = FILTER_TYPE_DATE;
 							$tmpTimeMode = DATEMODE_LASTX; 
+							break;
+						case "datelastxx": 
+							$tmpKeyName = SYSLOG_DATE; 
+							$tmpFilterType = FILTER_TYPE_DATE;
+							$tmpTimeMode = DATEMODE_LASTXX; 
 							break;
 						case "timereported": 
 							$tmpKeyName = SYSLOG_DATE; 
@@ -1228,7 +1318,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "+");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate +
+			//truncate +
 			$szValue = substr( $szValue, 1);
 			$myBits = FILTER_MODE_INCLUDE;
 		}
@@ -1246,7 +1336,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "=");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate -
+			//truncate -
 			$szValue = substr( $szValue, 1);
 
 			// Add BIT if not NUMBER FIELD!
@@ -1258,7 +1348,7 @@ abstract class LogStream {
 		$pos = strpos($szValue, "~");
 		if ( $pos !== false && $pos == 0 )
 		{
-			//trunscate -
+			//truncate -
 			$szValue = substr( $szValue, 1);
 			// Add BIT if not NUMBER FIELD!
 			if ( $myFilterType != FILTER_TYPE_NUMBER )

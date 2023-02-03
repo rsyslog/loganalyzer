@@ -43,6 +43,15 @@
 		<td class="cellmenu2" nowrap><B>{LN_CHART_FIELD}</B></td>
 		<td class="line2">&nbsp;{CHART_FIELD_DISPLAYNAME}</td>
 	</tr>
+        <tr>
+                <td class="cellmenu2" nowrap><B>{LN_CHART_ORDERBY}</B></td>
+                <td class="line2">&nbsp;{chart_orderby}</td>
+        </tr>
+        <tr>
+                <td class="cellmenu2" nowrap><B>{LN_CHART_FILTER}</B></td>
+                <td class="line2">&nbsp;{chart_defaultfilter}</td>
+        </tr>
+
 	<tr>
 		<td class="cellmenu2" nowrap><B>{LN_CHART_WIDTH}</B></td>
 		<td class="line1">&nbsp;{chart_width}</td>
@@ -59,7 +68,7 @@
 		<div id="Chart{CHART_ID}"></div>
 		<script> 
 			$( "#Chart{CHART_ID}").html('<center></br><img src="images/ajax-loader.gif"></br></br></center>');   
-			$( "#Chart{CHART_ID}").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}');
+$( "#Chart{CHART_ID}").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&orderby={chart_orderby_urldecoded}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}');
 		</script>
 	</td></tr>
 	</table>

@@ -60,9 +60,9 @@ function InitFilterHelpers()
 	$content['datemodes'][1]['ID'] = DATEMODE_RANGE;
 	$content['datemodes'][1]['DisplayName'] = $content['LN_DATEMODE_RANGE'];
 	if ( $filters['filter_datemode'] == DATEMODE_RANGE ) { $content['datemodes'][1]['selected'] = "selected"; } else { $content['datemodes'][1]['selected'] = ""; }
-	$content['datemodes'][2]['ID'] = DATEMODE_LASTX;
+	$content['datemodes'][2]['ID'] = DATEMODE_LASTXX;
 	$content['datemodes'][2]['DisplayName'] = $content['LN_DATEMODE_LASTX'];
-	if ( $filters['filter_datemode'] == DATEMODE_LASTX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
+	if ( $filters['filter_datemode'] == DATEMODE_LASTXX ) { $content['datemodes'][2]['selected'] = "selected"; } else { $content['datemodes'][2]['selected'] = ""; }
 	
 	// Init Date Range Parameters
 	global $currentTime, $currentDay, $currentMonth, $currentYear, $tomorrowTime, $tomorrowDay, $tomorrowMonth, $tomorrowYear; 
@@ -237,7 +237,7 @@ function InitFilterHelpers()
 	if ( isset($_SESSION['filter_severity']) ) 
 		$filters['filter_severity'] = intval($_SESSION['filter_severity']);
 	else
-		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG );
+		$filters['filter_severity'] = array ( SYSLOG_EMERG, SYSLOG_ALERT, SYSLOG_CRIT, SYSLOG_ERR, SYSLOG_WARNING, SYSLOG_NOTICE, SYSLOG_INFO, SYSLOG_DEBUG, CUSTOM_TRACE );
 
 	$iCount = count($content['filter_severity_list']);
 	for ( $i = 0; $i < $iCount; $i++ )

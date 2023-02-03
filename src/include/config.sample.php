@@ -80,6 +80,9 @@ $CFG['MiscMaxExecutionTime'] = 30;			// LogAnalyzer will try to overwrite the de
 $CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informations on failed logins
 // --- 
 
+// --- Default Export options
+$CFG['ExportUseTodayYesterday'] = 0;                    // Same as ViewUseTodayYesterday. By default export normal dates
+
 // --- Default Frontend Options 
 $CFG['PrependTitle'] = "";					// If set, this	text will be prepended withint the title tag
 $CFG['ViewUseTodayYesterday'] = 1;			// If enabled, the date from today and yesterday is displayed as "today" and "yesterday"
@@ -91,6 +94,9 @@ $CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user i
 											// Currently only "default" and "dark" are available. 
 $CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
 $CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is set to anything higher the 0 (which means disabled), this means auto reload is enabled by default. 
+
+$CFG['Default_AUTORELOAD_ID'] = 0; 		// By default disable autoreload (select id, 1 for user-defined) 
+$CFG['SESSION_MAXIMIZED'] = 0;   		// If enabled start session in maximized mode
 
 $CFG['SearchCustomButtonCaption'] = "I'd like to feel sad";	// Default caption for the custom fast search button
 $CFG['SearchCustomButtonSearch'] = "error";					// Default search string for the custom search button
@@ -124,11 +130,11 @@ $CFG['DefaultViewsID'] = "";
 // --- Predefined Searches! 
 $CFG['Search'][] = array ( "DisplayName" => "Syslog Warnings and Errors", "SearchQuery" => "filter=severity%3A0%2C1%2C2%2C3%2C4&search=Search" );
 $CFG['Search'][] = array ( "DisplayName" => "Syslog Errors", "SearchQuery" => "filter=severity%3A0%2C1%2C2%2C3&search=Search" );
-$CFG['Search'][] = array ( "DisplayName" => "All messages from the last hour", "SearchQuery" => "filter=datelastx%3A1&search=Search" );
-$CFG['Search'][] = array ( "DisplayName" => "All messages from last 12 hours", "SearchQuery" => "filter=datelastx%3A2&search=Search" );
-$CFG['Search'][] = array ( "DisplayName" => "All messages from last 24 hours", "SearchQuery" => "filter=datelastx%3A3&search=Search" );
-$CFG['Search'][] = array ( "DisplayName" => "All messages from last 7 days", "SearchQuery" => "filter=datelastx%3A4&search=Search" );
-$CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "SearchQuery" => "filter=datelastx%3A5&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from the last hour", "SearchQuery" => "filter=datelastxx%3A1&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 12 hours", "SearchQuery" => "filter=datelastxx%3A12&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 24 hours", "SearchQuery" => "filter=datelastxx%3A24&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 7 days", "SearchQuery" => "filter=datelastxx%3A168&search=Search" );
+$CFG['Search'][] = array ( "DisplayName" => "All messages from last 31 days", "SearchQuery" => "filter=datelastxx%3A744&search=Search" );
 // $CFG['Search'][] = array ( "DisplayName" => "", "SearchQuery" => "" );
 // ---
 

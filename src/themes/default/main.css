@@ -23,7 +23,6 @@ a:link,a:active,a:visited,a.postlink
 {
 	font-weight: bold;
 	text-decoration:none;
-
 	background-color: transparent;
 	color:#005989;
 }
@@ -33,6 +32,13 @@ a:hover
 	color:#002C5B;
 }
 /*---*/
+
+/* Gridline Link Classes */
+td .gridline a:link,td .gridline a:active,td .gridline a:visited,td .gridline a.postlink
+{
+        color:#ffffff;
+}
+
 
 /* Context Link Classes */
 a.contextlink:link,a.contextlink:active,a.contextlink:visited,a.contextlink
@@ -157,6 +163,52 @@ font
 }
 
 /* Cells for listening */
+/*emergency*/
+.line1_0  { color: #ffffff; background-color: #840A15;}
+.line1_0:hover { background-color:#ed1224;}
+.line2_0{ color: #ffffff; background-color: #be0e1d;}
+.line2_0:hover {background-color:#f8a0a7; }
+/*alert*/
+.line1_1 { color: #ffffff; background-color: #BA0716;}
+.line1_1:hover { background-color:#f6091d;}
+.line2_1{ color: #ffffff; background-color: #dd081a;}
+.line2_1:hover {background-color:#fa6b77; }
+/*critical*/
+.line1_2 { color: #ffffff; background-color: #CE0819;}
+.line1_2:hover { background-color:#fa6b77;}
+.line2_2{ color: #ffffff; background-color: #f83a4a;}
+.line2_2:hover {background-color:#fcb5bb; }
+/*error*/
+.line1_3 { color: #ffffff; background-color: #BB0A1F;}
+.line1_3:hover { background-color:#fa9ea9;}
+.line2_3{ color: #ffffff; background-color: #f20d28;}
+.line2_3:hover {background-color:#fa9ea9; }
+/*warning*/
+.line1_4 { color: #000000; background-color: #EF8200;}
+.line1_4:hover { background-color:#ffa333;}
+.line2_4{ color: #000000; background-color: #ff8c00;}
+.line2_4:hover {background-color:#ffc680; }
+/*notice*/
+.line1_5 { color: #000000; background-color: #14AD42;}
+.line1_5:hover { background-color:#32e768;}
+.line2_5{ color: #000000; background-color: #18cd4e;}
+.line2_5:hover {background-color:#76ef9a; }
+/*info*/
+.line1_6 { color: #000000; background-color: #0C9C91;}
+.line1_6:hover { background-color:#2aefde;}
+.line2_6{ color: #000000; background-color: #0ebeaf;}
+.line2_6:hover {background-color:#2aefde; }
+/*debug*/
+.line1_7 { color: #000000; background-color: #666699;}
+.line1_7:hover { background-color:#a3a3c2;}
+.line2_7{ color: #000000; background-color: #8585ad;}
+.line2_7:hover {background-color:#a3a3c2; }
+/*trace*/
+.line1_8 { color: #000000; background-color: #c2c2c0;}
+.line1_8:hover { background-color:#dadad8;}
+.line2_8{ color: #000000; background-color: #cdcdcb;}
+.line2_8:hover {background-color:#f3f3f2; }
+
 .line0
 {
 		color: #000000;

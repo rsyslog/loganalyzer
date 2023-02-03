@@ -1,0 +1,4 @@
+src/config.php
+*.bak
+
+src/index.html

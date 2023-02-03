@@ -47,15 +47,16 @@ if ( !defined('IN_PHPLOGCON') )
 define('DATEMODE_ALL', 1);
 define('DATEMODE_RANGE', 2);
 define('DATEMODE_LASTX', 3);
+define('DATEMODE_LASTXX', 33);
 define('DATEMODE_RANGE_FROM', 4);
 define('DATEMODE_RANGE_TO', 5);
 define('DATEMODE_RANGE_DATE', 6);
 
 define('DATE_LASTX_HOUR', 1);
-define('DATE_LASTX_12HOURS', 2);
-define('DATE_LASTX_24HOURS', 3);
-define('DATE_LASTX_7DAYS', 4);
-define('DATE_LASTX_31DAYS', 5);
+define('DATE_LASTX_12HOURS', 12);
+define('DATE_LASTX_24HOURS', 24);
+define('DATE_LASTX_7DAYS', 168);
+define('DATE_LASTX_31DAYS', 744);
 // --- 
 
 
@@ -109,6 +110,8 @@ $content['filter_severity_list'][] = array( "ID" => SYSLOG_WARNING, "DisplayName
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_NOTICE, "DisplayName" => "NOTICE", "selected" => "" );
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_INFO, "DisplayName" => "INFO", "selected" => "" );
 $content['filter_severity_list'][] = array( "ID" => SYSLOG_DEBUG, "DisplayName" => "DEBUG", "selected" => "" );
+$content['filter_severity_list'][] = array( "ID" => CUSTOM_TRACE, "DisplayName" => "TRACE", "selected" => "" );
+
 // --- 
 
 // Init MessageType LIST

@@ -68,7 +68,7 @@
 				&nbsp;<a href="#" id="dialog-chart_{ID}"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_CHARTS_PREVIEW}"></a>
 				<script> $( "#dialog-chart_{ID}" ).click(function( event ) { 
 					$( "#dialog").html('<center></br><img src="{BASEPATH}images/ajax-loader.gif"></br></br></center>');
-					$( "#dialog").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}&basepath={BASEPATH}');
+					$( "#dialog").load('{BASEPATH}chartgenerator.php?type={chart_type}&byfield={chart_field}&orderby={chart_orderby_urldecoded}&width={chart_width}&maxrecords={maxrecords}&showpercent={showpercent}&defaultfilter={chart_defaultfilter_urldecoded}&basepath={BASEPATH}');
 					$( "#dialog").dialog("option","position",$("#dialog").dialog("option","position"));
 					$( "#dialog").dialog( {title: "Chartgenerator"}); 
 					$( "#dialog").dialog( "open" ); 
@@ -119,6 +119,11 @@
 					</select>
 				</td>
 			</tr>
+                        <tr>
+                                <td align="left" class="cellmenu2" nowrap><b>{LN_CHART_ORDERBY}</b></td>
+                                <td align="left" class="line1"><input type="text" name="chart_orderby" size="55" maxlength="255" value='{chart_orderby}' class="maxwidth"></td>
+                        </tr>
+
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_CHART_WIDTH}</b></td>
 				<td align="left" class="line1"><input type="text" name="chart_width" size="55" maxlength="255" value="{chart_width}" class="maxwidth"></td>
@@ -133,7 +138,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" valign="top" nowrap><b>{LN_CHARTS_FILTERSTRING}</b></td>
-				<td align="left" class="line1"><font class="ErrorMsg">{LN_CHARTS_FILTERSTRING_HELP}</font></br><input type="text" name="chart_defaultfilter" size="100" maxlength="1024" value="{chart_defaultfilter}" class="maxwidth"></td>
+				<td align="left" class="line1"><font class="ErrorMsg">{LN_CHARTS_FILTERSTRING_HELP}</font></br><input type="text" name="chart_defaultfilter" size="100" maxlength="1024" value='{chart_defaultfilter}' class="maxwidth"></td>
 			</tr>
 
 			<tr>

@@ -930,7 +930,8 @@ function LoadChartsFromDatabase()
 				DB_CHARTS . ".chart_enabled, " . 
 				DB_CHARTS . ".chart_type, " . 
 				DB_CHARTS . ".chart_width, " . 
-				DB_CHARTS . ".chart_field, " . 
+				DB_CHARTS . ".chart_field, " .
+			        DB_CHARTS . ".chart_orderby, " .
 				DB_CHARTS . ".chart_defaultfilter, " . 
 				DB_CHARTS . ".maxrecords, " . 
 				DB_CHARTS . ".showpercent, " . 

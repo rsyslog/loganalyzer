@@ -62,6 +62,7 @@ class LogStreamDB extends LogStream {
 
 	private $_SQLwhereClause = "";
 	private $_myDBQuery = null;
+	private $_SQLcustomLimitHaltSearchAfter = null; //if set, then search will stop after getting this records
 
 	// Constructor
 	public function __construct ($streamConfigObj) {
@@ -545,6 +546,12 @@ class LogStreamDB extends LogStream {
 				$ret = $this->ReadNextRecordsFromDB($uID);
 			else
 			{
+				// Override default value if custom limit is less - act as tail without paging
+				// NB it won't work if custom limit gt page limit
+				$limit = $this->_SQLcustomLimitHaltSearchAfter;
+				if(isset($limit) && $this->_currentRecordNum >= $limit)
+					$ret = ERROR_NOMORERECORDS;
+
 				if ( !isset($this->bufferedRecords[$this->_currentRecordNum] ) )
 				{
 					// We need to load new records, so clear the old ones first!
@@ -590,7 +597,6 @@ class LogStreamDB extends LogStream {
 				if ( isset($arrProperitesOut[SYSLOG_MESSAGE]) ) 
 				{
 					$retParser = $this->_logStreamConfigObj->ProcessMsgParsers($arrProperitesOut[SYSLOG_MESSAGE], $arrProperitesOut);
-
 					// Check if we have to skip the message!
 					if ( $retParser == ERROR_MSG_SKIPMESSAGE )
 						$ret = $retParser;
@@ -618,7 +624,7 @@ class LogStreamDB extends LogStream {
 
 		// This additional filter check will take care on dynamic fields from the message parser!
 		} while ( $this->ApplyFilters($ret, $arrProperitesOut) != SUCCESS && $ret == SUCCESS );
-
+		
 		// reached here means return result!
 		return $ret;
 	}
@@ -1270,8 +1276,11 @@ class LogStreamDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy='')
 	{
+		if(empty($orderBy)){
+			$orderBy = 'totalcount DESC';
+		}
 		global $content, $dbmapping;
 
 		// Copy helper variables, this is just for better readability
@@ -1283,13 +1292,14 @@ class LogStreamDB extends LogStream {
 			$myDBFieldName = $dbmapping[$szTableType]['DBMAPPINGS'][$szFieldId];
 			$myDBQueryFieldName = $myDBFieldName;
 			$mySelectFieldName = $myDBFieldName;
-			
+
 			// Special handling for date fields
 			if ( $nFieldType == FILTER_TYPE_DATE )
 			{
 				// Helper variable for the select statement
 				$mySelectFieldName = $mySelectFieldName . "grouped";
 				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
+				//$orderBy = $mySelectFieldName." DESC";
 			}
 
 			// Create SQL Where Clause!
@@ -1307,7 +1317,7 @@ class LogStreamDB extends LogStream {
 						" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY totalcount DESC" . 
+						" ORDER BY ".$orderBy. 
 						" LIMIT " . $nRecordLimit;
 
 			// Perform Database Query
@@ -1346,7 +1356,7 @@ class LogStreamDB extends LogStream {
 
 
 	/*
-	*	============= Beginn of private functions =============
+	*	============= Begin of private functions =============
 	*/
 
 	/*
@@ -1357,6 +1367,11 @@ class LogStreamDB extends LogStream {
 	{
 		if ( $this->_filters != null )
 		{
+			//if filter limit set, then apply it to a query
+			if( isset($this->_filters['limit']) ){
+				$this->_SQLcustomLimitHaltSearchAfter= $this->_filters['limit'][FILTER_VALUE];
+			}
+
 			global $dbmapping;
 			$szTableType = $this->_logStreamConfigObj->DBTableType;
 
@@ -1365,6 +1380,7 @@ class LogStreamDB extends LogStream {
 			
 			// --- Build Query Array
 			$arrayQueryProperties = $this->_arrProperties; 
+			//"<pre>".$arrayQueryProperties."</pre><br>"
 			if ( isset($this->_arrFilterProperties) && $this->_arrFilterProperties != null)
 			{
 				foreach ( $this->_arrFilterProperties as $filterproperty )
@@ -1373,8 +1389,9 @@ class LogStreamDB extends LogStream {
 						$arrayQueryProperties[] = $filterproperty; 
 				}
 			}
-			// --- 
-
+			// ---
+			//echo 'DEBUG <pre>'; print_r($arrayQueryProperties); echo '</pre>'; 
+			//echo 'DEBUG <pre>'; print_r($this->_filters); echo '</pre>';
 			// Loop through all available properties
 			foreach( $arrayQueryProperties as $propertyname )
 			{
@@ -1493,28 +1510,36 @@ class LogStreamDB extends LogStream {
 										$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_DATE;
 									}
 									
+									//FIXME keep for backward compatibility
 									if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTX ) 
-									{
-										// Get current timestamp
-										$nNowTimeStamp = time();
+									{										
+										// Get current timestamp												
+										$nNowTimeStamp = time();												
+										if	( $myfilter[FILTER_VALUE] == 1 /*DATE_LASTX_HOUR*/ )		
+											$nNowTimeStamp -= 60 * 60; // One Hour!		
+										else if	( $myfilter[FILTER_VALUE] == 2 /*DATE_LASTX_12HOURS*/)		
+											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!		
+										else if	( $myfilter[FILTER_VALUE] == 3 /*DATE_LASTX_24HOURS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!		
+										else if	( $myfilter[FILTER_VALUE] == 4 /*DATE_LASTX_7DAYS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days		
+										else if	( $myfilter[FILTER_VALUE] == 5 /*DATE_LASTX_31DAYS*/ )		
+											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days		
+										else 		
+										{		
+											// Set filter to unknown and Abort in this case!		
+											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;		
+											break;		
+										}		
 
-										if		( $myfilter[FILTER_VALUE] == DATE_LASTX_HOUR )
-											$nNowTimeStamp -= 60 * 60; // One Hour!
-										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_12HOURS )
-											$nNowTimeStamp -= 60 * 60 * 12; // 12 Hours!
-										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_24HOURS )
-											$nNowTimeStamp -= 60 * 60 * 24; // 24 Hours!
-										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_7DAYS )
-											$nNowTimeStamp -= 60 * 60 * 24 * 7; // 7 days
-										else if	( $myfilter[FILTER_VALUE] == DATE_LASTX_31DAYS )
-											$nNowTimeStamp -= 60 * 60 * 24 * 31; // 31 days
-										else 
-										{
-											// Set filter to unknown and Abort in this case!
-											$tmpfilters[$propertyname][FILTER_TYPE] = FILTER_TYPE_UNKNOWN;
-											break;
-										}
-										
+										// Append filter
+										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
+									}
+									else if ( $myfilter[FILTER_DATEMODE] == DATEMODE_LASTXX ) 
+									{//handle x as hours
+										// Calculate offset timestamp
+										$nNowTimeStamp = time() - (60 * 60 * floatval($myfilter[FILTER_VALUE]));
+
 										// Append filter
 										$tmpfilters[$propertyname][FILTER_VALUE] .= $dbmapping[$szTableType]['DBMAPPINGS'][$propertyname] . " > '" . date("Y-m-d H:i:s", $nNowTimeStamp) . "'";
 									}
@@ -1553,7 +1578,6 @@ class LogStreamDB extends LogStream {
 					}
 				}
 			}
-
 			// Check and combine all filters now!
 			if ( isset($tmpfilters) )
 			{
@@ -1585,8 +1609,11 @@ class LogStreamDB extends LogStream {
 					}
 				}
 			}
-
-// echo $this->_SQLwhereClause;
+			
+			// print direct debug only on search page 
+			//if(strpos($_SERVER['REQUEST_URI'], "export.php") === false && strpos($_SERVER['REQUEST_URI'], "chartgenerator.php") === false){
+			//	echo "DEBUG: ".$this->_SQLwhereClause."<br>";
+			//}
 			//$dbmapping[$szTableType][SYSLOG_UID]
 		}
 		else // No filters means nothing to do!
@@ -1675,9 +1702,14 @@ class LogStreamDB extends LogStream {
 		$szSql = $this->CreateSQLStatement($uID);
 
 		// --- Append LIMIT 
-		$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
+		// Override default value if custom is less - act as tail without paging
+		$limit = $this->_SQLcustomLimitHaltSearchAfter;
+		if ( isset($limit) === true && ($limit < $this->_logStreamConfigObj->RecordsPerQuery)){
+			$szSql .= " LIMIT " . $limit;
+		}else
+			$szSql .= " LIMIT " . $this->_logStreamConfigObj->RecordsPerQuery;
 		// ---
-
+		
 		// Perform Database Query
 		$this->_myDBQuery = mysqli_query($this->_dbhandle, $szSql);
 		if ( !$this->_myDBQuery ) 

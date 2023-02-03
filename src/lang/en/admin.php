@@ -87,6 +87,7 @@ $content['LN_GEN_ADMINCHANGEWAITTIME'] = "Reloadtime in Adminpanel";
 $content['LN_GEN_IPADRRESOLVE'] = "Resolve IP Addresses using DNS";
 $content['LN_GEN_CUSTBTNCAPT'] = "Custom search caption";
 $content['LN_GEN_CUSTBTNSRCH'] = "Custom search string";
+$content['LN_GEN_EMPTYSRCHFILTR'] = "Override empty search filter";
 $content['LN_GEN_SUCCESSFULLYSAVED'] = "The configuration Values have been successfully saved";
 $content['LN_GEN_INTERNAL'] = "Internal";
 $content['LN_GEN_DISABLED'] = "Function disabled";
@@ -104,6 +105,7 @@ $content['LN_GEN_GLOBALVALUE'] = "Global value";
 $content['LN_GEN_PERSONALVALUE'] = "Personal (User)value";
 $content['LN_GEN_DISABLEUSEROPTIONS'] = "Click here to disable personal options";
 $content['LN_GEN_ENABLEUSEROPTIONS'] = "Click here to enable personal options";
+$content['LN_GEN_EXPORT_USETODAY'] = "Use Today and Yesterday in timefields of export";
 $content['LN_ADMIN_GLOBALONLY'] = "Global Options Only";
 $content['LN_GEN_DEBUGTOSYSLOG'] = "Send Debug to local syslog server";
 $content['LN_GEN_POPUPMENUTIMEOUT'] = "Popupmenu Timeout in milli seconds";
@@ -118,6 +120,7 @@ $content['LN_ADMIN_USEPROXYSERVER'] = "Leave empty if you do not want to use a p
 $content['LN_ADMIN_DEFAULTENCODING'] = "Default character encoding"; 
 $content['LN_GEN_CONTEXTLINKS'] = "Enable Contextlinks (Question marks)";
 $content['LN_GEN_DISABLEADMINUSERS'] = "Disable Adminpanel for normal users";
+$content['LN_GEN_SESSION_MAX'] = "Load page in maximized mode";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

@@ -154,7 +154,8 @@ if ( isset($_GET['op']) )
 		$content['CHECKED_ISSHOWPERCENT'] = "";
 		$content['chart_defaultfilter'] = ""; 
 		// Chart Field
-		$content['chart_field'] = SYSLOG_HOST; 
+		$content['chart_field'] = SYSLOG_HOST;
+	        $content['chart_orderby'] = '';	
 		CreateChartFields($content['chart_field']);
 
 		// COMMON Fields
@@ -194,7 +195,6 @@ if ( isset($_GET['op']) )
 			{
 				// Get Source reference
 				$myChart = $content['Charts'][ $content['CHARTID'] ];
-
 				// Copy basic properties
 				$content['Name'] = $myChart['DisplayName'];
 				$content['chart_type'] = $myChart['chart_type'];
@@ -216,7 +216,8 @@ if ( isset($_GET['op']) )
 				// Chart Field
 				$content['chart_field'] = $myChart['chart_field'];
 				CreateChartFields($content['chart_field']);
-				
+				$content['chart_orderby'] = $myChart['chart_orderby'];
+
 				// COMMON Fields
 				$content['userid'] = $myChart['userid'];
 				if ( $content['userid'] != null )
@@ -317,6 +318,7 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['chart_type']) ) { $content['chart_type'] = intval(DB_RemoveBadChars($_POST['chart_type'])); }
 	if ( isset($_POST['chart_width']) ) { $content['chart_width'] = intval(DB_RemoveBadChars($_POST['chart_width'])); } else {$content['chart_width'] = 400; }
 	if ( isset($_POST['chart_field']) ) { $content['chart_field'] = DB_RemoveBadChars($_POST['chart_field']); }
+	if ( isset($_POST['chart_orderby']) ) { $content['chart_orderby'] = DB_RemoveBadChars($_POST['chart_orderby']); }
 	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval(DB_RemoveBadChars($_POST['maxrecords'])); }
 	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval(DB_RemoveBadChars($_POST['showpercent'])); } else {$content['showpercent'] = 0; }
 	if ( isset($_POST['chart_defaultfilter']) ) { $content['chart_defaultfilter'] = DB_RemoveBadChars($_POST['chart_defaultfilter']); }
@@ -369,12 +371,13 @@ if ( isset($_POST['op']) )
 		if ( $_POST['op'] == "addnewchart" )
 		{
 			// Add custom search now!
-			$sqlquery = "INSERT INTO " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, chart_defaultfilter, maxrecords, showpercent, userid, groupid) 
+			$sqlquery = "INSERT INTO " . DB_CHARTS . " (DisplayName, chart_enabled, chart_type, chart_width, chart_field, chart_orderby, chart_defaultfilter, maxrecords, showpercent, userid, groupid) 
 			VALUES ('" . $content['Name'] . "', 
 					" . $content['chart_enabled'] . ", 
 					" . $content['chart_type'] . ", 
 					" . $content['chart_width'] . ", 
 					'" . $content['chart_field'] . "',
+					'" . $content['chart_orderby'] . "',
 					'" . $content['chart_defaultfilter'] . "',
 					" . $content['maxrecords'] . ", 
 					" . $content['showpercent'] . ", 
@@ -405,6 +408,7 @@ if ( isset($_POST['op']) )
 								chart_type = " . $content['chart_type'] . ", 
 								chart_width = " . $content['chart_width'] . ", 
 								chart_field = '" . $content['chart_field'] . "',
+								chart_orderby = '" . $content['chart_orderby'] . "',
 								chart_defaultfilter = '" . $content['chart_defaultfilter'] . "',
 								maxrecords = " . $content['maxrecords'] . ", 
 								showpercent = " . $content['showpercent'] . ", 
@@ -514,6 +518,12 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$myChart['chart_defaultfilter_urldecoded']	= urlencode($myChart['chart_defaultfilter']);
 		else 
 			$myChart['chart_defaultfilter_urldecoded'] = "";
+
+                if ( ( isset($myChart['chart_orderby']) ) && ( strlen($myChart['chart_orderby']) > 0 ) )
+                        $myChart['chart_orderby_urldecoded']      = urlencode($myChart['chart_orderby']);
+                else
+                        $myChart['chart_orderby_urldecoded'] = "";
+
 		// ---
 
 		// --- Set CSS Class
