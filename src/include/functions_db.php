@@ -49,7 +49,7 @@ $errdesc = "";
 $errno = 0;
 
 // --- Current Database Version, this is important for automated database Updates!
-$content['database_internalversion'] = "13";	// Whenever incremented, a database upgrade is needed
+$content['database_internalversion'] = "14";	// Whenever incremented, a database upgrade is needed
 $content['database_installedversion'] = "0";	// 0 is default which means Prior Versioning Database
 // --- 
 

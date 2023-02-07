@@ -949,30 +949,37 @@ function LoadChartsFromDatabase()
 	// ---
 
 	// Get Searches from DB now!
-	$result = DB_Query($sqlquery);
-	$myrows = DB_GetAllRows($result, true);
-	if ( isset($myrows ) && count($myrows) > 0 )
-	{
-		// Overwrite the existing graphics matrix but only the records of 
-		// the database, those of the configuration file we keep.
-		$not_remove = array();
-		foreach($CFG['Charts'] as $chartid => $myChart)
+	try {
+		$result = DB_Query($sqlquery);
+		$myrows = DB_GetAllRows($result, true);
+		if ( isset($myrows ) && count($myrows) > 0 )
 		{
-			if (! is_numeric($chartid) ) {
-				$not_remove[$chartid] = $myChart;
+			// Overwrite the existing graphics matrix but only the records of 
+			// the database, those of the configuration file we keep.
+			$not_remove = array();
+			foreach($CFG['Charts'] as $chartid => $myChart)
+			{
+				if (! is_numeric($chartid) ) {
+					$not_remove[$chartid] = $myChart;
+				}
 			}
+			$CFG['Charts'] = $not_remove;
+			
+			// Loop through all data rows 
+			foreach ($myrows as &$myChart )
+			{
+				// Append to Chart Array
+				$CFG['Charts'][ $myChart['ID'] ] = $myChart;
+			}
+			
+			// Copy to content array!
+			$content['Charts'] = $CFG['Charts'];
 		}
-		$CFG['Charts'] = $not_remove;
-		
-		// Loop through all data rows 
-		foreach ($myrows as &$myChart )
-		{
-			// Append to Chart Array
-			$CFG['Charts'][ $myChart['ID'] ] = $myChart;
-		}
-		
+	} catch (mysqli_sql_exception $e) {
+		// DEBUG ERROR
+		OutputDebugMessage("LoadChartsFromDatabase: DB Query failed with Code " . $e->getCode() . ": " . $e->getMessage(), DEBUG_ERROR);
 		// Copy to content array!
-		$content['Charts'] = $CFG['Charts'];
+		$content['Charts'] = array();
 	}
 }
 

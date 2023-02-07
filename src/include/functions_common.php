@@ -1908,7 +1908,7 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 	if ( isset($CFG[$szSettingName]) ) 
 		return $CFG[$szSettingName];
 	else
-		return $szDefaultValue;
+		return (isset($szDefaultValue) ? $szDefaultValue : "");
 }
 
 /*
