@@ -121,6 +121,7 @@ $content['LN_ADMIN_DEFAULTENCODING'] = "Default character encoding";
 $content['LN_GEN_CONTEXTLINKS'] = "Enable Contextlinks (Question marks)";
 $content['LN_GEN_DISABLEADMINUSERS'] = "Disable Adminpanel for normal users";
 $content['LN_GEN_SESSION_MAX'] = "Load page in maximized mode";
+$content['LN_GEN_VIEWCOLOREDCELLS'] = "Colored Syslog messages based on Syslog Severity (Priority)";
 
 // User Center
 $content['LN_USER_CENTER'] = "User Options";

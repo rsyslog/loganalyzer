@@ -332,6 +332,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			// --- Obtain characters limits first!
 			$myMsgCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
 			$myStrCharLimit = GetConfigSetting("ViewStringCharacterLimit", 30, CFGLEVEL_USER);
+			$ViewColoredCells = GetConfigSetting("ViewColoredCells", 0, CFGLEVEL_USER);
 			// ---
 
 			//Loop through the messages!
@@ -370,10 +371,11 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				// --- 
 
 				// --- Set CSS Class
+				$szCssAppend = ($ViewColoredCells == 1 ? ((isset($logArray[SYSLOG_SEVERITY]) && strlen($logArray[SYSLOG_SEVERITY]) > 0 ? "_" . $logArray[SYSLOG_SEVERITY] : "")) : "");
 				if ( $counter % 2 == 0 )
-					$content['syslogmessages'][$counter]['cssclass'] = "line1" . (isset($logArray[SYSLOG_SEVERITY]) && strlen($logArray[SYSLOG_SEVERITY]) > 0 ? "_" . $logArray[SYSLOG_SEVERITY] : "");
+					$content['syslogmessages'][$counter]['cssclass'] = "line1" . $szCssAppend;
 				else
-					$content['syslogmessages'][$counter]['cssclass'] = "line2" . (isset($logArray[SYSLOG_SEVERITY]) && strlen($logArray[SYSLOG_SEVERITY]) > 0 ? "_" . $logArray[SYSLOG_SEVERITY] : "");
+					$content['syslogmessages'][$counter]['cssclass'] = "line2" . $szCssAppend;
 				// --- 
 
 				// --- Copy other needed properties

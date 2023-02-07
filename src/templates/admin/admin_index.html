@@ -236,6 +236,15 @@
 <!-- ENDIF ENABLEUSEROPTIONS="true" -->
         </tr>
 
+
+	<tr>
+		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_VIEWCOLOREDCELLS}</b></td>
+		<td align="left" class="line2" ><input type="checkbox" name="ViewColoredCells" value="yes" {ViewColoredCells_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>
+<!-- IF ENABLEUSEROPTIONS="true" -->
+		<td align="left" class="line2" ><input type="checkbox" name="User_ViewColoredCells" value="yes" {User_ViewColoredCells_checked}></td>
+<!-- ENDIF ENABLEUSEROPTIONS="true" -->
+	</tr>
+
 	<tr>
 		<td align="left" class="cellmenu2" nowrap><b>{LN_GEN_USETODAY}</b></td>
 		<td align="left" class="line2" ><input type="checkbox" name="ViewUseTodayYesterday" value="yes" {ViewUseTodayYesterday_checked} {DISABLE_GLOBALEDIT_FORMCONTROL}></td>

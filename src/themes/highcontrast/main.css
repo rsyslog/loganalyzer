@@ -15,7 +15,6 @@ a:link,a:active,a:visited,a.postlink
 {
 	font-weight: bold;
 	text-decoration:none;
-
 	background-color: transparent;
 	color:#002C5B;
 }
@@ -134,26 +133,30 @@ a.title:hover
 	border-color: #44617D #203040 #203040 #44617D; 
 }
 
-/* Cells for listening */
-.line0
-{
+/* Style related Cells for listening */
+.ui-menu-item a, .ui-menu-item a:link, .ui-menu-item a:active, .ui-menu-item a:visited  {
+	color: #000000 !important;
+}
+.ui-menu-item a:hover {
+	color: #ffffff !important;
+}
+
+.line0 {
 	color: #000000;
 	background-color: #F0F0F0;
 }
-.line1
-{
+.line1 {
 	color: #000000;
 	background-color: #E0E0E0;
 }
-.line2
-{
+.line2 {
 	color: #000000;
 	background-color: #D0D0D0;
 }
-.line0:hover, .line1:hover, .line2:hover 
-{ 
+.line0:hover, .line1:hover, .line2:hover { 
 	background-color:#F9F9F9; 
 }
+
 .tableBackground
 {
 	color: #000000;

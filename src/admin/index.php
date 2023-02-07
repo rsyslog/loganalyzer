@@ -183,6 +183,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['DebugUserLogin']) ) { $content['DebugUserLogin'] = 1; } else { $content['DebugUserLogin'] = 0; } 
 			if ( isset ($_POST['MiscDebugToSyslog']) ) { $content['MiscDebugToSyslog'] = 1; } else { $content['MiscDebugToSyslog'] = 0; } 
 			if ( isset ($_POST['DisableAdminUsers']) ) { $content['DisableAdminUsers'] = 1; } else { $content['DisableAdminUsers'] = 0; } 
+			if ( isset ($_POST['ViewColoredCells']) ) { $content['ViewColoredCells'] = 1; } else { $content['ViewColoredCells'] = 0; }
 
 			// Read Text number fields
 			if ( isset ($_POST['ViewMessageCharacterLimit']) && is_numeric($_POST['ViewMessageCharacterLimit']) ) { $content['ViewMessageCharacterLimit'] = $_POST['ViewMessageCharacterLimit']; }
@@ -235,6 +236,7 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = $_POST['User_DefaultFontSize']; }
 
 			// Read checkboxes
+			if ( isset( $_POST['User_ViewColoredCells'])  ) { $USERCFG['ViewColoredCells'] = 1; } else { $USERCFG['ViewColoredCells'] = 0; }
 			if ( isset ($_POST['User_ViewUseTodayYesterday']) ) { $USERCFG['ViewUseTodayYesterday'] = 1; } else { $USERCFG['ViewUseTodayYesterday'] = 0; } 
 			if ( isset ($_POST['User_ViewEnableDetailPopups']) ) { $USERCFG['ViewEnableDetailPopups'] = 1; } else { $USERCFG['ViewEnableDetailPopups'] = 0; } 
 			if ( isset ($_POST['User_EnableContextLinks']) ) { $USERCFG['EnableContextLinks'] = 1; } else { $USERCFG['EnableContextLinks'] = 0; } 
@@ -280,7 +282,7 @@ if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime']
 // Set checkbox States
 if (isset($content['ExportUseTodayYesterday']) && $content['ExportUseTodayYesterday'] == 1) { $content['ExportUseTodayYesterday_checked'] = "checked"; } else { $content['ExportUseTodayYesterday_checked'] = ""; }
 if (isset($content['SESSION_MAXIMIZED']) && $content['SESSION_MAXIMIZED'] == 1) { $content['SESSION_MAXIMIZED_checked'] = "checked"; } else { $content['SESSION_MAXIMIZED_checked'] = ""; }
-
+if (isset($content['ViewColoredCells']) && $content['ViewColoredCells'] == 1) { $content['ViewColoredCells_checked'] = "checked"; } else { $content['ViewColoredCells_checked'] = ""; }
 if (isset($content['ViewUseTodayYesterday']) && $content['ViewUseTodayYesterday'] == 1) { $content['ViewUseTodayYesterday_checked'] = "checked"; } else { $content['ViewUseTodayYesterday_checked'] = ""; }
 if (isset($content['ViewEnableDetailPopups']) && $content['ViewEnableDetailPopups'] == 1) { $content['ViewEnableDetailPopups_checked'] = "checked"; } else { $content['ViewEnableDetailPopups_checked'] = ""; }
 if (isset($content['EnableContextLinks']) && $content['EnableContextLinks'] == 1) { $content['EnableContextLinks_checked'] = "checked"; } else { $content['EnableContextLinks_checked'] = ""; }
@@ -398,6 +400,7 @@ if ( $content['ENABLEUSEROPTIONS'] )
 	// Set checkbox States
 	if ( GetConfigSetting('ExportUseTodayYesterday', $content['ExportUseTodayYesterday'], CFGLEVEL_USER) == 1) { $content['User_ExportUseTodayYesterday_checked'] = "checked"; } else { $content['User_ExportUseTodayYesterday_checked'] = ""; }
 	if ( GetConfigSetting('SESSION_MAXIMIZED', $content['SESSION_MAXIMIZED'], CFGLEVEL_USER) == 1) { $content['User_SESSION_MAXIMIZED_checked'] = "checked"; } else { $content['User_SESSION_MAXIMIZED_checked'] = ""; }
+	if ( GetConfigSetting('ViewColoredCells', $content['ViewColoredCells'], CFGLEVEL_USER) == 1) { $content['User_ViewColoredCells_checked'] = "checked"; } else { $content['User_ViewColoredCells_checked'] = ""; }
 
 	if ( GetConfigSetting('ViewUseTodayYesterday', $content['ViewUseTodayYesterday'], CFGLEVEL_USER) == 1) { $content['User_ViewUseTodayYesterday_checked'] = "checked"; } else { $content['User_ViewUseTodayYesterday_checked'] = ""; }
 	if ( GetConfigSetting('ViewEnableDetailPopups', $content['ViewEnableDetailPopups'], CFGLEVEL_USER) == 1) { $content['User_ViewEnableDetailPopups_checked'] = "checked"; } else { $content['User_ViewEnableDetailPopups_checked'] = ""; }

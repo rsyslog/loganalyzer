@@ -154,34 +154,32 @@ font
 	border-color: #050A0F #353A3F #353A3F #050A0F; 
 }
 
-/* Cells for listening */
-.line0
-{
+/* Style related Cells for listening */
+.ui-menu-item a, .ui-menu-item a:link, .ui-menu-item a:active, .ui-menu-item a:visited  {
+	color: #ffffff !important;
+}
+.ui-menu-item a:hover {
+	color: #ffffff !important;
+}
+.line0 {
 	color: #B9B597;
 	background-color: #0E161F;
 }
-.line0:hover 
-{ 
+.line0:hover {
 	background-color:#3D4751; 
 }
-
-.line1
-{
+.line1 {
 	color: #B9B597;
 	background-color: #152331;
 }
-.line1:hover 
-{ 
+.line1:hover {
 	background-color:#3D4751; 
 }
-
-.line2
-{
+.line2 {
 	color: #B9B597;
 	background-color: #1D3043;
-}
-.line2:hover 
-{ 
+} 
+.line2:hover {
 	background-color:#3D4751; 
 }
 
