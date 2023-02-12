@@ -75,6 +75,8 @@ else
 $content['searchstr'] = "";
 $content['error_occured'] = false;
 
+$content['ExportAllMatchPages'] 		= GetConfigSetting("ExportAllMatchPages", 0, CFGLEVEL_USER) == 1;
+$content['SuppressDuplicatedMessages'] 	= GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1;
 // Check required input parameters
 if (
 		(isset($_GET['op']) && $_GET['op'] == "export") && 
@@ -203,32 +205,65 @@ if ( !$content['error_occured'] )
 			if ( $ret == SUCCESS )
 			{
 				//Loop through the messages!
+				$duplicateCount = 0; //FIXME while readNext record doesnt properly return skip_status keep it outside of loop body
+				$szLastMessageTimestamp = 0;
+				$DuplicateRecordMaxTsDistance = GetConfigSetting("DuplicateRecordMaxTsDistance", PHP_INT_MAX, CFGLEVEL_USER);
 				do
 				{
 					// --- Extra stuff for suppressing messages
 					if (
-							GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
-							&&
-							isset($logArray[SYSLOG_MESSAGE])
+						$content['SuppressDuplicatedMessages'] && isset($logArray[SYSLOG_MESSAGE])
 						)
 					{
-
-						if ( !isset($szLastMessage) ) // Only set lastmgr
-							$szLastMessage = $logArray[SYSLOG_MESSAGE];
-						else
+						// Skip if same msg
+						// but don't merge same messages if timestamp difference is greater than precofigured (useful when filtering same messages)
+						$tsDiff = abs($szLastMessageTimestamp - $logArray["timereported"][EVTIME_TIMESTAMP]);
+						//echo "uID=$uID; duplicates ($duplicateCount); delta ts = $tsDiff; isDublicate=".($szLastMessage == $logArray[SYSLOG_MESSAGE])."<br>\n";
+						if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] && ($tsDiff < $DuplicateRecordMaxTsDistance))
 						{
-							// Skip if same msg
-							if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] )
-							{
-								// Set last mgr
-								$szLastMessage = $logArray[SYSLOG_MESSAGE];
+							$szLastMessageTimestamp = $logArray["timereported"][EVTIME_TIMESTAMP];
 
-								// Skip entry
-								continue;
+							// --- Extra Loop to get the next entry!
+							// FIXME 230122 right now ReadNext skips entries only from custom  msgparser (see: classes/logstreamdb.class.php:601)
+							do
+							{
+								$ret = $stream->ReadNext($uID, $logArray);
+								$duplicateCount++;
+							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+							// --- 
+
+							// Skip entry
+							continue;
+						}else{
+							 //inject entry about suppressed records
+							// FIXME any better way of doing that?
+							if($duplicateCount > 1){ //ignore if only 1 duplicate
+								foreach($content['Columns'] as $mycolkey)
+								{
+									if ( isset($fields[$mycolkey]) )
+									{
+										$content['syslogmessages'][$counter][$mycolkey]['FieldColumn'] = $mycolkey;
+										$content['syslogmessages'][$counter][$mycolkey]['uid'] = $uID;
+
+										if($content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING && $mycolkey == SYSLOG_MESSAGE){
+												$content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = "... suppressed $duplicateCount duplicate(s)...";
+										}else   $content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = "\t";
+									}
+								}
+								$counter++;
+					        	$duplicateCount = 0; //reset suppress counter
 							}
+							$szLastMessage = $logArray[SYSLOG_MESSAGE];
+							$szLastMessageTimestamp = $logArray["timereported"][EVTIME_TIMESTAMP];
 						}
 					}
 					// --- 
+					
+					if(!isset($content['period_start_ts'])){ //store first record ts
+						$content['period_start_ts'] = $logArray["timereported"][EVTIME_TIMESTAMP];
+					}//*else if(!isset($content['period_start_ts'])){ // FIXME store last record ts
+						$content['period_end_ts'] = $logArray["timereported"][EVTIME_TIMESTAMP];
+					//}
 
 					// --- Now we populate the values array!
 					foreach($content['Columns'] as $mycolkey)
@@ -286,7 +321,17 @@ if ( !$content['error_occured'] )
 
 					// Increment Counter
 					$counter++;
-				} while ($counter < $content['CurrentViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+
+					// --- Extra Loop to get the next entry!
+					do
+					{
+						$ret = $stream->ReadNext($uID, $logArray);
+					} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+
+					if(!$content['ExportAllMatchPages'] && $counter >= $content['CurrentViewEntriesPerPage']){
+						break;
+					}
+				} while ($ret == SUCCESS);
 
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
@@ -331,7 +376,7 @@ else
 	$szOutputMimeType = "text/plain";
 	$szOutputCharset = "";
 
-	$szOutputFileName = "ExportMessages";
+	$szOutputFileName = "ExportMessages_".date('Ymd\THis',$content['period_start_ts'])."-".date('Ymd\THis',$content['period_end_ts']);
 	$szOutputFileExtension = ".txt";
 	$szOPFieldSeparator = " ";
 	$szOPFirstLineFieldNames = true;
