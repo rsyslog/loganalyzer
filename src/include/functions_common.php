@@ -61,7 +61,7 @@ $DEBUGMODE = DEBUG_INFO;
 
 // Try to enable a little more memory in case we do some more filtering
 @ini_set('memory_limit', '512M');
-// ---
+// --- 
 
 // Default language
 $LANG_EN = "en";	// Used for fallback
@@ -1317,6 +1317,9 @@ function RedirectResult( $szMsg, $newpage )
 */
 function GetEventTime($szTimStr)
 {
+	//remove field extra escaping
+	$szTimStr = str_replace("\\","",$szTimStr);
+
 	// Sample: Mar 10 14:45:44
 	if ( preg_match("/(...) ([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
@@ -1393,6 +1396,23 @@ function GetEventTime($szTimStr)
 		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
 		$eventtime[EVTIME_MICROSECONDS] = 0;
 	}
+	// Sample: \-1T11:10:50 or \-1T0:1 or T12:0, etc
+	else if ( preg_match("/(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})/", $szTimStr, $out ) )
+	{
+		$hh = is_numeric($out[2]) ? $out[2] : 0;
+		$mm = is_numeric($out[3]) ? $out[3] : 0;
+		$ss = is_numeric($out[4]) ? $out[4] : 0;
+
+		// RFC 3164 typical timestamp
+		$szTime = mktime($hh, $mm, $ss);
+		if(is_numeric($out[1]) && $out[1] < 0){//day offset
+			$szTime = strtotime($out[1].' days', $szTime);
+		}
+
+		$eventtime[EVTIME_TIMESTAMP] = $szTime;
+		$eventtime[EVTIME_TIMEZONE] = date('O'); // Get default Offset
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+        }
 	else
 	{
 		$eventtime[EVTIME_TIMESTAMP] = 0;
@@ -1733,8 +1753,8 @@ function StartPHPSession()
 	global $RUNMODE;
 	if ( $RUNMODE == RUNMODE_WEBSERVER )
 	{
-		// This will start the session
-		@session_start();
+                // This will start the session
+                @session_start();
 
 
 		if ( !isset($_SESSION['SESSION_STARTED']) )
