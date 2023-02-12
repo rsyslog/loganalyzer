@@ -335,6 +335,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			// --- Obtain characters limits first!
 			$myMsgCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
 			$myStrCharLimit = GetConfigSetting("ViewStringCharacterLimit", 30, CFGLEVEL_USER);
+			$ViewColoredCells = GetConfigSetting("ViewColoredCells", 0, CFGLEVEL_USER);
 			// ---
 
 			//Loop through the messages!

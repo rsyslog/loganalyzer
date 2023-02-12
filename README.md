@@ -7,7 +7,7 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - BUG: sometimes spinner on index page is drawn in the middle of page irrespective of it's size, but should be drawn in the middle of screen
  - GUI: add checkbox on events page to suppress duplicates in export (override default ExportSuppressDuplicatedMessages
  - GUI: add checkbox ... to override ExportAllMatchPages
- 
+
 # changes 230122
  - export: append exported range timestamp to filename
  - filter: dateto/datefrom add support for offset from current date, i.e. datefrom:T00:00:00 dateto:T01:00:00, datefrom:\-2T, datefrom:\-1T01
