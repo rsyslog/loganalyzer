@@ -69,14 +69,14 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 // --- 
 
 
-class LogStreamLineParsersyslog extends LogStreamLineParser {
+class LogStreamLineParsersyslogng extends LogStreamLineParser {
 //	protected $_arrProperties = null;
 
 	// Constructor
 	public function __construct () {
 		return; // Nothing
 	}
-	public function LogStreamLineParsersyslog() {
+	public function LogStreamLineParsersyslogng() {
 		self::__construct();
 	}
 
