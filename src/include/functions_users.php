@@ -388,8 +388,8 @@ function CheckLDAPUserLogin( $username, $password )
 	// for the moment when a user logs in from LDAP, create it in the DB.
 	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
 
-	/* DB_RemoveBadChars() needs to be done here to maintain backwards compatibility even if it is not needed here*/
-	$md5pass = md5(DB_RemoveBadChars($password)); 
+	/* Don't store LDAP passwords in database */
+	$md5pass = '';
 
 	// check if the user already exist
 	$sqlquery = "SELECT * FROM `" . DB_USERS . "` WHERE username = '" . $username . "'";
