@@ -230,7 +230,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['GROUPID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_GROUPS . 
@@ -261,7 +261,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['GROUPID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Get GroupInfo
 			$result = DB_Query("SELECT groupname FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID'] ); 

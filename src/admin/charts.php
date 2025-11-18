@@ -187,7 +187,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Check if exists
 			if ( is_numeric($content['CHARTID']) && isset($content['Charts'][ $content['CHARTID'] ]) )
@@ -268,7 +268,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID'] ); 

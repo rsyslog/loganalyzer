@@ -111,7 +111,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['ReportID'] = intval(strip_tags(DB_RemoveBadChars($_GET['id'])));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -203,7 +203,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['ReportID'] = intval(strip_tags(DB_RemoveBadChars($_GET['id'])));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -267,7 +267,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['ReportID'] = intval(strip_tags(DB_RemoveBadChars($_GET['id'])));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to parser!
@@ -334,7 +334,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['ReportID'] = intval(strip_tags(DB_RemoveBadChars($_GET['id'])));
 
 			// Init Form variables 
 			$content['ISADDSAVEDREPORT'] = "true";
@@ -430,7 +430,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ReportID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['ReportID'] = intval(strip_tags(DB_RemoveBadChars($_GET['id'])));
 			if ( isset($content['REPORTS'][ $content['ReportID'] ]) )
 			{
 				// Get Reference to report!
@@ -440,7 +440,7 @@ if ( isset($_GET['op']) )
 				$content['REPORTS_DETAILSFOR'] = GetAndReplaceLangStr( $content['LN_REPORTS_DETAILSFOR'], $content['ReportID'] ); 
 
 				// Now Get data from saved report!
-				$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
+				$content['SavedReportID'] = intval(DB_RemoveBadChars($_GET['savedreportid']));
 
 				if ( isset($myReport['SAVEDREPORTS'][$content['SavedReportID']]) ) 
 				{

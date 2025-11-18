@@ -70,7 +70,7 @@ else
 }
 
 if ( isset($_GET['id']) ) 
-	$content['reportid'] = DB_RemoveBadChars($_GET['id']);
+	$content['reportid'] = intval(DB_RemoveBadChars($_GET['id']));
 else
 {
 	$content['error_occured'] = "error";

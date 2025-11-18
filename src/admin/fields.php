@@ -93,7 +93,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['FieldID'] = DB_RemoveBadChars($_GET['id']);
+			$content['FieldID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			if ( isset($fields[$content['FieldID']]['FieldID']) )
 			{
@@ -139,7 +139,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['FieldID'] = DB_RemoveBadChars($_GET['id']);
+			$content['FieldID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Get UserInfo
 			$result = DB_Query("SELECT FieldCaption FROM " . DB_FIELDS . " WHERE FieldID = '" . $content['FieldID'] . "'"); 
