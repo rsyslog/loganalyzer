@@ -4,13 +4,19 @@
 Adiscon LogAnalyzer, a web frontend to log data from the same folks the created rsyslog
 
 # todo
- - export: add checkbox to export full filtered history (now exports only current page)
- - export: place ts into export filename (range from-to)
- - BUG: "Suppress duplicated messages" doesn't work
- - filter: allow to specify AFTER:n BEFORE:n (if possible/fast to implement) <- include records before and after match
- - export: configure columns for file export (allow to remove unnecessary columns) <- exclude list of columns
  - BUG: sometimes spinner on index page is drawn in the middle of page irrespective of it's size, but should be drawn in the middle of screen
- 
+ - GUI: add checkbox on events page to suppress duplicates in export (override default ExportSuppressDuplicatedMessages
+ - GUI: add checkbox ... to override ExportAllMatchPages
+
+# changes 230122
+ - export: append exported range timestamp to filename
+ - filter: dateto/datefrom add support for offset from current date, i.e. datefrom:T00:00:00 dateto:T01:00:00, datefrom:\-2T, datefrom:\-1T01
+ - fixed BUG: "Suppress duplicated messages" + add property to control distance between duplicates
+ - GUI: if suppress is enabled, then show how much records were suppressed (LN_GEN_SUPPRESSEDRECORDCOUNT)
+ - $CFG[ExportSuppressDuplicatedMessages] - separate export suppressing from view
+ - $CFG[ExportAllMatchPages] - allow to control how much to export by default
+ - $CFG[DuplicateRecordMaxTsDistance] - check duplicates timestamp before suppressing, i.e. same message with 24h period may not be assumed as duplicate
+
 # changes 230121
  - datelastx - keep for backward compatibility (for saved searches); add datelastxx
 
@@ -43,8 +49,10 @@ Adiscon LogAnalyzer, a web frontend to log data from the same folks the created 
  - gui: add loglevel style colors and change color for full line; 
  - filter: change datelastx behaviour - use number as hours indicator, i.e. datelastx:3 is 3 hours limit
  
- #obsolete
- - filter: allow to OR msg, i.e. key1 &key2 |key3;
+# obsolete
+ - filter: allow to specify AFTER:n BEFORE:n (if possible/fast to implement) <- include records before and after match
+ - export: configure columns for file export (allow to remove unnecessary columns) <- exclude list of columns
+ - filter: allow to OR msg, i.e. key1 &key2 |key3; (instead use regex)
  - filter: date{from,to} - allow to use today/yesterday + short time, i.e. today 1h same as 1h, yesterday 2h, since/after/before/etc.
  - "Maximize view" - reloads page and resets search filter, hide toolbars with js instead
  - changing "Autoreload" does the same as "Max. view"

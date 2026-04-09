@@ -323,6 +323,9 @@ function GetMessageTypeDisplayName( $nMsgTypeID )
 
 function GetTimeStampFromTimeString($szTimeString)
 {
+	//remove field extra escaping
+	$szTimeString = str_replace('\\', '', $szTimeString);
+	
 	//Sample: 2008-4-1T00:00:00
 	if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/", $szTimeString, $out) )
 	{
@@ -335,6 +338,20 @@ function GetTimeStampFromTimeString($szTimeString)
 		// return new timestamp
 		return mktime(0,0,0, $out[2], $out[3], $out[1]);
 	}
+	// Sample: \-1T11:10:50 or \-1T0:1 or T12:0, etc
+	else if ( preg_match("/(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})/", $szTimeString, $out ) )
+	{
+		$hh = is_numeric($out[2]) ? $out[2] : 0;
+		$mm = is_numeric($out[3]) ? $out[3] : 0;
+		$ss = is_numeric($out[4]) ? $out[4] : 0;
+
+		$szTime = mktime($hh, $mm, $ss);
+		if(is_numeric($out[1]) && $out[1] < 0){//day offset
+			$szTime = strtotime($out[1].' days', $szTime);
+		}
+		
+		return $szTime;
+    }
 	else
 	{
 		OutputDebugMessage("Unparseable Time in GetTimeStampFromTimeString - '" . $szTimeString . "'", DEBUG_WARN);

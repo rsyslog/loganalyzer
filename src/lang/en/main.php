@@ -38,6 +38,7 @@ $content['LN_GEN_LASTPAGE'] = "Last Page";
 $content['LN_GEN_NEXTPAGE'] = "Next Page";
 $content['LN_GEN_PREVIOUSPAGE'] = "Previous Page";
 $content['LN_GEN_RECORDCOUNT'] = "Total records found";
+$content['LN_GEN_SUPPRESSEDRECORDCOUNT'] = "Suppressed";
 $content['LN_GEN_PAGERSIZE'] = "Records per page";
 $content['LN_GEN_PAGE'] = "Page";
 $content['LN_GEN_PREDEFINEDSEARCHES'] = "Predefined Searches";

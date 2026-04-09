@@ -105,6 +105,9 @@ else
 	$content['skipone'] = false;
 // ---
 
+// Init show suppressed count flag
+$content['SUPPRESS_ENABLED'] = GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1;
+
 // Init Export Stuff!
 $content['EXPORT_ENABLED'] = true;
 
@@ -336,38 +339,78 @@ if ( isset($content['Sources'][$currentSourceID]) )
 			// ---
 
 			//Loop through the messages!
+			$duplicateCountTotal = 0;
+			$duplicateCount = 0; //FIXME while readNext record doesnt properly return skip_status keep it outside of loop body
+			$szLastMessageTimestamp = 0;
+			$DuplicateRecordMaxTsDistance = GetConfigSetting("DuplicateRecordMaxTsDistance", PHP_INT_MAX, CFGLEVEL_USER); 
 			do
 			{
 				// --- Extra stuff for suppressing messages
 				if (
-						GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
-						&&
-						isset($logArray[SYSLOG_MESSAGE])
-					)
+					GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
+					&&
+					isset($logArray[SYSLOG_MESSAGE])
+				   )
 				{
-
-					if ( !isset($szLastMessage) ) // Only set lastmgr
-						$szLastMessage = $logArray[SYSLOG_MESSAGE];
-					else
+					// Skip if same msg
+					// but don't merge same messages if timestamp difference is greater than precofigured (useful when filtering same messages)
+					$tsDiff = abs($szLastMessageTimestamp - $logArray["timereported"][EVTIME_TIMESTAMP]); //sign depends on direction
+					//echo "uID=$uID; duplicates ($duplicateCount); delta ts = $tsDiff; isDublicate=".($szLastMessage == $logArray[SYSLOG_MESSAGE])."<br>";
+					if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] && ($tsDiff < $DuplicateRecordMaxTsDistance))
 					{
-						// Skip if same msg
-						if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] )
+						$szLastMessageTimestamp = $logArray["timereported"][EVTIME_TIMESTAMP];
+
+						// --- Extra Loop to get the next entry!
+						// FIXME 230122 right now ReadNext skips entries only from custom  msgparser (see: classes/logstreamdb.class.php:601)
+						do
 						{
-							// Set last mgr
-							$szLastMessage = $logArray[SYSLOG_MESSAGE];
-
-							// --- Extra Loop to get the next entry!
-							do
+							$ret = $stream->ReadNext($uID, $logArray);
+							$duplicateCount++;
+						} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+						// --- 
+							
+						// Skip entry
+						continue;
+					}else{
+						//inject entry about suppressed records
+						// FIXME any better way of doing that?
+						if($duplicateCount > 1){
+							foreach($content['Columns'] as $mycolkey)
 							{
-								$ret = $stream->ReadNext($uID, $logArray);
-							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
-							// --- 
+								if ( isset($fields[$mycolkey]) ) 
+								{	
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldColumn'] = $mycolkey;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['uid'] = $uID;
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = $fields[$mycolkey]['FieldAlign'];
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = $content['syslogmessages'][$counter]['cssclass'];
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "TOP";
 
-							// Skip entry
-							continue;
+									// Set default link 
+									$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
+
+									if($content['fields'][$mycolkey]['FieldType'] == FILTER_TYPE_STRING && $mycolkey == SYSLOG_MESSAGE){
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "... suppressed ".($duplicateCount)." duplicate(s)...";
+										//$content['syslogmessages'][$counter]['values'][$mycolkey]['rawfieldvalue'] = "rawfield";      // helper variable used for Popups!
+										//$content['syslogmessages'][$counter]['values'][$mycolkey]['encodedfieldvalue'] = "encoded field"; // Convert into filter format for submenus
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['ismessagefield'] = false; //don't enable as it's not a real log message
+										$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "";
+	
+									}else	$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = "";
+								}
+							}
+							//if enabled, then print it. otherwise this message wll be printed in wrong column!
+							$content['syslogmessages'][$counter]['MiscShowDebugGridCounter'] = $content['MiscShowDebugGridCounter'];
+							$counter++;
+							$duplicateCountTotal += $duplicateCount;
+							$duplicateCount = 0; //reset suppress counter
 						}
+						$szLastMessage = $logArray[SYSLOG_MESSAGE];
+						$szLastMessageTimestamp = $logArray["timereported"][EVTIME_TIMESTAMP];
 					}
-				}
+					$content['main_suppressed_recordcount'] = $duplicateCountTotal;
+				}// --- End of suppressing
 				// --- 
 
 				// --- Set CSS Class
@@ -689,6 +732,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				} while ( $ret == ERROR_MSG_SKIPMESSAGE );
 				// --- 
 			} while ( $counter < $content['CurrentViewEntriesPerPage'] && ($ret == SUCCESS) );
+
 //print_r ( $content['syslogmessages'] );
 
 			// Move below processing - Read First and LAST UID's before start reading the stream!
