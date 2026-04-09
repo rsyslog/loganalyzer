@@ -142,6 +142,13 @@ if ( !$content['error_occured'] )
 		$stream = $stream_config->LogStreamFactory($stream_config);
 		$stream->SetFilter($content['searchstr']);
 		
+		// --- Set the maximum number of records to export
+		$maxExportRecords = GetConfigSetting("ExportMaxRecords", 10000, CFGLEVEL_GLOBAL);
+		if ($maxExportRecords == 0) {
+			// No limit - export all matching records
+			$maxExportRecords = PHP_INT_MAX;
+		}
+		
 		// Copy current used columns here!
 		$content['Columns'] = $content['Views'][$currentViewID]['Columns'];
 
@@ -286,7 +293,7 @@ if ( !$content['error_occured'] )
 
 					// Increment Counter
 					$counter++;
-				} while ($counter < $content['CurrentViewEntriesPerPage'] && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+				} while ($counter < $maxExportRecords && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
 
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{

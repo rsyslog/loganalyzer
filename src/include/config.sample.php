@@ -82,6 +82,7 @@ $CFG['DebugUserLogin'] = 0;					// if enabled, you will see additional informati
 
 // --- Default Export options
 $CFG['ExportUseTodayYesterday'] = 0;                    // Same as ViewUseTodayYesterday. By default export normal dates
+$CFG['ExportMaxRecords'] = 10000;                      // Maximum number of records to export. 0 means no limit (export all matching records)
 
 // --- Default Frontend Options 
 $CFG['PrependTitle'] = "";					// If set, this	text will be prepended withint the title tag
