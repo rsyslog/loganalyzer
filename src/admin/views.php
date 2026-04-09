@@ -138,7 +138,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) && isset($content['VIEWS'][$_GET['id']]) )
 		{
 			//PreInit these values 
-			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
+			$content['VIEWID'] = intval(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['VIEWS'][ $content['VIEWID'] ]) )
 			{
 
@@ -191,7 +191,7 @@ if ( isset($_GET['op']) )
 		{
 			$content['ISEDITORNEWVIEW'] = false;
 			$content['ISERROR'] = true;
-			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_VIEWS_ERROR_INVALIDID'], isset($_GET['id']) ? $_GET['id'] : "<unknown>" );
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_VIEWS_ERROR_INVALIDID'], isset($_GET['id']) ? intval($_GET['id']) : "<unknown>" );
 		}
 	}
 	else if ($_GET['op'] == "delete") 
@@ -199,7 +199,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
+			$content['VIEWID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_VIEWS . " WHERE ID = " . $content['VIEWID'] ); 

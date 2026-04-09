@@ -92,7 +92,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ParserID'] = intval(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
 			{
 				// Get Reference to parser!
@@ -155,7 +155,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ParserID'] = intval(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
 			{
 				// Get Reference to parser!
@@ -215,7 +215,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['ParserID'] = DB_RemoveBadChars($_GET['id']);
+			$content['ParserID'] = intval(DB_RemoveBadChars($_GET['id']));
 			if ( isset($content['PARSERS'][ $content['ParserID'] ]) )
 			{
 				// Get Reference to parser!

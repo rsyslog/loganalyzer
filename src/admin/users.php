@@ -186,7 +186,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_USERS . 
@@ -228,7 +228,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			if ( !isset($_SESSION['SESSION_USERNAME']) )
 			{

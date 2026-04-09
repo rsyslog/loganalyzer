@@ -177,7 +177,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Check if exists
 			if ( is_numeric($content['SOURCEID']) && isset($content['Sources'][ $content['SOURCEID'] ]) )
@@ -296,7 +296,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval(DB_RemoveBadChars($_GET['id']));
 
 			// Get SourceInfo
 			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
@@ -339,7 +339,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval(DB_RemoveBadChars($_GET['id']));
 		}
 
 		// Check If source is available
@@ -473,7 +473,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval(DB_RemoveBadChars($_GET['id']));
 		}
 
 		// Check If source is available
