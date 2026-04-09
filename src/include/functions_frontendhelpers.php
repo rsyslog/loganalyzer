@@ -122,7 +122,7 @@ function GetAdditionalUrl($skipParam, $appendParam = "")
 function CreateCurrentUrl()
 {
 	global $content;
-	$content['CURRENTURL'] = $_SERVER['PHP_SELF']; // . "?" . $_SERVER['QUERY_STRING']
+	$content['CURRENTURL'] = $_SERVER['SCRIPT_NAME'];
 	
 	// Init additional_url helper variable
 	$content['additional_url'] = ""; 
