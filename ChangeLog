@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------
+Version 4.1.14 (development)
+---------------------------------------------------------------------------
+- Security: Fixed SQL injection via unsanitised numeric identifier parameters
+  (CVE-2023-34600, issue #102).  All id/savedreportid/dbmpid parameters that
+  are used unquoted in SQL WHERE clauses are now cast to integer with intval()
+  before interpolation.  Affected admin pages: searches, views, groups, charts,
+  users, dbmappings, sources, reports.
+  DB_RemoveBadChars (addslashes) is documented as insufficient for unquoted
+  numeric columns; a TODO to migrate to prepared statements has been added.
+  A smoke-test script (tests/sql_injection_smoke.php) is included to validate
+  that common payloads ("1 OR 1=1", UNION SELECT, DROP TABLE, etc.) are blocked.
+---------------------------------------------------------------------------
 Version 4.1.13 (stable), 2022-10-19
 ---------------------------------------------------------------------------
 - UserDB: Fixed "Could not delete data in the '1' source" error in

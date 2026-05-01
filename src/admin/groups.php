@@ -229,8 +229,9 @@ if ( isset($_GET['op']) )
 
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['GROUPID'] = intval($_GET['id']);
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_GROUPS . 
@@ -260,8 +261,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['GROUPID'] = intval($_GET['id']);
 
 			// Get GroupInfo
 			$result = DB_Query("SELECT groupname FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID'] ); 

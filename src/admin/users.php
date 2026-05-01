@@ -185,8 +185,9 @@ if ( isset($_GET['op']) )
 
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['USERID'] = intval($_GET['id']);
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_USERS . 
@@ -227,8 +228,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['USERID'] = intval($_GET['id']);
 
 			if ( !isset($_SESSION['SESSION_USERNAME']) )
 			{
@@ -285,7 +287,7 @@ if ( isset($_GET['op']) )
 
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['USERID'] = DB_RemoveBadChars($_POST['id']); } else {$content['USERID'] = ""; }
+	if ( isset ($_POST['id']) ) { $content['USERID'] = intval($_POST['id']); } else {$content['USERID'] = -1; } // Numeric ID: cast to int
 	if ( isset ($_POST['username']) ) { $content['USERNAME'] = DB_RemoveBadChars($_POST['username']); } else {$content['USERNAME'] = ""; }
 	if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
 	if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }

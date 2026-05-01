@@ -176,11 +176,12 @@ if ( isset($_GET['op']) )
 
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['SOURCEID'] = intval($_GET['id']);
 
 			// Check if exists
-			if ( is_numeric($content['SOURCEID']) && isset($content['Sources'][ $content['SOURCEID'] ]) )
+			if ( $content['SOURCEID'] > 0 && isset($content['Sources'][ $content['SOURCEID'] ]) )
 			{
 				// Get Source reference
 				$mysource = $content['Sources'][ $content['SOURCEID'] ];
@@ -295,8 +296,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['SOURCEID'] = intval($_GET['id']);
 
 			// Get SourceInfo
 			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
@@ -338,8 +340,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['SOURCEID'] = intval($_GET['id']);
 		}
 
 		// Check If source is available
@@ -472,8 +475,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['SOURCEID'] = intval($_GET['id']);
 		}
 
 		// Check If source is available

@@ -264,6 +264,12 @@ function DB_RemoveParserSpecialBadChars($myString)
 
 function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = false)
 {
+	// WARNING: This function uses addslashes() for MySQL and string replacement for MSSQL.
+	// It is NOT sufficient to protect unquoted numeric values interpolated directly into SQL
+	// (e.g. "WHERE ID = " . $value).  Numeric identifiers from user input MUST be cast with
+	// intval() / (int) before being used in SQL, regardless of this function.
+	// TODO: Refactor all DB queries to use prepared statements (PDO/mysqli) to eliminate
+	//       string interpolation entirely.
 	// Check if Array
 	if ( is_array($myValue) )
 	{	// Array value

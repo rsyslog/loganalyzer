@@ -87,8 +87,9 @@ if ( isset($_GET['op']) )
 		// View must be loaded as well already!
 		if ( isset($_GET['dbmpid']) && isset($content['DBMP'][$_GET['dbmpid']]) )
 		{
-			//PreInit these values 
-			$content['DBMPID'] = DB_RemoveBadChars($_GET['dbmpid']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['DBMPID'] = intval($_GET['dbmpid']);
 			if ( isset($content['DBMP'][ $content['DBMPID'] ]) )
 			{
 				//Set the FormAdd URL
@@ -116,8 +117,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['dbmpid']) )
 		{
-			//PreInit these values 
-			$content['DBMPID'] = DB_RemoveBadChars($_GET['dbmpid']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['DBMPID'] = intval($_GET['dbmpid']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_MAPPINGS . " WHERE ID = " . $content['DBMPID'] ); 
@@ -248,7 +250,7 @@ if ( isset($content['ISEDITORNEWDBMP']) && $content['ISEDITORNEWDBMP'] )
 // --- Process POST Form Data
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['dbmpid']) ) { $content['DBMPID'] = DB_RemoveBadChars($_POST['dbmpid']); } else {$content['DBMPID'] = ""; }
+	if ( isset ($_POST['dbmpid']) ) { $content['DBMPID'] = intval($_POST['dbmpid']); } else {$content['DBMPID'] = -1; } // Numeric ID: cast to int
 	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_StripSlahes($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
 
 	// --- Check mandotary values

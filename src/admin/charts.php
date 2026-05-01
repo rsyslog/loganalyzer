@@ -187,11 +187,12 @@ if ( isset($_GET['op']) )
 
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['CHARTID'] = intval($_GET['id']);
 
 			// Check if exists
-			if ( is_numeric($content['CHARTID']) && isset($content['Charts'][ $content['CHARTID'] ]) )
+			if ( $content['CHARTID'] > 0 && isset($content['Charts'][ $content['CHARTID'] ]) )
 			{
 				// Get Source reference
 				$myChart = $content['Charts'][ $content['CHARTID'] ];
@@ -268,8 +269,9 @@ if ( isset($_GET['op']) )
 	{
 		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			//PreInit these values
+			// Numeric ID: cast to integer to prevent SQL injection (CVE-2023-34600).
+			$content['CHARTID'] = intval($_GET['id']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID'] ); 
