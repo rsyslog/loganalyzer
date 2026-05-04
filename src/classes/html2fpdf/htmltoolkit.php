@@ -12,14 +12,14 @@ function ConvertColor($color="#000000"){
   //All color names array
   static $common_colors = array('antiquewhite'=>'#FAEBD7','aquamarine'=>'#7FFFD4','beige'=>'#F5F5DC','black'=>'#000000','blue'=>'#0000FF','brown'=>'#A52A2A','cadetblue'=>'#5F9EA0','chocolate'=>'#D2691E','cornflowerblue'=>'#6495ED','crimson'=>'#DC143C','darkblue'=>'#00008B','darkgoldenrod'=>'#B8860B','darkgreen'=>'#006400','darkmagenta'=>'#8B008B','darkorange'=>'#FF8C00','darkred'=>'#8B0000','darkseagreen'=>'#8FBC8F','darkslategray'=>'#2F4F4F','darkviolet'=>'#9400D3','deepskyblue'=>'#00BFFF','dodgerblue'=>'#1E90FF','firebrick'=>'#B22222','forestgreen'=>'#228B22','gainsboro'=>'#DCDCDC','gold'=>'#FFD700','gray'=>'#808080','green'=>'#008000','greenyellow'=>'#ADFF2F','hotpink'=>'#FF69B4','indigo'=>'#4B0082','khaki'=>'#F0E68C','lavenderblush'=>'#FFF0F5','lemonchiffon'=>'#FFFACD','lightcoral'=>'#F08080','lightgoldenrodyellow'=>'#FAFAD2','lightgreen'=>'#90EE90','lightsalmon'=>'#FFA07A','lightskyblue'=>'#87CEFA','lightslategray'=>'#778899','lightyellow'=>'#FFFFE0','limegreen'=>'#32CD32','magenta'=>'#FF00FF','mediumaquamarine'=>'#66CDAA','mediumorchid'=>'#BA55D3','mediumseagreen'=>'#3CB371','mediumspringgreen'=>'#00FA9A','mediumvioletred'=>'#C71585','mintcream'=>'#F5FFFA','moccasin'=>'#FFE4B5','navy'=>'#000080','olive'=>'#808000','orange'=>'#FFA500','orchid'=>'#DA70D6','palegreen'=>'#98FB98','palevioletred'=>'#D87093','peachpuff'=>'#FFDAB9','pink'=>'#FFC0CB','powderblue'=>'#B0E0E6','red'=>'#FF0000','royalblue'=>'#4169E1','salmon'=>'#FA8072','seagreen'=>'#2E8B57','sienna'=>'#A0522D','skyblue'=>'#87CEEB','slategray'=>'#708090','springgreen'=>'#00FF7F','tan'=>'#D2B48C','thistle'=>'#D8BFD8','turquoise'=>'#40E0D0','violetred'=>'#D02090','white'=>'#FFFFFF','yellow'=>'#FFFF00');
   //http://www.w3schools.com/css/css_colornames.asp
-  if ( ($color{0} != '#') and ( strstr($color,'(') === false ) ) $color = $common_colors[strtolower($color)];
+  if ( ($color[0] != '#') and ( strstr($color,'(') === false ) ) $color = $common_colors[strtolower($color)];
 
-  if ($color{0} == '#') //case of #nnnnnn or #nnn
+  if ($color[0] == '#') //case of #nnnnnn or #nnn
   {
   	$cor = strtoupper($color);
   	if (strlen($cor) == 4) // Turn #RGB into #RRGGBB
   	{
-	 	  $cor = "#" . $cor{1} . $cor{1} . $cor{2} . $cor{2} . $cor{3} . $cor{3};
+	 	  $cor = "#" . $cor[1] . $cor[1] . $cor[2] . $cor[2] . $cor[3] . $cor[3];
 	  }  
 	  $R = substr($cor, 1, 2);
 	  $vermelho = hexdec($R);
@@ -34,9 +34,9 @@ function ConvertColor($color="#000000"){
   }
   else //case of RGB(r,g,b)
   {
-  	$color = str_replace("rgb(",'',$color); //remove ¥rgb(¥
-  	$color = str_replace("RGB(",'',$color); //remove ¥RGB(¥ -- PHP < 5 does not have str_ireplace
-  	$color = str_replace(")",'',$color); //remove ¥)¥
+  	$color = str_replace("rgb(",'',$color); //remove ùrgb(ù
+  	$color = str_replace("RGB(",'',$color); //remove ùRGB(ù -- PHP < 5 does not have str_ireplace
+  	$color = str_replace(")",'',$color); //remove ù)ù
     $cores = explode(",", $color);
     $color = array();
 	  $color['R']=$cores[0];
@@ -81,20 +81,20 @@ function lesser_entity_decode($html)
  	$html = str_replace("&amp;","&",$html);
  	$html = str_replace("&lt;","<",$html);
  	$html = str_replace("&gt;",">",$html);
- 	$html = str_replace("&laquo;","´",$html);
- 	$html = str_replace("&raquo;","ª",$html);
- 	$html = str_replace("&para;","∂",$html);
- 	$html = str_replace("&euro;","Ä",$html);
- 	$html = str_replace("&trade;","ô",$html);
- 	$html = str_replace("&copy;","©",$html);
- 	$html = str_replace("&reg;","Æ",$html);
- 	$html = str_replace("&plusmn;","±",$html);
+ 	$html = str_replace("&laquo;","ù",$html);
+ 	$html = str_replace("&raquo;","ù",$html);
+ 	$html = str_replace("&para;","ù",$html);
+ 	$html = str_replace("&euro;","ù",$html);
+ 	$html = str_replace("&trade;","ù",$html);
+ 	$html = str_replace("&copy;","ù",$html);
+ 	$html = str_replace("&reg;","ù",$html);
+ 	$html = str_replace("&plusmn;","ù",$html);
  	$html = str_replace("&tilde;","~",$html);
  	$html = str_replace("&circ;","^",$html);
  	$html = str_replace("&quot;",'"',$html);
- 	$html = str_replace("&permil;","â",$html);
- 	$html = str_replace("&Dagger;","á",$html);
- 	$html = str_replace("&dagger;","Ü",$html);
+ 	$html = str_replace("&permil;","ù",$html);
+ 	$html = str_replace("&Dagger;","ù",$html);
+ 	$html = str_replace("&dagger;","ù",$html);
   return $html;
 }
 

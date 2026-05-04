@@ -404,7 +404,7 @@ function GetStringWidth($s)
 	$cw=&$this->CurrentFont['cw'];
 	$w=0;
 	$l=strlen($s);
-	for($i=0;$i<$l;$i++) $w+=$cw[$s{$i}];
+	for($i=0;$i<$l;$i++) $w+=$cw[$s[$i]];
 	return $w*$this->FontSize/1000;
 }
 
@@ -702,7 +702,7 @@ function MultiCell($w,$h,$txt,$border=0,$align='J',$fill=0,$link='')
 	while($i<$nb)
 	{
 		//Get next character
-		$c=$s{$i};
+		$c=$s[$i];
 		if($c=="\n")
 		{
 			//Explicit line break
@@ -787,7 +787,7 @@ function Write($h,$txt,$currentx=0,$link='') //EDITEI
 	while($i<$nb)
 	{
 		//Get next character
-		$c=$s{$i};
+		$c=$s[$i];
 		if($c=="\n")
 		{
 			//Explicit line break
@@ -1047,7 +1047,7 @@ function WriteFlowingBlock( $s , $outofblock = false )
     for ( $i = 0; $i < strlen( $s ); $i++ )
     {
        // extract the current character
-       $c = $s{$i};
+       $c = $s[$i];
        // get the width of the character in points
        $cw = $this->CurrentFont[ 'cw' ][ $c ] * ( $this->FontSizePt / 1000 );
 
@@ -1226,7 +1226,7 @@ function WriteFlowingBlock( $s , $outofblock = false )
            // move on to the next line, reset variables, tack on saved content and current char
            $this->restoreFont( $savedFont );
            $font = array( $savedFont );
-           $content = array( $savedContent . $s{ $i } );
+           $content = array( $savedContent . $s[$i] );
 
            $currContent =& $content[ 0 ];
            $contentWidth = $this->GetStringWidth( $currContent ) * $this->k;
@@ -1236,7 +1236,7 @@ function WriteFlowingBlock( $s , $outofblock = false )
        else
        {
            $contentWidth += $cw;
-           $currContent .= $s{ $i };
+           $currContent .= $s[$i];
        }
     }
 }
@@ -2081,7 +2081,7 @@ function _beginpage($orientation)
 		$orientation=$this->DefOrientation;
 	else
 	{
-		$orientation=strtoupper($orientation{0});
+		$orientation=strtoupper($orientation[0]);
 		if($orientation!=$this->DefOrientation)
 			$this->OrientationChanges[$this->page]=true;
 	}
@@ -2224,7 +2224,7 @@ function _parsepng($file)
 
 function _parsegif($file) //EDITEI - GIF support is now included
 { 
-	//Function by JÈrÙme Fenal
+	//Function by Jùrùme Fenal
 	require_once(RELATIVE_PATH.'gif.php'); //GIF class in pure PHP from Yamasoft (http://www.yamasoft.com/php-gif.zip)
 
 	$h=0;
