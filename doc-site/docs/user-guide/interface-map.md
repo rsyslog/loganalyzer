@@ -15,7 +15,7 @@ See [Search syntax](chapters/searching.md) for query syntax used in filters and 
 
 ## Documentation trail
 
-- **Operational setup:** [Docker & CI](../docker.md), [Installation](chapters/install.md), [Troubleshooting](chapters/troubleshoot.md).
+- **Operational setup:** [Docker overview](../docker.md), [Docker install](../docker-install.md), [Development & CI](../docker-develop.md); [Installation](chapters/install.md), [Troubleshooting](chapters/troubleshoot.md).
 - **Using the product:** [Basics](chapters/basics.md), [Search syntax](chapters/searching.md), [Text log files](chapters/textfiles.md), [Windows Event Log](chapters/windowsevent.md).
 
 ## Screenshots

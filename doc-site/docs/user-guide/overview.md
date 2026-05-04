@@ -1,6 +1,6 @@
 # LogAnalyzer user guide (overview)
 
-This section is the **LogAnalyzer user guide**: how the app works, installation, search, and operations. **Quick start** and **Interface map** are handbook-native pages (with screenshots where available). The chapters below are **imported** from the upstream `doc/*.html` manuals in this repository, rendered here with the same navigation and theme as the rest of the site. For Docker development, CI, and contributor notes, use **Docker & CI** in the left nav.
+This section is the **LogAnalyzer user guide**: how the app works, installation, search, and operations. **Quick start** and **Interface map** are handbook-native pages (with screenshots where available). The chapters below are **imported** from the upstream `doc/*.html` manuals in this repository, rendered here with the same navigation and theme as the rest of the site. For Docker install versus development/CI, use **Docker** in the left nav.
 
 Every `*.html` manual under [`doc/`](https://github.com/rsyslog/loganalyzer/blob/master/doc/) is listed below **(10 chapters)**; matching pages appear under **LogAnalyzer user guide** in the sidebar.
 

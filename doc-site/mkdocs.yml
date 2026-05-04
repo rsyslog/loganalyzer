@@ -28,7 +28,10 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Docker (install & CI): docker.md
+  - Docker:
+    - Overview: docker.md
+    - Install & use (Compose): docker-install.md
+    - Development & CI: docker-develop.md
   - LogAnalyzer user guide:
     - 'Overview': user-guide/overview.md
     - 'Quick start': user-guide/quick-start.md

@@ -13,5 +13,5 @@ if [ ! -f "$ROOT/.env" ]; then
 		cp "$ROOT/docker/env.example" "$ROOT/.env"
 	fi
 fi
-docker compose -f docker/docker-compose.yml down -v
-docker compose -f docker/docker-compose.yml up --build
+docker compose --project-directory "$ROOT" -f docker/docker-compose.yml down -v
+docker compose --project-directory "$ROOT" -f docker/docker-compose.yml up --build

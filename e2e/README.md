@@ -7,13 +7,13 @@ Runs against a Docker stack (MySQL + PHP + seeded app).
 From repo root (requires Docker):
 
 ```bash
-docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
+docker compose --project-directory . -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
 ```
 
 ## Interactive (against dev stack — bind-mounted `src`)
 
 ```bash
-docker compose -f docker/docker-compose.dev.yml up -d
+docker compose --project-directory . -f docker/docker-compose.dev.yml up -d
 cd e2e
 npm install
 ```
@@ -40,7 +40,7 @@ The [LogAnalyzer handbook](https://rsyslog.github.io/loganalyzer/) embeds PNGs f
 From the repository root, run the E2E stack (runs all specs, including the handbook capture):
 
 ```bash
-docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
+docker compose --project-directory . -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
 ```
 
 [`tests/handbook-screenshots.spec.ts`](tests/handbook-screenshots.spec.ts) writes **`doc-site/docs/assets/user-guide/*.png`** (the Playwright service mounts that directory at `HANDBOOK_USER_GUIDE_ASSETS`; see `docker/docker-compose.e2e.yml`). Commit updated PNGs together with doc changes.

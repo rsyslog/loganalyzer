@@ -32,7 +32,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p e2e
-          docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright 2>&1 | tee e2e/e2e-run.log
+          docker compose --project-directory "${{ github.workspace }}" -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright 2>&1 | tee e2e/e2e-run.log
 
       - name: Upload Playwright report
         if: always()

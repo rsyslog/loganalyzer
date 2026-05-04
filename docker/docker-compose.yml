@@ -1,5 +1,5 @@
 # Default (consumer) stack: app baked into the image; config + DB persist in volumes.
-# From repo root: docker compose -f docker/docker-compose.yml up --build
+# From repo root: docker compose --project-directory . -f docker/docker-compose.yml up --build
 # Optional: copy `docker/env.example` → `.env` in the repo root to set admin and DB passwords.
 # Clean reset: sh docker/rebuild-consumer.sh | docker\rebuild-consumer.bat
 
@@ -24,7 +24,7 @@ services:
 
   web:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
     ports:
       - "8080:8080"

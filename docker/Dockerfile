@@ -1,7 +1,7 @@
 # Build from repository root (--context dir that contains docker/, src/, tests/):
 #   docker build -f docker/Dockerfile .
 #
-# Final image embeds php app + baked samplelogs; CI/dev/e2e may still bind-mount ../src.
+# Final image embeds php app + baked samplelogs; CI/dev/e2e may still bind-mount ./src.
 
 FROM php:8.2-cli AS loganalyzer-runtime
 
