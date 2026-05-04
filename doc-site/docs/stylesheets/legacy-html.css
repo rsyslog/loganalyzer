@@ -14,3 +14,28 @@
 .legacy-html-doc ul {
   margin: 0.5em 0 1em 1.2em;
 }
+
+.legacy-html-doc table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+}
+
+.legacy-html-doc table th,
+.legacy-html-doc table td {
+  border: 1px solid var(--md-typeset-table-color, rgba(0, 0, 0, 0.12));
+  padding: 0.4em 0.65em;
+  vertical-align: top;
+}
+
+.legacy-html-doc table th {
+  background: var(--md-default-fg-color--lightest, rgba(0, 0, 0, 0.04));
+}
+
+.legacy-html-doc h3 {
+  margin-top: 1.35em;
+}
+
+.legacy-html-doc code {
+  font-size: 0.92em;
+}

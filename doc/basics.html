@@ -12,7 +12,7 @@ as well as the rest of the documentation.
 <p>LogAnalyzer is configured via a master configuration file. If the userDB system
 (see below) is enabled, most settings can be made via the web-application itself
 without any further need to change the config file.
-<p>Intial configuration can also be done during a setup wizard, which writes
+<p>Initial configuration can also be done during a setup wizard, which writes
 an initial configuration file itself. This wizard can also enable the userDB system,
 so in this case you probably never need to touch the configuration file.
 
@@ -20,12 +20,12 @@ so in this case you probably never need to touch the configuration file.
 <p>A data source is a set of syslog (and other) data that is gathered. Data sources
 can be text files or databases. Any text file is supported, as long as it contains
 purely printable characters and LF is used as a line terminator. This applies to
-all regular text files so in short you can use whatver is present in text format.
+all regular text files so in short you can use whatever is present in text format.
 Obviously, these are files written by the syslogd, but this also includes any
 other text file, e.g. written by an application as its log file. Note that at
 this time, a file data source can contain exactly one file (and NOT multiple).
 
-For the database, tabels in either MonitorWare format or the format used by
+For the database, tables in either MonitorWare format or the format used by
 php-syslog-ng is supported. We support php-syslog-ng schema mainly for migration
 scenarios: it is sub-optimal in that it uses text strings where integer values are sufficient.
 This results in the need for more database space plus slower response time. If
@@ -43,19 +43,19 @@ button to build these. Alternatively, you can also review the
 to craft complex searches manually.
 <p>Note that searches are done via http get requests. That
 means you can copy and paste an url (or bookmark and email it) and that URL
-will contain a complete source. This is actually a great way to send searches
-to a co-worker or have some automatted process (eg via cron &quot; wget) pull specific
+will contain a complete snapshot of the search (query string and filters). This is actually a great way to send searches
+to a co-worker or have some automated process (e.g. via cron and <code>wget</code>) pull specific
 data on a periodic schedule.
 <p>The search part of LogAnalyzer is used much like any major search engine
 and hopefully is quite intuitive.
 <p>Note that a search is currently limited to a single data source only. If you
 would like to search across different data sources, you need to do this on the basis
 of individual data sources. To support you at least a bit in the process, there
-is a special page (for historical reasons called "the Oracle") which generates canned
+is a special page (<code>asktheoracle.php</code>, historically called &quot;the Oracle&quot;) which generates canned
 searches for you, so that you only need to click the individual search links to perform
 these searches. We know this is not perfect, but we hope this is useful.
 
-<h3>Context Links and Menues</h3>
+<h3>Context Links and Menus</h3>
 <p>At appropriate places, LogAnalyzer generates context links to potentially helpful
 information. For example, links to domain or IP range owner lookup or troubleshooting
 information (via the external <a href="https://kb.monitorware.com/">knowledge base</a>)
@@ -67,10 +67,10 @@ Now you wonder why a recent spam attack could happen. You review the mail log an
 indication of the spammer. Now, you can lookup the IP addresses and domain names used.
 Probably more interesting, you can invoke the cross-datasource search tool and obtain
 information on what the firewall log has recorded about the IPs in question. Finally,
-you may want to check the online knowledge based if there is some information
+you may want to check the online knowledge base if there is some information
 recorded about this or a similar event (for example, if you found a message that
-puzzels you). You may even ask you peers for help via the knowledge base.
-<p>In addition to the links, there are helpful popup menues for most of the
+puzzles you). You may even ask your peers for help via the knowledge base.
+<p>In addition to the links, there are helpful popup menus for most of the
 properties being displayed. To find out what you can do, please simply click the values
 (even those that do NOT look like a link) and see what the popup has to offer (and, yes,
 we will improve doc on these topics... ;)).

@@ -51,7 +51,8 @@ LEGACY_NAV_LABELS = {
 }
 
 MKDOCS_PATH = Path(__file__).resolve().parent / "mkdocs.yml"
-LEGACY_NAV_HEADER = "  - Legacy manuals (HTML):"
+# mkdocs.yml must contain this exact nav header line; `_patch_mkdocs_legacy_nav` replaces this section.
+LEGACY_NAV_HEADER = "  - LogAnalyzer user guide:"
 
 
 def _yaml_single_quoted(value: str) -> str:
@@ -66,7 +67,7 @@ def _nav_item_indent(line: str) -> int | None:
 
 def _extract_title_and_body(html: str) -> tuple[str, str]:
     tm = TITLE_RE.search(html)
-    title = (tm.group(1).strip() if tm else "Legacy manual").replace("\n", " ")
+    title = (tm.group(1).strip() if tm else "User guide").replace("\n", " ")
     bm = BODY_RE.search(html)
     body = bm.group(1).strip() if bm else html
     body = FIRST_H1_RE.sub("", body, count=1)
@@ -122,6 +123,8 @@ def _format_legacy_nav_lines(stems_ordered: list[str]) -> list[str]:
     lines = [
         LEGACY_NAV_HEADER,
         "    - Overview: legacy-html-manuals.md",
+        "    - Quick start: user-guide/quick-start.md",
+        "    - Interface map: user-guide/interface-map.md",
     ]
     for stem in stems_ordered:
         label = LEGACY_NAV_LABELS.get(stem, stem.replace("_", " ").title())
@@ -155,7 +158,7 @@ def _patch_mkdocs_legacy_nav(stems_ordered: list[str]) -> None:
         file_lines[:start_i] + _format_legacy_nav_lines(stems_ordered) + file_lines[end_i:]
     )
     MKDOCS_PATH.write_text("\n".join(new_file_lines) + "\n", encoding="utf-8", newline="\n")
-    print(f"Updated {MKDOCS_PATH.name} legacy nav ({len(stems_ordered)} manual page(s))")
+    print(f"Updated {MKDOCS_PATH.name} user guide nav ({len(stems_ordered)} imported chapter(s))")
 
 
 def _write_legacy_markdown(
@@ -208,16 +211,18 @@ def main() -> int:
         ordered = _ordered_legacy_stems(stems)
         stem_to_html = {f.stem: f.name for f in html_files}
         lines = [
-            "# Legacy HTML manuals",
+            "# LogAnalyzer user guide (overview)",
             "",
-            "These pages are **legacy HTML 4** manuals from the upstream tree. They are "
-            "**included in this handbook** (Material theme and navigation) so you can read them "
-            "without leaving the site. For Docker, CI, and contributor notes, use the other "
-            "sections in the left nav.",
+            "This section is the **LogAnalyzer user guide**: how the app works, installation, search, "
+            "and operations. **Quick start** and **Interface map** are handbook-native pages (with "
+            "screenshots where available). The chapters below are **imported** from the upstream "
+            "`doc/*.html` manuals in this repository, rendered here with the same navigation and theme "
+            "as the rest of the site. For Docker development, CI, and contributor notes, use "
+            "**Docker & CI** in the left nav.",
             "",
-            f"Every file under [`doc/`]({blob_base}/) with a `*.html` extension is listed below "
-            f"**({len(ordered)} manuals)**; the same pages appear under "
-            "**Legacy manuals (HTML)** in the left sidebar (same order and titles).",
+            f"Every `*.html` manual under [`doc/`]({blob_base}/) is listed below "
+            f"**({len(ordered)} chapters)**; matching pages appear under "
+            "**LogAnalyzer user guide** in the sidebar.",
             "",
             "## Pages (in-site)",
             "",

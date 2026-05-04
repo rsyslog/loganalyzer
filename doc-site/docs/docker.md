@@ -54,4 +54,10 @@ MySQL-dependent integration tests are skipped unless `LOGANALYZER_INTEGRATION=1`
 
 ## E2E (Playwright)
 
-See [e2e/README.md](https://github.com/rsyslog/loganalyzer/blob/master/e2e/README.md) and `docker/docker-compose.e2e.yml`.
+See [`e2e/README.md`](https://github.com/rsyslog/loganalyzer/blob/master/e2e/README.md) and `docker/docker-compose.e2e.yml`.
+
+### CI on GitHub Actions
+
+The [Playwright E2E workflow](https://github.com/rsyslog/loganalyzer/blob/master/.github/workflows/e2e.yml) runs on pull requests, pushes to `main` or `master`, and manual dispatch. It builds and runs the same Docker Compose stack as locally (`docker/docker-compose.e2e.yml`), then executes Playwright.
+
+If the job **fails**, the workflow can open a **GitHub issue** titled like `CI: playwright e2e failed (…)` with a link to the run and a **tail of the Docker/compose log**. That only happens when the workflow has `issues: write` and the run is for **this repository** (for pull requests from forks, issue creation is skipped). See the “Open issue on failure” step in [`.github/workflows/e2e.yml`](https://github.com/rsyslog/loganalyzer/blob/master/.github/workflows/e2e.yml) (`gh issue create`).

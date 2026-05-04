@@ -10,4 +10,4 @@ python -m mkdocs build -f doc-site/mkdocs.yml
 
 For GitHub Pages, set `GHP_REPO_URL=https://github.com/OWNER/REPO` when running `prepare_docs.py` (the workflow does this automatically). Optional: `GHP_DEFAULT_BRANCH` (default `master`) controls the link to `doc/` in the hub page.
 
-The **Legacy manuals** entries in `doc-site/mkdocs.yml` are rewritten by `prepare_docs.py` from every `doc/*.html`, so the side nav always lists all legacy pages after regeneration.
+The **LogAnalyzer user guide** block in `doc-site/mkdocs.yml` is maintained by `prepare_docs.py`: the script rewrites the list of chapters imported from every `doc/*.html`, and keeps fixed entries (Overview, Quick start, Interface map) at the top of that section when you regenerate docs.
