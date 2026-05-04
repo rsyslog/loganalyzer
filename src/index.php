@@ -350,7 +350,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 				if ( GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 && isset($logArray[SYSLOG_MESSAGE]) )
 				{
 					$szCurrentMessage = $logArray[SYSLOG_MESSAGE];
-					$szCurrentTs = (isset($logArray['timereported']) && is_array($logArray['timereported']) && isset($logArray['timereported'][EVTIME_TIMESTAMP])) ? $logArray['timereported'][EVTIME_TIMESTAMP] : 0;
+					$szCurrentTs = isset($logArray['timereported'][EVTIME_TIMESTAMP]) ? $logArray['timereported'][EVTIME_TIMESTAMP] : 0;
 					$tsDiff = ($szLastMessageTimestamp > 0 && $szCurrentTs > 0) ? abs($szCurrentTs - $szLastMessageTimestamp) : 0;
 
 					if ( $szLastMessage !== "" && $szLastMessage == $szCurrentMessage && $tsDiff < $DuplicateRecordMaxTsDistance )
