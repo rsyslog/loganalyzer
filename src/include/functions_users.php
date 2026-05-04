@@ -386,7 +386,7 @@ function CheckLDAPUserLogin( $username, $password )
 	}
 	 
 	// for the moment when a user logs in from LDAP, create it in the DB.
-	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code…
+	// then the prefs and group management is done in the DB and we don't rewrite the whole Loganalyzer code.
 
 	/* Don't store LDAP passwords in database */
 	$md5pass = '';
@@ -397,7 +397,7 @@ function CheckLDAPUserLogin( $username, $password )
 	$myrow = DB_GetSingleRow($result, true);
 	if (!isset($myrow['is_admin']) )
 	{
-		// Create User | use password to create MD5 Hash, so technically the user could login without LDAP as well
+		// Create User: password column left empty; authentication is via LDAP only while UserDBAuthMode is LDAP.
 		$sqlcmd = "INSERT INTO `" . DB_USERS . "` (username, password, is_admin, is_readonly) VALUES ('" . $username . "', '" . $md5pass . "', 0, 1)"; 
 
 		$result = DB_Query($sqlcmd);
@@ -405,6 +405,13 @@ function CheckLDAPUserLogin( $username, $password )
 		$myrow['is_admin'] = 0;
 		$myrow['last_login'] = 0;
 		$myrow['is_readonly'] = 1;
+	}
+	else if ( isset($myrow['password']) && strlen($myrow['password']) > 0 )
+	{
+		// Scrub legacy MD5 hashes from before LDAP passwords were stopped being stored.
+		$result = DB_Query("UPDATE `" . DB_USERS . "` SET password = '' WHERE ID = " . intval($myrow['ID']));
+		DB_FreeQuery($result);
+		$myrow['password'] = '';
 	}
 	
 	// Construct Row and return
