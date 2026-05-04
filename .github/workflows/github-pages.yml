@@ -31,6 +31,7 @@ jobs:
         run: python doc-site/prepare_docs.py
         env:
           GHP_REPO_URL: https://github.com/${{ github.repository }}
+          GHP_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 
       - name: Build site
         run: python -m mkdocs build -f doc-site/mkdocs.yml
