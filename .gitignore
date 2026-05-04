@@ -10,3 +10,4 @@ src/config.php
 /doc-site/docs/user-guide/chapters/
 
 src/index.html
+.phpunit.result.cache

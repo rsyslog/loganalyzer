@@ -152,6 +152,11 @@ if ( !$content['error_occured'] )
 			// No limit - export all matching records
 			$maxExportRecords = PHP_INT_MAX;
 		}
+
+		// --- Read export-specific config settings
+		$content['ExportAllMatchPages'] = GetConfigSetting("ExportAllMatchPages", 0, CFGLEVEL_USER) == 1;
+		$content['SuppressDuplicatedMessages'] = GetConfigSetting("ExportSuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1;
+		// ---
 		
 		// Copy current used columns here!
 		$content['Columns'] = $content['Views'][$currentViewID]['Columns'];
@@ -213,33 +218,59 @@ if ( !$content['error_occured'] )
 			// We found matching records, so continue
 			if ( $ret == SUCCESS )
 			{
+				// --- Init duplicate suppression state
+				$szLastMessage = "";
+				$duplicateCount = 0;
+				// ---
+
 				//Loop through the messages!
 				do
 				{
 					// --- Extra stuff for suppressing messages
-					if (
-							GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
-							&&
-							isset($logArray[SYSLOG_MESSAGE])
-						)
+					if ( $content['SuppressDuplicatedMessages'] && isset($logArray[SYSLOG_MESSAGE]) )
 					{
+						if ( $szLastMessage !== "" && $szLastMessage == $logArray[SYSLOG_MESSAGE] )
+						{
+							// It's a duplicate — count and skip
+							$duplicateCount++;
 
-						if ( !isset($szLastMessage) ) // Only set lastmgr
-							$szLastMessage = $logArray[SYSLOG_MESSAGE];
+							// Update period_end_ts for the duplicate record before skipping
+							if ( isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
+								$content['period_end_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
+
+							// Read next entry
+							do {
+								$ret = $stream->ReadNext($uID, $logArray);
+							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+							continue;
+						}
 						else
 						{
-							// Skip if same msg
-							if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] )
+							// Different message — flush any pending duplicate summary
+							if ( $duplicateCount > 0 )
 							{
-								// Set last mgr
-								$szLastMessage = $logArray[SYSLOG_MESSAGE];
-
-								// Skip entry
-								continue;
+								foreach ( $content['Columns'] as $mycolkey )
+								{
+									$content['syslogmessages'][$counter][$mycolkey]['FieldColumn'] = $mycolkey;
+									$content['syslogmessages'][$counter][$mycolkey]['uid'] = '';
+									$content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = '';
+								}
+								if ( isset($content['fields'][SYSLOG_MESSAGE]) )
+									$content['syslogmessages'][$counter][SYSLOG_MESSAGE]['fieldvalue'] = "... suppressed $duplicateCount duplicate(s)...";
+								$counter++;
+								$duplicateCount = 0;
 							}
+							$szLastMessage = $logArray[SYSLOG_MESSAGE];
 						}
 					}
-					// --- 
+					// ---
+
+					// --- Track period timestamps for the export filename
+					if ( !isset($content['period_start_ts']) && isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
+						$content['period_start_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
+					if ( isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
+						$content['period_end_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
+					// ---
 
 					// --- Now we populate the values array!
 					foreach($content['Columns'] as $mycolkey)
@@ -297,15 +328,41 @@ if ( !$content['error_occured'] )
 
 					// Increment Counter
 					$counter++;
-				} while ($counter < $maxExportRecords && ($ret = $stream->ReadNext($uID, $logArray)) == SUCCESS);
+
+					// Safety limit — stop if we've hit the maximum export record count
+					if ( $counter >= $maxExportRecords )
+						break;
+
+					// Read next entry, skipping filtered-out entries
+					do {
+						$ret = $stream->ReadNext($uID, $logArray);
+					} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+
+					// If not exporting all pages, stop after the current page size
+					if ( !$content['ExportAllMatchPages'] && $counter >= $content['CurrentViewEntriesPerPage'] )
+						break;
+
+				} while ($ret == SUCCESS);
+
+				// Flush any trailing duplicate summary row
+				if ( $content['SuppressDuplicatedMessages'] && $duplicateCount > 0 )
+				{
+					foreach ( $content['Columns'] as $mycolkey )
+					{
+						$content['syslogmessages'][$counter][$mycolkey]['FieldColumn'] = $mycolkey;
+						$content['syslogmessages'][$counter][$mycolkey]['uid'] = '';
+						$content['syslogmessages'][$counter][$mycolkey]['fieldvalue'] = '';
+					}
+					if ( isset($content['fields'][SYSLOG_MESSAGE]) )
+						$content['syslogmessages'][$counter][SYSLOG_MESSAGE]['fieldvalue'] = "... suppressed $duplicateCount duplicate(s)...";
+					$counter++;
+				}
 
 				if ( $content['read_direction'] == EnumReadDirection::Forward )
 				{
 					// Back Button was clicked, so we need to flip the array 
 					$content['syslogmessages'] = array_reverse ( $content['syslogmessages'] );
 				}
-// DEBUG
-//print_r ( $content['syslogmessages'] );
 			}
 		}
 		else
@@ -342,7 +399,9 @@ else
 	$szOutputMimeType = "text/plain";
 	$szOutputCharset = "";
 
-	$szOutputFileName = "ExportMessages";
+	$szOutputFileName = isset($content['period_start_ts'])
+		? "ExportMessages_" . date('Ymd\THis', $content['period_start_ts']) . "-" . date('Ymd\THis', $content['period_end_ts'])
+		: "ExportMessages";
 	$szOutputFileExtension = ".txt";
 	$szOPFieldSeparator = " ";
 	$szOPFirstLineFieldNames = true;

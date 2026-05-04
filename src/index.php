@@ -337,39 +337,70 @@ if (
 			$myMsgCharLimit = GetConfigSetting("ViewMessageCharacterLimit", 80, CFGLEVEL_USER);
 			$myStrCharLimit = GetConfigSetting("ViewStringCharacterLimit", 30, CFGLEVEL_USER);
 			$ViewColoredCells = GetConfigSetting("ViewColoredCells", 0, CFGLEVEL_USER);
+			$DuplicateRecordMaxTsDistance = GetConfigSetting("DuplicateRecordMaxTsDistance", PHP_INT_MAX, CFGLEVEL_USER);
+			// ---
+
+			// --- Init duplicate suppression state
+			$szLastMessage = "";
+			$szLastMessageTimestamp = 0;
+			$duplicateCount = 0;
+			$duplicateCountTotal = 0;
 			// ---
 
 			//Loop through the messages!
 			do
 			{
 				// --- Extra stuff for suppressing messages
-				if (
-						GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 
-						&&
-						isset($logArray[SYSLOG_MESSAGE])
-					)
+				if ( GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 && isset($logArray[SYSLOG_MESSAGE]) )
 				{
+					$szCurrentMessage = $logArray[SYSLOG_MESSAGE];
+					$szCurrentTs = isset($logArray['timereported'][EVTIME_TIMESTAMP]) ? $logArray['timereported'][EVTIME_TIMESTAMP] : 0;
+					$tsDiff = ($szLastMessageTimestamp > 0 && $szCurrentTs > 0) ? abs($szCurrentTs - $szLastMessageTimestamp) : 0;
 
-					if ( !isset($szLastMessage) ) // Only set lastmgr
-						$szLastMessage = $logArray[SYSLOG_MESSAGE];
+					if ( $szLastMessage !== "" && $szLastMessage == $szCurrentMessage && $tsDiff <= $DuplicateRecordMaxTsDistance )
+					{
+						// It's a duplicate
+						$duplicateCount++;
+						$duplicateCountTotal++;
+						$szLastMessageTimestamp = $szCurrentTs;
+
+						// --- Extra Loop to get the next entry!
+						do
+						{
+							$ret = $stream->ReadNext($uID, $logArray);
+						} while ( $ret == ERROR_MSG_SKIPMESSAGE );
+						// --- 
+
+						// Skip entry
+						continue;
+					}
 					else
 					{
-						// Skip if same msg
-						if ( $szLastMessage == $logArray[SYSLOG_MESSAGE] )
+						// Different message — flush any pending duplicate summary row
+						if ( $duplicateCount > 0 )
 						{
-							// Set last mgr
-							$szLastMessage = $logArray[SYSLOG_MESSAGE];
-
-							// --- Extra Loop to get the next entry!
-							do
+							$content['syslogmessages'][$counter]['cssclass'] = "line1";
+							$content['syslogmessages'][$counter]['MiscShowDebugGridCounter'] = $content['MiscShowDebugGridCounter'];
+							foreach ( $content['Columns'] as $mycolkey )
 							{
-								$ret = $stream->ReadNext($uID, $logArray);
-							} while ( $ret == ERROR_MSG_SKIPMESSAGE );
-							// --- 
-
-							// Skip entry
-							continue;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldColumn'] = $mycolkey;
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['uid'] = '';
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = isset($fields[$mycolkey]) ? $fields[$mycolkey]['FieldAlign'] : 'left';
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "line1";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "TOP";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
+								$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '';
+							}
+							if ( isset($content['syslogmessages'][$counter]['values'][SYSLOG_MESSAGE]) )
+								$content['syslogmessages'][$counter]['values'][SYSLOG_MESSAGE]['fieldvalue'] = "... suppressed $duplicateCount duplicate(s)...";
+							$counter++;
+							$duplicateCount = 0;
 						}
+						$szLastMessage = $szCurrentMessage;
+						$szLastMessageTimestamp = $szCurrentTs;
 					}
 				}
 				// --- 
@@ -693,7 +724,33 @@ if (
 				} while ( $ret == ERROR_MSG_SKIPMESSAGE );
 				// --- 
 			} while ( $counter < $content['CurrentViewEntriesPerPage'] && ($ret == SUCCESS) );
-//print_r ( $content['syslogmessages'] );
+
+			// Flush any trailing duplicate summary row that was pending when the loop ended
+			if ( GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 && $duplicateCount > 0 )
+			{
+				$content['syslogmessages'][$counter]['cssclass'] = "line1";
+				$content['syslogmessages'][$counter]['MiscShowDebugGridCounter'] = $content['MiscShowDebugGridCounter'];
+				foreach ( $content['Columns'] as $mycolkey )
+				{
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldColumn'] = $mycolkey;
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['uid'] = '';
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['FieldAlign'] = isset($fields[$mycolkey]) ? $fields[$mycolkey]['FieldAlign'] : 'left';
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldcssclass'] = "line1";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldbgcolor'] = "";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['isnowrap'] = "nowrap";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['hasdetails'] = "false";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['detailimagealign'] = "TOP";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['detaillink'] = "#";
+					$content['syslogmessages'][$counter]['values'][$mycolkey]['fieldvalue'] = '';
+				}
+				if ( isset($content['syslogmessages'][$counter]['values'][SYSLOG_MESSAGE]) )
+					$content['syslogmessages'][$counter]['values'][SYSLOG_MESSAGE]['fieldvalue'] = "... suppressed $duplicateCount duplicate(s)...";
+				$counter++;
+			}
+
+			// Expose suppressed record count and flag for the UI
+			$content['main_suppressed_recordcount'] = $duplicateCountTotal;
+			$content['SUPPRESS_ENABLED'] = GetConfigSetting("SuppressDuplicatedMessages", 0, CFGLEVEL_USER) == 1 ? "true" : "false";
 
 			// Move below processing - Read First and LAST UID's before start reading the stream!
 //			$content['uid_last'] = $stream->GetLastPageUID();
