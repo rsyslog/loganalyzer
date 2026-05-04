@@ -74,7 +74,7 @@ $content['TITLE'] = "LogAnalyzer :: " . $content['LN_INSTALL_TITLE'];
 // --- Read Vars
 if ( isset($_GET['step']) )
 {
-	$content['INSTALL_STEP'] = intval(DB_RemoveBadChars($_GET['step']));
+	$content['INSTALL_STEP'] = intval($_GET['step']);
 	if ( $content['INSTALL_STEP'] > MAX_STEPS ) 
 		$content['INSTALL_STEP'] = 1;
 }
@@ -301,7 +301,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_DBSERVER'] );
 
 			if ( isset($_POST['UserDBPort']) )
-				$_SESSION['UserDBPort'] = intval(DB_RemoveBadChars($_POST['UserDBPort']));
+				$_SESSION['UserDBPort'] = intval($_POST['UserDBPort']);
 			else
 				RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_DBPORT'] );
 
@@ -326,12 +326,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 				$_SESSION['UserDBPass'] = "";
 
 			if ( isset($_POST['UserDBLoginRequired']) )
-				$_SESSION['UserDBLoginRequired'] = intval(DB_RemoveBadChars($_POST['UserDBLoginRequired']));
+				$_SESSION['UserDBLoginRequired'] = intval($_POST['UserDBLoginRequired']);
 			else
 				$_SESSION['UserDBLoginRequired'] = false;
 
 			if ( isset($_POST['UserDBAuthMode']) )
-				$_SESSION['UserDBAuthMode'] = intval(DB_RemoveBadChars($_POST['UserDBAuthMode']));
+				$_SESSION['UserDBAuthMode'] = intval($_POST['UserDBAuthMode']);
 			else
 				$_SESSION['UserDBAuthMode'] = USERDB_AUTH_INTERNAL;
 			
@@ -344,7 +344,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 				else
 					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPServer'] );
 				if ( isset($_POST['LDAPPort']) )
-					$_SESSION['LDAPPort'] = intval(DB_RemoveBadChars($_POST['LDAPPort']));
+					$_SESSION['LDAPPort'] = intval($_POST['LDAPPort']);
 				else
 					RevertOneStep( $content['INSTALL_STEP']-1, $content['LN_CFG_PARAMMISSING'] . $content['LN_CFG_LDAPPort'] );
 				if ( isset($_POST['LDAPBaseDN']) )
@@ -389,7 +389,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 	// --- Read Frontend Vars
 	if ( isset($_POST['ViewMessageCharacterLimit']) )
 	{
-		$_SESSION['ViewMessageCharacterLimit'] = intval( DB_RemoveBadChars($_POST['ViewMessageCharacterLimit']) );
+		$_SESSION['ViewMessageCharacterLimit'] = intval($_POST['ViewMessageCharacterLimit']);
 		if ( $_SESSION['ViewMessageCharacterLimit'] < 0 )
 			$_SESSION['ViewMessageCharacterLimit'] = 80; // Fallback default!
 	}
@@ -398,7 +398,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 
 	if ( isset($_POST['ViewStringCharacterLimit']) )
 	{
-		$_SESSION['ViewStringCharacterLimit'] = intval( DB_RemoveBadChars($_POST['ViewStringCharacterLimit']) );
+		$_SESSION['ViewStringCharacterLimit'] = intval($_POST['ViewStringCharacterLimit']);
 		if ( $_SESSION['ViewStringCharacterLimit'] < 0 )
 			$_SESSION['ViewStringCharacterLimit'] = 30; // Fallback default!
 	}
@@ -407,7 +407,7 @@ else if ( $content['INSTALL_STEP'] == 4 )
 
 	if ( isset($_POST['ViewEntriesPerPage']) )
 	{
-		$_SESSION['ViewEntriesPerPage'] = intval( DB_RemoveBadChars($_POST['ViewEntriesPerPage']) );
+		$_SESSION['ViewEntriesPerPage'] = intval($_POST['ViewEntriesPerPage']);
 		if ( $_SESSION['ViewEntriesPerPage'] < 0 )
 			$_SESSION['ViewEntriesPerPage'] = 50; // Fallback default!
 	}
@@ -415,12 +415,12 @@ else if ( $content['INSTALL_STEP'] == 4 )
 		$_SESSION['ViewEntriesPerPage'] = 50; // Fallback default!
 
 	if ( isset($_POST['ViewEnableDetailPopups']) )
-		$_SESSION['ViewEnableDetailPopups'] = intval( DB_RemoveBadChars($_POST['ViewEnableDetailPopups']) );
+		$_SESSION['ViewEnableDetailPopups'] = intval($_POST['ViewEnableDetailPopups']);
 	else
 		$_SESSION['ViewEnableDetailPopups'] = 1; // Fallback default!
 
 	if ( isset($_POST['EnableIPAddressResolve']) )
-		$_SESSION['EnableIPAddressResolve'] = intval( DB_RemoveBadChars($_POST['EnableIPAddressResolve']) );
+		$_SESSION['EnableIPAddressResolve'] = intval($_POST['EnableIPAddressResolve']);
 	else
 		$_SESSION['EnableIPAddressResolve'] = 1; // Fallback default!
 

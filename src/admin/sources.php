@@ -177,10 +177,10 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval($_GET['id']);
 
 			// Check if exists
-			if ( is_numeric($content['SOURCEID']) && isset($content['Sources'][ $content['SOURCEID'] ]) )
+			if ( isset($content['Sources'][ $content['SOURCEID'] ]) )
 			{
 				// Get Source reference
 				$mysource = $content['Sources'][ $content['SOURCEID'] ];
@@ -296,7 +296,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval($_GET['id']);
 
 			// Get SourceInfo
 			$result = DB_Query("SELECT Name FROM " . DB_SOURCES . " WHERE ID = " . $content['SOURCEID'] ); 
@@ -339,7 +339,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval($_GET['id']);
 		}
 
 		// Check If source is available
@@ -473,7 +473,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SOURCEID'] = DB_RemoveBadChars($_GET['id']);
+			$content['SOURCEID'] = intval($_GET['id']);
 		}
 
 		// Check If source is available
@@ -563,13 +563,13 @@ if ( isset($_GET['op']) )
 if ( isset($_POST['op']) )
 {
 	// Read parameters first!
-	if ( isset($_POST['id']) ) { $content['SOURCEID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SOURCEID'] = -1; }
+	if ( isset($_POST['id']) && is_scalar($_POST['id']) ) { $content['SOURCEID'] = intval($_POST['id']); } else {$content['SOURCEID'] = -1; }
 	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
 	if ( isset($_POST['Description']) ) { $content['Description'] = DB_RemoveBadChars($_POST['Description']); } else {$content['Description'] = ""; }
 	if ( isset($_POST['SourceType']) ) { $content['SourceType'] = DB_RemoveBadChars($_POST['SourceType']); }
 	if ( isset($_POST['MsgParserList']) ) { $content['MsgParserList'] = DB_RemoveBadChars($_POST['MsgParserList']); }
-	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval(DB_RemoveBadChars($_POST['MsgNormalize'])); } else {$content['MsgNormalize'] = 0; }
-	if ( isset($_POST['MsgSkipUnparseable']) ) { $content['MsgSkipUnparseable'] = intval(DB_RemoveBadChars($_POST['MsgSkipUnparseable'])); } else {$content['MsgSkipUnparseable'] = 0; }
+	if ( isset($_POST['MsgNormalize']) ) { $content['MsgNormalize'] = intval($_POST['MsgNormalize']); } else {$content['MsgNormalize'] = 0; }
+	if ( isset($_POST['MsgSkipUnparseable']) ) { $content['MsgSkipUnparseable'] = intval($_POST['MsgSkipUnparseable']); } else {$content['MsgSkipUnparseable'] = 0; }
 	if ( isset($_POST['SourceViewID']) ) { $content['SourceViewID'] = DB_RemoveBadChars($_POST['SourceViewID']); }
 	if ( isset($_POST['defaultfilter']) ) { $content['defaultfilter'] = DB_RemoveBadChars($_POST['defaultfilter']); }
 

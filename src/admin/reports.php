@@ -440,7 +440,7 @@ if ( isset($_GET['op']) )
 				$content['REPORTS_DETAILSFOR'] = GetAndReplaceLangStr( $content['LN_REPORTS_DETAILSFOR'], $content['ReportID'] ); 
 
 				// Now Get data from saved report!
-				$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
+				$content['SavedReportID'] = intval($_GET['savedreportid']);
 
 				if ( isset($myReport['SAVEDREPORTS'][$content['SavedReportID']]) ) 
 				{
@@ -525,7 +525,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['savedreportid']) )
 		{
 			//PreInit these values 
-			$content['SavedReportID'] = DB_RemoveBadChars($_GET['savedreportid']);
+			$content['SavedReportID'] = intval($_GET['savedreportid']);
 
 			// Get GroupInfo
 			$result = DB_Query("SELECT customTitle FROM " . DB_SAVEDREPORTS . " WHERE ID = " . $content['SavedReportID'] ); 
@@ -1019,7 +1019,7 @@ if ( isset($_POST['op']) )
 		$myReport = $content['REPORTS'][ $content['ReportID'] ];
 
 		// Get SavedReportID!
-		if ( isset($_POST['savedreportid']) ) { $content['SavedReportID'] = DB_RemoveBadChars($_POST['savedreportid']); } else {$content['SavedReportID'] = ""; }
+		if ( isset($_POST['savedreportid']) && is_scalar($_POST['savedreportid']) ) { $content['SavedReportID'] = intval($_POST['savedreportid']); } else {$content['SavedReportID'] = 0; }
 
 		// Read parameters
 		if ( isset($_POST['SourceID']) ) { $content['SourceID'] = DB_RemoveBadChars($_POST['SourceID']); }

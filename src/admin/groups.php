@@ -91,7 +91,7 @@ if ( isset($_GET['op']) )
 	else if ($_GET['op'] == "adduser" && isset($_GET['id']) ) 
 	{
 		//PreInit these values 
-		$content['GROUPID'] = intval( DB_RemoveBadChars($_GET['id']) );
+		$content['GROUPID'] = intval($_GET['id']);
 
 		// Set Mode to add
 		$content['ISADDUSER'] = "true";
@@ -170,7 +170,7 @@ if ( isset($_GET['op']) )
 	else if ($_GET['op'] == "removeuser" && isset($_GET['id']) ) 
 	{
 		//PreInit these values 
-		$content['GROUPID'] = intval( DB_RemoveBadChars($_GET['id']) );
+		$content['GROUPID'] = intval($_GET['id']);
 
 		// Set Mode to add
 		$content['ISREMOVEUSER'] = "true";
@@ -230,7 +230,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['GROUPID'] = intval($_GET['id']);
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_GROUPS . 
@@ -261,7 +261,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['GROUPID'] = DB_RemoveBadChars($_GET['id']);
+			$content['GROUPID'] = intval($_GET['id']);
 
 			// Get GroupInfo
 			$result = DB_Query("SELECT groupname FROM " . DB_GROUPS . " WHERE ID = " . $content['GROUPID'] ); 
@@ -305,7 +305,7 @@ if ( isset($_GET['op']) )
 
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['GROUPID'] = intval( DB_RemoveBadChars($_POST['id']) ); } else {$content['GROUPID'] = ""; }
+	if ( isset ($_POST['id']) && is_scalar($_POST['id']) ) { $content['GROUPID'] = intval($_POST['id']); } else {$content['GROUPID'] = 0; }
 	if ( isset ($_POST['groupname']) ) { $content['groupname'] = DB_RemoveBadChars($_POST['groupname']); } else {$content['groupname'] = ""; }
 	if ( isset ($_POST['groupdescription']) ) { $content['groupdescription'] = DB_RemoveBadChars($_POST['groupdescription']); } else {$content['groupdescription'] = ""; }
 
@@ -368,7 +368,7 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['userid']) ) 
 			{ 
 				// Copy UserID
-				$content['USERID'] = intval( DB_RemoveBadChars($_POST['userid']) ); 
+				$content['USERID'] = intval($_POST['userid']); 
 
 				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE id = " . $content['USERID']); 
 				$myrow = DB_GetSingleRow($result, true);
@@ -401,7 +401,7 @@ if ( isset($_POST['op']) )
 			if ( isset($_POST['userid']) ) 
 			{ 
 				// Copy UserID
-				$content['USERID'] = intval( DB_RemoveBadChars($_POST['userid']) ); 
+				$content['USERID'] = intval($_POST['userid']); 
 
 				$result = DB_Query("SELECT username FROM " . DB_USERS . " WHERE id = " . $content['USERID']); 
 				$myrow = DB_GetSingleRow($result, true);

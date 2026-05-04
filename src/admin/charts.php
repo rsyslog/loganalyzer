@@ -99,8 +99,8 @@ if ( isset($_GET['miniop']) )
 		if ( $_GET['miniop'] == "setenabled" ) 
 		{
 			//PreInit these values 
-			$content['CHARTID'] = intval(DB_RemoveBadChars($_GET['id']));
-			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+			$content['CHARTID'] = intval($_GET['id']);
+			$iNewVal = intval($_GET['newval']);
 
 			// Perform SQL Query!
 			$sqlquery = "SELECT * " . 
@@ -188,10 +188,10 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = intval($_GET['id']);
 
 			// Check if exists
-			if ( is_numeric($content['CHARTID']) && isset($content['Charts'][ $content['CHARTID'] ]) )
+			if ( isset($content['Charts'][ $content['CHARTID'] ]) )
 			{
 				// Get Source reference
 				$myChart = $content['Charts'][ $content['CHARTID'] ];
@@ -269,7 +269,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['CHARTID'] = DB_RemoveBadChars($_GET['id']);
+			$content['CHARTID'] = intval($_GET['id']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_CHARTS . " WHERE ID = " . $content['CHARTID'] ); 
@@ -312,15 +312,15 @@ if ( isset($_GET['op']) )
 if ( isset($_POST['op']) )
 {
 	// Read parameters first!
-	if ( isset($_POST['id']) ) { $content['CHARTID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['CHARTID'] = -1; }
+	if ( isset($_POST['id']) && is_scalar($_POST['id']) ) { $content['CHARTID'] = intval($_POST['id']); } else {$content['CHARTID'] = -1; }
 	if ( isset($_POST['Name']) ) { $content['Name'] = DB_RemoveBadChars($_POST['Name']); } else {$content['Name'] = ""; }
-	if ( isset($_POST['chart_enabled']) ) { $content['chart_enabled'] = intval(DB_RemoveBadChars($_POST['chart_enabled'])); } else {$content['chart_enabled'] = 0; }
-	if ( isset($_POST['chart_type']) ) { $content['chart_type'] = intval(DB_RemoveBadChars($_POST['chart_type'])); }
-	if ( isset($_POST['chart_width']) ) { $content['chart_width'] = intval(DB_RemoveBadChars($_POST['chart_width'])); } else {$content['chart_width'] = 400; }
+	if ( isset($_POST['chart_enabled']) ) { $content['chart_enabled'] = intval($_POST['chart_enabled']); } else {$content['chart_enabled'] = 0; }
+	if ( isset($_POST['chart_type']) ) { $content['chart_type'] = intval($_POST['chart_type']); }
+	if ( isset($_POST['chart_width']) ) { $content['chart_width'] = intval($_POST['chart_width']); } else {$content['chart_width'] = 400; }
 	if ( isset($_POST['chart_field']) ) { $content['chart_field'] = DB_RemoveBadChars($_POST['chart_field']); }
 	if ( isset($_POST['chart_orderby']) ) { $content['chart_orderby'] = DB_RemoveBadChars($_POST['chart_orderby']); }
-	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval(DB_RemoveBadChars($_POST['maxrecords'])); }
-	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval(DB_RemoveBadChars($_POST['showpercent'])); } else {$content['showpercent'] = 0; }
+	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval($_POST['maxrecords']); }
+	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval($_POST['showpercent']); } else {$content['showpercent'] = 0; }
 	if ( isset($_POST['chart_defaultfilter']) ) { $content['chart_defaultfilter'] = DB_RemoveBadChars($_POST['chart_defaultfilter']); }
 	
 	// User & Group handeled specially

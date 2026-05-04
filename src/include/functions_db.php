@@ -99,6 +99,10 @@ function DB_Connect()
 		DB_PrintError("Cannot use database '" .GetConfigSetting("UserDBName") . "'", true);
 	// :D Success connecting to db
 
+	// Charset for correct mysqli_real_escape_string behaviour and full Unicode
+	if ( !@mysqli_set_charset($userdbconn, 'utf8mb4') )
+		@mysqli_set_charset($userdbconn, 'utf8');
+
 	// TODO Do some more validating on the database
 }
 
@@ -262,6 +266,27 @@ function DB_RemoveParserSpecialBadChars($myString)
 	return $returnstr;
 }
 
+/*
+ * Escape a string for use in a single-quoted SQL literal on the active MySQL connection.
+ * Falls back to addslashes() if the user DB is disabled or not connected yet (e.g. install).
+ */
+function DB_EscapeMysqlString($myValue)
+{
+	global $userdbconn;
+
+	if ( $myValue === null )
+		$myValue = '';
+	elseif ( is_scalar($myValue) )
+		$myValue = (string)$myValue;
+	else
+		$myValue = '';
+
+	if ( GetConfigSetting("UserDBEnabled", false) == true && $userdbconn instanceof mysqli )
+		return mysqli_real_escape_string($userdbconn, $myValue);
+
+	return addslashes($myValue);
+}
+
 function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = false)
 {
 	// Check if Array
@@ -277,8 +302,7 @@ function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = 
 			}
 			else
 			{
-				// Replace with internal PHP Functions!
-				$retArray[$mykey] = addslashes($myString);
+				$retArray[$mykey] = DB_EscapeMysqlString($myString);
 			}
 		}
 
@@ -295,8 +319,7 @@ function DB_RemoveBadChars($myValue, $dbEngine = DB_MYSQL, $bForceStripSlahes = 
 		}
 		else
 		{
-			// Replace with internal PHP Functions!
-			return addslashes($myValue);
+			return DB_EscapeMysqlString($myValue);
 		}
 	}
 }
