@@ -2,13 +2,16 @@
 declare(strict_types=1);
 
 /**
- * Generate /var/www/html/config.php from config.sample.php for Docker / CI.
- * Run inside the web container; requires mounted src at LOGANALYZER_DOCROOT.
+ * Generate config.php from config.sample.php for Docker / CI.
+ * Output path: LOGANALYZER_CONFIG_PATH or LOGANALYZER_DOCROOT/config.php.
  */
 
 $docroot = getenv('LOGANALYZER_DOCROOT') ?: '/var/www/html';
 $samplePath = $docroot . '/include/config.sample.php';
-$outPath = $docroot . '/config.php';
+$configPath = getenv('LOGANALYZER_CONFIG_PATH');
+$configPath = ($configPath !== false && $configPath !== '')
+    ? $configPath
+    : $docroot . '/config.php';
 
 if (!is_readable($samplePath)) {
     fwrite(STDERR, "Cannot read: $samplePath\n");
@@ -23,6 +26,8 @@ $dbPass = getenv('LOGANALYZER_DB_PASSWORD') ?: 'loganalyzer';
 $pref = getenv('LOGANALYZER_TABLE_PREFIX') ?: 'logcon_';
 
 $loginReq = getenv('LOGANALYZER_LOGIN_REQUIRED') !== '0' ? 'true' : 'false';
+
+require_once __DIR__ . '/env-disk-sources.php';
 
 $body = file_get_contents($samplePath);
 if ($body === false) {
@@ -55,9 +60,17 @@ if ($c === 0) {
 }
 
 $c = 0;
-$body = str_replace('$CFG[\'DiskAllowed\'][] = "/var/log/"; ', '$CFG[\'DiskAllowed\'][] = "/var/log/"; ' . "\n" . '$CFG[\'DiskAllowed\'][] = "/samplelogs/"; ', $body, $c);
+$needle = '$CFG[\'DiskAllowed\'][] = "/var/log/"; ';
+$suffix = '';
+foreach (loganalyzer_disk_allowed_directories() as $dir) {
+    if (rtrim((string) $dir, '/') === '/var/log') {
+        continue;
+    }
+    $suffix .= "\n" . '$CFG[\'DiskAllowed\'][] = ' . var_export($dir, true) . '; ';
+}
+$body = str_replace($needle, $needle . $suffix, $body, $c);
 if ($c === 0) {
-    fwrite(STDERR, "Could not extend DiskAllowed\n");
+    fwrite(STDERR, "Could not extend DiskAllowed (/var/log/ marker missing)\n");
     exit(1);
 }
 
@@ -70,9 +83,17 @@ if ($c === 0) {
     exit(1);
 }
 
-if (file_put_contents($outPath, $body) === false) {
-    fwrite(STDERR, "Cannot write $outPath\n");
+$parent = dirname($configPath);
+if ($parent !== '' && $parent !== '.' && !is_dir($parent)) {
+    if (!@mkdir($parent, 0755, true) && !is_dir($parent)) {
+        fwrite(STDERR, "Cannot create directory: $parent\n");
+        exit(1);
+    }
+}
+
+if (file_put_contents($configPath, $body) === false) {
+    fwrite(STDERR, "Cannot write $configPath\n");
     exit(1);
 }
 
-fwrite(STDOUT, "Wrote $outPath\n");
+fwrite(STDOUT, "Wrote $configPath\n");

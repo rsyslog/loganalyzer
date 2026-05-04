@@ -11,7 +11,7 @@ const handbookAssets =
     : path.join(repoRoot, 'doc-site', 'docs', 'assets', 'user-guide');
 
 const adminUser = process.env.LOGANALYZER_ADMIN_USER ?? 'admin';
-const adminPass = process.env.LOGANALYZER_ADMIN_PASSWORD ?? 'pass';
+const adminPass = process.env.LOGANALYZER_ADMIN_PASSWORD ?? 'loganalyzer';
 
 /** After login submit, wait for redirect to main view (PHP may be slow in Docker CI; keep below test timeout). */
 const LOGIN_REDIRECT_TIMEOUT_MS = 60_000;

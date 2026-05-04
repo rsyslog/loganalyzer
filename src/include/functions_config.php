@@ -481,11 +481,38 @@ function InitReportModules($szRootPath = "")
 }
 
 /*
+*	First configured source id with a usable ObjRef, or null.
+*/
+function GetFirstOperationalSourceID(array $sources)
+{
+	foreach ($sources as $sid => $src) {
+		if (isset($src['ObjRef']) && is_object($src['ObjRef'])) {
+			return $sid;
+		}
+	}
+
+	return null;
+}
+
+/*
+*	Prepend SYSLOG_UID to the active view columns when debug mode requests it.
+*/
+function AppendSyslogUidIfDebugEnabled(&$content, $viewId, $debugEnabled)
+{
+	if (!$debugEnabled || !isset($content['Views'][$viewId])) {
+		return;
+	}
+	array_unshift($content['Views'][$viewId]['Columns'], SYSLOG_UID);
+}
+
+/*
 *	Init Source configs
 */
 function InitSourceConfigs()
 {
 	global $CFG, $content, $currentSourceID;
+
+	$miscShowDebugUid = (GetConfigSetting('MiscShowDebugMsg', 0, CFGLEVEL_USER) == 1);
 
 	// Init Source Configs!
 	if ( isset($CFG['Sources']) )
@@ -497,55 +524,82 @@ function InitSourceConfigs()
 		}
 	}
 
+	$currentSourceID = null;
+
 	// Read SourceID from GET Querystring
-	if ( isset($_GET['sourceid']) && isset($content['Sources'][$_GET['sourceid']]) )
-	{
+	if (isset($_GET['sourceid'], $content['Sources'][$_GET['sourceid']])
+		&& isset($content['Sources'][$_GET['sourceid']]['ObjRef'])
+		&& is_object($content['Sources'][$_GET['sourceid']]['ObjRef'])
+	) {
 		$currentSourceID = $_GET['sourceid'];
 		$_SESSION['currentSourceID'] = $currentSourceID;
-	}
-	else
-	{
-		// Set Source from session if available!
-		if ( isset($_SESSION['currentSourceID']) && isset($content['Sources'][$_SESSION['currentSourceID']]) )
+	} else {
+		if (isset($_SESSION['currentSourceID'])) {
+			if (
+				!isset($content['Sources'][$_SESSION['currentSourceID']]['ObjRef'])
+				|| !is_object($content['Sources'][$_SESSION['currentSourceID']]['ObjRef'])
+			) {
+				unset($_SESSION['currentSourceID']);
+			}
+		}
+		if (
+			isset($_SESSION['currentSourceID'])
+			&& isset($content['Sources'][$_SESSION['currentSourceID']]['ObjRef'])
+			&& is_object($content['Sources'][$_SESSION['currentSourceID']]['ObjRef'])
+		) {
 			$currentSourceID = $_SESSION['currentSourceID'];
-		else
-		{
-			$tmpVar = GetConfigSetting("DefaultSourceID", "", CFGLEVEL_USER);
-			if ( isset($content['Sources'][ $tmpVar ]) ) 
-			{
-				// Set Source to preconfigured sourceID!
+		} else {
+			$currentSourceID = null;
+			$tmpVar = GetConfigSetting('DefaultSourceID', '', CFGLEVEL_USER);
+			if (
+				$tmpVar !== ''
+				&& isset($content['Sources'][$tmpVar]['ObjRef'])
+				&& is_object($content['Sources'][$tmpVar]['ObjRef'])
+			) {
 				$_SESSION['currentSourceID'] = $tmpVar;
 				$currentSourceID = $tmpVar;
+			} elseif (isset($content['Sources']) && is_array($content['Sources'])) {
+				$firstSid = GetFirstOperationalSourceID($content['Sources']);
+				if ($firstSid !== null) {
+					$currentSourceID = $firstSid;
+					$_SESSION['currentSourceID'] = $currentSourceID;
+				}
 			}
-			else
-				// No Source stored in session, then to so now!
-				$_SESSION['currentSourceID'] = $currentSourceID;
 		}
 	}
-	
-	// Set for the selection box in the header
-	$content['Sources'][$currentSourceID]['selected'] = "selected";
 
-	// Set Description properties!
-	if ( isset($content['Sources'][$currentSourceID]['Description']) && strlen($content['Sources'][$currentSourceID]['Description']) > 0 ) 
-	{
-		$content['SourceDescriptionEnabled'] = true;
-		$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description']; 
-	}
-	
-
-	// --- Additional handling needed for the current view!
 	global $currentViewID;
-	$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
+	if (
+		isset($currentSourceID)
+		&& isset($content['Sources'][$currentSourceID]['ObjRef'])
+		&& is_object($content['Sources'][$currentSourceID]['ObjRef'])
+	) {
+		$content['Sources'][$currentSourceID]['selected'] = 'selected';
 
-	// Set selected state for correct View, for selection box ^^
-	$content['Views'][ $currentViewID ]['selected'] = "selected";
+		if (
+			isset($content['Sources'][$currentSourceID]['Description'])
+			&& strlen((string) $content['Sources'][$currentSourceID]['Description']) > 0
+		) {
+			$content['SourceDescriptionEnabled'] = true;
+			$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description'];
+		}
 
-	// If DEBUG Mode is enabled, we prepend the UID field into the col list!
-	
-	if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['Views'][$currentViewID]) )
-		array_unshift( $content['Views'][$currentViewID]['Columns'], SYSLOG_UID);
-	// ---
+		$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
+		if (isset($content['Views'][$currentViewID])) {
+			$content['Views'][$currentViewID]['selected'] = 'selected';
+		}
+		AppendSyslogUidIfDebugEnabled($content, $currentViewID, $miscShowDebugUid);
+
+		return;
+	}
+
+	$currentSourceID = null;
+	$fallbackViewId = GetConfigSetting('DefaultViewsID', 'SYSLOG', CFGLEVEL_USER);
+	$currentViewID = isset($content['Views'][$fallbackViewId]) ? $fallbackViewId : 'SYSLOG';
+	if (isset($content['Views'][$currentViewID])) {
+		$content['Views'][$currentViewID]['selected'] = 'selected';
+	}
+	AppendSyslogUidIfDebugEnabled($content, $currentViewID, $miscShowDebugUid);
 }
 
 /*

@@ -225,7 +225,11 @@ if (empty($content['searchstr'])){
 // Do not BLOCK other Site Calls
 WriteClosePHPSession();
 
-if ( isset($content['Sources'][$currentSourceID]) ) 
+if (
+	isset($currentSourceID)
+	&& isset($content['Sources'][$currentSourceID]['ObjRef'])
+	&& is_object($content['Sources'][$currentSourceID]['ObjRef'])
+) 
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];

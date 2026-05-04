@@ -1,0 +1,38 @@
+# Build and push the web application image (PHP + baked src + samplelogs) to GHCR.
+# Tags: semver from git tag ( v* ), plus :latest .
+name: Docker publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: lc
+        name: GHCR image name (lowercase)
+        run: |
+          echo "image=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ steps.lc.outputs.image }}:${{ github.ref_name }}
+            ${{ steps.lc.outputs.image }}:latest
