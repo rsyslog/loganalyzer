@@ -34,6 +34,7 @@ jobs:
           mkdir -p e2e
           docker compose --project-directory "${{ github.workspace }}" -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright 2>&1 | tee e2e/e2e-run.log
 
+      # HTML report, traces, CI regression PNGs (admin + syslog grid + cell menu), handbook shots, compose log
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,6 +63,8 @@ jobs:
             echo '```text'
             tail -n 200 e2e/e2e-run.log 2>/dev/null || echo "(no log)"
             echo '```'
+            echo
+            echo "**Artifacts:** Download \`playwright-e2e\` from this run for HTML report and screenshots (including \`e2e/test-results/ci-visual/\` for admin grid + menus)."
           } > /tmp/e2e-issue.md
           gh issue create \
             --repo "${{ github.repository }}" \

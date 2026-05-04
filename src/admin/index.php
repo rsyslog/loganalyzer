@@ -164,7 +164,7 @@ if ( isset($_POST['op']) )
 
 			// Read default FONT  Settings
 			if ( isset ($_POST['DefaultFont']) ) { $content['DefaultFont'] = $_POST['DefaultFont']; }
-			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = $_POST['DefaultFontSize']; }
+			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = NormalizeDefaultFontSize($_POST['DefaultFontSize']); }
 
 			// Read checkboxes
 			if ( isset ($_POST['ExportUseTodayYesterday']) ) { $content['ExportUseTodayYesterday'] = 1; } else { $content['ExportUseTodayYesterday'] = 0; }
@@ -233,7 +233,7 @@ if ( isset($_POST['op']) )
 
 			// Read default FONT
 			if ( isset ($_POST['User_DefaultFont']) ) { $USERCFG['DefaultFont'] = $_POST['User_DefaultFont']; }
-			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = $_POST['User_DefaultFontSize']; }
+			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = NormalizeDefaultFontSize($_POST['User_DefaultFontSize']); }
 
 			// Read checkboxes
 			if ( isset( $_POST['User_ViewColoredCells'])  ) { $USERCFG['ViewColoredCells'] = 1; } else { $USERCFG['ViewColoredCells'] = 0; }
@@ -370,7 +370,10 @@ foreach ( $content['FONTS'] as &$myFont )
 // --- Init for DefaultFontSize field!
 // copy Fontsizes Array
 $content['FONTSIZES'] = $content['fontsizes'];
-if ( !isset($content['DefaultFontSize']) ) { $content['DefaultFontSize'] = 100; }
+if ( !isset($content['DefaultFontSize']) )
+	$content['DefaultFontSize'] = '100';
+else
+	$content['DefaultFontSize'] = NormalizeDefaultFontSize($content['DefaultFontSize']);
 foreach ( $content['FONTSIZES'] as $myFontKey => &$myFontSize )
 {
 	if ( $myFontKey == $content['DefaultFontSize'] )

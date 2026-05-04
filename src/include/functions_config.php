@@ -697,6 +697,20 @@ function InitPhpLogConConfigFile($bHandleMissing = true)
 			$content[$key] = $value;
 		// --- 
 
+		if ( isset($content['EventEmptySearchDefaultFilter']) )
+		{
+			$s = SanitizeStoredEventEmptySearchDefaultFilter((string)$content['EventEmptySearchDefaultFilter']);
+			$content['EventEmptySearchDefaultFilter'] = $s;
+			$CFG['EventEmptySearchDefaultFilter'] = $s;
+		}
+
+		if ( isset($content['DefaultFontSize']) )
+		{
+			$dfs = NormalizeDefaultFontSize($content['DefaultFontSize']);
+			$content['DefaultFontSize'] = $dfs;
+			$CFG['DefaultFontSize'] = $dfs;
+		}
+
 		// For MiscShowPageRenderStats
 		if ( GetConfigSetting("MiscShowPageRenderStats", 1) )
 		{

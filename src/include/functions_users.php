@@ -102,6 +102,10 @@ function InitUserSession()
 						$USERCFG[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
 //						$content[ $rows[$i]['propname'] ] = $rows[$i]['propvalue'];
 					}
+					if ( isset($USERCFG['EventEmptySearchDefaultFilter']) )
+						$USERCFG['EventEmptySearchDefaultFilter'] = SanitizeStoredEventEmptySearchDefaultFilter((string)$USERCFG['EventEmptySearchDefaultFilter']);
+					if ( isset($USERCFG['DefaultFontSize']) )
+						$USERCFG['DefaultFontSize'] = NormalizeDefaultFontSize($USERCFG['DefaultFontSize']);
 				}
 			}
 			else // Critical ERROR HERE!

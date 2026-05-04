@@ -31,7 +31,7 @@ $env:PLAYWRIGHT_BASE_URL="http://127.0.0.1:8080"
 npx playwright test
 ```
 
-Screenshots (when tests run) are written under `e2e/test-results/screenshots/`.
+Screenshots (when tests run) are written under `e2e/test-results/screenshots/` (smoke flow) and `e2e/test-results/ci-visual/` ([`tests/ci-regression.spec.ts`](tests/ci-regression.spec.ts): admin panel + syslog grid + open cell “Available searches” menu). Both trees are uploaded with the **`playwright-e2e`** GitHub Actions artifact.
 
 ## Handbook screenshots (MkDocs)
 

@@ -107,6 +107,35 @@
 }
 
 /*
+ * Grid "Available searches" menus: each <li> must have a single element child so jQuery UI
+ * Menu 1.x creates exactly one .ui-menu-item-wrapper per row (not one per img + anchor).
+ */
+.loganalyzer-cell-search-menu {
+	min-width: 14rem;
+	max-width: 28rem;
+	box-sizing: border-box;
+}
+.loganalyzer-cell-search-menu .loganalyzer-menu-item-content {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	column-gap: 6px;
+}
+.loganalyzer-cell-search-menu .loganalyzer-menu-item-content img {
+	flex-shrink: 0;
+	margin: 0;
+	float: none;
+	vertical-align: top;
+}
+.loganalyzer-cell-search-menu .loganalyzer-menu-item-content > a {
+	flex: 1 1 auto;
+	min-width: 0;
+	white-space: normal;
+	word-break: break-word;
+	line-height: 1.35;
+}
+
+/*
 * POPUP Helper Styles
 */
 .popupdetails
