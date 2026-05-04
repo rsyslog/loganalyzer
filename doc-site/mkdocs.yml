@@ -1,9 +1,9 @@
 site_name: LogAnalyzer handbook
 site_description: Adiscon LogAnalyzer — install, Docker dev, and bundled components
-site_url: https://example.github.io/loganalyzer/
-repo_url: https://github.com/example/loganalyzer
+site_url: https://rsyslog.github.io/loganalyzer/
+repo_url: https://github.com/rsyslog/loganalyzer
 repo_name: loganalyzer
-edit_uri: edit/main/doc-site/docs/
+edit_uri: edit/master/doc-site/docs/
 
 use_directory_urls: true
 strict: false
@@ -15,6 +15,9 @@ theme:
   features:
     - navigation.expand
     - content.code.copy
+
+extra_css:
+  - stylesheets/legacy-html.css
 
 markdown_extensions:
   - tables
@@ -28,10 +31,15 @@ nav:
   - Docker & CI (from AGENTS.md): docker.md
   - Legacy manuals (HTML):
     - Overview: legacy-html-manuals.md
-    - Documentation home: legacy-html/manual.html
-    - Basics: legacy-html/basics.html
-    - Installation: legacy-html/install.html
-    - Search syntax: legacy-html/searching.html
-    - Troubleshooting: legacy-html/troubleshoot.html
+    - Documentation home: legacy-html/manual.md
+    - Basics: legacy-html/basics.md
+    - Installation: legacy-html/install.md
+    - Search syntax: legacy-html/searching.md
+    - Troubleshooting: legacy-html/troubleshoot.md
+    - Build from repo: legacy-html/build_from_repo.md
+    - Free support: legacy-html/free_support.md
+    - Professional services: legacy-html/professional_services.md
+    - Text log files: legacy-html/textfiles.md
+    - Windows Event Log: legacy-html/windowsevent.md
   - Repository README: project-readme.md
   - Third-party components: third-party.md
