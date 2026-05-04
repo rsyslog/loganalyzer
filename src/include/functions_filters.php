@@ -340,7 +340,7 @@ function GetTimeStampFromTimeString($szTimeString)
 		return mktime(0,0,0, $out[2], $out[3], $out[1]);
 	}
 	// Relative date syntax, samples: T00:00:00, T12:30, -1T, -2T01:30
-	else if ( preg_match("/(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})/", $szTimeString, $out) )
+	else if ( preg_match("/^(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})$/", $szTimeString, $out) )
 	{
 		$days = (isset($out[1]) && strlen($out[1]) > 0) ? intval($out[1]) : 0;
 		$hh   = strlen($out[2]) > 0 ? intval($out[2]) : 0;

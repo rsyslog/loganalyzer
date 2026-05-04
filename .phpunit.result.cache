@@ -1,1 +1,0 @@
-{"version":1,"defects":{"LogAnalyzer\\Tests\\Integration\\DatabaseSeedPatternTest::testRootCanReachMysql":1},"times":{"LogAnalyzer\\Tests\\Unit\\ConstantsTest::testSourceDiskIsStringOne":0,"LogAnalyzer\\Tests\\Unit\\ConstantsTest::testSyslogFieldIdsNonEmpty":0,"LogAnalyzer\\Tests\\Integration\\DatabaseSeedPatternTest::testRootCanReachMysql":0}}
