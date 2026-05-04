@@ -1,0 +1,1191 @@
+<6>1 2011-03-25T08:58:15.112114+01:00 adiscondns1 kernel - - - imklog 4.6.4, log source = /proc/kmsg started.
+<46>1 2011-03-25T08:58:15.112193+01:00 adiscondns1 rsyslogd - - -  [origin software="rsyslogd" swVersion="4.6.4" x-pid="2374" x-info="http://www.rsyslog.com"] (re)start
+<6>1 2011-03-25T08:58:15.112731+01:00 adiscondns1 kernel - - - [    0.000000] Initializing cgroup subsys cpuset
+<6>1 2011-03-25T08:58:15.112739+01:00 adiscondns1 kernel - - - [    0.000000] Initializing cgroup subsys cpu
+<5>1 2011-03-25T08:58:15.112743+01:00 adiscondns1 kernel - - - [    0.000000] Linux version 2.6.26-2-amd64 (Debian 2.6.26-26lenny2) (dannf@debian.org) (gcc version 4.1.3 20080704 (prerelease) (Debian 4.1.2-25)) #1 SMP Tue Jan 25 05:59:43 UTC 2011
+<6>1 2011-03-25T08:58:15.112745+01:00 adiscondns1 kernel - - - [    0.000000] Command line: root=/dev/sda1 ro quiet
+<6>1 2011-03-25T08:58:15.112746+01:00 adiscondns1 kernel - - - [    0.000000] BIOS-provided physical RAM map:
+<6>1 2011-03-25T08:58:15.112748+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 0000000000000000 - 000000000009f800 (usable)
+<6>1 2011-03-25T08:58:15.112750+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 000000000009f800 - 00000000000a0000 (reserved)
+<6>1 2011-03-25T08:58:15.112752+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000000ca000 - 00000000000cc000 (reserved)
+<6>1 2011-03-25T08:58:15.112756+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000000dc000 - 00000000000e0000 (reserved)
+<6>1 2011-03-25T08:58:15.112758+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000000e4000 - 0000000000100000 (reserved)
+<6>1 2011-03-25T08:58:15.112760+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 0000000000100000 - 0000000017ef0000 (usable)
+<6>1 2011-03-25T08:58:15.112762+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 0000000017ef0000 - 0000000017eff000 (ACPI data)
+<6>1 2011-03-25T08:58:15.112763+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 0000000017eff000 - 0000000017f00000 (ACPI NVS)
+<6>1 2011-03-25T08:58:15.112765+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 0000000017f00000 - 0000000018000000 (usable)
+<6>1 2011-03-25T08:58:15.112767+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000e0000000 - 00000000f0000000 (reserved)
+<6>1 2011-03-25T08:58:15.112769+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000fec00000 - 00000000fec10000 (reserved)
+<6>1 2011-03-25T08:58:15.112773+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000fee00000 - 00000000fee01000 (reserved)
+<6>1 2011-03-25T08:58:15.112775+01:00 adiscondns1 kernel - - - [    0.000000]  BIOS-e820: 00000000fffe0000 - 0000000100000000 (reserved)
+<7>1 2011-03-25T08:58:15.112777+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 0, 159) 0 entries of 3200 used
+<7>1 2011-03-25T08:58:15.112779+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 256, 98032) 1 entries of 3200 used
+<7>1 2011-03-25T08:58:15.112781+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 98048, 98304) 2 entries of 3200 used
+<6>1 2011-03-25T08:58:15.112782+01:00 adiscondns1 kernel - - - [    0.000000] max_pfn_mapped = 1048576
+<6>1 2011-03-25T08:58:15.112783+01:00 adiscondns1 kernel - - - [    0.000000] init_memory_mapping
+<6>1 2011-03-25T08:58:15.112787+01:00 adiscondns1 kernel - - - [    0.000000] DMI present.
+<4>1 2011-03-25T08:58:15.112788+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: RSDP 000F6A30, 0024 (r2 PTLTD )
+<4>1 2011-03-25T08:58:15.112790+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: XSDT 17EF0772, 004C (r1 INTEL  440BX     6040000 VMW   1324272)
+<4>1 2011-03-25T08:58:15.112792+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: FACP 17EFEE98, 00F4 (r4 INTEL  440BX     6040000 PTL     F4240)
+<4>1 2011-03-25T08:58:15.112794+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: DSDT 17EF0938, E560 (r1 PTLTD  Custom    6040000 MSFT  3000001)
+<4>1 2011-03-25T08:58:15.112796+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: FACS 17EFFFC0, 0040
+<4>1 2011-03-25T08:58:15.112798+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: BOOT 17EF0910, 0028 (r1 PTLTD  $SBFTBL$  6040000  LTP        1)
+<4>1 2011-03-25T08:58:15.112800+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: APIC 17EF08B2, 005E (r1 PTLTD  	 APIC    6040000  LTP        0)
+<4>1 2011-03-25T08:58:15.112804+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: MCFG 17EF0876, 003C (r1 PTLTD  $PCITBL$  6040000  LTP        1)
+<4>1 2011-03-25T08:58:15.112806+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: SRAT 17EF07F6, 0080 (r2 VMWARE MEMPLUG   6040000 VMW         1)
+<6>1 2011-03-25T08:58:15.112807+01:00 adiscondns1 kernel - - - [    0.000000] No NUMA configuration found
+<6>1 2011-03-25T08:58:15.112809+01:00 adiscondns1 kernel - - - [    0.000000] Faking a node at 0000000000000000-0000000018000000
+<7>1 2011-03-25T08:58:15.112811+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 0, 159) 0 entries of 3200 used
+<7>1 2011-03-25T08:58:15.112813+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 256, 98032) 1 entries of 3200 used
+<7>1 2011-03-25T08:58:15.112815+01:00 adiscondns1 kernel - - - [    0.000000] Entering add_active_range(0, 98048, 98304) 2 entries of 3200 used
+<6>1 2011-03-25T08:58:15.112819+01:00 adiscondns1 kernel - - - [    0.000000] Bootmem setup node 0 0000000000000000-0000000018000000
+<6>1 2011-03-25T08:58:15.112820+01:00 adiscondns1 kernel - - - [    0.000000]   NODE_DATA [000000000000b000 - 000000000000ffff]
+<6>1 2011-03-25T08:58:15.112822+01:00 adiscondns1 kernel - - - [    0.000000]   bootmap [0000000000010000 -  0000000000012fff] pages 3
+<6>1 2011-03-25T08:58:15.112824+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 0 [0-fff] BIOS data page
+<6>1 2011-03-25T08:58:15.112826+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 1 [6000-7fff] TRAMPOLINE
+<6>1 2011-03-25T08:58:15.112827+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 2 [200000-675397] TEXT DATA BSS
+<6>1 2011-03-25T08:58:15.112829+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 3 [17881000-17edf2fe] RAMDISK
+<6>1 2011-03-25T08:58:15.112831+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 4 [9f800-fffff] BIOS reserved
+<6>1 2011-03-25T08:58:15.112834+01:00 adiscondns1 kernel - - - [    0.000000]   early res: 5 [8000-afff] PGTABLE
+<7>1 2011-03-25T08:58:15.112837+01:00 adiscondns1 kernel - - - [    0.000000]  [ffffe20000000000-ffffe200005fffff] PMD -> [ffff810001200000-ffff8100017fffff] on node 0
+<4>1 2011-03-25T08:58:15.112838+01:00 adiscondns1 kernel - - - [    0.000000] Zone PFN ranges:
+<4>1 2011-03-25T08:58:15.112840+01:00 adiscondns1 kernel - - - [    0.000000]   DMA             0 ->     4096
+<4>1 2011-03-25T08:58:15.112841+01:00 adiscondns1 kernel - - - [    0.000000]   DMA32        4096 ->  1048576
+<4>1 2011-03-25T08:58:15.112843+01:00 adiscondns1 kernel - - - [    0.000000]   Normal    1048576 ->  1048576
+<4>1 2011-03-25T08:58:15.112844+01:00 adiscondns1 kernel - - - [    0.000000] Movable zone start PFN for each node
+<4>1 2011-03-25T08:58:15.112848+01:00 adiscondns1 kernel - - - [    0.000000] early_node_map[3] active PFN ranges
+<4>1 2011-03-25T08:58:15.112849+01:00 adiscondns1 kernel - - - [    0.000000]     0:        0 ->      159
+<4>1 2011-03-25T08:58:15.112851+01:00 adiscondns1 kernel - - - [    0.000000]     0:      256 ->    98032
+<4>1 2011-03-25T08:58:15.112852+01:00 adiscondns1 kernel - - - [    0.000000]     0:    98048 ->    98304
+<7>1 2011-03-25T08:58:15.112854+01:00 adiscondns1 kernel - - - [    0.000000] On node 0 totalpages: 98191
+<7>1 2011-03-25T08:58:15.112855+01:00 adiscondns1 kernel - - - [    0.000000]   DMA zone: 56 pages used for memmap
+<7>1 2011-03-25T08:58:15.112857+01:00 adiscondns1 kernel - - - [    0.000000]   DMA zone: 1245 pages reserved
+<7>1 2011-03-25T08:58:15.113031+01:00 adiscondns1 kernel - - - [    0.000000]   DMA zone: 2698 pages, LIFO batch:0
+<7>1 2011-03-25T08:58:15.113036+01:00 adiscondns1 kernel - - - [    0.000000]   DMA32 zone: 1288 pages used for memmap
+<7>1 2011-03-25T08:58:15.113037+01:00 adiscondns1 kernel - - - [    0.000000]   DMA32 zone: 92904 pages, LIFO batch:31
+<7>1 2011-03-25T08:58:15.113039+01:00 adiscondns1 kernel - - - [    0.000000]   Normal zone: 0 pages used for memmap
+<7>1 2011-03-25T08:58:15.113041+01:00 adiscondns1 kernel - - - [    0.000000]   Movable zone: 0 pages used for memmap
+<6>1 2011-03-25T08:58:15.113042+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: PM-Timer IO Port: 0x1008
+<7>1 2011-03-25T08:58:15.113044+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: Local APIC address 0xfee00000
+<6>1 2011-03-25T08:58:15.113046+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+<6>1 2011-03-25T08:58:15.113049+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: LAPIC (acpi_id[0x01] lapic_id[0x01] enabled)
+<6>1 2011-03-25T08:58:15.113051+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: LAPIC_NMI (acpi_id[0x00] high edge lint[0x1])
+<6>1 2011-03-25T08:58:15.113053+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: LAPIC_NMI (acpi_id[0x01] high edge lint[0x1])
+<6>1 2011-03-25T08:58:15.113055+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: IOAPIC (id[0x02] address[0xfec00000] gsi_base[0])
+<6>1 2011-03-25T08:58:15.113057+01:00 adiscondns1 kernel - - - [    0.000000] IOAPIC[0]: apic_id 2, version 0, address 0xfec00000, GSI 0-23
+<6>1 2011-03-25T08:58:15.113059+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 high edge)
+<7>1 2011-03-25T08:58:15.113061+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: IRQ0 used by override.
+<7>1 2011-03-25T08:58:15.113062+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: IRQ2 used by override.
+<7>1 2011-03-25T08:58:15.113066+01:00 adiscondns1 kernel - - - [    0.000000] ACPI: IRQ9 used by override.
+<6>1 2011-03-25T08:58:15.113067+01:00 adiscondns1 kernel - - - [    0.000000] Setting APIC routing to flat
+<6>1 2011-03-25T08:58:15.113069+01:00 adiscondns1 kernel - - - [    0.000000] Using ACPI (MADT) for SMP configuration information
+<6>1 2011-03-25T08:58:15.113071+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 000000000009f000 - 00000000000a0000
+<6>1 2011-03-25T08:58:15.113073+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000a0000 - 00000000000ca000
+<6>1 2011-03-25T08:58:15.113075+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000ca000 - 00000000000cc000
+<6>1 2011-03-25T08:58:15.113077+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000cc000 - 00000000000dc000
+<6>1 2011-03-25T08:58:15.113082+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000dc000 - 00000000000e0000
+<6>1 2011-03-25T08:58:15.113084+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000e0000 - 00000000000e4000
+<6>1 2011-03-25T08:58:15.113086+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 00000000000e4000 - 0000000000100000
+<6>1 2011-03-25T08:58:15.113088+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 0000000017ef0000 - 0000000017eff000
+<6>1 2011-03-25T08:58:15.113090+01:00 adiscondns1 kernel - - - [    0.000000] PM: Registered nosave memory: 0000000017eff000 - 0000000017f00000
+<6>1 2011-03-25T08:58:15.113092+01:00 adiscondns1 kernel - - - [    0.000000] Allocating PCI resources starting at 20000000 (gap: 18000000:c8000000)
+<6>1 2011-03-25T08:58:15.113094+01:00 adiscondns1 kernel - - - [    0.000000] SMP: Allowing 2 CPUs, 0 hotplug CPUs
+<6>1 2011-03-25T08:58:15.113095+01:00 adiscondns1 kernel - - - [    0.000000] PERCPU: Allocating 37168 bytes of per cpu data
+<7>1 2011-03-25T08:58:15.113102+01:00 adiscondns1 kernel - - - [    0.000000] NR_CPUS: 32, nr_cpu_ids: 2
+<4>1 2011-03-25T08:58:15.113104+01:00 adiscondns1 kernel - - - [    0.000000] Built 1 zonelists in Node order, mobility grouping on.  Total pages: 95602
+<4>1 2011-03-25T08:58:15.113105+01:00 adiscondns1 kernel - - - [    0.000000] Policy zone: DMA32
+<5>1 2011-03-25T08:58:15.113107+01:00 adiscondns1 kernel - - - [    0.000000] Kernel command line: root=/dev/sda1 ro quiet
+<4>1 2011-03-25T08:58:15.113109+01:00 adiscondns1 kernel - - - [    0.000000] Initializing CPU#0
+<4>1 2011-03-25T08:58:15.113110+01:00 adiscondns1 kernel - - - [    0.000000] PID hash table entries: 2048 (order: 11, 16384 bytes)
+<6>1 2011-03-25T08:58:15.113112+01:00 adiscondns1 kernel - - - [    0.000000] Extended CMOS year: 2000
+<6>1 2011-03-25T08:58:15.113115+01:00 adiscondns1 kernel - - - [    0.000000] TSC: Frequency read from the hypervisor
+<6>1 2011-03-25T08:58:15.113117+01:00 adiscondns1 kernel - - - [    0.000000] time.c: Detected 2673.347 MHz processor.
+<4>1 2011-03-25T08:58:15.113119+01:00 adiscondns1 kernel - - - [    0.004000] Console: colour VGA+ 80x25
+<6>1 2011-03-25T08:58:15.113120+01:00 adiscondns1 kernel - - - [    0.004000] console [tty0] enabled
+<6>1 2011-03-25T08:58:15.113121+01:00 adiscondns1 kernel - - - [    0.004000] Checking aperture...
+<7>1 2011-03-25T08:58:15.113123+01:00 adiscondns1 kernel - - - [    0.004000] Calgary: detecting Calgary via BIOS EBDA area
+<7>1 2011-03-25T08:58:15.113125+01:00 adiscondns1 kernel - - - [    0.004000] Calgary: Unable to locate Rio Grande table in EBDA - bailing!
+<6>1 2011-03-25T08:58:15.113128+01:00 adiscondns1 kernel - - - [    0.004000] Memory: 375308k/393216k available (2229k kernel code, 17456k reserved, 1084k data, 392k init)
+<7>1 2011-03-25T08:58:15.113132+01:00 adiscondns1 kernel - - - [    0.004000] CPA: page pool initialized 1 of 1 pages preallocated
+<4>1 2011-03-25T08:58:15.113134+01:00 adiscondns1 kernel - - - [    0.083841] Calibrating delay using timer specific routine.. 5458.71 BogoMIPS (lpj=10917424)
+<6>1 2011-03-25T08:58:15.113136+01:00 adiscondns1 kernel - - - [    0.083942] Security Framework initialized
+<6>1 2011-03-25T08:58:15.113137+01:00 adiscondns1 kernel - - - [    0.083947] SELinux:  Disabled at boot.
+<6>1 2011-03-25T08:58:15.113139+01:00 adiscondns1 kernel - - - [    0.083950] Capability LSM initialized
+<6>1 2011-03-25T08:58:15.113140+01:00 adiscondns1 kernel - - - [    0.084005] Dentry cache hash table entries: 65536 (order: 7, 524288 bytes)
+<6>1 2011-03-25T08:58:15.113142+01:00 adiscondns1 kernel - - - [    0.084005] Inode-cache hash table entries: 32768 (order: 6, 262144 bytes)
+<4>1 2011-03-25T08:58:15.113146+01:00 adiscondns1 kernel - - - [    0.084005] Mount-cache hash table entries: 256
+<6>1 2011-03-25T08:58:15.113148+01:00 adiscondns1 kernel - - - [    0.084005] Initializing cgroup subsys ns
+<6>1 2011-03-25T08:58:15.113149+01:00 adiscondns1 kernel - - - [    0.084005] Initializing cgroup subsys cpuacct
+<6>1 2011-03-25T08:58:15.113151+01:00 adiscondns1 kernel - - - [    0.084005] Initializing cgroup subsys devices
+<6>1 2011-03-25T08:58:15.113152+01:00 adiscondns1 kernel - - - [    0.084005] CPU: L1 I cache: 32K, L1 D cache: 32K
+<6>1 2011-03-25T08:58:15.113154+01:00 adiscondns1 kernel - - - [    0.084005] CPU: L2 cache: 256K
+<6>1 2011-03-25T08:58:15.113155+01:00 adiscondns1 kernel - - - [    0.084005] CPU: L3 cache: 8192K
+<6>1 2011-03-25T08:58:15.113157+01:00 adiscondns1 kernel - - - [    0.084005] CPU 0/0 -> Node 0
+<6>1 2011-03-25T08:58:15.113160+01:00 adiscondns1 kernel - - - [    0.087050] ACPI: Core revision 20080321
+<6>1 2011-03-25T08:58:15.113162+01:00 adiscondns1 kernel - - - [    0.156009] CPU0: Intel(R) Core(TM) i7 CPU       @ 9200 @ 2.67GHz stepping 05
+<6>1 2011-03-25T08:58:15.113164+01:00 adiscondns1 kernel - - - [    0.156009] Using local APIC timer interrupts.
+<7>1 2011-03-25T08:58:15.113165+01:00 adiscondns1 kernel - - - [    0.160010] APIC timer calibration result 4053312
+<6>1 2011-03-25T08:58:15.113340+01:00 adiscondns1 kernel - - - [    0.160010] Detected 4.053 MHz APIC timer.
+<6>1 2011-03-25T08:58:15.113342+01:00 adiscondns1 kernel - - - [    0.160010] Booting processor 1/1 ip 6000
+<4>1 2011-03-25T08:58:15.113343+01:00 adiscondns1 kernel - - - [    0.196012] Initializing CPU#1
+<4>1 2011-03-25T08:58:15.113347+01:00 adiscondns1 kernel - - - [    0.196012] Calibrating delay using timer specific routine.. 5653.38 BogoMIPS (lpj=11306764)
+<6>1 2011-03-25T08:58:15.113349+01:00 adiscondns1 kernel - - - [    0.196012] CPU: L1 I cache: 32K, L1 D cache: 32K
+<6>1 2011-03-25T08:58:15.113350+01:00 adiscondns1 kernel - - - [    0.196012] CPU: L2 cache: 256K
+<6>1 2011-03-25T08:58:15.113352+01:00 adiscondns1 kernel - - - [    0.196012] CPU: L3 cache: 8192K
+<6>1 2011-03-25T08:58:15.113353+01:00 adiscondns1 kernel - - - [    0.196012] CPU 1/1 -> Node 0
+<6>1 2011-03-25T08:58:15.113355+01:00 adiscondns1 kernel - - - [    0.280382] CPU1: Intel(R) Core(TM) i7 CPU       @ 9200 @ 2.67GHz stepping 05
+<6>1 2011-03-25T08:58:15.113357+01:00 adiscondns1 kernel - - - [    0.280401] Skipping synchronization checks as TSC is reliable.
+<6>1 2011-03-25T08:58:15.113358+01:00 adiscondns1 kernel - - - [    0.280425] Brought up 2 CPUs
+<6>1 2011-03-25T08:58:15.113362+01:00 adiscondns1 kernel - - - [    0.280427] Total of 2 processors activated (11112.09 BogoMIPS).
+<7>1 2011-03-25T08:58:15.113364+01:00 adiscondns1 kernel - - - [    0.280522] CPU0 attaching sched-domain:
+<7>1 2011-03-25T08:58:15.113365+01:00 adiscondns1 kernel - - - [    0.280524]  domain 0: span 0-1
+<7>1 2011-03-25T08:58:15.113366+01:00 adiscondns1 kernel - - - [    0.280526]   groups: 0 1
+<7>1 2011-03-25T08:58:15.113368+01:00 adiscondns1 kernel - - - [    0.280528]   domain 1: span 0-1
+<7>1 2011-03-25T08:58:15.113369+01:00 adiscondns1 kernel - - - [    0.280529]    groups: 0-1
+<7>1 2011-03-25T08:58:15.113371+01:00 adiscondns1 kernel - - - [    0.280531] CPU1 attaching sched-domain:
+<7>1 2011-03-25T08:58:15.113374+01:00 adiscondns1 kernel - - - [    0.280532]  domain 0: span 0-1
+<7>1 2011-03-25T08:58:15.113376+01:00 adiscondns1 kernel - - - [    0.280533]   groups: 1 0
+<7>1 2011-03-25T08:58:15.113377+01:00 adiscondns1 kernel - - - [    0.280534]   domain 1: span 0-1
+<7>1 2011-03-25T08:58:15.113378+01:00 adiscondns1 kernel - - - [    0.280535]    groups: 0-1
+<6>1 2011-03-25T08:58:15.113380+01:00 adiscondns1 kernel - - - [    0.280761] net_namespace: 1224 bytes
+<6>1 2011-03-25T08:58:15.113381+01:00 adiscondns1 kernel - - - [    0.280764] Booting paravirtualized kernel on bare hardware
+<6>1 2011-03-25T08:58:15.113383+01:00 adiscondns1 kernel - - - [    0.286484] NET: Registered protocol family 16
+<6>1 2011-03-25T08:58:15.113385+01:00 adiscondns1 kernel - - - [    0.288018] ACPI: bus type pci registered
+<5>1 2011-03-25T08:58:15.113389+01:00 adiscondns1 kernel - - - [    0.288018] PCI: MCFG configuration 0: base e0000000 segment 0 buses 0 - 255
+<5>1 2011-03-25T08:58:15.113390+01:00 adiscondns1 kernel - - - [    0.288018] PCI: MCFG area at e0000000 reserved in E820
+<6>1 2011-03-25T08:58:15.113392+01:00 adiscondns1 kernel - - - [    0.290968] PCI: Using MMCONFIG at e0000000 - efffffff
+<6>1 2011-03-25T08:58:15.113394+01:00 adiscondns1 kernel - - - [    0.290968] PCI: Using configuration type 1 for base access
+<7>1 2011-03-25T08:58:15.113395+01:00 adiscondns1 kernel - - - [    0.332843] ACPI: EC: Look up EC in DSDT
+<5>1 2011-03-25T08:58:15.113397+01:00 adiscondns1 kernel - - - [    0.426876] ACPI: BIOS _OSI(Linux) query ignored
+<5>1 2011-03-25T08:58:15.113398+01:00 adiscondns1 kernel - - - [    0.426880] ACPI: DMI System Vendor: VMware, Inc.
+<5>1 2011-03-25T08:58:15.113402+01:00 adiscondns1 kernel - - - [    0.426881] ACPI: DMI Product Name: VMware Virtual Platform
+<5>1 2011-03-25T08:58:15.113404+01:00 adiscondns1 kernel - - - [    0.426882] ACPI: DMI Product Version: None
+<5>1 2011-03-25T08:58:15.113406+01:00 adiscondns1 kernel - - - [    0.426883] ACPI: DMI Board Name: 440BX Desktop Reference Platform
+<5>1 2011-03-25T08:58:15.113407+01:00 adiscondns1 kernel - - - [    0.426884] ACPI: DMI BIOS Vendor: Phoenix Technologies LTD
+<5>1 2011-03-25T08:58:15.113409+01:00 adiscondns1 kernel - - - [    0.426885] ACPI: DMI BIOS Date: 07/29/2008
+<5>1 2011-03-25T08:58:15.113411+01:00 adiscondns1 kernel - - - [    0.426886] ACPI: Please send DMI info above to linux-acpi@vger.kernel.org
+<5>1 2011-03-25T08:58:15.113413+01:00 adiscondns1 kernel - - - [    0.426887] ACPI: If "acpi_osi=Linux" works better, please notify linux-acpi@vger.kernel.org
+<6>1 2011-03-25T08:58:15.113415+01:00 adiscondns1 kernel - - - [    0.428278] ACPI: Interpreter enabled
+<6>1 2011-03-25T08:58:15.113418+01:00 adiscondns1 kernel - - - [    0.428281] ACPI: (supports S0 S1 S4 S5)
+<6>1 2011-03-25T08:58:15.113420+01:00 adiscondns1 kernel - - - [    0.428292] ACPI: Using IOAPIC for interrupt routing
+<6>1 2011-03-25T08:58:15.113421+01:00 adiscondns1 kernel - - - [    0.623993] ACPI: PCI Root Bridge [PCI0] (0000:00)
+<6>1 2011-03-25T08:58:15.113423+01:00 adiscondns1 kernel - - - [    0.627195] pci 0000:00:07.3: quirk: region 1000-103f claimed by PIIX4 ACPI
+<6>1 2011-03-25T08:58:15.113425+01:00 adiscondns1 kernel - - - [    0.627210] pci 0000:00:07.3: quirk: region 1040-104f claimed by PIIX4 SMB
+<6>1 2011-03-25T08:58:15.113427+01:00 adiscondns1 kernel - - - [    0.652481] PCI: Transparent bridge - 0000:00:11.0
+<7>1 2011-03-25T08:58:15.113429+01:00 adiscondns1 kernel - - - [    0.667875] ACPI: PCI Interrupt Routing Table [\_SB_.PCI0._PRT]
+<6>1 2011-03-25T08:58:15.113433+01:00 adiscondns1 kernel - - - [    1.347633] ACPI: PCI Interrupt Link [LNKA] (IRQs 3 4 5 6 7 *9 10 11 14 15)
+<6>1 2011-03-25T08:58:15.113435+01:00 adiscondns1 kernel - - - [    1.347633] ACPI: PCI Interrupt Link [LNKB] (IRQs 3 4 5 6 7 9 10 *11 14 15)
+<6>1 2011-03-25T08:58:15.113437+01:00 adiscondns1 kernel - - - [    1.347633] ACPI: PCI Interrupt Link [LNKC] (IRQs 3 4 5 6 7 9 *10 11 14 15)
+<6>1 2011-03-25T08:58:15.113439+01:00 adiscondns1 kernel - - - [    1.347633] ACPI: PCI Interrupt Link [LNKD] (IRQs 3 4 *5 6 7 9 10 11 14 15)
+<6>1 2011-03-25T08:58:15.113441+01:00 adiscondns1 kernel - - - [    1.347633] Linux Plug and Play Support v0.97 (c) Adam Belay
+<6>1 2011-03-25T08:58:15.113442+01:00 adiscondns1 kernel - - - [    1.347633] pnp: PnP ACPI init
+<6>1 2011-03-25T08:58:15.113444+01:00 adiscondns1 kernel - - - [    1.347633] ACPI: bus type pnp registered
+<7>1 2011-03-25T08:58:15.113446+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:00: parse allocated resources
+<7>1 2011-03-25T08:58:15.113449+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:00:   add io  0x2e-0x2f flags 0x1
+<7>1 2011-03-25T08:58:15.113451+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:00:   add io  0xfe00-0xfe1f flags 0x1
+<7>1 2011-03-25T08:58:15.113453+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:00:   add io  0xcf8-0xcff flags 0x1
+<7>1 2011-03-25T08:58:15.113455+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:00: Plug and Play ACPI device, IDs PNP0a03 PNP0a08 (active)
+<7>1 2011-03-25T08:58:15.113456+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01: parse allocated resources
+<7>1 2011-03-25T08:58:15.113458+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x10-0x1f flags 0x1
+<7>1 2011-03-25T08:58:15.113460+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x24-0x25 flags 0x1
+<7>1 2011-03-25T08:58:15.113464+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x28-0x29 flags 0x1
+<7>1 2011-03-25T08:58:15.113465+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x2c-0x2d flags 0x1
+<7>1 2011-03-25T08:58:15.113467+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x30-0x31 flags 0x1
+<7>1 2011-03-25T08:58:15.113469+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x34-0x35 flags 0x1
+<7>1 2011-03-25T08:58:15.113470+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x38-0x39 flags 0x1
+<7>1 2011-03-25T08:58:15.113472+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x3c-0x3d flags 0x1
+<7>1 2011-03-25T08:58:15.113474+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x50-0x53 flags 0x1
+<7>1 2011-03-25T08:58:15.113650+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x72-0x77 flags 0x1
+<7>1 2011-03-25T08:58:15.113655+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x80-0x80 flags 0x1
+<7>1 2011-03-25T08:58:15.113657+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x90-0x9f flags 0x1
+<7>1 2011-03-25T08:58:15.113658+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xa4-0xa5 flags 0x1
+<7>1 2011-03-25T08:58:15.113660+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xa8-0xa9 flags 0x1
+<7>1 2011-03-25T08:58:15.113661+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xac-0xad flags 0x1
+<7>1 2011-03-25T08:58:15.113663+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xb0-0xb5 flags 0x1
+<7>1 2011-03-25T08:58:15.113664+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xb8-0xb9 flags 0x1
+<7>1 2011-03-25T08:58:15.113668+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0xbc-0xbd flags 0x1
+<7>1 2011-03-25T08:58:15.113670+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x1000-0x103f flags 0x1
+<7>1 2011-03-25T08:58:15.113672+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01:   add io  0x1040-0x104f flags 0x1
+<7>1 2011-03-25T08:58:15.113673+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01: PNP0c02: calling quirk_system_pci_resources+0x0/0x15c
+<7>1 2011-03-25T08:58:15.113675+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:01: Plug and Play ACPI device, IDs PNP0c02 (active)
+<7>1 2011-03-25T08:58:15.113677+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02: parse allocated resources
+<7>1 2011-03-25T08:58:15.113679+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02:   add io  0x0-0xf flags 0x1
+<7>1 2011-03-25T08:58:15.113680+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02:   add io  0x81-0x8f flags 0x1
+<7>1 2011-03-25T08:58:15.113693+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02:   add io  0xc0-0xdf flags 0x1
+<7>1 2011-03-25T08:58:15.113698+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02:   add dma 4 flags 0x2
+<7>1 2011-03-25T08:58:15.113700+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:02: Plug and Play ACPI device, IDs PNP0200 (active)
+<7>1 2011-03-25T08:58:15.113701+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:03: parse allocated resources
+<7>1 2011-03-25T08:58:15.113703+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:03:   add io  0x20-0x21 flags 0x1
+<7>1 2011-03-25T08:58:15.113704+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:03:   add io  0xa0-0xa1 flags 0x1
+<7>1 2011-03-25T08:58:15.113706+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:03:   add io  0x4d0-0x4d1 flags 0x1
+<7>1 2011-03-25T08:58:15.113708+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:03: Plug and Play ACPI device, IDs PNP0001 (active)
+<7>1 2011-03-25T08:58:15.113717+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:04: parse allocated resources
+<7>1 2011-03-25T08:58:15.113721+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:04:   add io  0x70-0x71 flags 0x1
+<7>1 2011-03-25T08:58:15.113722+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:04:   add irq 8 flags 0x1
+<7>1 2011-03-25T08:58:15.113724+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:04: Plug and Play ACPI device, IDs PNP0b00 (active)
+<7>1 2011-03-25T08:58:15.113726+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:05: parse allocated resources
+<7>1 2011-03-25T08:58:15.113727+01:00 adiscondns1 kernel - - - [    1.347633] pnp 00:05:   add io  0x61-0x61 flags 0x1
+<7>1 2011-03-25T08:58:15.113729+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:05: Plug and Play ACPI device, IDs PNP0800 (active)
+<7>1 2011-03-25T08:58:15.113738+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:06: parse allocated resources
+<7>1 2011-03-25T08:58:15.113742+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:06:   add io  0x60-0x60 flags 0x1
+<7>1 2011-03-25T08:58:15.113744+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:06:   add io  0x64-0x64 flags 0x1
+<7>1 2011-03-25T08:58:15.113745+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:06:   add irq 1 flags 0x1
+<7>1 2011-03-25T08:58:15.113747+01:00 adiscondns1 kernel - - - [    1.351633] pnp 00:06: Plug and Play ACPI device, IDs PNP0303 (active)
+<7>1 2011-03-25T08:58:15.113749+01:00 adiscondns1 kernel - - - [    1.355328] pnp 00:07: parse allocated resources
+<7>1 2011-03-25T08:58:15.113750+01:00 adiscondns1 kernel - - - [    1.355339] pnp 00:07:   add irq 12 flags 0x1
+<7>1 2011-03-25T08:58:15.113752+01:00 adiscondns1 kernel - - - [    1.366768] pnp 00:07: Plug and Play ACPI device, IDs PNP0f13 (active)
+<7>1 2011-03-25T08:58:15.113761+01:00 adiscondns1 kernel - - - [    1.375607] pnp 00:08: parse allocated resources
+<7>1 2011-03-25T08:58:15.113765+01:00 adiscondns1 kernel - - - [    1.384122] pnp 00:08:   add io  0x378-0x37f flags 0x1
+<7>1 2011-03-25T08:58:15.113766+01:00 adiscondns1 kernel - - - [    1.384140] pnp 00:08:   add irq 7 flags 0x1
+<7>1 2011-03-25T08:58:15.113768+01:00 adiscondns1 kernel - - - [    1.384143] pnp 00:08: parse resource options
+<7>1 2011-03-25T08:58:15.113769+01:00 adiscondns1 kernel - - - [    1.384145] pnp 00:08: new independent option
+<7>1 2011-03-25T08:58:15.113771+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.113773+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x378 max 0x378 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.113783+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000080 flags 0x1
+<7>1 2011-03-25T08:58:15.113787+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.113789+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x378 max 0x378 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.113792+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000020 flags 0x1
+<7>1 2011-03-25T08:58:15.113793+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.113795+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x278 max 0x278 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.113798+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000080 flags 0x1
+<7>1 2011-03-25T08:58:15.113807+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.113811+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x278 max 0x278 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.113813+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000020 flags 0x1
+<7>1 2011-03-25T08:58:15.113815+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.113817+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x3bc max 0x3bc align 4 size 3 flags 0x1
+<7>1 2011-03-25T08:58:15.113820+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000080 flags 0x1
+<7>1 2011-03-25T08:58:15.113821+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114007+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x3bc max 0x3bc align 4 size 3 flags 0x1
+<7>1 2011-03-25T08:58:15.114013+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000020 flags 0x1
+<7>1 2011-03-25T08:58:15.114015+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114016+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x378 max 0x378 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114019+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000ca0 flags 0x1
+<7>1 2011-03-25T08:58:15.114021+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114023+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x278 max 0x278 align 8 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114032+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000ca0 flags 0x1
+<7>1 2011-03-25T08:58:15.114036+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114038+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   io  min 0x3bc max 0x3bc align 4 size 3 flags 0x1
+<7>1 2011-03-25T08:58:15.114040+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000ca0 flags 0x1
+<7>1 2011-03-25T08:58:15.114042+01:00 adiscondns1 kernel - - - [    1.384223] pnp 00:08: end dependent options
+<7>1 2011-03-25T08:58:15.114044+01:00 adiscondns1 kernel - - - [    1.396162] pnp 00:08: Plug and Play ACPI device, IDs PNP0400 (active)
+<7>1 2011-03-25T08:58:15.114046+01:00 adiscondns1 kernel - - - [    1.408380] pnp 00:09: parse allocated resources
+<7>1 2011-03-25T08:58:15.114055+01:00 adiscondns1 kernel - - - [    1.430914] pnp 00:09:   add io  0x3f8-0x3ff flags 0x1
+<7>1 2011-03-25T08:58:15.114059+01:00 adiscondns1 kernel - - - [    1.430928] pnp 00:09:   add irq 4 flags 0x1
+<7>1 2011-03-25T08:58:15.114060+01:00 adiscondns1 kernel - - - [    1.430931] pnp 00:09: parse resource options
+<7>1 2011-03-25T08:58:15.114062+01:00 adiscondns1 kernel - - - [    1.430933] pnp 00:09: new independent option
+<7>1 2011-03-25T08:58:15.114063+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114065+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x3f8 max 0x3f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114068+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000010 flags 0x1
+<7>1 2011-03-25T08:58:15.114077+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114081+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x2f8 max 0x2f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114083+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000008 flags 0x1
+<7>1 2011-03-25T08:58:15.114085+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114087+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x3e8 max 0x3e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114090+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000010 flags 0x1
+<7>1 2011-03-25T08:58:15.114091+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114100+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x2e8 max 0x2e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114105+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000008 flags 0x1
+<7>1 2011-03-25T08:58:15.114107+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114109+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x3f8 max 0x3f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114111+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114113+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114115+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x2f8 max 0x2f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114126+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114131+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114132+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x3e8 max 0x3e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114135+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114137+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114138+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   io  min 0x2e8 max 0x2e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114141+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114150+01:00 adiscondns1 kernel - - - [    1.435281] pnp 00:09: end dependent options
+<7>1 2011-03-25T08:58:15.114154+01:00 adiscondns1 kernel - - - [    1.443292] pnp 00:09: Plug and Play ACPI device, IDs PNP0501 (active)
+<7>1 2011-03-25T08:58:15.114155+01:00 adiscondns1 kernel - - - [    1.451433] pnp 00:0a: parse allocated resources
+<7>1 2011-03-25T08:58:15.114157+01:00 adiscondns1 kernel - - - [    1.471429] pnp 00:0a:   add io  0x2f8-0x2ff flags 0x1
+<7>1 2011-03-25T08:58:15.114159+01:00 adiscondns1 kernel - - - [    1.471443] pnp 00:0a:   add irq 3 flags 0x1
+<7>1 2011-03-25T08:58:15.114160+01:00 adiscondns1 kernel - - - [    1.471446] pnp 00:0a: parse resource options
+<7>1 2011-03-25T08:58:15.114162+01:00 adiscondns1 kernel - - - [    1.471449] pnp 00:0a: new independent option
+<7>1 2011-03-25T08:58:15.114171+01:00 adiscondns1 kernel - - - [    1.482768] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114175+01:00 adiscondns1 kernel - - - [    1.482773] pnp 00:0a:   io  min 0x3f8 max 0x3f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114402+01:00 adiscondns1 kernel - - - [    1.482780] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000010 flags 0x1
+<7>1 2011-03-25T08:58:15.114407+01:00 adiscondns1 kernel - - - [    1.482783] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114409+01:00 adiscondns1 kernel - - - [    1.482786] pnp 00:0a:   io  min 0x2f8 max 0x2f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114411+01:00 adiscondns1 kernel - - - [    1.482790] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000008 flags 0x1
+<7>1 2011-03-25T08:58:15.114413+01:00 adiscondns1 kernel - - - [    1.482793] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114424+01:00 adiscondns1 kernel - - - [    1.482796] pnp 00:0a:   io  min 0x3e8 max 0x3e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114429+01:00 adiscondns1 kernel - - - [    1.482800] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000010 flags 0x1
+<7>1 2011-03-25T08:58:15.114431+01:00 adiscondns1 kernel - - - [    1.482803] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114433+01:00 adiscondns1 kernel - - - [    1.482805] pnp 00:0a:   io  min 0x2e8 max 0x2e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114435+01:00 adiscondns1 kernel - - - [    1.482809] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000008 flags 0x1
+<7>1 2011-03-25T08:58:15.114437+01:00 adiscondns1 kernel - - - [    1.482812] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114439+01:00 adiscondns1 kernel - - - [    1.482814] pnp 00:0a:   io  min 0x3f8 max 0x3f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114449+01:00 adiscondns1 kernel - - - [    1.482818] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114452+01:00 adiscondns1 kernel - - - [    1.482821] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114454+01:00 adiscondns1 kernel - - - [    1.482824] pnp 00:0a:   io  min 0x2f8 max 0x2f8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114457+01:00 adiscondns1 kernel - - - [    1.482828] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114458+01:00 adiscondns1 kernel - - - [    1.482831] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114460+01:00 adiscondns1 kernel - - - [    1.482833] pnp 00:0a:   io  min 0x3e8 max 0x3e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114463+01:00 adiscondns1 kernel - - - [    1.482837] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114472+01:00 adiscondns1 kernel - - - [    1.482840] pnp 00:0a: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114476+01:00 adiscondns1 kernel - - - [    1.482842] pnp 00:0a:   io  min 0x2e8 max 0x2e8 align 1 size 8 flags 0x1
+<7>1 2011-03-25T08:58:15.114478+01:00 adiscondns1 kernel - - - [    1.482846] pnp 00:0a:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000c18 flags 0x1
+<7>1 2011-03-25T08:58:15.114480+01:00 adiscondns1 kernel - - - [    1.482849] pnp 00:0a: end dependent options
+<7>1 2011-03-25T08:58:15.114482+01:00 adiscondns1 kernel - - - [    1.491281] pnp 00:0a: Plug and Play ACPI device, IDs PNP0501 (active)
+<7>1 2011-03-25T08:58:15.114483+01:00 adiscondns1 kernel - - - [    1.518004] pnp 00:0b: parse allocated resources
+<7>1 2011-03-25T08:58:15.114485+01:00 adiscondns1 kernel - - - [    1.526204] pnp 00:0b:   add io  0x3f0-0x3f5 flags 0x1
+<7>1 2011-03-25T08:58:15.114499+01:00 adiscondns1 kernel - - - [    1.526208] pnp 00:0b:   add io  0x3f7-0x3f7 flags 0x1
+<7>1 2011-03-25T08:58:15.114502+01:00 adiscondns1 kernel - - - [    1.526226] pnp 00:0b:   add irq 6 flags 0x1
+<7>1 2011-03-25T08:58:15.114504+01:00 adiscondns1 kernel - - - [    1.526229] pnp 00:0b:   add dma 2 flags 0x0
+<7>1 2011-03-25T08:58:15.114505+01:00 adiscondns1 kernel - - - [    1.526231] pnp 00:0b: parse resource options
+<7>1 2011-03-25T08:58:15.114507+01:00 adiscondns1 kernel - - - [    1.526234] pnp 00:0b: new independent option
+<7>1 2011-03-25T08:58:15.114509+01:00 adiscondns1 kernel - - - [    1.530179] pnp 00:0b: new dependent option (priority 0x1)
+<7>1 2011-03-25T08:58:15.114511+01:00 adiscondns1 kernel - - - [    1.530183] pnp 00:0b:   io  min 0x3f0 max 0x3f0 align 8 size 6 flags 0x1
+<7>1 2011-03-25T08:58:15.114512+01:00 adiscondns1 kernel - - - [    1.530187] pnp 00:0b:   io  min 0x3f7 max 0x3f7 align 1 size 1 flags 0x1
+<7>1 2011-03-25T08:58:15.114522+01:00 adiscondns1 kernel - - - [    1.530193] pnp 00:0b:   irq bitmask 00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000040 flags 0x1
+<7>1 2011-03-25T08:58:15.114526+01:00 adiscondns1 kernel - - - [    1.530196] pnp 00:0b:   dma bitmask 0x4 flags 0x0
+<7>1 2011-03-25T08:58:15.114527+01:00 adiscondns1 kernel - - - [    1.530198] pnp 00:0b: end dependent options
+<7>1 2011-03-25T08:58:15.114529+01:00 adiscondns1 kernel - - - [    1.538061] pnp 00:0b: Plug and Play ACPI device, IDs PNP0700 (active)
+<7>1 2011-03-25T08:58:15.114531+01:00 adiscondns1 kernel - - - [    1.538215] pnp 00:0c: parse allocated resources
+<7>1 2011-03-25T08:58:15.114533+01:00 adiscondns1 kernel - - - [    1.538421] pnp 00:0c:   add mem 0xe0000000-0xefffffff flags 0x1
+<7>1 2011-03-25T08:58:15.114534+01:00 adiscondns1 kernel - - - [    1.538421] pnp 00:0c:   add io  0x1060-0x107f flags 0x1
+<7>1 2011-03-25T08:58:15.114543+01:00 adiscondns1 kernel - - - [    1.538421] pnp 00:0c:   add mem 0xdb400000-0xdb5fffff flags 0x1
+<7>1 2011-03-25T08:58:15.114547+01:00 adiscondns1 kernel - - - [    1.538421] pnp 00:0c: PNP0c02: calling quirk_system_pci_resources+0x0/0x15c
+<7>1 2011-03-25T08:58:15.114549+01:00 adiscondns1 kernel - - - [    1.546309] pnp 00:0c: Plug and Play ACPI device, IDs PNP0c02 (active)
+<6>1 2011-03-25T08:58:15.114551+01:00 adiscondns1 kernel - - - [    1.586844] pnp: PnP ACPI: found 13 devices
+<6>1 2011-03-25T08:58:15.114552+01:00 adiscondns1 kernel - - - [    1.586848] ACPI: ACPI bus type pnp unregistered
+<6>1 2011-03-25T08:58:15.114554+01:00 adiscondns1 kernel - - - [    1.601403] usbcore: registered new interface driver usbfs
+<6>1 2011-03-25T08:58:15.114556+01:00 adiscondns1 kernel - - - [    1.602004] usbcore: registered new interface driver hub
+<6>1 2011-03-25T08:58:15.114558+01:00 adiscondns1 kernel - - - [    1.602004] usbcore: registered new device driver usb
+<6>1 2011-03-25T08:58:15.114567+01:00 adiscondns1 kernel - - - [    1.603874] PCI: Using ACPI for IRQ routing
+<6>1 2011-03-25T08:58:15.114570+01:00 adiscondns1 kernel - - - [    1.623967] PCI-GART: No AMD northbridge found.
+<7>1 2011-03-25T08:58:15.114572+01:00 adiscondns1 kernel - - - [    1.627798] Switched to high resolution mode on CPU 0
+<7>1 2011-03-25T08:58:15.114573+01:00 adiscondns1 kernel - - - [    1.629536] Switched to high resolution mode on CPU 1
+<7>1 2011-03-25T08:58:15.114575+01:00 adiscondns1 kernel - - - [    1.640058] pnp: the driver 'system' has been registered
+<6>1 2011-03-25T08:58:15.114751+01:00 adiscondns1 kernel - - - [    1.640074] system 00:01: ioport range 0x1000-0x103f has been reserved
+<6>1 2011-03-25T08:58:15.114754+01:00 adiscondns1 kernel - - - [    1.640078] system 00:01: ioport range 0x1040-0x104f has been reserved
+<7>1 2011-03-25T08:58:15.114763+01:00 adiscondns1 kernel - - - [    1.640080] system 00:01: driver attached
+<6>1 2011-03-25T08:58:15.114767+01:00 adiscondns1 kernel - - - [    1.640093] system 00:0c: ioport range 0x1060-0x107f has been reserved
+<6>1 2011-03-25T08:58:15.114769+01:00 adiscondns1 kernel - - - [    1.640100] system 00:0c: iomem range 0xe0000000-0xefffffff could not be reserved
+<6>1 2011-03-25T08:58:15.114771+01:00 adiscondns1 kernel - - - [    1.640103] system 00:0c: iomem range 0xdb400000-0xdb5fffff has been reserved
+<7>1 2011-03-25T08:58:15.114772+01:00 adiscondns1 kernel - - - [    1.640106] system 00:0c: driver attached
+<6>1 2011-03-25T08:58:15.114774+01:00 adiscondns1 kernel - - - [    1.652702] PCI: Bridge: 0000:00:01.0
+<6>1 2011-03-25T08:58:15.114775+01:00 adiscondns1 kernel - - - [    1.652704]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114777+01:00 adiscondns1 kernel - - - [    1.652752]   MEM window: disabled.
+<6>1 2011-03-25T08:58:15.114785+01:00 adiscondns1 kernel - - - [    1.652784]   PREFETCH window: disabled.
+<6>1 2011-03-25T08:58:15.114789+01:00 adiscondns1 kernel - - - [    1.652849] PCI: Bridge: 0000:00:11.0
+<6>1 2011-03-25T08:58:15.114790+01:00 adiscondns1 kernel - - - [    1.652867]   IO window: 2000-3fff
+<6>1 2011-03-25T08:58:15.114792+01:00 adiscondns1 kernel - - - [    1.652915]   MEM window: 0xd8900000-0xd93fffff
+<6>1 2011-03-25T08:58:15.114794+01:00 adiscondns1 kernel - - - [    1.652948]   PREFETCH window: 0x00000000db600000-0x00000000dbafffff
+<6>1 2011-03-25T08:58:15.114795+01:00 adiscondns1 kernel - - - [    1.653011] PCI: Bridge: 0000:00:15.0
+<6>1 2011-03-25T08:58:15.114797+01:00 adiscondns1 kernel - - - [    1.653028]   IO window: 4000-4fff
+<6>1 2011-03-25T08:58:15.114805+01:00 adiscondns1 kernel - - - [    1.653076]   MEM window: 0xd9400000-0xd94fffff
+<6>1 2011-03-25T08:58:15.114809+01:00 adiscondns1 kernel - - - [    1.653108]   PREFETCH window: 0x00000000dbb00000-0x00000000dbbfffff
+<6>1 2011-03-25T08:58:15.114811+01:00 adiscondns1 kernel - - - [    1.653245] PCI: Bridge: 0000:00:15.1
+<6>1 2011-03-25T08:58:15.114812+01:00 adiscondns1 kernel - - - [    1.653265]   IO window: 8000-8fff
+<6>1 2011-03-25T08:58:15.114814+01:00 adiscondns1 kernel - - - [    1.653312]   MEM window: 0xd9800000-0xd98fffff
+<6>1 2011-03-25T08:58:15.114816+01:00 adiscondns1 kernel - - - [    1.653345]   PREFETCH window: 0x00000000dbf00000-0x00000000dbffffff
+<6>1 2011-03-25T08:58:15.114817+01:00 adiscondns1 kernel - - - [    1.653425] PCI: Bridge: 0000:00:15.2
+<6>1 2011-03-25T08:58:15.114818+01:00 adiscondns1 kernel - - - [    1.653444]   IO window: c000-cfff
+<6>1 2011-03-25T08:58:15.114833+01:00 adiscondns1 kernel - - - [    1.653491]   MEM window: 0xd9c00000-0xd9cfffff
+<6>1 2011-03-25T08:58:15.114837+01:00 adiscondns1 kernel - - - [    1.653525]   PREFETCH window: 0x00000000dc300000-0x00000000dc3fffff
+<6>1 2011-03-25T08:58:15.114838+01:00 adiscondns1 kernel - - - [    1.653603] PCI: Bridge: 0000:00:15.3
+<6>1 2011-03-25T08:58:15.114840+01:00 adiscondns1 kernel - - - [    1.653604]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114841+01:00 adiscondns1 kernel - - - [    1.653653]   MEM window: 0xda000000-0xda0fffff
+<6>1 2011-03-25T08:58:15.114843+01:00 adiscondns1 kernel - - - [    1.653686]   PREFETCH window: 0x00000000dc700000-0x00000000dc7fffff
+<6>1 2011-03-25T08:58:15.114844+01:00 adiscondns1 kernel - - - [    1.653764] PCI: Bridge: 0000:00:15.4
+<6>1 2011-03-25T08:58:15.114854+01:00 adiscondns1 kernel - - - [    1.653765]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114857+01:00 adiscondns1 kernel - - - [    1.653814]   MEM window: 0xda400000-0xda4fffff
+<6>1 2011-03-25T08:58:15.114859+01:00 adiscondns1 kernel - - - [    1.653846]   PREFETCH window: 0x00000000dcb00000-0x00000000dcbfffff
+<6>1 2011-03-25T08:58:15.114869+01:00 adiscondns1 kernel - - - [    1.653922] PCI: Bridge: 0000:00:15.5
+<6>1 2011-03-25T08:58:15.114871+01:00 adiscondns1 kernel - - - [    1.653924]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114872+01:00 adiscondns1 kernel - - - [    1.653973]   MEM window: 0xda800000-0xda8fffff
+<6>1 2011-03-25T08:58:15.114874+01:00 adiscondns1 kernel - - - [    1.654006]   PREFETCH window: 0x00000000dcf00000-0x00000000dcffffff
+<6>1 2011-03-25T08:58:15.114876+01:00 adiscondns1 kernel - - - [    1.654082] PCI: Bridge: 0000:00:15.6
+<6>1 2011-03-25T08:58:15.114884+01:00 adiscondns1 kernel - - - [    1.654084]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114887+01:00 adiscondns1 kernel - - - [    1.654132]   MEM window: 0xdac00000-0xdacfffff
+<6>1 2011-03-25T08:58:15.114889+01:00 adiscondns1 kernel - - - [    1.654167]   PREFETCH window: 0x00000000dd300000-0x00000000dd3fffff
+<6>1 2011-03-25T08:58:15.114890+01:00 adiscondns1 kernel - - - [    1.654246] PCI: Bridge: 0000:00:15.7
+<6>1 2011-03-25T08:58:15.114892+01:00 adiscondns1 kernel - - - [    1.654248]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114893+01:00 adiscondns1 kernel - - - [    1.654296]   MEM window: 0xdb000000-0xdb0fffff
+<6>1 2011-03-25T08:58:15.114895+01:00 adiscondns1 kernel - - - [    1.654329]   PREFETCH window: 0x00000000dd700000-0x00000000dd7fffff
+<6>1 2011-03-25T08:58:15.114904+01:00 adiscondns1 kernel - - - [    1.654405] PCI: Bridge: 0000:00:16.0
+<6>1 2011-03-25T08:58:15.114907+01:00 adiscondns1 kernel - - - [    1.654425]   IO window: 5000-5fff
+<6>1 2011-03-25T08:58:15.114909+01:00 adiscondns1 kernel - - - [    1.654472]   MEM window: 0xd9500000-0xd95fffff
+<6>1 2011-03-25T08:58:15.114910+01:00 adiscondns1 kernel - - - [    1.654505]   PREFETCH window: 0x00000000dbc00000-0x00000000dbcfffff
+<6>1 2011-03-25T08:58:15.114912+01:00 adiscondns1 kernel - - - [    1.654582] PCI: Bridge: 0000:00:16.1
+<6>1 2011-03-25T08:58:15.114913+01:00 adiscondns1 kernel - - - [    1.654600]   IO window: 9000-9fff
+<6>1 2011-03-25T08:58:15.114915+01:00 adiscondns1 kernel - - - [    1.654649]   MEM window: 0xd9900000-0xd99fffff
+<6>1 2011-03-25T08:58:15.114916+01:00 adiscondns1 kernel - - - [    1.654681]   PREFETCH window: 0x00000000dc000000-0x00000000dc0fffff
+<6>1 2011-03-25T08:58:15.114925+01:00 adiscondns1 kernel - - - [    1.654758] PCI: Bridge: 0000:00:16.2
+<6>1 2011-03-25T08:58:15.114928+01:00 adiscondns1 kernel - - - [    1.654776]   IO window: d000-dfff
+<6>1 2011-03-25T08:58:15.114929+01:00 adiscondns1 kernel - - - [    1.654824]   MEM window: 0xd9d00000-0xd9dfffff
+<6>1 2011-03-25T08:58:15.114931+01:00 adiscondns1 kernel - - - [    1.654861]   PREFETCH window: 0x00000000dc400000-0x00000000dc4fffff
+<6>1 2011-03-25T08:58:15.114933+01:00 adiscondns1 kernel - - - [    1.654938] PCI: Bridge: 0000:00:16.3
+<6>1 2011-03-25T08:58:15.114934+01:00 adiscondns1 kernel - - - [    1.654940]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114936+01:00 adiscondns1 kernel - - - [    1.654989]   MEM window: 0xda100000-0xda1fffff
+<6>1 2011-03-25T08:58:15.114945+01:00 adiscondns1 kernel - - - [    1.655021]   PREFETCH window: 0x00000000dc800000-0x00000000dc8fffff
+<6>1 2011-03-25T08:58:15.114948+01:00 adiscondns1 kernel - - - [    1.655097] PCI: Bridge: 0000:00:16.4
+<6>1 2011-03-25T08:58:15.114949+01:00 adiscondns1 kernel - - - [    1.655099]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114951+01:00 adiscondns1 kernel - - - [    1.655147]   MEM window: 0xda500000-0xda5fffff
+<6>1 2011-03-25T08:58:15.114953+01:00 adiscondns1 kernel - - - [    1.655181]   PREFETCH window: 0x00000000dcc00000-0x00000000dccfffff
+<6>1 2011-03-25T08:58:15.114954+01:00 adiscondns1 kernel - - - [    1.655257] PCI: Bridge: 0000:00:16.5
+<6>1 2011-03-25T08:58:15.114956+01:00 adiscondns1 kernel - - - [    1.655259]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114957+01:00 adiscondns1 kernel - - - [    1.655306]   MEM window: 0xda900000-0xda9fffff
+<6>1 2011-03-25T08:58:15.114966+01:00 adiscondns1 kernel - - - [    1.655340]   PREFETCH window: 0x00000000dd000000-0x00000000dd0fffff
+<6>1 2011-03-25T08:58:15.114969+01:00 adiscondns1 kernel - - - [    1.655416] PCI: Bridge: 0000:00:16.6
+<6>1 2011-03-25T08:58:15.114971+01:00 adiscondns1 kernel - - - [    1.655418]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.114972+01:00 adiscondns1 kernel - - - [    1.655467]   MEM window: 0xdad00000-0xdadfffff
+<6>1 2011-03-25T08:58:15.114974+01:00 adiscondns1 kernel - - - [    1.655527]   PREFETCH window: 0x00000000dd400000-0x00000000dd4fffff
+<6>1 2011-03-25T08:58:15.114975+01:00 adiscondns1 kernel - - - [    1.655547] PCI: Bridge: 0000:00:16.7
+<6>1 2011-03-25T08:58:15.115152+01:00 adiscondns1 kernel - - - [    1.655547]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115154+01:00 adiscondns1 kernel - - - [    1.655683]   MEM window: 0xdb100000-0xdb1fffff
+<6>1 2011-03-25T08:58:15.115163+01:00 adiscondns1 kernel - - - [    1.655718]   PREFETCH window: 0x00000000dd800000-0x00000000dd8fffff
+<6>1 2011-03-25T08:58:15.115166+01:00 adiscondns1 kernel - - - [    1.655799] PCI: Bridge: 0000:00:17.0
+<6>1 2011-03-25T08:58:15.115168+01:00 adiscondns1 kernel - - - [    1.655818]   IO window: 6000-6fff
+<6>1 2011-03-25T08:58:15.115169+01:00 adiscondns1 kernel - - - [    1.655865]   MEM window: 0xd9600000-0xd96fffff
+<6>1 2011-03-25T08:58:15.115171+01:00 adiscondns1 kernel - - - [    1.655898]   PREFETCH window: 0x00000000dbd00000-0x00000000dbdfffff
+<6>1 2011-03-25T08:58:15.115173+01:00 adiscondns1 kernel - - - [    1.655976] PCI: Bridge: 0000:00:17.1
+<6>1 2011-03-25T08:58:15.115174+01:00 adiscondns1 kernel - - - [    1.655994]   IO window: a000-afff
+<6>1 2011-03-25T08:58:15.115182+01:00 adiscondns1 kernel - - - [    1.656042]   MEM window: 0xd9a00000-0xd9afffff
+<6>1 2011-03-25T08:58:15.115186+01:00 adiscondns1 kernel - - - [    1.656074]   PREFETCH window: 0x00000000dc100000-0x00000000dc1fffff
+<6>1 2011-03-25T08:58:15.115188+01:00 adiscondns1 kernel - - - [    1.656152] PCI: Bridge: 0000:00:17.2
+<6>1 2011-03-25T08:58:15.115189+01:00 adiscondns1 kernel - - - [    1.656170]   IO window: e000-efff
+<6>1 2011-03-25T08:58:15.115190+01:00 adiscondns1 kernel - - - [    1.656218]   MEM window: 0xd9e00000-0xd9efffff
+<6>1 2011-03-25T08:58:15.115192+01:00 adiscondns1 kernel - - - [    1.656250]   PREFETCH window: 0x00000000dc500000-0x00000000dc5fffff
+<6>1 2011-03-25T08:58:15.115194+01:00 adiscondns1 kernel - - - [    1.656328] PCI: Bridge: 0000:00:17.3
+<6>1 2011-03-25T08:58:15.115195+01:00 adiscondns1 kernel - - - [    1.656330]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115203+01:00 adiscondns1 kernel - - - [    1.656378]   MEM window: 0xda200000-0xda2fffff
+<6>1 2011-03-25T08:58:15.115207+01:00 adiscondns1 kernel - - - [    1.656411]   PREFETCH window: 0x00000000dc900000-0x00000000dc9fffff
+<6>1 2011-03-25T08:58:15.115208+01:00 adiscondns1 kernel - - - [    1.656465] PCI: Bridge: 0000:00:17.4
+<6>1 2011-03-25T08:58:15.115210+01:00 adiscondns1 kernel - - - [    1.656467]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115211+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xda600000-0xda6fffff
+<6>1 2011-03-25T08:58:15.115213+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dcd00000-0x00000000dcdfffff
+<6>1 2011-03-25T08:58:15.115215+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:17.5
+<6>1 2011-03-25T08:58:15.115223+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115226+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xdaa00000-0xdaafffff
+<6>1 2011-03-25T08:58:15.115228+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dd100000-0x00000000dd1fffff
+<6>1 2011-03-25T08:58:15.115230+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:17.6
+<6>1 2011-03-25T08:58:15.115231+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115233+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xdae00000-0xdaefffff
+<6>1 2011-03-25T08:58:15.115235+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dd500000-0x00000000dd5fffff
+<6>1 2011-03-25T08:58:15.115236+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:17.7
+<6>1 2011-03-25T08:58:15.115245+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115248+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xdb200000-0xdb2fffff
+<6>1 2011-03-25T08:58:15.115250+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dd900000-0x00000000dd9fffff
+<6>1 2011-03-25T08:58:15.115251+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.0
+<6>1 2011-03-25T08:58:15.115253+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: 7000-7fff
+<6>1 2011-03-25T08:58:15.115254+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xd9700000-0xd97fffff
+<6>1 2011-03-25T08:58:15.115256+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dbe00000-0x00000000dbefffff
+<6>1 2011-03-25T08:58:15.115264+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.1
+<6>1 2011-03-25T08:58:15.115268+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: b000-bfff
+<6>1 2011-03-25T08:58:15.115269+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xd9b00000-0xd9bfffff
+<6>1 2011-03-25T08:58:15.115271+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dc200000-0x00000000dc2fffff
+<6>1 2011-03-25T08:58:15.115273+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.2
+<6>1 2011-03-25T08:58:15.115274+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: f000-ffff
+<6>1 2011-03-25T08:58:15.115276+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xd9f00000-0xd9ffffff
+<6>1 2011-03-25T08:58:15.115278+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dc600000-0x00000000dc6fffff
+<6>1 2011-03-25T08:58:15.115286+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.3
+<6>1 2011-03-25T08:58:15.115290+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115291+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xda300000-0xda3fffff
+<6>1 2011-03-25T08:58:15.115293+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dca00000-0x00000000dcafffff
+<6>1 2011-03-25T08:58:15.115294+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.4
+<6>1 2011-03-25T08:58:15.115296+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115297+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xda700000-0xda7fffff
+<6>1 2011-03-25T08:58:15.115307+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dce00000-0x00000000dcefffff
+<6>1 2011-03-25T08:58:15.115310+01:00 adiscondns1 kernel - - - [    1.656476] PCI: Bridge: 0000:00:18.5
+<6>1 2011-03-25T08:58:15.115312+01:00 adiscondns1 kernel - - - [    1.656476]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115313+01:00 adiscondns1 kernel - - - [    1.656476]   MEM window: 0xdab00000-0xdabfffff
+<6>1 2011-03-25T08:58:15.115315+01:00 adiscondns1 kernel - - - [    1.656476]   PREFETCH window: 0x00000000dd200000-0x00000000dd2fffff
+<6>1 2011-03-25T08:58:15.115316+01:00 adiscondns1 kernel - - - [    1.658360] PCI: Bridge: 0000:00:18.6
+<6>1 2011-03-25T08:58:15.115318+01:00 adiscondns1 kernel - - - [    1.658363]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115319+01:00 adiscondns1 kernel - - - [    1.658415]   MEM window: 0xdaf00000-0xdaffffff
+<6>1 2011-03-25T08:58:15.115328+01:00 adiscondns1 kernel - - - [    1.658448]   PREFETCH window: 0x00000000dd600000-0x00000000dd6fffff
+<6>1 2011-03-25T08:58:15.115331+01:00 adiscondns1 kernel - - - [    1.658531] PCI: Bridge: 0000:00:18.7
+<6>1 2011-03-25T08:58:15.115333+01:00 adiscondns1 kernel - - - [    1.658533]   IO window: disabled.
+<6>1 2011-03-25T08:58:15.115334+01:00 adiscondns1 kernel - - - [    1.658581]   MEM window: 0xdb300000-0xdb3fffff
+<6>1 2011-03-25T08:58:15.115336+01:00 adiscondns1 kernel - - - [    1.658613]   PREFETCH window: 0x00000000dda00000-0x00000000ddafffff
+<7>1 2011-03-25T08:58:15.115338+01:00 adiscondns1 kernel - - - [    1.658755] PCI: Setting latency timer of device 0000:00:01.0 to 64
+<7>1 2011-03-25T08:58:15.115340+01:00 adiscondns1 kernel - - - [    1.659052] PCI: Setting latency timer of device 0000:00:15.0 to 64
+<7>1 2011-03-25T08:58:15.115349+01:00 adiscondns1 kernel - - - [    1.659239] PCI: Setting latency timer of device 0000:00:15.1 to 64
+<7>1 2011-03-25T08:58:15.115352+01:00 adiscondns1 kernel - - - [    1.659425] PCI: Setting latency timer of device 0000:00:15.2 to 64
+<7>1 2011-03-25T08:58:15.115354+01:00 adiscondns1 kernel - - - [    1.659660] PCI: Setting latency timer of device 0000:00:15.3 to 64
+<7>1 2011-03-25T08:58:15.115356+01:00 adiscondns1 kernel - - - [    1.659913] PCI: Setting latency timer of device 0000:00:15.4 to 64
+<7>1 2011-03-25T08:58:15.115358+01:00 adiscondns1 kernel - - - [    1.660099] PCI: Setting latency timer of device 0000:00:15.5 to 64
+<7>1 2011-03-25T08:58:15.115534+01:00 adiscondns1 kernel - - - [    1.660286] PCI: Setting latency timer of device 0000:00:15.6 to 64
+<7>1 2011-03-25T08:58:15.115536+01:00 adiscondns1 kernel - - - [    1.660472] PCI: Setting latency timer of device 0000:00:15.7 to 64
+<7>1 2011-03-25T08:58:15.115538+01:00 adiscondns1 kernel - - - [    1.660625] PCI: Setting latency timer of device 0000:00:16.0 to 64
+<7>1 2011-03-25T08:58:15.115548+01:00 adiscondns1 kernel - - - [    1.660625] PCI: Setting latency timer of device 0000:00:16.1 to 64
+<7>1 2011-03-25T08:58:15.115552+01:00 adiscondns1 kernel - - - [    1.661330] PCI: Setting latency timer of device 0000:00:16.2 to 64
+<7>1 2011-03-25T08:58:15.115553+01:00 adiscondns1 kernel - - - [    1.661518] PCI: Setting latency timer of device 0000:00:16.3 to 64
+<7>1 2011-03-25T08:58:15.115555+01:00 adiscondns1 kernel - - - [    1.661732] PCI: Setting latency timer of device 0000:00:16.4 to 64
+<7>1 2011-03-25T08:58:15.115557+01:00 adiscondns1 kernel - - - [    1.661962] PCI: Setting latency timer of device 0000:00:16.5 to 64
+<7>1 2011-03-25T08:58:15.115559+01:00 adiscondns1 kernel - - - [    1.662160] PCI: Setting latency timer of device 0000:00:16.6 to 64
+<7>1 2011-03-25T08:58:15.115560+01:00 adiscondns1 kernel - - - [    1.662347] PCI: Setting latency timer of device 0000:00:16.7 to 64
+<7>1 2011-03-25T08:58:15.115569+01:00 adiscondns1 kernel - - - [    1.662533] PCI: Setting latency timer of device 0000:00:17.0 to 64
+<7>1 2011-03-25T08:58:15.115573+01:00 adiscondns1 kernel - - - [    1.662719] PCI: Setting latency timer of device 0000:00:17.1 to 64
+<7>1 2011-03-25T08:58:15.115575+01:00 adiscondns1 kernel - - - [    1.662906] PCI: Setting latency timer of device 0000:00:17.2 to 64
+<7>1 2011-03-25T08:58:15.115576+01:00 adiscondns1 kernel - - - [    1.663091] PCI: Setting latency timer of device 0000:00:17.3 to 64
+<7>1 2011-03-25T08:58:15.115578+01:00 adiscondns1 kernel - - - [    1.663277] PCI: Setting latency timer of device 0000:00:17.4 to 64
+<7>1 2011-03-25T08:58:15.115580+01:00 adiscondns1 kernel - - - [    1.663464] PCI: Setting latency timer of device 0000:00:17.5 to 64
+<7>1 2011-03-25T08:58:15.115582+01:00 adiscondns1 kernel - - - [    1.663650] PCI: Setting latency timer of device 0000:00:17.6 to 64
+<7>1 2011-03-25T08:58:15.115584+01:00 adiscondns1 kernel - - - [    1.663837] PCI: Setting latency timer of device 0000:00:17.7 to 64
+<7>1 2011-03-25T08:58:15.115593+01:00 adiscondns1 kernel - - - [    1.664121] PCI: Setting latency timer of device 0000:00:18.0 to 64
+<7>1 2011-03-25T08:58:15.115596+01:00 adiscondns1 kernel - - - [    1.664315] PCI: Setting latency timer of device 0000:00:18.1 to 64
+<7>1 2011-03-25T08:58:15.115598+01:00 adiscondns1 kernel - - - [    1.664503] PCI: Setting latency timer of device 0000:00:18.2 to 64
+<7>1 2011-03-25T08:58:15.115600+01:00 adiscondns1 kernel - - - [    1.664689] PCI: Setting latency timer of device 0000:00:18.3 to 64
+<7>1 2011-03-25T08:58:15.115602+01:00 adiscondns1 kernel - - - [    1.664875] PCI: Setting latency timer of device 0000:00:18.4 to 64
+<7>1 2011-03-25T08:58:15.115604+01:00 adiscondns1 kernel - - - [    1.664880] PCI: Setting latency timer of device 0000:00:18.5 to 64
+<7>1 2011-03-25T08:58:15.115605+01:00 adiscondns1 kernel - - - [    1.665275] PCI: Setting latency timer of device 0000:00:18.6 to 64
+<7>1 2011-03-25T08:58:15.115614+01:00 adiscondns1 kernel - - - [    1.665462] PCI: Setting latency timer of device 0000:00:18.7 to 64
+<6>1 2011-03-25T08:58:15.115618+01:00 adiscondns1 kernel - - - [    1.666051] NET: Registered protocol family 2
+<6>1 2011-03-25T08:58:15.115620+01:00 adiscondns1 kernel - - - [    1.705730] IP route cache hash table entries: 4096 (order: 3, 32768 bytes)
+<6>1 2011-03-25T08:58:15.115622+01:00 adiscondns1 kernel - - - [    1.706140] TCP established hash table entries: 16384 (order: 6, 262144 bytes)
+<6>1 2011-03-25T08:58:15.115623+01:00 adiscondns1 kernel - - - [    1.706301] TCP bind hash table entries: 16384 (order: 6, 262144 bytes)
+<6>1 2011-03-25T08:58:15.115625+01:00 adiscondns1 kernel - - - [    1.706492] TCP: Hash tables configured (established 16384 bind 16384)
+<6>1 2011-03-25T08:58:15.115627+01:00 adiscondns1 kernel - - - [    1.706494] TCP reno registered
+<6>1 2011-03-25T08:58:15.115628+01:00 adiscondns1 kernel - - - [    1.716339] NET: Registered protocol family 1
+<6>1 2011-03-25T08:58:15.115637+01:00 adiscondns1 kernel - - - [    1.716456] checking if image is initramfs... it is
+<6>1 2011-03-25T08:58:15.115640+01:00 adiscondns1 kernel - - - [    2.234851] Freeing initrd memory: 6520k freed
+<6>1 2011-03-25T08:58:15.115642+01:00 adiscondns1 kernel - - - [    2.258540] Simple Boot Flag at 0x36 set to 0x80
+<6>1 2011-03-25T08:58:15.115644+01:00 adiscondns1 kernel - - - [    2.273395] audit: initializing netlink socket (disabled)
+<5>1 2011-03-25T08:58:15.115645+01:00 adiscondns1 kernel - - - [    2.273412] type=2000 audit(1301039883.220:1): initialized
+<4>1 2011-03-25T08:58:15.115647+01:00 adiscondns1 kernel - - - [    2.273479] Total HugeTLB memory allocated, 0
+<5>1 2011-03-25T08:58:15.115649+01:00 adiscondns1 kernel - - - [    2.273479] VFS: Disk quotas dquot_6.5.1
+<4>1 2011-03-25T08:58:15.115657+01:00 adiscondns1 kernel - - - [    2.273479] Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+<6>1 2011-03-25T08:58:15.115661+01:00 adiscondns1 kernel - - - [    2.273479] msgmni has been set to 745
+<6>1 2011-03-25T08:58:15.115663+01:00 adiscondns1 kernel - - - [    2.273479] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 253)
+<6>1 2011-03-25T08:58:15.115664+01:00 adiscondns1 kernel - - - [    2.273479] io scheduler noop registered
+<6>1 2011-03-25T08:58:15.115666+01:00 adiscondns1 kernel - - - [    2.273479] io scheduler anticipatory registered
+<6>1 2011-03-25T08:58:15.115668+01:00 adiscondns1 kernel - - - [    2.273479] io scheduler deadline registered
+<6>1 2011-03-25T08:58:15.115669+01:00 adiscondns1 kernel - - - [    2.273479] io scheduler cfq registered (default)
+<6>1 2011-03-25T08:58:15.115671+01:00 adiscondns1 kernel - - - [    2.273479] pci 0000:00:00.0: Limiting direct PCI/PCI transfers
+<7>1 2011-03-25T08:58:15.115679+01:00 adiscondns1 kernel - - - [    2.273479] pci 0000:00:0f.0: Boot video device
+<7>1 2011-03-25T08:58:15.115683+01:00 adiscondns1 kernel - - - [    2.275971] PCI: Setting latency timer of device 0000:00:15.0 to 64
+<4>1 2011-03-25T08:58:15.115685+01:00 adiscondns1 kernel - - - [    2.276377] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115687+01:00 adiscondns1 kernel - - - [    2.276807] Allocate Port Service[0000:00:15.0:pcie00]
+<7>1 2011-03-25T08:58:15.115688+01:00 adiscondns1 kernel - - - [    2.276912] Allocate Port Service[0000:00:15.0:pcie02]
+<7>1 2011-03-25T08:58:15.115690+01:00 adiscondns1 kernel - - - [    2.277443] PCI: Setting latency timer of device 0000:00:15.1 to 64
+<4>1 2011-03-25T08:58:15.115692+01:00 adiscondns1 kernel - - - [    2.277497] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115694+01:00 adiscondns1 kernel - - - [    2.277497] Allocate Port Service[0000:00:15.1:pcie00]
+<7>1 2011-03-25T08:58:15.115702+01:00 adiscondns1 kernel - - - [    2.277497] Allocate Port Service[0000:00:15.1:pcie02]
+<7>1 2011-03-25T08:58:15.115706+01:00 adiscondns1 kernel - - - [    2.278492] PCI: Setting latency timer of device 0000:00:15.2 to 64
+<4>1 2011-03-25T08:58:15.115708+01:00 adiscondns1 kernel - - - [    2.278492] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115709+01:00 adiscondns1 kernel - - - [    2.278575] Allocate Port Service[0000:00:15.2:pcie00]
+<7>1 2011-03-25T08:58:15.115711+01:00 adiscondns1 kernel - - - [    2.284185] Allocate Port Service[0000:00:15.2:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.284671] PCI: Setting latency timer of device 0000:00:15.3 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.285078] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.285489] Allocate Port Service[0000:00:15.3:pcie00]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.285533] Allocate Port Service[0000:00:15.3:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.286965] PCI: Setting latency timer of device 0000:00:15.4 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.286965] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.287163] Allocate Port Service[0000:00:15.4:pcie00]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.288623] Allocate Port Service[0000:00:15.4:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] PCI: Setting latency timer of device 0000:00:15.5 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] Allocate Port Service[0000:00:15.5:pcie00]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] Allocate Port Service[0000:00:15.5:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] PCI: Setting latency timer of device 0000:00:15.6 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] Allocate Port Service[0000:00:15.6:pcie00]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290555] Allocate Port Service[0000:00:15.6:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.290658] PCI: Setting latency timer of device 0000:00:15.7 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.291056] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.291485] Allocate Port Service[0000:00:15.7:pcie00]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.291529] Allocate Port Service[0000:00:15.7:pcie02]
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.292060] PCI: Setting latency timer of device 0000:00:16.0 to 64
+<4>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.292469] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115787+01:00 adiscondns1 kernel - - - [    2.292887] Allocate Port Service[0000:00:16.0:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.292920] Allocate Port Service[0000:00:16.0:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.293386] PCI: Setting latency timer of device 0000:00:16.1 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.294536] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.294536] Allocate Port Service[0000:00:16.1:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.294536] Allocate Port Service[0000:00:16.1:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.295035] PCI: Setting latency timer of device 0000:00:16.2 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.295443] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.295874] Allocate Port Service[0000:00:16.2:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.297500] Allocate Port Service[0000:00:16.2:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] PCI: Setting latency timer of device 0000:00:16.3 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] Allocate Port Service[0000:00:16.3:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] Allocate Port Service[0000:00:16.3:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] PCI: Setting latency timer of device 0000:00:16.4 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298480] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298855] Allocate Port Service[0000:00:16.4:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.298888] Allocate Port Service[0000:00:16.4:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.299462] PCI: Setting latency timer of device 0000:00:16.5 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.299886] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.300305] Allocate Port Service[0000:00:16.5:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.300344] Allocate Port Service[0000:00:16.5:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.300876] PCI: Setting latency timer of device 0000:00:16.6 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.301278] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.302562] Allocate Port Service[0000:00:16.6:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.302562] Allocate Port Service[0000:00:16.6:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.302562] PCI: Setting latency timer of device 0000:00:16.7 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.302880] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.303303] Allocate Port Service[0000:00:16.7:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.305441] Allocate Port Service[0000:00:16.7:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] PCI: Setting latency timer of device 0000:00:17.0 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] Allocate Port Service[0000:00:17.0:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] Allocate Port Service[0000:00:17.0:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] PCI: Setting latency timer of device 0000:00:17.1 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] Allocate Port Service[0000:00:17.1:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.306564] Allocate Port Service[0000:00:17.1:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.307263] PCI: Setting latency timer of device 0000:00:17.2 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.307667] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.308111] Allocate Port Service[0000:00:17.2:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.308145] Allocate Port Service[0000:00:17.2:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.308657] PCI: Setting latency timer of device 0000:00:17.3 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.309056] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.309465] Allocate Port Service[0000:00:17.3:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.309518] Allocate Port Service[0000:00:17.3:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.311216] PCI: Setting latency timer of device 0000:00:17.4 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.311216] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.311437] Allocate Port Service[0000:00:17.4:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.312957] Allocate Port Service[0000:00:17.4:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.314979] PCI: Setting latency timer of device 0000:00:17.5 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] Allocate Port Service[0000:00:17.5:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] Allocate Port Service[0000:00:17.5:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] PCI: Setting latency timer of device 0000:00:17.6 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] Allocate Port Service[0000:00:17.6:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] Allocate Port Service[0000:00:17.6:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315295] PCI: Setting latency timer of device 0000:00:17.7 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.315667] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.316086] Allocate Port Service[0000:00:17.7:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.316123] Allocate Port Service[0000:00:17.7:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.316698] PCI: Setting latency timer of device 0000:00:18.0 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.317102] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.317523] Allocate Port Service[0000:00:18.0:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.317561] Allocate Port Service[0000:00:18.0:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.318078] PCI: Setting latency timer of device 0000:00:18.1 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.319265] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.319265] Allocate Port Service[0000:00:18.1:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.319265] Allocate Port Service[0000:00:18.1:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.319615] PCI: Setting latency timer of device 0000:00:18.2 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.320020] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.320445] Allocate Port Service[0000:00:18.2:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.322370] Allocate Port Service[0000:00:18.2:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] PCI: Setting latency timer of device 0000:00:18.3 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] Allocate Port Service[0000:00:18.3:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] Allocate Port Service[0000:00:18.3:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] PCI: Setting latency timer of device 0000:00:18.4 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323293] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323588] Allocate Port Service[0000:00:18.4:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.323623] Allocate Port Service[0000:00:18.4:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.324135] PCI: Setting latency timer of device 0000:00:18.5 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.324549] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.324965] Allocate Port Service[0000:00:18.5:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.325006] Allocate Port Service[0000:00:18.5:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.325528] PCI: Setting latency timer of device 0000:00:18.6 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.325931] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.327301] Allocate Port Service[0000:00:18.6:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.327302] Allocate Port Service[0000:00:18.6:pcie02]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.327302] PCI: Setting latency timer of device 0000:00:18.7 to 64
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.327491] assign_interrupt_mode Found MSI capability
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.327915] Allocate Port Service[0000:00:18.7:pcie00]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.330215] Allocate Port Service[0000:00:18.7:pcie02]
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.332456] Linux agpgart interface v0.103
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.332457] Serial: 8250/16550 driver $Revision: 1.90 $ 4 ports, IRQ sharing enabled
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.333311] serial8250: ttyS0 at I/O 0x3f8 (irq = 4) is a 16550A
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.334285] serial8250: ttyS1 at I/O 0x2f8 (irq = 3) is a 16550A
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.334285] pnp: the driver 'serial' has been registered
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.335755] 00:09: ttyS0 at I/O 0x3f8 (irq = 4) is a 16550A
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.335755] serial 00:09: driver attached
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.337571] 00:0a: ttyS1 at I/O 0x2f8 (irq = 3) is a 16550A
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339047] serial 00:0a: driver attached
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] brd: module loaded
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] input: Macintosh mouse button emulation as /class/input/input0
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] pnp: the driver 'i8042 kbd' has been registered
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] i8042 kbd 00:06: driver attached
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] pnp: the driver 'i8042 aux' has been registered
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] i8042 aux 00:07: driver attached
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.339390] PNP: PS/2 Controller [PNP0303:KBC,PNP0f13:MOUS] at 0x60,0x64 irq 1,12
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.911612] serio: i8042 KBD port at 0x60,0x64 irq 1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.911619] serio: i8042 AUX port at 0x60,0x64 irq 12
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] mice: PS/2 mouse device common for all mice
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] pnp: the driver 'rtc_cmos' has been registered
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] rtc_cmos 00:04: rtc core: registered rtc_cmos as rtc0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] rtc0: alarms up to one month, y3k
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] rtc_cmos 00:04: driver attached
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] cpuidle: using governor ladder
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] cpuidle: using governor menu
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] No iBFT detected.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] TCP cubic registered
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] NET: Registered protocol family 17
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.931465] registered taskstats version 1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.980429] rtc_cmos 00:04: setting system clock to 2011-03-25 07:58:04 UTC (1301039884)
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.980451] Freeing unused kernel memory: 392k freed
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    2.989373] input: AT Translated Set 2 keyboard as /class/input/input1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.079764] VMware vmxnet virtual NIC driver
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.113496] ACPI: ACPI0007:00 is registered as cooling_device0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.113496] ACPI: Processor [CPU0] (supports 8 throttling states)
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.113942] ACPI: ACPI0007:01 is registered as cooling_device1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.113942] ACPI: Processor [CPU1] (supports 8 throttling states)
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.409202] No dock devices found.
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.427382] SCSI subsystem initialized
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.434020] libata version 3.00 loaded.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.442666] Uniform Multi-Platform E-IDE driver
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.442670] ide: Assuming 33MHz system bus speed for PIO modes; override with idebus=xx
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.455572] PIIX4: IDE controller (0x8086:0x7111 rev 0x01) at  PCI slot 0000:00:07.1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.455572] PIIX4: not 100% native mode: will probe irqs later
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.455572] PIIX4: IDE port disabled
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.455572]     ide0: BM-DMA at 0x10c8-0x10cf
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.455572] Probing IDE interface ide0...
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.480197] Fusion MPT base driver 3.04.06
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.480197] Copyright (c) 1999-2007 LSI Corporation
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.506954] Fusion MPT SPI Host driver 3.04.06
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.514674] Intel(R) PRO/1000 Network Driver - version 7.3.20-k2-NAPI
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.514677] Copyright (c) 1999-2006 Intel Corporation.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.522774] USB Universal Host Controller Interface driver v3.0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.608336] Floppy drive(s): fd0 is 1.44M
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    3.624664] FDC 0 is a post-1991 82077
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.232081] hda: VMware Virtual IDE CDROM Drive, ATAPI CD/DVD-ROM drive
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.579076] hda: host max PIO4 wanted PIO255(auto-tune) selected PIO4
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.580044] hda: UDMA/33 mode selected
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.995288] ide0 at 0x170-0x177,0x376 on irq 15
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.995288] ACPI: PCI Interrupt 0000:00:10.0[A] -> GSI 17 (level, low) -> IRQ 17
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    4.995288] mptbase: ioc0: Initiating bringup
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.065551] ioc0: LSI53C1030 B0: Capabilities={Initiator}
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.196158] scsi0 : ioc0: LSI53C1030 B0, FwRev=00000000h, Ports=1, MaxQ=128, IRQ=17
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.433203] scsi 0:0:0:0: Direct-Access     VMware,  VMware Virtual S 1.0  PQ: 0 ANSI: 2
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.433203]  target0:0:0: Beginning Domain Validation
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.473749]  target0:0:0: Domain Validation skipping write tests
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.473752]  target0:0:0: Ending Domain Validation
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.473788]  target0:0:0: FAST-40 WIDE SCSI 80.0 MB/s ST (25 ns, offset 127)
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.503935] ACPI: PCI Interrupt 0000:02:01.0[A] -> GSI 19 (level, low) -> IRQ 19
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.504011] PCI: Setting latency timer of device 0000:02:01.0 to 64
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.509018] hda: ATAPI 1X CD-ROM drive, 32kB Cache
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.509018] Uniform CD-ROM driver Revision: 3.20
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.967384] e1000: 0000:02:01.0: e1000_probe: (PCI:66MHz:32-bit) 00:0c:29:e7:f1:e3
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.969346] Driver 'sd' needs updating - please use bus_type methods
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.969549] sd 0:0:0:0: [sda] 268435456 512-byte hardware sectors (137439 MB)
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.969603] sd 0:0:0:0: [sda] Write Protect is off
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.969606] sd 0:0:0:0: [sda] Mode Sense: 5d 00 00 00
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Cache data unavailable
+<3>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Assuming drive cache: write through
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] 268435456 512-byte hardware sectors (137439 MB)
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Write Protect is off
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Mode Sense: 5d 00 00 00
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Cache data unavailable
+<3>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949] sd 0:0:0:0: [sda] Assuming drive cache: write through
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.972949]  sda: sda1 sda2 < sda5 >
+<5>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    5.973106] sd 0:0:0:0: [sda] Attached SCSI disk
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] e1000: eth0: e1000_probe: Intel(R) PRO/1000 Network Connection
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] ACPI: PCI Interrupt 0000:02:00.0[A] -> GSI 18 (level, low) -> IRQ 18
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] uhci_hcd 0000:02:00.0: UHCI Host Controller
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] uhci_hcd 0000:02:00.0: new USB bus registered, assigned bus number 1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] uhci_hcd 0000:02:00.0: irq 18, io base 0x00002040
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] usb usb1: configuration #1 chosen from 1 choice
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] hub 1-0:1.0: USB hub found
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.019810] hub 1-0:1.0: 2 ports detected
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.131941] usb usb1: New USB device found, idVendor=1d6b, idProduct=0001
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.131944] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.131946] usb usb1: Product: UHCI Host Controller
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.131947] usb usb1: Manufacturer: Linux 2.6.26-2-amd64 uhci_hcd
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.131948] usb usb1: SerialNumber: 0000:02:00.0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.143944] ACPI: PCI Interrupt 0000:02:02.0[A] -> GSI 16 (level, low) -> IRQ 16
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.144111] ehci_hcd 0000:02:02.0: EHCI Host Controller
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.144202] ehci_hcd 0000:02:02.0: new USB bus registered, assigned bus number 2
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.144565] PCI: cache line size of 32 is not supported by device 0000:02:02.0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.144585] ehci_hcd 0000:02:02.0: irq 16, io mem 0xd8910000
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.156728] ehci_hcd 0000:02:02.0: USB 2.0 started, EHCI 1.00, driver 10 Dec 2004
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.156852] usb usb2: configuration #1 chosen from 1 choice
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.156883] hub 2-0:1.0: USB hub found
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.156891] hub 2-0:1.0: 6 ports detected
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.263599] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.263603] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.263606] usb usb2: Product: EHCI Host Controller
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.263608] usb usb2: Manufacturer: Linux 2.6.26-2-amd64 ehci_hcd
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.263610] usb usb2: SerialNumber: 0000:02:02.0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.319776] PM: Starting manual resume from disk
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.351950] kjournald starting.  Commit interval 5 seconds
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    6.352230] EXT3-fs: mounted filesystem with ordered data mode.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    7.391604] udevd version 125 started
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    7.919040] input: Power Button (FF) as /class/input/input2
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    7.968642] ACPI: Power Button (FF) [PWRF]
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    7.968723] input: Sleep Button (CM) as /class/input/input3
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.032775] ACPI: Sleep Button (CM) [SLPB]
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.172939] ACPI: AC Adapter [ACAD] (on-line)
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.336764] agpgart: Detected an Intel 440BX Chipset.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.336764] agpgart: AGP aperture is 256M @ 0x0
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.360830] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.371540] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.417425] piix4_smbus 0000:00:07.3: Found 0000:00:07.3 device
+<3>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.417455] piix4_smbus 0000:00:07.3: Host SMBus controller not enabled!
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437827] VMCI: Major device number is: 250
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437839] Probing for vmci/PCI.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437866] ACPI: PCI Interrupt 0000:00:07.7[A] -> GSI 16 (level, low) -> IRQ 16
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437897] Found vmci/PCI at 0x1080, irq 16.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437991] VMCIUtil: Host capability check: PASSED
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.437996] Registered vmci device.
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.544275] input: PC Speaker as /class/input/input4
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.615951] input: ImPS/2 Generic Wheel Mouse as /class/input/input5
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.686032] pnp: the driver 'parport_pc' has been registered
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.686045] parport_pc 00:08: reported by Plug and Play ACPI
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.687772] parport0: PC-style at 0x378, irq 7 [PCSPP,TRISTATE]
+<7>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.800896] parport_pc 00:08: driver attached
+<3>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [    8.805041] Error: Driver 'pcspkr' is already registered, aborting...
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   10.339038] Adding 1494004k swap on /dev/sda5.  Priority:-1 extents:1 across:1494004k
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   10.520951] EXT3 FS on sda1, internal journal
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   11.482812] loop: module loaded
+<4>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   11.678373] VMware hgfs: HGFS is disabled in the host
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   13.216435] NET: Registered protocol family 10
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   13.216435] lo: Disabled Privacy Extensions
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   13.250393] e1000: eth0: e1000_watchdog: NIC Link is Up 1000 Mbps Full Duplex, Flow Control: None
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   13.253654] ADDRCONF(NETDEV_UP): eth0: link is not ready
+<6>1 2011-03-25T08:58:15.115788+01:00 adiscondns1 kernel - - - [   13.254697] ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+<6>1 2011-03-25T08:58:16.052147+01:00 adiscondns1 kernel - - - [   15.486353] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+<6>1 2011-03-25T08:58:16.071209+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [32] registered
+<6>1 2011-03-25T08:58:16.071218+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [33] registered
+<6>1 2011-03-25T08:58:16.071219+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [34] registered
+<6>1 2011-03-25T08:58:16.071220+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [35] registered
+<6>1 2011-03-25T08:58:16.071221+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [36] registered
+<6>1 2011-03-25T08:58:16.071222+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [37] registered
+<6>1 2011-03-25T08:58:16.071223+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [38] registered
+<6>1 2011-03-25T08:58:16.071224+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [39] registered
+<6>1 2011-03-25T08:58:16.071225+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [40] registered
+<6>1 2011-03-25T08:58:16.071226+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [41] registered
+<6>1 2011-03-25T08:58:16.071227+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [42] registered
+<6>1 2011-03-25T08:58:16.071228+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [43] registered
+<6>1 2011-03-25T08:58:16.071229+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [44] registered
+<6>1 2011-03-25T08:58:16.071230+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [45] registered
+<6>1 2011-03-25T08:58:16.071231+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [46] registered
+<6>1 2011-03-25T08:58:16.071232+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [47] registered
+<6>1 2011-03-25T08:58:16.071232+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [48] registered
+<6>1 2011-03-25T08:58:16.071233+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [49] registered
+<6>1 2011-03-25T08:58:16.071234+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [50] registered
+<6>1 2011-03-25T08:58:16.071235+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [51] registered
+<6>1 2011-03-25T08:58:16.071236+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [52] registered
+<6>1 2011-03-25T08:58:16.071237+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [53] registered
+<6>1 2011-03-25T08:58:16.071238+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [54] registered
+<6>1 2011-03-25T08:58:16.071239+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [55] registered
+<6>1 2011-03-25T08:58:16.071240+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [56] registered
+<6>1 2011-03-25T08:58:16.071240+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [57] registered
+<6>1 2011-03-25T08:58:16.071241+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [58] registered
+<6>1 2011-03-25T08:58:16.071242+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [59] registered
+<6>1 2011-03-25T08:58:16.071243+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [60] registered
+<6>1 2011-03-25T08:58:16.071244+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [61] registered
+<6>1 2011-03-25T08:58:16.071245+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [62] registered
+<6>1 2011-03-25T08:58:16.071246+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [63] registered
+<6>1 2011-03-25T08:58:16.071247+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [160] registered
+<6>1 2011-03-25T08:58:16.071248+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [192] registered
+<6>1 2011-03-25T08:58:16.071249+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [224] registered
+<6>1 2011-03-25T08:58:16.071250+01:00 adiscondns1 kernel - - - [   15.683371] acpiphp: Slot [256] registered
+<6>1 2011-03-25T08:58:16.071251+01:00 adiscondns1 kernel - - - [   15.685444] acpiphp: Slot [161] registered
+<6>1 2011-03-25T08:58:16.071251+01:00 adiscondns1 kernel - - - [   15.685471] acpiphp: Slot [162] registered
+<6>1 2011-03-25T08:58:16.071259+01:00 adiscondns1 kernel - - - [   15.685494] acpiphp: Slot [163] registered
+<6>1 2011-03-25T08:58:16.071260+01:00 adiscondns1 kernel - - - [   15.685517] acpiphp: Slot [164] registered
+<6>1 2011-03-25T08:58:16.071261+01:00 adiscondns1 kernel - - - [   15.685539] acpiphp: Slot [165] registered
+<6>1 2011-03-25T08:58:16.077374+01:00 adiscondns1 kernel - - - [   15.685560] acpiphp: Slot [166] registered
+<6>1 2011-03-25T08:58:16.077384+01:00 adiscondns1 kernel - - - [   15.685581] acpiphp: Slot [167] registered
+<6>1 2011-03-25T08:58:16.077386+01:00 adiscondns1 kernel - - - [   15.685602] acpiphp: Slot [193] registered
+<6>1 2011-03-25T08:58:16.077388+01:00 adiscondns1 kernel - - - [   15.685623] acpiphp: Slot [194] registered
+<6>1 2011-03-25T08:58:16.077389+01:00 adiscondns1 kernel - - - [   15.685644] acpiphp: Slot [195] registered
+<6>1 2011-03-25T08:58:16.077391+01:00 adiscondns1 kernel - - - [   15.685665] acpiphp: Slot [196] registered
+<6>1 2011-03-25T08:58:16.077392+01:00 adiscondns1 kernel - - - [   15.685687] acpiphp: Slot [197] registered
+<6>1 2011-03-25T08:58:16.077394+01:00 adiscondns1 kernel - - - [   15.685708] acpiphp: Slot [198] registered
+<6>1 2011-03-25T08:58:16.077395+01:00 adiscondns1 kernel - - - [   15.685733] acpiphp: Slot [199] registered
+<6>1 2011-03-25T08:58:16.077396+01:00 adiscondns1 kernel - - - [   15.685754] acpiphp: Slot [225] registered
+<6>1 2011-03-25T08:58:16.077397+01:00 adiscondns1 kernel - - - [   15.685775] acpiphp: Slot [226] registered
+<6>1 2011-03-25T08:58:16.077399+01:00 adiscondns1 kernel - - - [   15.685775] acpiphp: Slot [227] registered
+<6>1 2011-03-25T08:58:16.077400+01:00 adiscondns1 kernel - - - [   15.685775] acpiphp: Slot [228] registered
+<6>1 2011-03-25T08:58:16.077401+01:00 adiscondns1 kernel - - - [   15.685775] acpiphp: Slot [229] registered
+<6>1 2011-03-25T08:58:16.077402+01:00 adiscondns1 kernel - - - [   15.685902] acpiphp: Slot [230] registered
+<6>1 2011-03-25T08:58:16.077404+01:00 adiscondns1 kernel - - - [   15.685927] acpiphp: Slot [231] registered
+<6>1 2011-03-25T08:58:16.077405+01:00 adiscondns1 kernel - - - [   15.685948] acpiphp: Slot [257] registered
+<6>1 2011-03-25T08:58:16.077407+01:00 adiscondns1 kernel - - - [   15.685970] acpiphp: Slot [258] registered
+<6>1 2011-03-25T08:58:16.077408+01:00 adiscondns1 kernel - - - [   15.685992] acpiphp: Slot [259] registered
+<6>1 2011-03-25T08:58:16.077409+01:00 adiscondns1 kernel - - - [   15.688469] acpiphp: Slot [260] registered
+<6>1 2011-03-25T08:58:16.077410+01:00 adiscondns1 kernel - - - [   15.688491] acpiphp: Slot [261] registered
+<6>1 2011-03-25T08:58:16.077412+01:00 adiscondns1 kernel - - - [   15.688512] acpiphp: Slot [262] registered
+<6>1 2011-03-25T08:58:16.077413+01:00 adiscondns1 kernel - - - [   15.688535] acpiphp: Slot [263] registered
+<4>1 2011-03-25T08:58:17.043648+01:00 adiscondns1 kernel - - - [   16.678003] VMware hgfs: HGFS is disabled in the host
+<6>1 2011-03-25T08:58:17.083122+01:00 adiscondns1 kernel - - - [   16.714453] VMware memory control driver initialized
+<7>1 2011-03-25T08:58:17.086633+01:00 adiscondns1 kernel - - - [   16.719582] vmmemctl: started kernel thread pid=2540
+<28>1 2011-03-25T08:58:18.134170+01:00 adiscondns1 pdns 2664 - -  Listening on controlsocket in '/var/run/pdns.controlsocket'
+<27>1 2011-03-25T08:58:18.134706+01:00 adiscondns1 pdns 2667 - -  Guardian is launching an instance
+<28>1 2011-03-25T08:58:18.136854+01:00 adiscondns1 pdns 2667 - -  This is a guarded instance of pdns
+<28>1 2011-03-25T08:58:18.137270+01:00 adiscondns1 pdns 2667 - -  It is advised to bind to explicit addresses with the --local-address option
+<27>1 2011-03-25T08:58:18.137379+01:00 adiscondns1 pdns 2667 - -  UDP server bound to 0.0.0.0:53
+<27>1 2011-03-25T08:58:18.137489+01:00 adiscondns1 pdns 2667 - -  TCP server bound to 0.0.0.0:53
+<28>1 2011-03-25T08:58:18.142026+01:00 adiscondns1 pdns 2667 - -  PowerDNS 2.9.21.2 (C) 2001-2008 PowerDNS.COM BV (Nov 25 2008, 22:40:57, gcc 4.3.2) starting up
+<28>1 2011-03-25T08:58:18.142067+01:00 adiscondns1 pdns 2667 - -  PowerDNS comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it according to the terms of the GPL version 2.
+<27>1 2011-03-25T08:58:18.144307+01:00 adiscondns1 pdns 2667 - -  Master/slave communicator launching
+<27>1 2011-03-25T08:58:18.144769+01:00 adiscondns1 pdns 2667 - -  Creating backend connection for TCP
+<28>1 2011-03-25T08:58:18.190266+01:00 adiscondns1 pdns 2667 - -  [bindbackend] Parsing 90 domain(s), will report when done
+<28>1 2011-03-25T08:58:18.272314+01:00 adiscondns1 pdns 2667 - -  [bindbackend] Warning! Skipping 'hint' zone ''
+<27>1 2011-03-25T08:58:18.409358+01:00 adiscondns1 pdns 2667 - -  [bindbackend] Done parsing domains, 0 rejected, 89 new, 0 removed
+<28>1 2011-03-25T08:58:18.409445+01:00 adiscondns1 pdns 2667 - -  About to create 3 backend threads for UDP
+<28>1 2011-03-25T08:58:18.409778+01:00 adiscondns1 pdns 2667 - -  85 slave domains need checking
+<28>1 2011-03-25T08:58:18.444508+01:00 adiscondns1 pdns 2667 - -  Domain mwagent.com is fresh
+<28>1 2011-03-25T08:58:18.504055+01:00 adiscondns1 pdns 2667 - -  Domain shooter-szene.de is fresh
+<28>1 2011-03-25T08:58:18.520605+01:00 adiscondns1 pdns 2667 - -  Domain googledochdunoob.de is fresh
+<27>1 2011-03-25T08:58:18.561547+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T08:58:18.594312+01:00 adiscondns1 pdns 2667 - -  Domain shooter-szene.com is fresh
+<28>1 2011-03-25T08:58:18.630551+01:00 adiscondns1 pdns 2667 - -  Domain adiscon.com is fresh
+<28>1 2011-03-25T08:58:18.667432+01:00 adiscondns1 pdns 2667 - -  Domain monitorware.com is fresh
+<28>1 2011-03-25T08:58:18.704144+01:00 adiscondns1 pdns 2667 - -  Domain taubermuell.de is fresh
+<28>1 2011-03-25T08:58:18.748438+01:00 adiscondns1 pdns 2667 - -  Domain letspromoteit.com is fresh
+<28>1 2011-03-25T08:58:18.788605+01:00 adiscondns1 pdns 2667 - -  Domain xn--taubermll-w9a.de is fresh
+<22>1 2011-03-25T08:58:18.808572+01:00 adiscondns1 postfix 2733 - -  daemon started -- version 2.5.5, configuration /etc/postfix
+<28>1 2011-03-25T08:58:18.820586+01:00 adiscondns1 pdns 2667 - -  Domain saturnnacht.de is fresh
+<28>1 2011-03-25T08:58:18.867032+01:00 adiscondns1 pdns 2667 - -  Domain syslogmessages.com is fresh
+<78>1 2011-03-25T08:58:18.895196+01:00 adiscondns1  2762 - -  (CRON) INFO (pidfile fd = 3)
+<78>1 2011-03-25T08:58:18.895481+01:00 adiscondns1  2763 - -  (CRON) STARTUP (fork ok)
+<28>1 2011-03-25T08:58:18.912790+01:00 adiscondns1 pdns 2667 - -  Domain mwconsole.com is fresh
+<78>1 2011-03-25T08:58:18.940334+01:00 adiscondns1  2763 - -  (CRON) INFO (Running @reboot jobs)
+<28>1 2011-03-25T08:58:18.948868+01:00 adiscondns1 pdns 2667 - -  Domain iisdefender.com is fresh
+<28>1 2011-03-25T08:58:18.985247+01:00 adiscondns1 pdns 2667 - -  Domain iisdefender.de is fresh
+<28>1 2011-03-25T08:58:19.021737+01:00 adiscondns1 pdns 2667 - -  Domain smartekids.de is fresh
+<28>1 2011-03-25T08:58:19.064466+01:00 adiscondns1 pdns 2667 - -  Domain rainerscript.com is fresh
+<28>1 2011-03-25T08:58:19.101227+01:00 adiscondns1 pdns 2667 - -  Domain librelp.com is fresh
+<6>1 2011-03-25T08:58:19.119839+01:00 adiscondns1 kernel - - - [   18.814851] ip_tables: (C) 2000-2006 Netfilter Core Team
+<28>1 2011-03-25T08:58:19.137479+01:00 adiscondns1 pdns 2667 - -  Domain grossrinderfeld.com is fresh
+<28>1 2011-03-25T08:58:19.174187+01:00 adiscondns1 pdns 2667 - -  Domain eventconsolidator.com is fresh
+<28>1 2011-03-25T08:58:19.210414+01:00 adiscondns1 pdns 2667 - -  Domain winsyslog.de is fresh
+<28>1 2011-03-25T08:58:19.246580+01:00 adiscondns1 pdns 2667 - -  Domain windows-experte.de is fresh
+<28>1 2011-03-25T08:58:19.282958+01:00 adiscondns1 pdns 2667 - -  Domain gerhards.net is fresh
+<28>1 2011-03-25T08:58:19.319706+01:00 adiscondns1 pdns 2667 - -  Domain windows-expert.net is fresh
+<28>1 2011-03-25T08:58:19.364098+01:00 adiscondns1 pdns 2667 - -  Domain litera-ell.de is fresh
+<28>1 2011-03-25T08:58:19.406677+01:00 adiscondns1 pdns 2667 - -  Domain filtra-tech.com is fresh
+<28>1 2011-03-25T08:58:19.445016+01:00 adiscondns1 pdns 2667 - -  Domain filtra-tech.de is fresh
+<28>1 2011-03-25T08:58:19.484319+01:00 adiscondns1 pdns 2667 - -  Domain tim-lorbach.de is fresh
+<28>1 2011-03-25T08:58:19.516505+01:00 adiscondns1 pdns 2667 - -  Domain push-up-dirndl.de is fresh
+<28>1 2011-03-25T08:58:19.568812+01:00 adiscondns1 pdns 2667 - -  Domain noemi-lorbach.de is fresh
+<4>1 2011-03-25T08:58:19.576824+01:00 adiscondns1 kernel - - - [   19.315122] nf_conntrack version 0.5.0 (3072 buckets, 12288 max)
+<28>1 2011-03-25T08:58:19.603464+01:00 adiscondns1 pdns 2667 - -  Domain familie-lorbach.de is fresh
+<28>1 2011-03-25T08:58:19.645719+01:00 adiscondns1 pdns 2667 - -  Domain ultrastats.org is fresh
+<28>1 2011-03-25T08:58:19.682042+01:00 adiscondns1 pdns 2667 - -  Domain sofpayback.de is fresh
+<28>1 2011-03-25T08:58:19.718088+01:00 adiscondns1 pdns 2667 - -  Domain syslogappliance.de is fresh
+<28>1 2011-03-25T08:58:19.754672+01:00 adiscondns1 pdns 2667 - -  Domain adiscon.biz is fresh
+<28>1 2011-03-25T08:58:19.791694+01:00 adiscondns1 pdns 2667 - -  Domain x-sites.de is fresh
+<28>1 2011-03-25T08:58:19.828651+01:00 adiscondns1 pdns 2667 - -  Domain iisdeveloper.de is fresh
+<28>1 2011-03-25T08:58:19.871484+01:00 adiscondns1 pdns 2667 - -  Domain stp-solutions.com is fresh
+<28>1 2011-03-25T08:58:19.912820+01:00 adiscondns1 pdns 2667 - -  Domain urlaubsweb.de is fresh
+<28>1 2011-03-25T08:58:19.951824+01:00 adiscondns1 pdns 2667 - -  Domain iislogger.de is fresh
+<28>1 2011-03-25T08:58:19.988383+01:00 adiscondns1 pdns 2667 - -  Domain rsyslog.com is fresh
+<28>1 2011-03-25T08:58:20.025273+01:00 adiscondns1 pdns 2667 - -  Domain ferientips.com is fresh
+<28>1 2011-03-25T08:58:20.061701+01:00 adiscondns1 pdns 2667 - -  Domain windows-expert.com is fresh
+<28>1 2011-03-25T08:58:20.098034+01:00 adiscondns1 pdns 2667 - -  Domain iislogger.com is fresh
+<28>1 2011-03-25T08:58:20.134686+01:00 adiscondns1 pdns 2667 - -  Domain scubatribe.com is fresh
+<28>1 2011-03-25T08:58:20.170999+01:00 adiscondns1 pdns 2667 - -  Domain moniware.com is fresh
+<28>1 2011-03-25T08:58:20.207676+01:00 adiscondns1 pdns 2667 - -  Domain adiscom.de is fresh
+<28>1 2011-03-25T08:58:20.243796+01:00 adiscondns1 pdns 2667 - -  Domain cardvalidator.com is fresh
+<28>1 2011-03-25T08:58:20.280164+01:00 adiscondns1 pdns 2667 - -  Domain grossrinderfeld-will-dsl.de is fresh
+<28>1 2011-03-25T08:58:20.317123+01:00 adiscondns1 pdns 2667 - -  Domain hochbegabt.cc is fresh
+<28>1 2011-03-25T08:58:20.353066+01:00 adiscondns1 pdns 2667 - -  Domain erftstadt-wetter.de is fresh
+<28>1 2011-03-25T08:58:20.389628+01:00 adiscondns1 pdns 2667 - -  Domain exchange-antivirus.de is fresh
+<28>1 2011-03-25T08:58:20.426372+01:00 adiscondns1 pdns 2667 - -  Domain eventreporter.com is fresh
+<28>1 2011-03-25T08:58:20.462633+01:00 adiscondns1 pdns 2667 - -  Domain eifelzocker.de is fresh
+<28>1 2011-03-25T08:58:20.499049+01:00 adiscondns1 pdns 2667 - -  Domain letspromoteit.de is fresh
+<28>1 2011-03-25T08:58:20.539757+01:00 adiscondns1 pdns 2667 - -  Domain smartkidswuerzburg.de is fresh
+<28>1 2011-03-25T08:58:20.583489+01:00 adiscondns1 pdns 2667 - -  Domain delta-sounds.de is fresh
+<28>1 2011-03-25T08:58:20.676827+01:00 adiscondns1 pdns 2667 - -  Domain adiscon.net is fresh
+<28>1 2011-03-25T08:58:20.713588+01:00 adiscondns1 pdns 2667 - -  Domain syslog.cc is fresh
+<28>1 2011-03-25T08:58:20.749427+01:00 adiscondns1 pdns 2667 - -  Domain win2k-reporter.de is fresh
+<28>1 2011-03-25T08:58:20.785565+01:00 adiscondns1 pdns 2667 - -  Domain activelogger.com is fresh
+<28>1 2011-03-25T08:58:20.822130+01:00 adiscondns1 pdns 2667 - -  Domain win2kreporter.de is fresh
+<27>1 2011-03-25T08:58:20.860141+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<28>1 2011-03-25T08:58:20.896440+01:00 adiscondns1 pdns 2667 - -  Domain 1337-server.net is fresh
+<28>1 2011-03-25T08:58:20.933329+01:00 adiscondns1 pdns 2667 - -  Domain sybari-antigen.de is fresh
+<28>1 2011-03-25T08:58:20.969878+01:00 adiscondns1 pdns 2667 - -  Domain winsyslog.com is fresh
+<28>1 2011-03-25T08:58:21.006479+01:00 adiscondns1 pdns 2667 - -  Domain passwordmanager.com is fresh
+<28>1 2011-03-25T08:58:21.042619+01:00 adiscondns1 pdns 2667 - -  Domain spiele-szene.de is fresh
+<28>1 2011-03-25T08:58:21.079217+01:00 adiscondns1 pdns 2667 - -  Domain monitorware.de is fresh
+<28>1 2011-03-25T08:58:21.115684+01:00 adiscondns1 pdns 2667 - -  Domain notes-antivirus.de is fresh
+<28>1 2011-03-25T08:58:21.151893+01:00 adiscondns1 pdns 2667 - -  Domain phplogcon.com is fresh
+<28>1 2011-03-25T08:58:21.188705+01:00 adiscondns1 pdns 2667 - -  Domain newsmerge.com is fresh
+<28>1 2011-03-25T08:58:21.224931+01:00 adiscondns1 pdns 2667 - -  Domain pocketpasswords.com is fresh
+<28>1 2011-03-25T08:58:21.261575+01:00 adiscondns1 pdns 2667 - -  Domain phplogcon.org is fresh
+<28>1 2011-03-25T08:58:21.298125+01:00 adiscondns1 pdns 2667 - -  Domain liblogging.org is fresh
+<28>1 2011-03-25T08:58:21.334263+01:00 adiscondns1 pdns 2667 - -  Domain adiscon.org is fresh
+<28>1 2011-03-25T08:58:21.371328+01:00 adiscondns1 pdns 2667 - -  Domain logappliance.com is fresh
+<28>1 2011-03-25T08:58:21.404074+01:00 adiscondns1 pdns 2667 - -  Domain deltaz-palaze.de is fresh
+<28>1 2011-03-25T08:58:21.444229+01:00 adiscondns1 pdns 2667 - -  Domain letspromoteit.net is fresh
+<28>1 2011-03-25T08:58:21.480226+01:00 adiscondns1 pdns 2667 - -  Domain spamappliance.org is fresh
+<28>1 2011-03-25T08:58:21.544326+01:00 adiscondns1 pdns 2667 - -  Domain alivemon.com is fresh
+<28>1 2011-03-25T08:58:21.578753+01:00 adiscondns1 pdns 2667 - -  Domain liblognorm.com is fresh
+<28>1 2011-03-25T08:58:21.616479+01:00 adiscondns1 pdns 2667 - -  Domain cod-news.com is fresh
+<28>1 2011-03-25T08:58:21.653383+01:00 adiscondns1 pdns 2667 - -  Domain adiscon.de is fresh
+<28>1 2011-03-25T08:58:21.689842+01:00 adiscondns1 pdns 2667 - -  Domain libcee.com is fresh
+<28>1 2011-03-25T08:58:21.726710+01:00 adiscondns1 pdns 2667 - -  Domain libee.org is fresh
+<29>1 2011-03-25T08:58:21.898538+01:00 adiscondns1 ntpdate 2150 - -  step time server 78.46.37.211 offset -0.131376 sec
+<7>1 2011-03-25T08:58:24.248303+01:00 adiscondns1 kernel - - - [   24.432723] eth0: no IPv6 routers present
+<27>1 2011-03-25T08:58:39.539436+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:40.291602+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:40.523284+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:41.421388+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:41.897376+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:42.548767+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:42.602383+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:43.980328+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:50.015292+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:53.875969+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:58:59.909146+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:00.857872+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:02.014670+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:08.021665+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:08.576561+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:09.221812+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:15.210814+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:20.279303+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:21.605464+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T08:59:21.754418+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T08:59:21.791900+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T08:59:22.004528+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:22.615415+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:23.191367+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:31.740952+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:31.769509+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:32.412265+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:33.150678+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T08:59:51.468003+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:02.342143+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:08.825042+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:09.110356+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:09.506955+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:09.595599+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:09.696235+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:00:20.260469+01:00 adiscondns1 kernel - - - [  150.962285] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=32328 PROTO=2 
+<28>1 2011-03-25T09:00:21.978288+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:00:22.015698+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:00:29.779256+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:40.253641+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:40.258078+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:56.983422+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:00:57.704170+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:01.024915+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:06.180761+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:06.195594+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:06.287577+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:08.555237+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:01:18.588370+01:00 adiscondns1 kernel - - - [  213.548171] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=235 TOS=0x00 PREC=0x00 TTL=128 ID=1431 PROTO=UDP SPT=138 DPT=138 LEN=215 
+<28>1 2011-03-25T09:01:22.183490+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:01:22.220375+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:01:28.798019+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:39.663484+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:40.009068+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:01:49.887272+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:02:01.707265+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:02:04.117991+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:02:22.280851+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:02:22.318157+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<4>1 2011-03-25T09:02:25.333442+01:00 adiscondns1 kernel - - - [  285.213874] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=2987 PROTO=2 
+<28>1 2011-03-25T09:03:22.470461+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:03:22.507113+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<4>1 2011-03-25T09:03:30.640567+01:00 adiscondns1 kernel - - - [  357.551734] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=4445 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<4>1 2011-03-25T09:03:31.388590+01:00 adiscondns1 kernel - - - [  358.304504] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=4467 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<4>1 2011-03-25T09:03:32.132296+01:00 adiscondns1 kernel - - - [  359.048857] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=4504 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<27>1 2011-03-25T09:03:45.254874+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:03:55.087909+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:04:22.663205+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:04:22.700446+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<4>1 2011-03-25T09:04:30.368346+01:00 adiscondns1 kernel - - - [  424.777619] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=6255 PROTO=2 
+<27>1 2011-03-25T09:04:44.835349+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:05:12.496752+01:00 adiscondns1 pdns 2667 - -  Not authoritative for 'japan-girls.tk', sending servfail to 65.55.5.136
+<28>1 2011-03-25T09:05:22.830044+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:05:22.868672+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:06:02.477039+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:06:03.011805+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:06:05.948290+01:00 adiscondns1 kernel - - - [  531.557083] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=229 TOS=0x00 PREC=0x00 TTL=128 ID=8396 PROTO=UDP SPT=138 DPT=138 LEN=209 
+<27>1 2011-03-25T09:06:11.422167+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:06:22.029867+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:06:22.066921+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<4>1 2011-03-25T09:06:35.404251+01:00 adiscondns1 kernel - - - [  566.706368] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=9045 PROTO=2 
+<28>1 2011-03-25T09:07:22.214501+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:07:22.254007+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:07:37.799092+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:07:37.912161+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:07:38.415019+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:08:22.345291+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:08:22.396454+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:08:38.300261+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:08:40.408428+01:00 adiscondns1 kernel - - - [  710.516608] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=15021 PROTO=2 
+<27>1 2011-03-25T09:08:46.946368+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:09:22.484009+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:09:22.558135+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:10:16.375581+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:16.637087+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:17.321816+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:17.702857+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:18.305127+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:18.365556+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:19.734352+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:10:22.737715+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:10:22.774727+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:10:25.731288+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:29.641814+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:32.619013+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:10:33.198293+01:00 adiscondns1 pdns 2667 - -  Not authoritative for 'www.japan-girls.tk', sending servfail to 66.249.72.179
+<27>1 2011-03-25T09:10:38.627257+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:39.429096+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:40.527666+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:10:45.456599+01:00 adiscondns1 kernel - - - [  845.093530] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=18943 PROTO=2 
+<27>1 2011-03-25T09:10:46.574548+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:47.145649+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:47.749134+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:53.777278+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:10:59.058175+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:00.207198+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:01.198587+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:01.697035+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:03.435934+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:10.531312+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:11.245163+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:11.860523+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:11:22.942569+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:11:22.979583+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:11:29.802921+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:11:30.047492+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:12:11.163465+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:12:11.163494+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:12:22.160184+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:12:22.196818+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<4>1 2011-03-25T09:12:50.472569+01:00 adiscondns1 kernel - - - [  983.580310] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=27931 PROTO=2 
+<27>1 2011-03-25T09:12:53.376344+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:12:59.362789+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:13:22.299800+01:00 adiscondns1 pdns 2667 - -  2 slave domains need checking
+<28>1 2011-03-25T09:13:22.336110+01:00 adiscondns1 pdns 2667 - -  Domain ultrastats.org is fresh
+<27>1 2011-03-25T09:13:22.373510+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Query to '217.92.119.74' for SOA of 'vereinsforum.de' produced a NS record
+<27>1 2011-03-25T09:14:18.510182+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:14:22.563864+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:14:22.600112+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Remote nameserver reported error: RCODE=2
+<4>1 2011-03-25T09:14:55.544286+01:00 adiscondns1 kernel - - - [ 1116.392406] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=12908 PROTO=2 
+<27>1 2011-03-25T09:15:08.093883+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:15:22.765918+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:15:22.801886+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Remote nameserver reported error: RCODE=2
+<4>1 2011-03-25T09:15:35.488335+01:00 adiscondns1 kernel - - - [ 1159.651020] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=15870 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<4>1 2011-03-25T09:15:36.236410+01:00 adiscondns1 kernel - - - [ 1160.451965] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=15887 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<4>1 2011-03-25T09:15:36.988390+01:00 adiscondns1 kernel - - - [ 1161.204304] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=15903 PROTO=UDP SPT=137 DPT=137 LEN=58 
+<27>1 2011-03-25T09:15:37.653730+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:15:38.668814+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:15:53.173462+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:16:13.653581+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:16:18.720142+01:00 adiscondns1 kernel - - - [ 1206.370007] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=235 TOS=0x00 PREC=0x00 TTL=128 ID=17303 PROTO=UDP SPT=138 DPT=138 LEN=215 
+<28>1 2011-03-25T09:16:22.956076+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:16:22.992340+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Remote nameserver reported error: RCODE=2
+<4>1 2011-03-25T09:17:00.564185+01:00 adiscondns1 kernel - - - [ 1255.250371] input: IN=eth0 OUT= MAC=01:00:5e:00:00:01:00:0c:29:cb:a5:de:08:00 SRC=172.17.0.100 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x00 TTL=1 ID=18768 PROTO=2 
+<78>1 2011-03-25T09:17:01.870793+01:00 adiscondns1  2971 - -  (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+<28>1 2011-03-25T09:17:22.128851+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:17:22.164452+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Remote nameserver reported error: RCODE=2
+<27>1 2011-03-25T09:17:24.118262+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:17:36.898303+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<28>1 2011-03-25T09:17:44.378310+01:00 adiscondns1 pdns 2667 - -  Not authoritative for 'japan-girls.tk', sending servfail to 207.46.200.42
+<27>1 2011-03-25T09:18:00.614406+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<27>1 2011-03-25T09:18:00.668924+01:00 adiscondns1 pdns 2667 - -  Ignoring wildcard CNAME '4players.shooter-szene.de' pointing at itself
+<4>1 2011-03-25T09:18:07.732282+01:00 adiscondns1 kernel - - - [ 1328.757675] input: IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:cb:a5:d4:08:00 SRC=192.168.183.128 DST=192.168.183.255 LEN=229 TOS=0x00 PREC=0x00 TTL=128 ID=20389 PROTO=UDP SPT=138 DPT=138 LEN=209 
+<28>1 2011-03-25T09:18:22.298582+01:00 adiscondns1 pdns 2667 - -  1 slave domain needs checking
+<27>1 2011-03-25T09:18:22.334381+01:00 adiscondns1 pdns 2667 - -  Error trying to retrieve/refresh 'vereinsforum.de': Remote nameserver reported error: RCODE=2
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420 hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420 hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420 hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)
+<166>1 2012-02-17T08:29:27.420Z hostname.domain Vpxa - - -  [8B230C32 verbose 'Default' opID=SWI-378c32b1-2] [VpxaVmomi] SetStatusDone was called with syncGenNo (262)

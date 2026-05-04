@@ -310,7 +310,7 @@ $content['LN_DBUPGRADE_SUCCESSEXEC'] = "Erfolgreich ausgeführte Anweisungen";
 $content['LN_DBUPGRADE_FAILEDEXEC'] = "Nicht erfolgreich ausgeführte Anweisungen";
 $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "Es wurde mind. eine Anweisung nicht korekt ausgeführt, dies muss manuell durch Sie korrigiert werden. Bitte beachten Sie die untenstehenden Details";
 $content['LN_DBUPGRADE_ERRMSG'] = "Fehler Meldung";
-$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "LogAnalyzer Datenbank Version";
+$content['LN_DBUPGRADE_LOGANALYZERDBVERSION'] = "LogAnalyzer Datenbank Version";
 
 // Charts Options
 $content['LN_CHARTS_CENTER'] = "Charts Optionen";

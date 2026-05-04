@@ -1,0 +1,13 @@
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.110.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:12:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:32:94 ;192.168.130.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:42:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.140.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:42:94 ;192.168.140.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Barcelona-penalver ;wlan1 ;00:15:AF:9E:52:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:62:94 ;192.168.140.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903
+script,info INICIO; Madrid-penalver ;wlan1 ;00:15:AF:9E:02:94 ;192.168.10.30 ;36Mbps ;24Mbps ;01:21:39 ;00:00:00.030 ;82dBm@1Mbps ;15 ;66 ;16852066,2147105 ;17288,12903

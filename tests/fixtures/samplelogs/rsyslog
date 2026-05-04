@@ -1,0 +1,1879 @@
+2008-03-28T10:47:55.169464+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T10:47:55.549737+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23334" x-info="http://www.rsyslog.com"] restart
+2008-03-28T10:48:00.394690+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23334" x-info="http://www.rsyslog.com"] exiting on signal 2.
+Mar 28 10:51:01 localhost rsyslogd:No files configured to be monitored: No such file or directory
+Mar 28 10:51:01 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23357" x-info="http://www.rsyslog.com"] restart
+Mar 28 10:51:02 localhost rger: test 2
+Mar 28 10:51:05 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23357" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T10:51:57.926650+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T10:51:58.327185+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23372" x-info="http://www.rsyslog.com"] restart
+2008-03-28T10:52:02.224558+01:00 localhost rger: test neu
+2008-03-28T10:52:37.942773+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23372" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:07:23.395892+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:07:23.788308+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23471" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:07:40.591633+01:00 localhost rger: test 1
+2008-03-28T11:10:14.313944+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23471" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:14:44.625110+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:14:44.995548+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23519" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:15:00.024408+01:00 localhost rger: test 1
+2008-03-28T11:15:35.968220+01:00 localhost rger: test 1
+2008-03-28T11:15:35.988982+01:00 localhost rger: test 2
+2008-03-28T11:15:36.007580+01:00 localhost rger: test 3
+2008-03-28T11:15:36.038543+01:00 localhost rger: test 4
+2008-03-28T11:15:36.057783+01:00 localhost rger: test 5
+2008-03-28T11:18:27.009577+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23519" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:18:45.876675+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:18:46.166406+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23563" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:18:46.182547+01:00 localhost rsyslogd:invalid or yet-unknown config file command - have you forgotten to load a module?
+2008-03-28T11:18:46.183919+01:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 11
+2008-03-28T11:19:40.739799+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23563" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:19:45.348070+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:19:45.691641+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23577" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:19:12+01:00 localhost rger: test 1
+2008-03-28T11:19:36+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16883" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:21:49.921658+01:00 172.19.2.10 2008-03-28T11:21:07.546003+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16900" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:21:51.623288+01:00 172.19.2.10 2008-03-28T11:21:09.208003+01:00 localhost rger: test 2
+2008-03-28T11:22:59.543309+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23577" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:23:08.034328+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:23:08.389942+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23769" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:22:29.033003+01:00 localhost rger: test 3
+2008-03-28T11:22:32.870003+01:00 localhost rger: test 4
+2008-03-28T11:22:48.955005+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16900" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:23:04+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16920" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:23:04+01:00 localhost rger: test 5
+2008-03-28T11:23:05+01:00 localhost rger: test 6
+2008-03-28T11:24:19.180107+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="23769" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:52:41.965155+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:52:42.311091+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25088" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:51:24+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16993" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:51:26+01:00 localhost rger: test 1
+2008-03-28T11:51:36+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="16993" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:52:48+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="17412" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:52:52+01:00 localhost rger: test 2
+2008-03-28T11:52:59+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="17412" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:55:36.533557+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="17459" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:55:48.202003+01:00 localhost rger: test 6
+2008-03-28T11:56:27.058003+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="17459" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:59:21.918550+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25088" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T11:59:26.976176+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T11:59:27.310679+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25136" x-info="http://www.rsyslog.com"] restart
+2008-03-28T11:59:33.643829+01:00 localhost rger: test 1
+2008-03-28T11:59:33.669483+01:00 localhost rger: test 2
+2008-03-28T11:59:33.697614+01:00 localhost rger: test 3
+2008-03-28T11:59:33.732182+01:00 localhost rger: test 4
+2008-03-28T11:59:33.763507+01:00 localhost rger: test 5
+2008-03-28T12:01:02.002625+01:00 localhost CROND[25155]: (root) CMD (run-parts /etc/cron.hourly)
+2008-03-28T12:12:03.880862+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25136" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T12:16:28.966569+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T12:16:29.361297+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25462" x-info="http://www.rsyslog.com"] restart
+2008-03-28T12:16:46.324632+01:00 localhost rger: test 1
+2008-03-28T12:18:50.885622+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="25462" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:05:02.743622+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:05:03.148023+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26365" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:05:04.769009+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26365" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:05:16.577104+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:05:49.793043+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:05:50.137147+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26386" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:05:54.935602+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26386" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:06:12.610917+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:06:12.972711+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26398" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:06:13.910014+01:00 localhost rger: test 1
+2008-03-28T14:06:13.981425+01:00 localhost rger: test 2
+2008-03-28T14:06:14.016780+01:00 localhost rger: test 3
+2008-03-28T14:06:14.055615+01:00 localhost rger: test 4
+2008-03-28T14:06:14.081238+01:00 localhost rger: test 5
+2008-03-28T14:06:16.534489+01:00 localhost rger: test 1
+2008-03-28T14:06:16.550541+01:00 localhost rger: test 2
+2008-03-28T14:06:16.588554+01:00 localhost rger: test 3
+2008-03-28T14:06:16.623898+01:00 localhost rger: test 4
+2008-03-28T14:06:16.637681+01:00 localhost rger: test 5
+2008-03-28T14:06:19.311877+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26398" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:07:29.241353+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:07:29.613650+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26426" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:07:37.139955+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:07:37.197719+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26426" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:07:39.804692+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26426" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:07:58.202539+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T14:07:58.571844+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26730" x-info="http://www.rsyslog.com"] restart
+2008-03-28T14:08:00.609967+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="26730" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T14:15:17.397178+01:00,**NO MATCH**2008-03-28T14:15:17.926533+01:00,**NO MATCH**2008-03-28T14:15:35.928096+01:00,**NO MATCH**2008-03-28T14:15:40.262880+01:00,**NO MATCH**
+2008-03-28T14:15:40.730857+01:00,**NO MATCH**
+2008-03-28T14:15:56.194233+01:00,**NO MATCH**
+2008-03-28T14:18:40.892774+01:00,**NO MATCH**
+2008-03-28T14:18:41.310416+01:00,**NO MATCH**
+2008-03-28T14:18:48.576155+01:00,
+2008-03-28T14:19:33.697361+01:00,**NO MATCH**
+2008-03-28T14:23:18.317364+01:00,**NO MATCH**
+2008-03-28T14:23:18.865811+01:00,**NO MATCH**
+2008-03-28T14:23:20.627990+01:00,**NO MATCH**
+2008-03-28T14:24:17.472125+01:00,**NO MATCH**
+2008-03-28T14:24:17.953637+01:00,**NO MATCH**
+2008-03-28T14:24:19.004476+01:00,**NO MATCH**
+2008-03-28T14:30:19.767746+01:00,**NO MATCH**
+2008-03-28T14:30:20.217310+01:00,**NO MATCH**
+2008-03-28T14:30:27.901678+01:00,**NO MATCH**
+2008-03-28T14:34:53.063123+01:00,**NO MATCH**
+2008-03-28T14:34:53.630686+01:00,**NO MATCH**
+2008-03-28T14:34:55.567585+01:00,**NO MATCH**
+2008-03-28T14:36:28.645603+01:00,**NO MATCH**
+2008-03-28T14:36:29.004035+01:00,**NO MATCH**
+2008-03-28T14:36:30.246605+01:00,**NO MATCH**
+2008-03-28T14:37:59.460676+01:00,**NO MATCH**
+2008-03-28T14:37:59.963924+01:00,**NO MATCH**
+2008-03-28T14:38:02.569745+01:00,**NO MATCH**
+2008-03-28T14:38:08.990933+01:00,**NO MATCH**
+2008-03-28T14:38:09.398853+01:00,**NO MATCH**
+2008-03-28T14:38:15.404207+01:00,**NO MATCH**
+2008-03-28T14:38:19.209838+01:00,
+2008-03-28T14:38:54.395422+01:00,**NO MATCH**
+2008-03-28T14:59:32.149748+01:00,**NO MATCH**
+2008-03-28T14:59:32.636162+01:00,**NO MATCH**
+2008-03-28T14:59:41.203848+01:00,
+2008-03-28T15:01:01.693127+01:00,**NO MATCH**
+2008-03-28T15:01:35.655598+01:00,**NO MATCH**
+2008-03-28T15:01:44.783568+01:00,**NO MATCH**
+2008-03-28T15:01:45.240791+01:00,**NO MATCH**
+2008-03-28T15:01:46.183099+01:00,
+2008-03-28T15:02:27.418689+01:00,**NO MATCH**
+2008-03-28T15:02:34.865515+01:00,**NO MATCH**
+2008-03-28T15:02:35.318764+01:00,**NO MATCH**
+2008-03-28T15:02:36.373883+01:00,
+2008-03-28T15:02:55.757507+01:00,**NO MATCH**
+2008-03-28T15:06:00.953586+01:00,**NO MATCH**
+2008-03-28T15:06:01.398677+01:00,**NO MATCH**
+2008-03-28T15:06:02.538398+01:00,
+2008-03-28T15:06:08.901644+01:00,
+2008-03-28T15:07:14.200872+01:00,
+2008-03-28T15:07:28.134249+01:00,
+2008-03-28T15:07:47.708001+01:00,**NO MATCH**
+2008-03-28T15:07:54.401770+01:00,**NO MATCH**
+2008-03-28T15:07:54.854704+01:00,**NO MATCH**
+2008-03-28T15:07:55.789594+01:00,
+2008-03-28T15:07:57.146646+01:00,
+2008-03-28T15:08:05.492891+01:00,
+2008-03-28T15:08:08.457631+01:00,
+2008-03-28T15:08:44.190412+01:00,**NO MATCH**
+2008-03-28T15:08:50.996008+01:00,**NO MATCH**
+2008-03-28T15:08:51.494212+01:00,**NO MATCH**
+2008-03-28T15:08:56.242060+01:00,X dX
+2008-03-28T15:12:52.310987+01:00,X dX XsdfsdfX
+2008-03-28T15:13:06.239339+01:00,X dX X
+2008-03-28T15:14:30.114615+01:00,**NO MATCH**
+2008-03-28T15:14:43.699665+01:00,**NO MATCH**
+2008-03-28T15:14:44.080542+01:00,**NO MATCH**
+2008-03-28T15:14:46.949730+01:00,X dX XsdfsdfX
+2008-03-28T15:15:11.693779+01:00,X dX XsdfsdfX
+2008-03-28T15:15:22.113076+01:00,X dX X
+2008-03-28T15:15:42.817141+01:00,**NO MATCH**
+2008-03-28T15:16:29.113066+01:00,**NO MATCH**
+2008-03-28T15:16:29.593561+01:00,**NO MATCH**
+2008-03-28T15:16:30.217532+01:00,X dX X
+2008-03-28T15:16:34.222186+01:00,**NO MATCH**
+2008-03-28T15:16:35.881827+01:00,X ddsdfaX
+2008-03-28T15:16:38.373485+01:00,X ddsdfaX
+2008-03-28T15:16:51.324883+01:00,**NO MATCH**
+2008-03-28T15:17:05.480876+01:00,**NO MATCH**
+2008-03-28T15:19:48.725061+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T15:19:49.130945+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27588" x-info="http://www.rsyslog.com"] restart
+2008-03-28T15:19:52.922093+01:00 localhost rger: aa ddsdfaXsdafdfsadf
+2008-03-28T15:19:55.721421+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27588" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T15:20:05.308865+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T15:20:05.675995+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27601" x-info="http://www.rsyslog.com"] restart
+2008-03-28T15:20:34.563431+01:00 localhost rger: aa ddsdfaXsdafdfsadf
+2008-03-28T15:20:44.960051+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27601" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T15:21:24.093061+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T15:21:24.445088+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27620" x-info="http://www.rsyslog.com"] restart
+2008-03-28T15:21:26.353140+01:00 localhost rger: aa ddsdfaXsdafdfsadf
+2008-03-28T15:21:29.693784+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="27620" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-28T19:19:49.227624+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T19:19:49.532145+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="9759" x-info="http://www.rsyslog.com"] restart
+2008-03-28T19:20:47.189421+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T19:20:47.232624+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="9759" x-info="http://www.rsyslog.com"] restart
+2008-03-28T19:20:53.564789+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-28T19:20:53.597595+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="9759" x-info="http://www.rsyslog.com"] restart
+2008-03-28T19:21:27.695753+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.5" x-pid="9759" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-29T15:22:41.460423+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-29T15:22:41.888738+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="7376" x-info="http://www.rsyslog.com"] restart
+2008-03-29T15:22:48.871342+01:00 localhost rger: test
+2008-03-29T15:25:48.790933+01:00 localhost rger: test 2
+2008-03-29T15:25:51.088087+01:00 localhost rger: test 3
+2008-03-29T15:25:54.693243+01:00 localhost rger: test 2
+2008-03-29T15:28:58.409972+01:00 localhost logger: cclose.c
+2008-03-29T15:28:58.420909+01:00 localhost logger: cmdif.h
+2008-03-29T15:28:58.425101+01:00 localhost logger: copen.c
+2008-03-29T15:28:58.431929+01:00 localhost logger: dbllinklist.h
+2008-03-29T15:28:58.436420+01:00 localhost logger: librelp.h
+2008-03-29T15:28:58.448301+01:00 localhost logger: librelp.la
+2008-03-29T15:28:58.499931+01:00 localhost logger: librelp_la-cclose.lo
+2008-03-29T15:28:58.508522+01:00 localhost logger: librelp_la-cclose.o
+2008-03-29T15:28:58.516002+01:00 localhost logger: librelp_la-copen.lo
+2008-03-29T15:28:58.521544+01:00 localhost logger: librelp_la-copen.o
+2008-03-29T15:28:58.532961+01:00 localhost logger: librelp_la-offers.lo
+2008-03-29T15:28:58.542654+01:00 localhost logger: librelp_la-offers.o
+2008-03-29T15:28:58.555628+01:00 localhost logger: librelp_la-relpclt.lo
+2008-03-29T15:28:58.565522+01:00 localhost logger: librelp_la-relpclt.o
+2008-03-29T15:28:58.570767+01:00 localhost logger: librelp_la-relpframe.lo
+2008-03-29T15:28:58.582865+01:00 localhost logger: librelp_la-relpframe.o
+2008-03-29T15:28:58.588705+01:00 localhost logger: librelp_la-relp.lo
+2008-03-29T15:28:58.599447+01:00 localhost logger: librelp_la-relp.o
+2008-03-29T15:28:58.606518+01:00 localhost logger: librelp_la-relpsess.lo
+2008-03-29T15:28:58.621306+01:00 localhost logger: librelp_la-relpsess.o
+2008-03-29T15:28:58.629172+01:00 localhost logger: librelp_la-relpsrv.lo
+2008-03-29T15:28:58.638108+01:00 localhost logger: librelp_la-relpsrv.o
+2008-03-29T15:28:58.644292+01:00 localhost logger: librelp_la-scrsp.lo
+2008-03-29T15:28:58.657126+01:00 localhost logger: librelp_la-scrsp.o
+2008-03-29T15:28:58.660748+01:00 localhost logger: librelp_la-scsyslog.lo
+2008-03-29T15:28:58.674044+01:00 localhost logger: librelp_la-scsyslog.o
+2008-03-29T15:28:58.679342+01:00 localhost logger: librelp_la-sendbuf.lo
+2008-03-29T15:28:58.691325+01:00 localhost logger: librelp_la-sendbuf.o
+2008-03-29T15:28:58.701155+01:00 localhost logger: librelp_la-sendq.lo
+2008-03-29T15:28:58.708255+01:00 localhost logger: librelp_la-sendq.o
+2008-03-29T15:28:58.724898+01:00 localhost logger: librelp_la-tcp.lo
+2008-03-29T15:28:58.728417+01:00 localhost logger: librelp_la-tcp.o
+2008-03-29T15:28:58.740078+01:00 localhost logger: Makefile
+2008-03-29T15:28:58.747453+01:00 localhost logger: Makefile.am
+2008-03-29T15:28:58.759682+01:00 localhost logger: Makefile.in
+2008-03-29T15:28:58.770087+01:00 localhost logger: offers.c
+2008-03-29T15:28:58.781199+01:00 localhost logger: offers.h
+2008-03-29T15:28:58.784447+01:00 localhost logger: relp.c
+2008-03-29T15:28:58.800075+01:00 localhost logger: relpclt.c
+2008-03-29T15:28:58.813374+01:00 localhost logger: relpclt.h
+2008-03-29T15:28:58.823081+01:00 localhost logger: relpframe.c
+2008-03-29T15:28:58.832429+01:00 localhost logger: relpframe.h
+2008-03-29T15:28:58.841634+01:00 localhost logger: relp.h
+2008-03-29T15:28:58.852965+01:00 localhost logger: relpsess.c
+2008-03-29T15:28:58.863667+01:00 localhost logger: relpsess.h
+2008-03-29T15:28:58.872123+01:00 localhost logger: relpsrv.c
+2008-03-29T15:28:58.882176+01:00 localhost logger: relpsrv.h
+2008-03-29T15:28:58.895650+01:00 localhost logger: save
+2008-03-29T15:28:58.898785+01:00 localhost logger: scrsp.c
+2008-03-29T15:28:58.910236+01:00 localhost logger: scsyslog.c
+2008-03-29T15:28:58.913305+01:00 localhost logger: sendbuf.c
+2008-03-29T15:28:58.916388+01:00 localhost logger: sendbuf.h
+2008-03-29T15:28:58.930986+01:00 localhost logger: sendq.c
+2008-03-29T15:28:58.934676+01:00 localhost logger: sendq.h
+2008-03-29T15:28:58.948148+01:00 localhost logger: t1
+2008-03-29T15:28:58.956810+01:00 localhost logger: tcp.c
+2008-03-29T15:28:58.967967+01:00 localhost logger: tcp.h
+2008-03-29T15:28:58.971372+01:00 localhost logger: test
+2008-03-29T15:28:58.982540+01:00 localhost logger: tmp
+2008-03-29T15:32:02.324528+01:00 localhost logger: cclose.c
+2008-03-29T15:32:02.334752+01:00 localhost logger: cmdif.h
+2008-03-29T15:32:02.339376+01:00 localhost logger: copen.c
+2008-03-29T15:32:02.345639+01:00 localhost logger: dbllinklist.h
+2008-03-29T15:32:02.348624+01:00 localhost logger: librelp.h
+2008-03-29T15:32:02.351794+01:00 localhost logger: librelp.la
+2008-03-29T15:32:02.366448+01:00 localhost logger: librelp_la-cclose.lo
+2008-03-29T15:32:02.371180+01:00 localhost logger: librelp_la-cclose.o
+2008-03-29T15:32:02.382078+01:00 localhost logger: librelp_la-copen.lo
+2008-03-29T15:32:02.400685+01:00 localhost logger: librelp_la-copen.o
+2008-03-29T15:32:02.419148+01:00 localhost logger: librelp_la-offers.lo
+2008-03-29T15:32:02.427034+01:00 localhost logger: librelp_la-offers.o
+2008-03-29T15:32:02.446633+01:00 localhost logger: librelp_la-relpclt.lo
+2008-03-29T15:32:02.461294+01:00 localhost logger: librelp_la-relpclt.o
+2008-03-29T15:32:02.469608+01:00 localhost logger: librelp_la-relpframe.lo
+2008-03-29T15:32:02.490359+01:00 localhost logger: librelp_la-relpframe.o
+2008-03-29T15:32:02.503993+01:00 localhost logger: librelp_la-relp.lo
+2008-03-29T15:32:02.526866+01:00 localhost logger: librelp_la-relp.o
+2008-03-29T15:32:02.531534+01:00 localhost logger: librelp_la-relpsess.lo
+2008-03-29T15:32:02.551193+01:00 localhost logger: librelp_la-relpsess.o
+2008-03-29T15:32:02.568417+01:00 localhost logger: librelp_la-relpsrv.lo
+2008-03-29T15:32:02.571588+01:00 localhost logger: librelp_la-relpsrv.o
+2008-03-29T15:32:02.584032+01:00 localhost logger: librelp_la-scrsp.lo
+2008-03-29T15:32:02.587362+01:00 localhost logger: librelp_la-scrsp.o
+2008-03-29T15:32:02.607878+01:00 localhost logger: librelp_la-scsyslog.lo
+2008-03-29T15:32:02.624457+01:00 localhost logger: librelp_la-scsyslog.o
+2008-03-29T15:32:02.628104+01:00 localhost logger: librelp_la-sendbuf.lo
+2008-03-29T15:32:02.647023+01:00 localhost logger: librelp_la-sendbuf.o
+2008-03-29T15:32:02.659418+01:00 localhost logger: librelp_la-sendq.lo
+2008-03-29T15:32:02.667694+01:00 localhost logger: librelp_la-sendq.o
+2008-03-29T15:32:02.690014+01:00 localhost logger: librelp_la-tcp.lo
+2008-03-29T15:32:02.695882+01:00 localhost logger: librelp_la-tcp.o
+2008-03-29T15:32:02.712362+01:00 localhost logger: Makefile
+2008-03-29T15:32:02.724677+01:00 localhost logger: Makefile.am
+2008-03-29T15:32:02.744640+01:00 localhost logger: Makefile.in
+2008-03-29T15:32:02.760960+01:00 localhost logger: offers.c
+2008-03-29T15:32:02.765290+01:00 localhost logger: offers.h
+2008-03-29T15:32:02.784230+01:00 localhost logger: relp.c
+2008-03-29T15:32:02.803675+01:00 localhost logger: relpclt.c
+2008-03-29T15:32:02.811703+01:00 localhost logger: relpclt.h
+2008-03-29T15:32:02.827871+01:00 localhost logger: relpframe.c
+2008-03-29T15:32:02.836188+01:00 localhost logger: relpframe.h
+2008-03-29T15:32:02.851774+01:00 localhost logger: relp.h
+2008-03-29T15:32:02.859218+01:00 localhost logger: relpsess.c
+2008-03-29T15:32:02.878054+01:00 localhost logger: relpsess.h
+2008-03-29T15:32:02.894814+01:00 localhost logger: relpsrv.c
+2008-03-29T15:32:02.898672+01:00 localhost logger: relpsrv.h
+2008-03-29T15:32:02.916665+01:00 localhost logger: save
+2008-03-29T15:32:02.920092+01:00 localhost logger: scrsp.c
+2008-03-29T15:32:02.937719+01:00 localhost logger: scsyslog.c
+2008-03-29T15:32:02.951875+01:00 localhost logger: sendbuf.c
+2008-03-29T15:32:02.954869+01:00 localhost logger: sendbuf.h
+2008-03-29T15:32:02.977400+01:00 localhost logger: sendq.c
+2008-03-29T15:32:02.980478+01:00 localhost logger: sendq.h
+2008-03-29T15:32:02.996831+01:00 localhost logger: t1
+2008-03-29T15:32:03.016776+01:00 localhost logger: tcp.c
+2008-03-29T15:32:03.019818+01:00 localhost logger: tcp.h
+2008-03-29T15:32:03.044920+01:00 localhost logger: test
+2008-03-29T15:32:03.055313+01:00 localhost logger: tmp
+2008-03-29T15:32:11.173306+01:00 localhost rger: t
+2008-03-29T15:35:19.124824+01:00 localhost rger: t
+2008-03-29T15:35:19.489333+01:00 localhost rger: t
+2008-03-29T15:35:19.878963+01:00 localhost rger: t
+2008-03-29T15:35:20.247595+01:00 localhost rger: t
+2008-03-29T15:35:20.605430+01:00 localhost rger: t
+2008-03-29T15:35:21.046257+01:00 localhost rger: t
+2008-03-29T15:36:16.339190+01:00 localhost rger: t
+2008-03-29T15:36:17.416027+01:00 localhost rger: t
+2008-03-29T15:37:39.082962+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="7376" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-29T15:37:44.962197+01:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-29T15:37:45.361006+01:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="7481" x-info="http://www.rsyslog.com"] restart
+2008-03-29T15:38:34.717719+01:00 localhost rger: t
+2008-03-29T15:38:35.085931+01:00 localhost rger: t
+2008-03-29T15:38:37.350625+01:00 localhost rger: t
+2008-03-29T15:46:44.400943+01:00 localhost rger: t
+2008-03-29T15:46:47.033264+01:00 localhost rger: t
+2008-03-29T15:46:56.086218+01:00 localhost rger: t2
+2008-03-29T15:48:33.041387+01:00 localhost rger: t2
+2008-03-29T15:48:33.479217+01:00 localhost rger: t2
+2008-03-29T15:56:47.375162+01:00 localhost userhelper[7589]: pam_timestamp(system-config-date:auth): timestamp file `/var/run/sudo/rger/unknown:root' has unacceptable age (72144 seconds), disallowing access to system-config-date for user rger
+2008-03-29T15:56:53.373886+01:00 localhost userhelper[7589]: pam_timestamp(system-config-date:session): updated timestamp file `/var/run/sudo/rger/unknown:root'
+2008-03-29T15:56:53.465019+01:00 localhost userhelper[7598]: running '/usr/share/system-config-date/system-config-date.py' with context system_u:system_r:unconfined_t:s0
+2008-03-29T15:56:53.476358+01:00 localhost userhelper[7598]: running '/usr/share/system-config-date/system-config-date.py ' with root privileges on behalf of 'rger'
+2008-03-31T08:19:56.406679+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T08:19:56.762649+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="8045" x-info="http://www.rsyslog.com"] restart
+2008-03-31T08:22:07.550383+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="8045" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T08:22:17.861733+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T08:22:18.229640+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="8312" x-info="http://www.rsyslog.com"] restart
+2008-03-31T08:25:01.112314+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="8312" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T08:25:31.190121+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T08:25:31.541447+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9103" x-info="http://www.rsyslog.com"] restart
+2008-03-31T08:25:51.590499+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9103" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T08:25:58.438000+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T08:25:58.801884+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9360" x-info="http://www.rsyslog.com"] restart
+2008-03-31T08:26:07.672314+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9360" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:30:33.407098+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:30:33.739247+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17349" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:32:15.990381+02:00 localhost rger: test
+2008-03-31T09:32:57.724708+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17349" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:33:07.421669+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:33:07.780381+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17433" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:36:29.417842+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17433" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:36:37.424440+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:36:37.753784+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17606" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:38:03.625670+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="17606" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:41:16.208717+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:41:16.557396+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18099" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:45:46.000858+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18099" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:47:35.919792+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:47:36.283861+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18286" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:47:44.961312+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18286" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:47:53.264199+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:47:53.601759+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18298" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:48:36.460512+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18298" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:49:35.734188+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:49:36.025999+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18656" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:53:09.270853+02:00 localhost rger: test
+2008-03-31T09:53:16.685412+02:00 localhost rger: test
+2008-03-31T09:53:18.377003+02:00 localhost rger: test
+2008-03-31T09:53:19.320771+02:00 localhost rger: test
+2008-03-31T09:53:20.406569+02:00 localhost rger: test
+2008-03-31T09:53:21.359263+02:00 localhost rger: test
+2008-03-31T09:53:22.128730+02:00 localhost rger: test
+2008-03-31T09:53:22.941637+02:00 localhost rger: test
+2008-03-31T09:53:23.700590+02:00 localhost rger: test
+2008-03-31T09:53:24.562747+02:00 localhost rger: test
+2008-03-31T09:53:25.456560+02:00 localhost rger: test
+2008-03-31T09:53:26.440385+02:00 localhost rger: test
+2008-03-31T09:53:27.557681+02:00 localhost rger: test
+2008-03-31T09:53:42.774873+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18656" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:53:51.731889+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:53:52.099403+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18845" x-info="http://www.rsyslog.com"] restart
+2008-03-31T09:53:54.494336+02:00 localhost rger: test
+2008-03-31T09:53:55.453354+02:00 localhost rger: test
+2008-03-31T09:53:56.251416+02:00 localhost rger: test
+2008-03-31T09:53:56.971710+02:00 localhost rger: test
+2008-03-31T09:53:57.783247+02:00 localhost rger: test
+2008-03-31T09:53:58.569607+02:00 localhost rger: test
+2008-03-31T09:53:59.973480+02:00 localhost rger: test
+2008-03-31T09:54:01.409125+02:00 localhost rger: test
+2008-03-31T09:54:02.157138+02:00 localhost rger: test
+2008-03-31T09:58:26.475933+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="18845" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T09:59:18.601756+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:59:27.655713+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T09:59:28.041563+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19097" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:00:07.323078+02:00 localhost rger: test
+2008-03-31T10:01:01.284755+02:00 localhost CROND[19107]: (root) CMD (run-parts /etc/cron.hourly)
+2008-03-31T10:02:51.889301+02:00 localhost logger: configure.ac
+2008-03-31T10:02:52.017304+02:00 localhost logger: Desktop
+2008-03-31T10:02:52.067407+02:00 localhost logger: Documents
+2008-03-31T10:02:52.129648+02:00 localhost logger: Download
+2008-03-31T10:02:52.174758+02:00 localhost logger: gittest
+2008-03-31T10:02:52.207470+02:00 localhost logger: Music
+2008-03-31T10:02:52.239808+02:00 localhost logger: nautilus-debug-log.txt
+2008-03-31T10:02:52.271026+02:00 localhost logger: Pictures
+2008-03-31T10:02:52.305132+02:00 localhost logger: proj
+2008-03-31T10:02:52.334442+02:00 localhost logger: Public
+2008-03-31T10:02:52.368775+02:00 localhost logger: rsyslog-1.19.10-gss-doc.patch
+2008-03-31T10:02:52.396207+02:00 localhost logger: rsyslog-1.19.8
+2008-03-31T10:02:52.430427+02:00 localhost logger: rsyslog_doc.patch.orig
+2008-03-31T10:02:52.470216+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T10:02:52.503108+02:00 localhost logger: Templates
+2008-03-31T10:02:52.531343+02:00 localhost logger: Videos
+2008-03-31T10:06:11.032377+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19097" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:06:19.060648+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:06:19.410837+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19287" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:14:10.496363+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19287" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:14:51.490550+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:14:51.828797+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24395" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:16:30.404513+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24395" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:16:39.490505+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:16:39.815854+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24566" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:17:54.526757+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24566" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:18:03.108336+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:18:03.453217+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24737" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:18:51.664114+02:00 localhost rger: test
+2008-03-31T10:22:25.082948+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24737" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:22:38.815914+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:22:39.209768+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24923" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:27:29.237854+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="24923" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:33:36.619071+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:33:41.764973+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:33:42.038943+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9606" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:35:15.414270+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9606" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:37:56.668697+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:37:56.918887+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21276" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:38:02.385031+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21276" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:38:10.326934+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:38:10.574914+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21290" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:39:34.243787+02:00 localhost logger: configure.ac
+2008-03-31T10:39:34.366698+02:00 localhost logger: Desktop
+2008-03-31T10:39:34.394406+02:00 localhost logger: Documents
+2008-03-31T10:39:34.417145+02:00 localhost logger: Download
+2008-03-31T10:39:34.448681+02:00 localhost logger: gittest
+2008-03-31T10:39:34.475947+02:00 localhost logger: Music
+2008-03-31T10:39:34.505313+02:00 localhost logger: nautilus-debug-log.txt
+2008-03-31T10:39:34.528986+02:00 localhost logger: Pictures
+2008-03-31T10:39:34.550935+02:00 localhost logger: proj
+2008-03-31T10:39:34.564388+02:00 localhost logger: Public
+2008-03-31T10:39:34.595135+02:00 localhost logger: rsyslog-1.19.10-gss-doc.patch
+2008-03-31T10:39:34.611460+02:00 localhost logger: rsyslog-1.19.8
+2008-03-31T10:39:34.633738+02:00 localhost logger: rsyslog_doc.patch.orig
+2008-03-31T10:39:34.655444+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T10:39:34.676509+02:00 localhost logger: Templates
+2008-03-31T10:39:34.700881+02:00 localhost logger: Videos
+2008-03-31T10:40:56.585335+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21290" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:41:02.190246+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:41:02.483240+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21310" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:41:02.530716+02:00 localhost rsyslogd:invalid or yet-unknown config file command - have you forgotten to load a module?
+2008-03-31T10:41:02.554015+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 17
+2008-03-31T10:42:14.082871+02:00 localhost logger: configure.ac
+2008-03-31T10:42:14.203216+02:00 localhost logger: Desktop
+2008-03-31T10:42:14.230323+02:00 localhost logger: Documents
+2008-03-31T10:42:14.255187+02:00 localhost logger: Download
+2008-03-31T10:42:14.293718+02:00 localhost logger: gittest
+2008-03-31T10:42:14.320337+02:00 localhost logger: Music
+2008-03-31T10:42:14.341764+02:00 localhost logger: nautilus-debug-log.txt
+2008-03-31T10:42:14.364824+02:00 localhost logger: Pictures
+2008-03-31T10:42:14.393558+02:00 localhost logger: proj
+2008-03-31T10:42:14.420535+02:00 localhost logger: Public
+2008-03-31T10:42:14.434350+02:00 localhost logger: rsyslog-1.19.10-gss-doc.patch
+2008-03-31T10:42:14.457416+02:00 localhost logger: rsyslog-1.19.8
+2008-03-31T10:42:14.476673+02:00 localhost logger: rsyslog_doc.patch.orig
+2008-03-31T10:42:14.498352+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T10:42:14.518240+02:00 localhost logger: Templates
+2008-03-31T10:42:14.548561+02:00 localhost logger: Videos
+2008-03-31T10:44:15.720630+02:00 localhost su: pam_unix(su:session): session opened for user root by rger(uid=500)
+2008-03-31T10:44:25.506900+02:00 localhost logger: 2007
+2008-03-31T10:44:25.514273+02:00 localhost logger: aclocal.m4
+2008-03-31T10:44:25.523122+02:00 localhost logger: action.c
+2008-03-31T10:44:25.529532+02:00 localhost logger: action.h
+2008-03-31T10:44:25.543886+02:00 localhost logger: aliases
+2008-03-31T10:44:25.568363+02:00 localhost logger: ANNOUNCE
+2008-03-31T10:44:25.589345+02:00 localhost logger: atomic.h
+2008-03-31T10:44:25.614596+02:00 localhost logger: AUTHORS
+2008-03-31T10:44:25.635637+02:00 localhost logger: autom4te.cache
+2008-03-31T10:44:25.652560+02:00 localhost logger: autoscan.log
+2008-03-31T10:44:25.681140+02:00 localhost logger: bsd-syslogd.c
+2008-03-31T10:44:25.707393+02:00 localhost logger: BUGS
+2008-03-31T10:44:25.730870+02:00 localhost logger: cfsysline.c
+2008-03-31T10:44:25.755089+02:00 localhost logger: cfsysline.h
+2008-03-31T10:44:25.770392+02:00 localhost logger: ChangeLog
+2008-03-31T10:44:25.793067+02:00 localhost logger: CHANGES
+2008-03-31T10:44:25.813042+02:00 localhost logger: compile
+2008-03-31T10:44:25.837698+02:00 localhost logger: conf
+2008-03-31T10:44:25.854383+02:00 localhost logger: conf.c
+2008-03-31T10:44:25.872318+02:00 localhost logger: conf.h
+2008-03-31T10:44:25.901793+02:00 localhost logger: config.guess
+2008-03-31T10:44:25.917090+02:00 localhost logger: config.h
+2008-03-31T10:44:25.940989+02:00 localhost logger: config.h.in
+2008-03-31T10:44:25.967032+02:00 localhost logger: config.h.in~
+2008-03-31T10:44:25.986339+02:00 localhost logger: config.log
+2008-03-31T10:44:26.007749+02:00 localhost logger: config.status
+2008-03-31T10:44:26.039543+02:00 localhost logger: config.sub
+2008-03-31T10:44:26.066368+02:00 localhost logger: configure
+2008-03-31T10:44:26.084048+02:00 localhost logger: configure.ac
+2008-03-31T10:44:26.109623+02:00 localhost logger: configure.scan
+2008-03-31T10:44:26.140564+02:00 localhost logger: contains
+2008-03-31T10:44:26.160743+02:00 localhost logger: contrib
+2008-03-31T10:44:26.181059+02:00 localhost logger: COPYING
+2008-03-31T10:44:26.201569+02:00 localhost logger: cp-doc-all
+2008-03-31T10:44:26.230431+02:00 localhost logger: cp-doc-one
+2008-03-31T10:44:26.251591+02:00 localhost logger: cp-rel
+2008-03-31T10:44:26.272467+02:00 localhost logger: createDB.sql
+2008-03-31T10:44:26.297522+02:00 localhost logger: ctok.c
+2008-03-31T10:44:26.324015+02:00 localhost logger: ctok.h
+2008-03-31T10:44:26.340900+02:00 localhost logger: ctok_token.c
+2008-03-31T10:44:26.364092+02:00 localhost logger: ctok_token.h
+2008-03-31T10:44:26.383952+02:00 localhost logger: cvs
+2008-03-31T10:44:26.408308+02:00 localhost logger: CVS
+2008-03-31T10:44:26.428486+02:00 localhost logger: datetime.c
+2008-03-31T10:44:26.453476+02:00 localhost logger: datetime.h
+2008-03-31T10:44:26.478733+02:00 localhost logger: debian
+2008-03-31T10:44:26.498188+02:00 localhost logger: debug
+2008-03-31T10:44:26.528075+02:00 localhost logger: debug.c
+2008-03-31T10:44:26.546184+02:00 localhost logger: debug.h
+2008-03-31T10:44:26.575398+02:00 localhost logger: delete_mysql
+2008-03-31T10:44:26.597076+02:00 localhost logger: depcomp
+2008-03-31T10:44:26.624219+02:00 localhost logger: diff
+2008-03-31T10:44:26.660578+02:00 localhost logger: dist
+2008-03-31T10:44:26.694271+02:00 localhost logger: doc
+2008-03-31T10:44:26.719514+02:00 localhost logger: do_configure
+2008-03-31T10:44:26.746039+02:00 localhost logger: Doxyfile
+2008-03-31T10:44:26.773382+02:00 localhost logger: errmsg.c
+2008-03-31T10:44:26.798682+02:00 localhost logger: errmsg.h
+2008-03-31T10:44:26.830241+02:00 localhost logger: expr.c
+2008-03-31T10:44:26.858506+02:00 localhost logger: expr.h
+2008-03-31T10:44:26.882971+02:00 localhost logger: fields
+2008-03-31T10:44:26.907071+02:00 localhost logger: filein
+2008-03-31T10:44:26.933178+02:00 localhost logger: file.log # comment
+2008-03-31T10:44:26.960429+02:00 localhost logger: freebsd
+2008-03-31T10:44:26.990232+02:00 localhost logger: glbl.h
+2008-03-31T10:44:27.021984+02:00 localhost logger: gssapi.la
+2008-03-31T10:44:27.042966+02:00 localhost logger: gss-misc.c
+2008-03-31T10:44:27.080564+02:00 localhost logger: gss-misc.h
+2008-03-31T10:44:27.095397+02:00 localhost logger: gssutil.la
+2008-03-31T10:44:27.130095+02:00 localhost logger: hang
+2008-03-31T10:44:27.156213+02:00 localhost logger: imfile.c
+2008-03-31T10:44:27.190233+02:00 localhost logger: imgssapi.c
+2008-03-31T10:44:27.223942+02:00 localhost logger: iminternal.c
+2008-03-31T10:44:27.245443+02:00 localhost logger: iminternal.h
+2008-03-31T10:44:27.272536+02:00 localhost logger: imklog.c
+2008-03-31T10:44:27.295023+02:00 localhost logger: immark.c
+2008-03-31T10:44:27.328110+02:00 localhost logger: imrelp.c
+2008-03-31T10:44:27.358800+02:00 localhost logger: imtcp.c
+2008-03-31T10:44:27.386446+02:00 localhost logger: imtemplate.c
+2008-03-31T10:44:27.402593+02:00 localhost logger: imudp.c
+2008-03-31T10:44:27.429848+02:00 localhost logger: imuxsock.c
+2008-03-31T10:44:27.450194+02:00 localhost logger: INSTALL
+2008-03-31T10:44:27.479768+02:00 localhost logger: install-sh
+2008-03-31T10:44:27.504020+02:00 localhost logger: johnn.conf
+2008-03-31T10:44:27.540492+02:00 localhost logger: kernelmsgs
+2008-03-31T10:44:27.556425+02:00 localhost logger: klogd
+2008-03-31T10:44:27.585762+02:00 localhost logger: klogd_sources
+2008-03-31T10:44:27.624896+02:00 localhost logger: l
+2008-03-31T10:44:27.650557+02:00 localhost logger: lib
+2008-03-31T10:44:27.675602+02:00 localhost logger: libgssapi-misc.la
+2008-03-31T10:44:27.700179+02:00 localhost logger: liblogging-stub.h
+2008-03-31T10:44:27.729720+02:00 localhost logger: libmysqlclient.a
+2008-03-31T10:44:27.752467+02:00 localhost logger: libtool
+2008-03-31T10:44:27.779441+02:00 localhost logger: linelen.c
+2008-03-31T10:44:27.809712+02:00 localhost logger: linkedlist.c
+2008-03-31T10:44:27.847570+02:00 localhost logger: linkedlist.h
+2008-03-31T10:44:27.871256+02:00 localhost logger: linux
+2008-03-31T10:44:27.896664+02:00 localhost logger: lmgssutil.la
+2008-03-31T10:44:27.919433+02:00 localhost logger: lmgssutil_la-gss-misc.lo
+2008-03-31T10:44:27.941692+02:00 localhost logger: lmnet.la
+2008-03-31T10:44:27.968469+02:00 localhost logger: lmnet_la-net.lo
+2008-03-31T10:44:27.995579+02:00 localhost logger: lmregexp.la
+2008-03-31T10:44:28.026649+02:00 localhost logger: lmregexp_la-regexp.lo
+2008-03-31T10:44:28.056385+02:00 localhost logger: lmrelputil.la
+2008-03-31T10:44:28.080382+02:00 localhost logger: lmrelputil_la-relputil.lo
+2008-03-31T10:44:28.109567+02:00 localhost logger: lmtcpclt.la
+2008-03-31T10:44:28.135696+02:00 localhost logger: lmtcpclt_la-tcpclt.lo
+2008-03-31T10:44:28.166822+02:00 localhost logger: lmtcpsrv.la
+2008-03-31T10:44:28.190810+02:00 localhost logger: lmtcpsrv_la-tcpsrv.lo
+2008-03-31T10:44:28.215051+02:00 localhost logger: lmtcpsrv_la-tcps_sess.lo
+2008-03-31T10:44:28.243904+02:00 localhost logger: log
+2008-03-31T10:44:28.278182+02:00 localhost logger: logfile
+2008-03-31T10:44:28.302968+02:00 localhost logger: ltmain.sh
+2008-03-31T10:44:28.334252+02:00 localhost logger: m
+2008-03-31T10:44:28.355217+02:00 localhost logger: Makefile
+2008-03-31T10:44:28.383630+02:00 localhost logger: Makefile.am
+2008-03-31T10:44:28.412997+02:00 localhost logger: Makefile.in
+2008-03-31T10:44:28.444758+02:00 localhost logger: MANIFEST
+2008-03-31T10:44:28.482186+02:00 localhost logger: missing
+2008-03-31T10:44:28.514069+02:00 localhost logger: mkrelease
+2008-03-31T10:44:28.534545+02:00 localhost logger: mksymlink
+2008-03-31T10:44:28.563245+02:00 localhost logger: mktar
+2008-03-31T10:44:28.587501+02:00 localhost logger: modules.c
+2008-03-31T10:44:28.620225+02:00 localhost logger: modules.c.save
+2008-03-31T10:44:28.644245+02:00 localhost logger: modules.h
+2008-03-31T10:44:28.666610+02:00 localhost logger: module-template.h
+2008-03-31T10:44:28.691856+02:00 localhost logger: msg.c
+2008-03-31T10:44:28.718467+02:00 localhost logger: msg.h
+2008-03-31T10:44:28.750767+02:00 localhost logger: net.c
+2008-03-31T10:44:28.774142+02:00 localhost logger: net.h
+2008-03-31T10:44:28.801462+02:00 localhost logger: net.la
+2008-03-31T10:44:28.833380+02:00 localhost logger: newfiles
+2008-03-31T10:44:28.858972+02:00 localhost logger: NEWS
+2008-03-31T10:44:28.887575+02:00 localhost logger: obj.c
+2008-03-31T10:44:28.912779+02:00 localhost logger: obj.h
+2008-03-31T10:44:28.935993+02:00 localhost logger: objomsr.c
+2008-03-31T10:44:28.964068+02:00 localhost logger: objomsr.h
+2008-03-31T10:44:28.999947+02:00 localhost logger: obj-types.h
+2008-03-31T10:44:29.028742+02:00 localhost logger: omdiscard.c
+2008-03-31T10:44:29.058589+02:00 localhost logger: omdiscard.h
+2008-03-31T10:44:29.087646+02:00 localhost logger: omfile.c
+2008-03-31T10:44:29.113218+02:00 localhost logger: omfile.h
+2008-03-31T10:44:29.141508+02:00 localhost logger: omfwd.c
+2008-03-31T10:44:29.174571+02:00 localhost logger: omfwd.h
+2008-03-31T10:44:29.196458+02:00 localhost logger: omgssapi.c
+2008-03-31T10:44:29.218614+02:00 localhost logger: omlibdbi.c
+2008-03-31T10:44:29.250642+02:00 localhost logger: ommysql.c
+2008-03-31T10:44:29.276997+02:00 localhost logger: ommysql.la
+2008-03-31T10:44:29.297474+02:00 localhost logger: ompgsql.c
+2008-03-31T10:44:29.322273+02:00 localhost logger: omrelp.c
+2008-03-31T10:44:29.344490+02:00 localhost logger: omshell.c
+2008-03-31T10:44:29.374204+02:00 localhost logger: omshell.h
+2008-03-31T10:44:29.403776+02:00 localhost logger: omsnmp.c
+2008-03-31T10:44:29.428570+02:00 localhost logger: omusrmsg.c
+2008-03-31T10:44:29.463781+02:00 localhost logger: omusrmsg.h
+2008-03-31T10:44:29.482764+02:00 localhost logger: outchannel.c
+2008-03-31T10:44:29.507381+02:00 localhost logger: outchannel.h
+2008-03-31T10:44:29.528399+02:00 localhost logger: parse.c
+2008-03-31T10:44:29.552273+02:00 localhost logger: parse.h
+2008-03-31T10:44:29.576467+02:00 localhost logger: patches
+2008-03-31T10:44:29.611247+02:00 localhost logger: perftest.c
+2008-03-31T10:44:29.638512+02:00 localhost logger: pidfile.c
+2008-03-31T10:44:29.660929+02:00 localhost logger: pidfile.h
+2008-03-31T10:44:29.686798+02:00 localhost logger: plugins
+2008-03-31T10:44:29.712191+02:00 localhost logger: queue.c
+2008-03-31T10:44:29.743561+02:00 localhost logger: queue.h
+2008-03-31T10:44:29.769858+02:00 localhost logger: rawfmt
+2008-03-31T10:44:29.796145+02:00 localhost logger: README
+2008-03-31T10:44:29.831149+02:00 localhost logger: redhat
+2008-03-31T10:44:29.852944+02:00 localhost logger: regexp.c
+2008-03-31T10:44:29.887044+02:00 localhost logger: regexp.h
+2008-03-31T10:44:29.912864+02:00 localhost logger: regexp.la
+2008-03-31T10:44:29.944430+02:00 localhost logger: relputil.c
+2008-03-31T10:44:29.965249+02:00 localhost logger: relputil.h
+2008-03-31T10:44:29.988585+02:00 localhost logger: rfc3195d
+2008-03-31T10:44:30.014490+02:00 localhost logger: rfc3195d.8
+2008-03-31T10:44:30.043999+02:00 localhost logger: rfc3195d.c
+2008-03-31T10:44:30.072837+02:00 localhost logger: rfc3195d.o
+2008-03-31T10:44:30.108983+02:00 localhost logger: rg2.conf
+2008-03-31T10:44:30.129681+02:00 localhost logger: rg.conf
+2008-03-31T10:44:30.151384+02:00 localhost logger: rg.conf.all
+2008-03-31T10:44:30.181441+02:00 localhost logger: rg.conf.large
+2008-03-31T10:44:30.211928+02:00 localhost logger: rg.conf.perftest
+2008-03-31T10:44:30.242688+02:00 localhost logger: rg.conf.save
+2008-03-31T10:44:30.269132+02:00 localhost logger: rger-lazyness.patch
+2008-03-31T10:44:30.289422+02:00 localhost logger: rklogd
+2008-03-31T10:44:30.325075+02:00 localhost logger: rmcore
+2008-03-31T10:44:30.347494+02:00 localhost logger: rsyslog-3.12.1.tar.gz
+2008-03-31T10:44:30.377542+02:00 localhost logger: rsyslog-3.12.2.tar.gz
+2008-03-31T10:44:30.404865+02:00 localhost logger: rsyslog-3.12.3.tar.gz
+2008-03-31T10:44:30.432492+02:00 localhost logger: rsyslog-3.12.4.tar.gz
+2008-03-31T10:44:30.465197+02:00 localhost logger: rsyslog-3.12.5.tar.gz
+2008-03-31T10:44:30.483374+02:00 localhost logger: rsyslog-3.13.0.tar.gz
+2008-03-31T10:44:30.511774+02:00 localhost logger: rsyslog.conf
+2008-03-31T10:44:30.538744+02:00 localhost logger: rsyslog.conf.5
+2008-03-31T10:44:30.566225+02:00 localhost logger: rsyslog.conf.man
+2008-03-31T10:44:30.585425+02:00 localhost logger: rsyslogd
+2008-03-31T10:44:30.613239+02:00 localhost logger: rsyslogd.8
+2008-03-31T10:44:30.639495+02:00 localhost logger: rsyslogd-action.o
+2008-03-31T10:44:30.675263+02:00 localhost logger: rsyslogd-cfsysline.o
+2008-03-31T10:44:30.693923+02:00 localhost logger: rsyslogd-conf.o
+2008-03-31T10:44:30.730049+02:00 localhost logger: rsyslogd-ctok.o
+2008-03-31T10:44:30.757650+02:00 localhost logger: rsyslogd-ctok_token.o
+2008-03-31T10:44:30.782068+02:00 localhost logger: rsyslogd-datetime.o
+2008-03-31T10:44:30.817065+02:00 localhost logger: rsyslogd-debug.o
+2008-03-31T10:44:30.840576+02:00 localhost logger: rsyslogd-errmsg.o
+2008-03-31T10:44:30.869610+02:00 localhost logger: rsyslogd-expr.o
+2008-03-31T10:44:30.899532+02:00 localhost logger: rsyslogd-iminternal.o
+2008-03-31T10:44:30.927420+02:00 localhost logger: rsyslogd-linkedlist.o
+2008-03-31T10:44:30.953768+02:00 localhost logger: rsyslogd-modules.o
+2008-03-31T10:44:30.983009+02:00 localhost logger: rsyslogd-msg.o
+2008-03-31T10:44:31.007793+02:00 localhost logger: rsyslogd-obj.o
+2008-03-31T10:44:31.034410+02:00 localhost logger: rsyslogd-objomsr.o
+2008-03-31T10:44:31.067537+02:00 localhost logger: rsyslogd-omdiscard.o
+2008-03-31T10:44:31.098528+02:00 localhost logger: rsyslogd-omfile.o
+2008-03-31T10:44:31.128526+02:00 localhost logger: rsyslogd-omfwd.o
+2008-03-31T10:44:31.157497+02:00 localhost logger: rsyslogd-omshell.o
+2008-03-31T10:44:31.192275+02:00 localhost logger: rsyslogd-omusrmsg.o
+2008-03-31T10:44:31.228182+02:00 localhost logger: rsyslogd-outchannel.o
+2008-03-31T10:44:31.253815+02:00 localhost logger: rsyslogd-parse.o
+2008-03-31T10:44:31.288896+02:00 localhost logger: rsyslogd-pidfile.o
+2008-03-31T10:44:31.314818+02:00 localhost logger: rsyslogd-queue.o
+2008-03-31T10:44:31.348485+02:00 localhost logger: rsyslogd-srUtils.o
+2008-03-31T10:44:31.375657+02:00 localhost logger: rsyslogd-stream.o
+2008-03-31T10:44:31.402087+02:00 localhost logger: rsyslogd-stringbuf.o
+2008-03-31T10:44:31.435623+02:00 localhost logger: rsyslogd-sync.o
+2008-03-31T10:44:31.458519+02:00 localhost logger: rsyslogd-syslogd.o
+2008-03-31T10:44:31.489128+02:00 localhost logger: rsyslogd-sysvar.o
+2008-03-31T10:44:31.508483+02:00 localhost logger: rsyslogd-tcpsyslog.o
+2008-03-31T10:44:31.544238+02:00 localhost logger: rsyslogd-template.o
+2008-03-31T10:44:31.569897+02:00 localhost logger: rsyslogd-threads.o
+2008-03-31T10:44:31.611445+02:00 localhost logger: rsyslogd-var.o
+2008-03-31T10:44:31.636796+02:00 localhost logger: rsyslogd-vm.o
+2008-03-31T10:44:31.660117+02:00 localhost logger: rsyslogd-vmop.o
+2008-03-31T10:44:31.688696+02:00 localhost logger: rsyslogd-vmprg.o
+2008-03-31T10:44:31.715623+02:00 localhost logger: rsyslogd-vmstk.o
+2008-03-31T10:44:31.746988+02:00 localhost logger: rsyslogd-with-regexp
+2008-03-31T10:44:31.771078+02:00 localhost logger: rsyslogd-wti.o
+2008-03-31T10:44:31.794995+02:00 localhost logger: rsyslogd-wtp.o
+2008-03-31T10:44:31.822563+02:00 localhost logger: rsyslog.h
+2008-03-31T10:44:31.857433+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T10:44:31.874840+02:00 localhost logger: s
+2008-03-31T10:44:31.903516+02:00 localhost logger: s2
+2008-03-31T10:44:31.933734+02:00 localhost logger: sample.conf
+2008-03-31T10:44:31.960116+02:00 localhost logger: slackware
+2008-03-31T10:44:31.987885+02:00 localhost logger: solaris
+2008-03-31T10:44:32.019720+02:00 localhost logger: spool
+2008-03-31T10:44:32.051434+02:00 localhost logger: sql
+2008-03-31T10:44:32.078255+02:00 localhost logger: srUtils.c
+2008-03-31T10:44:32.161949+02:00 localhost logger: srUtils.h
+2008-03-31T10:44:32.197693+02:00 localhost logger: stamp-h1
+2008-03-31T10:44:32.231121+02:00 localhost logger: stream.c
+2008-03-31T10:44:32.261411+02:00 localhost logger: stream.h
+2008-03-31T10:44:32.293983+02:00 localhost logger: stringbuf.c
+2008-03-31T10:44:32.322815+02:00 localhost logger: stringbuf.h
+2008-03-31T10:44:32.348492+02:00 localhost logger: sync.c
+2008-03-31T10:44:32.376917+02:00 localhost logger: sync.h
+2008-03-31T10:44:32.402490+02:00 localhost logger: syslog.conf
+2008-03-31T10:44:32.436416+02:00 localhost logger: syslog.conf.sample
+2008-03-31T10:44:32.460642+02:00 localhost logger: syslogd.c
+2008-03-31T10:44:32.487980+02:00 localhost logger: syslogd.h
+2008-03-31T10:44:32.511904+02:00 localhost logger: syslogd-types.h
+2008-03-31T10:44:32.540846+02:00 localhost logger: syslogmsgs
+2008-03-31T10:44:32.571869+02:00 localhost logger: syslog-tst.conf
+2008-03-31T10:44:32.603759+02:00 localhost logger: sysvar.c
+2008-03-31T10:44:32.634834+02:00 localhost logger: sysvar.h
+2008-03-31T10:44:32.656487+02:00 localhost logger: t
+2008-03-31T10:44:32.687627+02:00 localhost logger: t1
+2008-03-31T10:44:32.720410+02:00 localhost logger: tars
+2008-03-31T10:44:32.754838+02:00 localhost logger: tcpclt.c
+2008-03-31T10:44:32.777574+02:00 localhost logger: tcpclt.h
+2008-03-31T10:44:32.806375+02:00 localhost logger: tcpsrv.c
+2008-03-31T10:44:32.848969+02:00 localhost logger: tcpsrv.h
+2008-03-31T10:44:32.877917+02:00 localhost logger: tcpsrv.la
+2008-03-31T10:44:32.901445+02:00 localhost logger: tcps_sess.c
+2008-03-31T10:44:32.922888+02:00 localhost logger: tcps_sess.h
+2008-03-31T10:44:32.944671+02:00 localhost logger: tcpsyslog.c
+2008-03-31T10:44:32.973386+02:00 localhost logger: tcpsyslog.h
+2008-03-31T10:44:33.004207+02:00 localhost logger: template.c
+2008-03-31T10:44:33.036205+02:00 localhost logger: template.h
+2008-03-31T10:44:33.064376+02:00 localhost logger: test
+2008-03-31T10:44:33.091142+02:00 localhost logger: test.conf
+2008-03-31T10:44:33.114834+02:00 localhost logger: testrest
+2008-03-31T10:44:33.153012+02:00 localhost logger: threadsafe
+2008-03-31T10:44:33.171828+02:00 localhost logger: threads.c
+2008-03-31T10:44:33.199804+02:00 localhost logger: threads.h
+2008-03-31T10:44:33.221586+02:00 localhost logger: tm
+2008-03-31T10:44:33.247602+02:00 localhost logger: tmm
+2008-03-31T10:44:33.281434+02:00 localhost logger: tmp
+2008-03-31T10:44:33.298274+02:00 localhost logger: tmp1
+2008-03-31T10:44:33.328583+02:00 localhost logger: tmp2
+2008-03-31T10:44:33.361243+02:00 localhost logger: tmp.rg
+2008-03-31T10:44:33.386668+02:00 localhost logger: today
+2008-03-31T10:44:33.413246+02:00 localhost logger: todo
+2008-03-31T10:44:33.442176+02:00 localhost logger: toReview
+2008-03-31T10:44:33.467437+02:00 localhost logger: udpsyslog.pl
+2008-03-31T10:44:33.493421+02:00 localhost logger: upd-cvs
+2008-03-31T10:44:33.524666+02:00 localhost logger: utils
+2008-03-31T10:44:33.557587+02:00 localhost logger: var.c
+2008-03-31T10:44:33.583629+02:00 localhost logger: var.h
+2008-03-31T10:44:33.624196+02:00 localhost logger: varmofejko.conf
+2008-03-31T10:44:33.650251+02:00 localhost logger: vartmp
+2008-03-31T10:44:33.685619+02:00 localhost logger: vartmp1
+2008-03-31T10:44:33.711901+02:00 localhost logger: vm.c
+2008-03-31T10:44:33.741436+02:00 localhost logger: vm.h
+2008-03-31T10:44:33.764546+02:00 localhost logger: vmop.c
+2008-03-31T10:44:33.790790+02:00 localhost logger: vmop.h
+2008-03-31T10:44:33.819633+02:00 localhost logger: vmprg.c
+2008-03-31T10:44:33.846907+02:00 localhost logger: vmprg.h
+2008-03-31T10:44:33.869602+02:00 localhost logger: vmstk.c
+2008-03-31T10:44:33.898799+02:00 localhost logger: vmstk.h
+2008-03-31T10:44:33.924774+02:00 localhost logger: void
+2008-03-31T10:44:33.952615+02:00 localhost logger: wti.c
+2008-03-31T10:44:33.979847+02:00 localhost logger: wti.h
+2008-03-31T10:44:34.006204+02:00 localhost logger: wtp.c
+2008-03-31T10:44:34.038419+02:00 localhost logger: wtp.h
+2008-03-31T10:45:16.474183+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:45:16.749604+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21363" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:45:26.845858+02:00 localhost logger: 2007
+2008-03-31T10:45:26.859183+02:00 localhost logger: aclocal.m4
+2008-03-31T10:45:26.865697+02:00 localhost logger: action.c
+2008-03-31T10:45:26.876377+02:00 localhost logger: action.h
+2008-03-31T10:45:26.899239+02:00 localhost logger: aliases
+2008-03-31T10:45:26.937173+02:00 localhost logger: ANNOUNCE
+2008-03-31T10:45:26.967802+02:00 localhost logger: atomic.h
+2008-03-31T10:45:26.984908+02:00 localhost logger: AUTHORS
+2008-03-31T10:45:27.010352+02:00 localhost logger: autom4te.cache
+2008-03-31T10:45:27.029683+02:00 localhost logger: autoscan.log
+2008-03-31T10:45:27.054099+02:00 localhost logger: bsd-syslogd.c
+2008-03-31T10:45:27.077662+02:00 localhost logger: BUGS
+2008-03-31T10:45:27.105156+02:00 localhost logger: cfsysline.c
+2008-03-31T10:45:27.128298+02:00 localhost logger: cfsysline.h
+2008-03-31T10:45:27.143131+02:00 localhost logger: ChangeLog
+2008-03-31T10:45:27.164909+02:00 localhost logger: CHANGES
+2008-03-31T10:45:27.199366+02:00 localhost logger: compile
+2008-03-31T10:45:27.215787+02:00 localhost logger: conf
+2008-03-31T10:45:27.237249+02:00 localhost logger: conf.c
+2008-03-31T10:45:27.252462+02:00 localhost logger: conf.h
+2008-03-31T10:45:27.278251+02:00 localhost logger: config.guess
+2008-03-31T10:45:27.309210+02:00 localhost logger: config.h
+2008-03-31T10:45:27.324221+02:00 localhost logger: config.h.in
+2008-03-31T10:45:27.347665+02:00 localhost logger: config.h.in~
+2008-03-31T10:45:27.366804+02:00 localhost logger: config.log
+2008-03-31T10:45:27.392314+02:00 localhost logger: config.status
+2008-03-31T10:45:27.430831+02:00 localhost logger: config.sub
+2008-03-31T10:45:27.440224+02:00 localhost logger: configure
+2008-03-31T10:45:27.463829+02:00 localhost logger: configure.ac
+2008-03-31T10:45:27.481067+02:00 localhost logger: configure.scan
+2008-03-31T10:45:27.505449+02:00 localhost logger: contains
+2008-03-31T10:45:27.531582+02:00 localhost logger: contrib
+2008-03-31T10:45:27.560522+02:00 localhost logger: COPYING
+2008-03-31T10:45:27.578149+02:00 localhost logger: cp-doc-all
+2008-03-31T10:45:27.598769+02:00 localhost logger: cp-doc-one
+2008-03-31T10:45:27.627717+02:00 localhost logger: cp-rel
+2008-03-31T10:45:27.652741+02:00 localhost logger: createDB.sql
+2008-03-31T10:45:27.670336+02:00 localhost logger: ctok.c
+2008-03-31T10:45:27.696250+02:00 localhost logger: ctok.h
+2008-03-31T10:45:27.757383+02:00 localhost logger: ctok_token.c
+2008-03-31T10:45:27.784403+02:00 localhost logger: ctok_token.h
+2008-03-31T10:45:27.817389+02:00 localhost logger: cvs
+2008-03-31T10:45:27.839127+02:00 localhost logger: CVS
+2008-03-31T10:45:27.863304+02:00 localhost logger: datetime.c
+2008-03-31T10:45:27.893102+02:00 localhost logger: datetime.h
+2008-03-31T10:45:27.920275+02:00 localhost logger: debian
+2008-03-31T10:45:27.942258+02:00 localhost logger: debug
+2008-03-31T10:45:27.967327+02:00 localhost logger: debug.c
+2008-03-31T10:45:28.012607+02:00 localhost logger: debug.h
+2008-03-31T10:45:28.034031+02:00 localhost logger: delete_mysql
+2008-03-31T10:45:28.064194+02:00 localhost logger: depcomp
+2008-03-31T10:45:28.093503+02:00 localhost logger: diff
+2008-03-31T10:45:28.116073+02:00 localhost logger: dist
+2008-03-31T10:45:28.146062+02:00 localhost logger: doc
+2008-03-31T10:45:28.156245+02:00 localhost logger: do_configure
+2008-03-31T10:45:28.176073+02:00 localhost logger: Doxyfile
+2008-03-31T10:45:28.205245+02:00 localhost logger: errmsg.c
+2008-03-31T10:45:28.235880+02:00 localhost logger: errmsg.h
+2008-03-31T10:45:28.251247+02:00 localhost logger: expr.c
+2008-03-31T10:45:28.277494+02:00 localhost logger: expr.h
+2008-03-31T10:45:28.311214+02:00 localhost logger: fields
+2008-03-31T10:45:28.332953+02:00 localhost logger: filein
+2008-03-31T10:45:28.364112+02:00 localhost logger: file.log # comment
+2008-03-31T10:45:28.386242+02:00 localhost logger: freebsd
+2008-03-31T10:45:28.417194+02:00 localhost logger: glbl.h
+2008-03-31T10:45:28.432746+02:00 localhost logger: gssapi.la
+2008-03-31T10:45:28.454619+02:00 localhost logger: gss-misc.c
+2008-03-31T10:45:28.475893+02:00 localhost logger: gss-misc.h
+2008-03-31T10:45:28.501326+02:00 localhost logger: gssutil.la
+2008-03-31T10:45:28.524429+02:00 localhost logger: hang
+2008-03-31T10:45:28.545131+02:00 localhost logger: imfile.c
+2008-03-31T10:45:28.575890+02:00 localhost logger: imgssapi.c
+2008-03-31T10:45:28.597847+02:00 localhost logger: iminternal.c
+2008-03-31T10:45:28.617681+02:00 localhost logger: iminternal.h
+2008-03-31T10:45:28.632494+02:00 localhost logger: imklog.c
+2008-03-31T10:45:28.663073+02:00 localhost logger: immark.c
+2008-03-31T10:45:28.684137+02:00 localhost logger: imrelp.c
+2008-03-31T10:45:28.705533+02:00 localhost logger: imtcp.c
+2008-03-31T10:45:28.730924+02:00 localhost logger: imtemplate.c
+2008-03-31T10:45:28.756919+02:00 localhost logger: imudp.c
+2008-03-31T10:45:28.774724+02:00 localhost logger: imuxsock.c
+2008-03-31T10:45:28.804467+02:00 localhost logger: INSTALL
+2008-03-31T10:45:28.826159+02:00 localhost logger: install-sh
+2008-03-31T10:45:28.853033+02:00 localhost logger: johnn.conf
+2008-03-31T10:45:28.871411+02:00 localhost logger: kernelmsgs
+2008-03-31T10:45:28.895022+02:00 localhost logger: klogd
+2008-03-31T10:45:28.916721+02:00 localhost logger: klogd_sources
+2008-03-31T10:45:28.929924+02:00 localhost logger: l
+2008-03-31T10:45:28.958065+02:00 localhost logger: lib
+2008-03-31T10:45:28.989426+02:00 localhost logger: libgssapi-misc.la
+2008-03-31T10:45:29.021755+02:00 localhost logger: liblogging-stub.h
+2008-03-31T10:45:29.055943+02:00 localhost logger: libmysqlclient.a
+2008-03-31T10:45:29.080453+02:00 localhost logger: libtool
+2008-03-31T10:45:29.111347+02:00 localhost logger: linelen.c
+2008-03-31T10:45:29.139227+02:00 localhost logger: linkedlist.c
+2008-03-31T10:45:29.158246+02:00 localhost logger: linkedlist.h
+2008-03-31T10:45:29.186592+02:00 localhost logger: linux
+2008-03-31T10:45:29.207556+02:00 localhost logger: lmgssutil.la
+2008-03-31T10:45:29.234710+02:00 localhost logger: lmgssutil_la-gss-misc.lo
+2008-03-31T10:45:29.249814+02:00 localhost logger: lmnet.la
+2008-03-31T10:45:29.277208+02:00 localhost logger: lmnet_la-net.lo
+2008-03-31T10:45:29.292640+02:00 localhost logger: lmregexp.la
+2008-03-31T10:45:29.314859+02:00 localhost logger: lmregexp_la-regexp.lo
+2008-03-31T10:45:29.337912+02:00 localhost logger: lmrelputil.la
+2008-03-31T10:45:29.363979+02:00 localhost logger: lmrelputil_la-relputil.lo
+2008-03-31T10:45:29.388735+02:00 localhost logger: lmtcpclt.la
+2008-03-31T10:45:29.404390+02:00 localhost logger: lmtcpclt_la-tcpclt.lo
+2008-03-31T10:45:29.428454+02:00 localhost logger: lmtcpsrv.la
+2008-03-31T10:45:29.450977+02:00 localhost logger: lmtcpsrv_la-tcpsrv.lo
+2008-03-31T10:45:29.476982+02:00 localhost logger: lmtcpsrv_la-tcps_sess.lo
+2008-03-31T10:45:29.497763+02:00 localhost logger: log
+2008-03-31T10:45:29.520822+02:00 localhost logger: logfile
+2008-03-31T10:45:29.550435+02:00 localhost logger: ltmain.sh
+2008-03-31T10:45:29.563122+02:00 localhost logger: m
+2008-03-31T10:45:29.595057+02:00 localhost logger: Makefile
+2008-03-31T10:45:29.610028+02:00 localhost logger: Makefile.am
+2008-03-31T10:45:29.641148+02:00 localhost logger: Makefile.in
+2008-03-31T10:45:29.673771+02:00 localhost logger: MANIFEST
+2008-03-31T10:45:29.697503+02:00 localhost logger: missing
+2008-03-31T10:45:29.721688+02:00 localhost logger: mkrelease
+2008-03-31T10:45:29.736401+02:00 localhost logger: mksymlink
+2008-03-31T10:45:29.762488+02:00 localhost logger: mktar
+2008-03-31T10:45:29.786852+02:00 localhost logger: modules.c
+2008-03-31T10:45:29.810488+02:00 localhost logger: modules.c.save
+2008-03-31T10:45:29.833140+02:00 localhost logger: modules.h
+2008-03-31T10:45:29.858198+02:00 localhost logger: module-template.h
+2008-03-31T10:45:29.883850+02:00 localhost logger: msg.c
+2008-03-31T10:45:29.903994+02:00 localhost logger: msg.h
+2008-03-31T10:45:29.933541+02:00 localhost logger: net.c
+2008-03-31T10:45:29.947987+02:00 localhost logger: net.h
+2008-03-31T10:45:29.968860+02:00 localhost logger: net.la
+2008-03-31T10:45:30.002528+02:00 localhost logger: newfiles
+2008-03-31T10:45:30.018846+02:00 localhost logger: NEWS
+2008-03-31T10:45:30.046714+02:00 localhost logger: obj.c
+2008-03-31T10:45:30.065396+02:00 localhost logger: obj.h
+2008-03-31T10:45:30.095577+02:00 localhost logger: objomsr.c
+2008-03-31T10:45:30.110709+02:00 localhost logger: objomsr.h
+2008-03-31T10:45:30.142882+02:00 localhost logger: obj-types.h
+2008-03-31T10:45:30.157331+02:00 localhost logger: omdiscard.c
+2008-03-31T10:45:30.183741+02:00 localhost logger: omdiscard.h
+2008-03-31T10:45:30.198537+02:00 localhost logger: omfile.c
+2008-03-31T10:45:30.222582+02:00 localhost logger: omfile.h
+2008-03-31T10:45:30.243171+02:00 localhost logger: omfwd.c
+2008-03-31T10:45:30.266927+02:00 localhost logger: omfwd.h
+2008-03-31T10:45:30.284148+02:00 localhost logger: omgssapi.c
+2008-03-31T10:45:30.310577+02:00 localhost logger: omlibdbi.c
+2008-03-31T10:45:30.339967+02:00 localhost logger: ommysql.c
+2008-03-31T10:45:30.351176+02:00 localhost logger: ommysql.la
+2008-03-31T10:45:30.384044+02:00 localhost logger: ompgsql.c
+2008-03-31T10:45:30.404707+02:00 localhost logger: omrelp.c
+2008-03-31T10:45:30.428451+02:00 localhost logger: omshell.c
+2008-03-31T10:45:30.447965+02:00 localhost logger: omshell.h
+2008-03-31T10:45:30.472298+02:00 localhost logger: omsnmp.c
+2008-03-31T10:45:30.491655+02:00 localhost logger: omusrmsg.c
+2008-03-31T10:45:30.517419+02:00 localhost logger: omusrmsg.h
+2008-03-31T10:45:30.549910+02:00 localhost logger: outchannel.c
+2008-03-31T10:45:30.561678+02:00 localhost logger: outchannel.h
+2008-03-31T10:45:30.593178+02:00 localhost logger: parse.c
+2008-03-31T10:45:30.606904+02:00 localhost logger: parse.h
+2008-03-31T10:45:30.635889+02:00 localhost logger: patches
+2008-03-31T10:45:30.652322+02:00 localhost logger: perftest.c
+2008-03-31T10:45:30.672589+02:00 localhost logger: pidfile.c
+2008-03-31T10:45:30.696199+02:00 localhost logger: pidfile.h
+2008-03-31T10:45:30.716477+02:00 localhost logger: plugins
+2008-03-31T10:45:30.733859+02:00 localhost logger: queue.c
+2008-03-31T10:45:30.756718+02:00 localhost logger: queue.h
+2008-03-31T10:45:30.798931+02:00 localhost logger: rawfmt
+2008-03-31T10:45:30.816551+02:00 localhost logger: README
+2008-03-31T10:45:30.835296+02:00 localhost logger: redhat
+2008-03-31T10:45:30.861876+02:00 localhost logger: regexp.c
+2008-03-31T10:45:30.889419+02:00 localhost logger: regexp.h
+2008-03-31T10:45:30.915473+02:00 localhost logger: regexp.la
+2008-03-31T10:45:30.945126+02:00 localhost logger: relputil.c
+2008-03-31T10:45:30.950962+02:00 localhost logger: relputil.h
+2008-03-31T10:45:30.971522+02:00 localhost logger: rfc3195d
+2008-03-31T10:45:30.999039+02:00 localhost logger: rfc3195d.8
+2008-03-31T10:45:31.026875+02:00 localhost logger: rfc3195d.c
+2008-03-31T10:45:31.057978+02:00 localhost logger: rfc3195d.o
+2008-03-31T10:45:31.079021+02:00 localhost logger: rg2.conf
+2008-03-31T10:45:31.100045+02:00 localhost logger: rg.conf
+2008-03-31T10:45:31.124212+02:00 localhost logger: rg.conf.all
+2008-03-31T10:45:31.149860+02:00 localhost logger: rg.conf.large
+2008-03-31T10:45:31.178347+02:00 localhost logger: rg.conf.perftest
+2008-03-31T10:45:31.203932+02:00 localhost logger: rg.conf.save
+2008-03-31T10:45:31.231889+02:00 localhost logger: rger-lazyness.patch
+2008-03-31T10:45:31.244913+02:00 localhost logger: rklogd
+2008-03-31T10:45:31.272650+02:00 localhost logger: rmcore
+2008-03-31T10:45:31.295397+02:00 localhost logger: rsyslog-3.12.1.tar.gz
+2008-03-31T10:45:31.314900+02:00 localhost logger: rsyslog-3.12.2.tar.gz
+2008-03-31T10:45:31.342633+02:00 localhost logger: rsyslog-3.12.3.tar.gz
+2008-03-31T10:45:31.356881+02:00 localhost logger: rsyslog-3.12.4.tar.gz
+2008-03-31T10:45:31.382399+02:00 localhost logger: rsyslog-3.12.5.tar.gz
+2008-03-31T10:45:31.397412+02:00 localhost logger: rsyslog-3.13.0.tar.gz
+2008-03-31T10:45:31.421263+02:00 localhost logger: rsyslog.conf
+2008-03-31T10:45:31.447142+02:00 localhost logger: rsyslog.conf.5
+2008-03-31T10:45:31.463779+02:00 localhost logger: rsyslog.conf.man
+2008-03-31T10:45:31.480845+02:00 localhost logger: rsyslogd
+2008-03-31T10:45:31.499786+02:00 localhost logger: rsyslogd.8
+2008-03-31T10:45:31.530185+02:00 localhost logger: rsyslogd-action.o
+2008-03-31T10:45:31.550857+02:00 localhost logger: rsyslogd-cfsysline.o
+2008-03-31T10:45:31.572749+02:00 localhost logger: rsyslogd-conf.o
+2008-03-31T10:45:31.593347+02:00 localhost logger: rsyslogd-ctok.o
+2008-03-31T10:45:31.615596+02:00 localhost logger: rsyslogd-ctok_token.o
+2008-03-31T10:45:31.652413+02:00 localhost logger: rsyslogd-datetime.o
+2008-03-31T10:45:31.662069+02:00 localhost logger: rsyslogd-debug.o
+2008-03-31T10:45:31.708626+02:00 localhost logger: rsyslogd-errmsg.o
+2008-03-31T10:45:31.729121+02:00 localhost logger: rsyslogd-expr.o
+2008-03-31T10:45:31.760761+02:00 localhost logger: rsyslogd-iminternal.o
+2008-03-31T10:45:31.782077+02:00 localhost logger: rsyslogd-linkedlist.o
+2008-03-31T10:45:31.809180+02:00 localhost logger: rsyslogd-modules.o
+2008-03-31T10:45:31.831744+02:00 localhost logger: rsyslogd-msg.o
+2008-03-31T10:45:31.868838+02:00 localhost logger: rsyslogd-obj.o
+2008-03-31T10:45:31.903155+02:00 localhost logger: rsyslogd-objomsr.o
+2008-03-31T10:45:31.924864+02:00 localhost logger: rsyslogd-omdiscard.o
+2008-03-31T10:45:31.951189+02:00 localhost logger: rsyslogd-omfile.o
+2008-03-31T10:45:31.974658+02:00 localhost logger: rsyslogd-omfwd.o
+2008-03-31T10:45:32.002153+02:00 localhost logger: rsyslogd-omshell.o
+2008-03-31T10:45:32.032892+02:00 localhost logger: rsyslogd-omusrmsg.o
+2008-03-31T10:45:32.055135+02:00 localhost logger: rsyslogd-outchannel.o
+2008-03-31T10:45:32.082151+02:00 localhost logger: rsyslogd-parse.o
+2008-03-31T10:45:32.110139+02:00 localhost logger: rsyslogd-pidfile.o
+2008-03-31T10:45:32.132628+02:00 localhost logger: rsyslogd-queue.o
+2008-03-31T10:45:32.160060+02:00 localhost logger: rsyslogd-srUtils.o
+2008-03-31T10:45:32.178869+02:00 localhost logger: rsyslogd-stream.o
+2008-03-31T10:45:32.211642+02:00 localhost logger: rsyslogd-stringbuf.o
+2008-03-31T10:45:32.236406+02:00 localhost logger: rsyslogd-sync.o
+2008-03-31T10:45:32.267172+02:00 localhost logger: rsyslogd-syslogd.o
+2008-03-31T10:45:32.296505+02:00 localhost logger: rsyslogd-sysvar.o
+2008-03-31T10:45:32.316704+02:00 localhost logger: rsyslogd-tcpsyslog.o
+2008-03-31T10:45:32.344421+02:00 localhost logger: rsyslogd-template.o
+2008-03-31T10:45:32.374056+02:00 localhost logger: rsyslogd-threads.o
+2008-03-31T10:45:32.405173+02:00 localhost logger: rsyslogd-var.o
+2008-03-31T10:45:32.431756+02:00 localhost logger: rsyslogd-vm.o
+2008-03-31T10:45:32.835865+02:00 localhost logger: rsyslogd-vmop.o
+2008-03-31T10:45:32.875583+02:00 localhost logger: rsyslogd-vmprg.o
+2008-03-31T10:45:32.929879+02:00 localhost logger: rsyslogd-vmstk.o
+2008-03-31T10:45:32.961530+02:00 localhost logger: rsyslogd-with-regexp
+2008-03-31T10:45:33.009416+02:00 localhost logger: rsyslogd-wti.o
+2008-03-31T10:45:33.054179+02:00 localhost logger: rsyslogd-wtp.o
+2008-03-31T10:45:33.089739+02:00 localhost logger: rsyslog.h
+2008-03-31T10:45:33.167830+02:00 localhost logger: s
+2008-03-31T10:45:33.134882+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T10:45:33.196377+02:00 localhost logger: s2
+2008-03-31T10:45:33.227948+02:00 localhost logger: sample.conf
+2008-03-31T10:45:33.251189+02:00 localhost logger: slackware
+2008-03-31T10:45:33.283510+02:00 localhost logger: solaris
+2008-03-31T10:45:33.322475+02:00 localhost logger: spool
+2008-03-31T10:45:33.344081+02:00 localhost logger: sql
+2008-03-31T10:45:33.398724+02:00 localhost logger: srUtils.c
+2008-03-31T10:45:33.435033+02:00 localhost logger: srUtils.h
+2008-03-31T10:45:33.490733+02:00 localhost logger: stamp-h1
+2008-03-31T10:45:33.533485+02:00 localhost logger: stream.c
+2008-03-31T10:45:33.562441+02:00 localhost logger: stream.h
+2008-03-31T10:45:33.599039+02:00 localhost logger: stringbuf.c
+2008-03-31T10:45:33.630922+02:00 localhost logger: stringbuf.h
+2008-03-31T10:45:33.675381+02:00 localhost logger: sync.c
+2008-03-31T10:45:33.705162+02:00 localhost logger: sync.h
+2008-03-31T10:45:33.735160+02:00 localhost logger: syslog.conf
+2008-03-31T10:45:33.769946+02:00 localhost logger: syslog.conf.sample
+2008-03-31T10:45:33.793568+02:00 localhost logger: syslogd.c
+2008-03-31T10:45:33.829152+02:00 localhost logger: syslogd.h
+2008-03-31T10:45:33.859570+02:00 localhost logger: syslogd-types.h
+2008-03-31T10:45:33.889452+02:00 localhost logger: syslogmsgs
+2008-03-31T10:45:33.920873+02:00 localhost logger: syslog-tst.conf
+2008-03-31T10:45:33.958722+02:00 localhost logger: sysvar.c
+2008-03-31T10:45:33.993173+02:00 localhost logger: sysvar.h
+2008-03-31T10:45:34.025219+02:00 localhost logger: t
+2008-03-31T10:45:34.060834+02:00 localhost logger: t1
+2008-03-31T10:45:34.093952+02:00 localhost logger: tars
+2008-03-31T10:45:34.131631+02:00 localhost logger: tcpclt.c
+2008-03-31T10:45:34.178030+02:00 localhost logger: tcpclt.h
+2008-03-31T10:45:34.204467+02:00 localhost logger: tcpsrv.c
+2008-03-31T10:45:34.234598+02:00 localhost logger: tcpsrv.h
+2008-03-31T10:45:34.278630+02:00 localhost logger: tcpsrv.la
+2008-03-31T10:45:34.303803+02:00 localhost logger: tcps_sess.c
+2008-03-31T10:45:34.330032+02:00 localhost logger: tcps_sess.h
+2008-03-31T10:45:34.368533+02:00 localhost logger: tcpsyslog.c
+2008-03-31T10:45:34.394575+02:00 localhost logger: tcpsyslog.h
+2008-03-31T10:45:34.428865+02:00 localhost logger: template.c
+2008-03-31T10:45:34.459857+02:00 localhost logger: template.h
+2008-03-31T10:45:34.494589+02:00 localhost logger: test
+2008-03-31T10:45:34.534595+02:00 localhost logger: test.conf
+2008-03-31T10:45:34.564456+02:00 localhost logger: testrest
+2008-03-31T10:45:34.612624+02:00 localhost logger: threadsafe
+2008-03-31T10:45:34.625559+02:00 localhost logger: threads.c
+2008-03-31T10:45:34.672096+02:00 localhost logger: threads.h
+2008-03-31T10:45:34.704102+02:00 localhost logger: tm
+2008-03-31T10:45:34.752528+02:00 localhost logger: tmm
+2008-03-31T10:45:34.787417+02:00 localhost logger: tmp
+2008-03-31T10:45:34.812593+02:00 localhost logger: tmp1
+2008-03-31T10:45:34.846274+02:00 localhost logger: tmp2
+2008-03-31T10:45:34.896412+02:00 localhost logger: tmp.rg
+2008-03-31T10:45:34.913645+02:00 localhost logger: today
+2008-03-31T10:45:34.951182+02:00 localhost logger: todo
+2008-03-31T10:45:34.987613+02:00 localhost logger: toReview
+2008-03-31T10:45:35.011381+02:00 localhost logger: udpsyslog.pl
+2008-03-31T10:45:35.050184+02:00 localhost logger: upd-cvs
+2008-03-31T10:45:35.077770+02:00 localhost logger: utils
+2008-03-31T10:45:35.112207+02:00 localhost logger: var.c
+2008-03-31T10:45:35.141904+02:00 localhost logger: var.h
+2008-03-31T10:45:35.213692+02:00 localhost logger: vartmp
+2008-03-31T10:45:35.185088+02:00 localhost logger: varmofejko.conf
+2008-03-31T10:45:35.239548+02:00 localhost logger: vartmp1
+2008-03-31T10:45:35.276836+02:00 localhost logger: vm.c
+2008-03-31T10:45:35.300728+02:00 localhost logger: vm.h
+2008-03-31T10:45:35.332131+02:00 localhost logger: vmop.c
+2008-03-31T10:45:35.364273+02:00 localhost logger: vmop.h
+2008-03-31T10:45:35.394730+02:00 localhost logger: vmprg.c
+2008-03-31T10:45:35.422963+02:00 localhost logger: vmprg.h
+2008-03-31T10:45:35.462972+02:00 localhost logger: vmstk.c
+2008-03-31T10:45:35.490576+02:00 localhost logger: vmstk.h
+2008-03-31T10:45:35.514571+02:00 localhost logger: void
+2008-03-31T10:45:35.562410+02:00 localhost logger: wti.c
+2008-03-31T10:45:35.593603+02:00 localhost logger: wti.h
+2008-03-31T10:45:35.632738+02:00 localhost logger: wtp.c
+2008-03-31T10:45:35.662070+02:00 localhost logger: wtp.h
+2008-03-31T10:46:19.015243+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="21363" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T10:54:10.272223+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T10:54:10.462129+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="27428" x-info="http://www.rsyslog.com"] restart
+2008-03-31T10:54:19.842953+02:00 localhost rger: test
+2008-03-31T10:56:14.254857+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="27428" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:11:00.988469+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:11:01.176566+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="27507" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:11:06.511509+02:00 localhost logger: 2007
+2008-03-31T11:11:06.518350+02:00 localhost logger: aclocal.m4
+2008-03-31T11:11:06.519947+02:00 localhost logger: action.c
+2008-03-31T11:11:06.525024+02:00 localhost logger: action.h
+2008-03-31T11:11:06.528678+02:00 localhost logger: aliases
+2008-03-31T11:11:06.531079+02:00 localhost logger: ANNOUNCE
+2008-03-31T11:11:06.536183+02:00 localhost logger: atomic.h
+2008-03-31T11:11:06.547210+02:00 localhost logger: AUTHORS
+2008-03-31T11:11:06.556106+02:00 localhost logger: autom4te.cache
+2008-03-31T11:11:06.569242+02:00 localhost logger: autoscan.log
+2008-03-31T11:11:06.570830+02:00 localhost logger: bsd-syslogd.c
+2008-03-31T11:11:06.574879+02:00 localhost logger: BUGS
+2008-03-31T11:11:06.582078+02:00 localhost logger: cfsysline.c
+2008-03-31T11:11:06.586326+02:00 localhost logger: cfsysline.h
+2008-03-31T11:11:06.602521+02:00 localhost logger: ChangeLog
+2008-03-31T11:11:06.605474+02:00 localhost logger: CHANGES
+2008-03-31T11:11:06.607200+02:00 localhost logger: compile
+2008-03-31T11:11:06.610600+02:00 localhost logger: conf
+2008-03-31T11:11:06.615461+02:00 localhost logger: conf.c
+2008-03-31T11:11:06.636564+02:00 localhost logger: conf.h
+2008-03-31T11:11:06.640632+02:00 localhost logger: config.guess
+2008-03-31T11:11:06.644031+02:00 localhost logger: config.h
+2008-03-31T11:11:06.663938+02:00 localhost logger: config.h.in
+2008-03-31T11:11:06.665992+02:00 localhost logger: config.h.in~
+2008-03-31T11:11:06.667848+02:00 localhost logger: config.log
+2008-03-31T11:11:06.669396+02:00 localhost logger: config.status
+2008-03-31T11:11:06.671021+02:00 localhost logger: config.sub
+2008-03-31T11:11:06.672965+02:00 localhost logger: configure
+2008-03-31T11:11:06.675119+02:00 localhost logger: configure.ac
+2008-03-31T11:11:06.696434+02:00 localhost logger: configure.scan
+2008-03-31T11:11:06.698064+02:00 localhost logger: contains
+2008-03-31T11:11:06.699659+02:00 localhost logger: contrib
+2008-03-31T11:11:06.701343+02:00 localhost logger: COPYING
+2008-03-31T11:11:06.702858+02:00 localhost logger: cp-doc-all
+2008-03-31T11:11:06.704712+02:00 localhost logger: cp-doc-one
+2008-03-31T11:11:06.706776+02:00 localhost logger: cp-rel
+2008-03-31T11:11:06.708392+02:00 localhost logger: createDB.sql
+2008-03-31T11:11:06.729274+02:00 localhost logger: ctok.c
+2008-03-31T11:11:06.730789+02:00 localhost logger: ctok.h
+2008-03-31T11:11:06.732248+02:00 localhost logger: ctok_token.c
+2008-03-31T11:11:06.734020+02:00 localhost logger: ctok_token.h
+2008-03-31T11:11:06.735552+02:00 localhost logger: cvs
+2008-03-31T11:11:06.737033+02:00 localhost logger: CVS
+2008-03-31T11:11:06.739406+02:00 localhost logger: datetime.c
+2008-03-31T11:11:06.740963+02:00 localhost logger: datetime.h
+2008-03-31T11:11:06.759785+02:00 localhost logger: debian
+2008-03-31T11:11:06.761238+02:00 localhost logger: debug
+2008-03-31T11:11:06.762959+02:00 localhost logger: debug.c
+2008-03-31T11:11:06.764551+02:00 localhost logger: debug.c.net
+2008-03-31T11:11:06.766081+02:00 localhost logger: debug.h
+2008-03-31T11:11:06.767757+02:00 localhost logger: delete_mysql
+2008-03-31T11:11:06.769312+02:00 localhost logger: depcomp
+2008-03-31T11:11:06.790987+02:00 localhost logger: diff
+2008-03-31T11:11:06.794432+02:00 localhost logger: dist
+2008-03-31T11:11:06.796007+02:00 localhost logger: doc
+2008-03-31T11:11:06.801574+02:00 localhost logger: do_configure
+2008-03-31T11:11:06.824481+02:00 localhost logger: Doxyfile
+2008-03-31T11:11:06.828113+02:00 localhost logger: errmsg.c
+2008-03-31T11:11:06.831732+02:00 localhost logger: errmsg.h
+2008-03-31T11:11:06.835255+02:00 localhost logger: expr.c
+2008-03-31T11:11:06.836962+02:00 localhost logger: expr.h
+2008-03-31T11:11:06.857776+02:00 localhost logger: fields
+2008-03-31T11:11:06.862071+02:00 localhost logger: filein
+2008-03-31T11:11:06.867572+02:00 localhost logger: file.log # comment
+2008-03-31T11:11:06.871205+02:00 localhost logger: freebsd
+2008-03-31T11:11:06.897104+02:00 localhost logger: glbl.h
+2008-03-31T11:11:06.902511+02:00 localhost logger: gssapi.la
+2008-03-31T11:11:06.906735+02:00 localhost logger: gss-misc.c
+2008-03-31T11:11:06.908729+02:00 localhost logger: gss-misc.h
+2008-03-31T11:11:06.929398+02:00 localhost logger: gssutil.la
+2008-03-31T11:11:06.930882+02:00 localhost logger: hang
+2008-03-31T11:11:06.932273+02:00 localhost logger: imfile.c
+2008-03-31T11:11:06.939634+02:00 localhost logger: imgssapi.c
+2008-03-31T11:11:06.963137+02:00 localhost logger: iminternal.c
+2008-03-31T11:11:06.966435+02:00 localhost logger: iminternal.h
+2008-03-31T11:11:06.968009+02:00 localhost logger: imklog.c
+2008-03-31T11:11:06.974456+02:00 localhost logger: immark.c
+2008-03-31T11:11:06.976080+02:00 localhost logger: imrelp.c
+2008-03-31T11:11:06.995011+02:00 localhost logger: imtcp.c
+2008-03-31T11:11:06.998801+02:00 localhost logger: imtemplate.c
+2008-03-31T11:11:07.000314+02:00 localhost logger: imudp.c
+2008-03-31T11:11:07.008705+02:00 localhost logger: imuxsock.c
+2008-03-31T11:11:07.028008+02:00 localhost logger: INSTALL
+2008-03-31T11:11:07.031755+02:00 localhost logger: install-sh
+2008-03-31T11:11:07.036308+02:00 localhost logger: johnn.conf
+2008-03-31T11:11:07.041175+02:00 localhost logger: kernelmsgs
+2008-03-31T11:11:07.063029+02:00 localhost logger: klogd
+2008-03-31T11:11:07.068423+02:00 localhost logger: klogd_sources
+2008-03-31T11:11:07.072758+02:00 localhost logger: l
+2008-03-31T11:11:07.074469+02:00 localhost logger: lib
+2008-03-31T11:11:07.096131+02:00 localhost logger: libgssapi-misc.la
+2008-03-31T11:11:07.097636+02:00 localhost logger: liblogging-stub.h
+2008-03-31T11:11:07.102386+02:00 localhost logger: libmysqlclient.a
+2008-03-31T11:11:07.103933+02:00 localhost logger: libtool
+2008-03-31T11:11:07.108009+02:00 localhost logger: linelen.c
+2008-03-31T11:11:07.128317+02:00 localhost logger: linkedlist.c
+2008-03-31T11:11:07.129864+02:00 localhost logger: linkedlist.h
+2008-03-31T11:11:07.131230+02:00 localhost logger: linux
+2008-03-31T11:11:07.138150+02:00 localhost logger: lmgssutil.la
+2008-03-31T11:11:07.159961+02:00 localhost logger: lmgssutil_la-gss-misc.lo
+2008-03-31T11:11:07.161418+02:00 localhost logger: lmnet.la
+2008-03-31T11:11:07.167219+02:00 localhost logger: lmnet_la-net.lo
+2008-03-31T11:11:07.168913+02:00 localhost logger: lmregexp.la
+2008-03-31T11:11:07.172788+02:00 localhost logger: lmregexp_la-regexp.lo
+2008-03-31T11:11:07.193541+02:00 localhost logger: lmrelputil.la
+2008-03-31T11:11:07.195008+02:00 localhost logger: lmrelputil_la-relputil.lo
+2008-03-31T11:11:07.200549+02:00 localhost logger: lmtcpclt.la
+2008-03-31T11:11:07.203889+02:00 localhost logger: lmtcpclt_la-tcpclt.lo
+2008-03-31T11:11:07.225308+02:00 localhost logger: lmtcpsrv.la
+2008-03-31T11:11:07.230043+02:00 localhost logger: lmtcpsrv_la-tcpsrv.lo
+2008-03-31T11:11:07.233640+02:00 localhost logger: lmtcpsrv_la-tcps_sess.lo
+2008-03-31T11:11:07.237137+02:00 localhost logger: log
+2008-03-31T11:11:07.257326+02:00 localhost logger: logfile
+2008-03-31T11:11:07.260726+02:00 localhost logger: ltmain.sh
+2008-03-31T11:11:07.264515+02:00 localhost logger: m
+2008-03-31T11:11:07.270739+02:00 localhost logger: Makefile
+2008-03-31T11:11:07.272901+02:00 localhost logger: Makefile.am
+2008-03-31T11:11:07.294146+02:00 localhost logger: Makefile.in
+2008-03-31T11:11:07.295884+02:00 localhost logger: MANIFEST
+2008-03-31T11:11:07.301061+02:00 localhost logger: missing
+2008-03-31T11:11:07.304601+02:00 localhost logger: mkrelease
+2008-03-31T11:11:07.350002+02:00 localhost logger: mksymlink
+2008-03-31T11:11:07.351481+02:00 localhost logger: mktar
+2008-03-31T11:11:07.356229+02:00 localhost logger: modules.c
+2008-03-31T11:11:07.360338+02:00 localhost logger: modules.c.save
+2008-03-31T11:11:07.363749+02:00 localhost logger: modules.h
+2008-03-31T11:11:07.367179+02:00 localhost logger: module-template.h
+2008-03-31T11:11:07.376455+02:00 localhost logger: msg.c
+2008-03-31T11:11:07.379933+02:00 localhost logger: msg.h
+2008-03-31T11:11:07.383420+02:00 localhost logger: net.c
+2008-03-31T11:11:07.384970+02:00 localhost logger: net.h
+2008-03-31T11:11:07.388642+02:00 localhost logger: net.la
+2008-03-31T11:11:07.399715+02:00 localhost logger: newfiles
+2008-03-31T11:11:07.406681+02:00 localhost logger: NEWS
+2008-03-31T11:11:07.410029+02:00 localhost logger: obj.c
+2008-03-31T11:11:07.411618+02:00 localhost logger: obj.h
+2008-03-31T11:11:07.416986+02:00 localhost logger: objomsr.c
+2008-03-31T11:11:07.418601+02:00 localhost logger: objomsr.h
+2008-03-31T11:11:07.438162+02:00 localhost logger: obj-types.h
+2008-03-31T11:11:07.443396+02:00 localhost logger: omdiscard.c
+2008-03-31T11:11:07.446837+02:00 localhost logger: omdiscard.h
+2008-03-31T11:11:07.450255+02:00 localhost logger: omfile.c
+2008-03-31T11:11:07.469392+02:00 localhost logger: omfile.h
+2008-03-31T11:11:07.473681+02:00 localhost logger: omfwd.c
+2008-03-31T11:11:07.475520+02:00 localhost logger: omfwd.h
+2008-03-31T11:11:07.479117+02:00 localhost logger: omgssapi.c
+2008-03-31T11:11:07.502065+02:00 localhost logger: omlibdbi.c
+2008-03-31T11:11:07.505973+02:00 localhost logger: ommysql.c
+2008-03-31T11:11:07.507880+02:00 localhost logger: ommysql.la
+2008-03-31T11:11:07.513307+02:00 localhost logger: ompgsql.c
+2008-03-31T11:11:07.535083+02:00 localhost logger: omrelp.c
+2008-03-31T11:11:07.536515+02:00 localhost logger: omshell.c
+2008-03-31T11:11:07.538068+02:00 localhost logger: omshell.h
+2008-03-31T11:11:07.544408+02:00 localhost logger: omsnmp.c
+2008-03-31T11:11:07.546110+02:00 localhost logger: omusrmsg.c
+2008-03-31T11:11:07.571891+02:00 localhost logger: omusrmsg.h
+2008-03-31T11:11:07.586758+02:00 localhost logger: outchannel.c
+2008-03-31T11:11:07.594573+02:00 localhost logger: outchannel.h
+2008-03-31T11:11:07.598157+02:00 localhost logger: parse.c
+2008-03-31T11:11:07.599735+02:00 localhost logger: parse.h
+2008-03-31T11:11:07.619676+02:00 localhost logger: patches
+2008-03-31T11:11:07.627634+02:00 localhost logger: perftest.c
+2008-03-31T11:11:07.629553+02:00 localhost logger: pidfile.c
+2008-03-31T11:11:07.633089+02:00 localhost logger: pidfile.h
+2008-03-31T11:11:07.654530+02:00 localhost logger: plugins
+2008-03-31T11:11:07.658535+02:00 localhost logger: queue.c
+2008-03-31T11:11:07.662349+02:00 localhost logger: queue.h
+2008-03-31T11:11:07.666467+02:00 localhost logger: rawfmt
+2008-03-31T11:11:07.690741+02:00 localhost logger: README
+2008-03-31T11:11:07.694233+02:00 localhost logger: redhat
+2008-03-31T11:11:07.695814+02:00 localhost logger: regexp.c
+2008-03-31T11:11:07.702035+02:00 localhost logger: regexp.h
+2008-03-31T11:11:07.703873+02:00 localhost logger: regexp.la
+2008-03-31T11:11:07.728553+02:00 localhost logger: relputil.c
+2008-03-31T11:11:07.732697+02:00 localhost logger: relputil.h
+2008-03-31T11:11:07.736364+02:00 localhost logger: rfc3195d
+2008-03-31T11:11:07.740154+02:00 localhost logger: rfc3195d.8
+2008-03-31T11:11:07.762884+02:00 localhost logger: rfc3195d.c
+2008-03-31T11:11:07.764472+02:00 localhost logger: rfc3195d.o
+2008-03-31T11:11:07.766016+02:00 localhost logger: rg2.conf
+2008-03-31T11:11:07.772941+02:00 localhost logger: rg.conf
+2008-03-31T11:11:07.777199+02:00 localhost logger: rg.conf.all
+2008-03-31T11:11:07.798945+02:00 localhost logger: rg.conf.large
+2008-03-31T11:11:07.805217+02:00 localhost logger: rg.conf.perftest
+2008-03-31T11:11:07.808400+02:00 localhost logger: rg.conf.save
+2008-03-31T11:11:07.832872+02:00 localhost logger: rger-lazyness.patch
+2008-03-31T11:11:07.836708+02:00 localhost logger: rklogd
+2008-03-31T11:11:07.841812+02:00 localhost logger: rmcore
+2008-03-31T11:11:07.845383+02:00 localhost logger: rsyslog-3.12.1.tar.gz
+2008-03-31T11:11:07.870014+02:00 localhost logger: rsyslog-3.12.2.tar.gz
+2008-03-31T11:11:07.875131+02:00 localhost logger: rsyslog-3.12.3.tar.gz
+2008-03-31T11:11:07.884146+02:00 localhost logger: rsyslog-3.12.4.tar.gz
+2008-03-31T11:11:07.888617+02:00 localhost logger: rsyslog-3.12.5.tar.gz
+2008-03-31T11:11:07.911357+02:00 localhost logger: rsyslog-3.13.0.tar.gz
+2008-03-31T11:11:07.913017+02:00 localhost logger: rsyslog.conf
+2008-03-31T11:11:07.919186+02:00 localhost logger: rsyslog.conf.5
+2008-03-31T11:11:07.921357+02:00 localhost logger: rsyslog.conf.man
+2008-03-31T11:11:07.926686+02:00 localhost logger: rsyslogd
+2008-03-31T11:11:07.946788+02:00 localhost logger: rsyslogd.8
+2008-03-31T11:11:07.952561+02:00 localhost logger: rsyslogd-action.o
+2008-03-31T11:11:07.957633+02:00 localhost logger: rsyslogd-cfsysline.o
+2008-03-31T11:11:07.982316+02:00 localhost logger: rsyslogd-conf.o
+2008-03-31T11:11:07.986155+02:00 localhost logger: rsyslogd-ctok.o
+2008-03-31T11:11:07.988391+02:00 localhost logger: rsyslogd-ctok_token.o
+2008-03-31T11:11:07.995067+02:00 localhost logger: rsyslogd-datetime.o
+2008-03-31T11:11:08.018542+02:00 localhost logger: rsyslogd-debug.o
+2008-03-31T11:11:08.019984+02:00 localhost logger: rsyslogd-errmsg.o
+2008-03-31T11:11:08.028002+02:00 localhost logger: rsyslogd-expr.o
+2008-03-31T11:11:08.032218+02:00 localhost logger: rsyslogd-iminternal.o
+2008-03-31T11:11:08.054970+02:00 localhost logger: rsyslogd-linkedlist.o
+2008-03-31T11:11:08.059704+02:00 localhost logger: rsyslogd-modules.o
+2008-03-31T11:11:08.063475+02:00 localhost logger: rsyslogd-msg.o
+2008-03-31T11:11:08.067478+02:00 localhost logger: rsyslogd-obj.o
+2008-03-31T11:11:08.089814+02:00 localhost logger: rsyslogd-objomsr.o
+2008-03-31T11:11:08.093268+02:00 localhost logger: rsyslogd-omdiscard.o
+2008-03-31T11:11:08.097762+02:00 localhost logger: rsyslogd-omfile.o
+2008-03-31T11:11:08.101066+02:00 localhost logger: rsyslogd-omfwd.o
+2008-03-31T11:11:08.128358+02:00 localhost logger: rsyslogd-omshell.o
+2008-03-31T11:11:08.132318+02:00 localhost logger: rsyslogd-omusrmsg.o
+2008-03-31T11:11:08.134077+02:00 localhost logger: rsyslogd-outchannel.o
+2008-03-31T11:11:08.139651+02:00 localhost logger: rsyslogd-parse.o
+2008-03-31T11:11:08.143207+02:00 localhost logger: rsyslogd-pidfile.o
+2008-03-31T11:11:08.162886+02:00 localhost logger: rsyslogd-queue.o
+2008-03-31T11:11:08.168831+02:00 localhost logger: rsyslogd-srUtils.o
+2008-03-31T11:11:08.172749+02:00 localhost logger: rsyslogd-stream.o
+2008-03-31T11:11:08.175214+02:00 localhost logger: rsyslogd-stringbuf.o
+2008-03-31T11:11:08.200894+02:00 localhost logger: rsyslogd-sync.o
+2008-03-31T11:11:08.203163+02:00 localhost logger: rsyslogd-syslogd.o
+2008-03-31T11:11:08.208558+02:00 localhost logger: rsyslogd-sysvar.o
+2008-03-31T11:11:08.212196+02:00 localhost logger: rsyslogd-tcpsyslog.o
+2008-03-31T11:11:08.235231+02:00 localhost logger: rsyslogd-template.o
+2008-03-31T11:11:08.240058+02:00 localhost logger: rsyslogd-threads.o
+2008-03-31T11:11:08.244154+02:00 localhost logger: rsyslogd-var.o
+2008-03-31T11:11:08.248316+02:00 localhost logger: rsyslogd-vm.o
+2008-03-31T11:11:08.270423+02:00 localhost logger: rsyslogd-vmop.o
+2008-03-31T11:11:08.277332+02:00 localhost logger: rsyslogd-vmprg.o
+2008-03-31T11:11:08.282052+02:00 localhost logger: rsyslogd-vmstk.o
+2008-03-31T11:11:08.285674+02:00 localhost logger: rsyslogd-with-regexp
+2008-03-31T11:11:08.313917+02:00 localhost logger: rsyslogd-wti.o
+2008-03-31T11:11:08.317610+02:00 localhost logger: rsyslogd-wtp.o
+2008-03-31T11:11:08.321726+02:00 localhost logger: rsyslog.h
+2008-03-31T11:11:08.345143+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T11:11:08.346807+02:00 localhost logger: s
+2008-03-31T11:11:08.352142+02:00 localhost logger: s2
+2008-03-31T11:11:08.356390+02:00 localhost logger: sample.conf
+2008-03-31T11:11:08.376898+02:00 localhost logger: slackware
+2008-03-31T11:11:08.380347+02:00 localhost logger: solaris
+2008-03-31T11:11:08.383950+02:00 localhost logger: spool
+2008-03-31T11:11:08.388176+02:00 localhost logger: sql
+2008-03-31T11:11:08.410855+02:00 localhost logger: srUtils.c
+2008-03-31T11:11:08.417170+02:00 localhost logger: srUtils.h
+2008-03-31T11:11:08.420443+02:00 localhost logger: stamp-h1
+2008-03-31T11:11:08.424979+02:00 localhost logger: stream.c
+2008-03-31T11:11:08.446831+02:00 localhost logger: stream.h
+2008-03-31T11:11:08.451128+02:00 localhost logger: stringbuf.c
+2008-03-31T11:11:08.452699+02:00 localhost logger: stringbuf.h
+2008-03-31T11:11:08.459530+02:00 localhost logger: sync.c
+2008-03-31T11:11:08.461359+02:00 localhost logger: sync.h
+2008-03-31T11:11:08.492687+02:00 localhost logger: syslog.conf
+2008-03-31T11:11:08.496539+02:00 localhost logger: syslog.conf.sample
+2008-03-31T11:11:08.501901+02:00 localhost logger: syslogd.c
+2008-03-31T11:11:08.503701+02:00 localhost logger: syslogd.h
+2008-03-31T11:11:08.519411+02:00 localhost logger: syslogd-types.h
+2008-03-31T11:11:08.523524+02:00 localhost logger: syslogmsgs
+2008-03-31T11:11:08.525178+02:00 localhost logger: syslog-tst.conf
+2008-03-31T11:11:08.531179+02:00 localhost logger: sysvar.c
+2008-03-31T11:11:08.533055+02:00 localhost logger: sysvar.h
+2008-03-31T11:11:08.547829+02:00 localhost logger: t
+2008-03-31T11:11:08.551578+02:00 localhost logger: t1
+2008-03-31T11:11:08.556212+02:00 localhost logger: tars
+2008-03-31T11:11:08.560342+02:00 localhost logger: tcpclt.c
+2008-03-31T11:11:08.576142+02:00 localhost logger: tcpclt.h
+2008-03-31T11:11:08.579079+02:00 localhost logger: tcpsrv.c
+2008-03-31T11:11:08.584918+02:00 localhost logger: tcpsrv.h
+2008-03-31T11:11:08.589882+02:00 localhost logger: tcpsrv.la
+2008-03-31T11:11:08.602001+02:00 localhost logger: tcps_sess.c
+2008-03-31T11:11:08.603561+02:00 localhost logger: tcps_sess.h
+2008-03-31T11:11:08.609525+02:00 localhost logger: tcpsyslog.c
+2008-03-31T11:11:08.614906+02:00 localhost logger: tcpsyslog.h
+2008-03-31T11:11:08.618771+02:00 localhost logger: template.c
+2008-03-31T11:11:08.622824+02:00 localhost logger: template.h
+2008-03-31T11:11:08.642559+02:00 localhost logger: test
+2008-03-31T11:11:08.646577+02:00 localhost logger: test.conf
+2008-03-31T11:11:08.650712+02:00 localhost logger: testrest
+2008-03-31T11:11:08.654575+02:00 localhost logger: threadsafe
+2008-03-31T11:11:08.677148+02:00 localhost logger: threads.c
+2008-03-31T11:11:08.678893+02:00 localhost logger: threads.h
+2008-03-31T11:11:08.680487+02:00 localhost logger: tm
+2008-03-31T11:11:08.687745+02:00 localhost logger: tmm
+2008-03-31T11:11:08.713539+02:00 localhost logger: tmp
+2008-03-31T11:11:08.716978+02:00 localhost logger: tmp1
+2008-03-31T11:11:08.718462+02:00 localhost logger: tmp2
+2008-03-31T11:11:08.724910+02:00 localhost logger: tmp.rg
+2008-03-31T11:11:08.726648+02:00 localhost logger: today
+2008-03-31T11:11:08.746546+02:00 localhost logger: todo
+2008-03-31T11:11:08.747950+02:00 localhost logger: toReview
+2008-03-31T11:11:08.753191+02:00 localhost logger: udpsyslog.pl
+2008-03-31T11:11:08.757606+02:00 localhost logger: upd-cvs
+2008-03-31T11:11:08.780527+02:00 localhost logger: utils
+2008-03-31T11:11:08.784130+02:00 localhost logger: var.c
+2008-03-31T11:11:08.790072+02:00 localhost logger: var.h
+2008-03-31T11:11:08.792457+02:00 localhost logger: varmofejko.conf
+2008-03-31T11:11:08.796593+02:00 localhost logger: vartmp
+2008-03-31T11:11:08.816385+02:00 localhost logger: vartmp1
+2008-03-31T11:11:08.820071+02:00 localhost logger: vm.c
+2008-03-31T11:11:08.828496+02:00 localhost logger: vm.h
+2008-03-31T11:11:08.830534+02:00 localhost logger: vmop.c
+2008-03-31T11:11:08.831982+02:00 localhost logger: vmop.h
+2008-03-31T11:11:08.852701+02:00 localhost logger: vmprg.c
+2008-03-31T11:11:08.854229+02:00 localhost logger: vmprg.h
+2008-03-31T11:11:08.860742+02:00 localhost logger: vmstk.c
+2008-03-31T11:11:08.862360+02:00 localhost logger: vmstk.h
+2008-03-31T11:11:08.863751+02:00 localhost logger: void
+2008-03-31T11:11:08.887036+02:00 localhost logger: wti.c
+2008-03-31T11:11:08.891700+02:00 localhost logger: wti.h
+2008-03-31T11:11:08.893195+02:00 localhost logger: wtp.c
+2008-03-31T11:11:08.894562+02:00 localhost logger: wtp.h
+2008-03-31T11:11:23.689515+02:00 localhost rger: test1
+2008-03-31T11:12:31.152240+02:00 localhost logger: 2007
+2008-03-31T11:12:31.189895+02:00 localhost logger: aclocal.m4
+2008-03-31T11:12:31.194221+02:00 localhost logger: action.c
+2008-03-31T11:12:31.200924+02:00 localhost logger: action.h
+2008-03-31T11:12:31.205990+02:00 localhost logger: aliases
+2008-03-31T11:12:31.223310+02:00 localhost logger: ANNOUNCE
+2008-03-31T11:12:31.224916+02:00 localhost logger: atomic.h
+2008-03-31T11:12:31.226933+02:00 localhost logger: AUTHORS
+2008-03-31T11:12:31.228511+02:00 localhost logger: autom4te.cache
+2008-03-31T11:12:31.238074+02:00 localhost logger: autoscan.log
+2008-03-31T11:12:31.254648+02:00 localhost logger: bsd-syslogd.c
+2008-03-31T11:12:31.258513+02:00 localhost logger: BUGS
+2008-03-31T11:12:31.266212+02:00 localhost logger: cfsysline.c
+2008-03-31T11:12:31.271228+02:00 localhost logger: cfsysline.h
+2008-03-31T11:12:31.289169+02:00 localhost logger: ChangeLog
+2008-03-31T11:12:31.291240+02:00 localhost logger: CHANGES
+2008-03-31T11:12:31.299268+02:00 localhost logger: compile
+2008-03-31T11:12:31.307550+02:00 localhost logger: conf
+2008-03-31T11:12:31.323554+02:00 localhost logger: conf.c
+2008-03-31T11:12:31.328763+02:00 localhost logger: conf.h
+2008-03-31T11:12:31.330806+02:00 localhost logger: config.guess
+2008-03-31T11:12:31.335373+02:00 localhost logger: config.h
+2008-03-31T11:12:31.336920+02:00 localhost logger: config.h.in
+2008-03-31T11:12:31.356560+02:00 localhost logger: config.h.in~
+2008-03-31T11:12:31.358137+02:00 localhost logger: config.log
+2008-03-31T11:12:31.359786+02:00 localhost logger: config.status
+2008-03-31T11:12:31.361408+02:00 localhost logger: config.sub
+2008-03-31T11:12:31.362992+02:00 localhost logger: configure
+2008-03-31T11:12:31.364869+02:00 localhost logger: configure.ac
+2008-03-31T11:12:31.388655+02:00 localhost logger: configure.scan
+2008-03-31T11:12:31.393637+02:00 localhost logger: contains
+2008-03-31T11:12:31.395091+02:00 localhost logger: contrib
+2008-03-31T11:12:31.398881+02:00 localhost logger: COPYING
+2008-03-31T11:12:31.402945+02:00 localhost logger: cp-doc-all
+2008-03-31T11:12:31.422529+02:00 localhost logger: cp-doc-one
+2008-03-31T11:12:31.423935+02:00 localhost logger: cp-rel
+2008-03-31T11:12:31.425310+02:00 localhost logger: createDB.sql
+2008-03-31T11:12:31.430191+02:00 localhost logger: ctok.c
+2008-03-31T11:12:31.434749+02:00 localhost logger: ctok.h
+2008-03-31T11:12:31.454002+02:00 localhost logger: ctok_token.c
+2008-03-31T11:12:31.457439+02:00 localhost logger: ctok_token.h
+2008-03-31T11:12:31.458960+02:00 localhost logger: cvs
+2008-03-31T11:12:31.464464+02:00 localhost logger: CVS
+2008-03-31T11:12:31.485958+02:00 localhost logger: datetime.c
+2008-03-31T11:12:31.487453+02:00 localhost logger: datetime.h
+2008-03-31T11:12:31.488872+02:00 localhost logger: debian
+2008-03-31T11:12:31.496045+02:00 localhost logger: debug
+2008-03-31T11:12:31.497732+02:00 localhost logger: debug.c
+2008-03-31T11:12:31.518983+02:00 localhost logger: debug.c.net
+2008-03-31T11:12:31.522131+02:00 localhost logger: debug.h
+2008-03-31T11:12:31.525534+02:00 localhost logger: delete_mysql
+2008-03-31T11:12:31.528872+02:00 localhost logger: depcomp
+2008-03-31T11:12:31.548046+02:00 localhost logger: diff
+2008-03-31T11:12:31.549503+02:00 localhost logger: dist
+2008-03-31T11:12:31.555696+02:00 localhost logger: doc
+2008-03-31T11:12:31.559015+02:00 localhost logger: do_configure
+2008-03-31T11:12:31.560609+02:00 localhost logger: Doxyfile
+2008-03-31T11:12:31.580741+02:00 localhost logger: errmsg.c
+2008-03-31T11:12:31.582140+02:00 localhost logger: errmsg.h
+2008-03-31T11:12:31.583850+02:00 localhost logger: expr.c
+2008-03-31T11:12:31.591460+02:00 localhost logger: expr.h
+2008-03-31T11:12:31.613427+02:00 localhost logger: fields
+2008-03-31T11:12:31.614944+02:00 localhost logger: filein
+2008-03-31T11:12:31.621822+02:00 localhost logger: file.log # comment
+2008-03-31T11:12:31.623570+02:00 localhost logger: freebsd
+2008-03-31T11:12:31.626881+02:00 localhost logger: glbl.h
+2008-03-31T11:12:31.645836+02:00 localhost logger: gssapi.la
+2008-03-31T11:12:31.649415+02:00 localhost logger: gss-misc.c
+2008-03-31T11:12:31.654051+02:00 localhost logger: gss-misc.h
+2008-03-31T11:12:31.655671+02:00 localhost logger: gssutil.la
+2008-03-31T11:12:31.676935+02:00 localhost logger: hang
+2008-03-31T11:12:31.679875+02:00 localhost logger: imfile.c
+2008-03-31T11:12:31.683619+02:00 localhost logger: imgssapi.c
+2008-03-31T11:12:31.687669+02:00 localhost logger: iminternal.c
+2008-03-31T11:12:31.708700+02:00 localhost logger: iminternal.h
+2008-03-31T11:12:31.712090+02:00 localhost logger: imklog.c
+2008-03-31T11:12:31.713699+02:00 localhost logger: immark.c
+2008-03-31T11:12:31.719992+02:00 localhost logger: imrelp.c
+2008-03-31T11:12:31.721631+02:00 localhost logger: imtcp.c
+2008-03-31T11:12:31.740704+02:00 localhost logger: imtemplate.c
+2008-03-31T11:12:31.743625+02:00 localhost logger: imudp.c
+2008-03-31T11:12:31.747053+02:00 localhost logger: imuxsock.c
+2008-03-31T11:12:31.751077+02:00 localhost logger: INSTALL
+2008-03-31T11:12:31.772669+02:00 localhost logger: install-sh
+2008-03-31T11:12:31.774120+02:00 localhost logger: johnn.conf
+2008-03-31T11:12:31.775569+02:00 localhost logger: kernelmsgs
+2008-03-31T11:12:31.780994+02:00 localhost logger: klogd
+2008-03-31T11:12:31.784974+02:00 localhost logger: klogd_sources
+2008-03-31T11:12:31.804898+02:00 localhost logger: l
+2008-03-31T11:12:31.808428+02:00 localhost logger: lib
+2008-03-31T11:12:31.811912+02:00 localhost logger: libgssapi-misc.la
+2008-03-31T11:12:31.815341+02:00 localhost logger: liblogging-stub.h
+2008-03-31T11:12:31.857576+02:00 localhost logger: libmysqlclient.a
+2008-03-31T11:12:31.859374+02:00 localhost logger: libtool
+2008-03-31T11:12:31.864790+02:00 localhost logger: linelen.c
+2008-03-31T11:12:31.874301+02:00 localhost logger: linkedlist.c
+2008-03-31T11:12:31.879562+02:00 localhost logger: linkedlist.h
+2008-03-31T11:12:31.886484+02:00 localhost logger: linux
+2008-03-31T11:12:31.891251+02:00 localhost logger: lmgssutil.la
+2008-03-31T11:12:31.892854+02:00 localhost logger: lmgssutil_la-gss-misc.lo
+2008-03-31T11:12:31.896096+02:00 localhost logger: lmnet.la
+2008-03-31T11:12:31.906452+02:00 localhost logger: lmnet_la-net.lo
+2008-03-31T11:12:31.911584+02:00 localhost logger: lmregexp.la
+2008-03-31T11:12:31.917471+02:00 localhost logger: lmregexp_la-regexp.lo
+2008-03-31T11:12:31.921126+02:00 localhost logger: lmrelputil.la
+2008-03-31T11:12:31.924466+02:00 localhost logger: lmrelputil_la-relputil.lo
+2008-03-31T11:12:31.927826+02:00 localhost logger: lmtcpclt.la
+2008-03-31T11:12:31.946337+02:00 localhost logger: lmtcpclt_la-tcpclt.lo
+2008-03-31T11:12:31.947816+02:00 localhost logger: lmtcpsrv.la
+2008-03-31T11:12:31.954555+02:00 localhost logger: lmtcpsrv_la-tcpsrv.lo
+2008-03-31T11:12:31.957857+02:00 localhost logger: lmtcpsrv_la-tcps_sess.lo
+2008-03-31T11:12:31.959548+02:00 localhost logger: log
+2008-03-31T11:12:31.978508+02:00 localhost logger: logfile
+2008-03-31T11:12:31.980098+02:00 localhost logger: ltmain.sh
+2008-03-31T11:12:31.988427+02:00 localhost logger: m
+2008-03-31T11:12:31.990089+02:00 localhost logger: Makefile
+2008-03-31T11:12:32.009396+02:00 localhost logger: Makefile.am
+2008-03-31T11:12:32.011099+02:00 localhost logger: Makefile.in
+2008-03-31T11:12:32.015871+02:00 localhost logger: MANIFEST
+2008-03-31T11:12:32.020454+02:00 localhost logger: missing
+2008-03-31T11:12:32.042251+02:00 localhost logger: mkrelease
+2008-03-31T11:12:32.045672+02:00 localhost logger: mksymlink
+2008-03-31T11:12:32.047303+02:00 localhost logger: mktar
+2008-03-31T11:12:32.053768+02:00 localhost logger: modules.c
+2008-03-31T11:12:32.055626+02:00 localhost logger: modules.c.save
+2008-03-31T11:12:32.074554+02:00 localhost logger: modules.h
+2008-03-31T11:12:32.080258+02:00 localhost logger: module-template.h
+2008-03-31T11:12:32.081879+02:00 localhost logger: msg.c
+2008-03-31T11:12:32.086360+02:00 localhost logger: msg.h
+2008-03-31T11:12:32.111557+02:00 localhost logger: net.c
+2008-03-31T11:12:32.113874+02:00 localhost logger: net.h
+2008-03-31T11:12:32.118130+02:00 localhost logger: net.la
+2008-03-31T11:12:32.121526+02:00 localhost logger: newfiles
+2008-03-31T11:12:32.124785+02:00 localhost logger: NEWS
+2008-03-31T11:12:32.146116+02:00 localhost logger: obj.c
+2008-03-31T11:12:32.147687+02:00 localhost logger: obj.h
+2008-03-31T11:12:32.154464+02:00 localhost logger: objomsr.c
+2008-03-31T11:12:32.157729+02:00 localhost logger: objomsr.h
+2008-03-31T11:12:32.176439+02:00 localhost logger: obj-types.h
+2008-03-31T11:12:32.177889+02:00 localhost logger: omdiscard.c
+2008-03-31T11:12:32.179246+02:00 localhost logger: omdiscard.h
+2008-03-31T11:12:32.185491+02:00 localhost logger: omfile.c
+2008-03-31T11:12:32.188711+02:00 localhost logger: omfile.h
+2008-03-31T11:12:32.215039+02:00 localhost logger: omfwd.c
+2008-03-31T11:12:32.220639+02:00 localhost logger: omfwd.h
+2008-03-31T11:12:32.222028+02:00 localhost logger: omgssapi.c
+2008-03-31T11:12:32.225604+02:00 localhost logger: omlibdbi.c
+2008-03-31T11:12:32.229031+02:00 localhost logger: ommysql.c
+2008-03-31T11:12:32.247688+02:00 localhost logger: ommysql.la
+2008-03-31T11:12:32.249092+02:00 localhost logger: ompgsql.c
+2008-03-31T11:12:32.254905+02:00 localhost logger: omrelp.c
+2008-03-31T11:12:32.258180+02:00 localhost logger: omshell.c
+2008-03-31T11:12:32.261469+02:00 localhost logger: omshell.h
+2008-03-31T11:12:32.280505+02:00 localhost logger: omsnmp.c
+2008-03-31T11:12:32.288820+02:00 localhost logger: omusrmsg.c
+2008-03-31T11:12:32.292530+02:00 localhost logger: omusrmsg.h
+2008-03-31T11:12:32.314210+02:00 localhost logger: outchannel.c
+2008-03-31T11:12:32.318123+02:00 localhost logger: outchannel.h
+2008-03-31T11:12:32.324700+02:00 localhost logger: parse.c
+2008-03-31T11:12:32.328053+02:00 localhost logger: parse.h
+2008-03-31T11:12:32.346984+02:00 localhost logger: patches
+2008-03-31T11:12:32.351105+02:00 localhost logger: perftest.c
+2008-03-31T11:12:32.357387+02:00 localhost logger: pidfile.c
+2008-03-31T11:12:32.360822+02:00 localhost logger: pidfile.h
+2008-03-31T11:12:32.380007+02:00 localhost logger: plugins
+2008-03-31T11:12:32.384898+02:00 localhost logger: queue.c
+2008-03-31T11:12:32.390508+02:00 localhost logger: queue.h
+2008-03-31T11:12:32.413532+02:00 localhost logger: rawfmt
+2008-03-31T11:12:32.417241+02:00 localhost logger: README
+2008-03-31T11:12:32.422244+02:00 localhost logger: redhat
+2008-03-31T11:12:32.432170+02:00 localhost logger: regexp.c
+2008-03-31T11:12:32.486107+02:00 localhost logger: regexp.h
+2008-03-31T11:12:32.487825+02:00 localhost logger: regexp.la
+2008-03-31T11:12:32.489196+02:00 localhost logger: relputil.c
+2008-03-31T11:12:32.492938+02:00 localhost logger: relputil.h
+2008-03-31T11:12:32.496362+02:00 localhost logger: rfc3195d
+2008-03-31T11:12:32.535706+02:00 localhost logger: rfc3195d.8
+2008-03-31T11:12:32.538672+02:00 localhost logger: rfc3195d.c
+2008-03-31T11:12:32.541965+02:00 localhost logger: rfc3195d.o
+2008-03-31T11:12:32.545374+02:00 localhost logger: rg2.conf
+2008-03-31T11:12:32.582482+02:00 localhost logger: rg.conf
+2008-03-31T11:12:32.586519+02:00 localhost logger: rg.conf.all
+2008-03-31T11:12:32.587892+02:00 localhost logger: rg.conf.large
+2008-03-31T11:12:32.593533+02:00 localhost logger: rg.conf.perftest
+2008-03-31T11:12:32.634924+02:00 localhost logger: rg.conf.save
+2008-03-31T11:12:32.638455+02:00 localhost logger: rger-lazyness.patch
+2008-03-31T11:12:32.641946+02:00 localhost logger: rklogd
+2008-03-31T11:12:32.645208+02:00 localhost logger: rmcore
+2008-03-31T11:12:32.646929+02:00 localhost logger: rsyslog-3.12.1.tar.gz
+2008-03-31T11:12:32.685775+02:00 localhost logger: rsyslog-3.12.2.tar.gz
+2008-03-31T11:12:32.689659+02:00 localhost logger: rsyslog-3.12.3.tar.gz
+2008-03-31T11:12:32.694763+02:00 localhost logger: rsyslog-3.12.4.tar.gz
+2008-03-31T11:12:32.696489+02:00 localhost logger: rsyslog-3.12.5.tar.gz
+2008-03-31T11:12:32.727701+02:00 localhost logger: rsyslog-3.13.0.tar.gz
+2008-03-31T11:12:32.730915+02:00 localhost logger: rsyslog.conf
+2008-03-31T11:12:32.734612+02:00 localhost logger: rsyslog.conf.5
+2008-03-31T11:12:32.737965+02:00 localhost logger: rsyslog.conf.man
+2008-03-31T11:12:32.769047+02:00 localhost logger: rsyslogd
+2008-03-31T11:12:32.772922+02:00 localhost logger: rsyslogd.8
+2008-03-31T11:12:32.774474+02:00 localhost logger: rsyslogd-action.o
+2008-03-31T11:12:32.779775+02:00 localhost logger: rsyslogd-cfsysline.o
+2008-03-31T11:12:32.811597+02:00 localhost logger: rsyslogd-conf.o
+2008-03-31T11:12:32.815157+02:00 localhost logger: rsyslogd-ctok.o
+2008-03-31T11:12:32.819402+02:00 localhost logger: rsyslogd-ctok_token.o
+2008-03-31T11:12:32.822939+02:00 localhost logger: rsyslogd-datetime.o
+2008-03-31T11:12:32.824480+02:00 localhost logger: rsyslogd-debug.o
+2008-03-31T11:12:32.854602+02:00 localhost logger: rsyslogd-errmsg.o
+2008-03-31T11:12:32.860037+02:00 localhost logger: rsyslogd-expr.o
+2008-03-31T11:12:32.863607+02:00 localhost logger: rsyslogd-iminternal.o
+2008-03-31T11:12:32.902982+02:00 localhost logger: rsyslogd-linkedlist.o
+2008-03-31T11:12:32.906601+02:00 localhost logger: rsyslogd-modules.o
+2008-03-31T11:12:32.908025+02:00 localhost logger: rsyslogd-msg.o
+2008-03-31T11:12:32.911678+02:00 localhost logger: rsyslogd-obj.o
+2008-03-31T11:12:32.915164+02:00 localhost logger: rsyslogd-objomsr.o
+2008-03-31T11:12:32.945520+02:00 localhost logger: rsyslogd-omdiscard.o
+2008-03-31T11:12:32.947078+02:00 localhost logger: rsyslogd-omfile.o
+2008-03-31T11:12:32.952782+02:00 localhost logger: rsyslogd-omfwd.o
+2008-03-31T11:12:32.954802+02:00 localhost logger: rsyslogd-omshell.o
+2008-03-31T11:12:32.958064+02:00 localhost logger: rsyslogd-omusrmsg.o
+2008-03-31T11:12:32.990875+02:00 localhost logger: rsyslogd-outchannel.o
+2008-03-31T11:12:32.996613+02:00 localhost logger: rsyslogd-parse.o
+2008-03-31T11:12:33.000488+02:00 localhost logger: rsyslogd-pidfile.o
+2008-03-31T11:12:33.004137+02:00 localhost logger: rsyslogd-queue.o
+2008-03-31T11:12:33.037998+02:00 localhost logger: rsyslogd-srUtils.o
+2008-03-31T11:12:33.042684+02:00 localhost logger: rsyslogd-stream.o
+2008-03-31T11:12:33.046220+02:00 localhost logger: rsyslogd-stringbuf.o
+2008-03-31T11:12:33.047872+02:00 localhost logger: rsyslogd-sync.o
+2008-03-31T11:12:33.079043+02:00 localhost logger: rsyslogd-syslogd.o
+2008-03-31T11:12:33.082077+02:00 localhost logger: rsyslogd-sysvar.o
+2008-03-31T11:12:33.086799+02:00 localhost logger: rsyslogd-tcpsyslog.o
+2008-03-31T11:12:33.090199+02:00 localhost logger: rsyslogd-template.o
+2008-03-31T11:12:33.154539+02:00 localhost logger: rsyslogd-threads.o
+2008-03-31T11:12:33.155989+02:00 localhost logger: rsyslogd-var.o
+2008-03-31T11:12:33.161349+02:00 localhost logger: rsyslogd-vm.o
+2008-03-31T11:12:33.165748+02:00 localhost logger: rsyslogd-vmop.o
+2008-03-31T11:12:33.188313+02:00 localhost logger: rsyslogd-vmprg.o
+2008-03-31T11:12:33.189809+02:00 localhost logger: rsyslogd-vmstk.o
+2008-03-31T11:12:33.191186+02:00 localhost logger: rsyslogd-with-regexp
+2008-03-31T11:12:33.197515+02:00 localhost logger: rsyslogd-wti.o
+2008-03-31T11:12:33.201551+02:00 localhost logger: rsyslogd-wtp.o
+2008-03-31T11:12:33.213894+02:00 localhost logger: rsyslog.h
+2008-03-31T11:12:33.215269+02:00 localhost logger: rsyslog_ompgsql.diff
+2008-03-31T11:12:33.221385+02:00 localhost logger: s
+2008-03-31T11:12:33.222886+02:00 localhost logger: s2
+2008-03-31T11:12:33.236878+02:00 localhost logger: sample.conf
+2008-03-31T11:12:33.240236+02:00 localhost logger: slackware
+2008-03-31T11:12:33.241745+02:00 localhost logger: solaris
+2008-03-31T11:12:33.247274+02:00 localhost logger: spool
+2008-03-31T11:12:33.248840+02:00 localhost logger: sql
+2008-03-31T11:12:33.258894+02:00 localhost logger: srUtils.c
+2008-03-31T11:12:33.264611+02:00 localhost logger: srUtils.h
+2008-03-31T11:12:33.268730+02:00 localhost logger: stamp-h1
+2008-03-31T11:12:33.272185+02:00 localhost logger: stream.c
+2008-03-31T11:12:33.275488+02:00 localhost logger: stream.h
+2008-03-31T11:12:33.295117+02:00 localhost logger: stringbuf.c
+2008-03-31T11:12:33.297108+02:00 localhost logger: stringbuf.h
+2008-03-31T11:12:33.303565+02:00 localhost logger: sync.c
+2008-03-31T11:12:33.307034+02:00 localhost logger: sync.h
+2008-03-31T11:12:33.309079+02:00 localhost logger: syslog.conf
+2008-03-31T11:12:33.328359+02:00 localhost logger: syslog.conf.sample
+2008-03-31T11:12:33.330025+02:00 localhost logger: syslogd.c
+2008-03-31T11:12:33.338129+02:00 localhost logger: syslogd.h
+2008-03-31T11:12:33.339735+02:00 localhost logger: syslogd-types.h
+2008-03-31T11:12:33.359036+02:00 localhost logger: syslogmsgs
+2008-03-31T11:12:33.360567+02:00 localhost logger: syslog-tst.conf
+2008-03-31T11:12:33.365499+02:00 localhost logger: sysvar.c
+2008-03-31T11:12:33.369971+02:00 localhost logger: sysvar.h
+2008-03-31T11:12:33.371551+02:00 localhost logger: t
+2008-03-31T11:12:33.394271+02:00 localhost logger: t1
+2008-03-31T11:12:33.396124+02:00 localhost logger: tars
+2008-03-31T11:12:33.399660+02:00 localhost logger: tcpclt.c
+2008-03-31T11:12:33.403840+02:00 localhost logger: tcpclt.h
+2008-03-31T11:12:33.425876+02:00 localhost logger: tcpsrv.c
+2008-03-31T11:12:33.429344+02:00 localhost logger: tcpsrv.h
+2008-03-31T11:12:33.430794+02:00 localhost logger: tcpsrv.la
+2008-03-31T11:12:33.436064+02:00 localhost logger: tcps_sess.c
+2008-03-31T11:12:33.439862+02:00 localhost logger: tcps_sess.h
+2008-03-31T11:12:33.457927+02:00 localhost logger: tcpsyslog.c
+2008-03-31T11:12:33.461379+02:00 localhost logger: tcpsyslog.h
+2008-03-31T11:12:33.462921+02:00 localhost logger: template.c
+2008-03-31T11:12:33.471123+02:00 localhost logger: template.h
+2008-03-31T11:12:33.472755+02:00 localhost logger: test
+2008-03-31T11:12:33.491354+02:00 localhost logger: test.conf
+2008-03-31T11:12:33.494863+02:00 localhost logger: testrest
+2008-03-31T11:12:33.500263+02:00 localhost logger: threadsafe
+2008-03-31T11:12:33.501945+02:00 localhost logger: threads.c
+2008-03-31T11:12:33.560669+02:00 localhost logger: threads.h
+2008-03-31T11:12:33.563732+02:00 localhost logger: tm
+2008-03-31T11:12:33.568852+02:00 localhost logger: tmm
+2008-03-31T11:12:33.570386+02:00 localhost logger: tmp
+2008-03-31T11:12:33.603500+02:00 localhost logger: tmp1
+2008-03-31T11:12:33.607400+02:00 localhost logger: tmp2
+2008-03-31T11:12:33.608931+02:00 localhost logger: tmp.rg
+2008-03-31T11:12:33.615040+02:00 localhost logger: today
+2008-03-31T11:12:33.645942+02:00 localhost logger: todo
+2008-03-31T11:12:33.649307+02:00 localhost logger: toReview
+2008-03-31T11:12:33.654721+02:00 localhost logger: udpsyslog.pl
+2008-03-31T11:12:33.656240+02:00 localhost logger: upd-cvs
+2008-03-31T11:12:33.687815+02:00 localhost logger: utils
+2008-03-31T11:12:33.691171+02:00 localhost logger: var.c
+2008-03-31T11:12:33.694659+02:00 localhost logger: var.h
+2008-03-31T11:12:33.698053+02:00 localhost logger: varmofejko.conf
+2008-03-31T11:12:33.699785+02:00 localhost logger: vartmp
+2008-03-31T11:12:33.729563+02:00 localhost logger: vartmp1
+2008-03-31T11:12:33.733217+02:00 localhost logger: vm.c
+2008-03-31T11:12:33.739425+02:00 localhost logger: vm.h
+2008-03-31T11:12:33.740914+02:00 localhost logger: vmop.c
+2008-03-31T11:12:33.742258+02:00 localhost logger: vmop.h
+2008-03-31T11:12:33.770977+02:00 localhost logger: vmprg.c
+2008-03-31T11:12:33.776271+02:00 localhost logger: vmprg.h
+2008-03-31T11:12:33.777735+02:00 localhost logger: vmstk.c
+2008-03-31T11:12:33.779383+02:00 localhost logger: vmstk.h
+2008-03-31T11:12:33.811047+02:00 localhost logger: void
+2008-03-31T11:12:33.812762+02:00 localhost logger: wti.c
+2008-03-31T11:12:33.814206+02:00 localhost logger: wti.h
+2008-03-31T11:12:33.820470+02:00 localhost logger: wtp.c
+2008-03-31T11:12:33.821889+02:00 localhost logger: wtp.h
+2008-03-31T11:12:45.551577+02:00 localhost rger: test1
+2008-03-31T11:23:27.756197+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="27507" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:42:13.212653+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:42:13.461377+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="6303" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:45:16.460871+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T11:45:16.722204+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="6319" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:45:19.871522+02:00 localhost rger: test 1
+2008-03-31T11:45:25.666647+02:00 localhost rger: test 1
+2008-03-31T11:55:05.718893+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="6319" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:55:12.523706+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:55:12.746170+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9034" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:55:12.756513+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCServerclose
+2008-03-31T11:55:12.769398+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 6
+2008-03-31T11:55:12.770883+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCServerclose
+2008-03-31T11:55:12.788815+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 8
+2008-03-31T11:55:12.789947+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 14
+2008-03-31T11:55:12.791904+02:00 localhost rsyslogd:warning: selector line without actions will be discarded
+2008-03-31T11:55:16.973608+02:00 localhost rger: test 1
+2008-03-31T11:55:33.705393+02:00 localhost rger: test 2
+2008-03-31T11:55:55.492660+02:00 localhost rger: test 3
+2008-03-31T11:56:41.985580+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9034" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:56:46.667081+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:56:46.878431+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9472" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:56:46.925537+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCCServerclose
+2008-03-31T11:56:46.927541+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 6
+2008-03-31T11:56:46.928687+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCCServerclose
+2008-03-31T11:56:46.929870+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 8
+2008-03-31T11:56:46.930948+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 14
+2008-03-31T11:56:46.932694+02:00 localhost rsyslogd:warning: selector line without actions will be discarded
+2008-03-31T11:57:43.505459+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="9472" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:57:46.936813+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:57:47.142031+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="11866" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:57:47.186612+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCCServerclose
+2008-03-31T11:57:47.188622+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 6
+2008-03-31T11:57:47.189776+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so', dlopen: /lib64/librelp.so.0: undefined symbol: relpCCServerclose
+2008-03-31T11:57:47.190945+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 8
+2008-03-31T11:57:47.200239+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 14
+2008-03-31T11:57:47.215085+02:00 localhost rsyslogd:warning: selector line without actions will be discarded
+2008-03-31T11:58:52.010315+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="11866" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T11:58:56.877680+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T11:58:57.117063+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12304" x-info="http://www.rsyslog.com"] restart
+2008-03-31T11:59:02.835843+02:00 localhost rger: test 1
+2008-03-31T11:59:08.685471+02:00 localhost rger: test 2
+2008-03-31T11:59:53.896744+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12304" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T12:00:00.011595+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T12:00:00.282015+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12740" x-info="http://www.rsyslog.com"] restart
+2008-03-31T12:00:03.840184+02:00 localhost rger: test 1
+2008-03-31T12:00:12.352938+02:00 localhost rger: test 2
+2008-03-31T12:01:01.527407+02:00 localhost CROND[12751]: (root) CMD (run-parts /etc/cron.hourly)
+2008-03-31T12:02:13.656011+02:00 localhost rger: test 2
+2008-03-31T12:02:34.579428+02:00 localhost rger: test 3
+2008-03-31T12:02:47.168154+02:00 localhost rger: test 4
+2008-03-31T12:03:00.630905+02:00 localhost rger: test 5
+2008-03-31T12:03:44.280737+02:00 localhost rger: test 6
+2008-03-31T12:03:52.556420+02:00 localhost rger: test 7
+2008-03-31T12:04:19.585076+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12740" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T14:57:21.486560+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T14:57:21.780509+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="11314" x-info="http://www.rsyslog.com"] restart
+2008-03-31T14:58:20.248834+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T14:58:20.538906+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="11329" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:01:35.295656+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T15:01:35.550308+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12196" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:03:08.960061+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T15:03:09.268234+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="12633" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:04:56.313436+02:00 localhost rsyslogd:No files configured to be monitored: Inappropriate ioctl for device
+2008-03-31T15:04:56.552850+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13068" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:05:26.249087+02:00 localhost rger: test 2
+2008-03-31T15:06:08.836625+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13068" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:07:32.600605+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:07:32.867413+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13506" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:09:02.489864+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13506" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:10:08.158298+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:10:08.448535+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13944" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:11:09.947484+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="13944" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:11:14.402893+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:11:14.693643+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="14399" x-info="http://www.rsyslog.com"] restart
+2008-03-31T14:45:25.376227+02:00 localhost rger: test 1
+2008-03-31T15:27:07.165657+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="14399" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:27:43.799740+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:27:44.093931+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19239" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:10:53.884896+02:00 localhost rger: test 1
+2008-03-31T15:37:38.508320+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19239" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:45:23.337068+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:45:23.570729+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19306" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:19:20.669179+02:00 localhost rger: test 2
+2008-03-31T15:19:49.133202+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="32186" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:47:33.986925+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19306" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-03-31T15:47:42.986949+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T15:47:43.244178+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.12.6" x-pid="19322" x-info="http://www.rsyslog.com"] restart
+2008-03-31T15:50:03.901815+02:00 localhost rger: test 1
+2008-03-31T15:50:22.794911+02:00 localhost rger: test 2
+2008-03-31T16:28:29.247151+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-03-31T16:28:29.494274+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.13.0-dev0" x-pid="21944" x-info="http://www.rsyslog.com"] restart
+2008-04-01T15:50:03.901815+02:00 localhost rger: test 1
+2008-04-01T15:50:22.794911+02:00 localhost rger: test 2
+2008-04-02T10:52:53.337473+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-04-02T10:52:53.541297+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.17.0" x-pid="23035" x-info="http://www.rsyslog.com"] restart
+2008-04-02T10:52:53.584249+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so', dlopen: /home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so: undefined symbol: relpEngineAddListner
+2008-04-02T10:52:53.586088+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 6
+2008-04-02T10:52:53.587296+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so', dlopen: /home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so: undefined symbol: relpEngineConstruct
+2008-04-02T10:52:53.601714+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 8
+2008-04-02T10:52:53.602863+02:00 localhost rsyslogd:invalid or yet-unknown config file command - have you forgotten to load a module?
+2008-04-02T10:52:53.604005+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 13
+2008-04-02T10:52:53.605118+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 14
+2008-04-02T10:52:53.618122+02:00 localhost rsyslogd:warning: selector line without actions will be discarded
+2008-04-02T10:52:54.866656+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.17.0" x-pid="23035" x-info="http://www.rsyslog.com"] exiting on signal 2.
+2008-04-02T11:12:29.489172+02:00 localhost rsyslogd:No files configured to be monitored: No such file or directory
+2008-04-02T11:12:29.714152+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.17.0" x-pid="29375" x-info="http://www.rsyslog.com"] restart
+2008-04-02T11:12:29.726409+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so', dlopen: /home/rger/proj/rsyslog/plugins/imrelp/.libs/imrelp.so: undefined symbol: relpEngineAddListner
+2008-04-02T11:12:29.728277+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 6
+2008-04-02T11:12:29.729458+02:00 localhost rsyslogd:could not load module '/home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so', dlopen: /home/rger/proj/rsyslog/plugins/omrelp/.libs/omrelp.so: undefined symbol: relpEngineConstruct
+2008-04-02T11:12:29.730585+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 8
+2008-04-02T11:12:29.731700+02:00 localhost rsyslogd:invalid or yet-unknown config file command - have you forgotten to load a module?
+2008-04-02T11:12:29.772500+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 13
+2008-04-02T11:12:29.774124+02:00 localhost rsyslogd:the last error occured in /home/rger/proj/rsyslog/rg.conf, line 14
+2008-04-02T11:12:29.777408+02:00 localhost rsyslogd:warning: selector line without actions will be discarded
+2008-04-02T11:12:32.380449+02:00 localhost rsyslogd: [origin software="rsyslogd" swVersion="3.17.0" x-pid="29375" x-info="http://www.rsyslog.com"] exiting on signal 2.

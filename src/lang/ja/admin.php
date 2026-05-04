@@ -318,7 +318,7 @@ $content['LN_DBUPGRADE_SUCCESSEXEC'] = "Successfully executed statements";
 $content['LN_DBUPGRADE_FAILEDEXEC'] = "Failed statements";
 $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "At least one statement failed, you may need to correct and fix this issue manually. See error details below";
 $content['LN_DBUPGRADE_ERRMSG'] = "Error Message";
-$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "LogAnalyzer Database Version";
+$content['LN_DBUPGRADE_LOGANALYZERDBVERSION'] = "LogAnalyzer Database Version";
 
 // Charts Options
 $content['LN_CHARTS_CENTER'] = "チャート オプション";
