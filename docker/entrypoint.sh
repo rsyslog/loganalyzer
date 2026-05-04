@@ -10,7 +10,7 @@ DB_PASS="${LOGANALYZER_DB_PASSWORD:-loganalyzer}"
 DB_ROOT_PASS="${MYSQL_ROOT_PASSWORD:-loganalyzer_root}"
 TABLE_PREFIX="${LOGANALYZER_TABLE_PREFIX:-logcon_}"
 ADMIN_USER="${LOGANALYZER_ADMIN_USER:-admin}"
-ADMIN_PASS="${LOGANALYZER_ADMIN_PASSWORD:-pass}"
+ADMIN_PASS="${LOGANALYZER_ADMIN_PASSWORD:-loganalyzer}"
 SAMPLE_LOG="${LOGANALYZER_SAMPLE_LOG:-/samplelogs/sampledata_syslog.log}"
 SAMPLE_EVENTREPORTER="${LOGANALYZER_SAMPLE_EVENTREPORTER:-/samplelogs/EventReporter.log}"
 
@@ -28,9 +28,19 @@ export MYSQL_ROOT_PASSWORD="$DB_ROOT_PASS"
 
 export LOGANALYZER_DOCROOT="${LOGANALYZER_DOCROOT:-/var/www/html}"
 
-if [ ! -f "${LOGANALYZER_CONFIG_PATH:-$LOGANALYZER_DOCROOT/config.php}" ] || [ "${LOGANALYZER_OVERWRITE_CONFIG:-0}" = "1" ]; then
+DOC_CONFIG="${LOGANALYZER_DOCROOT}/config.php"
+RESOLVED_CONFIG="${LOGANALYZER_CONFIG_PATH:-$DOC_CONFIG}"
+
+if [ ! -f "$RESOLVED_CONFIG" ] || [ "${LOGANALYZER_OVERWRITE_CONFIG:-0}" = "1" ]; then
   php /usr/local/share/loganalyzer/write-config.php
-  echo "Wrote config.php for LogAnalyzer (UserDB + disk allow /samplelogs)."
+  echo "Wrote config for LogAnalyzer (UserDB + disk allow /samplelogs)."
+fi
+
+# When config lives outside the docroot (persisted volume), re-link each start — new containers lose the symlink.
+if [ -n "${LOGANALYZER_CONFIG_PATH:-}" ] && [ "$LOGANALYZER_CONFIG_PATH" != "$DOC_CONFIG" ]; then
+  mkdir -p "$(dirname "$LOGANALYZER_CONFIG_PATH")"
+  rm -f "$DOC_CONFIG"
+  ln -sfn "$LOGANALYZER_CONFIG_PATH" "$DOC_CONFIG"
 fi
 
 echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT}..."

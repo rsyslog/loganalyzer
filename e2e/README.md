@@ -10,10 +10,10 @@ From repo root (requires Docker):
 docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
 ```
 
-## Interactive (against dev stack)
+## Interactive (against dev stack — bind-mounted `src`)
 
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.dev.yml up -d
 cd e2e
 npm install
 ```
@@ -45,7 +45,7 @@ docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-
 
 [`tests/handbook-screenshots.spec.ts`](tests/handbook-screenshots.spec.ts) writes **`doc-site/docs/assets/user-guide/*.png`** (the Playwright service mounts that directory at `HANDBOOK_USER_GUIDE_ASSETS`; see `docker/docker-compose.e2e.yml`). Commit updated PNGs together with doc changes.
 
-**Local dev stack** (`docker-compose.yml`) with Playwright on the host:
+**Local dev stack** (`docker-compose.dev.yml`) with Playwright on the host:
 
 ```bash
 cd e2e

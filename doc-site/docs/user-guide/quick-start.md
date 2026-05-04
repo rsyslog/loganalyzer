@@ -1,8 +1,10 @@
 # Quick start
 
-This page matches the seeded **Docker** stack described in [Docker & CI](../docker.md): sample log sources and default admin **`admin`** / **`pass`** (development only).
+The **default Docker stack** embeds the app image and persists MySQL plus **`config.php`**. Fresh installs (**`LOGANALYZER_SEED_SAMPLE_SOURCES=0`**) create **schema + admin only** — add sources in Administration unless you enable demo seeding (**`LOGANALYZER_SEED_SAMPLE_SOURCES=1`**).
 
-## Run LogAnalyzer locally
+Credentials come from Compose or repo-root **`.env`**; default placeholders **`admin`** / **`loganalyzer`**. **[`docker/README.md` install](https://github.com/rsyslog/loganalyzer/blob/master/docker/README.md)** (numbered steps, optional **`LOGANALYZER_DISK_*`**); **[Docker handbook](../docker.md)** (helper scripts table, dev **`docker-compose.dev.yml`**, full **`web`** env table). The screenshots below use **demo sources** (Playwright/E2E).
+
+## Run LogAnalyzer locally (default Compose)
 
 From the repository root:
 

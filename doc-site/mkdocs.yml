@@ -1,5 +1,5 @@
 site_name: LogAnalyzer handbook
-site_description: Adiscon LogAnalyzer — install, Docker dev, and bundled components
+site_description: Adiscon LogAnalyzer — Docker install & dev, bundled components
 site_url: https://rsyslog.github.io/loganalyzer/
 repo_url: https://github.com/rsyslog/loganalyzer
 repo_name: loganalyzer
@@ -28,7 +28,7 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Docker & CI (from AGENTS.md): docker.md
+  - Docker (install & CI): docker.md
   - LogAnalyzer user guide:
     - 'Overview': user-guide/overview.md
     - 'Quick start': user-guide/quick-start.md

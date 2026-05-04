@@ -132,7 +132,11 @@ $content['highlightstr'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";
 
 // --- BEGIN Custom Code
-if ( isset($content['Sources'][$currentSourceID]) ) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
+if (
+	isset($currentSourceID)
+	&& isset($content['Sources'][$currentSourceID]['ObjRef'])
+	&& is_object($content['Sources'][$currentSourceID]['ObjRef'])
+) // && $content['uid_current'] != UID_UNKNOWN ) // && $content['Sources'][$currentSourceID]['SourceType'] == SOURCE_DISK )
 {
 	// Obtain and get the Config Object
 	$stream_config = $content['Sources'][$currentSourceID]['ObjRef'];

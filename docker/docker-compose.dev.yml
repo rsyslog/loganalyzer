@@ -1,7 +1,6 @@
-# Default (consumer) stack: app baked into the image; config + DB persist in volumes.
-# From repo root: docker compose -f docker/docker-compose.yml up --build
-# Optional: copy `docker/env.example` → `.env` in the repo root to set admin and DB passwords.
-# Clean reset: sh docker/rebuild-consumer.sh | docker\rebuild-consumer.bat
+# Developer stack: live bind-mount of repo src/, fixtures as /samplelogs, overwrite config each start.
+# From repo root: docker compose -f docker/docker-compose.dev.yml up --build
+# Clean rebuild: sh docker/rebuild-dev.sh | docker\rebuild-dev.bat
 
 services:
   db:
@@ -14,8 +13,10 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
     volumes:
-      - loganalyzer_mysql_data:/var/lib/mysql
+      - loganalyzer_dev_mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
       interval: 5s
@@ -29,12 +30,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - loganalyzer_config:/persist
-      # Real host logs (Linux examples): uncomment and point LOGANALYZER_DISK_* at paths under /mnt/hostlog inside the container.
-      # - /var/log:/mnt/hostlog:ro
+      - ../src:/var/www/html:rw
+      - ../tests/fixtures/samplelogs:/samplelogs:ro
     environment:
       LOGANALYZER_DOCROOT: /var/www/html
-      LOGANALYZER_CONFIG_PATH: /persist/config.php
       LOGANALYZER_DB_HOST: db
       LOGANALYZER_DB_PORT: "3306"
       LOGANALYZER_DB_NAME: ${MYSQL_DATABASE:-loganalyzer}
@@ -47,11 +46,10 @@ services:
       LOGANALYZER_LOGIN_REQUIRED: "0"
       LOGANALYZER_SAMPLE_LOG: /samplelogs/sampledata_syslog.log
       LOGANALYZER_SAMPLE_EVENTREPORTER: /samplelogs/EventReporter.log
-      LOGANALYZER_SEED_SAMPLE_SOURCES: "${LOGANALYZER_SEED_SAMPLE_SOURCES:-0}"
       LOGANALYZER_DISK_SOURCE_PATHS: "${LOGANALYZER_DISK_SOURCE_PATHS:-}"
       LOGANALYZER_DISK_SOURCES: "${LOGANALYZER_DISK_SOURCES:-}"
       LOGANALYZER_DISK_ALLOWED_EXTRA: "${LOGANALYZER_DISK_ALLOWED_EXTRA:-}"
-      LOGANALYZER_OVERWRITE_CONFIG: "0"
+      LOGANALYZER_OVERWRITE_CONFIG: "1"
     depends_on:
       db:
         condition: service_healthy
@@ -69,5 +67,4 @@ services:
       start_period: 45s
 
 volumes:
-  loganalyzer_mysql_data:
-  loganalyzer_config:
+  loganalyzer_dev_mysql_data:

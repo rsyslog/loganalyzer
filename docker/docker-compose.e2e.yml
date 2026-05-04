@@ -5,25 +5,25 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: loganalyzer_root
-      MYSQL_DATABASE: loganalyzer
-      MYSQL_USER: loganalyzer
-      MYSQL_PASSWORD: loganalyzer
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-loganalyzer_root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-loganalyzer}
+      MYSQL_USER: ${MYSQL_USER:-loganalyzer}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-loganalyzer}
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - loganalyzer_e2e_mysql:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-ploganalyzer_root"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
       interval: 5s
       timeout: 5s
       retries: 15
 
   web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     volumes:
       - ../src:/var/www/html:rw
       - ../tests/fixtures/samplelogs:/samplelogs:ro
@@ -31,16 +31,17 @@ services:
       LOGANALYZER_DOCROOT: /var/www/html
       LOGANALYZER_DB_HOST: db
       LOGANALYZER_DB_PORT: "3306"
-      LOGANALYZER_DB_NAME: loganalyzer
-      LOGANALYZER_DB_USER: loganalyzer
-      LOGANALYZER_DB_PASSWORD: loganalyzer
-      MYSQL_ROOT_PASSWORD: loganalyzer_root
+      LOGANALYZER_DB_NAME: ${MYSQL_DATABASE:-loganalyzer}
+      LOGANALYZER_DB_USER: ${MYSQL_USER:-loganalyzer}
+      LOGANALYZER_DB_PASSWORD: ${MYSQL_PASSWORD:-loganalyzer}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-loganalyzer_root}
       LOGANALYZER_TABLE_PREFIX: logcon_
-      LOGANALYZER_ADMIN_USER: admin
-      LOGANALYZER_ADMIN_PASSWORD: pass
+      LOGANALYZER_ADMIN_USER: ${LOGANALYZER_ADMIN_USER:-admin}
+      LOGANALYZER_ADMIN_PASSWORD: ${LOGANALYZER_ADMIN_PASSWORD:-loganalyzer}
       LOGANALYZER_LOGIN_REQUIRED: "0"
       LOGANALYZER_SAMPLE_LOG: /samplelogs/sampledata_syslog.log
       LOGANALYZER_SAMPLE_EVENTREPORTER: /samplelogs/EventReporter.log
+      LOGANALYZER_SEED_SAMPLE_SOURCES: "1"
       LOGANALYZER_OVERWRITE_CONFIG: "1"
     depends_on:
       db:
@@ -65,8 +66,8 @@ services:
         condition: service_healthy
     environment:
       PLAYWRIGHT_BASE_URL: http://web:8080
-      LOGANALYZER_ADMIN_USER: admin
-      LOGANALYZER_ADMIN_PASSWORD: pass
+      LOGANALYZER_ADMIN_USER: ${LOGANALYZER_ADMIN_USER:-admin}
+      LOGANALYZER_ADMIN_PASSWORD: ${LOGANALYZER_ADMIN_PASSWORD:-loganalyzer}
       HANDBOOK_USER_GUIDE_ASSETS: /handbook-user-guide-assets
     volumes:
       - ../e2e:/e2e
