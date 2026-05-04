@@ -59,7 +59,7 @@ services:
       start_period: 45s
 
   playwright:
-    image: mcr.microsoft.com/playwright:v1.49.1-noble
+    image: mcr.microsoft.com/playwright:v1.59.1-noble
     depends_on:
       web:
         condition: service_healthy
