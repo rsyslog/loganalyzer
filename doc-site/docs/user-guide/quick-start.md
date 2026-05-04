@@ -39,5 +39,5 @@ PNG files under `doc-site/docs/assets/user-guide/` are produced with **Playwrigh
 ## Go deeper
 
 - [Interface map](interface-map.md) — how main areas fit together.
-- [User guide overview](../legacy-html-manuals.md) — full list of imported chapters from `doc/`.
-- [Installation](../legacy-html/install.md) and [Basics](../legacy-html/basics.md) for configuration and concepts.
+- [User guide overview](overview.md) — full list of imported chapters from `doc/`.
+- [Installation](chapters/install.md) and [Basics](chapters/basics.md) for configuration and concepts.

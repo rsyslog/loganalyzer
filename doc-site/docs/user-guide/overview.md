@@ -6,16 +6,16 @@ Every `*.html` manual under [`doc/`](https://github.com/rsyslog/loganalyzer/blob
 
 ## Pages (in-site)
 
-- [Documentation home](legacy-html/manual.md) (`manual.html`)
-- [Basics](legacy-html/basics.md) (`basics.html`)
-- [Installation](legacy-html/install.md) (`install.html`)
-- [Search syntax](legacy-html/searching.md) (`searching.html`)
-- [Troubleshooting](legacy-html/troubleshoot.md) (`troubleshoot.html`)
-- [Build from repo](legacy-html/build_from_repo.md) (`build_from_repo.html`)
-- [Free support](legacy-html/free_support.md) (`free_support.html`)
-- [Professional services](legacy-html/professional_services.md) (`professional_services.html`)
-- [Text log files](legacy-html/textfiles.md) (`textfiles.html`)
-- [Windows Event Log](legacy-html/windowsevent.md) (`windowsevent.html`)
+- [Documentation home](chapters/manual.md) (`manual.html`)
+- [Basics](chapters/basics.md) (`basics.html`)
+- [Installation](chapters/install.md) (`install.html`)
+- [Search syntax](chapters/searching.md) (`searching.html`)
+- [Troubleshooting](chapters/troubleshoot.md) (`troubleshoot.html`)
+- [Build from repo](chapters/build_from_repo.md) (`build_from_repo.html`)
+- [Free support](chapters/free_support.md) (`free_support.html`)
+- [Professional services](chapters/professional_services.md) (`professional_services.html`)
+- [Text log files](chapters/textfiles.md) (`textfiles.html`)
+- [Windows Event Log](chapters/windowsevent.md) (`windowsevent.html`)
 
 ## Source in the repository
 

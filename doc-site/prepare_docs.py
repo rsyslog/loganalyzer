@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare doc-site/docs from repository Markdown; embed legacy HTML as MkDocs pages."""
+"""Prepare doc-site/docs from repository Markdown; embed upstream doc/*.html as MkDocs pages under user-guide/chapters/."""
 from __future__ import annotations
 
 import os
@@ -9,7 +9,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = Path(__file__).resolve().parent / "docs"
-LEGACY_SUBDIR = "legacy-html"
+# Handbook-native pages live in user-guide/; imported doc/*.html render under user-guide/chapters/.
+USER_GUIDE_DIR = "user-guide"
+IMPORTED_CHAPTERS_DIR = "chapters"
+OVERVIEW_MD = "overview.md"
 REPO_URL = os.environ.get("GHP_REPO_URL", "https://github.com/rsyslog/loganalyzer").rstrip("/")
 DEFAULT_BRANCH = os.environ.get("GHP_DEFAULT_BRANCH", "master").strip() or "master"
 
@@ -122,13 +125,15 @@ def _ordered_legacy_stems(stems: set[str]) -> list[str]:
 def _format_legacy_nav_lines(stems_ordered: list[str]) -> list[str]:
     lines = [
         LEGACY_NAV_HEADER,
-        "    - Overview: legacy-html-manuals.md",
-        "    - Quick start: user-guide/quick-start.md",
-        "    - Interface map: user-guide/interface-map.md",
+        f"    - {_yaml_single_quoted('Overview')}: {USER_GUIDE_DIR}/{OVERVIEW_MD}",
+        f"    - {_yaml_single_quoted('Quick start')}: {USER_GUIDE_DIR}/quick-start.md",
+        f"    - {_yaml_single_quoted('Interface map')}: {USER_GUIDE_DIR}/interface-map.md",
     ]
     for stem in stems_ordered:
         label = LEGACY_NAV_LABELS.get(stem, stem.replace("_", " ").title())
-        lines.append(f"    - {label}: legacy-html/{stem}.md")
+        lines.append(
+            f"    - {_yaml_single_quoted(label)}: {USER_GUIDE_DIR}/{IMPORTED_CHAPTERS_DIR}/{stem}.md"
+        )
     return lines
 
 
@@ -177,6 +182,16 @@ def _write_legacy_markdown(
     out_path.write_text(md, encoding="utf-8", newline="\n")
 
 
+def _remove_pre_migration_doc_artifacts(out_dir: Path) -> None:
+    """Remove handbook output from the pre-PR layout (legacy-html/, legacy-html-manuals.md)."""
+    for name in ("legacy-html", "legacy-html-manuals.md"):
+        path = out_dir / name
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.is_file():
+            path.unlink()
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     agents = REPO_ROOT / "AGENTS.md"
@@ -188,12 +203,16 @@ def main() -> int:
         text = readme.read_text(encoding="utf-8", errors="replace")
         (OUT_DIR / "project-readme.md").write_text(text, encoding="utf-8", newline="\n")
         print(f"Wrote {OUT_DIR / 'project-readme.md'}")
+    _remove_pre_migration_doc_artifacts(OUT_DIR)
     manuals = REPO_ROOT / "doc"
     if manuals.is_dir():
-        legacy_out = OUT_DIR / LEGACY_SUBDIR
-        if legacy_out.is_dir():
-            shutil.rmtree(legacy_out)
-        legacy_out.mkdir(parents=True, exist_ok=True)
+        guide_root = OUT_DIR / USER_GUIDE_DIR
+        guide_root.mkdir(parents=True, exist_ok=True)
+        chapters_out = guide_root / IMPORTED_CHAPTERS_DIR
+        if chapters_out.is_dir():
+            shutil.rmtree(chapters_out)
+        chapters_out.mkdir(parents=True, exist_ok=True)
+
         html_files = sorted(manuals.glob("*.html"))
         stems = {f.stem for f in html_files}
 
@@ -202,11 +221,11 @@ def main() -> int:
             doc_title, body = _extract_title_and_body(raw)
             body = _rewrite_hrefs(body, stems)
             md_name = src.with_suffix(".md").name
-            _write_legacy_markdown(legacy_out / md_name, doc_title, body)
-            print(f"Wrote {legacy_out / md_name} <- {src.name}")
+            _write_legacy_markdown(chapters_out / md_name, doc_title, body)
+            print(f"Wrote {chapters_out / md_name} <- {src.name}")
 
         blob_base = f"{REPO_URL}/blob/{DEFAULT_BRANCH}/doc"
-        rel_prefix = f"{LEGACY_SUBDIR}/"
+        rel_prefix = f"{IMPORTED_CHAPTERS_DIR}/"
 
         ordered = _ordered_legacy_stems(stems)
         stem_to_html = {f.stem: f.name for f in html_files}
@@ -240,12 +259,9 @@ def main() -> int:
                 "",
             ]
         )
-        (OUT_DIR / "legacy-html-manuals.md").write_text(
-            "\n".join(lines) + "\n",
-            encoding="utf-8",
-            newline="\n",
-        )
-        print(f"Wrote {OUT_DIR / 'legacy-html-manuals.md'}")
+        overview_path = OUT_DIR / USER_GUIDE_DIR / OVERVIEW_MD
+        overview_path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+        print(f"Wrote {overview_path}")
         _patch_mkdocs_legacy_nav(_ordered_legacy_stems(stems))
     return 0
 

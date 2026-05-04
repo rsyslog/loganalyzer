@@ -30,18 +30,18 @@ nav:
   - Home: index.md
   - Docker & CI (from AGENTS.md): docker.md
   - LogAnalyzer user guide:
-    - Overview: legacy-html-manuals.md
-    - Quick start: user-guide/quick-start.md
-    - Interface map: user-guide/interface-map.md
-    - Documentation home: legacy-html/manual.md
-    - Basics: legacy-html/basics.md
-    - Installation: legacy-html/install.md
-    - Search syntax: legacy-html/searching.md
-    - Troubleshooting: legacy-html/troubleshoot.md
-    - Build from repo: legacy-html/build_from_repo.md
-    - Free support: legacy-html/free_support.md
-    - Professional services: legacy-html/professional_services.md
-    - Text log files: legacy-html/textfiles.md
-    - Windows Event Log: legacy-html/windowsevent.md
+    - 'Overview': user-guide/overview.md
+    - 'Quick start': user-guide/quick-start.md
+    - 'Interface map': user-guide/interface-map.md
+    - 'Documentation home': user-guide/chapters/manual.md
+    - 'Basics': user-guide/chapters/basics.md
+    - 'Installation': user-guide/chapters/install.md
+    - 'Search syntax': user-guide/chapters/searching.md
+    - 'Troubleshooting': user-guide/chapters/troubleshoot.md
+    - 'Build from repo': user-guide/chapters/build_from_repo.md
+    - 'Free support': user-guide/chapters/free_support.md
+    - 'Professional services': user-guide/chapters/professional_services.md
+    - 'Text log files': user-guide/chapters/textfiles.md
+    - 'Windows Event Log': user-guide/chapters/windowsevent.md
   - Repository README: project-readme.md
   - Third-party components: third-party.md
