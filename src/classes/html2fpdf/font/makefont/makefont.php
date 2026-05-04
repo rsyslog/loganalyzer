@@ -15,7 +15,7 @@ function ReadMap($enc)
 	$cc2gn=array();
 	foreach($a as $l)
 	{
-		if($l{0}=='!')
+		if($l[0]=='!')
 		{
 			$e=preg_split('/[ \\t]+/',chop($l));
 			$cc=hexdec(substr($e[0],1));
