@@ -182,6 +182,16 @@ def _write_legacy_markdown(
     out_path.write_text(md, encoding="utf-8", newline="\n")
 
 
+def _remove_pre_migration_doc_artifacts(out_dir: Path) -> None:
+    """Remove handbook output from the pre-PR layout (legacy-html/, legacy-html-manuals.md)."""
+    legacy_old = out_dir / "legacy-html"
+    if legacy_old.is_dir():
+        shutil.rmtree(legacy_old)
+    old_hub = out_dir / "legacy-html-manuals.md"
+    if old_hub.is_file():
+        old_hub.unlink()
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     agents = REPO_ROOT / "AGENTS.md"
@@ -193,6 +203,7 @@ def main() -> int:
         text = readme.read_text(encoding="utf-8", errors="replace")
         (OUT_DIR / "project-readme.md").write_text(text, encoding="utf-8", newline="\n")
         print(f"Wrote {OUT_DIR / 'project-readme.md'}")
+    _remove_pre_migration_doc_artifacts(OUT_DIR)
     manuals = REPO_ROOT / "doc"
     if manuals.is_dir():
         guide_root = OUT_DIR / USER_GUIDE_DIR
@@ -201,13 +212,6 @@ def main() -> int:
         if chapters_out.is_dir():
             shutil.rmtree(chapters_out)
         chapters_out.mkdir(parents=True, exist_ok=True)
-        # Remove pre-URL-cleanup output locations (generated or leftover).
-        legacy_old = OUT_DIR / "legacy-html"
-        if legacy_old.is_dir():
-            shutil.rmtree(legacy_old)
-        old_hub = OUT_DIR / "legacy-html-manuals.md"
-        if old_hub.is_file():
-            old_hub.unlink()
 
         html_files = sorted(manuals.glob("*.html"))
         stems = {f.stem for f in html_files}
