@@ -1,0 +1,67 @@
+# From repo root: docker compose -f docker/docker-compose.yml up --build
+# App: http://localhost:8080/   Login: admin / pass (see AGENTS.md)
+# MySQL: localhost:3306  user loganalyzer / loganalyzer
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: loganalyzer_root
+      MYSQL_DATABASE: loganalyzer
+      MYSQL_USER: loganalyzer
+      MYSQL_PASSWORD: loganalyzer
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      - loganalyzer_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-ploganalyzer_root"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../src:/var/www/html:rw
+      - ../tests/fixtures/samplelogs:/samplelogs:ro
+    environment:
+      LOGANALYZER_DOCROOT: /var/www/html
+      LOGANALYZER_DB_HOST: db
+      LOGANALYZER_DB_PORT: "3306"
+      LOGANALYZER_DB_NAME: loganalyzer
+      LOGANALYZER_DB_USER: loganalyzer
+      LOGANALYZER_DB_PASSWORD: loganalyzer
+      MYSQL_ROOT_PASSWORD: loganalyzer_root
+      LOGANALYZER_TABLE_PREFIX: logcon_
+      LOGANALYZER_ADMIN_USER: admin
+      LOGANALYZER_ADMIN_PASSWORD: pass
+      LOGANALYZER_LOGIN_REQUIRED: "0"
+      LOGANALYZER_SAMPLE_LOG: /samplelogs/sampledata_syslog.log
+      LOGANALYZER_SAMPLE_EVENTREPORTER: /samplelogs/EventReporter.log
+      LOGANALYZER_OVERWRITE_CONFIG: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "php",
+          "-r",
+          "exit(@file_get_contents('http://127.0.0.1:8080/index.php')!==false?0:1);",
+        ]
+      interval: 5s
+      timeout: 8s
+      retries: 30
+      start_period: 45s
+
+volumes:
+  loganalyzer_mysql_data:

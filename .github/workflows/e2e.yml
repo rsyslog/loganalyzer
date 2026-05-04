@@ -1,0 +1,67 @@
+name: Playwright E2E
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Repo identity for issue step (skip forks)
+        id: meta
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "issue_ok=${{ github.event.pull_request.head.repo.full_name == github.repository }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "issue_ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run Docker Compose E2E
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p e2e
+          docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright 2>&1 | tee e2e/e2e-run.log
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-e2e
+          path: |
+            e2e/playwright-report
+            e2e/test-results
+            e2e/e2e-run.log
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Open issue on failure (same-repo only)
+        if: failure() && steps.meta.outputs.issue_ok == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## Playwright E2E failed"
+            echo
+            echo "**Run:** [workflow](${RUN_URL})"
+            echo
+            echo "### Log tail"
+            echo '```text'
+            tail -n 200 e2e/e2e-run.log 2>/dev/null || echo "(no log)"
+            echo '```'
+          } > /tmp/e2e-issue.md
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "CI: playwright e2e failed (${{ github.ref_name }}, run ${{ github.run_id }})" \
+            --body-file /tmp/e2e-issue.md

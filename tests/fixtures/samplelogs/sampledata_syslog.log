@@ -1,0 +1,1100 @@
+Mar  7 08:54:25 deboldtest anacron[3243]: Job `cron.daily' terminated (mailing output)
+Mar  7 08:54:25 deboldtest anacron[3243]: Job `cron.weekly' started
+Mar  7 08:54:25 deboldtest anacron[6258]: Updated timestamp for job `cron.weekly' to 2008-03-07
+Mar  7 08:54:48 deboldtest syslogd 1.4.1#18: restart.
+Mar  7 08:54:48 deboldtest anacron[3243]: Job `cron.weekly' terminated (mailing output)
+Mar  7 08:54:48 deboldtest anacron[3243]: Normal exit (2 jobs run)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6441]: (svn-autoreleasedeb) CMD (sh /etc/default/svn-autoreleasedeb && /usr/bin/svn-autoreleasedeb 2>&1 >> /var/log/svn-autoreleasedeb/run.log)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6444]: (mailping) CMD (if [ -x /usr/bin/mailping-cron ]; then /usr/bin/mailping-cron; fi)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6445]: (gnats) CMD (test -x /usr/lib/gnats/queue-pr && /usr/lib/gnats/queue-pr --run ; exit 0)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6447]: (debarchiver) CMD (test -x /usr/bin/debarchiver && /usr/bin/debarchiver -so | logger -t debarchiver -p daemon.info)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6449]: (root) CMD (if [ -x /etc/munin/plugins/apt_all ]; then /etc/munin/plugins/apt_all update 7200 12 >/dev/null; elif [ -x /etc/munin/plugins/apt ]; then /etc/munin/plugins/apt update 7200 12 >/dev/null; fi)
+Mar  7 08:55:01 deboldtest /USR/SBIN/CRON[6460]: (cvs-autoreleasedeb) CMD (sh /etc/default/cvs-autoreleasedeb && /usr/bin/cvs-autoreleasedeb 2>&1 >> /var/log/cvs-autoreleasedeb/run.log)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6532]: (root) CMD ([ -x /usr/lib/gforge/bin/update-user-group-cvs.sh ] && /usr/lib/gforge/bin/update-user-group-cvs.sh > /dev/null 2>&1)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6535]: (mailping) CMD (if [ -x /usr/bin/mailping-cron ]; then /usr/bin/mailping-cron; fi)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6536]: (root) CMD ([ -f /var/lib/gforge/bind/dns.head ] && [ -x /usr/lib/gforge/bin/dns_conf.pl ] && /usr/lib/gforge/bin/dns_conf.pl &&  /usr/sbin/invoke-rc.d --quiet bind9 reload )
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6538]: (cvs-autoreleasedeb) CMD (sh /etc/default/cvs-autoreleasedeb && /usr/bin/cvs-autoreleasedeb 2>&1 >> /var/log/cvs-autoreleasedeb/run.log)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6540]: (debarchiver) CMD (test -x /usr/bin/debarchiver && /usr/bin/debarchiver -so | logger -t debarchiver -p daemon.info)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6557]: (svn-autoreleasedeb) CMD (sh /etc/default/svn-autoreleasedeb && /usr/bin/svn-autoreleasedeb 2>&1 >> /var/log/svn-autoreleasedeb/run.log)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6560]: (root) CMD (if [ -x /etc/munin/plugins/apt_all ]; then /etc/munin/plugins/apt_all update 7200 12 >/dev/null; elif [ -x /etc/munin/plugins/apt ]; then /etc/munin/plugins/apt update 7200 12 >/dev/null; fi)
+Mar  7 09:00:01 deboldtest /USR/SBIN/CRON[6561]: (al) CMD (/usr/bin/logger test)
+Mar  7 09:00:01 deboldtest logger: test
+Mar  7 17:18:34 deboldtest kernel: Kernel logging (proc) stopped.
+Mar  7 17:18:34 deboldtest kernel: Kernel log daemon terminating.
+Mar  7 17:18:35 deboldtest exiting on signal 15
+Mar 10 14:38:11 deboldtest syslogd 1.4.1#18: restart.
+Mar 10 14:38:11 deboldtest kernel: klogd 1.4.1#18, log source = /proc/kmsg started.
+Mar 10 14:38:11 deboldtest kernel: Bootdata ok (command line is root=/dev/hda1 ro )
+Mar 10 14:38:11 deboldtest kernel: Linux version 2.6.18-5-amd64 (Debian 2.6.18.dfsg.1-17) (yG9cAE7@debian.org) (gcc version 4.1.2 20061115 (prerelease) (Debian 4.1.1-21)) #1 SMP Sat Dec 22 20:43:59 UTC 2007
+Mar 10 14:38:11 deboldtest kernel: BIOS-provided physical RAM map:
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 0000000000000000 - 000000000009f800 (usable)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 000000000009f800 - 00000000000a0000 (reserved)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 00000000000dc000 - 0000000000100000 (reserved)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 0000000000100000 - 000000002fef0000 (usable)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 000000002fef0000 - 000000002feff000 (ACPI data)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 000000002feff000 - 000000002ff00000 (ACPI NVS)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 000000002ff00000 - 0000000030000000 (usable)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 00000000fec00000 - 00000000fec10000 (reserved)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 00000000fee00000 - 00000000fee01000 (reserved)
+Mar 10 14:38:11 deboldtest kernel:  BIOS-e820: 00000000fffe0000 - 0000000100000000 (reserved)
+Mar 10 14:38:11 deboldtest kernel: DMI present.
+Mar 10 14:38:11 deboldtest kernel: ACPI: RSDP (v000 PTLTD                                 ) @ 0x00000000000f6c60
+Mar 10 14:38:11 deboldtest kernel: ACPI: RSDT (v001 PTLTD    RSDT   0x06040000  LTP 0x00000000) @ 0x000000002fefab68
+Mar 10 14:38:11 deboldtest kernel: ACPI: FADT (v001 INTEL  440BX    0x06040000 PTL  0x000f4240) @ 0x000000002fefef14
+Mar 10 14:38:11 deboldtest kernel: ACPI: MADT (v001 PTLTD  ^I APIC   0x06040000  LTP 0x00000000) @ 0x000000002fefef88
+Mar 10 14:38:11 deboldtest kernel: ACPI: BOOT (v001 PTLTD  $SBFTBL$ 0x06040000  LTP 0x00000001) @ 0x000000002fefefd8
+Mar 10 14:38:11 deboldtest kernel: ACPI: DSDT (v001 PTLTD  Custom   0x06040000 MSFT 0x0100000d) @ 0x0000000000000000
+Mar 10 14:38:11 deboldtest kernel: No NUMA configuration found
+Mar 10 14:38:11 deboldtest kernel: Faking a node at 0000000000000000-0000000030000000
+Mar 10 14:38:11 deboldtest kernel: Bootmem setup node 0 0000000000000000-0000000030000000
+Mar 10 14:38:11 deboldtest kernel: On node 0 totalpages: 192921
+Mar 10 14:38:11 deboldtest kernel:   DMA zone: 3057 pages, LIFO batch:0
+Mar 10 14:38:11 deboldtest kernel:   DMA32 zone: 189864 pages, LIFO batch:31
+Mar 10 14:38:11 deboldtest kernel: ACPI: PM-Timer IO Port: 0x1008
+Mar 10 14:38:11 deboldtest kernel: ACPI: Local APIC address 0xfee00000
+Mar 10 14:38:11 deboldtest kernel: ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+Mar 10 14:38:11 deboldtest kernel: Processor #0 6:15 APIC version 17
+Mar 10 14:38:11 deboldtest kernel: ACPI: LAPIC_NMI (acpi_id[0x00] high edge lint[0x1])
+Mar 10 14:38:11 deboldtest kernel: ACPI: IOAPIC (id[0x01] address[0xfec00000] gsi_base[0])
+Mar 10 14:38:11 deboldtest kernel: IOAPIC[0]: apic_id 1, version 17, address 0xfec00000, GSI 0-23
+Mar 10 14:38:11 deboldtest kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 high edge)
+Mar 10 14:38:11 deboldtest kernel: ACPI: IRQ0 used by override.
+Mar 10 14:38:11 deboldtest kernel: ACPI: IRQ2 used by override.
+Mar 10 14:38:11 deboldtest kernel: ACPI: IRQ9 used by override.
+Mar 10 14:38:11 deboldtest kernel: Setting APIC routing to physical flat
+Mar 10 14:38:11 deboldtest kernel: Using ACPI (MADT) for SMP configuration information
+Mar 10 14:38:11 deboldtest kernel: Allocating PCI resources starting at 40000000 (gap: 30000000:cec00000)
+Mar 10 14:38:11 deboldtest kernel: SMP: Allowing 1 CPUs, 0 hotplug CPUs
+Mar 10 14:38:11 deboldtest kernel: Built 1 zonelists.  Total pages: 192921
+Mar 10 14:38:11 deboldtest kernel: Kernel command line: root=/dev/hda1 ro 
+Mar 10 14:38:11 deboldtest kernel: Initializing CPU#0
+Mar 10 14:38:11 deboldtest kernel: PID hash table entries: 4096 (order: 12, 32768 bytes)
+Mar 10 14:38:11 deboldtest kernel: time.c: Using 3.579545 MHz WALL PM GTOD PIT/TSC timer.
+Mar 10 14:38:11 deboldtest kernel: time.c: Detected 2871.279 MHz processor.
+Mar 10 14:38:11 deboldtest kernel: Console: colour VGA+ 80x25
+Mar 10 14:38:11 deboldtest kernel: Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes)
+Mar 10 14:38:11 deboldtest kernel: Inode-cache hash table entries: 65536 (order: 7, 524288 bytes)
+Mar 10 14:38:11 deboldtest kernel: Checking aperture...
+Mar 10 14:38:11 deboldtest kernel: Memory: 764712k/786432k available (1928k kernel code, 21268k reserved, 867k data, 176k init)
+Mar 10 14:38:11 deboldtest kernel: Calibrating delay using timer specific routine.. 5759.05 BogoMIPS (lpj=11518109)
+Mar 10 14:38:11 deboldtest kernel: Security Framework v1.0.0 initialized
+Mar 10 14:38:11 deboldtest kernel: SELinux:  Disabled at boot.
+Mar 10 14:38:11 deboldtest kernel: Capability LSM initialized
+Mar 10 14:38:11 deboldtest kernel: Mount-cache hash table entries: 256
+Mar 10 14:38:11 deboldtest kernel: CPU: L1 I cache: 32K, L1 D cache: 32K
+Mar 10 14:38:11 deboldtest kernel: CPU: L2 cache: 4096K
+Mar 10 14:38:11 deboldtest kernel: SMP alternatives: switching to UP code
+Mar 10 14:38:11 deboldtest kernel: Freeing SMP alternatives: 28k freed
+Mar 10 14:38:11 deboldtest kernel: ACPI: Core revision 20060707
+Mar 10 14:38:11 deboldtest kernel: Using local APIC timer interrupts.
+Mar 10 14:38:11 deboldtest kernel: result 4124268
+Mar 10 14:38:11 deboldtest kernel: Detected 4.124 MHz APIC timer.
+Mar 10 14:38:11 deboldtest kernel: Brought up 1 CPUs
+Mar 10 14:38:11 deboldtest kernel: testing NMI watchdog ... CPU#0: NMI appears to be stuck (0->0)!
+Mar 10 14:38:11 deboldtest kernel: migration_cost=0
+Sep 23 06:57:41 server syslogd 1.4.1#18: restart.
+Sep 23 08:20:10 server postfix/pickup[9841]: B69C43B9C4A8: uid=33 from=<www-data>
+Sep 23 08:20:10 server postfix/cleanup[11482]: B69C43B9C4A8: message-id=<zs8l5Nx0eUcRA@www.dummydomain.com>
+Sep 23 08:20:10 server postfix/qmgr[6244]: B69C43B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=796, nrcpt=1 (queue active)
+Sep 23 08:20:10 server postfix/pickup[9841]: CACA13B9C4A6: uid=33 from=<www-data>
+Sep 23 08:20:10 server postfix/cleanup[11482]: CACA13B9C4A6: message-id=<uQzZHxAOAPo@www.dummydomain.com>
+Sep 23 08:20:10 server postfix/qmgr[6244]: CACA13B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 23 08:20:11 server postfix/smtp[11486]: B69C43B9C4A8: to=<MpmoluiBTOAduA3@hotmail.com>, relay=mx3.hotmail.com[65.54.244.72]:25, delay=1.5, delays=0.4/0/0.53/0.61, dsn=2.0.0, status=sent (250  <zs8l5Nx0eUcRA@www.dummydomain.com> Queued mail for delivery)
+Sep 23 08:20:11 server postfix/qmgr[6244]: B69C43B9C4A8: removed
+Sep 23 08:20:16 server postfix/smtp[11488]: CACA13B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.9, delays=0.13/0/0.2/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 189733B3A15)
+Sep 23 08:20:16 server postfix/qmgr[6244]: CACA13B9C4A6: removed
+Sep 23 08:31:46 server postfix/pickup[11628]: 0FBCC3B9C4A8: uid=33 from=<www-data>
+Sep 23 08:31:46 server postfix/cleanup[11680]: 0FBCC3B9C4A8: message-id=<5134a7df56285732db4b8596ad2c0984@http://www.dummydomain.com/>
+Sep 23 08:31:46 server postfix/qmgr[6244]: 0FBCC3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1300, nrcpt=1 (queue active)
+Sep 23 08:31:46 server postfix/smtp[11682]: 0FBCC3B9C4A8: to=<jqBZ42LQTx@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.38, delays=0.08/0/0.04/0.26, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 4F293187774)
+Sep 23 08:31:46 server postfix/qmgr[6244]: 0FBCC3B9C4A8: removed
+Sep 23 08:48:06 server postfix/pickup[11628]: 2D3293B9C4A8: uid=33 from=<www-data>
+Sep 23 08:48:06 server postfix/cleanup[12019]: 2D3293B9C4A8: message-id=<QXNdy17W5hn@www.dummydomain.com>
+Sep 23 08:48:06 server postfix/qmgr[6244]: 2D3293B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=804, nrcpt=1 (queue active)
+Sep 23 08:48:06 server postfix/pickup[11628]: 3D05E3B9C4A6: uid=33 from=<www-data>
+Sep 23 08:48:06 server postfix/cleanup[12019]: 3D05E3B9C4A6: message-id=<1sUetMye1XEg@www.dummydomain.com>
+Sep 23 08:48:06 server postfix/qmgr[6244]: 3D05E3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 23 08:48:07 server postfix/smtp[12023]: 2D3293B9C4A8: to=<c3hif7MIjEIB@googlemail.com>, relay=gmail-smtp-in.l.google.com[209.85.129.114]:25, delay=1.4, delays=0.1/0.01/0.02/1.3, dsn=2.0.0, status=sent (250 2.0.0 OK 1222152487 e17si1013131fke.10)
+Sep 23 08:48:07 server postfix/qmgr[6244]: 2D3293B9C4A8: removed
+Sep 23 08:48:11 server postfix/smtp[12024]: 3D05E3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.7, delays=0.12/0.01/0.04/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 834F23B3A15)
+Sep 23 08:48:11 server postfix/qmgr[6244]: 3D05E3B9C4A6: removed
+Sep 23 08:56:09 server postfix/pickup[11628]: 7386C3B9C4A8: uid=33 from=<www-data>
+Sep 23 08:56:09 server postfix/cleanup[12249]: 7386C3B9C4A8: message-id=<2x3Q5fFfixy6Eg@www.dummydomain.com>
+Sep 23 08:56:09 server postfix/qmgr[6244]: 7386C3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 08:56:09 server postfix/pickup[11628]: 994943B9C4A6: uid=33 from=<www-data>
+Sep 23 08:56:09 server postfix/cleanup[12249]: 994943B9C4A6: message-id=<fNVcsG7t3@www.dummydomain.com>
+Sep 23 08:56:09 server postfix/qmgr[6244]: 994943B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 08:56:10 server postfix/smtp[12253]: 7386C3B9C4A8: to=<XwT403j1ohA@hotmail.com>, relay=mx4.hotmail.com[65.54.244.232]:25, delay=1.3, delays=0.19/0/0.51/0.55, dsn=2.0.0, status=sent (250  <2x3Q5fFfixy6Eg@www.dummydomain.com> Queued mail for delivery)
+Sep 23 08:56:10 server postfix/qmgr[6244]: 7386C3B9C4A8: removed
+Sep 23 08:56:14 server postfix/smtp[12254]: 994943B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.5, delays=0.22/0.02/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 931733B3A15)
+Sep 23 08:56:14 server postfix/qmgr[6244]: 994943B9C4A6: removed
+Sep 23 09:27:22 server postfix/pickup[11628]: 8A9A23B9C4A8: uid=33 from=<www-data>
+Sep 23 09:27:22 server postfix/cleanup[13210]: 8A9A23B9C4A8: message-id=<VMfYd1XRRdd@www.dummydomain.com>
+Sep 23 09:27:22 server postfix/qmgr[6244]: 8A9A23B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=865, nrcpt=1 (queue active)
+Sep 23 09:27:22 server postfix/pickup[11628]: 9741A3B9C4A6: uid=33 from=<www-data>
+Sep 23 09:27:22 server postfix/cleanup[13210]: 9741A3B9C4A6: message-id=<4dXkAmFzC@www.dummydomain.com>
+Sep 23 09:27:22 server postfix/qmgr[6244]: 9741A3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=648, nrcpt=1 (queue active)
+Sep 23 09:27:22 server postfix/smtp[13214]: 8A9A23B9C4A8: to=<jNSYn6ACN@wxs.nl>, relay=mailin.planet.nl[195.121.6.51]:25, delay=0.31, delays=0.09/0.01/0.1/0.12, dsn=2.6.0, status=sent (250 2.6.0  <VMfYd1XRRdd@www.dummydomain.com> Queued mail for delivery)
+Sep 23 09:27:22 server postfix/qmgr[6244]: 8A9A23B9C4A8: removed
+Sep 23 09:27:28 server postfix/smtp[13216]: 9741A3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.03/0/0.04/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as DC0683B3A15)
+Sep 23 09:27:28 server postfix/qmgr[6244]: 9741A3B9C4A6: removed
+Sep 23 12:07:55 server postfix/cleanup[17984]: A3EFA3B9C4A8: message-id=<tN4MKk8Q7zvlPm@www.dummydomain.com>
+Sep 23 12:07:55 server postfix/qmgr[6244]: A3EFA3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=6639, nrcpt=1 (queue active)
+Sep 23 12:08:01 server postfix/smtp[17986]: A3EFA3B9C4A8: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.8, delays=0.19/0.02/0.02/5.5, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 47B143B3A16)
+Sep 23 12:08:01 server postfix/qmgr[6244]: A3EFA3B9C4A8: removed
+Sep 23 12:08:28 server postfix/pickup[17015]: 2EB463B9C4A8: uid=33 from=<www-data>
+Sep 23 12:08:28 server postfix/cleanup[17984]: 2EB463B9C4A8: message-id=<Tz3qzAurYA0BbMs@www.dummydomain.com>
+Sep 23 12:08:28 server postfix/qmgr[6244]: 2EB463B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=807, nrcpt=1 (queue active)
+Sep 23 12:08:28 server postfix/pickup[17015]: F06743B9C4A9: uid=33 from=<www-data>
+Sep 23 12:08:28 server postfix/cleanup[17984]: F06743B9C4A9: message-id=<PTLX90ccgiFC@www.dummydomain.com>
+Sep 23 12:08:29 server postfix/qmgr[6244]: F06743B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=708, nrcpt=1 (queue active)
+Sep 23 12:08:29 server postfix/smtp[18001]: F06743B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.25, delays=0.05/0.12/0.02/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 345A43B3A16)
+Sep 23 12:08:29 server postfix/qmgr[6244]: F06743B9C4A9: removed
+Sep 23 12:08:29 server postfix/smtp[17986]: 2EB463B9C4A8: to=<S7Qq73WqR@hotmail.com>, relay=mx4.hotmail.com[65.54.245.104]:25, delay=1.2, delays=0.04/0/0.54/0.6, dsn=2.0.0, status=sent (250  <Tz3qzAurYA0BbMs@www.dummydomain.com> Queued mail for delivery)
+Sep 23 12:08:29 server postfix/qmgr[6244]: 2EB463B9C4A8: removed
+Sep 23 12:18:38 server postfix/pickup[17015]: 3412F3B9C4A8: uid=33 from=<www-data>
+Sep 23 12:18:38 server postfix/cleanup[18276]: 3412F3B9C4A8: message-id=<v9pHEQEQX@www.dummydomain.com>
+Sep 23 12:18:38 server postfix/qmgr[6244]: 3412F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=794, nrcpt=1 (queue active)
+Sep 23 12:18:38 server postfix/pickup[17015]: 3AFD23B9C4A6: uid=33 from=<www-data>
+Sep 23 12:18:38 server postfix/cleanup[18280]: 3AFD23B9C4A6: message-id=<Vkwq37V@www.dummydomain.com>
+Sep 23 12:18:38 server postfix/qmgr[6244]: 3AFD23B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 12:18:38 server postfix/smtp[18281]: 3412F3B9C4A8: to=<oHhWM1@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.64, delays=0.32/0.01/0.04/0.28, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 672532CAC13)
+Sep 23 12:18:38 server postfix/qmgr[6244]: 3412F3B9C4A8: removed
+Sep 23 12:18:43 server postfix/smtp[18282]: 3AFD23B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.05/0.04/0.04/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A1F8E3B3A16)
+Sep 23 12:18:43 server postfix/qmgr[6244]: 3AFD23B9C4A6: removed
+Sep 23 12:20:19 server postfix/pickup[17015]: 8044F3B9C4A8: uid=33 from=<www-data>
+Sep 23 12:20:19 server postfix/cleanup[18341]: 8044F3B9C4A8: message-id=<zzG9AiqBcFuMeGt@www.dummydomain.com>
+Sep 23 12:20:19 server postfix/qmgr[6244]: 8044F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=776, nrcpt=1 (queue active)
+Sep 23 12:20:19 server postfix/pickup[17015]: 9199B3B9C4A6: uid=33 from=<www-data>
+Sep 23 12:20:19 server postfix/cleanup[18345]: 9199B3B9C4A6: message-id=<3LrAtV1@www.dummydomain.com>
+Sep 23 12:20:19 server postfix/smtp[18282]: 8044F3B9C4A8: to=<Cij2NRMnWOJH2@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.26, delays=0.17/0/0.04/0.05, dsn=2.0.0, status=sent (250 OK id=1Ki50F-0004kq-00)
+Sep 23 12:20:19 server postfix/qmgr[6244]: 8044F3B9C4A8: removed
+Sep 23 12:20:20 server postfix/qmgr[6244]: 9199B3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 12:20:20 server postfix/smtp[18282]: 9199B3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=1.1, delays=0.92/0/0.03/0.11, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 9A8C23B3A16)
+Sep 23 12:20:20 server postfix/qmgr[6244]: 9199B3B9C4A6: removed
+Sep 23 12:23:47 server postfix/pickup[17015]: 8576F3B9C4A8: uid=33 from=<www-data>
+Sep 23 12:23:47 server postfix/cleanup[18474]: 8576F3B9C4A8: message-id=<a308492fcafbc16930582b8fb47cfa45@http://www.dummydomain.com/>
+Sep 23 12:23:47 server postfix/qmgr[6244]: 8576F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1000, nrcpt=1 (queue active)
+Sep 23 12:23:47 server postfix/smtp[18476]: 8576F3B9C4A8: to=<WmwHAcompy5@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.74, delays=0.66/0/0.02/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 160AD3B3A16)
+Sep 23 12:23:47 server postfix/qmgr[6244]: 8576F3B9C4A8: removed
+Sep 23 12:33:22 server postfix/smtpd[18748]: connect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:22 server postfix/smtpd[18748]: lost connection after CONNECT from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:22 server postfix/smtpd[18748]: disconnect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:23 server postfix/smtpd[18748]: connect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:25 server postfix/smtpd[18748]: NOQUEUE: reject: RCPT from 114-44-142-102.dynamic.hinet.net[114.44.142.102]: 554 5.7.1 <ChBvVHoHzGrW@yahoo.com.tw>: Relay access denied; from=<zcicbEo@oogfqxvxj.com> to=<ChBvVHoHzGrW@yahoo.com.tw> proto=ESMTP helo=<adshoz.com>
+Sep 23 12:33:30 server postfix/smtpd[18752]: connect from 114-44-128-53.dynamic.hinet.net[114.44.128.53]
+Sep 23 12:33:30 server postfix/smtpd[18752]: lost connection after CONNECT from 114-44-128-53.dynamic.hinet.net[114.44.128.53]
+Sep 23 12:33:30 server postfix/smtpd[18752]: disconnect from 114-44-128-53.dynamic.hinet.net[114.44.128.53]
+Sep 23 12:33:31 server postfix/smtpd[18752]: connect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:38 server postfix/smtpd[18754]: connect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:38 server postfix/smtpd[18754]: lost connection after EHLO from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:38 server postfix/smtpd[18754]: disconnect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:41 server postfix/smtpd[18748]: lost connection after RCPT from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:41 server postfix/smtpd[18748]: disconnect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:52 server postfix/smtpd[18752]: lost connection after AUTH from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:33:52 server postfix/smtpd[18752]: disconnect from 114-44-142-102.dynamic.hinet.net[114.44.142.102]
+Sep 23 12:34:15 server postfix/smtpd[18754]: connect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:15 server postfix/smtpd[18754]: lost connection after CONNECT from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:15 server postfix/smtpd[18754]: disconnect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:21 server postfix/smtpd[18752]: connect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:21 server postfix/smtpd[18752]: lost connection after CONNECT from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:21 server postfix/smtpd[18752]: disconnect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:24 server postfix/smtpd[18748]: connect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:25 server postfix/smtpd[18748]: lost connection after UNKNOWN from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:34:25 server postfix/smtpd[18748]: disconnect from 114-44-146-206.dynamic.hinet.net[114.44.146.206]
+Sep 23 12:37:45 server postfix/anvil[18750]: statistics: max connection rate 4/60s for (smtp:114.44.142.102) at Sep 23 12:33:38
+Sep 23 12:37:45 server postfix/anvil[18750]: statistics: max connection count 3 for (smtp:114.44.142.102) at Sep 23 12:33:38
+Sep 23 12:37:45 server postfix/anvil[18750]: statistics: max cache size 3 at Sep 23 12:34:15
+Sep 23 12:39:10 server postfix/pickup[17015]: B74C23B9C4A8: uid=33 from=<www-data>
+Sep 23 12:39:10 server postfix/cleanup[18931]: B74C23B9C4A8: message-id=<bfe3638f9f505fb3fcc28caa2292ea14@http://www.dummydomain.com/>
+Sep 23 12:39:10 server postfix/qmgr[6244]: B74C23B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1000, nrcpt=1 (queue active)
+Sep 23 12:39:16 server postfix/smtp[18933]: B74C23B9C4A8: to=<WmwHAcompy5@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.8, delays=0.15/0.01/0.03/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 6F4E83B3A16)
+Sep 23 12:39:16 server postfix/qmgr[6244]: B74C23B9C4A8: removed
+Sep 23 13:09:42 server postfix/pickup[19479]: 6BA2A3B9C4A8: uid=33 from=<www-data>
+Sep 23 13:09:42 server postfix/cleanup[19731]: 6BA2A3B9C4A8: message-id=<TfigwYCkqhrwrm@www.dummydomain.com>
+Sep 23 13:09:42 server postfix/qmgr[6244]: 6BA2A3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 13:09:42 server postfix/pickup[19479]: 719EC3B9C4A9: uid=33 from=<www-data>
+Sep 23 13:09:42 server postfix/cleanup[19731]: 719EC3B9C4A9: message-id=<V4tHIYoC8k@www.dummydomain.com>
+Sep 23 13:09:42 server postfix/qmgr[6244]: 719EC3B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 13:09:43 server postfix/smtp[19735]: 6BA2A3B9C4A8: to=<y38qdNQgPeqf7Gm@hotmail.com>, relay=mx3.hotmail.com[65.54.244.200]:25, delay=1.2, delays=0.03/0/0.52/0.6, dsn=2.0.0, status=sent (250  <TfigwYCkqhrwrm@www.dummydomain.com> Queued mail for delivery)
+Sep 23 13:09:43 server postfix/qmgr[6244]: 6BA2A3B9C4A8: removed
+Sep 23 13:09:48 server postfix/smtp[19736]: 719EC3B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.7, delays=0.05/0.01/0.02/5.7, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 9BBE13B3A16)
+Sep 23 13:09:48 server postfix/qmgr[6244]: 719EC3B9C4A9: removed
+Sep 23 13:24:57 server postfix/pickup[19479]: 57AEF3B9C4A8: uid=33 from=<www-data>
+Sep 23 13:24:57 server postfix/cleanup[20157]: 57AEF3B9C4A8: message-id=<i0AA5wBDH@www.dummydomain.com>
+Sep 23 13:24:57 server postfix/qmgr[6244]: 57AEF3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 13:24:57 server postfix/pickup[19479]: 6CE5B3B9C4A6: uid=33 from=<www-data>
+Sep 23 13:24:57 server postfix/cleanup[20161]: 6CE5B3B9C4A6: message-id=<mdQ4lpLivQ5kBg@www.dummydomain.com>
+Sep 23 13:24:57 server postfix/qmgr[6244]: 6CE5B3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 23 13:24:57 server postfix/smtp[20164]: 57AEF3B9C4A8: to=<LgNjiVXV@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.32, delays=0.1/0.14/0.04/0.04, dsn=2.0.0, status=sent (250 OK id=1Ki60n-0002Mf-00)
+Sep 23 13:24:57 server postfix/qmgr[6244]: 57AEF3B9C4A8: removed
+Sep 23 13:25:02 server postfix/smtp[20163]: 6CE5B3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.6, delays=0.12/0.09/0.03/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 7B7B03B3A16)
+Sep 23 13:25:02 server postfix/qmgr[6244]: 6CE5B3B9C4A6: removed
+Sep 23 13:31:02 server postfix/pickup[19479]: 40E2E3B9C4A8: uid=33 from=<www-data>
+Sep 23 13:31:02 server postfix/cleanup[20384]: 40E2E3B9C4A8: message-id=<ctu19zSDpXoe2@www.dummydomain.com>
+Sep 23 13:31:02 server postfix/qmgr[6244]: 40E2E3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=776, nrcpt=1 (queue active)
+Sep 23 13:31:02 server postfix/pickup[19479]: 537233B9C4A6: uid=33 from=<www-data>
+Sep 23 13:31:02 server postfix/cleanup[20384]: 537233B9C4A6: message-id=<UKDZKFjALYElj@www.dummydomain.com>
+Sep 23 13:31:02 server postfix/qmgr[6244]: 537233B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 13:31:02 server postfix/smtp[20388]: 40E2E3B9C4A8: to=<Jud4bJQi3j0MYW5@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.29, delays=0.1/0.05/0.1/0.04, dsn=5.0.0, status=bounced (host mx-ha01.web.de[217.72.192.149] said: 550 Protocol violation (in reply to DATA command))
+Sep 23 13:31:02 server postfix/cleanup[20384]: 8A6043B9C4AA: message-id=<2PTROHMTpLB3pL@server.dummydomain.com>
+Sep 23 13:31:02 server postfix/qmgr[6244]: 8A6043B9C4AA: from=<>, size=2735, nrcpt=1 (queue active)
+Sep 23 13:31:02 server postfix/bounce[20390]: 40E2E3B9C4A8: sender non-delivery notification: 8A6043B9C4AA
+Sep 23 13:31:02 server postfix/qmgr[6244]: 40E2E3B9C4A8: removed
+Sep 23 13:31:02 server postfix/smtp[20389]: 537233B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.32, delays=0.13/0.07/0.03/0.09, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 249623B3A16)
+Sep 23 13:31:02 server postfix/qmgr[6244]: 537233B9C4A6: removed
+Sep 23 13:31:02 server postfix/local[20392]: 8A6043B9C4AA: to=<qmhM5uSuw@server.dummydomain.com>, relay=local, delay=0.12, delays=0.01/0.02/0/0.09, dsn=2.0.0, status=sent (delivered to mailbox)
+Sep 23 13:31:02 server postfix/qmgr[6244]: 8A6043B9C4AA: removed
+Sep 23 13:31:45 server postfix/pickup[19479]: 926743B9C4A8: uid=33 from=<www-data>
+Sep 23 13:31:45 server postfix/cleanup[20384]: 926743B9C4A8: message-id=<OVTT7xSztkW@www.dummydomain.com>
+Sep 23 13:31:45 server postfix/qmgr[6244]: 926743B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=802, nrcpt=1 (queue active)
+Sep 23 13:31:45 server postfix/pickup[19479]: 98E143B9C4A9: uid=33 from=<www-data>
+Sep 23 13:31:45 server postfix/cleanup[20384]: 98E143B9C4A9: message-id=<OVN9CpFfRl@www.dummydomain.com>
+Sep 23 13:31:45 server postfix/qmgr[6244]: 98E143B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=714, nrcpt=1 (queue active)
+Sep 23 13:31:45 server postfix/smtp[20389]: 98E143B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.35, delays=0.05/0/0.02/0.29, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 4C18E3B3A16)
+Sep 23 13:31:45 server postfix/qmgr[6244]: 98E143B9C4A9: removed
+Sep 23 13:31:48 server postfix/smtp[20388]: 926743B9C4A8: to=<b0RPO1x@googlemail.com>, relay=gmail-smtp-in.l.google.com[209.85.129.114]:25, delay=3.4, delays=0.03/0/0.02/3.3, dsn=2.0.0, status=sent (250 2.0.0 OK 1222169508 21si1223034fkx.13)
+Sep 23 13:31:48 server postfix/qmgr[6244]: 926743B9C4A8: removed
+Sep 23 13:33:53 server postfix/pickup[19479]: 8F5433B9C4A8: uid=33 from=<www-data>
+Sep 23 13:33:53 server postfix/cleanup[20485]: 8F5433B9C4A8: message-id=<rntW3gTFvZrqH@www.dummydomain.com>
+Sep 23 13:33:53 server postfix/qmgr[6244]: 8F5433B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=782, nrcpt=1 (queue active)
+Sep 23 13:33:53 server postfix/pickup[19479]: 9590D3B9C4A6: uid=33 from=<www-data>
+Sep 23 13:33:53 server postfix/cleanup[20485]: 9590D3B9C4A6: message-id=<xA79oZI@www.dummydomain.com>
+Sep 23 13:33:53 server postfix/qmgr[6244]: 9590D3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 23 13:33:53 server postfix/smtp[20489]: 8F5433B9C4A8: to=<JYYHLoR@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.62, delays=0.46/0/0.06/0.1, dsn=2.0.0, status=sent (250 OK id=1Ki69R-0002HT-00)
+Sep 23 13:33:53 server postfix/qmgr[6244]: 8F5433B9C4A8: removed
+Sep 23 13:33:53 server postfix/smtp[20489]: 9590D3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.25, delays=0.09/0.08/0.02/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 6B5753B3A16)
+Sep 23 13:33:53 server postfix/qmgr[6244]: 9590D3B9C4A6: removed
+Sep 23 13:52:37 server postfix/pickup[19479]: 29AED3B9C4A8: uid=33 from=<www-data>
+Sep 23 13:52:37 server postfix/cleanup[21065]: 29AED3B9C4A8: message-id=<ezPpknRmM8q0OH@www.dummydomain.com>
+Sep 23 13:52:37 server postfix/qmgr[6244]: 29AED3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=819, nrcpt=1 (queue active)
+Sep 23 13:52:37 server postfix/pickup[19479]: 2F4513B9C4A6: uid=33 from=<www-data>
+Sep 23 13:52:37 server postfix/cleanup[21065]: 2F4513B9C4A6: message-id=<X8pvgY6sy@www.dummydomain.com>
+Sep 23 15:19:06 server postfix/qmgr[6244]: A235F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=786, nrcpt=1 (queue active)
+Sep 23 15:19:06 server postfix/pickup[22220]: A7FE83B9C4A9: uid=33 from=<www-data>
+Sep 23 15:19:06 server postfix/cleanup[24202]: A7FE83B9C4A9: message-id=<8PVzlzWg49Imx@www.dummydomain.com>
+Sep 23 15:19:06 server postfix/qmgr[6244]: A7FE83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 23 15:19:06 server postfix/smtp[24207]: A7FE83B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.1, delays=0.03/0/0.03/0.03, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 0E2973B3A16)
+Sep 23 15:19:06 server postfix/qmgr[6244]: A7FE83B9C4A9: removed
+Sep 23 15:19:07 server postfix/smtp[24206]: A235F3B9C4A8: to=<xYcp3l71CALLr@Gerusel.com>, relay=mx.freenet.de[195.4.92.212]:25, delay=0.66, delays=0.11/0/0.18/0.37, dsn=2.0.0, status=sent (250 OK id=1Ki7nH-0004IM-2L)
+Sep 23 15:19:07 server postfix/qmgr[6244]: A235F3B9C4A8: removed
+Sep 23 15:27:09 server postfix/pickup[22220]: 0EB1D3B9C4A8: uid=33 from=<www-data>
+Sep 23 15:27:09 server postfix/cleanup[24524]: 0EB1D3B9C4A8: message-id=<4efFyvgF9c@www.dummydomain.com>
+Sep 23 15:27:09 server postfix/qmgr[6244]: 0EB1D3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=804, nrcpt=1 (queue active)
+Sep 23 15:27:09 server postfix/pickup[22220]: 149D23B9C4A6: uid=33 from=<www-data>
+Sep 23 15:27:09 server postfix/cleanup[24524]: 149D23B9C4A6: message-id=<Xlogl5H@www.dummydomain.com>
+Sep 23 15:27:09 server postfix/qmgr[6244]: 149D23B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=716, nrcpt=1 (queue active)
+Sep 23 15:27:14 server postfix/smtp[24530]: 149D23B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.05/0/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 8083D3B3A16)
+Sep 23 15:27:14 server postfix/qmgr[6244]: 149D23B9C4A6: removed
+Sep 23 15:27:22 server postfix/smtp[24529]: 0EB1D3B9C4A8: to=<cRcbmEt@online.de>, relay=mx01.kundenserver.de[212.227.15.186]:25, delay=13, delays=0.05/0.01/0.09/13, dsn=2.0.0, status=sent (250 Message 0MKqIe-1Ki7v310cR-0004oD accepted by mxeu3.kundenserver.de)
+Sep 23 15:27:22 server postfix/qmgr[6244]: 0EB1D3B9C4A8: removed
+Sep 23 15:27:38 server postfix/pickup[22220]: 96D003B9C4A8: uid=33 from=<www-data>
+Sep 23 15:27:38 server postfix/cleanup[24528]: 96D003B9C4A8: message-id=<086879919bb9e9a99fcb6092b569e298@http://www.dummydomain.com/>
+Sep 23 15:27:38 server postfix/qmgr[6244]: 96D003B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1304, nrcpt=1 (queue active)
+Sep 23 15:27:39 server postfix/smtp[24530]: 96D003B9C4A8: to=<jqBZ42LQTx@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=1.5, delays=0.44/0/0.35/0.67, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 4B3AD32E698)
+Sep 23 15:27:39 server postfix/qmgr[6244]: 96D003B9C4A8: removed
+Sep 23 15:31:45 server postfix/pickup[22220]: D765F3B9C4A8: uid=33 from=<www-data>
+Sep 23 15:31:45 server postfix/cleanup[24688]: D765F3B9C4A8: message-id=<524ece06329620982a3f97ebe597e33c@http://www.dummydomain.com/>
+Sep 23 15:31:45 server postfix/qmgr[6244]: D765F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1304, nrcpt=1 (queue active)
+Sep 23 15:31:48 server postfix/smtp[24690]: D765F3B9C4A8: to=<jqBZ42LQTx@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=3.1, delays=0.54/0.16/0.04/2.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 3D9D532E786)
+Sep 23 15:31:48 server postfix/qmgr[6244]: D765F3B9C4A8: removed
+Sep 23 15:47:02 server postfix/pickup[24931]: 40A1D3B9C4A8: uid=33 from=<www-data>
+Sep 23 15:47:02 server postfix/cleanup[25205]: 40A1D3B9C4A8: message-id=<8fee75a75b04b010a262a50c4c326638@http://www.dummydomain.com/>
+Sep 23 15:47:02 server postfix/qmgr[6244]: 40A1D3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1352, nrcpt=1 (queue active)
+Sep 23 15:47:18 server postfix/smtp[25207]: 40A1D3B9C4A8: to=<9TDNszgkz9tPnB@Ralf-Schlueter.de>, relay=mx00.schlund.de[212.227.15.169]:25, delay=16, delays=0.44/0/3.1/13, dsn=2.0.0, status=sent (250 Message 0MKt64-1Ki8EL1wSw-0007qZ accepted by mxeu9.kundenserver.de)
+Sep 23 15:47:18 server postfix/qmgr[6244]: 40A1D3B9C4A8: removed
+Sep 23 15:55:23 server postfix/pickup[24931]: 966263B9C4A8: uid=33 from=<www-data>
+Sep 23 15:55:23 server postfix/cleanup[25536]: 966263B9C4A8: message-id=<Zcps2TwVHNpl@www.dummydomain.com>
+Sep 23 15:55:24 server postfix/qmgr[6244]: 966263B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1177, nrcpt=1 (queue active)
+Sep 23 15:55:24 server postfix/smtp[25538]: 966263B9C4A8: to=<K2id6TS@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.78, delays=0.57/0.11/0.04/0.06, dsn=2.0.0, status=sent (250 OK id=1Ki8MO-0004Aw-00)
+Sep 23 15:55:24 server postfix/qmgr[6244]: 966263B9C4A8: removed
+Sep 23 15:55:44 server postfix/pickup[24931]: 6A3BB3B9C4A8: uid=33 from=<www-data>
+Sep 23 15:55:44 server postfix/cleanup[25536]: 6A3BB3B9C4A8: message-id=<GWGhRDOgsWQFPm@www.dummydomain.com>
+Sep 23 15:55:44 server postfix/qmgr[6244]: 6A3BB3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1042, nrcpt=1 (queue active)
+Sep 23 15:55:44 server postfix/smtp[25538]: 6A3BB3B9C4A8: to=<K2id6TS@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.24, delays=0.15/0.01/0.04/0.04, dsn=2.0.0, status=sent (250 OK id=1Ki8Mi-00085B-00)
+Sep 23 15:55:44 server postfix/qmgr[6244]: 6A3BB3B9C4A8: removed
+Sep 23 16:07:24 server postfix/pickup[24931]: 8D1873B9C4A8: uid=33 from=<www-data>
+Sep 23 16:07:24 server postfix/cleanup[25946]: 8D1873B9C4A8: message-id=<HPPx5LOS3wjuk@www.dummydomain.com>
+Sep 23 16:07:24 server postfix/qmgr[6244]: 8D1873B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=800, nrcpt=1 (queue active)
+Sep 23 16:07:24 server postfix/pickup[24931]: C77073B9C4A6: uid=33 from=<www-data>
+Sep 23 16:07:24 server postfix/cleanup[25950]: C77073B9C4A6: message-id=<Mu6ibt7wY@www.dummydomain.com>
+Sep 23 16:07:24 server postfix/qmgr[6244]: C77073B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 23 16:07:25 server postfix/smtp[25951]: 8D1873B9C4A8: to=<zV9ecQHe7@freenet.de>, relay=mx.freenet.de[195.4.92.9]:25, delay=0.72, delays=0.31/0.03/0.08/0.31, dsn=2.0.0, status=sent (250 OK id=1Ki8Y1-00027O-5G)
+Sep 23 16:07:25 server postfix/qmgr[6244]: 8D1873B9C4A8: removed
+Sep 23 16:07:31 server postfix/smtp[25952]: C77073B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.6, delays=0.23/0.03/0.03/6.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as C6F223B3A16)
+Sep 23 16:07:31 server postfix/qmgr[6244]: C77073B9C4A6: removed
+Sep 23 16:08:48 server postfix/pickup[24931]: 1F6F13B9C4A8: uid=33 from=<www-data>
+Sep 23 16:08:48 server postfix/cleanup[25946]: 1F6F13B9C4A8: message-id=<vm76LOFs4j6xu4@www.dummydomain.com>
+Sep 23 16:08:48 server postfix/qmgr[6244]: 1F6F13B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 16:08:48 server postfix/pickup[24931]: 2A5873B9C4A9: uid=33 from=<www-data>
+Sep 23 16:08:48 server postfix/cleanup[25950]: 2A5873B9C4A9: message-id=<iDOycCLK@www.dummydomain.com>
+Sep 23 16:08:48 server postfix/smtp[25951]: 1F6F13B9C4A8: to=<ZCdRSDN@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.12, delays=0.03/0/0.04/0.04, dsn=2.0.0, status=sent (250 OK id=1Ki8ZM-0007SL-00)
+Sep 23 16:08:48 server postfix/qmgr[6244]: 1F6F13B9C4A8: removed
+Sep 23 16:08:48 server postfix/qmgr[6244]: 2A5873B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 23 16:08:51 server postfix/pickup[24931]: 1748F3B9C4A8: uid=33 from=<www-data>
+Sep 23 16:08:51 server postfix/cleanup[25946]: 1748F3B9C4A8: message-id=<RuQg3qbu1RU@www.dummydomain.com>
+Sep 23 16:08:51 server postfix/qmgr[6244]: 1748F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=790, nrcpt=1 (queue active)
+Sep 23 16:08:51 server postfix/pickup[24931]: 464C63B9C4A6: uid=33 from=<www-data>
+Sep 23 16:08:51 server postfix/cleanup[25950]: 464C63B9C4A6: message-id=<hboXj4PXc8V@www.dummydomain.com>
+Sep 23 16:08:51 server postfix/qmgr[6244]: 464C63B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 23 16:08:51 server postfix/smtp[25951]: 1748F3B9C4A8: to=<rrUQZBvWjHV4nl@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=1.3, delays=1.1/0/0.04/0.09, dsn=2.0.0, status=sent (250 OK id=1Ki8ZP-000327-00)
+Sep 23 16:08:51 server postfix/qmgr[6244]: 1748F3B9C4A8: removed
+Sep 23 16:08:54 server postfix/smtp[25952]: 2A5873B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.9, delays=0.63/0/0.02/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A845D3B3A16)
+Sep 23 16:08:54 server postfix/qmgr[6244]: 2A5873B9C4A9: removed
+Sep 23 16:08:56 server postfix/smtp[25951]: 464C63B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.14/0.09/0.09/5, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 2A9853B3A16)
+Sep 23 16:08:56 server postfix/qmgr[6244]: 464C63B9C4A6: removed
+Sep 23 16:14:30 server postfix/pickup[24931]: C3B5F3B9C4A8: uid=33 from=<www-data>
+Sep 23 16:14:30 server postfix/cleanup[26228]: C3B5F3B9C4A8: message-id=<62d03bf57de0fa202157f68fbd268ecf@http://www.dummydomain.com/>
+Sep 23 16:14:30 server postfix/qmgr[6244]: C3B5F3B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=999, nrcpt=1 (queue active)
+Sep 23 16:14:31 server postfix/smtp[26230]: C3B5F3B9C4A8: to=<BFBDo96QKhULx@x-sites.de>, relay=server.x-sites.de[133.7.13.37]:25, delay=0.44, delays=0.35/0/0.03/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A14FB3B3A16)
+Sep 23 16:14:31 server postfix/qmgr[6244]: C3B5F3B9C4A8: removed
+Sep 23 16:16:12 server postfix/pickup[24931]: 64D023B9C4A8: uid=33 from=<www-data>
+Sep 23 16:16:12 server postfix/cleanup[26270]: 64D023B9C4A8: message-id=<a0c12d51acada7bd6aa9a8f0c9d37923@http://www.dummydomain.com/>
+Sep 23 16:16:12 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 23 16:16:12 server postfix/smtp[26272]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 16:16:13 server postfix/smtp[26272]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=0.96, delays=0.89/0/0.06/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 16:19:21 server postfix/pickup[24931]: 8893E3B9C4A9: uid=33 from=<www-data>
+Sep 23 16:19:21 server postfix/cleanup[26399]: 8893E3B9C4A9: message-id=<807813e03b8486d6db5e51db47b28505@http://www.dummydomain.com/>
+Sep 23 16:19:21 server postfix/qmgr[6244]: 8893E3B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=999, nrcpt=1 (queue active)
+Sep 23 16:19:21 server postfix/smtp[26401]: 8893E3B9C4A9: to=<BFBDo96QKhULx@x-sites.de>, relay=server.x-sites.de[133.7.13.37]:25, delay=0.16, delays=0.05/0/0.02/0.09, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 54C1B3B3A16)
+Sep 23 16:19:21 server postfix/qmgr[6244]: 8893E3B9C4A9: removed
+Sep 23 16:20:55 server postfix/pickup[24931]: F129E3B9C4A9: uid=33 from=<www-data>
+Sep 23 16:20:55 server postfix/cleanup[26399]: F129E3B9C4A9: message-id=<92vq3Jdv@www.dummydomain.com>
+Sep 23 16:20:56 server postfix/qmgr[6244]: F129E3B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 16:20:56 server postfix/pickup[24931]: 0337B3B9C4A6: uid=33 from=<www-data>
+Sep 23 16:20:56 server postfix/cleanup[26399]: 0337B3B9C4A6: message-id=<oU88zuKw8BcG@www.dummydomain.com>
+Sep 23 16:20:56 server postfix/qmgr[6244]: 0337B3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 23 16:20:56 server postfix/smtp[26467]: 0337B3B9C4A6: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.15, delays=0.04/0.01/0.02/0.08, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as C63063B3A16)
+Sep 23 16:20:56 server postfix/qmgr[6244]: 0337B3B9C4A6: removed
+Sep 23 16:20:56 server postfix/smtp[26401]: F129E3B9C4A9: to=<4sbf07yZN6ZCjd@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.33, delays=0.06/0/0.05/0.22, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 2CA4127B12F)
+Sep 23 16:20:56 server postfix/qmgr[6244]: F129E3B9C4A9: removed
+Sep 23 16:21:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 23 16:21:52 server postfix/smtp[26467]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 16:21:52 server postfix/smtp[26467]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=340, delays=340/0/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 16:27:42 server postfix/pickup[24931]: 526002268001: uid=33 from=<www-data>
+Sep 23 16:27:42 server postfix/cleanup[26862]: 526002268001: message-id=<Zv3nrRIgPkM@www.dummydomain.com>
+Sep 23 16:27:42 server postfix/qmgr[6244]: 526002268001: from=<qmhM5uSuw@server.dummydomain.com>, size=800, nrcpt=1 (queue active)
+Sep 23 16:27:42 server postfix/pickup[24931]: 580632268002: uid=33 from=<www-data>
+Sep 23 16:27:42 server postfix/cleanup[26862]: 580632268002: message-id=<tom0f12NtFUG0k@www.dummydomain.com>
+Sep 23 16:27:42 server postfix/qmgr[6244]: 580632268002: from=<qmhM5uSuw@server.dummydomain.com>, size=714, nrcpt=1 (queue active)
+Sep 23 16:27:44 server postfix/smtp[26866]: 526002268001: to=<lbr52Q06sl@hotmail.de>, relay=mx1.hotmail.com[65.54.244.136]:25, delay=2.6, delays=0.1/0.01/0.84/1.7, dsn=2.0.0, status=sent (250  <Zv3nrRIgPkM@www.dummydomain.com> Queued mail for delivery)
+Sep 23 16:27:44 server postfix/qmgr[6244]: 526002268001: removed
+Sep 23 16:27:48 server postfix/smtp[26867]: 580632268002: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.8, delays=0.02/0.01/0.05/5.8, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as DFB3A3B3A16)
+Sep 23 16:27:48 server postfix/qmgr[6244]: 580632268002: removed
+Sep 23 16:31:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 23 16:31:52 server postfix/smtp[27147]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 16:31:52 server postfix/smtp[27147]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=940, delays=940/0.01/0.03/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 16:41:27 server postfix/pickup[24931]: 562E23B9C4A6: uid=33 from=<www-data>
+Sep 23 16:41:27 server postfix/cleanup[27547]: 562E23B9C4A6: message-id=<GOwNqRJsq@www.dummydomain.com>
+Sep 23 16:41:27 server postfix/qmgr[6244]: 562E23B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=772, nrcpt=1 (queue active)
+Sep 23 16:41:27 server postfix/pickup[24931]: 5F0673B9C4A9: uid=33 from=<www-data>
+Sep 23 16:41:27 server postfix/cleanup[27547]: 5F0673B9C4A9: message-id=<Nrgj4d3GoInA@www.dummydomain.com>
+Sep 23 16:41:27 server postfix/qmgr[6244]: 5F0673B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 23 16:41:27 server postfix/smtp[27550]: 562E23B9C4A6: to=<slf5mwpDW1fB7qw@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.18, delays=0.05/0/0.04/0.09, dsn=2.0.0, status=sent (250 OK id=1Ki94x-0008JG-00)
+Sep 23 16:41:27 server postfix/qmgr[6244]: 562E23B9C4A6: removed
+Sep 23 16:41:32 server postfix/smtp[27550]: 5F0673B9C4A9: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.05/0.07/0.03/5.1, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 6B5E63B3A16)
+Sep 23 16:41:32 server postfix/qmgr[6244]: 5F0673B9C4A9: removed
+Sep 23 16:41:47 server postfix/pickup[24931]: 259EB3B9C4A6: uid=33 from=<www-data>
+Sep 23 16:41:47 server postfix/cleanup[27547]: 259EB3B9C4A6: message-id=<pQrIKSH2@www.dummydomain.com>
+Sep 23 16:41:47 server postfix/qmgr[6244]: 259EB3B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 16:41:47 server postfix/pickup[24931]: 336413B9C089: uid=33 from=<www-data>
+Sep 23 16:41:47 server postfix/cleanup[27547]: 336413B9C089: message-id=<AyZAGrkXlH@www.dummydomain.com>
+Sep 23 16:41:47 server postfix/qmgr[6244]: 336413B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 23 16:41:47 server postfix/smtp[27550]: 336413B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.19, delays=0.12/0/0.02/0.05, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 3123A3B3A16)
+Sep 23 16:41:47 server postfix/qmgr[6244]: 336413B9C089: removed
+Sep 23 19:22:55 server postfix/pickup[31092]: BC1D53B9C4AA: uid=33 from=<www-data>
+Sep 23 19:22:55 server postfix/cleanup[2301]: BC1D53B9C4AA: message-id=<jeihJz4kO4@www.dummydomain.com>
+Sep 23 19:22:55 server postfix/qmgr[6244]: BC1D53B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=794, nrcpt=1 (queue active)
+Sep 23 19:22:55 server postfix/pickup[31092]: C0F8E3B9C089: uid=33 from=<www-data>
+Sep 23 19:22:55 server postfix/cleanup[2305]: C0F8E3B9C089: message-id=<eEY1VQYo@www.dummydomain.com>
+Sep 23 19:22:55 server postfix/qmgr[6244]: C0F8E3B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 23 19:22:57 server postfix/smtp[2306]: BC1D53B9C4AA: to=<uij99F85XjGIt@gmail.com>, relay=gmail-smtp-in.l.google.com[209.85.135.27]:25, delay=1.4, delays=0.02/0.01/0.22/1.1, dsn=2.0.0, status=sent (250 2.0.0 OK 1222190577 y2si2771641mug.2)
+Sep 23 19:22:57 server postfix/qmgr[6244]: BC1D53B9C4AA: removed
+Sep 23 19:23:02 server postfix/smtp[2307]: C0F8E3B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.7, delays=0.04/0.01/0.04/6.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 675C93B3A16)
+Sep 23 19:23:02 server postfix/qmgr[6244]: C0F8E3B9C089: removed
+Sep 23 19:29:58 server postfix/pickup[31092]: 0521E3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:29:58 server postfix/cleanup[2947]: 0521E3B9C4AA: message-id=<kvPKTqAuJVQnH@www.dummydomain.com>
+Sep 23 19:29:58 server postfix/qmgr[6244]: 0521E3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=853, nrcpt=1 (queue active)
+Sep 23 19:29:58 server postfix/pickup[31092]: 17BF13B9C089: uid=33 from=<www-data>
+Sep 23 19:29:58 server postfix/cleanup[2947]: 17BF13B9C089: message-id=<c664LVP6xcIk9@www.dummydomain.com>
+Sep 23 19:29:58 server postfix/qmgr[6244]: 17BF13B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=648, nrcpt=1 (queue active)
+Sep 23 19:30:02 server postfix/smtp[2951]: 0521E3B9C4AA: to=<I1vJBhO6nINuuo@telefonica.net>, relay=tnetmx.telefonica.net[213.4.149.227]:25, delay=4.9, delays=0.34/0/0.11/4.4, dsn=2.0.0, status=sent (250 2.0.0 JHVx1a0150D8JSN08HVxby mail accepted for delivery)
+Sep 23 19:30:02 server postfix/qmgr[6244]: 0521E3B9C4AA: removed
+Sep 23 19:30:03 server postfix/smtp[2952]: 17BF13B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.1/0/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 58F363B3A16)
+Sep 23 19:30:03 server postfix/qmgr[6244]: 17BF13B9C089: removed
+Sep 23 19:42:21 server postfix/pickup[3323]: E6FF13B9C4AA: uid=33 from=<www-data>
+Sep 23 19:42:21 server postfix/cleanup[3785]: E6FF13B9C4AA: message-id=<KUV7c7pqI4q@www.dummydomain.com>
+Sep 23 19:42:21 server postfix/qmgr[6244]: E6FF13B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=806, nrcpt=1 (queue active)
+Sep 23 19:42:21 server postfix/pickup[3323]: F16D83B9C089: uid=33 from=<www-data>
+Sep 23 19:42:22 server postfix/cleanup[3789]: F16D83B9C089: message-id=<De4SMAW@www.dummydomain.com>
+Sep 23 19:42:22 server postfix/qmgr[6244]: F16D83B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 23 19:42:23 server postfix/smtp[3790]: E6FF13B9C4AA: to=<wA7KGdeXCWkOI@hotmail.com>, relay=mx2.hotmail.com[65.54.245.40]:25, delay=1.3, delays=0.1/0.01/0.52/0.63, dsn=2.0.0, status=sent (250  <KUV7c7pqI4q@www.dummydomain.com> Queued mail for delivery)
+Sep 23 19:42:23 server postfix/qmgr[6244]: E6FF13B9C4AA: removed
+Sep 23 19:42:27 server postfix/smtp[3791]: F16D83B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.05/0.05/0.03/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 758143B3A16)
+Sep 23 19:42:27 server postfix/qmgr[6244]: F16D83B9C089: removed
+Sep 23 19:42:58 server postfix/pickup[3323]: 9CEDF3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:42:58 server postfix/cleanup[3785]: 9CEDF3B9C4AA: message-id=<1G1rNZP7SrBbsT@www.dummydomain.com>
+Sep 23 19:42:58 server postfix/qmgr[6244]: 9CEDF3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1172, nrcpt=1 (queue active)
+Sep 23 19:42:58 server postfix/smtp[3790]: 9CEDF3B9C4AA: to=<ehGrlyDV@die-skunks.de>, relay=mail.die-skunks.de[80.86.91.154]:25, delay=0.41, delays=0.31/0/0.08/0.02, dsn=2.0.0, status=sent (250 ok 1222191778 qp 12101)
+Sep 23 19:42:58 server postfix/qmgr[6244]: 9CEDF3B9C4AA: removed
+Sep 23 19:43:24 server postfix/pickup[3323]: 203513B9C4AA: uid=33 from=<www-data>
+Sep 23 19:43:24 server postfix/cleanup[3789]: 203513B9C4AA: message-id=<07fDQYowMwOQ2Du@www.dummydomain.com>
+Sep 23 19:43:24 server postfix/qmgr[6244]: 203513B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1037, nrcpt=1 (queue active)
+Sep 23 19:43:24 server postfix/smtp[3791]: 203513B9C4AA: to=<ehGrlyDV@die-skunks.de>, relay=mail.die-skunks.de[80.86.91.154]:25, delay=0.13, delays=0.05/0/0.06/0.02, dsn=2.0.0, status=sent (250 ok 1222191804 qp 13337)
+Sep 23 19:43:24 server postfix/qmgr[6244]: 203513B9C4AA: removed
+Sep 23 19:47:07 server postfix/pickup[3323]: 8DCFA3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:47:07 server postfix/cleanup[3947]: 8DCFA3B9C4AA: message-id=<mDRGVoW@www.dummydomain.com>
+Sep 23 19:47:07 server postfix/qmgr[6244]: 8DCFA3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=800, nrcpt=1 (queue active)
+Sep 23 19:47:07 server postfix/pickup[3323]: 943BF3B9C089: uid=33 from=<www-data>
+Sep 23 19:47:07 server postfix/cleanup[3947]: 943BF3B9C089: message-id=<udVfYvnV0rkK@www.dummydomain.com>
+Sep 23 19:47:07 server postfix/qmgr[6244]: 943BF3B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 23 19:47:08 server postfix/smtp[3952]: 8DCFA3B9C4AA: to=<WnqKtCE0EIc0yh@freenet.de>, relay=mx.freenet.de[195.4.92.9]:25, delay=0.47, delays=0.05/0/0.1/0.31, dsn=2.0.0, status=sent (250 OK id=1KiByd-0004kV-Uk)
+Sep 23 19:47:08 server postfix/qmgr[6244]: 8DCFA3B9C4AA: removed
+Sep 23 19:47:13 server postfix/smtp[3953]: 943BF3B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.15/0/0.04/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 1AF473B3A16)
+Sep 23 19:47:13 server postfix/qmgr[6244]: 943BF3B9C089: removed
+Sep 23 19:48:01 server postfix/pickup[3323]: 7FE673B9C4AA: uid=33 from=<www-data>
+Sep 23 19:48:01 server postfix/cleanup[3947]: 7FE673B9C4AA: message-id=<80cbf4fae3c8aa768dad363e774b3310@http://www.dummydomain.com/>
+Sep 23 19:48:01 server postfix/qmgr[6244]: 7FE673B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1002, nrcpt=1 (queue active)
+Sep 23 19:48:01 server postfix/smtp[3952]: 7FE673B9C4AA: to=<qWz7LTO@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.12, delays=0.03/0/0.04/0.06, dsn=2.0.0, status=sent (250 OK id=1KiBzV-0002XP-00)
+Sep 23 19:48:01 server postfix/qmgr[6244]: 7FE673B9C4AA: removed
+Sep 23 19:51:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 23 19:51:52 server postfix/smtp[4111]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 19:51:52 server postfix/smtp[4111]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=12941, delays=12941/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 19:53:47 server postfix/pickup[3323]: 4F1BB3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:53:47 server postfix/cleanup[4181]: 4F1BB3B9C4AA: message-id=<Y0IfwnwHnBW@www.dummydomain.com>
+Sep 23 19:53:47 server postfix/qmgr[6244]: 4F1BB3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1187, nrcpt=1 (queue active)
+Sep 23 19:53:49 server postfix/smtp[4183]: 4F1BB3B9C4AA: to=<1L3ptW9@yahoo.de>, relay=f.mx.mail.yahoo.com[209.191.88.247]:25, delay=2.3, delays=0.05/0.01/1/1.3, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 23 19:53:49 server postfix/qmgr[6244]: 4F1BB3B9C4AA: removed
+Sep 23 19:55:09 server postfix/pickup[3323]: ADC1D3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:55:09 server postfix/cleanup[4181]: ADC1D3B9C4AA: message-id=<NuuNmwpeefLj1o@www.dummydomain.com>
+Sep 23 19:55:10 server postfix/qmgr[6244]: ADC1D3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=772, nrcpt=1 (queue active)
+Sep 23 19:55:10 server postfix/pickup[3323]: 57E3D3B9C089: uid=33 from=<www-data>
+Sep 23 19:55:10 server postfix/cleanup[4181]: 57E3D3B9C089: message-id=<sObCGckjqi2OG@www.dummydomain.com>
+Sep 23 19:55:10 server postfix/qmgr[6244]: 57E3D3B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 23 19:55:10 server postfix/smtp[4183]: ADC1D3B9C4AA: to=<3sTqA629l4A@gmx.de>, relay=mx0.gmx.net[213.165.64.100]:25, delay=1.2, delays=1/0/0.05/0.09, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx076})
+Sep 23 19:55:10 server postfix/qmgr[6244]: ADC1D3B9C4AA: removed
+Sep 23 19:55:15 server postfix/smtp[4261]: 57E3D3B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.1, delays=0.64/0/0.21/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as E9F483B3A16)
+Sep 23 19:55:15 server postfix/qmgr[6244]: 57E3D3B9C089: removed
+Sep 23 19:55:50 server postfix/pickup[3323]: 83AB73B9C4AA: uid=33 from=<www-data>
+Sep 23 19:55:50 server postfix/cleanup[4181]: 83AB73B9C4AA: message-id=<ydwpWShCIVRbA@www.dummydomain.com>
+Sep 23 19:55:50 server postfix/qmgr[6244]: 83AB73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1052, nrcpt=1 (queue active)
+Sep 23 19:55:53 server postfix/smtp[4183]: 83AB73B9C4AA: to=<1L3ptW9@yahoo.de>, relay=d.mx.mail.yahoo.com[66.196.82.7]:25, delay=2.8, delays=0.15/0/0.39/2.2, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 23 19:55:53 server postfix/qmgr[6244]: 83AB73B9C4AA: removed
+Sep 23 19:57:48 server postfix/pickup[3323]: B2CCA3B9C4AA: uid=33 from=<www-data>
+Sep 23 19:57:48 server postfix/cleanup[4366]: B2CCA3B9C4AA: message-id=<0f26c2f3b5dd7e241706aac15557c49c@http://www.dummydomain.com/>
+Sep 23 19:57:48 server postfix/qmgr[6244]: B2CCA3B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1014, nrcpt=1 (queue active)
+Sep 23 19:57:49 server postfix/smtp[4368]: B2CCA3B9C4AA: to=<IcNXPe29Epy@gmail.com>, relay=gmail-smtp-in.l.google.com[72.14.221.27]:25, delay=0.86, delays=0.05/0/0.03/0.78, dsn=2.0.0, status=sent (250 2.0.0 OK 1222192669 3si8015441fge.3)
+Sep 23 19:57:49 server postfix/qmgr[6244]: B2CCA3B9C4AA: removed
+Sep 23 19:59:57 server postfix/pickup[3323]: 107703B9C4AA: uid=33 from=<www-data>
+Sep 23 19:59:57 server postfix/cleanup[4459]: 107703B9C4AA: message-id=<9j36O2K2BmgYN7@www.dummydomain.com>
+Sep 23 19:59:57 server postfix/qmgr[6244]: 107703B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=780, nrcpt=1 (queue active)
+Sep 23 19:59:57 server postfix/pickup[3323]: 211F13B9C4AB: uid=33 from=<www-data>
+Sep 23 19:59:57 server postfix/cleanup[4459]: 211F13B9C4AB: message-id=<UxJnStptQb@www.dummydomain.com>
+Sep 23 19:59:57 server postfix/qmgr[6244]: 211F13B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 23 19:59:57 server postfix/smtp[4462]: 107703B9C4AA: to=<dhMor9RCvUuOf@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.27, delays=0.14/0/0.05/0.08, dsn=2.0.0, status=sent (250 OK id=1KiCB3-0006zP-00)
+Sep 23 19:59:57 server postfix/qmgr[6244]: 107703B9C4AA: removed
+Sep 23 20:00:02 server postfix/smtp[4462]: 211F13B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.8, delays=0.06/0.05/0.07/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 179103B3A16)
+Sep 23 20:00:02 server postfix/qmgr[6244]: 211F13B9C4AB: removed
+Sep 23 20:02:01 server postfix/pickup[3323]: 518B43B9C4AA: uid=33 from=<www-data>
+Sep 23 20:02:01 server postfix/cleanup[4528]: 518B43B9C4AA: message-id=<iE1xmoEQgK@www.dummydomain.com>
+Sep 23 20:02:01 server postfix/qmgr[6244]: 518B43B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1169, nrcpt=1 (queue active)
+Sep 23 20:02:05 server postfix/smtp[4530]: 518B43B9C4AA: to=<V7UnKvDEM@yahoo.de>, relay=c.mx.mail.yahoo.com[216.39.53.2]:25, delay=4.7, delays=0.36/0.01/0.52/3.8, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 23 20:02:05 server postfix/qmgr[6244]: 518B43B9C4AA: removed
+Sep 23 20:02:37 server postfix/pickup[3323]: 1BF243B9C4AA: uid=33 from=<www-data>
+Sep 23 20:02:37 server postfix/cleanup[4528]: 1BF243B9C4AA: message-id=<7b0M4iTlKP@www.dummydomain.com>
+Sep 23 20:02:37 server postfix/qmgr[6244]: 1BF243B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1034, nrcpt=1 (queue active)
+Sep 23 20:02:38 server postfix/smtp[4530]: 1BF243B9C4AA: to=<V7UnKvDEM@yahoo.de>, relay=f.mx.mail.yahoo.com[68.142.202.247]:25, delay=1.9, delays=0.41/0/0.76/0.75, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 23 20:02:38 server postfix/qmgr[6244]: 1BF243B9C4AA: removed
+Sep 23 20:06:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 23 20:06:52 server postfix/smtp[4701]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 20:06:52 server postfix/smtp[4701]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=8946, delays=8946/0.03/0.11/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 20:11:09 server postfix/pickup[3323]: 870793B9C4AA: uid=33 from=<www-data>
+Sep 23 20:11:09 server postfix/cleanup[4897]: 870793B9C4AA: message-id=<OP9Ziy4E@www.dummydomain.com>
+Sep 23 20:11:10 server postfix/pickup[3323]: 26E7C3B9C089: uid=33 from=<www-data>
+Sep 23 20:11:10 server postfix/qmgr[6244]: 870793B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 23 20:11:10 server postfix/cleanup[4897]: 26E7C3B9C089: message-id=<DXP9iDwd@www.dummydomain.com>
+Sep 23 20:11:10 server postfix/qmgr[6244]: 26E7C3B9C089: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 23 20:11:15 server postfix/smtp[4903]: 26E7C3B9C089: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.8, delays=0.66/0/0.02/5.1, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 985C23B3A1D)
+Sep 23 20:11:15 server postfix/qmgr[6244]: 26E7C3B9C089: removed
+Sep 23 20:11:23 server postfix/smtp[4902]: 870793B9C4AA: to=<tEHiK4@malisch.com>, relay=mx01.schlund.de[212.227.15.150]:25, delay=14, delays=0.65/0.01/0.25/13, dsn=2.0.0, status=sent (250 Message 0MKtd6-1KiCLu20Kc-0003Zi accepted by mxeu24.kundenserver.de)
+Sep 23 20:11:23 server postfix/qmgr[6244]: 870793B9C4AA: removed
+Sep 23 20:15:26 server postfix/pickup[3323]: 754293B9C4AA: uid=33 from=<www-data>
+Sep 23 20:15:27 server postfix/cleanup[4990]: 754293B9C4AA: message-id=<sKyyN6HSE@www.dummydomain.com>
+Sep 23 20:15:28 server postfix/qmgr[6244]: 754293B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1160, nrcpt=1 (queue active)
+Sep 23 20:15:28 server postfix/smtp[4992]: 754293B9C4AA: to=<BARkQoNC@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=13, delays=13/0/0.22/0.14, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx047})
+Sep 23 20:15:28 server postfix/qmgr[6244]: 754293B9C4AA: removed
+Sep 23 20:16:08 server postfix/pickup[3323]: A53B53B9C4AA: uid=33 from=<www-data>
+Sep 23 20:16:08 server postfix/cleanup[4990]: A53B53B9C4AA: message-id=<xhhJFq9M@www.dummydomain.com>
+Sep 23 20:16:08 server postfix/qmgr[6244]: A53B53B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=1025, nrcpt=1 (queue active)
+Sep 23 20:16:08 server postfix/smtp[4992]: A53B53B9C4AA: to=<BARkQoNC@gmx.de>, relay=mx0.gmx.net[213.165.64.100]:25, delay=0.34, delays=0.18/0/0.05/0.11, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx107})
+Sep 23 20:16:08 server postfix/qmgr[6244]: A53B53B9C4AA: removed
+Sep 23 20:20:26 server postfix/pickup[3323]: 488D93B9C4AA: uid=33 from=<www-data>
+Sep 23 20:20:26 server postfix/cleanup[5174]: 488D93B9C4AA: message-id=<JBZt8f7G@www.dummydomain.com>
+Sep 23 20:20:26 server postfix/qmgr[6244]: 488D93B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=5061, nrcpt=1 (queue active)
+Sep 23 20:20:32 server postfix/smtp[5176]: 488D93B9C4AA: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.3, delays=1/0/0.03/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 8C93E3B3A1D)
+Sep 23 20:20:32 server postfix/qmgr[6244]: 488D93B9C4AA: removed
+Sep 23 20:20:39 server postfix/pickup[3323]: B75363B9C4AA: uid=33 from=<www-data>
+Sep 23 23:51:52 server postfix/smtp[12978]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 23 23:51:52 server postfix/smtp[12978]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=25597, delays=25597/0.01/0.04/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 23 23:59:15 server postfix/pickup[12594]: E7AD83B9C4AB: uid=33 from=<www-data>
+Sep 23 23:59:15 server postfix/cleanup[13483]: E7AD83B9C4AB: message-id=<Nwvhu2SH21hkFi@www.dummydomain.com>
+Sep 23 23:59:15 server postfix/qmgr[6244]: E7AD83B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=1165, nrcpt=1 (queue active)
+Sep 23 23:59:16 server postfix/smtp[13485]: E7AD83B9C4AB: to=<D56Sn4gMHopdJj@xonics.net>, relay=mxlb.ispgateway.de[80.67.18.126]:25, delay=0.43, delays=0.05/0/0.23/0.14, dsn=2.0.0, status=sent (250 OK id=1KiFue-0005PU-6t)
+Sep 23 23:59:16 server postfix/qmgr[6244]: E7AD83B9C4AB: removed
+Sep 24 00:00:13 server postfix/pickup[12594]: C36123B9C4AB: uid=33 from=<www-data>
+Sep 24 00:00:13 server postfix/cleanup[13483]: C36123B9C4AB: message-id=<J5ey1wERMGT@www.dummydomain.com>
+Sep 24 00:00:13 server postfix/qmgr[6244]: C36123B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=1030, nrcpt=1 (queue active)
+Sep 24 00:00:14 server postfix/smtp[13485]: C36123B9C4AB: to=<D56Sn4gMHopdJj@xonics.net>, relay=mxlb.ispgateway.de[80.67.18.126]:25, delay=0.38, delays=0.21/0/0.08/0.09, dsn=2.0.0, status=sent (250 OK id=1KiFva-00040k-0t)
+Sep 24 00:00:14 server postfix/qmgr[6244]: C36123B9C4AB: removed
+Sep 24 00:31:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 00:31:52 server postfix/smtp[15296]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 00:31:52 server postfix/smtp[15296]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=29740, delays=29740/0.08/0.03/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 00:46:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 00:46:52 server postfix/smtp[15666]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 00:46:52 server postfix/smtp[15666]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=25746, delays=25746/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 00:56:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 00:56:55 server postfix/smtp[15863]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 00:56:56 server postfix/smtp[15863]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=13123, delays=13119/0.01/3.2/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 01:01:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 01:01:52 server postfix/smtp[16004]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 01:01:52 server postfix/smtp[16004]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=29797, delays=29796/0.01/0.22/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 01:20:49 server postfix/pickup[16259]: 9014D3B9C4AB: uid=33 from=<www-data>
+Sep 24 01:20:49 server postfix/cleanup[16380]: 9014D3B9C4AB: message-id=<tFH5yjygJSe@www.dummydomain.com>
+Sep 24 01:20:49 server postfix/qmgr[6244]: 9014D3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=784, nrcpt=1 (queue active)
+Sep 24 01:20:49 server postfix/pickup[16259]: A9FE73B9C0C2: uid=33 from=<www-data>
+Sep 24 01:20:49 server postfix/cleanup[16380]: A9FE73B9C0C2: message-id=<DbxreUu@www.dummydomain.com>
+Sep 24 01:20:49 server postfix/qmgr[6244]: A9FE73B9C0C2: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 24 01:20:50 server postfix/smtp[16384]: 9014D3B9C4AB: to=<gpwMVwCxWA@hotmail.com>, relay=mx2.hotmail.com[65.54.244.40]:25, delay=1.3, delays=0.09/0.04/0.52/0.6, dsn=2.0.0, status=sent (250  <tFH5yjygJSe@www.dummydomain.com> Queued mail for delivery)
+Sep 24 01:20:50 server postfix/qmgr[6244]: 9014D3B9C4AB: removed
+Sep 24 01:20:55 server postfix/smtp[16385]: A9FE73B9C0C2: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.1, delays=0.15/0.1/0.47/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 22A103B3A1D)
+Sep 24 01:20:55 server postfix/qmgr[6244]: A9FE73B9C0C2: removed
+Sep 24 01:40:56 server postfix/smtpd[16746]: connect from 118-160-212-115.dynamic.hinet.net[118.160.212.115]
+Sep 24 01:40:57 server postfix/smtpd[16746]: NOQUEUE: reject: RCPT from 118-160-212-115.dynamic.hinet.net[118.160.212.115]: 554 5.7.1 <0xsmKqu@mail2000.com.tw>: Relay access denied; from=<SPutZsQT9@msa.hinet.net> to=<0xsmKqu@mail2000.com.tw> proto=SMTP helo=<78.46.38.10>
+Sep 24 01:40:58 server postfix/smtpd[16746]: lost connection after RCPT from 118-160-212-115.dynamic.hinet.net[118.160.212.115]
+Sep 24 01:40:58 server postfix/smtpd[16746]: disconnect from 118-160-212-115.dynamic.hinet.net[118.160.212.115]
+Sep 24 01:41:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 01:41:52 server postfix/smtp[16778]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 01:41:52 server postfix/smtp[16778]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=33940, delays=33940/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 01:44:18 server postfix/anvil[16748]: statistics: max connection rate 1/60s for (smtp:118.160.212.115) at Sep 24 01:40:56
+Sep 24 01:44:18 server postfix/anvil[16748]: statistics: max connection count 1 for (smtp:118.160.212.115) at Sep 24 01:40:56
+Sep 24 01:44:18 server postfix/anvil[16748]: statistics: max cache size 1 at Sep 24 01:40:56
+Sep 24 01:56:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 01:56:52 server postfix/smtp[17027]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 01:56:52 server postfix/smtp[17027]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=29946, delays=29946/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 02:06:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 02:06:52 server postfix/smtp[17224]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 02:06:52 server postfix/smtp[17224]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=17319, delays=17319/0.01/0.16/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 02:11:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 02:11:52 server postfix/smtp[17306]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 02:11:52 server postfix/smtp[17306]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=33997, delays=33997/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 02:33:51 server postfix/pickup[16259]: 1CE173B9C4AB: uid=33 from=<www-data>
+Sep 24 02:33:51 server postfix/cleanup[17672]: 1CE173B9C4AB: message-id=<mHZOplAsON@www.dummydomain.com>
+Sep 24 02:33:51 server postfix/qmgr[6244]: 1CE173B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=6427, nrcpt=1 (queue active)
+Sep 24 02:33:56 server postfix/smtp[17674]: 1CE173B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.09/0/0.03/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 4F19D3B3A1D)
+Sep 24 02:33:56 server postfix/qmgr[6244]: 1CE173B9C4AB: removed
+Sep 24 02:36:30 server postfix/pickup[16259]: 54F5D3B9C4AB: uid=33 from=<www-data>
+Sep 24 02:36:30 server postfix/cleanup[17703]: 54F5D3B9C4AB: message-id=<cWwUhBvkp@www.dummydomain.com>
+Sep 24 02:36:30 server postfix/qmgr[6244]: 54F5D3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=6363, nrcpt=1 (queue active)
+Sep 24 02:36:30 server postfix/smtp[17705]: 54F5D3B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.26, delays=0.15/0/0.02/0.1, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 78D2F3B3A1D)
+Sep 24 02:36:30 server postfix/qmgr[6244]: 54F5D3B9C4AB: removed
+Sep 24 02:51:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 02:51:52 server postfix/smtp[17965]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 02:51:52 server postfix/smtp[17965]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=38141, delays=38141/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 03:06:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 03:06:52 server postfix/smtp[18182]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 03:06:52 server postfix/smtp[18182]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=34146, delays=34146/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 03:16:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 03:16:56 server postfix/smtp[18353]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 03:16:56 server postfix/smtp[18353]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=21523, delays=21519/0.01/3.3/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 03:21:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 03:21:52 server postfix/smtp[18427]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 03:21:52 server postfix/smtp[18427]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=38197, delays=38197/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 03:24:49 server postfix/pickup[17956]: 0BC573B9C4AB: uid=33 from=<www-data>
+Sep 24 03:24:49 server postfix/cleanup[18515]: 0BC573B9C4AB: message-id=<SNuA9S@www.dummydomain.com>
+Sep 24 03:24:49 server postfix/qmgr[6244]: 0BC573B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=776, nrcpt=1 (queue active)
+Sep 24 03:24:49 server postfix/pickup[17956]: 1552F3B9C4AE: uid=33 from=<www-data>
+Sep 24 03:24:49 server postfix/cleanup[18515]: 1552F3B9C4AE: message-id=<fJcMKeM2LRuQSlE@www.dummydomain.com>
+Sep 24 03:24:49 server postfix/qmgr[6244]: 1552F3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 24 03:24:49 server postfix/smtp[18519]: 0BC573B9C4AB: to=<bU7whgfPfDQ@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=0.3, delays=0.06/0/0.04/0.19, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx059})
+Sep 24 03:24:49 server postfix/qmgr[6244]: 0BC573B9C4AB: removed
+Sep 24 03:24:55 server postfix/smtp[18520]: 1552F3B9C4AE: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.6, delays=0.03/0.12/0.07/6.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as E61063B3A1D)
+Sep 24 03:24:55 server postfix/qmgr[6244]: 1552F3B9C4AE: removed
+Sep 24 04:01:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 04:01:52 server postfix/smtp[19120]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 04:01:53 server postfix/smtp[19120]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=42341, delays=42340/0.19/0.05/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 04:15:54 server postfix/pickup[17956]: 1925E3B9C4AB: uid=33 from=<www-data>
+Sep 24 04:15:54 server postfix/cleanup[19313]: 1925E3B9C4AB: message-id=<HKhdINoJTw@www.dummydomain.com>
+Sep 24 04:15:54 server postfix/qmgr[6244]: 1925E3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=794, nrcpt=1 (queue active)
+Sep 24 04:15:54 server postfix/pickup[17956]: 1F2933B9C0C2: uid=33 from=<www-data>
+Sep 24 04:15:54 server postfix/cleanup[19313]: 1F2933B9C0C2: message-id=<Bk8xMBmKIP@www.dummydomain.com>
+Sep 24 04:15:54 server postfix/qmgr[6244]: 1F2933B9C0C2: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 24 04:15:55 server postfix/smtp[19317]: 1925E3B9C4AB: to=<1qB0GlZmA@hotmail.com>, relay=mx1.hotmail.com[65.54.244.8]:25, delay=1.2, delays=0.11/0/0.51/0.57, dsn=2.0.0, status=sent (250  <HKhdINoJTw@www.dummydomain.com> Queued mail for delivery)
+Sep 24 04:15:55 server postfix/qmgr[6244]: 1925E3B9C4AB: removed
+Sep 24 04:15:59 server postfix/smtp[19318]: 1F2933B9C0C2: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.05/0/0.06/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 279413B3A1D)
+Sep 24 04:15:59 server postfix/qmgr[6244]: 1F2933B9C0C2: removed
+Sep 24 04:16:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 04:16:52 server postfix/smtp[19317]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 04:16:52 server postfix/smtp[19317]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=38346, delays=38346/0/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 04:26:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 04:26:52 server postfix/smtp[19448]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 04:26:52 server postfix/smtp[19448]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=25719, delays=25719/0.01/0.32/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 04:31:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 04:31:52 server postfix/smtp[19506]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 04:31:52 server postfix/smtp[19506]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=42397, delays=42397/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 04:43:49 server postfix/pickup[19455]: 808CC3B9C4AB: uid=33 from=<www-data>
+Sep 24 04:43:49 server postfix/cleanup[19633]: 808CC3B9C4AB: message-id=<652321ad006d8e2b97d55b8c695d849d@http://www.dummydomain.com/>
+Sep 24 04:43:49 server postfix/qmgr[6244]: 808CC3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=1300, nrcpt=1 (queue active)
+Sep 24 04:43:49 server postfix/smtp[19635]: 808CC3B9C4AB: to=<jqBZ42LQTx@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=1.1, delays=0.83/0/0.07/0.23, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as DEDC31F502C)
+Sep 24 04:43:49 server postfix/qmgr[6244]: 808CC3B9C4AB: removed
+Sep 24 05:11:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 05:11:54 server postfix/smtp[20033]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 05:11:54 server postfix/smtp[20033]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=46542, delays=46540/2/0.16/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 05:26:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 05:26:53 server postfix/smtp[20173]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 05:26:53 server postfix/smtp[20173]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=42547, delays=42546/0.19/0.24/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 05:36:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 05:37:22 server postfix/smtp[20281]: connect to goolgemail.com[204.13.160.129]:25: Connection timed out
+Sep 24 05:37:22 server postfix/smtp[20281]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=29949, delays=29919/0.08/30/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection timed out)
+Sep 24 05:41:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 05:41:52 server postfix/smtp[20357]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 05:41:53 server postfix/smtp[20357]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=46597, delays=46597/0.04/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 06:21:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 06:21:52 server postfix/smtp[20752]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 06:21:52 server postfix/smtp[20752]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=50740, delays=50740/0.06/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 06:29:30 server postfix/pickup[20601]: B17AB3B9C4AB: uid=0 from=<root>
+Sep 24 06:29:30 server postfix/cleanup[20866]: B17AB3B9C4AB: message-id=<Bc4cyJYzo@server.dummydomain.com>
+Sep 24 06:29:31 server postfix/qmgr[6244]: B17AB3B9C4AB: from=<F2fiYzIfeDR@server.dummydomain.com>, size=1064, nrcpt=1 (queue active)
+Sep 24 06:29:36 server postfix/smtp[20868]: B17AB3B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.1, delays=0.76/0/0.02/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as D5FEC3B3A1D)
+Sep 24 06:29:36 server postfix/qmgr[6244]: B17AB3B9C4AB: removed
+Sep 24 07:56:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 07:31:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 07:31:52 server postfix/smtp[21836]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 07:31:52 server postfix/smtp[21836]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=54941, delays=54941/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 07:46:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 07:46:52 server postfix/smtp[22064]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 07:46:52 server postfix/smtp[22064]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=50946, delays=50946/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 07:54:24 server postfix/pickup[22022]: C856B3B9C4AE: uid=33 from=<www-data>
+Sep 24 07:54:24 server postfix/cleanup[22185]: C856B3B9C4AE: message-id=<hciBuI6WHbUw@www.dummydomain.com>
+Sep 24 07:54:24 server postfix/qmgr[6244]: C856B3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=6638, nrcpt=1 (queue active)
+Sep 24 07:54:30 server postfix/smtp[22187]: C856B3B9C4AE: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.07/0/0.04/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 606253B3A1D)
+Sep 24 07:54:30 server postfix/qmgr[6244]: C856B3B9C4AE: removed
+Sep 24 07:57:01 server postfix/smtp[22230]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 07:57:02 server postfix/smtp[22230]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=38328, delays=38319/0.01/9.5/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 10:47:52 server postfix/smtpd[26253]: disconnect from bl7-207-10.dsl.telepac.pt[85.240.207.10]
+Sep 24 10:51:12 server postfix/anvil[26255]: statistics: max connection rate 1/60s for (smtp:85.240.207.10) at Sep 24 10:47:51
+Sep 24 10:51:12 server postfix/anvil[26255]: statistics: max connection count 1 for (smtp:85.240.207.10) at Sep 24 10:47:51
+Sep 24 10:51:12 server postfix/anvil[26255]: statistics: max cache size 1 at Sep 24 10:47:51
+Sep 24 11:01:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 11:01:52 server postfix/smtp[26621]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 11:01:52 server postfix/smtp[26621]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=67540, delays=67540/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 11:16:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 11:16:52 server postfix/smtp[26974]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 11:16:52 server postfix/smtp[26974]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=63545, delays=63545/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 11:18:15 server postfix/pickup[26499]: A573F3B9C4AE: uid=33 from=<www-data>
+Sep 24 11:18:15 server postfix/cleanup[27018]: A573F3B9C4AE: message-id=<34183cc67ced1efd10a3d315e7a10ea1@http://www.dummydomain.com/>
+Sep 24 11:18:15 server postfix/qmgr[6244]: A573F3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=1352, nrcpt=1 (queue active)
+Sep 24 11:18:28 server postfix/smtp[26974]: A573F3B9C4AE: to=<9TDNszgkz9tPnB@Ralf-Schlueter.de>, relay=mx00.schlund.de[212.227.15.134]:25, delay=17, delays=4.3/0/0.09/13, dsn=2.0.0, status=sent (250 Message 0MKstg-1KiQVk0bGG-0002Kt accepted by mxeu25.kundenserver.de)
+Sep 24 11:18:28 server postfix/qmgr[6244]: A573F3B9C4AE: removed
+Sep 24 11:18:31 server postfix/pickup[26499]: 15E393B9C4AE: uid=33 from=<www-data>
+Sep 24 11:18:31 server postfix/cleanup[27018]: 15E393B9C4AE: message-id=<2LxWhhK@www.dummydomain.com>
+Sep 24 11:18:31 server postfix/qmgr[6244]: 15E393B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=800, nrcpt=1 (queue active)
+Sep 24 11:18:31 server postfix/pickup[26499]: 1B8F03B9C4BA: uid=33 from=<www-data>
+Sep 24 11:18:31 server postfix/cleanup[27018]: 1B8F03B9C4BA: message-id=<mykLfb04qg1VQm5@www.dummydomain.com>
+Sep 24 11:18:31 server postfix/qmgr[6244]: 1B8F03B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 24 11:18:31 server postfix/smtp[26974]: 15E393B9C4AE: to=<YBpbNzJLLle@googlemail.com>, relay=gmail-smtp-in.l.google.com[72.14.221.114]:25, delay=0.89, delays=0.04/0/0.03/0.82, dsn=2.0.0, status=sent (250 2.0.0 OK 1222247911 4si10543572fge.8)
+Sep 24 11:18:31 server postfix/qmgr[6244]: 15E393B9C4AE: removed
+Sep 24 11:18:41 server postfix/smtp[27025]: 1B8F03B9C4BA: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=10, delays=0.05/0/5/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 24F333B3A1D)
+Sep 24 11:18:41 server postfix/qmgr[6244]: 1B8F03B9C4BA: removed
+Sep 24 11:26:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 11:26:56 server postfix/smtp[27317]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 11:26:57 server postfix/smtp[27317]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=50923, delays=50920/0.01/3.5/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 11:31:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 11:31:52 server postfix/smtp[27431]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 11:31:52 server postfix/smtp[27431]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=67597, delays=67597/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 12:03:58 server postfix/pickup[26499]: E95683B9C4AE: uid=33 from=<www-data>
+Sep 24 12:03:58 server postfix/cleanup[28298]: E95683B9C4AE: message-id=<SxF3yfe@www.dummydomain.com>
+Sep 24 12:03:58 server postfix/qmgr[6244]: E95683B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=798, nrcpt=1 (queue active)
+Sep 24 12:03:59 server postfix/pickup[26499]: F1E033B9C4AB: uid=33 from=<www-data>
+Sep 24 12:03:59 server postfix/cleanup[28298]: F1E033B9C4AB: message-id=<O2Ei529XmOsf6@www.dummydomain.com>
+Sep 24 12:03:59 server postfix/qmgr[6244]: F1E033B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=716, nrcpt=1 (queue active)
+Sep 24 12:04:04 server postfix/smtp[28303]: F1E033B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.5, delays=0.05/0.01/0.04/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 2C4493B3A3F)
+Sep 24 12:04:04 server postfix/qmgr[6244]: F1E033B9C4AB: removed
+Sep 24 12:04:05 server postfix/smtp[28302]: E95683B9C4AE: to=<L2iCNFnjN@gmx.at>, relay=mx0.gmx.de[213.165.64.100]:25, delay=6.7, delays=0.17/0.01/5/1.5, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx103})
+Sep 24 12:04:05 server postfix/qmgr[6244]: E95683B9C4AE: removed
+Sep 24 12:07:04 server postfix/pickup[26499]: 3FF973B9C4AE: uid=33 from=<www-data>
+Sep 24 12:07:04 server postfix/cleanup[28386]: 3FF973B9C4AE: message-id=<kbsiDi0uehTCb@www.dummydomain.com>
+Sep 24 12:07:04 server postfix/qmgr[6244]: 3FF973B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=1176, nrcpt=1 (queue active)
+Sep 24 12:07:04 server postfix/smtp[28388]: 3FF973B9C4AE: to=<lLDGc7IYhE1KXQE@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.69, delays=0.08/0/0.12/0.49, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 9814B30280C)
+Sep 24 12:07:04 server postfix/qmgr[6244]: 3FF973B9C4AE: removed
+Sep 24 12:11:10 server postfix/pickup[26499]: 46F3E3B9C4AE: uid=33 from=<www-data>
+Sep 24 12:11:10 server postfix/cleanup[28552]: 46F3E3B9C4AE: message-id=<3Fb8VzJ@www.dummydomain.com>
+Sep 24 12:11:10 server postfix/qmgr[6244]: 46F3E3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=1041, nrcpt=1 (queue active)
+Sep 24 12:11:11 server postfix/smtp[28554]: 46F3E3B9C4AE: to=<lLDGc7IYhE1KXQE@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.95, delays=0.04/0/0.05/0.86, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 99ACC3027E5)
+Sep 24 12:11:11 server postfix/qmgr[6244]: 46F3E3B9C4AE: removed
+Sep 24 12:11:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 12:11:52 server postfix/smtp[28554]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 12:11:52 server postfix/smtp[28554]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=71740, delays=71740/0/0.05/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 12:15:35 server postfix/pickup[26499]: 0F7A33B9C4AE: uid=33 from=<www-data>
+Sep 24 12:15:35 server postfix/cleanup[28644]: 0F7A33B9C4AE: message-id=<pxSyR2I172Q@www.dummydomain.com>
+Sep 24 12:15:35 server postfix/qmgr[6244]: 0F7A33B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=798, nrcpt=1 (queue active)
+Sep 24 12:15:35 server postfix/pickup[26499]: 1CAF73B9C4AB: uid=33 from=<www-data>
+Sep 24 12:15:35 server postfix/cleanup[28644]: 1CAF73B9C4AB: message-id=<vZl4TTOACcmx@www.dummydomain.com>
+Sep 24 12:15:35 server postfix/qmgr[6244]: 1CAF73B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=714, nrcpt=1 (queue active)
+Sep 24 12:15:35 server postfix/smtp[28649]: 0F7A33B9C4AE: to=<SzFVoxcIIR@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.32, delays=0.18/0.01/0.05/0.08, dsn=2.0.0, status=sent (250 OK id=1KiRPD-0003ll-00)
+Sep 24 12:15:35 server postfix/qmgr[6244]: 0F7A33B9C4AE: removed
+Sep 24 12:15:40 server postfix/smtp[28650]: 1CAF73B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.08/0.02/0.08/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 6A9DC3B3A3F)
+Sep 24 12:15:40 server postfix/qmgr[6244]: 1CAF73B9C4AB: removed
+Sep 24 12:26:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 12:26:52 server postfix/smtp[28982]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 12:26:52 server postfix/smtp[28982]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=67746, delays=67746/0.01/0.06/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 12:36:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 12:36:52 server postfix/smtp[29258]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 12:36:52 server postfix/smtp[29258]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=55119, delays=55119/0.01/0.16/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 12:41:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 12:41:52 server postfix/smtp[29444]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 12:41:52 server postfix/smtp[29444]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=71797, delays=71797/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 13:15:03 server postfix/pickup[28989]: 3823A3B9C4AE: uid=33 from=<www-data>
+Sep 24 13:15:03 server postfix/cleanup[30477]: 3823A3B9C4AE: message-id=<dkCMfbpMcKk2@www.dummydomain.com>
+Sep 24 13:15:03 server postfix/qmgr[6244]: 3823A3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=819, nrcpt=1 (queue active)
+Sep 24 13:15:03 server postfix/pickup[28989]: 3EFF43B9C4BA: uid=33 from=<www-data>
+Sep 24 13:15:03 server postfix/cleanup[30477]: 3EFF43B9C4BA: message-id=<0ZhEqsJlXl6j5@www.dummydomain.com>
+Sep 24 13:15:03 server postfix/qmgr[6244]: 3EFF43B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 24 13:15:04 server postfix/smtp[30481]: 3823A3B9C4AE: to=<BoMdXVuToMc@hotmail.com>, relay=mx3.hotmail.com[65.54.244.200]:25, delay=1.4, delays=0.03/0/0.64/0.71, dsn=2.0.0, status=sent (250  <dkCMfbpMcKk2@www.dummydomain.com> Queued mail for delivery)
+Sep 24 13:15:04 server postfix/qmgr[6244]: 3823A3B9C4AE: removed
+Sep 24 13:15:08 server postfix/smtp[30482]: 3EFF43B9C4BA: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.6, delays=0.03/0/0.03/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 479953B3A3F)
+Sep 24 13:15:08 server postfix/qmgr[6244]: 3EFF43B9C4BA: removed
+Sep 24 13:19:28 server postfix/pickup[28989]: 2BDDB3B9C4AE: uid=33 from=<www-data>
+Sep 24 13:19:28 server postfix/cleanup[30614]: 2BDDB3B9C4AE: message-id=<DgoHSf0w@www.dummydomain.com>
+Sep 24 13:19:28 server postfix/qmgr[6244]: 2BDDB3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 24 13:19:28 server postfix/pickup[28989]: 312F43B9C4BA: uid=33 from=<www-data>
+Sep 24 13:19:28 server postfix/cleanup[30614]: 312F43B9C4BA: message-id=<3wVNyVto3EhSr@www.dummydomain.com>
+Sep 24 13:19:28 server postfix/qmgr[6244]: 312F43B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 24 13:19:28 server postfix/smtp[30617]: 2BDDB3B9C4AE: to=<WY1wxTF6GmH@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.14, delays=0.04/0/0.05/0.04, dsn=2.0.0, status=sent (250 OK id=1KiSP2-0007ME-00)
+Sep 24 13:19:28 server postfix/qmgr[6244]: 2BDDB3B9C4AE: removed
+Sep 24 13:19:28 server postfix/smtp[30619]: 312F43B9C4BA: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.13, delays=0.03/0/0.02/0.08, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as B04D93B3A3F)
+Sep 24 13:19:28 server postfix/qmgr[6244]: 312F43B9C4BA: removed
+Sep 24 13:21:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 13:21:52 server postfix/smtp[30689]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 13:21:52 server postfix/smtp[30689]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=75940, delays=75940/0.01/0.05/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 13:36:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 13:36:52 server postfix/smtp[31134]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 13:36:52 server postfix/smtp[31134]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=71946, delays=71946/0.02/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 13:39:26 server postfix/pickup[28989]: 73B563B9C4AE: uid=33 from=<www-data>
+Sep 24 13:39:26 server postfix/cleanup[31223]: 73B563B9C4AE: message-id=<sBYSrjQvLJ8KZ@www.dummydomain.com>
+Sep 24 13:39:26 server postfix/qmgr[6244]: 73B563B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=790, nrcpt=1 (queue active)
+Sep 24 13:39:26 server postfix/pickup[28989]: 7D2BF3B9C4AB: uid=33 from=<www-data>
+Sep 24 13:39:26 server postfix/cleanup[31223]: 7D2BF3B9C4AB: message-id=<b6d2Rv2Rvr@www.dummydomain.com>
+Sep 24 13:39:26 server postfix/smtp[31227]: 73B563B9C4AE: to=<hWSnYwhzb5@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=0.25, delays=0.07/0/0.06/0.11, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx021})
+Sep 24 13:39:26 server postfix/qmgr[6244]: 73B563B9C4AE: removed
+Sep 24 13:39:26 server postfix/qmgr[6244]: 7D2BF3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 24 13:39:26 server postfix/smtp[31227]: 7D2BF3B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.39, delays=0.26/0/0.04/0.09, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 61C313B3A40)
+Sep 24 13:39:26 server postfix/qmgr[6244]: 7D2BF3B9C4AB: removed
+Sep 24 13:46:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 13:46:53 server postfix/smtp[31428]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 13:46:53 server postfix/smtp[31428]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=59320, delays=59319/0.01/0.65/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 13:51:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 13:51:52 server postfix/smtp[31590]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 13:51:52 server postfix/smtp[31590]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=75997, delays=75997/0.04/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 13:55:31 server postfix/pickup[28989]: F3AC83B9C4AE: uid=33 from=<www-data>
+Sep 24 13:55:32 server postfix/cleanup[31709]: F3AC83B9C4AE: message-id=<JD0lYx5sSB@www.dummydomain.com>
+Sep 24 13:55:32 server postfix/qmgr[6244]: F3AC83B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=798, nrcpt=1 (queue active)
+Sep 24 13:55:32 server postfix/pickup[28989]: 059BB3B9C4AB: uid=33 from=<www-data>
+Sep 24 13:55:32 server postfix/cleanup[31709]: 059BB3B9C4AB: message-id=<qw4FbwDleYw@www.dummydomain.com>
+Sep 24 13:55:32 server postfix/qmgr[6244]: 059BB3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=715, nrcpt=1 (queue active)
+Sep 24 13:55:32 server postfix/smtp[31713]: F3AC83B9C4AE: to=<wssIx4EAep@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.17, delays=0.05/0/0.04/0.07, dsn=2.0.0, status=sent (250 OK id=1KiSxw-0003Li-00)
+Sep 24 13:55:32 server postfix/qmgr[6244]: F3AC83B9C4AE: removed
+Sep 24 13:55:37 server postfix/smtp[31714]: 059BB3B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.5, delays=0.06/0.02/0.02/5.4, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 1AB523B3A40)
+Sep 24 13:55:37 server postfix/qmgr[6244]: 059BB3B9C4AB: removed
+Sep 24 13:57:35 server postfix/pickup[28989]: EE3DC3B9C4AE: uid=33 from=<www-data>
+Sep 24 13:57:35 server postfix/cleanup[31839]: EE3DC3B9C4AE: message-id=<x4yeq38wzCcY@www.dummydomain.com>
+Sep 24 13:57:36 server postfix/qmgr[6244]: EE3DC3B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=800, nrcpt=1 (queue active)
+Sep 24 13:57:36 server postfix/pickup[28989]: 05C9F3B9C4AB: uid=33 from=<www-data>
+Sep 24 13:57:36 server postfix/cleanup[31839]: 05C9F3B9C4AB: message-id=<JngzTKEB2TOh@www.dummydomain.com>
+Sep 24 13:57:36 server postfix/qmgr[6244]: 05C9F3B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 24 13:57:36 server postfix/smtp[31843]: EE3DC3B9C4AE: to=<W0rIrVrGwM7@gmx.net>, relay=mx0.gmx.de[213.165.64.100]:25, delay=0.27, delays=0.09/0/0.05/0.12, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx086})
+Sep 24 16:48:15 server postfix/qmgr[6244]: 3A9B83B9C4AB: removed
+Sep 24 16:48:17 server postfix/smtp[5720]: 33E093B9C4BA: to=<LkPGgKoBM@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=2.2, delays=0.21/0/0.05/1.9, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx088})
+Sep 24 16:48:17 server postfix/qmgr[6244]: 33E093B9C4BA: removed
+Sep 24 16:49:58 server postfix/pickup[2785]: E31D43B9C4BA: uid=33 from=<www-data>
+Sep 24 16:49:58 server postfix/cleanup[5834]: E31D43B9C4BA: message-id=<qTEZrJ3dFbdG5RS@www.dummydomain.com>
+Sep 24 16:49:58 server postfix/qmgr[6244]: E31D43B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=827, nrcpt=1 (queue active)
+Sep 24 16:49:58 server postfix/pickup[5840]: F29683B9C4BE: uid=33 from=<www-data>
+Sep 24 16:49:58 server postfix/cleanup[5834]: F29683B9C4BE: message-id=<9RdcQMZsCHp@www.dummydomain.com>
+Sep 24 16:49:59 server postfix/qmgr[6244]: F29683B9C4BE: from=<qmhM5uSuw@server.dummydomain.com>, size=717, nrcpt=1 (queue active)
+Sep 24 16:50:00 server postfix/smtp[5839]: E31D43B9C4BA: to=<td8QqwL@hotmail.de>, relay=mx4.hotmail.com[65.54.245.104]:25, delay=2.1, delays=0.15/0/0.8/1.1, dsn=2.0.0, status=sent (250  <qTEZrJ3dFbdG5RS@www.dummydomain.com> Queued mail for delivery)
+Sep 24 16:50:00 server postfix/qmgr[6244]: E31D43B9C4BA: removed
+Sep 24 16:50:04 server postfix/smtp[5841]: F29683B9C4BE: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.5, delays=0.08/0.1/0.03/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 660C63B3A1C)
+Sep 24 16:50:04 server postfix/qmgr[6244]: F29683B9C4BE: removed
+Sep 24 16:51:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 16:51:52 server postfix/smtp[5913]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 16:51:52 server postfix/smtp[5913]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=88540, delays=88540/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 17:01:02 server postfix/pickup[5840]: E59B93B9C4BA: uid=33 from=<www-data>
+Sep 24 17:01:02 server postfix/cleanup[6265]: E59B93B9C4BA: message-id=<ed5507a941d93b66c2623cb6db1c5067@http://www.dummydomain.com/>
+Sep 24 17:01:02 server postfix/qmgr[6244]: E59B93B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=1324, nrcpt=1 (queue active)
+Sep 24 17:01:03 server postfix/smtp[6267]: E59B93B9C4BA: to=<V9xyNjikEHo@gws-clan.de>, relay=mail.gws-clan.de[85.13.140.100]:25, delay=1.5, delays=0.34/0.14/0.39/0.62, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 3B8DF1800B6DC)
+Sep 24 17:01:03 server postfix/qmgr[6244]: E59B93B9C4BA: removed
+Sep 24 17:03:56 server postfix/pickup[5840]: 3AE073B9C4BA: uid=33 from=<www-data>
+Sep 24 17:03:56 server postfix/cleanup[6397]: 3AE073B9C4BA: message-id=<zxF3xsrv@www.dummydomain.com>
+Sep 24 17:03:56 server postfix/qmgr[6244]: 3AE073B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=790, nrcpt=1 (queue active)
+Sep 24 17:03:56 server postfix/pickup[5840]: 418493B9C4BE: uid=33 from=<www-data>
+Sep 24 17:03:56 server postfix/cleanup[6397]: 418493B9C4BE: message-id=<CEcru8kgURu8d@www.dummydomain.com>
+Sep 24 17:03:56 server postfix/qmgr[6244]: 418493B9C4BE: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 24 17:03:57 server postfix/smtp[6401]: 3AE073B9C4BA: to=<NhhrPoqJ@yahoo.de>, relay=c.mx.mail.yahoo.com[216.39.53.3]:25, delay=1.1, delays=0.12/0/0.4/0.61, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 24 17:03:57 server postfix/qmgr[6244]: 3AE073B9C4BA: removed
+Sep 24 17:04:01 server postfix/smtp[6402]: 418493B9C4BE: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.04/0/0.03/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 915783B3A1C)
+Sep 24 17:04:01 server postfix/qmgr[6244]: 418493B9C4BE: removed
+Sep 24 17:05:33 server postfix/pickup[5840]: 7F7663B9C4BA: uid=33 from=<www-data>
+Sep 24 17:05:33 server postfix/cleanup[6397]: 7F7663B9C4BA: message-id=<Iu8VXP8GliH@www.dummydomain.com>
+Sep 24 17:05:33 server postfix/qmgr[6244]: 7F7663B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 24 17:05:33 server postfix/pickup[5840]: C5EB13B9C4AB: uid=33 from=<www-data>
+Sep 24 17:05:33 server postfix/cleanup[6397]: C5EB13B9C4AB: message-id=<AciBTqSr0h@www.dummydomain.com>
+Sep 24 17:05:33 server postfix/qmgr[6244]: C5EB13B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 24 17:05:33 server postfix/smtp[6402]: C5EB13B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.33, delays=0.25/0/0.02/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as E4A743B3A1C)
+Sep 24 17:05:33 server postfix/qmgr[6244]: C5EB13B9C4AB: removed
+Sep 24 17:05:35 server postfix/smtp[6401]: 7F7663B9C4BA: to=<7DqmYPP8MH63@yahoo.de>, relay=f.mx.mail.yahoo.com[68.142.202.247]:25, delay=2.3, delays=0.37/0.02/0.76/1.1, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 24 17:05:35 server postfix/qmgr[6244]: 7F7663B9C4BA: removed
+Sep 24 17:06:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 17:06:52 server postfix/smtp[6402]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 17:06:52 server postfix/smtp[6402]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=84546, delays=84546/0/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 17:08:53 server postfix/pickup[5840]: A7D843B9C4BA: uid=33 from=<www-data>
+Sep 24 17:08:53 server postfix/cleanup[6579]: A7D843B9C4BA: message-id=<AIfClDh@www.dummydomain.com>
+Sep 24 17:08:53 server postfix/pickup[5840]: B00393B9C4AB: uid=33 from=<www-data>
+Sep 24 17:08:53 server postfix/cleanup[6582]: B00393B9C4AB: message-id=<ikfojMLJJr@www.dummydomain.com>
+Sep 24 17:08:53 server postfix/qmgr[6244]: A7D843B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=805, nrcpt=1 (queue active)
+Sep 24 17:08:53 server postfix/qmgr[6244]: B00393B9C4AB: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 24 17:08:54 server postfix/smtp[6584]: B00393B9C4AB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.35, delays=0.04/0.17/0.04/0.09, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 127C93B3A1C)
+Sep 24 17:08:54 server postfix/qmgr[6244]: B00393B9C4AB: removed
+Sep 24 17:09:00 server postfix/smtp[6583]: A7D843B9C4BA: to=<QnihqCOYIhWzq@chello.at>, relay=smtpgate.chello.at[213.46.255.2]:25, delay=7.3, delays=0.07/0.16/0.09/7, dsn=2.0.0, status=sent (250 Message received: 9bMLrnuMfhL@server.dummydomain.com)
+Sep 24 17:09:00 server postfix/qmgr[6244]: A7D843B9C4BA: removed
+Sep 24 17:15:45 server postfix/pickup[5840]: DCC303B9C4BA: uid=33 from=<www-data>
+Sep 24 17:15:45 server postfix/cleanup[6840]: DCC303B9C4BA: message-id=<yslxP2qu2z@www.dummydomain.com>
+Sep 24 17:15:45 server postfix/qmgr[6244]: DCC303B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=786, nrcpt=1 (queue active)
+Sep 24 17:15:45 server postfix/pickup[5840]: E62B63B9C05A: uid=33 from=<www-data>
+Sep 24 17:15:45 server postfix/cleanup[6844]: E62B63B9C05A: message-id=<MEbxeEstdtuO@www.dummydomain.com>
+Sep 24 17:15:46 server postfix/qmgr[6244]: E62B63B9C05A: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 24 17:15:46 server postfix/smtp[6846]: E62B63B9C05A: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.23, delays=0.12/0/0.05/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 3D6583B3A1C)
+Sep 24 17:15:46 server postfix/qmgr[6244]: E62B63B9C05A: removed
+Sep 24 17:16:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 24 17:16:52 server postfix/smtp[6846]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 24 17:16:52 server postfix/smtp[6846]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=71919, delays=71919/0/0.32/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 24 17:17:01 server postfix/pickup[5840]: 342063B9C4BB: uid=33 from=<www-data>
+Sep 24 17:17:01 server postfix/cleanup[6840]: 342063B9C4BB: message-id=<7RfC2G1ecx@www.dummydomain.com>
+Sep 24 17:17:01 server postfix/qmgr[6244]: 342063B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=780, nrcpt=1 (queue active)
+Sep 24 17:17:01 server postfix/pickup[5840]: 457593B9C05A: uid=33 from=<www-data>
+Sep 24 17:17:01 server postfix/cleanup[6844]: 457593B9C05A: message-id=<J5wTYEfXjnMd@www.dummydomain.com>
+Sep 24 17:17:01 server postfix/qmgr[6244]: 457593B9C05A: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 24 17:17:01 server postfix/smtp[6846]: 342063B9C4BB: to=<eIo5FIJFI@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.17, delays=0.09/0/0.03/0.05, dsn=2.0.0, status=sent (250 OK id=1KiW6v-00025T-00)
+Sep 24 17:17:01 server postfix/qmgr[6244]: 342063B9C4BB: removed
+Sep 24 17:17:06 server postfix/smtp[6899]: 457593B9C05A: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.09/0.01/0.02/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as AFAB73B3A1C)
+Sep 24 17:17:06 server postfix/qmgr[6244]: 457593B9C05A: removed
+Sep 24 17:21:07 server postfix/smtp[6845]: DCC303B9C4BA: conversation with g.mx.mail.yahoo.com[206.190.53.191] timed out while receiving the initial server greeting
+Sep 24 17:21:09 server postfix/smtp[6845]: DCC303B9C4BA: to=<QHs8fJZbidofQ@yahoo.de>, relay=c.mx.mail.yahoo.com[216.39.53.2]:25, delay=324, delays=0.06/0.01/321/2.5, dsn=2.0.0, status=sent (250 ok dirdel)
+Sep 24 17:21:09 server postfix/qmgr[6244]: DCC303B9C4BA: removed
+Sep 24 17:21:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 24 17:21:52 server postfix/smtp[6845]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 24 17:21:52 server postfix/smtp[6845]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=88597, delays=88597/0/0.04/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 24 17:23:10 server postfix/pickup[5840]: 87C8C3B9C4BA: uid=33 from=<www-data>
+Sep 24 17:23:10 server postfix/cleanup[7075]: 87C8C3B9C4BA: message-id=<h2dYJMgGlclJduh@www.dummydomain.com>
+Sep 24 17:23:10 server postfix/qmgr[6244]: 87C8C3B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=794, nrcpt=1 (queue active)
+Sep 24 17:23:10 server postfix/pickup[5840]: 930893B9C05A: uid=33 from=<www-data>
+Sep 24 17:23:10 server postfix/cleanup[7075]: 930893B9C05A: message-id=<WpreB8D7OqeeDs5@www.dummydomain.com>
+Sep 24 17:23:10 server postfix/qmgr[6244]: 930893B9C05A: from=<qmhM5uSuw@server.dummydomain.com>, size=711, nrcpt=1 (queue active)
+Sep 24 17:23:16 server postfix/smtp[7080]: 930893B9C05A: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6.1, delays=0.19/0/0.12/5.8, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 47DC23B3A1C)
+Sep 24 17:23:16 server postfix/qmgr[6244]: 930893B9C05A: removed
+Sep 24 17:23:22 server postfix/pickup[5840]: 472863B9C4BB: uid=33 from=<www-data>
+Sep 24 17:23:22 server postfix/cleanup[7075]: 472863B9C4BB: message-id=<HZvs4dm1mR@www.dummydomain.com>
+Sep 24 17:23:22 server postfix/qmgr[6244]: 472863B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=784, nrcpt=1 (queue active)
+Sep 24 17:23:22 server postfix/pickup[5840]: 513763B9C4BE: uid=33 from=<www-data>
+Sep 24 17:23:22 server postfix/cleanup[7079]: 513763B9C4BE: message-id=<GE9doyNpE80po0@www.dummydomain.com>
+Sep 24 17:23:22 server postfix/qmgr[6244]: 513763B9C4BE: from=<qmhM5uSuw@server.dummydomain.com>, size=712, nrcpt=1 (queue active)
+Sep 24 17:23:22 server postfix/pickup[5840]: 7D5373B9C4BF: uid=33 from=<www-data>
+Sep 24 17:23:22 server postfix/cleanup[7075]: 7D5373B9C4BF: message-id=<y6gyGKuOO@www.dummydomain.com>
+Sep 24 17:23:22 server postfix/qmgr[6244]: 7D5373B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 24 17:23:22 server postfix/pickup[5840]: 84B613B9C4C0: uid=33 from=<www-data>
+Sep 24 17:23:22 server postfix/cleanup[7079]: 84B613B9C4C0: message-id=<wOeKpYvsGvAw@www.dummydomain.com>
+Sep 24 17:23:22 server postfix/qmgr[6244]: 84B613B9C4C0: from=<qmhM5uSuw@server.dummydomain.com>, size=709, nrcpt=1 (queue active)
+Sep 24 17:23:22 server postfix/smtp[7111]: 84B613B9C4C0: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.12, delays=0.04/0/0.02/0.05, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as C72583B3A1C)
+Sep 24 17:23:22 server postfix/qmgr[6244]: 84B613B9C4C0: removed
+Sep 24 17:23:23 server postfix/smtp[7110]: 7D5373B9C4BF: to=<LW2LyxAvfRgwGS@googlemail.com>, relay=gmail-smtp-in.l.google.com[72.14.221.114]:25, delay=1.1, delays=0.03/0/0.02/1, dsn=2.0.0, status=sent (250 2.0.0 OK 1222269803 l12si11311547fgb.6)
+Sep 24 17:23:23 server postfix/qmgr[6244]: 7D5373B9C4BF: removed
+Sep 24 17:23:23 server postfix/smtp[7080]: 472863B9C4BB: to=<wc2SIDjvPmc@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=1.7, delays=0.04/0/0.04/1.6, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx007})
+Sep 24 17:23:23 server postfix/qmgr[6244]: 472863B9C4BB: removed
+Sep 24 17:23:26 server postfix/smtp[6845]: 87C8C3B9C4BA: to=<5bDSct6jn4z@rbk-esports.eu>, relay=mx01.kundenserver.de[212.227.15.169]:25, delay=16, delays=0.1/0/3.3/13, dsn=2.0.0, status=sent (250 Message 0ML05c-1KiWCw0ac6-0000Ot accepted by mxeu19.kundenserver.de)
+Sep 24 17:23:26 server postfix/qmgr[6244]: 87C8C3B9C4BA: removed
+Sep 24 17:23:27 server postfix/smtp[7105]: 513763B9C4BE: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.05/0.13/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as C9F3F3B3A1C)
+Sep 24 17:23:27 server postfix/qmgr[6244]: 513763B9C4BE: removed
+Sep 24 17:28:39 server postfix/pickup[5840]: DFE2A3B9C4BA: uid=33 from=<www-data>
+Sep 24 17:28:39 server postfix/cleanup[7286]: DFE2A3B9C4BA: message-id=<mjuDm2Rc5B@www.dummydomain.com>
+Sep 24 17:28:39 server postfix/qmgr[6244]: DFE2A3B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=794, nrcpt=1 (queue active)
+Sep 24 17:28:39 server postfix/pickup[5840]: E64513B9C4BB: uid=33 from=<www-data>
+Sep 24 17:28:39 server postfix/cleanup[7286]: E64513B9C4BB: message-id=<lMQhE76LcmeyCdz@www.dummydomain.com>
+Sep 24 17:28:39 server postfix/qmgr[6244]: E64513B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 24 17:28:40 server postfix/smtp[7291]: E64513B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.15, delays=0.04/0/0.02/0.08, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 4210D3B3A1C)
+Sep 24 17:28:40 server postfix/qmgr[6244]: E64513B9C4BB: removed
+Sep 24 17:28:40 server postfix/smtp[7289]: DFE2A3B9C4BA: to=<XSXsR6K0n5MJ7yo@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=0.43, delays=0.05/0/0.04/0.34, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx034})
+Sep 24 17:28:40 server postfix/qmgr[6244]: DFE2A3B9C4BA: removed
+Sep 24 17:34:43 server postfix/pickup[5840]: 61B0F3B9C4BA: uid=33 from=<www-data>
+Sep 24 17:34:43 server postfix/cleanup[7524]: 61B0F3B9C4BA: message-id=<bIq79ied8wFmI63@www.dummydomain.com>
+Sep 24 17:34:43 server postfix/qmgr[6244]: 61B0F3B9C4BA: from=<qmhM5uSuw@server.dummydomain.com>, size=792, nrcpt=1 (queue active)
+Sep 24 17:34:43 server postfix/pickup[5840]: 706FF3B9C05A: uid=33 from=<www-data>
+Sep 24 17:34:43 server postfix/cleanup[7524]: 706FF3B9C05A: message-id=<ZgeeyIznuGTtpS@www.dummydomain.com>
+Sep 24 17:34:43 server postfix/qmgr[6244]: 706FF3B9C05A: from=<qmhM5uSuw@server.dummydomain.com>, size=716, nrcpt=1 (queue active)
+Sep 24 17:34:47 server postfix/smtp[7528]: 61B0F3B9C4BA: to=<XownP2lKwr@hotmail.de>, relay=mx3.hotmail.com[65.54.244.200]:25, delay=4.1, delays=0.09/0.01/3.2/0.72, dsn=2.0.0, status=sent (250  <bIq79ied8wFmI63@www.dummydomain.com> Queued mail for delivery)
+Sep 24 17:34:47 server postfix/qmgr[6244]: 61B0F3B9C4BA: removed
+Sep 24 17:34:48 server postfix/smtp[7529]: 706FF3B9C05A: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.06/0.04/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as E60E03B3A1C)
+Sep 24 17:34:48 server postfix/qmgr[6244]: 706FF3B9C05A: removed
+Sep 24 17:36:52 server postfix/qmgr[6244]: ED8653B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=996, nrcpt=1 (queue active)
+Sep 25 06:27:21 server syslogd 1.5.0#5: restart.
+Sep 25 06:27:21 server postfix/pickup[29836]: 5047D3B9C4BF: uid=0 from=<root>
+Sep 25 06:27:21 server postfix/cleanup[30342]: 5047D3B9C4BF: message-id=<s2cRTQovSS@server.dummydomain.com>
+Sep 25 06:27:21 server postfix/qmgr[6244]: 5047D3B9C4BF: from=<F2fiYzIfeDR@server.dummydomain.com>, size=740, nrcpt=1 (queue active)
+Sep 25 06:27:21 server postfix/local[30344]: 5047D3B9C4BF: to=<F2fiYzIfeDR@server.dummydomain.com>, orig_to=<root>, relay=local, delay=3.5, delays=3.3/0.12/0/0.12, dsn=2.0.0, status=sent (delivered to mailbox)
+Sep 25 06:27:21 server postfix/qmgr[6244]: 5047D3B9C4BF: removed
+Sep 25 06:28:01 server /USR/SBIN/CRON[30389]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:29:01 server /USR/SBIN/CRON[30396]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:30:01 server /USR/SBIN/CRON[30405]: (al) CMD (sh /home/al/www/awstats/genstats.sh >/dev/null 2>&1)
+Sep 25 06:30:01 server /USR/SBIN/CRON[30407]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:31:01 server /USR/SBIN/CRON[30417]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:32:01 server /USR/SBIN/CRON[30442]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:33:01 server /USR/SBIN/CRON[30471]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:34:01 server /USR/SBIN/CRON[30491]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:35:01 server /USR/SBIN/CRON[30497]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:36:01 server /USR/SBIN/CRON[30502]: (root) CMD (/root/scripts/serverchecker.sh  >/dev/null 2>&1)
+Sep 25 06:36:33 server ntpd[28406]: kernel time sync error 0001
+Sep 25 08:21:55 server postfix/anvil[32289]: statistics: max cache size 1 at Sep 25 08:18:32
+Sep 25 08:26:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 25 08:26:52 server postfix/smtp[32398]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 25 08:26:52 server postfix/smtp[32398]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=126519, delays=126519/0.01/0.32/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 25 08:28:36 server postfix/smtpd[32441]: connect from unknown[222.254.138.170]
+Sep 25 08:28:37 server postfix/smtpd[32441]: NOQUEUE: reject: RCPT from unknown[222.254.138.170]: 554 5.7.1 <cLDZ9n5445G@www.dummydomain.com>: Relay access denied; from=<dIpigCI7sDB3v7@blairhammond.co.uk> to=<cLDZ9n5445G@www.dummydomain.com> proto=ESMTP helo=<childrenstheatre.org>
+Sep 25 08:28:38 server postfix/smtpd[32441]: lost connection after RCPT from unknown[222.254.138.170]
+Sep 25 08:28:38 server postfix/smtpd[32441]: disconnect from unknown[222.254.138.170]
+Sep 25 08:31:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 08:31:52 server postfix/smtp[32526]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 08:31:52 server postfix/smtp[32526]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=143196, delays=143196/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 08:31:58 server postfix/anvil[32443]: statistics: max connection rate 1/60s for (smtp:222.254.138.170) at Sep 25 08:28:36
+Sep 25 08:31:58 server postfix/anvil[32443]: statistics: max connection count 1 for (smtp:222.254.138.170) at Sep 25 08:28:36
+Sep 25 08:31:58 server postfix/anvil[32443]: statistics: max cache size 1 at Sep 25 08:28:36
+Sep 25 08:46:52 server postfix/qmgr[6244]: ED8653B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=996, nrcpt=1 (queue active)
+Sep 25 08:47:22 server postfix/smtp[303]: connect to mail.p2x.de[80.86.187.130]:25: Connection timed out
+Sep 25 08:47:22 server postfix/smtp[303]: ED8653B9C4AE: to=<DTp4ykMR@p2x.de>, relay=none, delay=67675, delays=67645/0.01/30/0, dsn=4.4.1, status=deferred (connect to mail.p2x.de[80.86.187.130]:25: Connection timed out)
+Sep 25 09:11:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 09:11:52 server postfix/smtp[871]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 09:11:52 server postfix/smtp[871]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=147340, delays=147340/0.03/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 09:26:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 09:26:52 server postfix/smtp[1176]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 09:26:52 server postfix/smtp[1176]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=143346, delays=143346/0.01/0.05/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 09:36:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 25 09:36:53 server postfix/smtp[1398]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 25 09:36:53 server postfix/smtp[1398]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=130720, delays=130719/0.01/0.32/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 25 09:41:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 09:41:52 server postfix/smtp[1542]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 09:41:52 server postfix/smtp[1542]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=147397, delays=147397/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 09:43:20 server postfix/pickup[1093]: 18DD63B9C4BF: uid=33 from=<www-data>
+Sep 25 09:43:20 server postfix/cleanup[1576]: 18DD63B9C4BF: message-id=<ez79ZhWLq@www.dummydomain.com>
+Sep 25 09:43:20 server postfix/qmgr[6244]: 18DD63B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=764, nrcpt=1 (queue active)
+Sep 25 09:43:20 server postfix/pickup[1093]: 2A8EA3B9C4BB: uid=33 from=<www-data>
+Sep 25 09:43:20 server postfix/cleanup[1580]: 2A8EA3B9C4BB: message-id=<W3SNbeb1h1I2j@www.dummydomain.com>
+Sep 25 09:43:20 server postfix/qmgr[6244]: 2A8EA3B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=707, nrcpt=1 (queue active)
+Sep 25 09:43:20 server postfix/smtp[1542]: 18DD63B9C4BF: to=<iNTMgM6HtWx@gmx.ch>, relay=mx0.gmx.de[213.165.64.100]:25, delay=0.39, delays=0.12/0/0.03/0.24, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx028})
+Sep 25 09:43:20 server postfix/qmgr[6244]: 18DD63B9C4BF: removed
+Sep 25 09:43:25 server postfix/smtp[1581]: 2A8EA3B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.9, delays=0.19/0/0.06/5.6, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as EC0E83B3A16)
+Sep 25 09:43:25 server postfix/qmgr[6244]: 2A8EA3B9C4BB: removed
+Sep 25 09:51:32 server postfix/pickup[1093]: A10283B9C4BF: uid=33 from=<www-data>
+Sep 25 09:51:32 server postfix/cleanup[1855]: A10283B9C4BF: message-id=<hLhcvcWJvJCT7kS@www.dummydomain.com>
+Sep 25 09:51:32 server postfix/qmgr[6244]: A10283B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=796, nrcpt=1 (queue active)
+Sep 25 09:51:32 server postfix/pickup[1093]: D7EAC3B9C4BB: uid=33 from=<www-data>
+Sep 25 09:51:32 server postfix/cleanup[1855]: D7EAC3B9C4BB: message-id=<GsQv345Tz@www.dummydomain.com>
+Sep 25 09:51:32 server postfix/qmgr[6244]: D7EAC3B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 25 09:51:34 server postfix/smtp[1859]: A10283B9C4BF: to=<JN5bkVW70wX@hotmail.com>, relay=mx4.hotmail.com[65.54.244.104]:25, delay=1.4, delays=0.25/0.01/0.53/0.63, dsn=2.0.0, status=sent (250  <hLhcvcWJvJCT7kS@www.dummydomain.com> Queued mail for delivery)
+Sep 25 09:51:34 server postfix/qmgr[6244]: A10283B9C4BF: removed
+Sep 25 09:51:38 server postfix/smtp[1860]: D7EAC3B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.5, delays=0.22/0/0.03/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 27E743B3A16)
+Sep 25 09:51:38 server postfix/qmgr[6244]: D7EAC3B9C4BB: removed
+Sep 25 09:56:52 server postfix/qmgr[6244]: ED8653B9C4AE: from=<qmhM5uSuw@server.dummydomain.com>, size=996, nrcpt=1 (queue active)
+Sep 25 09:57:22 server postfix/smtp[1998]: connect to mail.p2x.de[80.86.187.130]:25: Connection timed out
+Sep 25 09:57:22 server postfix/smtp[1998]: ED8653B9C4AE: to=<DTp4ykMR@p2x.de>, relay=none, delay=71876, delays=71845/0.27/30/0, dsn=4.4.1, status=deferred (connect to mail.p2x.de[80.86.187.130]:25: Connection timed out)
+Sep 25 10:05:53 server postfix/pickup[1093]: 9F5793B9C4BF: uid=33 from=<www-data>
+Sep 25 10:05:53 server postfix/cleanup[2275]: 9F5793B9C4BF: message-id=<khvyqqpvR@www.dummydomain.com>
+Sep 25 10:05:53 server postfix/qmgr[6244]: 9F5793B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=816, nrcpt=1 (queue active)
+Sep 25 10:05:53 server postfix/pickup[1093]: B197B3B9C4BB: uid=33 from=<www-data>
+Sep 25 10:05:53 server postfix/cleanup[2275]: B197B3B9C4BB: message-id=<1KKfcdFSgqI@www.dummydomain.com>
+Sep 25 10:05:53 server postfix/smtp[2279]: 9F5793B9C4BF: to=<4iuDYl5HNv6H@gmx.de>, relay=mx0.gmx.net[213.165.64.100]:25, delay=0.31, delays=0.1/0/0.08/0.13, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx023})
+Sep 25 10:05:53 server postfix/qmgr[6244]: 9F5793B9C4BF: removed
+Sep 25 10:05:54 server postfix/qmgr[6244]: B197B3B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=720, nrcpt=1 (queue active)
+Sep 25 10:05:59 server postfix/smtp[2279]: B197B3B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=6, delays=0.64/0/0.06/5.3, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as ACF983B3A16)
+Sep 25 10:05:59 server postfix/qmgr[6244]: B197B3B9C4BB: removed
+Sep 25 10:07:12 server postfix/pickup[1093]: 011C73B9C4BF: uid=33 from=<www-data>
+Sep 25 10:07:12 server postfix/cleanup[2280]: 011C73B9C4BF: message-id=<fBP5ydOKU1SIf@www.dummydomain.com>
+Sep 25 10:07:12 server postfix/qmgr[6244]: 011C73B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=798, nrcpt=1 (queue active)
+Sep 25 10:07:12 server postfix/pickup[1093]: 07D113B9C4BB: uid=33 from=<www-data>
+Sep 25 10:07:12 server postfix/cleanup[2275]: 07D113B9C4BB: message-id=<Jk35Bri2dn@www.dummydomain.com>
+Sep 25 10:07:12 server postfix/qmgr[6244]: 07D113B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 25 10:07:12 server postfix/smtp[2350]: 07D113B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=0.36, delays=0.28/0.01/0.02/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 799923B3A16)
+Sep 25 10:07:12 server postfix/qmgr[6244]: 07D113B9C4BB: removed
+Sep 25 10:07:13 server postfix/smtp[2279]: 011C73B9C4BF: to=<yLZseZDO@hotmail.com>, relay=mx4.hotmail.com[65.54.244.232]:25, delay=1.1, delays=0.07/0/0.5/0.57, dsn=2.0.0, status=sent (250  <fBP5ydOKU1SIf@www.dummydomain.com> Queued mail for delivery)
+Sep 25 10:07:13 server postfix/qmgr[6244]: 011C73B9C4BF: removed
+Sep 25 10:08:42 server postfix/pickup[1093]: 428963B9C4BF: uid=33 from=<www-data>
+Sep 25 10:08:42 server postfix/cleanup[2280]: 428963B9C4BF: message-id=<8uWPQWFnC8WtMyP@www.dummydomain.com>
+Sep 25 10:08:42 server postfix/qmgr[6244]: 428963B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=788, nrcpt=1 (queue active)
+Sep 25 10:08:42 server postfix/pickup[1093]: 4999C3B9C4BB: uid=33 from=<www-data>
+Sep 25 10:08:42 server postfix/cleanup[2275]: 4999C3B9C4BB: message-id=<b9XFpoH@www.dummydomain.com>
+Sep 25 10:08:42 server postfix/qmgr[6244]: 4999C3B9C4BB: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 25 10:08:42 server postfix/smtp[2350]: 428963B9C4BF: to=<iKLg6gyi3@web.de>, relay=mx-ha01.web.de[217.72.192.149]:25, delay=0.28, delays=0.17/0/0.04/0.07, dsn=2.0.0, status=sent (250 OK id=1Kilty-00088V-00)
+Sep 25 10:08:42 server postfix/qmgr[6244]: 428963B9C4BF: removed
+Sep 25 10:08:47 server postfix/smtp[2279]: 4999C3B9C4BB: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.06/0/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A65363B3A16)
+Sep 25 10:08:47 server postfix/qmgr[6244]: 4999C3B9C4BB: removed
+Sep 25 10:11:39 server postfix/pickup[1093]: 1C2683B9C4BF: uid=33 from=<www-data>
+Sep 25 10:11:39 server postfix/cleanup[2482]: 1C2683B9C4BF: message-id=<jRHKSUD4AWX@www.dummydomain.com>
+Sep 25 10:11:39 server postfix/qmgr[6244]: 1C2683B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=782, nrcpt=1 (queue active)
+Sep 25 10:11:39 server postfix/pickup[1093]: 221523B9C4C0: uid=33 from=<www-data>
+Sep 25 10:11:39 server postfix/cleanup[2482]: 221523B9C4C0: message-id=<iTfZkgBwx0Ddg@www.dummydomain.com>
+Sep 25 10:11:39 server postfix/qmgr[6244]: 221523B9C4C0: from=<qmhM5uSuw@server.dummydomain.com>, size=710, nrcpt=1 (queue active)
+Sep 25 10:11:39 server postfix/smtp[2486]: 1C2683B9C4BF: to=<pimYxuE60@arcor.de>, relay=mx.arcor.de[151.189.21.118]:25, delay=0.72, delays=0.04/0/0.16/0.51, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as C467627BAF2)
+Sep 25 10:11:39 server postfix/qmgr[6244]: 1C2683B9C4BF: removed
+Sep 25 10:11:44 server postfix/smtp[2487]: 221523B9C4C0: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.4, delays=0.14/0.01/0.02/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A39713B3A16)
+Sep 25 10:11:44 server postfix/qmgr[6244]: 221523B9C4C0: removed
+Sep 25 10:21:52 server postfix/qmgr[6244]: 64D023B9C4A8: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 10:21:52 server postfix/smtp[2746]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 10:21:53 server postfix/smtp[2746]: 64D023B9C4A8: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=151541, delays=151541/0.01/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 10:28:28 server postfix/smtpd[2925]: warning: 83.219.11.9: address not listed for hostname dialup-ekt-83.219.11.9.uralcom.com
+Sep 25 10:28:28 server postfix/smtpd[2925]: connect from unknown[83.219.11.9]
+Sep 25 10:28:29 server postfix/smtpd[2925]: NOQUEUE: reject: RCPT from unknown[83.219.11.9]: 554 5.7.1 <cLDZ9n5445G@www.dummydomain.com>: Relay access denied; from=<yIyMcroMwU@blythevalleypark.co.uk> to=<cLDZ9n5445G@www.dummydomain.com> proto=ESMTP helo=<baronet.ca>
+Sep 25 10:28:29 server postfix/smtpd[2925]: lost connection after RCPT from unknown[83.219.11.9]
+Sep 25 10:28:29 server postfix/smtpd[2925]: disconnect from unknown[83.219.11.9]
+Sep 25 10:31:49 server postfix/anvil[2928]: statistics: max connection rate 1/60s for (smtp:83.219.11.9) at Sep 25 10:28:28
+Sep 25 10:31:49 server postfix/anvil[2928]: statistics: max connection count 1 for (smtp:83.219.11.9) at Sep 25 10:28:28
+Sep 25 10:31:49 server postfix/anvil[2928]: statistics: max cache size 1 at Sep 25 10:28:28
+Sep 25 10:36:52 server postfix/qmgr[6244]: D66D83B9C4A9: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 10:36:52 server postfix/smtp[3145]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 10:36:52 server postfix/smtp[3145]: D66D83B9C4A9: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=147546, delays=147546/0.01/0.09/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 10:46:52 server postfix/qmgr[6244]: 703A73B9C4AA: from=<qmhM5uSuw@server.dummydomain.com>, size=809, nrcpt=1 (queue active)
+Sep 25 10:46:55 server postfix/smtp[3402]: connect to goolgemail.com[204.13.160.129]:25: Connection refused
+Sep 25 10:46:56 server postfix/smtp[3402]: 703A73B9C4AA: to=<6NP9AAMzlgAjWyC@goolgemail.com>, relay=none, delay=134922, delays=134919/0.02/3.2/0, dsn=4.4.1, status=deferred (connect to goolgemail.com[204.13.160.129]:25: Connection refused)
+Sep 25 10:50:17 server postfix/pickup[3495]: 2ED343B9C4BF: uid=33 from=<www-data>
+Sep 25 10:50:17 server postfix/cleanup[3496]: 2ED343B9C4BF: message-id=<3f420e605b95562cd597f11f1778d7e4@http://www.dummydomain.com/>
+Sep 25 10:50:17 server postfix/qmgr[6244]: 2ED343B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=1300, nrcpt=1 (queue active)
+Sep 25 10:50:19 server postfix/smtp[3498]: 2ED343B9C4BF: host mx00.netclusive.de[89.110.132.163] said: 450 4.7.1 <RZccRAT@xyz-munkes.de>: Recipient address rejected: Temporary lookup failure (crossed fingers). Sorry for the delay! Please try again later... (in reply to RCPT TO command)
+Sep 25 10:50:20 server postfix/smtp[3498]: 2ED343B9C4BF: to=<RZccRAT@xyz-munkes.de>, relay=mx00.netclusive.de[89.110.132.164]:25, delay=3.4, delays=0.91/0/1.4/1, dsn=4.7.1, status=deferred (host mx00.netclusive.de[89.110.132.164] said: 450 4.7.1 <RZccRAT@xyz-munkes.de>: Recipient address rejected: Temporary lookup failure (crossed fingers). Sorry for the delay! Please try again later... (in reply to RCPT TO command))
+Sep 25 10:51:52 server postfix/qmgr[6244]: E12403B9C4A6: from=<qmhM5uSuw@server.dummydomain.com>, size=1001, nrcpt=1 (queue active)
+Sep 25 10:51:52 server postfix/smtp[3498]: connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused
+Sep 25 10:51:52 server postfix/smtp[3498]: E12403B9C4A6: to=<D56Sn4gMHopdJj@domaindummy.com>, relay=none, delay=151597, delays=151597/0/0.02/0, dsn=4.4.1, status=deferred (connect to mail.domaindummy.com[193.34.121.36]:25: Connection refused)
+Sep 25 10:56:17 server postfix/pickup[3495]: 1D2493B9C4C0: uid=33 from=<www-data>
+Sep 25 10:56:17 server postfix/cleanup[3665]: 1D2493B9C4C0: message-id=<8M5cxwo7ojS7x59@www.dummydomain.com>
+Sep 25 10:56:17 server postfix/qmgr[6244]: 1D2493B9C4C0: from=<qmhM5uSuw@server.dummydomain.com>, size=786, nrcpt=1 (queue active)
+Sep 25 10:56:17 server postfix/pickup[3495]: 2376B3B9C4C1: uid=33 from=<www-data>
+Sep 25 10:56:17 server postfix/cleanup[3665]: 2376B3B9C4C1: message-id=<lkjJD0XgLA9Lz@www.dummydomain.com>
+Sep 25 10:56:17 server postfix/qmgr[6244]: 2376B3B9C4C1: from=<qmhM5uSuw@server.dummydomain.com>, size=713, nrcpt=1 (queue active)
+Sep 25 10:56:18 server postfix/smtp[3669]: 1D2493B9C4C0: to=<wVoQ9Y5XCDZQ27@gmx.de>, relay=mx0.gmx.de[213.165.64.100]:25, delay=1.9, delays=0.05/0/0.67/1.2, dsn=2.6.0, status=sent (250 2.6.0 Message accepted {mx103})
+Sep 25 10:56:18 server postfix/qmgr[6244]: 1D2493B9C4C0: removed
+Sep 25 10:56:22 server postfix/smtp[3670]: 2376B3B9C4C1: to=<Lx12NSn@dummydomain.com>, relay=mail.dummydomain.com[133.7.13.37]:25, delay=5.3, delays=0.06/0.01/0.07/5.2, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as DDAFD3B3A16)
+Sep 25 10:56:22 server postfix/qmgr[6244]: 2376B3B9C4C1: removed
+Sep 25 10:56:52 server postfix/qmgr[6244]: 2ED343B9C4BF: from=<qmhM5uSuw@server.dummydomain.com>, size=1300, nrcpt=1 (queue active)
+Sep 25 10:56:53 server postfix/smtp[3669]: 2ED343B9C4BF: to=<RZccRAT@xyz-munkes.de>, relay=mx01.netclusive.de[89.110.132.161]:25, delay=396, delays=395/0/0.05/0.6, dsn=2.6.0, status=sent (250 2.6.0 Ok, id=00509-02, from MTA([127.0.0.1]:10025): 250 2.0.0 Ok: queued as DA2A14005C)
+Sep 25 10:56:53 server postfix/qmgr[6244]: 2ED343B9C4BF: removed
+Dec 4 08:18:45 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 0 timesheets waiting approval
+Dec 4 08:18:45 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 0 claims waiting approval
+Dec 4 08:18:45 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 531 jobs waiting approval
+2008-04-02T11:12:32.380449-02:00 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 0 timesheets waiting approval
+2008-04-02T11:12:32.380449-02:00 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 0 claims waiting approval
+2008-04-02T11:12:32.380449-02:00 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 531 jobs waiting approval
+2008-04-02T11:12:32-02:00 lo-app-102.dds.co.uk mainframe.MainframeMCSDataSource[Processor28]: dev-mcs-01 - 531 jobs waiting approval

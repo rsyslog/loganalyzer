@@ -56,8 +56,10 @@ $DEBUGMODE = DEBUG_INFO;
 // Disable ARGV setting @webserver!
 @ini_set( "register_argc_argv", "Off" );
 
-// Enable error tracking
-@ini_set( "track_errors", "On" );
+// Removed in PHP 8.3; only enable on older versions (legacy $php_errormsg).
+if (version_compare(PHP_VERSION, '8.3.0', '<')) {
+	@ini_set("track_errors", "On");
+}
 
 // Try to enable a little more memory in case we do some more filtering
 @ini_set('memory_limit', '512M');
@@ -88,11 +90,14 @@ $content['EXTRA_FOOTER'] = "";
 $content['CURRENTURL'] = "";
 // --- 
 
-// --- Check PHP Version! If lower the 5, LogAnalyzer will not work proberly!
-$myPhpVer = phpversion();
-$myPhpVerArray = explode('.', $myPhpVer);
-if ( $myPhpVerArray[0] < 5 )
-	DieWithErrorMsg( 'Error, the PHP Version on this Server does not meet the installation requirements.<br> <A HREF="http://www.php.net"><B>PHP5</B></A> or higher is needed. Current installed Version is: <B>' . $myPhpVer . '</B>');
+// --- Check PHP Version (8.1+ required for supported installs)
+if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+	die(
+		'Error, the PHP Version on this Server does not meet the installation requirements.<br> '
+		. '<a href="https://www.php.net/"><strong>PHP 8.1</strong></a> or higher is required. '
+		. 'Current installed version is: <strong>' . htmlspecialchars(phpversion(), ENT_QUOTES, 'UTF-8') . '</strong>'
+	);
+}
 // ---
 
 function InitBasicPhpLogCon()

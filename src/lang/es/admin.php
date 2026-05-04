@@ -315,7 +315,7 @@ $content['LN_DBUPGRADE_SUCCESSEXEC'] = "Sentencia ejecutadas con éxito";
 $content['LN_DBUPGRADE_FAILEDEXEC'] = "Sentencia fallidas";
 $content['LN_DBUPGRADE_ONESTATEMENTFAILED'] = "Al menos una declaración falló, es posible que deba corregir y solucionar este problema manualmente. Ver detalles del error a continuación";
 $content['LN_DBUPGRADE_ERRMSG'] = "Mensaje de Error";
-$content['LN_DBUPGRADE_ULTRASTATSDBVERSION'] = "Versión de la Base de Datos de LogAnalyzer";
+$content['LN_DBUPGRADE_LOGANALYZERDBVERSION'] = "Versión de la Base de Datos de LogAnalyzer";
 
 // Charts Options
 $content['LN_CHARTS_CENTER'] = "Opciones de Gráficos";

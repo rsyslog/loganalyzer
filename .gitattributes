@@ -1,0 +1,2 @@
+# Normalize shell scripts to LF for Docker (Windows-friendly checkouts)
+docker/*.sh text eol=lf
