@@ -6,6 +6,6 @@ LogAnalyzer is a PHP web front end for browsing syslog and related log data. Thi
 - **[Quick start](user-guide/quick-start.md)** — run with Docker and skim the UI with screenshots.
 - **[Interface map](user-guide/interface-map.md)** — main routes and where to read more.
 - [Third-party and bundled libraries](third-party.md) lists versions and update notes.
-- [User guide overview](legacy-html-manuals.md) indexes every imported manual page; sources remain [`doc/*.html`](https://github.com/rsyslog/loganalyzer/tree/master/doc) on GitHub.
+- [User guide overview](user-guide/overview.md) indexes every imported manual page; sources remain [`doc/*.html`](https://github.com/rsyslog/loganalyzer/tree/master/doc) on GitHub.
 
 Handbook build: `doc-site/`; published at [https://rsyslog.github.io/loganalyzer/](https://rsyslog.github.io/loganalyzer/) (`site_url` in `mkdocs.yml`).

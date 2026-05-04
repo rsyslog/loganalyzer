@@ -11,12 +11,12 @@ LogAnalyzer is a PHP web UI. URLs below are the primary entry points; your deplo
 | Reports | `reports.php` | Report-oriented views. |
 | Administration | `admin/index.php` | Manage sources, users, and system options (administrators). |
 
-See [Search syntax](../legacy-html/searching.md) for query syntax used in filters and searches.
+See [Search syntax](chapters/searching.md) for query syntax used in filters and searches.
 
 ## Documentation trail
 
-- **Operational setup:** [Docker & CI](../docker.md), [Installation](../legacy-html/install.md), [Troubleshooting](../legacy-html/troubleshoot.md).
-- **Using the product:** [Basics](../legacy-html/basics.md), [Search syntax](../legacy-html/searching.md), [Text log files](../legacy-html/textfiles.md), [Windows Event Log](../legacy-html/windowsevent.md).
+- **Operational setup:** [Docker & CI](../docker.md), [Installation](chapters/install.md), [Troubleshooting](chapters/troubleshoot.md).
+- **Using the product:** [Basics](chapters/basics.md), [Search syntax](chapters/searching.md), [Text log files](chapters/textfiles.md), [Windows Event Log](chapters/windowsevent.md).
 
 ## Screenshots
 
