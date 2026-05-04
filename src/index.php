@@ -353,7 +353,7 @@ if ( isset($content['Sources'][$currentSourceID]) )
 					$szCurrentTs = isset($logArray['timereported'][EVTIME_TIMESTAMP]) ? $logArray['timereported'][EVTIME_TIMESTAMP] : 0;
 					$tsDiff = ($szLastMessageTimestamp > 0 && $szCurrentTs > 0) ? abs($szCurrentTs - $szLastMessageTimestamp) : 0;
 
-					if ( $szLastMessage !== "" && $szLastMessage == $szCurrentMessage && $tsDiff < $DuplicateRecordMaxTsDistance )
+					if ( $szLastMessage !== "" && $szLastMessage == $szCurrentMessage && $tsDiff <= $DuplicateRecordMaxTsDistance )
 					{
 						// It's a duplicate
 						$duplicateCount++;
