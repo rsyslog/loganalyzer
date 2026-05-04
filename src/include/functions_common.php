@@ -1322,8 +1322,26 @@ function RedirectResult( $szMsg, $newpage )
 */
 function GetEventTime($szTimStr)
 {
+	// Strip optional leading backslash (URL-encoded filter values may include it)
+	if ( strlen($szTimStr) > 0 && $szTimStr[0] === '\\' )
+		$szTimStr = substr($szTimStr, 1);
+
+	// Relative date syntax, samples: T00:00:00, T12:30, -1T, -2T01:30
+	if ( preg_match("/^(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})$/", $szTimStr, $out ) )
+	{
+		$days = (isset($out[1]) && strlen($out[1]) > 0) ? intval($out[1]) : 0;
+		$hh   = strlen($out[2]) > 0 ? intval($out[2]) : 0;
+		$mm   = strlen($out[3]) > 0 ? intval($out[3]) : 0;
+		$ss   = strlen($out[4]) > 0 ? intval($out[4]) : 0;
+		$szTime = mktime($hh, $mm, $ss);
+		if ( $days < 0 )
+			$szTime = strtotime("$days days", $szTime);
+		$eventtime[EVTIME_TIMESTAMP] = $szTime;
+		$eventtime[EVTIME_TIMEZONE] = date('O');
+		$eventtime[EVTIME_MICROSECONDS] = 0;
+	}
 	// Sample: Mar 10 14:45:44
-	if ( preg_match("/(...) ([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
+	else if ( preg_match("/(...) ([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $szTimStr, $out ) )
 	{
 		// RFC 3164 typical timestamp
 		$eventtime[EVTIME_TIMESTAMP] = mktime($out[3], $out[4], $out[5], GetMonthFromString($out[1]), $out[2], date("Y") );

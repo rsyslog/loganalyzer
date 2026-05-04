@@ -323,6 +323,10 @@ function GetMessageTypeDisplayName( $nMsgTypeID )
 
 function GetTimeStampFromTimeString($szTimeString)
 {
+	// Strip optional leading backslash (URL-encoded filter values may include it)
+	if ( strlen($szTimeString) > 0 && $szTimeString[0] === '\\' )
+		$szTimeString = substr($szTimeString, 1);
+
 	//Sample: 2008-4-1T00:00:00
 	if ( preg_match("/([0-9]{4,4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/", $szTimeString, $out) )
 	{
@@ -334,6 +338,18 @@ function GetTimeStampFromTimeString($szTimeString)
 	{
 		// return new timestamp
 		return mktime(0,0,0, $out[2], $out[3], $out[1]);
+	}
+	// Relative date syntax, samples: T00:00:00, T12:30, -1T, -2T01:30
+	else if ( preg_match("/(-?[0-9]{1,2})?T([0-9]{0,2}):?([0-9]{0,2}):?([0-9]{0,2})/", $szTimeString, $out) )
+	{
+		$days = (isset($out[1]) && strlen($out[1]) > 0) ? intval($out[1]) : 0;
+		$hh   = strlen($out[2]) > 0 ? intval($out[2]) : 0;
+		$mm   = strlen($out[3]) > 0 ? intval($out[3]) : 0;
+		$ss   = strlen($out[4]) > 0 ? intval($out[4]) : 0;
+		$szTime = mktime($hh, $mm, $ss);
+		if ( $days < 0 )
+			$szTime = strtotime("$days days", $szTime);
+		return $szTime;
 	}
 	else
 	{
