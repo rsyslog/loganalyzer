@@ -712,8 +712,6 @@ if (
 
 				// Increment Counter
 				$counter++;
-				if ( $suppressDupMessages && isset($logArray[SYSLOG_MESSAGE]) )
-					$szLastDisplayedMessage = $logArray[SYSLOG_MESSAGE];
 
 				// --- Extra Loop to get the next entry!
 

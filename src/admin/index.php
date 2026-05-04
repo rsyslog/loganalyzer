@@ -198,7 +198,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = $_POST['PrependTitle']; }
 			if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = $_POST['SearchCustomButtonCaption']; }
 			if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = $_POST['SearchCustomButtonSearch']; }
-			if ( isset ($_POST['EventEmptySearchDefaultFilter']) ) { $content['EventEmptySearchDefaultFilter'] = $_POST['EventEmptySearchDefaultFilter']; }
+			if ( isset ($_POST['EventEmptySearchDefaultFilter']) )
+				$content['EventEmptySearchDefaultFilter'] = SanitizeStoredEventEmptySearchDefaultFilter((string)$_POST['EventEmptySearchDefaultFilter']);
 
 			if ( isset ($_POST['InjectHtmlHeader']) ) { $content['InjectHtmlHeader'] = $_POST['InjectHtmlHeader']; }
 			if ( isset ($_POST['InjectBodyHeader']) ) { $content['InjectBodyHeader'] = $_POST['InjectBodyHeader']; }
@@ -261,7 +262,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_PrependTitle']) ) { $USERCFG['PrependTitle'] = $_POST['User_PrependTitle']; }
 			if ( isset ($_POST['User_SearchCustomButtonCaption']) ) { $USERCFG['SearchCustomButtonCaption'] = $_POST['User_SearchCustomButtonCaption']; }
 			if ( isset ($_POST['User_SearchCustomButtonSearch']) ) { $USERCFG['SearchCustomButtonSearch'] = $_POST['User_SearchCustomButtonSearch']; }
-			if ( isset ($_POST['User_EventEmptySearchDefaultFilter']) ) { $USERCFG['EventEmptySearchDefaultFilter'] = $_POST['User_EventEmptySearchDefaultFilter']; }
+			if ( isset ($_POST['User_EventEmptySearchDefaultFilter']) )
+				$USERCFG['EventEmptySearchDefaultFilter'] = SanitizeStoredEventEmptySearchDefaultFilter((string)$_POST['User_EventEmptySearchDefaultFilter']);
 
 
 			// Save configuration variables now
@@ -278,6 +280,12 @@ if ( !isset($content['SuppressDuplicatedMessages']) ) { $content['SuppressDuplic
 if ( !isset($content['TreatNotFoundFiltersAsTrue']) ) { $content['TreatNotFoundFiltersAsTrue'] = 0; }
 if ( !isset($content['InlineOnlineSearchIcons']) ) { $content['InlineOnlineSearchIcons'] = 1; }
 if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime'] = 2; }
+
+$content['EventEmptySearchDefaultFilter'] = GetConfigSetting(
+	'EventEmptySearchDefaultFilter',
+	$content['EventEmptySearchDefaultFilter'] ?? '',
+	CFGLEVEL_GLOBAL
+);
 
 // Set checkbox States
 if (isset($content['ExportUseTodayYesterday']) && $content['ExportUseTodayYesterday'] == 1) { $content['ExportUseTodayYesterday_checked'] = "checked"; } else { $content['ExportUseTodayYesterday_checked'] = ""; }

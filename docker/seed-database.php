@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 /**
  * One-time MySQL seed: schema + migrations + default view/source + admin user.
+ * Default statistic charts come from bundled config.sample.php (`Chart1`–`Chart4`); loading DB rows with the same display names while keeping those keys would duplicate entries in `$CFG['Charts']`.
  * Idempotent: skips if logcon_config.database_installedversion is already set.
  */
 

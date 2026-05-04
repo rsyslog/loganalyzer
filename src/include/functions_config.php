@@ -935,8 +935,8 @@ function LoadSearchesFromDatabase()
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM `" . DB_SEARCHES . "`" . 
-				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SEARCHES . "`.userid=`" . DB_USERS . "`.ID ) " . 
-				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SEARCHES . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" LEFT OUTER JOIN `" . DB_USERS . "` ON `" . DB_SEARCHES . "`.userid=`" . DB_USERS . "`.ID " . 
+				" LEFT OUTER JOIN `" . DB_GROUPS . "` ON `" . DB_SEARCHES . "`.groupid=`" . DB_GROUPS . "`.ID " . 
 				" WHERE (`" . DB_SEARCHES . "`.userid IS NULL AND `" . DB_SEARCHES . "`.groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -1008,8 +1008,8 @@ function LoadChartsFromDatabase()
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM `" . DB_CHARTS . "`" . 
-				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_CHARTS . "`.userid=`" . DB_USERS . "`.ID ) " . 
-				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_CHARTS . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" LEFT OUTER JOIN `" . DB_USERS . "` ON `" . DB_CHARTS . "`.userid=`" . DB_USERS . "`.ID " . 
+				" LEFT OUTER JOIN `" . DB_GROUPS . "` ON `" . DB_CHARTS . "`.groupid=`" . DB_GROUPS . "`.ID " . 
 				" WHERE (`" . DB_CHARTS . "`.userid IS NULL AND `" . DB_CHARTS . "`.groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -1046,8 +1046,10 @@ function LoadChartsFromDatabase()
 	} catch (mysqli_sql_exception $e) {
 		// DEBUG ERROR
 		OutputDebugMessage("LoadChartsFromDatabase: DB Query failed with Code " . $e->getCode() . ": " . $e->getMessage(), DEBUG_ERROR);
-		// Copy to content array!
-		$content['Charts'] = array();
+		if ( isset($CFG['Charts']) && is_array($CFG['Charts']) && count($CFG['Charts']) > 0 )
+			$content['Charts'] = $CFG['Charts'];
+		else
+			$content['Charts'] = array();
 	}
 }
 
@@ -1077,8 +1079,8 @@ function LoadViewsFromDatabase()
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM `" . DB_VIEWS . "`" . 
-				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_VIEWS . "`.userid=`" . DB_USERS . "`.ID ) " . 
-				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_VIEWS . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" LEFT OUTER JOIN `" . DB_USERS . "` ON `" . DB_VIEWS . "`.userid=`" . DB_USERS . "`.ID " . 
+				" LEFT OUTER JOIN `" . DB_GROUPS . "` ON `" . DB_VIEWS . "`.groupid=`" . DB_GROUPS . "`.ID " . 
 				" WHERE (`" . DB_VIEWS . "`.userid IS NULL AND `" . DB_VIEWS . "`.groupid IS NULL) " . 
 				$szWhereUser . 
 				$szGroupWhere . 
@@ -1150,8 +1152,8 @@ function LoadSourcesFromDatabase($ForceloadAllSources = false)
 				DB_USERS . ".username, " .
 				DB_GROUPS . ".groupname " .
 				" FROM `" . DB_SOURCES . "`" . 
-				" LEFT OUTER JOIN (`" . DB_USERS . "`) ON (`" . DB_SOURCES . "`.userid=`" . DB_USERS . "`.ID ) " . 
-				" LEFT OUTER JOIN (`" . DB_GROUPS . "`) ON (`" . DB_SOURCES . "`.groupid=`" . DB_GROUPS . "`.ID ) " . 
+				" LEFT OUTER JOIN `" . DB_USERS . "` ON `" . DB_SOURCES . "`.userid=`" . DB_USERS . "`.ID " . 
+				" LEFT OUTER JOIN `" . DB_GROUPS . "` ON `" . DB_SOURCES . "`.groupid=`" . DB_GROUPS . "`.ID " . 
 				$szWhereNoUserOrGroups . 
 				$szWhereUser . 
 				$szGroupWhere . 
