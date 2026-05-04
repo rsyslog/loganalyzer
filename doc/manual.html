@@ -2,16 +2,18 @@
 <html><head><title>LogAnalyzer documentation</title></head>
 <body>
 <h1>LogAnalyzer - Documentation</h1>
-<p>The <b><a href="http://loganalyzer.adiscon.com">LogAnalyzer</a>
+<p><i>Historical manual (2008&ndash;2011 era). For the current project, see
+<a href="https://github.com/rsyslog/loganalyzer">LogAnalyzer on GitHub</a>.</i></p>
+<p>The <b><a href="https://github.com/rsyslog/loganalyzer">LogAnalyzer</a>
 project provides an easy to use but powerful front end for
 searching, reviewing and analyzing network event data, including
 syslog, windows event log and many other event sources.</b>
 It focusses on the user-interface side of this project, so the
 data itself needs to be gathered by another program,
 for example the stock syslogd, 
-<a href="http://www.rsyslog.com">rsyslog</a> (often the distro's default syslogd),
-<a href="http://www.winsyslog.com">WinSyslog</a> or
-<a href="http://www.mwagent.com">MonitorWare Agent</a>.
+<a href="https://www.rsyslog.com/">rsyslog</a> (often the distro's default syslogd),
+<a href="https://www.winsyslog.com">WinSyslog</a> or
+<a href="https://www.mwagent.com">MonitorWare Agent</a>.
 LogAnalyzer works equally well on Linux and
 Windows. It is a free, GPLed open source application written mostly in php.
 Data can be obtained from databases but also from plain text files, for
@@ -21,7 +23,7 @@ example those that are written by the syslogd.
 <li><a href="basics.html">LogAnalyzer basics <b>Important - read this!</b></a></li>
 <li><a href="searching.html">LogAnalyzer Search syntax</a></li>
 <li><a href="install.html">LogAnalyzer installation guide</a></li>
-<li><xa href="">LogAnalyzer configuration parameters</a></li>
+<li><i>LogAnalyzer configuration parameters</i> &mdash; use the in-application Admin UI (no separate HTML chapter).</li>
 <li><a href="textfiles.html">working with text log files</a></li>
 <li><a href="windowsevent.html">using Windows Event Logs with LogAnalyzer</a></li>
 <li><a href="troubleshoot.html">troubleshooting LogAnalyzer problems</a></li>
@@ -30,8 +32,8 @@ example those that are written by the syslogd.
 <p><b>We have some in-depth papers on</b></p>
 <ul>
 <li><a href="build_from_repo.html">obtaining LogAnalyzer from the source repository</a></li>
-<li><a href="http://www.mwagent.com/Common/en/Articles/setup_mwagent_webserverlogging_phplogcon_mysql.php">consolidating web server logs and viewing them with LogAnalyzer [Windows/Apache]</a></li>
-<li><a href="http://www.mwagent.com/Common/en/Articles/setup_eventreporter_eventlogging_phplogcon_mysql.php">How to setup Event logging in EventReporter to consolidate Windows
+<li><a href="https://www.mwagent.com/Common/en/Articles/setup_mwagent_webserverlogging_phplogcon_mysql.php">consolidating web server logs and viewing them with LogAnalyzer [Windows/Apache]</a></li>
+<li><a href="https://www.mwagent.com/Common/en/Articles/setup_eventreporter_eventlogging_phplogcon_mysql.php">How to setup Event logging in EventReporter to consolidate Windows
 Events and view them in LogAnalyzer</a>
 <!--
 <li><a href="install.html">installing LogAnalyzer</a></li>
@@ -40,31 +42,31 @@ Events and view them in LogAnalyzer</a>
 </ul>
 <p><b>You can also browse the following online resources:</b></p>
 <ul>
-<li>the <a href="http://wiki.rsyslog.com/index.php/PhpLogCon">LogAnalyzer
-wiki</a>, a community resource, part of the greater rsyslog wiki.
-<li><a href="http://loganalyzer.adiscon.com/doc">LogAnalyzer online documentation (most current version only)</a></li>
+<li>the <a href="https://wiki.rsyslog.com/index.php/PhpLogCon">LogAnalyzer
+wiki</a>, a community resource, part of the greater rsyslog wiki.</li>
+<li><a href="https://github.com/rsyslog/loganalyzer">LogAnalyzer on GitHub</a> (current source and issues)</li>
 
-<li><a href="http://kb.monitorware.com/phplogcon-f39.html">LogAnalyzer
-discussion forum - use this for technical support</a></li>
-<li><a href="http://www.rsyslog.com/Topic4.phtml">LogAnalyzer change log</b></a></li>
-<li><a href="http://wiki.rsyslog.com/index.php/PhpLogCon_FAQ">LogAnalyzer FAQ</a></li>
-<li><a href="http://www.monitorware.com/en/syslog-enabled-products/">syslog
+<li><a href="https://kb.monitorware.com/phplogcon-f39.html">LogAnalyzer
+discussion forum</a> (historical; prefer GitHub for current support)</li>
+<li><a href="https://www.rsyslog.com/Topic4.phtml">LogAnalyzer change log</a></li>
+<li><a href="https://wiki.rsyslog.com/index.php/PhpLogCon_FAQ">LogAnalyzer FAQ</a></li>
+<li><a href="https://www.monitorware.com/en/syslog-enabled-products/">syslog
 device configuration guide</a> (off-site)</li>
-<li><a href="http://www.rsyslog.com/doc-rsyslog_high_database_rate.html">writing massive amounts of syslog messages to a database via rsyslog</a> (this may be useful if you have lots of messages,
+<li><a href="https://www.rsyslog.com/doc-rsyslog_high_database_rate.html">writing massive amounts of syslog messages to a database via rsyslog</a> (this may be useful if you have lots of messages,
 want to store them in databases but have performance issues doing so)</li>
 </ul>
 <p>Don't forget about the
-<a href="http://lists.adiscon.net/mailman/listinfo/phplogcon">LogAnalyzer
+<a href="https://lists.adiscon.net/mailman/listinfo/phplogcon">LogAnalyzer
 mailing list</a>. If you are interested in the "backstage" behind the overall idea that
 LogAnalyzer contributes to, you may find
-<a href="http://www.gerhards.net/rainer">Rainer</a>'s
-<a href="http://blog.gerhards.net/">blog</a> an interesting read.
+<a href="https://www.gerhards.net/rainer">Rainer</a>'s
+<a href="https://blog.gerhards.net/">blog</a> an interesting read.
 <p>Feedback is always welcome, but if you have a support question, please do not
 mail the authors directly (<a href="free_support.html">why not?</a>).
 <p><font size="2">This documentation is part of the
-<a href="http://loganalyzer.adiscon.com">Adiscon LogAnalyzer</a> project.<br>
-Copyright &copy; 2008-2011 by <a href="http://www.adiscon.com/">Adiscon</a>.
+<a href="https://loganalyzer.adiscon.com">Adiscon LogAnalyzer</a> project.<br>
+Copyright &copy; 2008-2011 by <a href="https://www.adiscon.com/">Adiscon</a>.
 Released under the GNU GPL version 3 or higher.
-<a href="http://loganalyzer.adiscon.com/commercial">Adiscon LogAnaylzer commercial licenses are also available.</a>
+<a href="https://loganalyzer.adiscon.com/commercial">LogAnalyzer commercial licenses are also available.</a>
 </font></p>
 </body></html>

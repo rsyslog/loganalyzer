@@ -26,6 +26,12 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Docker & CI (from AGENTS.md): docker.md
-  - Legacy HTML manuals (links): legacy-html-manuals.md
+  - Legacy manuals (HTML):
+    - Overview: legacy-html-manuals.md
+    - Documentation home: legacy-html/manual.html
+    - Basics: legacy-html/basics.html
+    - Installation: legacy-html/install.html
+    - Search syntax: legacy-html/searching.html
+    - Troubleshooting: legacy-html/troubleshoot.html
   - Repository README: project-readme.md
   - Third-party components: third-party.md

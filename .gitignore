@@ -5,5 +5,6 @@ src/config.php
 /e2e/playwright-report/
 /e2e/test-results/
 /doc-site/_site/
+/doc-site/docs/legacy-html/
 
 src/index.html
