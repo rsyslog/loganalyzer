@@ -43,8 +43,10 @@ test('main flows with screenshots (session kept in one test)', async ({ page }) 
   await page.screenshot({ path: path.join(shots, '02-admin.png'), fullPage: true });
 
   await page.goto('/statistics.php');
+  await expect(page.locator('body')).not.toContainText(/Fatal error|Parse error/i);
   await page.screenshot({ path: path.join(shots, '03-statistics.png'), fullPage: true });
 
   await page.goto('/reports.php');
+  await expect(page.locator('body')).not.toContainText(/Fatal error|Parse error/i);
   await page.screenshot({ path: path.join(shots, '04-reports.png'), fullPage: true });
 });

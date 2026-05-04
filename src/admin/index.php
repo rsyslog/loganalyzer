@@ -164,7 +164,7 @@ if ( isset($_POST['op']) )
 
 			// Read default FONT  Settings
 			if ( isset ($_POST['DefaultFont']) ) { $content['DefaultFont'] = $_POST['DefaultFont']; }
-			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = $_POST['DefaultFontSize']; }
+			if ( isset ($_POST['DefaultFontSize']) ) { $content['DefaultFontSize'] = NormalizeDefaultFontSize($_POST['DefaultFontSize']); }
 
 			// Read checkboxes
 			if ( isset ($_POST['ExportUseTodayYesterday']) ) { $content['ExportUseTodayYesterday'] = 1; } else { $content['ExportUseTodayYesterday'] = 0; }
@@ -198,7 +198,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['PrependTitle']) ) { $content['PrependTitle'] = $_POST['PrependTitle']; }
 			if ( isset ($_POST['SearchCustomButtonCaption']) ) { $content['SearchCustomButtonCaption'] = $_POST['SearchCustomButtonCaption']; }
 			if ( isset ($_POST['SearchCustomButtonSearch']) ) { $content['SearchCustomButtonSearch'] = $_POST['SearchCustomButtonSearch']; }
-			if ( isset ($_POST['EventEmptySearchDefaultFilter']) ) { $content['EventEmptySearchDefaultFilter'] = $_POST['EventEmptySearchDefaultFilter']; }
+			if ( isset ($_POST['EventEmptySearchDefaultFilter']) )
+				$content['EventEmptySearchDefaultFilter'] = SanitizeStoredEventEmptySearchDefaultFilter((string)$_POST['EventEmptySearchDefaultFilter']);
 
 			if ( isset ($_POST['InjectHtmlHeader']) ) { $content['InjectHtmlHeader'] = $_POST['InjectHtmlHeader']; }
 			if ( isset ($_POST['InjectBodyHeader']) ) { $content['InjectBodyHeader'] = $_POST['InjectBodyHeader']; }
@@ -233,7 +234,7 @@ if ( isset($_POST['op']) )
 
 			// Read default FONT
 			if ( isset ($_POST['User_DefaultFont']) ) { $USERCFG['DefaultFont'] = $_POST['User_DefaultFont']; }
-			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = $_POST['User_DefaultFontSize']; }
+			if ( isset ($_POST['User_DefaultFontSize']) ) { $USERCFG['DefaultFontSize'] = NormalizeDefaultFontSize($_POST['User_DefaultFontSize']); }
 
 			// Read checkboxes
 			if ( isset( $_POST['User_ViewColoredCells'])  ) { $USERCFG['ViewColoredCells'] = 1; } else { $USERCFG['ViewColoredCells'] = 0; }
@@ -261,7 +262,8 @@ if ( isset($_POST['op']) )
 			if ( isset ($_POST['User_PrependTitle']) ) { $USERCFG['PrependTitle'] = $_POST['User_PrependTitle']; }
 			if ( isset ($_POST['User_SearchCustomButtonCaption']) ) { $USERCFG['SearchCustomButtonCaption'] = $_POST['User_SearchCustomButtonCaption']; }
 			if ( isset ($_POST['User_SearchCustomButtonSearch']) ) { $USERCFG['SearchCustomButtonSearch'] = $_POST['User_SearchCustomButtonSearch']; }
-			if ( isset ($_POST['User_EventEmptySearchDefaultFilter']) ) { $USERCFG['EventEmptySearchDefaultFilter'] = $_POST['User_EventEmptySearchDefaultFilter']; }
+			if ( isset ($_POST['User_EventEmptySearchDefaultFilter']) )
+				$USERCFG['EventEmptySearchDefaultFilter'] = SanitizeStoredEventEmptySearchDefaultFilter((string)$_POST['User_EventEmptySearchDefaultFilter']);
 
 
 			// Save configuration variables now
@@ -278,6 +280,12 @@ if ( !isset($content['SuppressDuplicatedMessages']) ) { $content['SuppressDuplic
 if ( !isset($content['TreatNotFoundFiltersAsTrue']) ) { $content['TreatNotFoundFiltersAsTrue'] = 0; }
 if ( !isset($content['InlineOnlineSearchIcons']) ) { $content['InlineOnlineSearchIcons'] = 1; }
 if ( !isset($content['AdminChangeWaitTime']) ) { $content['AdminChangeWaitTime'] = 2; }
+
+$content['EventEmptySearchDefaultFilter'] = GetConfigSetting(
+	'EventEmptySearchDefaultFilter',
+	$content['EventEmptySearchDefaultFilter'] ?? '',
+	CFGLEVEL_GLOBAL
+);
 
 // Set checkbox States
 if (isset($content['ExportUseTodayYesterday']) && $content['ExportUseTodayYesterday'] == 1) { $content['ExportUseTodayYesterday_checked'] = "checked"; } else { $content['ExportUseTodayYesterday_checked'] = ""; }
@@ -370,7 +378,10 @@ foreach ( $content['FONTS'] as &$myFont )
 // --- Init for DefaultFontSize field!
 // copy Fontsizes Array
 $content['FONTSIZES'] = $content['fontsizes'];
-if ( !isset($content['DefaultFontSize']) ) { $content['DefaultFontSize'] = 100; }
+if ( !isset($content['DefaultFontSize']) )
+	$content['DefaultFontSize'] = '100';
+else
+	$content['DefaultFontSize'] = NormalizeDefaultFontSize($content['DefaultFontSize']);
 foreach ( $content['FONTSIZES'] as $myFontKey => &$myFontSize )
 {
 	if ( $myFontKey == $content['DefaultFontSize'] )

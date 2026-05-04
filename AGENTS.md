@@ -76,6 +76,16 @@ To pull from GHCR, point **`web.image`** at **`ghcr.io/<owner>/<repo>:<tag>`** (
 | `LOGANALYZER_DISK_ALLOWED_EXTRA` | `.env`/unset | `.env`/unset | Extra `DiskAllowed` directory prefixes (comma-separated); auto-includes dirs of env disk paths plus `/var/log/` and `/samplelogs/` |
 | `LOGANALYZER_CONFIG_PATH` | `/persist/config.php` | unset | When set (and not equal to `LOGANALYZER_DOCROOT/config.php`), config is stored there and symlinked into the docroot |
 
+## Releases & ChangeLog
+
+- Root **[`ChangeLog`](ChangeLog)** (dash-delimited **`Version X.Y.Z, YYYY-MM-DD`** blocks) is the canonical prose for shipped work. GitHub Releases paste the matching block plus auto-generated comparison notes via [`.github/scripts/build_release_body.py`](.github/scripts/build_release_body.py)—**do not insert extra `--------------------------------------------------------------------------------` lines inside one version section** or the extractor stops at the wrong boundary.
+- Prefer **detailed, themed bullets** (cluster by area; sub-bullets for specifics) so operators and reviewers can skim without spelunking `git log`. PR/`#NN` references are welcome for traceability.
+- Git history can land broad merges (e.g. Docker/docs) *after* a prose-only changelog commit; when cutting a release, reconcile **`ChangeLog` text** with the **actual tree** you are tagging so operators see the full delta, not only the last merge on `main`.
+- **Before pushing tag `vX.Y.Z`** (workflows: [`.github/workflows/release-on-tag.yml`](.github/workflows/release-on-tag.yml), [`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)):
+  - Add or extend the **`Version X.Y.Z`** block in **`ChangeLog`** with everything user-facing in that release.
+  - Set **BUILDNUMBER** in [`src/include/functions_common.php`](src/include/functions_common.php) to the **same semver** (`5.0.1` style, no `v`) as the changelog heading the release script will match.
+  - Confirm **`vX.Y.Z`** points at (or **`git tag --points-at <commit>`** resolves to) the commit that contains both the changelog entry and **`BUILDNUMBER`** bump—annotated vs lightweight tags should both peel to that tree when you publish.
+
 ## PHPUnit
 
 ```bash

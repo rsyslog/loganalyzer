@@ -70,7 +70,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "4.1.13";
+$content['BUILDNUMBER'] = "5.0.1";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -818,6 +818,50 @@ function GetAndReplaceLangStr( $strlang, $param1 = "", $param2 = "", $param3 = "
 	return $strfinal;
 }
 
+/**
+ * Admin HTML uses value="{EventEmptySearchDefaultFilter}" style placeholders. If that exact
+ * literal (or the user-fields variant) was saved into config, normalize to empty meaning "no filter".
+ */
+function SanitizeStoredEventEmptySearchDefaultFilter($value)
+{
+	if ( !is_string($value) )
+		return '';
+	$t = trim($value);
+	foreach ( ['{EventEmptySearchDefaultFilter}', '{User_EventEmptySearchDefaultFilter}'] as $bogus )
+	{
+		if ( strcasecmp($t, $bogus) === 0 )
+			return '';
+	}
+	return $value;
+}
+
+/**
+ * Default font size is stored as percent 50–200 in steps of 10 (see InitFontSizeList keys).
+ * Older / mistaken UI values may include a trailing "%" (must match array keys, not display labels).
+ */
+function NormalizeDefaultFontSize($value)
+{
+	if ( $value === null )
+		return '100';
+	if ( is_int($value) || is_float($value) )
+		$s = (string)(int)$value;
+	else
+	{
+		$s = trim((string)$value);
+		if ( $s === '' )
+			return '100';
+		$s = rtrim($s, '%');
+		if ( $s === '' || !is_numeric($s) )
+			return '100';
+		$s = (string)(int)$s;
+	}
+	$n = (int)$s;
+	$n = max(50, min(200, $n));
+	$n = (int)(round($n / 10) * 10);
+	$n = max(50, min(200, $n));
+	return (string)$n;
+}
+
 function InitConfigurationValues()
 {
 	global $content, $CFG, $LANG, $gl_root_path;
@@ -852,6 +896,20 @@ function InitConfigurationValues()
 			}
 			else // Critical ERROR HERE!
 				DieWithFriendlyErrorMsg( "Critical Error occured while trying to access the database in table '" . DB_CONFIG . "'" );
+
+			if ( isset($content['EventEmptySearchDefaultFilter']) )
+			{
+				$s = SanitizeStoredEventEmptySearchDefaultFilter((string)$content['EventEmptySearchDefaultFilter']);
+				$content['EventEmptySearchDefaultFilter'] = $s;
+				$CFG['EventEmptySearchDefaultFilter'] = $s;
+			}
+
+			if ( isset($content['DefaultFontSize']) )
+			{
+				$dfs = NormalizeDefaultFontSize($content['DefaultFontSize']);
+				$content['DefaultFontSize'] = $dfs;
+				$CFG['DefaultFontSize'] = $dfs;
+			}
 
 			// Database Version Checker! 
 			if ( $content['database_internalversion'] > $content['database_installedversion'] )
@@ -1913,6 +1971,8 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 {
 	global $content, $CFG, $USERCFG;
 
+	$out = (isset($szDefaultValue) ? $szDefaultValue : "");
+
 	if ( isset($CFG['UserDBEnabled']) && $CFG['UserDBEnabled'] )
 	{
 		if ( $DesiredConfigLevel == CFGLEVEL_USER )
@@ -1922,16 +1982,25 @@ function GetConfigSetting($szSettingName, $szDefaultValue = "", $DesiredConfigLe
 			{
 				// return user specific setting if available
 				if ( isset($USERCFG[$szSettingName]) ) 
-					return $USERCFG[$szSettingName];
+					$out = $USERCFG[$szSettingName];
 			}
 		}
 	}
 
 	// Either UserDB disabled, or global setting wanted - easier handling
-	if ( isset($CFG[$szSettingName]) ) 
-		return $CFG[$szSettingName];
-	else
-		return (isset($szDefaultValue) ? $szDefaultValue : "");
+	if ( !isset($CFG['UserDBEnabled']) || !($DesiredConfigLevel == CFGLEVEL_USER && isset($USERCFG['UserOverwriteOptions']) && $USERCFG['UserOverwriteOptions'] == 1 && isset($USERCFG[$szSettingName])) )
+	{
+		if ( isset($CFG[$szSettingName]) ) 
+			$out = $CFG[$szSettingName];
+	}
+
+	if ( $szSettingName === 'EventEmptySearchDefaultFilter' )
+		return SanitizeStoredEventEmptySearchDefaultFilter(is_string($out) ? $out : (string)$out);
+
+	if ( $szSettingName === 'DefaultFontSize' )
+		return NormalizeDefaultFontSize($out);
+
+	return $out;
 }
 
 /*
@@ -2202,24 +2271,15 @@ function InitFontList()
 // Creates a list of supported available fonts!
 function InitFontSizeList()
 {
-	global $content; 
+	global $content;
 
-	$content["fontsizes"]["50"]["Name"]			= "50%"; 
-	$content["fontsizes"]["60"]["Name"]			= "60%"; 
-	$content["fontsizes"]["70"]["Name"]			= "70%"; 
-	$content["fontsizes"]["80"]["Name"]			= "80%"; 
-	$content["fontsizes"]["90"]["Name"]			= "90%"; 
-	$content["fontsizes"]["100"]["Name"]		= "100%"; 
-	$content["fontsizes"]["110"]["Name"]		= "110%"; 
-	$content["fontsizes"]["120"]["Name"]		= "120%"; 
-	$content["fontsizes"]["130"]["Name"]		= "130%"; 
-	$content["fontsizes"]["140"]["Name"]		= "140%"; 
-	$content["fontsizes"]["150"]["Name"]		= "150%"; 
-	$content["fontsizes"]["160"]["Name"]		= "160%"; 
-	$content["fontsizes"]["170"]["Name"]		= "170%"; 
-	$content["fontsizes"]["180"]["Name"]		= "180%"; 
-	$content["fontsizes"]["190"]["Name"]		= "190%"; 
-	$content["fontsizes"]["200"]["Name"]		= "200%"; 
+	unset($content["fontsizes"]);
+	for ( $pct = 50; $pct <= 200; $pct += 10 )
+	{
+		$key = (string)$pct;
+		$content["fontsizes"][$key]["Name"]  = $key . '%';
+		$content["fontsizes"][$key]["Value"] = $key;
+	}
 }
 // --- 
 
@@ -2251,8 +2311,14 @@ function InitFontSettings()
 		a, .linksize {
 			font-size: ' . ($userdefaultfontsize/10)*1.1 . 'px; 
 		}
-		.ui-menu, .title {
+		.ui-menu:not(.loganalyzer-cell-search-menu), .title {
 			font-size: ' . ($userdefaultfontsize/10)*1.3 . 'px; 
+		}
+		.loganalyzer-cell-search-menu.ui-menu {
+			font-size: inherit;
+		}
+		.loganalyzer-cell-search-menu.ui-menu .ui-menu-item-wrapper {
+			font-size: inherit;
 		}
 		.ui-button, .ErrorMsg, .topmenu2 {
 			font-size: ' . ($userdefaultfontsize/10)*1.2 . 'px; 

@@ -284,12 +284,14 @@
 			<button id="button_menu_{FieldColumn}_{uid}"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_AVAILABLESEARCHES}"></span></button>
 			<!-- ENDIF hasdropdownbutton="true" -->
 
-			<ul id="menu_{FieldColumn}_{uid}" style="position:absolute;z-index:99;display:none;">
-				<li class="ui-widget-header-noborder">{LN_GEN_AVAILABLESEARCHES}</li>
+			<ul id="menu_{FieldColumn}_{uid}" class="loganalyzer-cell-search-menu" style="position:absolute;z-index:99;display:none;">
+				<li class="ui-widget-header-noborder"><span>{LN_GEN_AVAILABLESEARCHES}</span></li>
 				<!-- BEGIN buttons -->
 				<li>
-					<img src="{IconSource}" width="16" height="16" vspace="0" style="float:left;"/>
-					<a href="{ButtonUrl}<!-- IF ButtonAppendUrl="true" -->{additional_url_sourceonly}<!-- ENDIF ButtonAppendUrl="true" -->" target="{ButtonTarget}">{DisplayName}</a>
+					<div class="loganalyzer-menu-item-content">
+						<img src="{IconSource}" width="16" height="16" alt="" decoding="async" />
+						<a href="{ButtonUrl}<!-- IF ButtonAppendUrl="true" -->{additional_url_sourceonly}<!-- ENDIF ButtonAppendUrl="true" -->" target="{ButtonTarget}">{DisplayName}</a>
+					</div>
 				</li>
 				<!-- END buttons -->
 			</ul>

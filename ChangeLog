@@ -1,8 +1,40 @@
 --------------------------------------------------------------------------------
-Version 4.1.13, 2026-05-04
+Version 5.0.1, 2026-05-04
 --------------------------------------------------------------------------------
-- Docker development stack (PHP 8.2, MySQL 8, seeded admin + disk source).
-- GitHub Actions: PHP lint matrix, PHPUnit, Playwright E2E, MkDocs Pages, tag releases.
-- PHPUnit bootstrap and fixture log cap (50MB) under tests/fixtures/samplelogs.
-- PHP 8.3 compatibility: optional track_errors; replaced eregi in bundled html2fpdf.
-- Raised minimum supported PHP version check to 8.1+.
+- Security fixes & hardening
+  - CVE-2023-36306 (#105): build redirect and page URLs using `SCRIPT_NAME` instead of `PHP_SELF` to mitigate XSS via crafted paths.
+  - CVE-2023-34600 (#117): remediate authenticated admin SQL injection; harden construction and escaping when SQL literals are quoted.
+  - LDAP (#106): stop persisting LDAP user passwords into MySQL; bind-only semantics for directory accounts.
+  - LDAP (#119 / #103): on successful LDAP login, scrub legacy salted password-hash fields previously stored locally so accounts cannot authenticate with stale hashes.
+  - Frontend dependencies (#107): bump jQuery 1.12.4 → 3.7.1 and jQuery UI 1.11.1 → 1.14.1 to address upstream security defects.
+- Log viewing, search filters, charts, and export UX (#88/#91 lineage)
+  - Syslog PRI/level: recognise **TRACE**, apply level-based colours, optionally colour the full grid row, and tighten empty-search defaults (time window capped, hours-based `datelastx`).
+  - Filters: quoted segments stay literal; support numeric ranges and reduced surprise parsing (#88).
+  - Pagination: enforced upper bound on rows per page; `datelastx` clarified for backwards compatibility (#88/#91).
+  - Charts: configurable default ordering for statistic charts (#88 README thread).
+  - Export: plaintext / trace-aware export behaviours and README-documented workflows (#88, `4845e6f`, `a075991`).
+  - Admin UI option **ViewColoredCells** toggle (#91) for styled cells in the grid.
+  - Regression fixes after community UI merges: stylesheet and non-event row link styling (#88 follow-up `e966850`, `d1e501b`).
+  - Supporting plumbing: coordinated updates in `functions_common.php` and `index.php` for merged behaviour (#88/#91 integration commits).
+- Parsers & configuration bootstrap
+  - Syslog-ng: refresh structured/exporter-oriented parsing logic (`logstreamlineparsersyslogng.class.php`, merges #96/#101).
+  - Read default PHP settings safely when optional keys are absent (non-merge fix `18c40e1`) so fresh installs/upgrades skip notices.
+  - PHP runtime: **`install`/runtime check requires PHP 8.1+**; PHP 8.3 compatibility tweaks (optional `track_errors`; remove legacy `html2fpdf` **`eregi`** usage).
+  - bundled **html2fpdf**: tolerate PHP 8 substring/offset edge cases (#112 thread, `6600166`) atop the eregi/track_errors tidy-up above.
+- Docker & Compose
+  - **PHP 8.2 + MySQL 8** development stack; seeded admin and optional disk source for getting started (originally drafted for an unreleased 4.1.13 line; all shipped here under 5.0.1).
+  - Compose files for **consumer** default install vs **development** bind mounts vs **Playwright/E2E** stacks; Dockerfile multi-stage bake of `src` plus optional **`/samplelogs`** fixtures (#109 baseline; follow-on PR #122/`ede5ff9`).
+  - First-boot MySQL seed: optional demo disk sources via **`LOGANALYZER_SEED_SAMPLE_SOURCES`**; **`LOGANALYZER_SKIP_SEED`** for advanced automation; **`LOGANALYZER_OVERWRITE_CONFIG`** toggles regenerated `config.php` for dev ergonomics versus persisted runtime config.
+  - Operator-driven disk ingestion: **`LOGANALYZER_DISK_SOURCE_PATHS`**, **`LOGANALYZER_DISK_SOURCES`** (delimiter rules in `docker/env.example`), **`LOGANALYZER_DISK_ALLOWED_EXTRA`**, **`LOGANALYZER_CONFIG_PATH`** with symlink into docroot, `docker/write-config.php` extending **`DiskAllowed`**, hardened **`InitSourceConfigs`** merging env-driven sources into DB (`ede5ff9`).
+  - Rebuild/`init-env-interactive` helper scripts (.sh / .ps1 / .bat) for frictionless resets and prompting secrets (PR chain through #122).
+  - Compose project invocation: **`--project-directory .`** reinforced so repo-root `.env` is honoured when using `-f docker/docker-compose.yml` (`8d9180a`, documented in handbook + PR #123); rebuild scripts propagate the same invariant.
+  - Maintainership: GHCR publish workflow on semver tags (`docker-publish.yml`).
+- CI, quality gates & PHP toolchain (#109/#112/#113)
+  - GitHub Actions: PHP **lint matrices**, **Composer + PHPUnit**, **MkDocs Pages** builds, **Playwright E2E** against the dockerised stack, **tag-based release** tarball workflow (`.github/workflows/release-on-tag.yml`), optional failure issue bot.
+  - PHPUnit: bootstrap and **fixture log cap (50MB)** under `tests/fixtures/samplelogs`.
+  - Composer lock maintained for **PHP 8.1/8.2** CI (`a87ea54`); workflow reliability fixes for CI/docs publishing (`d14438e`, `99df04d`, `f472ae1`).
+- Documentation site & handbook (MkDocs + GitHub Pages)
+  - Material-themed handbook under `doc-site/`, legacy HTML manuals embedded and deep-linked, automated nav/hook generation for embedded manual trees (#115/#116 / `68ffeb9`, `ef472ed`).
+  - GitHub Pages deployment output path corrected for Actions (`c32fb25`, #114).
+  - User guide refresh plus regenerated Playwright screenshots against the live handbook (#118 / `d17cb19`).
+  - Nav label quoting, legacy path cleanup when `doc/` missing, and drop obsolete `legacy-html` URL segments (#120 / `1c78744`, `73d37d9`, `2eec76c`).
