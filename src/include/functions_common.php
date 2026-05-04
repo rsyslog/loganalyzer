@@ -1334,7 +1334,7 @@ function GetEventTime($szTimStr)
 		$mm   = strlen($out[3]) > 0 ? intval($out[3]) : 0;
 		$ss   = strlen($out[4]) > 0 ? intval($out[4]) : 0;
 		$szTime = mktime($hh, $mm, $ss);
-		if ( $days < 0 )
+		if ( $days !== 0 )
 			$szTime = strtotime("$days days", $szTime);
 		$eventtime[EVTIME_TIMESTAMP] = $szTime;
 		$eventtime[EVTIME_TIMEZONE] = date('O');

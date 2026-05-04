@@ -230,6 +230,10 @@ if ( !$content['error_occured'] )
 							// It's a duplicate — count and skip
 							$duplicateCount++;
 
+							// Update period_end_ts for the duplicate record before skipping
+							if ( isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
+								$content['period_end_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
+
 							// Read next entry
 							do {
 								$ret = $stream->ReadNext($uID, $logArray);
@@ -258,9 +262,9 @@ if ( !$content['error_occured'] )
 					// ---
 
 					// --- Track period timestamps for the export filename
-					if ( !isset($content['period_start_ts']) && isset($logArray['timereported']) )
+					if ( !isset($content['period_start_ts']) && isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
 						$content['period_start_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
-					if ( isset($logArray['timereported']) )
+					if ( isset($logArray['timereported'][EVTIME_TIMESTAMP]) )
 						$content['period_end_ts'] = $logArray['timereported'][EVTIME_TIMESTAMP];
 					// ---
 
