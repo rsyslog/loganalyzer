@@ -43,6 +43,43 @@ function run_statements(mysqli $m, array $stmts): void
     }
 }
 
+/**
+ * Align seeded admin password with LOGANALYZER_ADMIN_PASSWORD (same md5 scheme as INSERT).
+ * Persistent MySQL volumes skip full seed once database_installedversion is set; stale hashes cause login failures.
+ *
+ * Uses a prepared statement for credential values; table name stays quoted from the configured prefix only.
+ *
+ * @return int -1 on query error, 0 if no row was updated (unknown user or password already matched), otherwise affected row count (typically 1)
+ */
+function sync_admin_password_if_exists(mysqli $m, string $tableUsersQuoted, string $adminUser, string $adminPass): int
+{
+    if ($adminUser === '') {
+        return 0;
+    }
+
+    $passwordHash = md5($adminPass);
+    $sql = 'UPDATE ' . $tableUsersQuoted . ' SET password = ? WHERE username = ? LIMIT 1';
+    $stmt = $m->prepare($sql);
+    if ($stmt === false) {
+        fwrite(STDERR, "Warning: admin password sync prepare failed: {$m->error}\n");
+
+        return -1;
+    }
+
+    try {
+        $stmt->bind_param('ss', $passwordHash, $adminUser);
+        if (!$stmt->execute()) {
+            fwrite(STDERR, "Warning: admin password sync execute failed: {$stmt->error}\n");
+
+            return -1;
+        }
+
+        return (int) $stmt->affected_rows;
+    } finally {
+        $stmt->close();
+    }
+}
+
 $dbHost = getenv('LOGANALYZER_DB_HOST') ?: 'db';
 $dbPort = (int) (getenv('LOGANALYZER_DB_PORT') ?: 3306);
 $dbName = getenv('LOGANALYZER_DB_NAME') ?: 'loganalyzer';
@@ -79,6 +116,12 @@ if ($tst && $tst->num_rows > 0) {
     $chk = $m->query('SELECT propvalue FROM ' . $tableConfig . " WHERE propname = 'database_installedversion' AND is_global = 1 LIMIT 1");
     if ($chk && ($row = $chk->fetch_assoc()) && strlen((string) ($row['propvalue'] ?? '')) > 0) {
         fwrite(STDOUT, "Database already seeded (database_installedversion=" . ($row['propvalue'] ?? '') . ").\n");
+        $syncResult = sync_admin_password_if_exists($m, $tableUsers, $adminUser, $adminPass);
+        if ($syncResult > 0) {
+            fwrite(STDOUT, "Updated admin password hash for user '$adminUser' from environment.\n");
+        } elseif ($syncResult === 0) {
+            fwrite(STDOUT, "Admin password sync: no row changed (user not found or password already matches environment).\n");
+        }
         exit(0);
     }
 }

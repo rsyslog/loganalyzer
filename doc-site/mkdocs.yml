@@ -29,8 +29,10 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Docker & CI (from AGENTS.md): docker.md
-  - Legacy manuals (HTML):
+  - LogAnalyzer user guide:
     - Overview: legacy-html-manuals.md
+    - Quick start: user-guide/quick-start.md
+    - Interface map: user-guide/interface-map.md
     - Documentation home: legacy-html/manual.md
     - Basics: legacy-html/basics.md
     - Installation: legacy-html/install.md

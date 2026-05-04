@@ -1,9 +1,11 @@
+# Playwright E2E: Docker Compose app + MySQL + Playwright container.
+# On failure (same-repo only; not for PRs from forks), opens a GitHub issue with a log tail — see "Open issue on failure".
 name: Playwright E2E
 
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:

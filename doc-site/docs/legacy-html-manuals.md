@@ -1,8 +1,8 @@
-# Legacy HTML manuals
+# LogAnalyzer user guide (overview)
 
-These pages are **legacy HTML 4** manuals from the upstream tree. They are **included in this handbook** (Material theme and navigation) so you can read them without leaving the site. For Docker, CI, and contributor notes, use the other sections in the left nav.
+This section is the **LogAnalyzer user guide**: how the app works, installation, search, and operations. **Quick start** and **Interface map** are handbook-native pages (with screenshots where available). The chapters below are **imported** from the upstream `doc/*.html` manuals in this repository, rendered here with the same navigation and theme as the rest of the site. For Docker development, CI, and contributor notes, use **Docker & CI** in the left nav.
 
-Every file under [`doc/`](https://github.com/rsyslog/loganalyzer/blob/master/doc/) with a `*.html` extension is listed below **(10 manuals)**; the same pages appear under **Legacy manuals (HTML)** in the left sidebar (same order and titles).
+Every `*.html` manual under [`doc/`](https://github.com/rsyslog/loganalyzer/blob/master/doc/) is listed below **(10 chapters)**; matching pages appear under **LogAnalyzer user guide** in the sidebar.
 
 ## Pages (in-site)
 

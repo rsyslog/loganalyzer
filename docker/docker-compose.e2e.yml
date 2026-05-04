@@ -67,8 +67,10 @@ services:
       PLAYWRIGHT_BASE_URL: http://web:8080
       LOGANALYZER_ADMIN_USER: admin
       LOGANALYZER_ADMIN_PASSWORD: pass
+      HANDBOOK_USER_GUIDE_ASSETS: /handbook-user-guide-assets
     volumes:
       - ../e2e:/e2e
+      - ../doc-site/docs/assets/user-guide:/handbook-user-guide-assets
     working_dir: /e2e
     command: sh -c "npm ci && npx playwright test"
 

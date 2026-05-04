@@ -16,8 +16,46 @@ docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-
 docker compose -f docker/docker-compose.yml up -d
 cd e2e
 npm install
-set PLAYWRIGHT_BASE_URL=http://127.0.0.1:8080
+```
+
+Set `PLAYWRIGHT_BASE_URL` to your app (default in config is `http://127.0.0.1:8080`), then:
+
+```bash
+npx playwright test
+```
+
+PowerShell:
+
+```text
+$env:PLAYWRIGHT_BASE_URL="http://127.0.0.1:8080"
 npx playwright test
 ```
 
 Screenshots (when tests run) are written under `e2e/test-results/screenshots/`.
+
+## Handbook screenshots (MkDocs)
+
+The [LogAnalyzer handbook](https://rsyslog.github.io/loganalyzer/) embeds PNGs from `doc-site/docs/assets/user-guide/`. Regenerate them with Playwright after UI changes.
+
+From the repository root, run the E2E stack (runs all specs, including the handbook capture):
+
+```bash
+docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
+```
+
+[`tests/handbook-screenshots.spec.ts`](tests/handbook-screenshots.spec.ts) writes **`doc-site/docs/assets/user-guide/*.png`** (the Playwright service mounts that directory at `HANDBOOK_USER_GUIDE_ASSETS`; see `docker/docker-compose.e2e.yml`). Commit updated PNGs together with doc changes.
+
+**Local dev stack** (`docker-compose.yml`) with Playwright on the host:
+
+```bash
+cd e2e
+npm install
+# PowerShell
+$env:PLAYWRIGHT_BASE_URL="http://127.0.0.1:8080"
+npx playwright test tests/handbook-screenshots.spec.ts
+```
+
+```bash
+# bash
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:8080 npx playwright test tests/handbook-screenshots.spec.ts
+```
