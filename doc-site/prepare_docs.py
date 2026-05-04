@@ -125,14 +125,14 @@ def _ordered_legacy_stems(stems: set[str]) -> list[str]:
 def _format_legacy_nav_lines(stems_ordered: list[str]) -> list[str]:
     lines = [
         LEGACY_NAV_HEADER,
-        f"    - Overview: {USER_GUIDE_DIR}/{OVERVIEW_MD}",
-        f"    - Quick start: {USER_GUIDE_DIR}/quick-start.md",
-        f"    - Interface map: {USER_GUIDE_DIR}/interface-map.md",
+        f"    - {_yaml_single_quoted('Overview')}: {USER_GUIDE_DIR}/{OVERVIEW_MD}",
+        f"    - {_yaml_single_quoted('Quick start')}: {USER_GUIDE_DIR}/quick-start.md",
+        f"    - {_yaml_single_quoted('Interface map')}: {USER_GUIDE_DIR}/interface-map.md",
     ]
     for stem in stems_ordered:
         label = LEGACY_NAV_LABELS.get(stem, stem.replace("_", " ").title())
         lines.append(
-            f"    - {label}: {USER_GUIDE_DIR}/{IMPORTED_CHAPTERS_DIR}/{stem}.md"
+            f"    - {_yaml_single_quoted(label)}: {USER_GUIDE_DIR}/{IMPORTED_CHAPTERS_DIR}/{stem}.md"
         )
     return lines
 
@@ -184,12 +184,12 @@ def _write_legacy_markdown(
 
 def _remove_pre_migration_doc_artifacts(out_dir: Path) -> None:
     """Remove handbook output from the pre-PR layout (legacy-html/, legacy-html-manuals.md)."""
-    legacy_old = out_dir / "legacy-html"
-    if legacy_old.is_dir():
-        shutil.rmtree(legacy_old)
-    old_hub = out_dir / "legacy-html-manuals.md"
-    if old_hub.is_file():
-        old_hub.unlink()
+    for name in ("legacy-html", "legacy-html-manuals.md"):
+        path = out_dir / name
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.is_file():
+            path.unlink()
 
 
 def main() -> int:
