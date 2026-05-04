@@ -1,0 +1,16 @@
+/* Legacy HTML manuals embedded in Markdown (Material wrapper) */
+.legacy-html-doc {
+  max-width: 100%;
+}
+
+.legacy-html-doc h2 {
+  margin-top: 1.75em;
+}
+
+.legacy-html-doc p {
+  margin: 0.75em 0;
+}
+
+.legacy-html-doc ul {
+  margin: 0.5em 0 1em 1.2em;
+}
