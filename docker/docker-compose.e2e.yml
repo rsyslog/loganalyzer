@@ -1,5 +1,5 @@
 # E2E: app + MySQL + Playwright. From repo root:
-#   docker compose -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
+#   docker compose --project-directory . -f docker/docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from playwright
 
 services:
   db:
@@ -22,11 +22,11 @@ services:
 
   web:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
     volumes:
-      - ../src:/var/www/html:rw
-      - ../tests/fixtures/samplelogs:/samplelogs:ro
+      - ./src:/var/www/html:rw
+      - ./tests/fixtures/samplelogs:/samplelogs:ro
     environment:
       LOGANALYZER_DOCROOT: /var/www/html
       LOGANALYZER_DB_HOST: db
@@ -70,8 +70,8 @@ services:
       LOGANALYZER_ADMIN_PASSWORD: ${LOGANALYZER_ADMIN_PASSWORD:-loganalyzer}
       HANDBOOK_USER_GUIDE_ASSETS: /handbook-user-guide-assets
     volumes:
-      - ../e2e:/e2e
-      - ../doc-site/docs/assets/user-guide:/handbook-user-guide-assets
+      - ./e2e:/e2e
+      - ./doc-site/docs/assets/user-guide:/handbook-user-guide-assets
     working_dir: /e2e
     command: sh -c "npm ci && npx playwright test"
 

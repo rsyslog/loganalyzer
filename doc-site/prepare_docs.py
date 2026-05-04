@@ -194,10 +194,8 @@ def _remove_pre_migration_doc_artifacts(out_dir: Path) -> None:
 
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    agents = REPO_ROOT / "AGENTS.md"
-    if agents.is_file():
-        shutil.copyfile(agents, OUT_DIR / "docker.md")
-        print(f"Wrote {OUT_DIR / 'docker.md'}")
+    # Handbook Docker lives in docker.md (overview) plus docker-install.md / docker-develop.md;
+    # do not overwrite — AGENTS.md remains IDE-oriented in the repo root.
     readme = REPO_ROOT / "README.md"
     if readme.is_file():
         text = readme.read_text(encoding="utf-8", errors="replace")
@@ -236,8 +234,8 @@ def main() -> int:
             "and operations. **Quick start** and **Interface map** are handbook-native pages (with "
             "screenshots where available). The chapters below are **imported** from the upstream "
             "`doc/*.html` manuals in this repository, rendered here with the same navigation and theme "
-            "as the rest of the site. For Docker development, CI, and contributor notes, use "
-            "**Docker & CI** in the left nav.",
+            "as the rest of the site. For Docker install versus development/CI, use **Docker** "
+            "in the left nav.",
             "",
             f"Every `*.html` manual under [`doc/`]({blob_base}/) is listed below "
             f"**({len(ordered)} chapters)**; matching pages appear under "

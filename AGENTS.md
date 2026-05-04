@@ -1,5 +1,7 @@
 # LogAnalyzer agent / contributor notes
 
+Handbook (expanded): **`doc-site/docs/docker-install.md`** (Compose users), **`docker-develop.md`** (dev / E2E / CI / env table).
+
 ## Docker stacks
 
 | Compose file | Use case |
@@ -9,12 +11,12 @@
 
 Build context for images is **repository root**; see [`docker/Dockerfile`](docker/Dockerfile) (multi-stage: runtime + baked `src`; optional fixture tree at `/samplelogs`). Install walkthrough (**`.env`**, volumes, **`LOGANALYZER_DISK_*`**, reset): [`docker/README.md`](docker/README.md).
 
-Credentials and bootstrap flags normally come **at runtime**, not **`docker build`**: copy [`docker/env.example`](docker/env.example) to **`.env` in the repository root** (same folder as `README.md`) and adjust `LOGANALYZER_ADMIN_*`, `MYSQL_*`, `LOGANALYZER_SEED_SAMPLE_SOURCES`, and optional **`LOGANALYZER_DISK_*`** before **`docker compose up`**. Compose injects `${VARIABLE:-defaults}` automatically; **`.gitignore` excludes `.env`**.
+Credentials and bootstrap flags normally come **at runtime**, not **`docker build`**: copy [`docker/env.example`](docker/env.example) to **`.env` in the repository root** (same folder as `README.md`) and adjust `LOGANALYZER_ADMIN_*`, `MYSQL_*`, `LOGANALYZER_SEED_SAMPLE_SOURCES`, and optional **`LOGANALYZER_DISK_*`** before **`docker compose`**. Invoke **`docker compose --project-directory . -f docker/docker-compose.yml …`** from the repo root (or rely on **`docker/rebuild-*.sh` / `.bat`**, which set **`--project-directory`** explicitly) so the root **`.env`** is loaded for **`${VAR}`** interpolation — otherwise Compose’s default project directory follows the **`docker/`** compose path and skips that file.
 
 **Real disk sources at first seed:** set **`LOGANALYZER_DISK_SOURCE_PATHS`** (comma-separated file paths *inside the web container*) and/or **`LOGANALYZER_DISK_SOURCES`** (see comments in [`docker/env.example`](docker/env.example)). Bind-mount host directories on the **`web`** service (commented example in [`docker/docker-compose.yml`](docker/docker-compose.yml)). `docker/write-config.php` extends **`DiskAllowed`** from those paths plus **`LOGANALYZER_DISK_ALLOWED_EXTRA`**. After the first boot, updating disk paths in `.env` requires either **`LOGANALYZER_OVERWRITE_CONFIG=1`** once or wiping the **`loganalyzer_config`** volume so **`config.php`** regenerates with the new prefixes (and usually **`docker compose … down -v`** if you must re-run the seed for new rows).
 
 ```bash
-docker compose -f docker/docker-compose.yml up --build
+docker compose --project-directory . -f docker/docker-compose.yml up --build
 ```
 
 **Clean reset** (wipe DB + persisted config):
@@ -22,12 +24,12 @@ docker compose -f docker/docker-compose.yml up --build
 - Linux/macOS/Git Bash: `sh docker/rebuild-consumer.sh`
 - Windows (cmd): `docker\rebuild-consumer.bat`
 
-Those scripts invoke **`docker/init-env-interactive.sh`** (POSIX path requires **bash** on `PATH`; if none, they fall back to copying **`docker/env.example`**) or **`docker/init-env-interactive.ps1`** (called from **`.bat`**) whenever **`.env`** is absent. Each **`KEY=value`** line from **`docker/env.example`** is prompted with **Enter = default**. **`*PASSWORD*`** prompts are masked in Bash and PowerShell **`7.1+`**, echoed in **`5.x`** / **7.0**). Afterwards: **`docker compose down -v`** then **`up --build`** for [`docker-compose.yml`](docker/docker-compose.yml).
+Those scripts invoke **`docker/init-env-interactive.sh`** (POSIX path requires **bash** on `PATH`; if none, they fall back to copying **`docker/env.example`**) or **`docker/init-env-interactive.ps1`** (called from **`.bat`**) whenever **`.env`** is absent. Each **`KEY=value`** line from **`docker/env.example`** is prompted with **Enter = default**. **`*PASSWORD*`** prompts are masked in Bash and PowerShell **`7.1+`**, echoed in **`5.x`** / **`7.0`**. **`docker compose`** is run with **`--project-directory`** set to the repo root (**[`docker/rebuild-consumer.sh`](docker/rebuild-consumer.sh)** / **[`.bat`](docker/rebuild-consumer.bat)**) so **`${VAR}`** interpolation loads **`.env`** from the repository root even though **`-f docker/docker-compose.yml`** lives under **`docker/`**.
 
 ### Developer stack
 
 ```bash
-docker compose -f docker/docker-compose.dev.yml up --build
+docker compose --project-directory . -f docker/docker-compose.dev.yml up --build
 ```
 
 **Clean rebuild** (`src/config.php` + MySQL wiped for this stack):
@@ -45,7 +47,7 @@ Developer stack exposes **MySQL** on **`localhost:3306`**.
 
 The default consumer compose sets **`LOGANALYZER_SEED_SAMPLE_SOURCES=0`**, giving a **clean first install**: schema + views + admin only (add sources manually). Fixtures still exist under **`/samplelogs`** if you bump that env var to **`1`**. Contributor/E2E stacks omit it or pin **`1`**, restoring the seeded demo disk sources Playwright relies on.
 
-Reset the developer stack volumes: `docker compose -f docker/docker-compose.dev.yml down -v`.
+Reset the developer stack volumes: `docker compose --project-directory . -f docker/docker-compose.dev.yml down -v`.
 
 ### Publish image (maintainers)
 

@@ -1,5 +1,5 @@
 # Developer stack: live bind-mount of repo src/, fixtures as /samplelogs, overwrite config each start.
-# From repo root: docker compose -f docker/docker-compose.dev.yml up --build
+# From repo root: docker compose --project-directory . -f docker/docker-compose.dev.yml up --build
 # Clean rebuild: sh docker/rebuild-dev.sh | docker\rebuild-dev.bat
 
 services:
@@ -25,13 +25,13 @@ services:
 
   web:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
     ports:
       - "8080:8080"
     volumes:
-      - ../src:/var/www/html:rw
-      - ../tests/fixtures/samplelogs:/samplelogs:ro
+      - ./src:/var/www/html:rw
+      - ./tests/fixtures/samplelogs:/samplelogs:ro
     environment:
       LOGANALYZER_DOCROOT: /var/www/html
       LOGANALYZER_DB_HOST: db
