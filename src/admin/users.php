@@ -88,8 +88,8 @@ if ( isset($_GET['miniop']) )
 		if ( $_GET['miniop'] == "setisadmin" ) 
 		{
 			//PreInit these values 
-			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
-			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+			$content['USERID'] = is_scalar($_GET['id']) ? intval($_GET['id']) : 0;
+			$iNewVal = is_scalar($_GET['newval']) ? intval($_GET['newval']) : 0;
 
 			// --- handle special case
 			if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 0)
@@ -122,8 +122,8 @@ if ( isset($_GET['miniop']) )
 		else if ( $_GET['miniop'] == "setisreadonly" ) 
 		{
 			//PreInit these values 
-			$content['USERID'] = intval(DB_RemoveBadChars($_GET['id']));
-			$iNewVal = intval(DB_RemoveBadChars($_GET['newval']));
+			$content['USERID'] = is_scalar($_GET['id']) ? intval($_GET['id']) : 0;
+			$iNewVal = is_scalar($_GET['newval']) ? intval($_GET['newval']) : 0;
 
 			// --- handle special case
 			if ( $content['USERID'] == $content['SESSION_USERID'] && (!isset($_GET['verify']) || $_GET['verify'] != "yes") && $iNewVal == 1)
@@ -186,7 +186,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			$content['USERID'] = is_scalar($_GET['id']) ? intval($_GET['id']) : 0;
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_USERS . 
@@ -228,7 +228,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['USERID'] = DB_RemoveBadChars($_GET['id']);
+			$content['USERID'] = is_scalar($_GET['id']) ? intval($_GET['id']) : 0;
 
 			if ( !isset($_SESSION['SESSION_USERNAME']) )
 			{
@@ -285,7 +285,7 @@ if ( isset($_GET['op']) )
 
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['USERID'] = DB_RemoveBadChars($_POST['id']); } else {$content['USERID'] = ""; }
+	if ( isset ($_POST['id']) && is_scalar($_POST['id']) ) { $content['USERID'] = intval($_POST['id']); } else {$content['USERID'] = 0; }
 	if ( isset ($_POST['username']) ) { $content['USERNAME'] = DB_RemoveBadChars($_POST['username']); } else {$content['USERNAME'] = ""; }
 	if ( isset ($_POST['password1']) ) { $content['PASSWORD1'] = DB_RemoveBadChars($_POST['password1']); } else {$content['PASSWORD1'] = ""; }
 	if ( isset ($_POST['password2']) ) { $content['PASSWORD2'] = DB_RemoveBadChars($_POST['password2']); } else {$content['PASSWORD2'] = ""; }

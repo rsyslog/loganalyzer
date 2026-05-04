@@ -77,7 +77,7 @@ $content['TITLE'] = "LogAnalyzer :: " . $content['LN_CONVERT_TITLE'];
 // --- Read Vars
 if ( isset($_GET['step']) )
 {
-	$content['CONVERT_STEP'] = intval(DB_RemoveBadChars($_GET['step']));
+	$content['CONVERT_STEP'] = intval($_GET['step']);
 	if ( $content['CONVERT_STEP'] > MAX_STEPS ) 
 		$content['CONVERT_STEP'] = 1;
 }

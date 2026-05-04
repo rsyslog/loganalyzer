@@ -193,8 +193,8 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['FieldAlign']) && isset($content['ALIGMENTS'][$_POST['FieldAlign']]) ) { $content['FieldAlign'] = $_POST['FieldAlign']; } else {$content['FieldAlign'] = ALIGN_CENTER; }
 
 	// number fields
-	if ( isset($_POST['DefaultWidth']) ) { $content['DefaultWidth'] = intval(DB_RemoveBadChars($_POST['DefaultWidth'])); } else {$content['DefaultWidth'] = 50; }
-//	NOT USED YET if ( isset ($_POST['Trunscate']) ) { $content['Trunscate'] = intval(DB_RemoveBadChars($_POST['Trunscate'])); } else {$content['Trunscate'] = 30; }
+	if ( isset($_POST['DefaultWidth']) ) { $content['DefaultWidth'] = intval($_POST['DefaultWidth']); } else {$content['DefaultWidth'] = 50; }
+//	NOT USED YET if ( isset ($_POST['Trunscate']) ) { $content['Trunscate'] = intval($_POST['Trunscate']); } else {$content['Trunscate'] = 30; }
 	CreateFieldTypesList(0);
 	if ( isset($_POST['NewFieldType']) && isset($content['FILTERTYPES'][$_POST['NewFieldType']]) ) { $content['FieldType'] = intval($_POST['NewFieldType']); } else if ( isset($_POST['FieldType']) && isset($content['FILTERTYPES'][$_POST['FieldType']]) ) { $content['FieldType'] = intval($_POST['FieldType']); } else { $content['FieldType'] = FILTER_TYPE_STRING; }
 

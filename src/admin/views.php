@@ -135,10 +135,9 @@ if ( isset($_GET['op']) )
 		$content['VIEWS'] = $content['Views'];
 
 		// View must be loaded as well already!
-		if ( isset($_GET['id']) && isset($content['VIEWS'][$_GET['id']]) )
+		if ( isset($_GET['id']) )
 		{
-			//PreInit these values 
-			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
+			$content['VIEWID'] = intval($_GET['id']);
 			if ( isset($content['VIEWS'][ $content['VIEWID'] ]) )
 			{
 
@@ -199,7 +198,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['VIEWID'] = DB_RemoveBadChars($_GET['id']);
+			$content['VIEWID'] = intval($_GET['id']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_VIEWS . " WHERE ID = " . $content['VIEWID'] ); 
@@ -318,7 +317,7 @@ if ( isset($content['ISEDITORNEWVIEW']) && $content['ISEDITORNEWVIEW'] )
 // --- Process POST Form Data
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['VIEWID'] = DB_RemoveBadChars($_POST['id']); } else {$content['VIEWID'] = ""; }
+	if ( isset ($_POST['id']) && is_scalar($_POST['id']) ) { $content['VIEWID'] = intval($_POST['id']); } else {$content['VIEWID'] = 0; }
 	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_StripSlahes($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
 
 	// User & Group handeled specially

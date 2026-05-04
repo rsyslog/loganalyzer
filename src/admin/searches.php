@@ -128,7 +128,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['SEARCHID'] = intval($_GET['id']);
 
 			$sqlquery = "SELECT * " . 
 						" FROM " . DB_SEARCHES . 
@@ -191,7 +191,7 @@ if ( isset($_GET['op']) )
 		if ( isset($_GET['id']) )
 		{
 			//PreInit these values 
-			$content['SEARCHID'] = strip_tags(DB_RemoveBadChars($_GET['id']));
+			$content['SEARCHID'] = intval($_GET['id']);
 
 			// Get UserInfo
 			$result = DB_Query("SELECT DisplayName FROM " . DB_SEARCHES . " WHERE ID = " . $content['SEARCHID'] ); 
@@ -233,7 +233,7 @@ if ( isset($_GET['op']) )
 
 if ( isset($_POST['op']) )
 {
-	if ( isset ($_POST['id']) ) { $content['SEARCHID'] = intval(DB_RemoveBadChars($_POST['id'])); } else {$content['SEARCHID'] = -1; }
+	if ( isset ($_POST['id']) && is_scalar($_POST['id']) ) { $content['SEARCHID'] = intval($_POST['id']); } else {$content['SEARCHID'] = -1; }
 	if ( isset ($_POST['DisplayName']) ) { $content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']); } else {$content['DisplayName'] = ""; }
 	if ( isset ($_POST['SearchQuery']) ) { $content['SearchQuery'] = DB_RemoveBadChars($_POST['SearchQuery']); } else {$content['SearchQuery'] = ""; }
 
