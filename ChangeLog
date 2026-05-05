@@ -1,4 +1,27 @@
 --------------------------------------------------------------------------------
+Version 5.0.2, 2026-05-05
+--------------------------------------------------------------------------------
+- UI / themes
+  - **Credit:** Modernization and flattened-layout direction inspired by community PR **#73** (*Simplified Layout*, 2021) from **[@Alfa-Soft](https://github.com/Alfa-Soft)** — https://github.com/rsyslog/loganalyzer/pull/73 — reworked for the current tree rather than merged verbatim.
+  - Add optional **modern** theme (`themes/modern/`): flat slate styling for `main.css` and `jquery-ui-theme.css`; neutral `about.txt` metadata (directory key **`modern`** only).
+  - **Modern** theme refresh: CSS design tokens (`:root`), system font stack, lighter surfaces and shadows, clearer focus rings (`:focus-visible`), refined table and severity chip styling, and jQuery UI alignment (8px radii, shared slate/blue palette).
+  - **Details popup** (grid → syslog link): dialog titlebar tied to theme; hide duplicate inner `.title` row; soften `#EventItemDetails` label cells for contrast, padding, and vertical alignment inside `.ui-dialog`.
+  - **Modern** jQuery UI: `ui-state-default` surfaces (toolbars, selectmenu triggers, dialog chrome) use flat **#fff** with **no** background texture; **hover**/**focus** stay white with a stronger border, **active** stays white with the existing accent border/text; **menu** dropdown rows and **datepicker** day hovers use **#f1f5f9** so highlights remain visible on white panels; **checkbox/radio** icon boxes drop the structure inset shadow for a clean white control.
+  - **Modern** theme assets: ship `themes/modern/images/` (jQuery UI **ui-icons** sprites aligned with **`jquery-ui-theme.css`**, plus **`bg_bottom.gif`** for [`include_footer.html`](src/templates/include_footer.html)) so controls and the footer bar do not 404 when the theme is active.
+  - **Modern** polish (visual review): remove stray table cell / bad `</span>` closures in [`index.html`](src/templates/index.html) **SearchPanel**; flatten native + **jQuery UI** buttons (`appearance`, no `box-shadow`); white **multi-select** list surfaces; tighter cell/dialog padding; dialog **button pane** float containment + table **margin** so the last detail row is not crowded; slightly brighter **report title** links on slate headers.
+  - **`ViewDefaultTheme`** in [`config.sample.php`](src/include/config.sample.php) is **`modern`** for **new** installs (installer output, Docker-generated `config.php`). Existing sites keep whatever is already in `config.php` and the user DB; PHP fallbacks for missing keys remain **`default`** so behaviour does not change until an operator updates settings.
+  - Style selector list picks up new themes via existing filesystem scan.
+- Templates & accessibility tidy
+  - Remove deprecated **`align="left"`** from toolbar/menu `<img>` elements; align via [`css/defaults.css`](src/css/defaults.css) (`#menu` buttons, top-menu links, search form).
+  - Stable hooks: **`#SearchPanel`**, **`#ProjectPanel`**, **`#PagerTop`** on main index chrome; **`#MainMenuPanel`** around the primary menu; **`#EventItemDetails`** on the detail view field table.
+  - Main menu: **Help** and **KB** controls moved after authentication / user actions (before maximise).
+- Robustness & i18n
+  - **`DieWithErrorMsg` / `DieWithFriendlyErrorMsg`**: fix invalid extra `<tr>` in the auxiliary error table; normalise detail rows; correct friendly-error footer cell markup; trim redundant padding `<br>` in error cells ([`functions_common.php`](src/include/functions_common.php)).
+  - Export placeholder copy: strip decorative **`&gt;` / `&lt;`** from **`LN_GEN_SELECTEXPORT`** in en/de/es/ja `main.php`.
+- E2E / Playwright
+  - **`Modern theme visual review`**: switch session style via `userchange.php`, assert theme stylesheets, capture **`modern-01`…`modern-05`** screenshots under `e2e/test-results/ci-visual/` (index grid, **details dialog**, admin index, advanced search, reports).
+
+--------------------------------------------------------------------------------
 Version 5.0.1, 2026-05-04
 --------------------------------------------------------------------------------
 - Security fixes & hardening

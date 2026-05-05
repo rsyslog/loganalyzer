@@ -63,8 +63,8 @@ if (
 {
 	// Setup static values
 	define('MAX_STEPS', 6);
-	$content['web_theme'] = "default";
-	$content['user_theme'] = "default";
+	$content['web_theme'] = "modern";
+	$content['user_theme'] = "modern";
 }
 else
 	DieWithErrorMsg( $content['LN_CONVERT_ERRORINSTALLED'] );

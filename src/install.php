@@ -56,8 +56,8 @@ if ( InitPhpLogConConfigFile(false) )
 
 // Set some static values
 define('MAX_STEPS', 8);
-$content['web_theme'] = "default";
-$content['user_theme'] = "default";
+$content['web_theme'] = "modern";
+$content['user_theme'] = "modern";
 $configsamplefile = $content['BASEPATH'] . "include/config.sample.php"; 
 $content['HeaderDefaultEncoding'] = ENC_ISO_8859_1; // Set Default encoding!  
 

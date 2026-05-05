@@ -302,3 +302,15 @@ td .line1_8 a, td .line1_8 a:link, td .line1_8 a:active, td .line1_8 a:visited,
 td .line2_8 a, td .line2_8 a:link, td .line2_8 a:active, td .line2_8 a:visited {
 	color: #000000;
 }
+
+/* Icon images formerly used deprecated HTML align="left" */
+button[id^="button_menu"] img,
+ul#menu_help a img {
+	vertical-align: middle;
+}
+a.topmenu1_link > img {
+	vertical-align: middle;
+}
+form#searchform button img {
+	vertical-align: middle;
+}

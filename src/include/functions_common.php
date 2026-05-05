@@ -70,7 +70,7 @@ $LANG_EN = "en";	// Used for fallback
 $LANG = "en";		// Default language
 
 // Default Template vars
-$content['BUILDNUMBER'] = "5.0.1";
+$content['BUILDNUMBER'] = "5.0.2";
 $content['UPDATEURL'] = "http://loganalyzer.adiscon.com/files/version.txt";
 $content['TITLE'] = "Adiscon LogAnalyzer :: Release " . $content['BUILDNUMBER'];	// Default page title 
 $content['BASEPATH'] = $gl_root_path;
@@ -1166,19 +1166,19 @@ function DieWithErrorMsg( $szerrmsg )
 			"<td class=\"PriorityError\" align=\"center\" colspan=\"2\">" . 
 			"<H3>Critical Error occured</H3>" . 
 			"</td></tr>" . 
-			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" . 
-			$szerrmsg . 
-			"<br><br></td></tr></table>");
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" .
+			"<td class=\"tableBackground\" align=\"left\">" .
+			$szerrmsg .
+			"</td></tr></table>");
 		
 		// Print Detail error's if available
 		if ( isset($content['detailederror']) )
 		{
-			print ("<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\"><tr>". 
-			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Additional Errordetails:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" . 
-			$content['detailederror'] . 
-			"<br><br></td></tr></table>");
+			print ("<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\">" .
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Additional Errordetails:</td>" .
+			"<td class=\"tableBackground\" align=\"left\">" .
+			$content['detailederror'] .
+			"</td></tr></table>");
 		}
 
 		// End HTML Body
@@ -1210,18 +1210,18 @@ function DieWithFriendlyErrorMsg( $szerrmsg, $szLink = "", $szLinkLable = "" )
 			"<td class=\"PriorityWarning\" align=\"center\" colspan=\"2\">" . 
 			"<H3>Error occured</H3>" . 
 			"</td></tr>" . 
-			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Error:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" .
-			$szerrmsg . 
-			"<br><br></td></tr>"; 
+			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Error:</td>" .
+			"<td class=\"tableBackground\" align=\"left\">" .
+			$szerrmsg .
+			"</td></tr>";
 		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['detailederror']) && strlen($content['detailederror']) > 0) {
-			echo "<tr><td class=\"cellmenu1_naked\" align=\"left\">Details:</td>" . 
-			"<td class=\"tableBackground\" align=\"left\"><br>" .
+			echo "<tr><td class=\"cellmenu1_naked\" align=\"left\">Details:</td>" .
+			"<td class=\"tableBackground\" align=\"left\">" .
 			$content['detailederror'] . 
-			"<br><br></td></tr>"; 
+			"</td></tr>";
 		}
 		if ( strlen($szLink) > 0 && strlen($szLinkLable) > 0 )
-			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"$gl_root_path$szLink\" target=\"\">$szLinkLable</a></tr></td>";
+			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"$gl_root_path$szLink\" target=\"\">$szLinkLable</a></td></tr>";
 		echo 
 			"</table>" . 
 			"</body></html>"; 

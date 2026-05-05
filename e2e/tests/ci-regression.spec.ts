@@ -183,3 +183,49 @@ test.describe('CI regression (admin + log views)', () => {
     await page.keyboard.press('Escape');
   });
 });
+
+test.describe('Modern theme visual review', () => {
+  async function switchToModernTheme(page: Page): Promise<void> {
+    const res = await page.goto('/userchange.php?op=changestyle&stylename=modern');
+    expect(res?.ok()).toBeTruthy();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('link[href*="themes/modern/"]')).toHaveCount(2, { timeout: 30_000 });
+  }
+
+  test('screenshots: index, admin, search, details dialog with modern theme', async ({ page }) => {
+    await loginAsAdmin(page);
+    await switchToModernTheme(page);
+
+    await gotoIndexGrid(page);
+    await page.screenshot({ path: path.join(ciVisual, 'modern-01-index-grid.png'), fullPage: true });
+
+    const detailLinkGrid = page.locator('a[id^="dialog-link_"]').first();
+    await expect(detailLinkGrid).toBeVisible({ timeout: 30_000 });
+    await detailLinkGrid.click();
+    const detailsDlg = page.getByRole('dialog', { name: /Details for/i });
+    await expect(detailsDlg).toBeVisible({ timeout: 20_000 });
+    await expect(detailsDlg.locator('#EventItemDetails')).toBeVisible({ timeout: 25_000 });
+    await detailsDlg.screenshot({ path: path.join(ciVisual, 'modern-05-details-dialog.png') });
+    await detailsDlg.getByRole('button', { name: 'Ok' }).click();
+    await expect(detailsDlg).toBeHidden({ timeout: 10_000 });
+
+    const resAdmin = await page.goto('/admin/index.php');
+    expect(resAdmin?.ok()).toBeTruthy();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('body')).not.toContainText(/You need to be logged in/i);
+    await expect(page.locator('link[href*="themes/modern/"]')).toHaveCount(2);
+    await page.screenshot({ path: path.join(ciVisual, 'modern-02-admin-index.png'), fullPage: true });
+
+    const resSearch = await page.goto('/search.php');
+    expect(resSearch?.ok()).toBeTruthy();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('link[href*="themes/modern/"]')).toHaveCount(2);
+    await page.screenshot({ path: path.join(ciVisual, 'modern-03-advanced-search.png'), fullPage: true });
+
+    const resReports = await page.goto('/reports.php');
+    expect(resReports?.ok()).toBeTruthy();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('body')).not.toContainText(/Fatal error|Parse error/i);
+    await page.screenshot({ path: path.join(ciVisual, 'modern-04-reports.png'), fullPage: true });
+  });
+});
