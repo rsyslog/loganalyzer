@@ -91,8 +91,8 @@ $CFG['ViewMessageCharacterLimit'] = 80;		// Default character limit for the mess
 $CFG['ViewStringCharacterLimit'] = 30;		// Default character limit for all other string type fields before they get trunscated! 0 means NO trunscation.
 $CFG['ViewEntriesPerPage'] = 50;			// Default number of syslog entries shown per page
 $CFG['ViewEnableDetailPopups'] = 1;			// If enabled, you will see additional Details for each syslog message on mouse over. 
-$CFG['ViewDefaultTheme'] = "default";		// This sets the default theme the user is going to see when he opens LogAnalyzer the first time. 
-											// Currently only "default" and "dark" are available. 
+$CFG['ViewDefaultTheme'] = "modern";		// Default theme for new installs (from this sample / generated config.php). Existing deployments keep the value already in config.php and/or the user database.
+											// Available keys match directories under themes/ (e.g. default, dark, highcontrast, modern). 
 $CFG['ViewDefaultLanguage'] = "en";			// Sets the default display language
 $CFG['ViewEnableAutoReloadSeconds'] = 0;	// If "ViewEnableAutoReloadSeconds" is set to anything higher the 0 (which means disabled), this means auto reload is enabled by default. 
 

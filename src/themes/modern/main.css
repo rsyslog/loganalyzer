@@ -1,0 +1,641 @@
+/* Modern theme — contemporary defaults (design tokens, system font stack, focus visibility) */
+
+:root {
+	--modern-font: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	--modern-text: #111827;
+	--modern-text-muted: #4b5563;
+	--modern-link: #2563eb;
+	--modern-link-hover: #1d4ed8;
+	--modern-surface: #ffffff;
+	--modern-surface-muted: #f8fafc;
+	--modern-surface-elevated: #f1f5f9;
+	--modern-border: #e2e8f0;
+	--modern-border-strong: #cbd5e1;
+	--modern-header-bg: #334155;
+	--modern-header-text: #f8fafc;
+	--modern-header-border: #1e293b;
+	--modern-subheader-bg: #e2e8f0;
+	--modern-subheader-text: #1e293b;
+	--modern-radius: 8px;
+	--modern-radius-sm: 6px;
+	--modern-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+	--modern-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+	--modern-focus: 0 0 0 2px var(--modern-surface), 0 0 0 4px rgba(37, 99, 235, 0.45);
+	/* Slightly compact controls (touch-friendly but not oversized on desktop) */
+	--modern-control-min-h: 1.875rem;
+	--modern-pad-y-title: 0.35rem;
+	--modern-pad-y-cell: 0.22rem;
+}
+
+/* Generell Tag Classes */
+body {
+	color: var(--modern-text);
+	background-color: var(--modern-surface-muted);
+	font-family: var(--modern-font);
+	line-height: 1.45;
+	-webkit-font-smoothing: antialiased;
+}
+
+td {
+	color: inherit;
+}
+
+/* Default Link Classes */
+a:link,
+a:active,
+a:visited,
+a.postlink {
+	font-weight: 600;
+	text-decoration: none;
+	background-color: transparent;
+	color: var(--modern-link);
+}
+
+a:hover {
+	font-weight: 600;
+	color: var(--modern-link-hover);
+}
+
+/*---*/
+
+/* Gridline Link Classes */
+.gridline {
+	color: #ffffff;
+}
+
+/* Context Link Classes */
+a.contextlink:link,
+a.contextlink:active,
+a.contextlink:visited,
+a.contextlink {
+	font-weight: 600;
+	background-color: transparent;
+	color: #dc2626;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+a.contextlink:hover {
+	font-weight: 600;
+	color: #991b1b;
+	text-decoration: none;
+}
+
+/*---*/
+
+img {
+	border: 0px;
+}
+
+/* Title Classes */
+.title {
+	font-weight: 700;
+	font-size: 1rem;
+	letter-spacing: 0.02em;
+	padding: var(--modern-pad-y-title) 0.65rem;
+	background-color: var(--modern-header-bg);
+	background-image: none;
+	color: var(--modern-header-text);
+	border: 1px solid var(--modern-header-border);
+	box-shadow: var(--modern-shadow-sm);
+	text-align: center;
+	vertical-align: middle;
+}
+
+a.title,
+a.title:active,
+a.title:visited {
+	font-weight: 600;
+	color: #fef08a;
+	text-decoration: none;
+}
+
+a.title:hover {
+	color: #fef3c7;
+	text-decoration: none;
+}
+
+.titleSecond {
+	font-weight: 600;
+	font-size: 0.92rem;
+	padding: 0.38rem 0.55rem;
+	background-color: var(--modern-subheader-bg);
+	background-image: none;
+	color: var(--modern-subheader-text);
+	border: 1px solid var(--modern-border-strong);
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* Default Font Classes */
+font {
+}
+
+/* Table / Border Classes */
+.table_with_border {
+	background-color: var(--modern-surface);
+	border: 1px solid var(--modern-border);
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.table_with_border_second {
+	background-color: var(--modern-surface-elevated);
+	border: 1px solid var(--modern-border);
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.table_with_border_light {
+	background-color: var(--modern-surface-elevated);
+	border: 1px solid var(--modern-border);
+}
+
+.with_border {
+	text-indent: 3px;
+	background-color: var(--modern-surface-elevated);
+	border: 1px solid var(--modern-border);
+}
+
+.with_border_alternate {
+	text-indent: 3px;
+	background-color: var(--modern-surface-elevated);
+	border: 1px solid var(--modern-border);
+}
+
+.mainheader {
+	border: 1px solid var(--modern-border-strong);
+	background-color: var(--modern-surface);
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.mainfooter {
+	background-color: var(--modern-surface-elevated);
+	border-top: 1px solid var(--modern-border);
+	border-bottom: 1px solid var(--modern-border-strong);
+}
+
+.imageborder {
+	border: 1px solid var(--modern-border-strong);
+}
+
+/* Style related Cells for listening */
+.ui-menu-item a,
+.ui-menu-item a:link,
+.ui-menu-item a:active,
+.ui-menu-item a:visited {
+	color: var(--modern-text) !important;
+}
+
+.ui-menu-item a:hover {
+	color: var(--modern-text) !important;
+}
+
+.line0 {
+	color: var(--modern-text);
+	background-color: #e5e7eb;
+}
+
+.line0:hover {
+	background-color: #f3f4f6;
+}
+
+.line1 {
+	color: var(--modern-text);
+	background-color: #f3f4f6;
+}
+
+.line1:hover {
+	background-color: #f9fafb;
+}
+
+.line2 {
+	color: var(--modern-text);
+	background-color: #f9fafb;
+}
+
+.line2:hover {
+	background-color: #ffffff;
+}
+
+.tableBackground {
+	color: var(--modern-text);
+	background-color: #f9fafb;
+}
+
+.lineColouredWhite,
+.lineColouredWhite:hover,
+a.lineColouredWhite {
+	color: #ffffff;
+}
+
+.lineColouredBlack,
+.lineColouredBlack:hover,
+a.lineColouredBlack {
+	color: #000000;
+}
+
+/* TOP Menu Classes */
+.topmenu2 {
+	border: 1px solid var(--modern-header-border);
+	padding: 2px 6px;
+	vertical-align: middle;
+	color: #fef9c3;
+	background-color: #475569;
+	border-radius: var(--modern-radius-sm);
+}
+
+.topmenu2:hover {
+	color: #ffffff;
+	border-color: #334155;
+	background-color: #334155;
+	text-decoration: none;
+}
+
+.topmenu2_link,
+A.topmenu2_link {
+	color: #fef08a;
+	font-weight: 600;
+}
+
+.topmenu2_link:hover,
+a.topmenu2_link:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.topmenu1_link,
+a.topmenu1_link,
+a.topmenu1_link:visited,
+.topmenu2_link,
+a.topmenu2_link,
+a.topmenu2_link:visited,
+.topmenu3_link,
+a.topmenu3_link,
+a.topmenu3_link:visited {
+	vertical-align: middle;
+	color: #fef08a;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.topmenu1_link:hover,
+.topmenu2_link:hover,
+.topmenu3_link:hover {
+	vertical-align: middle;
+	color: #ffffff;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+/* Cell Columns */
+.cellmenu1 {
+	border: 1px solid var(--modern-header-border);
+	text-indent: 0px;
+	font-weight: 600;
+	font-size: 0.88rem;
+	background-color: var(--modern-header-bg);
+	background-image: none;
+	color: var(--modern-header-text);
+	padding: var(--modern-pad-y-cell) 0.45rem;
+}
+
+.cellmenu1_naked {
+	border: 1px solid var(--modern-header-border);
+	background-color: #3f4f63;
+	text-indent: 0px;
+	font-weight: 600;
+	color: var(--modern-header-text);
+	padding: var(--modern-pad-y-cell) 0.45rem;
+}
+
+.cellmenu1:hover,
+.cellmenu1_naked:hover {
+	color: #fef08a;
+	text-decoration: none;
+}
+
+A.cellmenu1_link {
+	color: #fde047;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	font-weight: 600;
+}
+
+A.cellmenu1_link:hover {
+	color: #fef9c3;
+	text-decoration: none;
+}
+
+.cellmenu2 {
+	border: 1px solid var(--modern-border-strong);
+	text-indent: 0px;
+	font-weight: 600;
+	font-size: 0.85rem;
+	background-color: #e2e8f0;
+	background-image: none;
+	color: var(--modern-subheader-text);
+	padding: var(--modern-pad-y-cell) 6px var(--modern-pad-y-cell) 6px;
+}
+
+.cellmenu2_naked {
+	text-indent: 0px;
+	font-weight: 600;
+	color: var(--modern-subheader-text);
+	border: 1px solid var(--modern-border-strong);
+	background-color: #e8eef5;
+	padding: var(--modern-pad-y-cell) 0.45rem;
+}
+
+.cellmenu2:hover,
+.cellmenu2_naked:hover {
+	color: #b91c1c;
+	text-decoration: none;
+}
+
+/* Usefull Text Classes */
+.ErrorMsg {
+	font-weight: 600;
+	color: #dc2626;
+}
+
+.PriorityEmergency {
+	color: #ffffff;
+	background-color: #ef4444;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityAlert {
+	color: #ffffff;
+	background-color: #c026d3;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityCrit {
+	color: #ffffff;
+	background-color: #ea580c;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityError {
+	color: #ffffff;
+	background-color: #dc2626;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityWarning {
+	color: #422006;
+	background-color: #fbbf24;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityNotice {
+	color: #ffffff;
+	background-color: #22c55e;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityInfo {
+	color: #0c4a6e;
+	background-color: #bae6fd;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+.PriorityDebug {
+	color: #ffffff;
+	background-color: #4f46e5;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--modern-shadow-sm);
+}
+
+/* Form elements */
+select,
+input,
+button,
+textarea {
+	background-color: var(--modern-surface);
+	color: var(--modern-text);
+	font-weight: 500;
+	font-family: inherit;
+	border: 1px solid var(--modern-border-strong);
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Multi-select / sized listboxes: match white fields (avoid default grey panel) */
+select[multiple],
+select[size]:not([size="1"]):not([size="0"]) {
+	background-color: var(--modern-surface);
+	color: var(--modern-text);
+}
+
+/*
+ * Flat controls: strip OS-level gradients/shadows (Win/Edge/Chrome) so surfaces
+ * stay aligned with theme tokens and jQuery UI .ui-button matches plain inputs.
+ */
+button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+.ui-button {
+	-webkit-appearance: none;
+	appearance: none;
+	background-image: none;
+	box-shadow: none;
+}
+
+.ui-button:active,
+button:active {
+	box-shadow: none;
+}
+
+#menu button.ui-button,
+form#searchform button.ui-button,
+.ui-widget-content > .ui-button {
+	box-shadow: none;
+}
+
+/* Predefined-search dropdown: icon-only button — flex-center (abs + top:50% drifts with line-height/font metrics) */
+form#searchform #openmenu_searches.ui-button-icon-only {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	padding: 0;
+	min-height: 0;
+	width: 2em;
+	height: 2em;
+	box-sizing: border-box;
+	vertical-align: middle;
+}
+
+form#searchform #openmenu_searches.ui-button-icon-only .ui-icon {
+	position: static;
+	margin: 0;
+	top: auto;
+	left: auto;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input:not([type]) {
+	min-height: var(--modern-control-min-h);
+}
+
+.SearchFormControl {
+	margin: 2px;
+	background-color: var(--modern-surface);
+	color: var(--modern-text);
+	font-weight: 500;
+	font-family: inherit;
+	border: 1px solid var(--modern-border-strong);
+	min-height: var(--modern-control-min-h);
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.SearchFormTextbox {
+	width: 100%;
+	margin: 2px;
+	background-color: var(--modern-surface);
+	color: var(--modern-text);
+	font-weight: 500;
+	font-family: inherit;
+	border: 1px solid var(--modern-border-strong);
+	min-height: var(--modern-control-min-h);
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.highlighted {
+	font-weight: 600;
+	background-color: #fef2f2;
+	color: #b91c1c;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	background: var(--modern-header-bg);
+	border: 1px solid var(--modern-header-border);
+	border-bottom: 1px solid #1e293b;
+	color: var(--modern-header-text);
+	font-weight: 600;
+	border-radius: var(--modern-radius-sm) var(--modern-radius-sm) 0 0;
+}
+
+.ui-dialog .ui-dialog-title {
+	color: var(--modern-header-text);
+	font-weight: 600;
+	font-size: 0.9375rem;
+}
+
+/* -------------------------------------------------------------------------
+   Details modal (jQuery UI dialog): readability for popup detail view
+   Loaded markup lives in #dialog; titlebar already shows the caption.
+   ------------------------------------------------------------------------- */
+.ui-dialog .ui-dialog-content {
+	font-family: var(--modern-font);
+	padding: 0.65rem 0.85rem !important;
+	box-sizing: border-box;
+}
+
+.ui-dialog #dialog > table.with_border {
+	margin-bottom: 0.4rem;
+}
+
+/* Drop duplicate “Details for…” bar inside the panel (titlebar is enough) */
+.ui-dialog #dialog > table.with_border > tbody > tr:first-child > td.title,
+.ui-dialog #dialog > table.with_border > tr:first-child > td.title {
+	display: none;
+}
+
+/* Field table: label column = calm sidebar strip, not full header chrome */
+.ui-dialog #dialog #EventItemDetails td {
+	vertical-align: middle !important;
+	padding: 0.28rem 0.55rem !important;
+}
+
+.ui-dialog #dialog #EventItemDetails td.cellmenu1,
+.ui-dialog #dialog #EventItemDetails td.cellmenu1_naked {
+	background: #f1f5f9 !important;
+	background-image: none !important;
+	color: #1e293b !important;
+	border: 1px solid #e2e8f0 !important;
+	font-weight: 600;
+	font-size: 0.875rem;
+	letter-spacing: 0.01em;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	padding: 0.4rem 0.85rem !important;
+	margin-top: 0 !important;
+	border-top: 1px solid var(--modern-border) !important;
+	clear: both;
+	overflow: hidden;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
+	min-height: var(--modern-control-min-h);
+	padding: 0.3rem 0.95rem !important;
+	font-weight: 600 !important;
+}
+
+/* Focus visibility (keyboard / accessibility) */
+a:focus-visible {
+	outline: none;
+	box-shadow: var(--modern-focus);
+	border-radius: 2px;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+	outline: none;
+	border-color: var(--modern-link);
+	box-shadow: var(--modern-focus);
+}
+
+/* Corner radius */
+.title,
+.with_border,
+.with_border_alternate,
+.mainheader,
+.imageborder,
+.topmenu1,
+.topmenu2,
+.topmenu2end,
+.topmenu3,
+.cellmenu1,
+.cellmenu1_naked,
+.cellmenu2,
+.cellmenu2_naked,
+.SearchFormControl,
+.SearchFormTextbox,
+.table_with_border,
+.table_with_border_second,
+.table_with_border_light,
+select,
+input,
+button,
+textarea {
+	border-radius: var(--modern-radius-sm);
+}

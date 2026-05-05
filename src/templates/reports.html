@@ -7,7 +7,7 @@
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
 		<p align="left">{ERROR_MSG}</p>
 		<p>
-			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
+			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank" rel="noopener noreferrer">
 			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
 			{LN_GEN_MOREINFORMATION}
 			</a>
@@ -31,10 +31,10 @@
 
 	<table border="0" cellpadding="2" cellspacing="0" width="100%" class="with_border_alternate">
 	<tr>
-		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img align="left" src="{MENU_DOCUMENTLIST}" title="{LN_REPORTS_ADMIN}" width="16" height="16" vspace="0">{LN_REPORTS_ADMIN}</a></td>
-		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank"><img align="left" src="{MENU_NETDOWNLOAD}" title="{LN_REPORTMENU_ONLINELIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
+		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php" target="_top"><img src="{MENU_DOCUMENTLIST}" title="{LN_REPORTS_ADMIN}" width="16" height="16" vspace="0">{LN_REPORTS_ADMIN}</a></td>
+		<td class="topmenu2" nowrap align="center" width="25%"><a class="topmenu1_link" href="http://loganalyzer.adiscon.com/plugins/reports" target="_blank" rel="noopener noreferrer"><img src="{MENU_NETDOWNLOAD}" title="{LN_REPORTMENU_ONLINELIST}" width="16" height="16" vspace="0">{LN_REPORTMENU_ONLINELIST}</a></td>
 		<!-- IF ISADDSAVEDREPORT="true" -->
-		<td class="topmenu2" nowrap align="center" width="50%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img align="left" src="{MENU_VIEW}" title="{REPORTS_DETAILSFOR}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
+		<td class="topmenu2" nowrap align="center" width="50%"><a class="topmenu1_link" href="{BASEPATH}admin/reports.php?op=details&id={ReportID}" target="_top"><img src="{MENU_VIEW}" title="{REPORTS_DETAILSFOR}" width="16" height="16" vspace="0">{REPORTS_DETAILSFOR}</a></td>
 		<!-- ENDIF ISADDSAVEDREPORT="true" -->
 		<!-- IF ISADDSAVEDREPORT!="true" -->
 		<td class="topmenu2" nowrap align="center" width="50%">&nbsp;</td>
@@ -60,7 +60,7 @@
 			<td align="center" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
 			<td align="left" width="100%" class="line1">
 				<!-- IF ReportHelpEnabled="true" -->
-				&nbsp;&nbsp;<a href="{ReportHelpArticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}">&nbsp;{LN_REPORTS_HELP}</a>
+				&nbsp;&nbsp;<a href="{ReportHelpArticle}" target="_blank" rel="noopener noreferrer"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}">&nbsp;{LN_REPORTS_HELP}</a>
 				<!-- ENDIF ReportHelpEnabled="true" -->
 				&nbsp;&nbsp;<a href="{BASEPATH}admin/reports.php?op=details&id={ID}"><img src="{MENU_INFORMATION}" width="16" title="{LN_REPORTS_INFO}">&nbsp;{LN_REPORTS_INFO}</a>
 			</td>
@@ -82,7 +82,7 @@
 				<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle}</a>
 				</td>
 				<td align="center" class="{srcssclass}">
-					&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_PLAY_GREEN}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+					&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ID}&savedreportid={SavedReportID}" target="_blank" rel="noopener noreferrer"><img src="{MENU_PLAY_GREEN}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
 				</td>
 			</tr>
 			<!-- END SAVEDREPORTS -->
@@ -116,19 +116,19 @@
 			<b>{reportname}</b>
 			<!-- ENDIF reportdownloadlink="-" -->
 			<!-- IF reportdownloadlink!="-" -->
-			<a href="{reportdownloadlink}" target="_blank">{reportname}</a>
+			<a href="{reportdownloadlink}" target="_blank" rel="noopener noreferrer">{reportname}</a>
 			<!-- ENDIF reportdownloadlink!="-" -->
 			</td>
 			<td align="left" class="{cssclass}" valign="top">{reportdescription}</td>
 			<td align="center" class="{cssclass}">
 				<!-- IF reportdownloadlink!="-" -->
-				<a href="{reportdownloadlink}" target="_blank"><img src="{MENU_NETDOWNLOAD}" width="16" title="{LN_REPORTS_DOWNLOAD}"></a>&nbsp;&nbsp;
+				<a href="{reportdownloadlink}" target="_blank" rel="noopener noreferrer"><img src="{MENU_NETDOWNLOAD}" width="16" title="{LN_REPORTS_DOWNLOAD}"></a>&nbsp;&nbsp;
 				<!-- ENDIF reportdownloadlink!="-" -->
 				<!-- IF reporthelparticle!="-" -->
-				<a href="{reporthelparticle}" target="_blank"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
+				<a href="{reporthelparticle}" target="_blank" rel="noopener noreferrer"><img src="{MENU_HELP}" width="16" title="{LN_REPORTS_HELP}"></a>&nbsp;&nbsp;
 				<!-- ENDIF reporthelparticle!="-" -->
 				<!-- IF reportsamplelink!="-" -->
-				<a href="{reportsamplelink}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_SAMPLELINK}"></a>&nbsp;&nbsp;
+				<a href="{reportsamplelink}" target="_blank" rel="noopener noreferrer"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_SAMPLELINK}"></a>&nbsp;&nbsp;
 				<!-- ENDIF reportsamplelink!="-" -->
 			</td>
 		</tr>
@@ -171,7 +171,7 @@
 		<!-- IF EnableHelpArticle="true" -->
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_REPORTS_HELP}</b></td>
-			<td align="center" class="line2" colspan="2"><a href="{ReportHelpArticle}" target="_blank">{LN_REPORTS_HELP_CLICK}</a></td>
+			<td align="center" class="line2" colspan="2"><a href="{ReportHelpArticle}" target="_blank" rel="noopener noreferrer">{LN_REPORTS_HELP_CLICK}</a></td>
 		</tr>
 		<!-- ENDIF EnableHelpArticle="true" -->
 		<!-- IF EnableNeedsInit="true" -->
@@ -200,7 +200,7 @@
 			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
 			</td>
 			<td align="center" class="{srcssclass}">
-				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
+				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank" rel="noopener noreferrer"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
 				&nbsp;<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}"><img src="{MENU_EDIT}" width="16" title="{LN_REPORTS_EDITSAVEDREPORT}"></a>
 				&nbsp;<a href="{BASEPATH}admin/reports.php?op=removesavedreport&savedreportid={SavedReportID}"><img src="{MENU_DELETE}" width="16" title="{LN_REPORTS_REMOVESAVEDREPORT}"></a>
 			</td>

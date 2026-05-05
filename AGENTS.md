@@ -41,7 +41,7 @@ docker compose --project-directory . -f docker/docker-compose.dev.yml up --build
 
 - `sh docker/rebuild-e2e.sh` or `docker\rebuild-e2e.bat`
 
-Operational details mirror the handbook: **`http://localhost:8080/`**, **fresh admin** defaults to **`LOGANALYZER_ADMIN_*`** from Compose or `.env` (compose defaults **`admin`** / **`loganalyzer`** if unset).
+Operational details mirror the handbook: **`http://localhost:8080/`**, **fresh admin** defaults to **`LOGANALYZER_ADMIN_*`** from Compose or `.env` (compose defaults **`admin`** / **`loganalyzer`** if unset). **New installs** also pick up **`ViewDefaultTheme = modern`** from [`src/include/config.sample.php`](src/include/config.sample.php) when `config.php` is generated (web installer or `docker/write-config.php`); **existing** `config.php` / DB rows are not migrated.
 
 Developer stack exposes **MySQL** on **`localhost:3306`**.
 

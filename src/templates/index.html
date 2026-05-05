@@ -1,7 +1,7 @@
 <!-- INCLUDE include_header.html -->
 
 <div id="dialog" title="Details"><br/></div>
-<table border="0" cellspacing="0" cellpadding="2" align="center">
+<table border="0" cellspacing="0" cellpadding="2" align="center" id="SearchPanel">
 <form action="" method="get" id="searchform" name="searchform">
 <!-- BEGIN HIDDENVARS_SOURCE -->
 <input type="hidden" name="{varname}" value="{varvalue}">
@@ -11,7 +11,7 @@
 		<b>{LN_SEARCH_FILTER}</b>
 	</td>
 <!-- IF EnablePredefinedSearches="true" -->
-	<td nowrap valign="top" nowrap>
+	<td nowrap valign="middle">
 		<button id="openmenu_searches"><span class="ui-icon ui-icon-circle-triangle-s" title="{LN_GEN_PREDEFINEDSEARCHES}"></span></button>
 		<ul id="menu_searches" style="position:absolute;z-index:99;display:none;">
 			<!-- BEGIN Search -->
@@ -21,16 +21,15 @@
 		<script> CreateMenuFunction( "#openmenu_searches", "#menu_searches", false );</script>
 	</td>
 <!-- ENDIF EnablePredefinedSearches="true" -->
-	<td align="center" nowrap valign="top">
-	<td nowrap align="center" nowrap valign="top">
+	<td nowrap align="center" valign="top">
 		<input maxlength="2048" name="filter" size="80" title="Search" value="{searchstr_htmlform}" class="ui-widget-content SearchFormTextbox" onkeypress="MoveToButtonOnKeypress('buttonsearch', event);">
 		</br>
-		<button id="buttonsearch"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-search" title="{LN_SEARCH}">&nbsp;{LN_SEARCH}</button>
+		<button id="buttonsearch"><img src="{IMG_SPACER}" class="ui-icon ui-icon-search" title="{LN_SEARCH}">&nbsp;{LN_SEARCH}</button>
 <!-- IF enabledoraclesearchstr="true" -->
-		<button id="buttonmoreinfo"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
+		<button id="buttonmoreinfo"><img src="{IMG_SPACER}" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
 <!-- ENDIF enabledoraclesearchstr="true" -->
-		<button id="buttonlucky"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</span></button>
-		<button id="buttonreset"><img src="{IMG_SPACER}" align="left" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</span></button>
+		<button id="buttonlucky"><img src="{IMG_SPACER}" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</button>
+		<button id="buttonreset"><img src="{IMG_SPACER}" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</button>
 		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
 		<script> 
 			CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
@@ -66,7 +65,7 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="5">
+	<td colspan="4">
 		<span id="HightLightArea" name="HightLightArea" class="HiddenContent">
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" align="center" class="with_border">
 		<tr>
@@ -106,7 +105,7 @@
 </script>
 <!-- ENDIF EXPAND_HIGHLIGHT="true" -->
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" class="with_border" id="ProjectPanel">
 <tr>
 	<td class="title" width="100%" nowrap><B>Recent syslog messages</B></td>
 <!-- IF EXPORT_ENABLED="true" -->
@@ -140,7 +139,7 @@
 </tr>
 </table>
 
-<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border">
+<table width="100%" align="center" border="0" cellpadding="1" cellspacing="1" class="with_border" id="PagerTop">
 <tr>
 	<td nowrap width="100%" class="tableBackground" align="left">
 <!-- IF main_currentpagenumber_found="true" -->
