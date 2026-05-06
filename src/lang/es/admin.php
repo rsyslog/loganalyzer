@@ -367,6 +367,7 @@ $content['LN_FIELDS_ERROR_FIELDCAPTIONEMPTY'] = "El Título del Campo estaba vac
 $content['LN_FIELDS_ERROR_FIELDIDEMPTY'] = "La ID del Campo estaba vacía. ";
 $content['LN_FIELDS_ERROR_SEARCHFIELDEMPTY'] = "El Filtro de Búsqueda estaba vacío. ";
 $content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "El ID Interno estaba vacío. ";
+$content['LN_FIELDS_ERROR_FIELDIDEXISTS'] = "Ya existe un campo con el ID de campo '%1'. Use la función de edición para modificar un campo existente.";
 $content['LN_FIELDS_HASBEENEDIT'] = "La configuración para el Campo '%1' se ha editado correctamente.";
 $content['LN_FIELDS_HASBEENADDED'] = "La configuración para el Campo '%1' se ha agregado con éxito.";
 $content['LN_FIELDS_'] = "";

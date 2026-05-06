@@ -370,6 +370,7 @@ $content['LN_FIELDS_ERROR_FIELDCAPTIONEMPTY'] = "The field caption was empty. ";
 $content['LN_FIELDS_ERROR_FIELDIDEMPTY'] = "The field id was empty. ";
 $content['LN_FIELDS_ERROR_SEARCHFIELDEMPTY'] = "The searchfilter was empty. ";
 $content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "The internal FieldID was empty. ";
+$content['LN_FIELDS_ERROR_FIELDIDEXISTS'] = "A field with the FieldID '%1' already exists. Use the edit function to modify an existing field.";
 $content['LN_FIELDS_HASBEENEDIT'] = "The configuration for the field '%1' has been successfully edited.";
 $content['LN_FIELDS_HASBEENADDED'] = "The configuration for the field '%1' has been successfully added.";
 $content['LN_FIELDS_'] = "";
