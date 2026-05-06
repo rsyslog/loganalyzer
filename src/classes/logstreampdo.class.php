@@ -1479,6 +1479,14 @@ class LogStreamPDO extends LogStream {
 			$szLimitSqlAfter = ""; 
 		}
 
+		// Create SQL Where Clause!
+		if ( $this->_SQLwhereClause == "" ) 
+		{
+			$res = $this->CreateSQLWhereClause();
+			if ( $res != SUCCESS ) 
+				return $res;
+		}
+
 		// Create SQL String now!
 		$szSql =	"SELECT " . 
 					$szLimitSqlBefore . 
