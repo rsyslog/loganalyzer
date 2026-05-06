@@ -355,6 +355,7 @@ $content['LN_FIELDS_ERROR_FIELDCAPTIONEMPTY'] = "Die Inhalt des Feldes war leer.
 $content['LN_FIELDS_ERROR_FIELDIDEMPTY'] = "Die ID des Feldes war leer. ";
 $content['LN_FIELDS_ERROR_SEARCHFIELDEMPTY'] = "Der Suchfilter war leer. ";
 $content['LN_FIELDS_ERROR_FIELDDEFINEEMPTY'] = "Die interne Feld-ID war leer. ";
+$content['LN_FIELDS_ERROR_FIELDIDEXISTS'] = "Ein Feld mit der Feld-ID '%1' existiert bereits. Verwenden Sie die Bearbeiten-Funktion, um ein vorhandenes Feld zu ändern.";
 $content['LN_FIELDS_HASBEENEDIT'] = "Die Konfiguration des Feldes %1' wurde erfolgreich geÄndert.";
 $content['LN_FIELDS_HASBEENADDED'] = "Die Konfiguration des Feldes '%1' wurde erfolgreich hinzugefügt.";
 $content['LN_FIELDS_'] = "";

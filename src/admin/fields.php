@@ -230,7 +230,14 @@ if ( isset($_POST['op']) )
 		// Everything was alright, go and check if the entry exists!
 		$result = DB_Query("SELECT FieldID FROM " . DB_FIELDS . " WHERE FieldID = '" . $content['FieldID'] . "'");
 		$myrow = DB_GetSingleRow($result, true);
-		if ( !isset($myrow['FieldID']) )
+
+		if ( $_POST['op'] == "addnewfield" && isset($myrow['FieldID']) )
+		{
+			// Duplicate FieldID submitted via the add-new-field form — reject it.
+			$content['ISERROR'] = true;
+			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_FIELDS_ERROR_FIELDIDEXISTS'], $content['FieldID'] );
+		}
+		else if ( !isset($myrow['FieldID']) )
 		{
 			//TODO: Trunscate NOT USED YET, it is currently set to 30 to avoid error mysql.
 			//		check "parsers.php" when using Truncate
