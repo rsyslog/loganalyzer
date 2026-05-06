@@ -161,7 +161,13 @@ if ( isset($content['ISEDITORNEWDBMP']) && $content['ISEDITORNEWDBMP'] )
 {
 	// If Columns are send using POST we use them, otherwise we try to use from the view itself, if available
 	if ( isset($_POST['Mappings']) )
+	{
 		$AllMappings = $_POST['Mappings'];
+		// Reset SUBMAPPINGS when rebuilding from POST data so that stale DB-loaded
+		// string entries (fields removed in a prior delete subop) do not remain and
+		// cause "Illegal string offset" warnings when iterated as arrays (issue #61).
+		$content['SUBMAPPINGS'] = array();
+	}
 	else if ( isset($content['SUBMAPPINGS']) )
 		$AllMappings = $content['SUBMAPPINGS'];
 
