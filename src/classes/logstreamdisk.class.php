@@ -127,7 +127,8 @@ class LogStreamDisk extends LogStream {
 		$bIsAllowedDir = false; 
 		foreach($content['DiskAllowed'] as $szAllowedDir)
 		{
-			if ( strpos($szFileDirName, $szAllowedDir) !== FALSE ) 
+			$szAllowedDirNorm = rtrim($szAllowedDir, '/') . '/';
+			if ( strpos($szFileDirName, $szAllowedDirNorm) === 0 )
 			{
 				$bIsAllowedDir = true; 
 				break; 
