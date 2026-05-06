@@ -1,70 +1,146 @@
 <?php
 declare(strict_types=1);
 
-namespace LogAnalyzer\Tests\Unit;
+// ---------------------------------------------------------------------------
+// Global-namespace stub for GetAndReplaceLangStr.
+// Verify() calls this helper when a path is denied. We provide a lightweight
+// implementation here so the test does not need to load functions_common.php
+// (which pulls in the entire application stack).
+// ---------------------------------------------------------------------------
+namespace {
+    if (!function_exists('GetAndReplaceLangStr')) {
+        function GetAndReplaceLangStr($strlang, $param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '')
+        {
+            $out = str_replace('%1', (string) $param1, (string) $strlang);
+            if ((string) $param2 !== '') {
+                $out = str_replace('%2', (string) $param2, $out);
+            }
+            if ((string) $param3 !== '') {
+                $out = str_replace('%3', (string) $param3, $out);
+            }
+            if ((string) $param4 !== '') {
+                $out = str_replace('%4', (string) $param4, $out);
+            }
+            if ((string) $param5 !== '') {
+                $out = str_replace('%5', (string) $param5, $out);
+            }
+            return $out;
+        }
+    }
+}
 
-use PHPUnit\Framework\TestCase;
+// ---------------------------------------------------------------------------
+// Test class
+// ---------------------------------------------------------------------------
+namespace LogAnalyzer\Tests\Unit {
 
-/**
- * Tests the path-prefix validation logic used in LogStreamDisk::Verify().
- *
- * The fix ensures that a file's directory must *start with* an allowed prefix,
- * rather than merely *containing* it anywhere in the path (which would allow
- * traversal attacks like /evil/var/log/syslog bypassing a /var/log/ restriction).
- */
-final class LogStreamDiskPathTest extends TestCase
-{
+    use PHPUnit\Framework\TestCase;
+
     /**
-     * Replicates the normalisation and prefix check from LogStreamDisk::Verify().
+     * Tests the disk-path allow-list validation in LogStreamDisk::Verify().
      *
-     * @param string[] $allowedDirs
+     * Strategy:
+     *  - A path whose directory is NOT in DiskAllowed  → ERROR_PATH_NOT_ALLOWED
+     *  - A path whose directory IS     in DiskAllowed but the file does not
+     *    exist on disk                                 → ERROR_FILE_NOT_FOUND
+     *  - A path whose directory IS     in DiskAllowed and the file exists     → SUCCESS
+     *
+     * This exercises the real LogStreamDisk::Verify() method rather than a
+     * duplicate of its logic.
      */
-    private function isPathAllowed(string $filePath, array $allowedDirs): bool
+    final class LogStreamDiskPathTest extends TestCase
     {
-        $fileDirName = dirname($filePath) . '/';
-        foreach ($allowedDirs as $allowedDir) {
-            $allowedDirNorm = rtrim($allowedDir, '/') . '/';
-            if (strpos($fileDirName, $allowedDirNorm) === 0) {
-                return true;
+        /** Temporary file created once for the "file exists" test. */
+        private static string $tmpFile = '';
+
+        public static function setUpBeforeClass(): void
+        {
+            global $gl_root_path;
+            require_once $gl_root_path . 'classes/logstream.class.php';
+            require_once $gl_root_path . 'classes/logstreamdisk.class.php';
+
+            // Create a real, readable temporary file.
+            self::$tmpFile = (string) tempnam(sys_get_temp_dir(), 'la_test_');
+        }
+
+        public static function tearDownAfterClass(): void
+        {
+            if (self::$tmpFile !== '' && file_exists(self::$tmpFile)) {
+                unlink(self::$tmpFile);
             }
         }
-        return false;
-    }
 
-    public function testFileInAllowedDirectoryIsAllowed(): void
-    {
-        self::assertTrue($this->isPathAllowed('/var/log/syslog', ['/var/log/']));
-    }
+        /**
+         * Set DiskAllowed, point a LogStreamDisk at $fileName, call Verify().
+         *
+         * @param string[] $allowedDirs
+         */
+        private function verify(string $fileName, array $allowedDirs): int
+        {
+            global $content;
+            $content['DiskAllowed'] = $allowedDirs;
+            $content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'] = '';
 
-    public function testFileInSecondOfMultipleAllowedDirectoriesIsAllowed(): void
-    {
-        self::assertTrue(
-            $this->isPathAllowed('/data/logs/app.log', ['/var/log/', '/data/logs/'])
-        );
-    }
+            $cfg = new \stdClass();
+            $cfg->FileName = $fileName;
+            return (new \LogStreamDisk($cfg))->Verify();
+        }
 
-    public function testFileOutsideAllAllowedDirectoriesIsDenied(): void
-    {
-        self::assertFalse(
-            $this->isPathAllowed('/tmp/evil.log', ['/var/log/', '/data/logs/'])
-        );
-    }
+        public function testFileInAllowedDirectoryPassesPathCheck(): void
+        {
+            // Path is inside /var/log/ but the file does not physically exist.
+            // Verify() should return FILE_NOT_FOUND, not PATH_NOT_ALLOWED.
+            self::assertSame(ERROR_FILE_NOT_FOUND, $this->verify('/var/log/la_test_nonexistent.log', ['/var/log/']));
+        }
 
-    public function testPathContainingAllowedDirButNotStartingWithItIsDenied(): void
-    {
-        // /evil/var/log/syslog contains "/var/log/" but does not start with it.
-        self::assertFalse($this->isPathAllowed('/evil/var/log/syslog', ['/var/log/']));
-    }
+        public function testFileInSecondOfMultipleAllowedDirectoriesPassesPathCheck(): void
+        {
+            $tmpDir = rtrim(sys_get_temp_dir(), '/') . '/';
+            self::assertSame(
+                ERROR_FILE_NOT_FOUND,
+                $this->verify($tmpDir . 'app.log', ['/var/log/', $tmpDir])
+            );
+        }
 
-    public function testAllowedDirWithoutTrailingSlashIsNormalized(): void
-    {
-        // DiskAllowed entries may or may not carry a trailing slash.
-        self::assertTrue($this->isPathAllowed('/var/log/syslog', ['/var/log']));
-    }
+        public function testFileOutsideAllAllowedDirectoriesIsDenied(): void
+        {
+            self::assertSame(
+                ERROR_PATH_NOT_ALLOWED,
+                $this->verify('/etc/passwd', ['/var/log/', '/data/logs/'])
+            );
+        }
 
-    public function testAllowedDirWithoutTrailingSlashDoesNotMatchSimilarPrefix(): void
-    {
-        // /var/log2/ must not be accepted when only /var/log is allowed.
-        self::assertFalse($this->isPathAllowed('/var/log2/syslog', ['/var/log']));
+        public function testPathContainingAllowedDirButNotStartingWithItIsDenied(): void
+        {
+            // /evil/var/log/syslog contains "/var/log/" but does not start with it.
+            self::assertSame(
+                ERROR_PATH_NOT_ALLOWED,
+                $this->verify('/evil/var/log/syslog', ['/var/log/'])
+            );
+        }
+
+        public function testAllowedDirWithoutTrailingSlashIsNormalized(): void
+        {
+            // DiskAllowed entries may be stored without a trailing slash.
+            self::assertSame(
+                ERROR_FILE_NOT_FOUND,
+                $this->verify('/var/log/la_test_nonexistent.log', ['/var/log'])
+            );
+        }
+
+        public function testAllowedDirWithoutTrailingSlashDoesNotMatchLongerPrefix(): void
+        {
+            // /var/log2/ must not be accepted when only /var/log is allowed.
+            self::assertSame(
+                ERROR_PATH_NOT_ALLOWED,
+                $this->verify('/var/log2/syslog', ['/var/log'])
+            );
+        }
+
+        public function testExistingReadableFileInAllowedDirectoryReturnsSuccess(): void
+        {
+            $tmpDir = rtrim(sys_get_temp_dir(), '/') . '/';
+            self::assertSame(SUCCESS, $this->verify(self::$tmpFile, [$tmpDir]));
+        }
     }
 }
