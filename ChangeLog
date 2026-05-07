@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-Version 5.0.2, 2026-05-05
+Version 5.0.2, 2026-05-07
 --------------------------------------------------------------------------------
 - UI / themes
   - **Credit:** Modernization and flattened-layout direction inspired by community PR **#73** (*Simplified Layout*, 2021) from **[@Alfa-Soft](https://github.com/Alfa-Soft)** — https://github.com/rsyslog/loganalyzer/pull/73 — reworked for the current tree rather than merged verbatim.
@@ -20,6 +20,9 @@ Version 5.0.2, 2026-05-05
   - Export placeholder copy: strip decorative **`&gt;` / `&lt;`** from **`LN_GEN_SELECTEXPORT`** in en/de/es/ja `main.php`.
 - E2E / Playwright
   - **`Modern theme visual review`**: switch session style via `userchange.php`, assert theme stylesheets, capture **`modern-01`…`modern-05`** screenshots under `e2e/test-results/ci-visual/` (index grid, **details dialog**, admin index, advanced search, reports).
+- Bug fixes
+  - **PDO syslog summary per-host filter** (#71, PR #129): `ConsolidateDataByField` in [`logstreampdo.class.php`](src/classes/logstreampdo.class.php) now regenerates the WHERE clause for each grouped value so per-host filtering is applied correctly in syslog summary reports.
+  - **DB source mapping deletion** (#61, PR #128): fix illegal-string-offset PHP warnings when deleting multiple rows from a DB source mapping; the row-index loop now operates on the correct array structure.
 
 --------------------------------------------------------------------------------
 Version 5.0.1, 2026-05-04

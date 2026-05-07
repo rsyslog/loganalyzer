@@ -19,15 +19,12 @@ const LOGIN_REDIRECT_TIMEOUT_MS = 60_000;
 test('capture handbook screenshots under doc-site/docs/assets/user-guide', async ({ page }) => {
   fs.mkdirSync(handbookAssets, { recursive: true });
 
-  let res = await page.goto('/index.php');
-  expect(res?.ok()).toBeTruthy();
-  await page.locator('body').waitFor({ state: 'visible' });
-  await page.screenshot({ path: path.join(handbookAssets, 'index.png'), fullPage: true });
-
-  res = await page.goto('/login.php');
+  // Capture login page before authenticating (theme-neutral).
+  let res = await page.goto('/login.php');
   expect(res?.ok()).toBeTruthy();
   await page.screenshot({ path: path.join(handbookAssets, 'login.png'), fullPage: true });
 
+  // Log in as admin.
   await page.locator('input[name="uname"]').fill(adminUser);
   await page.locator('input[name="pass"]').fill(adminPass);
   await Promise.all([
@@ -37,6 +34,19 @@ test('capture handbook screenshots under doc-site/docs/assets/user-guide', async
   await page.waitForLoadState('domcontentloaded');
   await expect(page.locator('body')).not.toContainText(/Wrong username or password/i);
 
+  // Switch session to the modern theme so all subsequent screenshots use it.
+  res = await page.goto('/userchange.php?op=changestyle&stylename=modern');
+  expect(res?.ok()).toBeTruthy();
+  await page.waitForLoadState('domcontentloaded');
+  await expect(page.locator('link[href*="themes/modern/"]')).toHaveCount(2, { timeout: 30_000 });
+
+  // Main log view (logged in, modern theme).
+  res = await page.goto('/index.php');
+  expect(res?.ok()).toBeTruthy();
+  await page.locator('body').waitFor({ state: 'visible' });
+  await page.screenshot({ path: path.join(handbookAssets, 'index.png'), fullPage: true });
+
+  // Admin panel.
   res = await page.goto('/admin/index.php');
   expect(res?.ok()).toBeTruthy();
   await page.waitForLoadState('domcontentloaded');
@@ -44,13 +54,14 @@ test('capture handbook screenshots under doc-site/docs/assets/user-guide', async
   await expect(page.locator('select[name="ViewDefaultTheme"]').first()).toBeVisible({
     timeout: 30_000,
   });
-
   await page.screenshot({ path: path.join(handbookAssets, 'admin.png'), fullPage: true });
 
+  // Statistics.
   res = await page.goto('/statistics.php');
   expect(res?.ok()).toBeTruthy();
   await page.screenshot({ path: path.join(handbookAssets, 'statistics.png'), fullPage: true });
 
+  // Reports.
   res = await page.goto('/reports.php');
   expect(res?.ok()).toBeTruthy();
   await page.screenshot({ path: path.join(handbookAssets, 'reports.png'), fullPage: true });
