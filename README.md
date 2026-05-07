@@ -2,7 +2,13 @@
 
 **LogAnalyzer** is a PHP web application for browsing syslog and related log data from **files** or **databases**. It comes from the same ecosystem as [rsyslog](https://www.rsyslog.com/).
 
-![LogAnalyzer main view](https://user-images.githubusercontent.com/8426197/209875963-b7438f3b-9052-4e8f-9f22-05794e1e54a5.png)
+| Main log view | Login | Admin |
+|:---:|:---:|:---:|
+| ![LogAnalyzer main view](doc-site/docs/assets/user-guide/index.png) | ![Login page](doc-site/docs/assets/user-guide/login.png) | ![Admin panel](doc-site/docs/assets/user-guide/admin.png) |
+
+| Reports | Statistics |
+|:---:|:---:|
+| ![Reports](doc-site/docs/assets/user-guide/reports.png) | ![Statistics](doc-site/docs/assets/user-guide/statistics.png) |
 
 ## Documentation
 
