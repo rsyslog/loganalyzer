@@ -230,14 +230,14 @@ function GetFormatedDate($evttimearray, $onExport = false)
 			($onExport == true && GetConfigSetting("ExportUseTodayYesterday", 0, CFGLEVEL_USER) == 1)   
 			|| ( 
 				$onExport == false && GetConfigSetting("ViewUseTodayYesterday", 0, CFGLEVEL_USER) == 1 
-				&& ( date('m', $evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', $evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
+				&& ( date('m', (int)$evttimearray[EVTIME_TIMESTAMP]) == date('m') && date('Y', (int)$evttimearray[EVTIME_TIMESTAMP]) == date('Y') )
 			 )
 		  )	
 		{
-			if ( date('d', $evttimearray[EVTIME_TIMESTAMP]) == date('d') )
-				return "Today " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
-			else if ( date('d', $evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
-				return "Yesterday " . date("H:i:s", $evttimearray[EVTIME_TIMESTAMP] );
+			if ( date('d', (int)$evttimearray[EVTIME_TIMESTAMP]) == date('d') )
+				return "Today " . date("H:i:s", (int)$evttimearray[EVTIME_TIMESTAMP] );
+			else if ( date('d', (int)$evttimearray[EVTIME_TIMESTAMP] + 86400) == date('d') )
+				return "Yesterday " . date("H:i:s", (int)$evttimearray[EVTIME_TIMESTAMP] );
 		}
 		
 		// Copy to local variable
@@ -251,7 +251,7 @@ function GetFormatedDate($evttimearray, $onExport = false)
 	}
 
 	// Reach return normal format!
-	return $szDateFormatted = date("Y-m-d H:i:s", $nMyTimeStamp );
+	return $szDateFormatted = date("Y-m-d H:i:s", (int)$nMyTimeStamp );
 }
 
 function GetDebugBgColor( $szDebugMode )

@@ -18,6 +18,7 @@ Version 5.0.2, 2026-05-07
 - Robustness & i18n
   - **`DieWithErrorMsg` / `DieWithFriendlyErrorMsg`**: fix invalid extra `<tr>` in the auxiliary error table; normalise detail rows; correct friendly-error footer cell markup; trim redundant padding `<br>` in error cells ([`functions_common.php`](src/include/functions_common.php)).
   - Export placeholder copy: strip decorative **`&gt;` / `&lt;`** from **`LN_GEN_SELECTEXPORT`** in en/de/es/ja `main.php`.
+  - PHP 8.1+: cast event timestamps to **`int`** before **`date()`** in disk consolidation/chart helpers, grid date formatting, DB/PDO/ClickHouse date-range filters, and export filenames; fix wrong field variable in disk **`ConsolidateItemListByField`** / **`ConsolidateDataByField`** date grouping ([#132](https://github.com/rsyslog/loganalyzer/issues/132), thanks **@KDocProf**).
 - E2E / Playwright
   - **`Modern theme visual review`**: switch session style via `userchange.php`, assert theme stylesheets, capture **`modern-01`…`modern-05`** screenshots under `e2e/test-results/ci-visual/` (index grid, **details dialog**, admin index, advanced search, reports).
 - Bug fixes

@@ -822,7 +822,7 @@ class LogStreamDisk extends LogStream {
 					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
 					{
 						// Convert to FULL Day Date for now!
-						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+						$myFieldData = date( "Y-m-d", (int)$logArray[$szConsFieldId][EVTIME_TIMESTAMP] );
 					}
 					else // Just copy the value!
 						$myFieldData = $logArray[$szConsFieldId];
@@ -915,7 +915,7 @@ class LogStreamDisk extends LogStream {
 					if ( $nConsFieldType == FILTER_TYPE_DATE ) 
 					{
 						// Convert to FULL Day Date for now!
-						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+						$myFieldData = date( "Y-m-d", (int)$logArray[$szConsFieldId][EVTIME_TIMESTAMP] );
 					}
 					else // Just copy the value!
 						$myFieldData = $logArray[$szConsFieldId];
@@ -1018,7 +1018,7 @@ class LogStreamDisk extends LogStream {
 					if ( $nFieldType == FILTER_TYPE_DATE ) 
 					{
 						// Convert to FULL Day Date for now!
-						$myFieldData = date( "Y-m-d", $logArray[$szFieldId][EVTIME_TIMESTAMP] );
+						$myFieldData = date( "Y-m-d", (int)$logArray[$szFieldId][EVTIME_TIMESTAMP] );
 					}
 					else // Just copy the value!
 						$myFieldData = $logArray[$szFieldId];

@@ -400,7 +400,7 @@ else
 	$szOutputCharset = "";
 
 	$szOutputFileName = isset($content['period_start_ts'])
-		? "ExportMessages_" . date('Ymd\THis', $content['period_start_ts']) . "-" . date('Ymd\THis', $content['period_end_ts'])
+		? "ExportMessages_" . date('Ymd\THis', (int)$content['period_start_ts']) . "-" . date('Ymd\THis', (int)$content['period_end_ts'])
 		: "ExportMessages";
 	$szOutputFileExtension = ".txt";
 	$szOPFieldSeparator = " ";
