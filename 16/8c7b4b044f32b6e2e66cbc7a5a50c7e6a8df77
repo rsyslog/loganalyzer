@@ -1,0 +1,19 @@
+doc-site/requirements.txt
+  s_61ad21f29053dd::t_85e48098f3a861 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "168c7b4b044f32b6e2e66cbc7a5a50c7e6a8df77",
+  "prompts": {},
+  "sessions": {
+    "s_61ad21f29053dd": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "39b6f5cb-d34a-44a5-bb46-f50df5433ad6",
+        "model": "grok-4.6"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    }
+  }
+}
