@@ -1265,7 +1265,7 @@ class LogStreamClickHouse extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy = 'count_desc')
 	{
 		global $content, $dbmapping;
 
@@ -1302,7 +1302,7 @@ class LogStreamClickHouse extends LogStream {
 						" FROM `" . $this->_logStreamConfigObj->DBTableName . "`" . 
 						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY totalcount DESC" . 
+						" ORDER BY " . ChartOrderByExpression($orderBy, $mySelectFieldName) .
 						" LIMIT " . $nRecordLimit;
 
 			// Perform Database Query

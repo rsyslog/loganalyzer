@@ -96,6 +96,14 @@ function InitSource(&$mysource)
 			$content['Sources'][$iSourceID]['Description'] = "";
 		}
 
+		// Source names and descriptions may be created by a non-admin user and
+		// are rendered in the global source selector. Keep the stored values raw
+		// for application logic, but provide escaped display variants.
+		$mysource['NameHtml'] = HtmlEscapeText(isset($mysource['Name']) ? $mysource['Name'] : '');
+		$mysource['DescriptionHtml'] = HtmlEscapeText($mysource['Description']);
+		$content['Sources'][$iSourceID]['NameHtml'] = $mysource['NameHtml'];
+		$content['Sources'][$iSourceID]['DescriptionHtml'] = $mysource['DescriptionHtml'];
+
 		if ( !isset($mysource['defaultfilter']) )
 		{
 			$CFG['Sources'][$iSourceID]['defaultfilter'] = "";
@@ -581,7 +589,7 @@ function InitSourceConfigs()
 			&& strlen((string) $content['Sources'][$currentSourceID]['Description']) > 0
 		) {
 			$content['SourceDescriptionEnabled'] = true;
-			$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description'];
+			$content['SourceDescription'] = $content['Sources'][$currentSourceID]['DescriptionHtml'];
 		}
 
 		$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];

@@ -28,6 +28,13 @@ export MYSQL_ROOT_PASSWORD="$DB_ROOT_PASS"
 
 export LOGANALYZER_DOCROOT="${LOGANALYZER_DOCROOT:-/var/www/html}"
 
+# The E2E security suite uses an isolated, disposable symlink target. This is
+# deliberately opt-in and is never enabled by the consumer or developer stack.
+if [ "${LOGANALYZER_E2E_SECURITY:-0}" = "1" ]; then
+  mkdir -p /tmp/loganalyzer-e2e-allowed
+  ln -sfn /etc/passwd /tmp/loganalyzer-e2e-allowed/passwd-link
+fi
+
 DOC_CONFIG="${LOGANALYZER_DOCROOT}/config.php"
 RESOLVED_CONFIG="${LOGANALYZER_CONFIG_PATH:-$DOC_CONFIG}"
 

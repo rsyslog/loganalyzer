@@ -1276,11 +1276,8 @@ class LogStreamDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy='')
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy='count_desc')
 	{
-		if(empty($orderBy)){
-			$orderBy = 'totalcount DESC';
-		}
 		global $content, $dbmapping;
 
 		// Copy helper variables, this is just for better readability
@@ -1299,8 +1296,9 @@ class LogStreamDB extends LogStream {
 				// Helper variable for the select statement
 				$mySelectFieldName = $mySelectFieldName . "grouped";
 				$myDBQueryFieldName = "DATE( " . $myDBFieldName . ") AS " . $mySelectFieldName ;
-				//$orderBy = $mySelectFieldName." DESC";
 			}
+
+			$orderBy = ChartOrderByExpression($orderBy, $mySelectFieldName);
 
 			// Create SQL Where Clause!
 			if ( $this->_SQLwhereClause == "" ) 

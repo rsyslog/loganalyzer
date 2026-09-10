@@ -1560,7 +1560,7 @@ class LogStreamPDO extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy = 'count_desc')
 	{
 		global $content, $dbmapping;
 
@@ -1605,7 +1605,7 @@ class LogStreamPDO extends LogStream {
 						" FROM " . $this->_logStreamConfigObj->DBTableName . 
 						$this->_SQLwhereClause . 
 						" GROUP BY " . $mySelectFieldName . 
-						" ORDER BY totalcount DESC"; 
+						" ORDER BY " . ChartOrderByExpression($orderBy, $mySelectFieldName);
 			// Append LIMIT in this case!
 			if			(	$this->_logStreamConfigObj->DBType == DB_MYSQL || 
 							$this->_logStreamConfigObj->DBType == DB_PGSQL )

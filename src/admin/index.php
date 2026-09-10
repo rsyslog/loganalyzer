@@ -521,6 +521,23 @@ if ( $content['ENABLEUSEROPTIONS'] )
 
 }
 
+// The settings page displays stored configuration values in form attributes.
+// Encode them only after all business logic and comparisons are complete.
+foreach (array('PrependTitle', 'ViewMessageCharacterLimit', 'ViewStringCharacterLimit', 'ViewEntriesPerPage', 'ViewEnableAutoReloadSeconds', 'AdminChangeWaitTime', 'PopupMenuTimeout', 'SearchCustomButtonCaption', 'SearchCustomButtonSearch', 'EventEmptySearchDefaultFilter', 'MiscMaxExecutionTime', 'PhplogconLogoUrl', 'UseProxyServerForRemoteQueries') as $htmlField)
+{
+	if ( isset($content[$htmlField]) )
+		$content[$htmlField] = HtmlEscapeAttribute($content[$htmlField]);
+	$userField = 'User_' . $htmlField;
+	if ( isset($content[$userField]) )
+		$content[$userField] = HtmlEscapeAttribute($content[$userField]);
+}
+foreach (array('SOURCES', 'USER_SOURCES') as $sourceList)
+{
+	if ( isset($content[$sourceList]) && is_array($content[$sourceList]) )
+		foreach ($content[$sourceList] as &$sourceEntry)
+			$sourceEntry['NameHtml'] = HtmlEscapeText(isset($sourceEntry['Name']) ? $sourceEntry['Name'] : '');
+}
+
 // --- BEGIN CREATE TITLE
 $content['TITLE'] = InitPageTitle();
 $content['TITLE'] .= " :: " . $content['LN_ADMINMENU_GENOPT'];

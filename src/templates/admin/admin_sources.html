@@ -52,7 +52,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p>{ERROR_MSG_HTML}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top" title="{LN_GEN_ERRORRETURNPREV}">{LN_GEN_ERRORRETURNPREV}</a>
@@ -82,15 +82,15 @@
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
 			<td align="left" class="{cssclass}">
 			<!-- IF ActionsAllowed="true" -->
-			<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}">{Name}</a>
+			<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}">{NameHtml}</a>
 			<!-- ENDIF ActionsAllowed="true" -->
 			<!-- IF ActionsAllowed!="true" -->
-			<b>{Name}</b>
+			<b>{NameHtml}</b>
 			<!-- ENDIF ActionsAllowed!="true" -->
 			
 			</td>
 			<td align="left" class="{cssclass}"><img src="{SourcesTypeImage}" width="16" align="left" title="{SourcesTypeText}"> <b>{SourcesTypeText}</b></td>
-			<td align="left" class="{cssclass}"><img src="{SourcesAssignedToImage}" width="16" align="left" title="{SourcesAssignedToText}"> <b>{SourcesAssignedToText}</b></td>
+			<td align="left" class="{cssclass}"><img src="{SourcesAssignedToImage}" width="16" align="left" title="{SourcesAssignedToTextAttr}"> <b>{SourcesAssignedToTextHtml}</b></td>
 			<td align="center" class="{cssclass}">
 				<!-- IF ActionsAllowed="true" -->
 				&nbsp;<a href="{BASEPATH}admin/sources.php?op=edit&id={ID}"><img src="{MENU_EDIT}" width="16" title="{LN_GEN_ERRORRETURNPREV}"></a>
@@ -127,7 +127,7 @@
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
-			<td align="left" class="line2">{DisplayName}</td>
+			<td align="left" class="line2">{DisplayNameHtml}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2" valign="top"><b>{LN_SOURCES_TYPE}</b></td>
@@ -210,7 +210,7 @@
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2"><b>{LN_SOURCES_NAME}</b></td>
-			<td align="left" class="line2">{DisplayName}</td>
+			<td align="left" class="line2">{DisplayNameHtml}</td>
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2" valign="top"><b>{LN_SOURCES_TYPE}</b></td>
@@ -218,7 +218,7 @@
 		</tr>
 		<tr>
 			<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
-			<td align="left" class="line1">{Description}</td>
+			<td align="left" class="line1">{DescriptionHtml}</td>
 		</tr>
 		</table>
 		<br />
@@ -256,11 +256,11 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="30%"><b>{LN_SOURCES_NAME}</b></td>
-				<td align="left" class="line1" width="70%"><input type="text" name="Name" maxlength="255" value="{Name}" class="maxwidth"></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="Name" maxlength="255" value="{NameHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_DESCRIPTION}</b></td>
-				<td align="left" class="line1"><textarea name="Description" cols="50" rows="5" class="maxwidth">{Description}</textarea></td>
+				<td align="left" class="line1"><textarea name="Description" cols="50" rows="5" class="maxwidth">{DescriptionHtml}</textarea></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_SOURCES_TYPE}</b></td>
@@ -284,7 +284,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_MSGPARSERS}</b></td>
-				<td align="left" class="line1"><input type="text" name="MsgParserList" maxlength="255" value="{MsgParserList}" class="maxwidth"></td>
+				<td align="left" class="line1"><input type="text" name="MsgParserList" maxlength="255" value="{MsgParserListHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_NORMALIZEMSG}</b></td>
@@ -296,7 +296,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" valign="top"><b>{LN_SOURCES_FILTERSTRING}</b></td>
-				<td align="left" class="line1"><font class="ErrorMsg">{LN_SOURCES_FILTERSTRING_HELP}</font></br><input type="text" name="defaultfilter" class="maxwidth" maxlength="1024" value="{defaultfilter}"></td>
+				<td align="left" class="line1"><font class="ErrorMsg">{LN_SOURCES_FILTERSTRING_HELP}</font></br><input type="text" name="defaultfilter" class="maxwidth" maxlength="1024" value="{defaultfilterHtml}"></td>
 			</tr>
 
 			<tr>
@@ -333,7 +333,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_SYSLOGFILE}</b></td>
-				<td align="left" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFile}"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDiskFile" size="50" maxlength="255" value="{SourceDiskFileHtml}"></td>
 			</tr>
 			</table>
 			</div>
@@ -371,23 +371,23 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBSERVER}</b></td>
-				<td align="left" class="line0"><input type="text" name="SourceDBServer" maxlength="255" value="{SourceDBServer}" class="maxwidth"></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBServer" maxlength="255" value="{SourceDBServerHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBNAME}</b></td>
-				<td align="left" class="line1"><input type="text" name="SourceDBName" maxlength="255" value="{SourceDBName}" class="maxwidth"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBName" maxlength="255" value="{SourceDBNameHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBTABLENAME}</b></td>
-				<td align="left" class="line0"><input type="text" name="SourceDBTableName" maxlength="255" value="{SourceDBTableName}" class="maxwidth"></td>
+				<td align="left" class="line0"><input type="text" name="SourceDBTableName" maxlength="255" value="{SourceDBTableNameHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBUSER}</b></td>
-				<td align="left" class="line1"><input type="text" name="SourceDBUser" maxlength="255" value="{SourceDBUser}" class="maxwidth"></td>
+				<td align="left" class="line1"><input type="text" name="SourceDBUser" maxlength="255" value="{SourceDBUserHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBPASSWORD}</b></td>
-				<td align="left" class="line0"><input type="password" name="SourceDBPassword" maxlength="255" value="{SourceDBPassword}" class="maxwidth"></td>
+				<td align="left" class="line0"><input type="password" name="SourceDBPassword" maxlength="255" value="{SourceDBPasswordHtml}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2"><b>{LN_CFG_DBROWCOUNTING}</b></td>
@@ -402,7 +402,7 @@
 			<table border="0" cellpadding="1" cellspacing="1" width="80%" align="center" class="with_border">
 			<tr>
 				<td align="left" class="cellmenu2" width="250"><b>{LN_CFG_DBRECORDSPERQUERY}</b></td>
-				<td align="left" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQuery}"></td>
+				<td align="left" class="line1" width="350"><input type="text" name="SourceDBRecordsPerQuery" size="40" maxlength="255" value="{SourceDBRecordsPerQueryHtml}"></td>
 			</tr>
 			</table>
 			</div>

@@ -417,6 +417,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	// --- Process Users
 	for($i = 0; $i < count($content['USERS']); $i++)
 	{
+		$content['USERS'][$i]['username_html'] = HtmlEscapeText($content['USERS'][$i]['username']);
 		// --- Set Image for IsAdmin
 		if ( $content['USERS'][$i]['is_admin'] == 1 ) 
 		{
@@ -465,6 +466,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	// --- 
 }
+
+$content['USERNAME_HTML'] = HtmlEscapeAttribute(isset($content['USERNAME']) ? $content['USERNAME'] : '');
 
 // Helper function to delete SQL Data
 function PerformSQLDelete( $szDeleteStm, $szErrMsg, $szUserID)

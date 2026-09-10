@@ -130,6 +130,62 @@ function DB_Query($query_string, $bProcessError = true, $bCritical = false)
 	return $query_id;
 }
 
+/**
+ * Execute a parameterized statement against the configured user database.
+ * Values must be supplied through $params; SQL identifiers are never accepted
+ * as parameters and must be validated by the caller before being interpolated.
+ */
+function DB_ExecutePrepared($query_string, $types, array $params = array(), $bProcessError = true, $bCritical = false)
+{
+	if ( GetConfigSetting("UserDBEnabled", false) == false )
+		return;
+
+	global $userdbconn, $querycount;
+	$stmt = mysqli_prepare($userdbconn, $query_string);
+	if ( !$stmt )
+	{
+		if ( $bProcessError )
+			DB_PrintError("Invalid prepared SQL: " . $query_string, $bCritical);
+		return false;
+	}
+
+	if ( strlen($types) !== count($params) )
+	{
+		mysqli_stmt_close($stmt);
+		if ( $bProcessError )
+			DB_PrintError("Invalid prepared SQL parameter count: " . $query_string, $bCritical);
+		return false;
+	}
+
+	if ( $types !== '' )
+	{
+		$bindParams = array($types);
+		foreach ( $params as $key => &$value )
+			$bindParams[] = &$value;
+
+		if ( !call_user_func_array(array($stmt, 'bind_param'), $bindParams) )
+		{
+			mysqli_stmt_close($stmt);
+			if ( $bProcessError )
+				DB_PrintError("Could not bind prepared SQL parameters: " . $query_string, $bCritical);
+			return false;
+		}
+	}
+
+	$success = mysqli_stmt_execute($stmt);
+	if ( !$success && $bProcessError )
+		DB_PrintError("Invalid prepared SQL: " . $query_string, $bCritical);
+
+	$querycount++;
+	mysqli_stmt_close($stmt);
+	return $success;
+}
+
+function DB_IsSafeIdentifier($value)
+{
+	return is_scalar($value) && preg_match('/^[A-Za-z0-9_]+$/D', (string)$value) === 1;
+}
+
 function DB_FreeQuery($query_id)
 {
 	// --- Abort in this case!

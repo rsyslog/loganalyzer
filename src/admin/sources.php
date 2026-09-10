@@ -775,7 +775,11 @@ if ( isset($_POST['op']) )
 		// Create LogStream Object 
 		$stream = $tmpSource['ObjRef']->LogStreamFactory($tmpSource['ObjRef']);
 		$res = $stream->Verify();
-		if ( $res != SUCCESS ) 
+		$allowMissingDiskFile = $res == ERROR_FILE_NOT_FOUND
+			&& $tmpSource['SourceType'] == SOURCE_DISK
+			&& method_exists($stream, 'IsMissingFileAuthorized')
+			&& $stream->IsMissingFileAuthorized();
+		if ( $res != SUCCESS && !$allowMissingDiskFile )
 		{
 			$content['ISERROR'] = true;
 			$content['ERROR_MSG'] = GetAndReplaceLangStr( $content['LN_SOURCES_ERROR_WITHINSOURCE'], $tmpSource['Name'], GetErrorMessage($res) );
@@ -925,6 +929,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	$i = 0; // Help counter!
 	foreach ($content['SOURCES'] as &$mySource )
 	{
+		$mySource['NameHtml'] = HtmlEscapeText(isset($mySource['Name']) ? $mySource['Name'] : '');
 		// --- Set Image for Type
 		// NonNUMERIC are config files Sources, can not be editied
 		if ( is_numeric($mySource['ID']) )
@@ -964,6 +969,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			$mySource['SourcesAssignedToImage'] = $content["MENU_INTERNAL"];
 			$mySource['SourcesAssignedToText'] = $content["LN_GEN_CONFIGFILE"];
 		}
+		$mySource['SourcesAssignedToTextHtml'] = HtmlEscapeText($mySource['SourcesAssignedToText']);
+		$mySource['SourcesAssignedToTextAttr'] = HtmlEscapeAttribute($mySource['SourcesAssignedToText']);
 		// ---
 
 		// --- Set SourceType
@@ -1017,6 +1024,13 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	// --- 
 //	print_r ( $content['SOURCES'] );
+}
+
+// Keep stored source values raw for persistence and logic, but escape every
+// value that is copied into the editor form or details panels.
+foreach (array('Name', 'Description', 'DisplayName', 'MsgParserList', 'defaultfilter', 'SourceDiskFile', 'SourceDBServer', 'SourceDBName', 'SourceDBTableName', 'SourceDBUser', 'SourceDBPassword', 'SourceDBRecordsPerQuery') as $htmlField)
+{
+	$content[$htmlField . 'Html'] = HtmlEscapeAttribute(isset($content[$htmlField]) ? $content[$htmlField] : '');
 }
 
 /*

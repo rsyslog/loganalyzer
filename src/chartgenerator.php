@@ -100,8 +100,10 @@ else
 
 if ( isset($_GET['orderby']) )
 {
-        $content['chart_orderby'] = $_GET['orderby'];
-}else { $content['chart_orderby'] = NULL; }
+	$content['chart_orderby'] = NormalizeChartOrderKey($_GET['orderby']);
+}
+else
+	$content['chart_orderby'] = 'count_desc';
 
 if ( isset($_GET['maxrecords']) ) 
 {

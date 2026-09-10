@@ -53,6 +53,7 @@ class LogStreamDisk extends LogStream {
 	private $_currentStartPos = -1;
 	private $_fp = null;
 	private $_bEOS = false;
+	private $_bMissingFileAuthorized = false;
 
 	const _BUFFER_length = 8192;
 	private $_buffer = false;
@@ -87,7 +88,9 @@ class LogStreamDisk extends LogStream {
 			return $result;
 		
 		// Now open the file 
-		$this->_fp = fopen($this->_logStreamConfigObj->FileName, 'r');	
+		$this->_fp = @fopen($this->_logStreamConfigObj->FileName, 'r');
+		if ( $this->_fp === false )
+			return ERROR_FILE_NOT_READABLE;
 		$this->_currentOffset = ftell($this->_fp);
 		$this->_currentStartPos = $this->_currentOffset;
 		$this->_arrProperties = $arrProperties;
@@ -120,43 +123,140 @@ class LogStreamDisk extends LogStream {
 	* @return integer Error state
 	*/
 	public function Verify() {
-		global $content; 
-		
-		// --- Check if Filename is within allowed directories!
-		$szFileDirName = dirname($this->_logStreamConfigObj->FileName) . '/'; 
-		$bIsAllowedDir = false; 
-		foreach($content['DiskAllowed'] as $szAllowedDir)
+		global $content;
+		$requestedPath = (string)$this->_logStreamConfigObj->FileName;
+		$this->_bMissingFileAuthorized = false;
+
+		if ( $requestedPath === '' || strpos($requestedPath, "\0") !== false )
+			return $this->DenyPath($requestedPath);
+
+		// For an existing file, realpath() resolves '..' segments and symlinks.
+		// The canonical path is retained so the later open cannot switch back to
+		// an unchecked spelling of the path.
+		$canonicalPath = realpath($requestedPath);
+		if ( $canonicalPath !== false )
 		{
-			$szAllowedDirNorm = rtrim($szAllowedDir, '/') . '/';
-			if ( strpos($szFileDirName, $szAllowedDirNorm) === 0 )
+			if ( !$this->IsPathWithinAllowedDirectory($canonicalPath) )
+				return $this->DenyPath($requestedPath);
+
+			if ( !is_file($canonicalPath) )
+				return ERROR_FILE_NOT_FOUND;
+
+			if ( !is_readable($canonicalPath) )
+				return ERROR_FILE_NOT_READABLE;
+
+			$this->_logStreamConfigObj->FileName = $canonicalPath;
+			return SUCCESS;
+		}
+
+		// Source creation historically permits a path whose file does not yet
+		// exist.  Authorize that case using the canonical parent directory, while
+		// still rejecting traversal to an existing or future path outside the
+		// allow-list.
+		$canonicalParent = realpath(dirname($requestedPath));
+		$missingPath = $canonicalParent !== false
+			? rtrim(str_replace('\\', '/', $canonicalParent), '/') . '/' . basename($requestedPath)
+			: $this->NormalizePathForComparison($requestedPath);
+		if ( !$this->IsPathWithinAllowedDirectory($missingPath) )
+			return $this->DenyPath($requestedPath);
+
+		$this->_bMissingFileAuthorized = true;
+		return ERROR_FILE_NOT_FOUND;
+	}
+
+	/**
+	 * Return whether Verify() authorized a future file path for source creation.
+	 * Read-time authorization remains authoritative in Open().
+	 */
+	public function IsMissingFileAuthorized()
+	{
+		return $this->_bMissingFileAuthorized;
+	}
+
+	private function DenyPath($requestedPath)
+	{
+		global $content, $extraErrorDescription;
+		$allowedDirectories = isset($content['DiskAllowed']) && is_array($content['DiskAllowed'])
+			? $content['DiskAllowed'] : array();
+		$extraErrorDescription = GetAndReplaceLangStr(
+			$content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'],
+			$requestedPath,
+			implode(", ", $allowedDirectories)
+		);
+
+		return ERROR_PATH_NOT_ALLOWED;
+	}
+
+	private function IsPathWithinAllowedDirectory($candidatePath)
+	{
+		global $content;
+		$allowedDirectories = isset($content['DiskAllowed']) && is_array($content['DiskAllowed'])
+			? $content['DiskAllowed'] : array();
+		$candidate = $this->NormalizePathForComparison($candidatePath);
+
+		foreach ( $allowedDirectories as $allowedDirectory )
+		{
+			$canonicalAllowedDirectory = realpath((string)$allowedDirectory);
+			if ( $canonicalAllowedDirectory === false || !is_dir($canonicalAllowedDirectory) )
+				continue;
+
+			$allowed = rtrim($this->NormalizePathForComparison($canonicalAllowedDirectory), '/');
+			if ( $allowed === '' )
+				$allowed = '/';
+
+			$comparisonCandidate = $candidate;
+			$comparisonAllowed = $allowed;
+			if ( DIRECTORY_SEPARATOR === '\\' )
 			{
-				$bIsAllowedDir = true; 
-				break; 
+				$comparisonCandidate = strtolower($comparisonCandidate);
+				$comparisonAllowed = strtolower($comparisonAllowed);
 			}
+
+			if ( $comparisonCandidate === $comparisonAllowed ||
+				strpos($comparisonCandidate, $comparisonAllowed === '/' ? '/' : $comparisonAllowed . '/') === 0 )
+				return true;
 		}
-		if ( !$bIsAllowedDir ) 
+
+		return false;
+	}
+
+	private function NormalizePathForComparison($path)
+	{
+		$path = str_replace('\\', '/', (string)$path);
+		$prefix = '';
+		if ( preg_match('/^[A-Za-z]:\//', $path) )
 		{
-			global $extraErrorDescription;
-			$extraErrorDescription = GetAndReplaceLangStr( $content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'], $this->_logStreamConfigObj->FileName, implode(", ", $content['DiskAllowed']) ); 
-
-			return ERROR_PATH_NOT_ALLOWED;
+			$prefix = substr($path, 0, 2);
+			$path = substr($path, 2);
+		}
+		elseif ( isset($path[0]) && $path[0] === '/' )
+		{
+			$prefix = '/';
+			$path = ltrim($path, '/');
 		}
 
-		
-		// ---
-
-		// Check if file exists!
-		if(!file_exists($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_FOUND;
+		$parts = array();
+		foreach ( explode('/', $path) as $part )
+		{
+			if ( $part === '' || $part === '.' )
+				continue;
+			if ( $part === '..' )
+			{
+				if ( !empty($parts) && end($parts) !== '..' )
+					array_pop($parts);
+				elseif ( $prefix === '' )
+					$parts[] = '..';
+				continue;
+			}
+			$parts[] = $part;
 		}
 
-		// Check if file is readable!
-		if(!is_readable($this->_logStreamConfigObj->FileName)) {
-			return ERROR_FILE_NOT_READABLE;
-		}
-
-		// reached this point means success ;)!
-		return SUCCESS;
+		$result = implode('/', $parts);
+		if ( $prefix === '/' )
+			return '/' . $result;
+		if ( $prefix !== '' )
+			return $prefix . '/' . $result;
+		return $result === '' ? '.' : $result;
 	}
 		
 
@@ -998,7 +1098,7 @@ class LogStreamDisk extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy = 'count_desc')
 	{
 		global $content;
 
@@ -1042,9 +1142,24 @@ class LogStreamDisk extends LogStream {
 				}
 			} while ( ($ret = $this->ReadNext($uID, $logArray)) == SUCCESS );
 
-			// Sort Array, so the highest count comes first!
-			arsort($aResult);
-//			array_multisort($aResult, SORT_NUMERIC, SORT_DESC);
+			// Apply only the finite chart-order choices accepted by the request
+			// layer. Keep the "Others" bucket at the end below.
+			switch ( NormalizeChartOrderKey($orderBy) )
+			{
+				case 'count_asc':
+					asort($aResult, SORT_NUMERIC);
+					break;
+				case 'field_asc':
+					uksort($aResult, 'strnatcasecmp');
+					break;
+				case 'field_desc':
+					uksort($aResult, function($left, $right) { return strnatcasecmp($right, $left); });
+					break;
+				case 'count_desc':
+				default:
+					arsort($aResult, SORT_NUMERIC);
+					break;
+			}
 
 			if ( isset($aResult[ $content['LN_STATS_OTHERS'] ]) )
 			{

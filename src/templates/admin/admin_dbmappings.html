@@ -5,7 +5,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p>{ERROR_MSG_HTML}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -34,14 +34,14 @@
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
 			<td align="left" class="{cssclass}">
 			<!-- IF ActionsAllowed="true" -->
-			<a href="{BASEPATH}admin/dbmappings.php?op=edit&dbmpid={ID}">{DisplayName}</a>
+				<a href="{BASEPATH}admin/dbmappings.php?op=edit&dbmpid={ID}">{DisplayNameHtml}</a>
 			<!-- ENDIF ActionsAllowed="true" -->
 			<!-- IF ActionsAllowed!="true" -->
-			<b>{DisplayName}</b>
+				<b>{DisplayNameHtml}</b>
 			<!-- ENDIF ActionsAllowed!="true" -->
 			</td>
-			<td align="left" class="{cssclass}">
-			<!-- BEGIN MYMAPPINGS -->{CaptionSeperator}{FieldCaption} => {FieldMapping}<!-- END MYMAPPINGS -->
+				<td align="left" class="{cssclass}">
+				<!-- BEGIN MYMAPPINGS -->{CaptionSeperator}{FieldCaptionHtml} =&gt; {FieldMappingHtml}<!-- END MYMAPPINGS -->
 			</td>
 			<td align="center" class="{cssclass}">
 				<!-- IF ActionsAllowed="true" -->
@@ -69,7 +69,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="30%"><b>{LN_DBMP_NAME}</b></td>
-				<td align="left" class="line1" width="70%"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayName}" class="maxwidth"></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="DisplayName" size="55" maxlength="255" value="{DisplayNameHtml}" class="maxwidth"></td>
 			</tr>
 			</table>
 			<br>
@@ -86,7 +86,7 @@
 					<b>{MappingCaption} (<I>{MappingInternalID}</I>)</b>
 				</td>
 				<td align="left" class="{colcssclass}" width="25%">
-					<input type="text" name="{MappingFieldID}" size="24" maxlength="255" value="{MappingDbFieldName}" class="maxwidth">
+					<input type="text" name="{MappingFieldID}" size="24" maxlength="255" value="{MappingDbFieldNameHtml}" class="maxwidth">
 				</td>
 				
 				<td align="center" class="{colcssclass}" width="20%">
