@@ -1,0 +1,182 @@
+src/templates/admin/admin_dbmappings.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,133
+  s_7034a37c187f79::t_e584ad4bebced9 37,40,43-44,72,89
+src/templates/admin/admin_parsers.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,121
+src/templates/admin/admin_charts.html
+  s_7034a37c187f79::t_09d2c79a6048eb 9
+  s_7034a37c187f79::t_bd8a5bfd4be5aa 122-131
+src/templates/admin/admin_sources.html
+  s_7034a37c187f79::t_09d2c79a6048eb 55
+  s_7034a37c187f79::t_2e26e451627b5a 85,88,130,213,221,259,263,287,299,336,374,378,382,386,390,405
+src/templates/admin/admin_searches.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,112
+src/templates/statistics.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8
+src/templates/admin/admin_fields.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,127
+src/include/functions_chart.php
+  s_7034a37c187f79::t_c234d6540e4939 14
+  s_7034a37c187f79::t_d573a5d52f19ad 1-13,15-59
+src/templates/login.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,62
+src/templates/admin/admin_users.html
+  s_7034a37c187f79::t_09d2c79a6048eb 36,61,96
+src/classes/logstreamdisk.class.php
+  s_041ac544bf8b68::t_31f281d333b066 90-92,125-135,137-147,149,180
+  s_041ac544bf8b68::t_7962e4d4026f86 150-152,177-179
+  s_041ac544bf8b68::t_185d9829de9142 181-183
+  s_041ac544bf8b68::t_b814d142dfc0ca 153-176,184-185,187-189,191-205,208-209,211-223,226-239,242-247,1089,1133-1150,1197
+src/templates/admin/admin_upgrade.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,110
+e2e/tests/security-regression.spec.ts
+  s_7034a37c187f79::t_1b9e0307627e22 2-28,30-41,43-48,50-110,112,114-125,127-131
+  s_7034a37c187f79::t_e19c6d678a02d1 111
+  s_7034a37c187f79::t_4c66709ec32203 113
+  s_7034a37c187f79::t_e4cf248faf79a4 1,29,42,49,126
+src/templates/admin/admin_reports.html
+  s_7034a37c187f79::t_2e26e451627b5a 472,543
+  s_7034a37c187f79::t_09d2c79a6048eb 8
+tests/php/Unit/SecurityHelpersTest.php
+  s_7034a37c187f79::t_be54b9b9553d52 37,39
+  s_7034a37c187f79::t_c3c4abdf80b9ce 8
+  s_7034a37c187f79::t_23255e5443ba74 1-7,9-36,38,40-51
+src/templates/details.html
+  s_7034a37c187f79::t_09d2c79a6048eb 121,134
+src/templates/admin/admin_index.html
+  s_7034a37c187f79::t_e5c6e1b9d148c7 112,120,411
+tests/php/Unit/LogStreamDiskPathTest.php
+  s_041ac544bf8b68::t_d3db1f4669973c 55-57
+  s_041ac544bf8b68::t_3d090f1d3c809f 67-75,83-88,114-119,169-193
+src/include/functions_html.php
+  s_7034a37c187f79::t_d573a5d52f19ad 1-13,15-18,20-23,25-39
+  s_7034a37c187f79::t_c234d6540e4939 14,19,24
+src/classes/logstreammongodb.class.php
+  s_7034a37c187f79::t_484ec091391cac 1250,1863
+  s_7034a37c187f79::t_be54b9b9553d52 1341-1359
+src/templates/asktheoracle.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,96
+src/templates/admin/admin_groups.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,160
+  s_7034a37c187f79::t_e5c6e1b9d148c7 56,108,138
+src/templates/reports.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,222
+src/classes/logstream.class.php
+  s_7034a37c187f79::t_484ec091391cac 204
+docker/entrypoint.sh
+  s_7034a37c187f79::t_1b9e0307627e22 31-37
+src/templates/admin/admin_views.html
+  s_7034a37c187f79::t_09d2c79a6048eb 8,152
+docker/docker-compose.e2e.yml
+  s_1c8eae3b2ceac6::t_bb41e9d1cb6d30 46-47
+src/admin/charts.php
+  s_1c8eae3b2ceac6::t_6e8619a8cba502 158-159,220-221,323-324
+src/admin/index.php
+  s_733e0a5e8f63f9::t_1a491f8b6ecd30 524-540,552
+src/admin/result.php
+  s_733e0a5e8f63f9::t_bccd78d0d24659 63-64,66-69,72,74,77-78,80-81,91
+src/admin/sources.php
+  s_b7d30f3593ddce::t_d044710d456f46 928,1023-1029
+src/admin/users.php
+  s_b7d30f3593ddce::t_64b17969bf50d1 420,470-471,501
+src/chartgenerator.php
+  s_733e0a5e8f63f9::t_c59d9ba6165e2f 103-106
+src/classes/logstreamdb.class.php
+  s_1c8eae3b2ceac6::t_6e4eae766a1406 1279,1301-1302
+src/include/functions_common.php
+  s_b7d30f3593ddce::t_8b152a14a61fd9 47-48,1060,1173,1182,1217,1222,1225-1230,1267,1286,1299-1301,1355-1373,1378,1385,1865-1867,1870,1872-1877,1880-1883
+src/include/functions_config.php
+  s_890d9ed0a4c8d0::t_e44c25b97c4825 99-106,592
+src/include/functions_db.php
+  s_2a0a8afc6c62d5::t_7a7419bd50baf4 133-188,564
+src/include/functions_frontendhelpers.php
+  s_733e0a5e8f63f9::t_c073952267d106 72-76,338
+src/index.php
+  s_733e0a5e8f63f9::t_f513db69cd81fa 125
+src/statistics.php
+  s_733e0a5e8f63f9::t_185b2b72bef788 114-115
+src/templates/include_header.html
+  s_890d9ed0a4c8d0::t_be8cc42b0255cb 97
+src/templates/index.html
+  s_0cfd4f19e61e91::t_425d53c80120f9 31,35,399,453
+src/admin/dbmappings.php
+  s_041ac544bf8b68::t_aff91e61a40e27 398,409,412,438-442,457,475,478,504-508,537,573-574,597-604,618
+src/admin/groups.php
+  s_041ac544bf8b68::t_602d1cd7f366e3 478-479,500-506
+src/classes/logstreamclickhouse.class.php
+  s_7034a37c187f79::t_c5358d4d3b7e7b 1268,1305
+src/classes/logstreampdo.class.php
+  s_7034a37c187f79::t_7990eb71f4cf7e 1563,1608
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "51fa4662a57e69af3ac778333b3c7279a2aa00c2",
+  "prompts": {},
+  "sessions": {
+    "s_041ac544bf8b68": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08bb3-bb30-7490-92b4-1587c636c0ff",
+        "model": "unknown"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_0cfd4f19e61e91": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08628-c7e4-7652-9878-06e83787012e",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_1c8eae3b2ceac6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b0f-d893-7832-a3d5-1d75d30c96bb",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_2a0a8afc6c62d5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08ba4-ab34-7471-a84c-b4255fc8f766",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_7034a37c187f79": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b8f-e0f7-7b53-9dc1-a2cfbbfc5340",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": null
+    },
+    "s_733e0a5e8f63f9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0859f-3fe3-73b3-aebc-34a614e8a2bf",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_890d9ed0a4c8d0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a080d7-0ad4-7372-9708-7f074241cdea",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    },
+    "s_b7d30f3593ddce": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5a9b008b-15df-4845-a8fd-4c8d6723ca01",
+        "model": "grok-4.6"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    }
+  }
+}
