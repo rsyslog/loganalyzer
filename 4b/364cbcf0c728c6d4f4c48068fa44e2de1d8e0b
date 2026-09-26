@@ -1,0 +1,110 @@
+src/include/functions_html.php
+  s_7034a37c187f79::t_714337d0538de2 22-41,57-62,64-79
+  s_7034a37c187f79::t_e671cd29382e30 63
+  s_7034a37c187f79::t_785d7aa1fe4de8 42-56
+src/include/functions_users.php
+  s_7034a37c187f79::t_cb163aedc17f44 196-197
+  s_7034a37c187f79::t_fa746329450b27 192-195,474-481,572
+  s_7034a37c187f79::t_b77c593e7f4071 233-236
+  s_7034a37c187f79::t_e2682ad5730c2c 225
+src/admin/reports.php
+  s_7034a37c187f79::t_4a6e21a255f627 175-177,1275-1277,1304-1308
+  s_7034a37c187f79::t_ef428a1b179314 1473,1481,1489,1497,1505
+  s_7034a37c187f79::t_785d7aa1fe4de8 1348
+  s_7034a37c187f79::t_6de5d50f4c537f 1330,1333-1336,1338-1340,1342-1343,1345-1346,1727
+tests/php/Unit/NumericSqlFilterTest.php
+  s_7034a37c187f79::t_e671cd29382e30 54-60,62-63,65-66
+  s_7034a37c187f79::t_9c399f1b2cbd7e 5-7
+  s_7034a37c187f79::t_ef3f097b65c5b7 61
+  s_7034a37c187f79::t_425eaf64b0af1d 64
+  s_7034a37c187f79::t_be4063b14fc818 9-13
+  s_7034a37c187f79::t_977dc46d44c83c 1-4,8,14-53,67-68
+src/classes/logstream.class.php
+  s_7034a37c187f79::t_42272e5bd7f9c9 781
+  s_7034a37c187f79::t_e671cd29382e30 782-786
+  s_7034a37c187f79::t_2b43a842d124b1 49-59,1215-1241
+e2e/tests/security-regression.spec.ts
+  s_7034a37c187f79::t_73544cd3c48c44 140
+  s_7034a37c187f79::t_750188b31f6085 155,165-168
+  s_7034a37c187f79::t_7e9620d01dd120 11,124-127,131-139,141-154,169-170
+  s_7034a37c187f79::t_2ed59d2757072f 65-99
+  s_7034a37c187f79::t_e671cd29382e30 128-130,156-164
+doc-site/docs/docker-develop.md
+  s_7034a37c187f79::t_2ded3ef620dddf 93
+doc-site/docs/docker-install.md
+  s_7034a37c187f79::t_2ded3ef620dddf 44-45
+docker/README.md
+  s_c1b12db8b09c8c::t_2eb0d47515c1a4 48
+  s_7034a37c187f79::t_2ded3ef620dddf 45-47
+src/classes/logstreamclickhouse.class.php
+  s_7034a37c187f79::t_282cf08f84719c 1457-1460
+docker/docker-compose.dev.yml
+  s_7034a37c187f79::t_04bfb99a282c95 52
+src/templates/admin/admin_reports.html
+  s_7034a37c187f79::t_4a6e21a255f627 191,313,317
+  s_7034a37c187f79::t_ef428a1b179314 77
+src/reportgenerator.php
+  s_7034a37c187f79::t_750188b31f6085 159,223
+src/classes/logstreampdo.class.php
+  s_7034a37c187f79::t_282cf08f84719c 1799-1802
+docker/env.example
+  s_7034a37c187f79::t_04bfb99a282c95 34-40
+tests/php/Integration/DatabaseSeedPatternTest.php
+  s_7034a37c187f79::t_eca78ea92e9062 31
+docker/write-config.php
+  s_7034a37c187f79::t_04bfb99a282c95 29,47
+tests/php/Unit/SecurityHelpersTest.php
+  s_7034a37c187f79::t_0ab17ff9e385f1 13,102-111
+  s_7034a37c187f79::t_192f3f334f8536 25-37,53-63,67-73
+  s_7034a37c187f79::t_785d7aa1fe4de8 38,44-52
+  s_7034a37c187f79::t_a94469a2a7fb65 39-43
+  s_7034a37c187f79::t_7cc01514328b11 12
+  s_c1b12db8b09c8c::t_548da9245ce862 112
+  s_7034a37c187f79::t_e671cd29382e30 64-66
+tests/php/Unit/ReportFileOutputTest.php
+  s_7034a37c187f79::t_6b5db70ca1377d 92-106
+  s_7034a37c187f79::t_6974f29af222ff 18
+  s_7034a37c187f79::t_0a3a0b3e37a9a4 1-17,19-91,107-125,140-141
+  s_7034a37c187f79::t_dd3ac5e0f543bc 126-139
+src/classes/logstreamdb.class.php
+  s_7034a37c187f79::t_282cf08f84719c 1476-1479
+src/reports.php
+  s_7034a37c187f79::t_4a6e21a255f627 116-117,149
+docker/docker-compose.yml
+  s_7034a37c187f79::t_04bfb99a282c95 54
+src/classes/reports/report.class.php
+  s_7034a37c187f79::t_34188d451a63db 592-593,636-662,675,689-692
+  s_7034a37c187f79::t_febc26b9e17b45 44,350-351
+  s_7034a37c187f79::t_2e289672a344c2 627,634-635,663-668,672-674,678-679,685-688,694-705,950
+  s_c1b12db8b09c8c::t_25394c7bbbd5ab 677,693
+  s_7034a37c187f79::t_50411f555d0dd6 669-671,676,680-684
+src/include/config.sample.php
+  s_7034a37c187f79::t_2e289672a344c2 86,187
+src/templates/reports.html
+  s_7034a37c187f79::t_4a6e21a255f627 82
+  s_7034a37c187f79::t_ef428a1b179314 200
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4b364cbcf0c728c6d4f4c48068fa44e2de1d8e0b",
+  "prompts": {},
+  "sessions": {
+    "s_7034a37c187f79": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b8f-e0f7-7b53-9dc1-a2cfbbfc5340",
+        "model": "gpt-6-luna"
+      },
+      "human_author": null
+    },
+    "s_c1b12db8b09c8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0b4e4-4c05-73e3-b51b-383185d7b73c",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    }
+  }
+}
