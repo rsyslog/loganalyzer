@@ -172,6 +172,9 @@ if ( isset($_GET['op']) )
 					$i = 0; // Help counter!
 					foreach ($content['SAVEDREPORTS']  as &$mySavedReport )
 					{
+						$mySavedReport['customTitle_text'] = HtmlEscapeText($mySavedReport['customTitle']);
+						$mySavedReport['customTitle_attr'] = HtmlEscapeAttribute($mySavedReport['customTitle']);
+
 						// --- Set CSS Class
 						if ( $i % 2 == 0 )
 							$mySavedReport['srcssclass'] = "line1";
@@ -1269,6 +1272,9 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 				$j = 0; // Help counter!
 				foreach ($myReport['SAVEDREPORTS']  as &$mySavedReport )
 				{
+					$mySavedReport['customTitle_text'] = HtmlEscapeText($mySavedReport['customTitle']);
+					$mySavedReport['customTitle_attr'] = HtmlEscapeAttribute($mySavedReport['customTitle']);
+
 					// --- Set CSS Class
 					if ( $j % 2 == 0 )
 						$mySavedReport['srcssclass'] = "line1";
@@ -1295,6 +1301,11 @@ $content['TITLE'] = InitPageTitle();
 $content['TITLE'] .= " :: " . $content['LN_ADMINMENU_REEPORTSOPT'];
 // --- END CREATE TITLE
 
+if ( isset($content['customTitle']) )
+	$content['customTitle_attr'] = HtmlEscapeAttribute($content['customTitle']);
+if ( isset($content['customComment']) )
+	$content['customComment_attr'] = HtmlEscapeAttribute($content['customComment']);
+
 // --- Parsen and Output
 InitTemplateParser();
 $page -> parser($content, "admin/admin_reports.html");
@@ -1316,22 +1327,25 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 	$myReportObj = $myReport["ObjRef"];
 
 	// Handle GET and POST input!
-	$content['MSG_WARNING_FORMURL'] = $_SERVER['SCRIPT_NAME'] . "?";
-	$content['MSG_CHECK_URL'] = $_SERVER['SCRIPT_NAME'] . "?";
+	$warningQuery = array();
 	foreach ($_GET as $varname => $varvalue)
 	{
-		// All variables!
-		$content['MSG_WARNING_FORMURL'] .= $varname . "=" . $varvalue . "&";
-
-		// Skip the Optimize variable!
-		if (strpos( $varname, "optimize" ) === false ) 
-			$content['MSG_CHECK_URL'] .= $varname . "=" . $varvalue . "&";
+		if ( is_scalar($varvalue) )
+			$warningQuery[(string)$varname] = (string)$varvalue;
 	}
-	foreach ($_POST as $varname => $varvalue)
-		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+	$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], $warningQuery);
 
-	// Append Force Optimice Paramater
-	$content['MSG_CHECK_URL'] .= "forcecheckoptimize=true";
+	$checkQuery = array();
+	foreach ($warningQuery as $varname => $varvalue)
+	{
+		// Skip the Optimize variable!
+		if (strpos($varname, "optimize") === false)
+			$checkQuery[$varname] = $varvalue;
+	}
+	$checkQuery['forcecheckoptimize'] = 'true';
+	$content['MSG_CHECK_URL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], $checkQuery);
+
+	$content['POST_VARIABLES'] = HtmlSafePostVariables($_POST);
 
 	// Check if optimize variable is set!
 	if ( isset($_GET['optimize']) )
@@ -1456,7 +1470,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ADD_MISSINGFIELDS'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-				$content['MSG_WARNING_FORMURL'] .= "optimize=addfields"; // Addmissing fields
+				$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], array_merge($warningQuery, array('optimize' => 'addfields'))); // Add missing fields
 			}
 			else if ( $res == ERROR_DB_INDEXESMISSING ) 
 			{
@@ -1464,7 +1478,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_INDEXES'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-				$content['MSG_WARNING_FORMURL'] .= "optimize=indexes"; // Add missing INDEXES 
+				$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], array_merge($warningQuery, array('optimize' => 'indexes'))); // Add missing indexes
 			}
 			else if ( $res == ERROR_DB_TRIGGERMISSING ) 
 			{
@@ -1472,7 +1486,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_OPTIMIZE_TRIGGER'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-				$content['MSG_WARNING_FORMURL'] .= "optimize=trigger"; // Add missing TRIGGERS
+				$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], array_merge($warningQuery, array('optimize' => 'trigger'))); // Add missing triggers
 			}
 			else if ( $res == ERROR_DB_CHECKSUMERROR ) 
 			{
@@ -1480,7 +1494,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_CHANGE_CHECKSUM'], $content['SOURCES'][$mySourceID]['Name'] );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-				$content['MSG_WARNING_FORMURL'] .= "optimize=checksum"; // Change Checksum field!
+				$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], array_merge($warningQuery, array('optimize' => 'checksum'))); // Change checksum field
 			}
 			else 
 			{
@@ -1488,7 +1502,7 @@ function CheckConfiguredLogStreamSource($myReport, $mySourceID)
 				$content['MSG_WARNING_CLASS'] = 'PriorityWarning'; 
 				$content['MSG_WARNING_DETAILS'] = GetAndReplaceLangStr( $content['LN_REPORTS_ERROR_FAILED_SOURCE_CHECK'], $content['SOURCES'][$mySourceID]['Name'], GetErrorMessage($res) );
 				$content['MSG_WARNING_SUBMITFORM'] = "true"; 
-				$content['MSG_WARNING_FORMURL'] .= "forcecheckoptimize=true"; // Change Checksum field!
+				$content['MSG_WARNING_FORMURL'] = HtmlSafeUrlAttributeFromQuery($_SERVER['SCRIPT_NAME'], array_merge($warningQuery, array('forcecheckoptimize' => 'true')));
 			}
 		}
 		else

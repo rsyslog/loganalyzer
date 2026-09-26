@@ -90,6 +90,7 @@ To consume from GHCR, set **`web.image`** (**`ghcr.io/<owner>/<repo>:<tag>`**) i
 | `LOGANALYZER_DISK_SOURCE_PATHS` | **`.env`** / unset | same | Comma-separated container paths ⇒ syslog disk rows on first seed |
 | `LOGANALYZER_DISK_SOURCES` | **`.env`** / unset | same | **`;;`**-separated records, **`|`** fields — see **`docker/env.example`** |
 | `LOGANALYZER_DISK_ALLOWED_EXTRA` | **`.env`** / unset | same | Extra **`DiskAllowed`** directory prefixes |
+| `LOGANALYZER_REPORT_OUTPUT_DIR` | unset | unset | Optional writable container directory outside the webroot for saved `.html` / `.pdf` reports; empty disables file output |
 | `LOGANALYZER_CONFIG_PATH` | **`/persist/config.php`** *(typical default stack)* | unset | Persist **`config.php`** outside the layer and symlink into docroot |
 
 ---

@@ -556,6 +556,7 @@ function OutpuCustomErrorMessage() {
 
 	// Create template Parser and output results
 	$content['TITLE'] .= " :: " . $content['LN_GEN_ERRORDETAILS'];
+	$content['error_details_html'] = HtmlEscapeErrorDetails(isset($content['error_details']) ? $content['error_details'] : '');
 	InitTemplateParser();
 	$page -> parser($content, "chartgenerator.html");
 	$page -> output(); 

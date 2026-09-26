@@ -8,6 +8,7 @@ const normalUser = `${marker}-user`;
 const normalPass = 'loganalyzer-e2e-pass';
 const storedName = `${marker} <script>window.loganalyzerXss=1</script>`;
 const storedDescription = `${marker} <img src=x onerror=window.loganalyzerXss=2>`;
+const savedReportTitle = `${marker} <script>window.savedReportTitleXss=1</script>`;
 
 async function login(page: Page, username: string, password: string): Promise<void> {
   await page.goto('/login.php');
@@ -61,6 +62,41 @@ test.describe('security remediation regressions', () => {
     expect(await response.text()).not.toMatch(/SQL syntax|Unknown column|You have an error/i);
   });
 
+  test('malformed numeric facility filters do not reach a SQL query', async ({ page }) => {
+    await login(page, normalUser, normalPass);
+    const filter = 'facility:16,unknown_facility,16 OR 1=1';
+    const response = await page.goto(`/index.php?filter=${encodeURIComponent(filter)}&search=Search`);
+    expect(response?.status()).toBeLessThan(500);
+    await expect(page.locator('body')).not.toContainText(/SQL syntax|Fatal error|You have an error in your SQL/i);
+  });
+
+  test('login and logout rotate session IDs across privilege changes', async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const sessionId = async () => (await context.cookies()).find(cookie => cookie.name === 'PHPSESSID')?.value;
+    try {
+      await page.goto('/login.php');
+      const anonymousId = await sessionId();
+      expect(anonymousId).toBeTruthy();
+      await login(page, normalUser, normalPass);
+      const userId = await sessionId();
+      expect(userId).toBeTruthy();
+      expect(userId).not.toBe(anonymousId);
+
+      await page.goto('/login.php?op=logoff');
+      const loggedOutId = await sessionId();
+      expect(loggedOutId).toBeTruthy();
+      expect(loggedOutId).not.toBe(userId);
+
+      await login(page, adminUser, adminPass);
+      expect(await sessionId()).not.toBe(loggedOutId);
+      await page.goto('/admin/users.php');
+      await expect(page.locator('body')).not.toContainText(/not allowed|permission denied/i);
+    } finally {
+      await context.close();
+    }
+  });
+
   test('administrator mapping writes treat display names as values', async ({ page }) => {
     await login(page, adminUser, adminPass);
     const response = await page.request.post('/admin/dbmappings.php', {
@@ -85,6 +121,56 @@ test.describe('security remediation regressions', () => {
     await expect(page.locator('script').filter({ hasText: 'resultXss' })).toHaveCount(0);
     const refresh = page.locator('meta[http-equiv="REFRESH"]');
     await expect(refresh).toHaveAttribute('content', /URL=index\.php/i);
+
+    const backslashTarget = `${String.fromCharCode(92).repeat(2)}evil.test`;
+    await page.goto(`/admin/result.php?msg=${encodeURIComponent(message)}&redir=${encodeURIComponent(backslashTarget)}`);
+    await expect(page.locator('meta[http-equiv="REFRESH"]')).toHaveAttribute('content', /URL=index\.php/i);
+
+    await page.goto(`/admin/result.php?msg=${encodeURIComponent(message)}&redir=${encodeURIComponent(' //evil.test')}`);
+    await expect(page.locator('meta[http-equiv="REFRESH"]')).toHaveAttribute('content', /URL=index\.php/i);
+
+    await page.goto(`/admin/result.php?msg=${encodeURIComponent(message)}&redir=${encodeURIComponent('/reports.php')}`);
+    await expect(page.locator('meta[http-equiv="REFRESH"]')).toHaveAttribute('content', /URL=\/reports\.php/i);
+  });
+
+  test('normal-user saved report titles stay inert in cross-user report lists', async ({ browser }) => {
+    const normalPage = await browser.newPage();
+    await login(normalPage, normalUser, normalPass);
+    await normalPage.goto('/reports.php');
+    const reportHref = await normalPage.locator('a[href*="admin/reports.php?op=details&id="]').first().getAttribute('href');
+    expect(reportHref).toBeTruthy();
+    const reportId = new URL(reportHref!, 'http://localhost/').searchParams.get('id');
+    if (!reportId) throw new Error('Could not determine the report identifier for the saved-report regression.');
+
+    await normalPage.goto(`/admin/reports.php?op=addsavedreport&id=${reportId}`);
+    await expect(normalPage.locator('#savedreportform')).toBeVisible();
+    await normalPage.locator('input[name="report_customtitle"]').fill(savedReportTitle);
+    await Promise.all([
+      normalPage.waitForURL(/\/reports\.php(?:\?|$)/i, { timeout: loginTimeout }),
+      normalPage.locator('button[name="op"][value="addsavedreport_return"]').click(),
+    ]);
+    await normalPage.close();
+
+    const adminPage = await browser.newPage();
+    await login(adminPage, adminUser, adminPass);
+    await adminPage.goto('/reports.php');
+    await expect(adminPage.getByRole('link', { name: savedReportTitle, exact: true })).toHaveCount(1);
+    const savedReportRow = adminPage.locator('tr').filter({ hasText: savedReportTitle }).last();
+    const editHref = await savedReportRow.locator('a[href*="op=editsavedreport"]').getAttribute('href');
+    if (!editHref) throw new Error('Could not find the saved report edit link for the attribute regression.');
+    await adminPage.goto(editHref);
+    await expect(adminPage.locator('input[name="report_customtitle"]')).toHaveValue(savedReportTitle);
+    expect(await adminPage.evaluate(() => (window as any).savedReportTitleXss)).toBeUndefined();
+
+    await adminPage.goto('/reports.php');
+    const reportRowAfterEdit = adminPage.locator('tr').filter({ hasText: savedReportTitle }).last();
+    const runHref = await reportRowAfterEdit.locator('a[href*="reportgenerator.php?op=runreport"]').getAttribute('href');
+    if (!runHref) throw new Error('Could not find the saved report run link for the error regression.');
+    await adminPage.goto(runHref);
+    await expect(adminPage.locator('.PriorityError')).toBeVisible();
+    await expect(adminPage.locator('body')).toContainText(savedReportTitle);
+    expect(await adminPage.evaluate(() => (window as any).savedReportTitleXss)).toBeUndefined();
+    await adminPage.close();
   });
 
   test('normal-user source output is escaped for the creator and administrator', async ({ browser }) => {

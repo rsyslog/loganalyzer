@@ -1296,6 +1296,7 @@ function InitTemplateParser()
 	$page -> set_path ( $gl_root_path . "templates/" );
 	
 	// Append correct Character encoding to HTML Header
+	$content['HeaderDefaultEncoding'] = HtmlOutputCharset($content['HeaderDefaultEncoding']);
 	$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=' . HtmlEscapeAttribute($content['HeaderDefaultEncoding']) . '" />';
 	$content['ERROR_MSG_HTML'] = HtmlEscapeText(isset($content['ERROR_MSG']) ? $content['ERROR_MSG'] : '');
 	$content['DETAILEDERROR_HTML'] = HtmlEscapeText(isset($content['detailederror']) ? $content['detailederror'] : '');
@@ -1350,29 +1351,6 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 				return false; 
 		}
 	}
-}
-
-function SecureRedirect( $szRedir ) 
-{
-	if ( !is_scalar($szRedir) )
-		return "index.php";
-
-	$szRedir = (string)$szRedir;
-	if ( $szRedir === '' || preg_match('/[\x00-\x1F\x7F\\]/', $szRedir) )
-		return "index.php";
-
-	$parsed = parse_url($szRedir);
-	if ( $parsed === false || isset($parsed['scheme']) || isset($parsed['host']) || isset($parsed['user']) || isset($parsed['pass']) || isset($parsed['port']) )
-		return "index.php";
-	if ( substr($szRedir, 0, 2) === '//' )
-		return "index.php";
-
-	$path = isset($parsed['path']) ? (string)$parsed['path'] : '';
-	$decodedPath = rawurldecode($path);
-	if ( $path === '' || substr($path, 0, 1) === '/' || substr($decodedPath, 0, 1) === '/' || preg_match('#(^|/)\.\.?(/|$)#', $decodedPath) )
-		return "index.php";
-
-	return $szRedir;
 }
 
 function RedirectPage( $newpage )

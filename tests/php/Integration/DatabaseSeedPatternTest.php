@@ -28,6 +28,7 @@ final class DatabaseSeedPatternTest extends TestCase
         if ($m->connect_error) {
             self::fail('MySQL root connect failed: ' . $m->connect_error);
         }
+        self::assertTrue($m->ping(), 'The seeded MySQL connection should respond to ping.');
         $m->close();
     }
 }

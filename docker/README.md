@@ -42,6 +42,10 @@ Paths in **`LOGANALYZER_DISK_SOURCE_PATHS`** / **`LOGANALYZER_DISK_SOURCES`** mu
 2. Set the matching paths in `.env`, e.g. `LOGANALYZER_DISK_SOURCE_PATHS=/mnt/hostlog/syslog`.
 3. **First seed only** creates those DB sources; changing paths later usually means resetting the **`loganalyzer_config`** volume and/or **`LOGANALYZER_OVERWRITE_CONFIG`** — see the [handbook — Docker install](https://rsyslog.github.io/loganalyzer/docker-install/).
 
+### Saved report file output
+
+File output is disabled unless `ReportOutputDirectory` is set in `config.php` (Docker: `LOGANALYZER_REPORT_OUTPUT_DIR` when generating config). Create and mount a dedicated, writable directory outside `/var/www/html`; never expose it as an executable web path. Saved reports may write only a simple `name.html` or `name.pdf` filename matching their output format. Old saved reports with absolute paths or other extensions must be reviewed and edited before their cron jobs run; they are not migrated automatically. The default stack persists `config.php`, so changing the environment variable alone does not update an existing installation. Edit the persisted config or regenerate it deliberately; do not reset the database or volumes just for this setting.
+
 ### Stop, reset, reinstall
 
 - **Stop without deleting data:** `docker compose --project-directory . -f docker/docker-compose.yml down`

@@ -1473,6 +1473,10 @@ class LogStreamDB extends LogStream {
 									}
 									break;
 								case FILTER_TYPE_NUMBER:
+									$numeric = self::NormalizeNumericFilterValue($myfilter[FILTER_VALUE]);
+									if ( $numeric === null )
+										break;
+									$myfilter[FILTER_VALUE] = $numeric;
 									// --- Check if user wants to include or exclude!
 									if ( $myfilter[FILTER_MODE] & FILTER_MODE_EXCLUDE )
 									{

@@ -213,6 +213,7 @@ if ( $content['error_occured'] || $content['report_success'] )
 		$content['TITLE'] .= " :: " . $content['LN_GEN_SUCCESS_WHILEREPORTGEN'];
 
 	// Create template Parser and output results
+	$content['error_details_html'] = HtmlEscapeErrorDetails(isset($content['error_details']) ? $content['error_details'] : '');
 	InitTemplateParser();
 	$page -> parser($content, "reportgenerator.html");
 	$page -> output(); 

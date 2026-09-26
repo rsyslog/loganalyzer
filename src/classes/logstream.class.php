@@ -47,6 +47,15 @@ require_once($gl_root_path . 'include/constants_logstream.php');
 
 
 abstract class LogStream {
+	/** Only unsigned decimal integers may be interpolated into numeric SQL filters. */
+	public static function NormalizeNumericFilterValue($value)
+	{
+		if ( !is_int($value) && !is_string($value) )
+			return null;
+		$value = (string)$value;
+		return preg_match('/\A[0-9]{1,20}\z/D', $value) ? $value : null;
+	}
+
 	protected $_readDirection = EnumReadDirection::Forward;
 	protected $_sortOrder = EnumSortingOrder::Descending;
 	protected $_filters = null;
@@ -769,8 +778,11 @@ abstract class LogStream {
 			$tmpEntries = preg_split($szFilterRgx, $szFilters, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 			//echo "DEBUG:<pre>"; print_r ($tmpEntries ); echo "</pre>";
 
-			foreach($tmpEntries as $myEntry) 
+			foreach($tmpEntries as $myEntry)
 			{
+				// A continue in any parsing branch must not leak temporary state into the next filter.
+				unset($tmpArray, $tmpValues, $tmpTimeMode, $tmpKeyName, $tmpFilterType);
+
 				// Continue if empty filter!
 				if ( strlen(trim($myEntry)) <= 0 ) 
 					continue;
@@ -1198,6 +1210,32 @@ abstract class LogStream {
 								// Unknown filter
 								$tmpFilterType = FILTER_TYPE_UNKNOWN;
 						//done!
+					}
+
+					// Conversion of facility/severity names may fail. Never retain the
+					// original string in a numeric filter (including list entries).
+					if ( $tmpFilterType == FILTER_TYPE_NUMBER )
+					{
+						if ( isset($tmpValues) )
+						{
+							foreach ( $tmpValues as $key => $value )
+							{
+								$numeric = self::NormalizeNumericFilterValue($value[FILTER_TMP_VALUE]);
+								if ( $numeric === null )
+									unset($tmpValues[$key]);
+								else
+									$tmpValues[$key][FILTER_TMP_VALUE] = $numeric;
+							}
+							if ( count($tmpValues) == 0 )
+								continue;
+						}
+						else
+					{
+							$numeric = self::NormalizeNumericFilterValue($tmpArray[FILTER_TMP_VALUE]);
+							if ( $numeric === null )
+								continue;
+							$tmpArray[FILTER_TMP_VALUE] = $numeric;
+						}
 					}
 
 					// Add to detected filter array

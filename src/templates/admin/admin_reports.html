@@ -74,7 +74,7 @@
 		<tr>
 			<td align="left" class="{srcssclass}" colspan="2">
 			<img src="{MENU_REPORTS}" width="16">
-			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle}</a>
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle_text}</a>
 			</td>
 			<td align="center" class="{srcssclass}">
 				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_PLAY_GREEN}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
@@ -188,7 +188,7 @@
 		<tr>
 			<td align="left" class="{srcssclass}">
 			<img src="{MENU_REPORTS}" width="16">
-			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle_text}</a>
 			</td>
 			<td align="center" class="{srcssclass}">
 				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
@@ -310,11 +310,11 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_REPORTS_CUSTOMTITLE}</b></td>
-				<td align="left" class="line1" width="70%"><input type="text" name="report_customtitle" size="80" maxlength="255" value="{customTitle}" class="maxwidth"></td>
+				<td align="left" class="line1" width="70%"><input type="text" name="report_customtitle" size="80" maxlength="255" value="{customTitle_attr}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_REPORTS_CUSTOMCOMMENT}</b></td>
-				<td align="left" class="line2"><input type="text" name="report_customcomment" size="80" maxlength="255" value="{customComment}" class="maxwidth"></td>
+				<td align="left" class="line2"><input type="text" name="report_customcomment" size="80" maxlength="255" value="{customComment_attr}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2_naked" valign="top" nowrap><b>{LN_REPORTS_FILTERSTRING}</b></td>

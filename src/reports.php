@@ -113,6 +113,8 @@ if ( isset($content['REPORTS']) )
 			$j = 0; // Help counter!
 			foreach ($myReport['SAVEDREPORTS']  as &$mySavedReport )
 			{
+				$mySavedReport['customTitle_text'] = HtmlEscapeText($mySavedReport['customTitle']);
+
 				// --- Set CSS Class
 				if ( $j % 2 == 0 )
 					$mySavedReport['srcssclass'] = "line1";

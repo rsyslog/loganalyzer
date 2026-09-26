@@ -41,6 +41,7 @@ if ( !defined('IN_PHPLOGCON') )
 require_once($gl_root_path . 'classes/enums.class.php');
 require_once($gl_root_path . 'include/constants_errors.php');
 require_once($gl_root_path . 'include/constants_logstream.php');
+require_once($gl_root_path . 'include/functions_html.php');
 // --- 
 
 // Include LogStream facility
@@ -346,8 +347,8 @@ abstract class Report {
 	{
 		global $content, $fields; 
 
-		$content["report_title"] = $this->GetCustomTitle();
-		$content["report_comment"] = $this->GetCustomComment();
+		$content["report_title"] = HtmlEscapeText($this->GetCustomTitle());
+		$content["report_comment"] = HtmlEscapeText($this->GetCustomComment());
 		$content["report_version"] = $this->GetReportVersion();
 		$content["report_gentime"] = date(DATE_RFC822);
 
@@ -588,6 +589,8 @@ abstract class Report {
 		// Helper variable, init with buffer
 		$szFinalOutput = $szOutputBuffer;
 		$res = SUCCESS; 
+		if ( $this->_outputTarget == REPORT_TARGET_FILE && $this->ValidateReportFileTarget($szErrorStr) === false )
+			return ERROR;
 
 		// Simple HTML Output!
 		if ( $this->_outputFormat == REPORT_OUTPUT_HTML ) 
@@ -621,39 +624,83 @@ abstract class Report {
 		}
 		else if ( $this->_outputTarget == REPORT_TARGET_FILE ) 
 		{
-			// Get Filename first
-			if ( isset($this->_arrOutputTargetDetails['filename']) )
-			{
-				// Get Filename property 
-				$szFilename = $this->_arrOutputTargetDetails['filename']; 
-
-				// Create file and Write Report into it!
-				$handle = @fopen($szFilename, "w");
-				if ( $handle === false ) 
-				{
-					$szErrorStr = "Could not create '" . $szFilename . "'!"; 
-					$res = ERROR; 
-				}
-				else
-				{
-					fwrite($handle, $szFinalOutput);
-					fflush($handle);
-					fclose($handle);
-					
-					// For result
-					$szErrorStr = "Results were saved into '" . $szFilename . "'"; 
-					$res = SUCCESS; 
-				}
-			}
-			else
-			{
-				$szErrorStr = "The parameter 'filename' was missing."; 
-				$res = ERROR; 
-			}
+			$res = $this->WriteReportFile($szFinalOutput, $szErrorStr);
 		}
 
 		// return result
 		return $res; 
+	}
+
+	/** Save only into the operator-controlled, non-web-served report directory. */
+	protected function WriteReportFile($output, &$error)
+	{
+		$target = $this->ValidateReportFileTarget($error);
+		if ( $target === false )
+			return ERROR;
+		$directory = dirname($target);
+
+		// A newly created temporary file and rename avoid following an existing
+		// target symlink and avoid partially written scheduled reports.
+		$temporary = @tempnam($directory, '.loganalyzer-');
+		if ( $temporary === false )
+		{
+			$error = 'Could not create a temporary report file.';
+			return ERROR;
+		}
+		$written = @file_put_contents($temporary, $output);
+		if ( $written !== strlen($output) || is_dir($target) || !@rename($temporary, $target) )
+		{
+			@unlink($temporary);
+			$error = 'Could not save the report file.';
+			return ERROR;
+		}
+		$error = "Results were saved into '" . $target . "'";
+		return SUCCESS;
+	}
+
+	private function ValidateReportFileTarget(&$error)
+	{
+		global $gl_root_path;
+
+		$configured = GetConfigSetting('ReportOutputDirectory', '');
+		$directory = is_string($configured) && $configured !== '' ? realpath($configured) : false;
+		$webroot = realpath($gl_root_path);
+		$documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
+		if ( $directory === false || $webroot === false || !is_dir($directory) || !is_writable($directory)
+			|| (DIRECTORY_SEPARATOR !== '\\' && (fileperms($directory) & 0002) !== 0)
+			|| self::PathIsWithin($directory, $webroot)
+			|| ($documentRoot !== false && self::PathIsWithin($directory, $documentRoot)) )
+		{
+			$error = 'Report file output requires a writable ReportOutputDirectory outside the webroot.';
+			return false;
+		}
+
+		$filename = isset($this->_arrOutputTargetDetails['filename'])
+			? $this->_arrOutputTargetDetails['filename'] : '';
+		if ( $this->_outputFormat != REPORT_OUTPUT_HTML && $this->_outputFormat != REPORT_OUTPUT_PDF )
+		{
+			$error = 'Unsupported report output format.';
+			return false;
+		}
+		$extension = $this->_outputFormat == REPORT_OUTPUT_PDF ? 'pdf' : 'html';
+		if ( !is_string($filename) || !preg_match('/\A[A-Za-z0-9_-]+\.' . $extension . '\z/iD', $filename) )
+		{
+			$error = 'Report filename must be a simple .' . $extension . ' name without a path.';
+			return false;
+		}
+		return $directory . DIRECTORY_SEPARATOR . $filename;
+	}
+
+	private static function PathIsWithin($path, $root)
+	{
+		$path = rtrim(str_replace('\\', '/', $path), '/');
+		$root = rtrim(str_replace('\\', '/', $root), '/');
+		if ( DIRECTORY_SEPARATOR === '\\' )
+		{
+			$path = strtolower($path);
+			$root = strtolower($root);
+		}
+		return $path === $root || strpos($path, $root . '/') === 0;
 	}
 
 

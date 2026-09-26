@@ -388,6 +388,7 @@ if ( !$content['error_occured'] )
 // --- Convert and Output
 if ( $content['error_occured'] ) 
 {
+	$content['error_details_html'] = HtmlEscapeErrorDetails(isset($content['error_details']) ? $content['error_details'] : '');
 	InitTemplateParser();
 	$page -> parser($content, "export.html");
 	$page -> output(); 
