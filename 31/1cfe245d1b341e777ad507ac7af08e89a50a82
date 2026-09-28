@@ -1,0 +1,19 @@
+ChangeLog
+  s_7034a37c187f79::t_7009c167cf448a 2,4-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "311cfe245d1b341e777ad507ac7af08e89a50a82",
+  "prompts": {},
+  "sessions": {
+    "s_7034a37c187f79": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b8f-e0f7-7b53-9dc1-a2cfbbfc5340",
+        "model": "gpt-6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    }
+  }
+}
