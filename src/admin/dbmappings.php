@@ -395,7 +395,7 @@ if ( isset($_POST['op']) )
 		else // Now SUBOP means normal processing!
 		{
 			// Now we convert fr DB insert!
-			$content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']);
+			$content['DisplayName'] = DB_StripSlahes((string)$_POST['DisplayName']);
 
 			// Everything was alright, so we go to the next step!
 			if ( $_POST['op'] == "addnewdbmp" )
@@ -406,10 +406,10 @@ if ( isset($_POST['op']) )
 					// Copy columns ID's
 					foreach ($_POST['Mappings'] as $myColKey)
 					{
-						if ( isset($_POST[$myColKey]) && strlen($_POST[$myColKey]) > 0 ) 
+						if ( DB_IsSafeIdentifier($myColKey) && isset($_POST[$myColKey]) && is_scalar($_POST[$myColKey]) && strlen((string)$_POST[$myColKey]) > 0 && DB_IsSafeIdentifier($_POST[$myColKey]) )
 						{
 							// Get FieldName
-							$myMappingFieldName = DB_StripSlahes($_POST[$myColKey]);
+							$myMappingFieldName = DB_StripSlahes((string)$_POST[$myColKey]);
 
 							if ( isset($content['SUBMAPPINGS']) ) 
 								$content['SUBMAPPINGS'] .= "," . $myColKey;
@@ -435,12 +435,11 @@ if ( isset($_POST['op']) )
 					if ( !isset($content['ISERROR']) ) 
 					{
 						// Add custom search now!
-						$sqlquery = "INSERT INTO " . DB_MAPPINGS. " (DisplayName, Mappings) 
-						VALUES ('" . $content['DisplayName'] . "', 
-								'" . $content['SUBMAPPINGS'] . "' 
-								)";
-						$result = DB_Query($sqlquery);
-						DB_FreeQuery($result);
+						DB_ExecutePrepared(
+							"INSERT INTO " . DB_MAPPINGS . " (DisplayName, Mappings) VALUES (?, ?)",
+							"ss",
+							array($content['DisplayName'], $content['SUBMAPPINGS'])
+						);
 						
 						// Do the final redirect
 						RedirectResult( GetAndReplaceLangStr( $content['LN_DBMP_HASBEENADDED'], DB_StripSlahes($content['DisplayName']) ) , "dbmappings.php" );
@@ -455,7 +454,7 @@ if ( isset($_POST['op']) )
 			else if ( $_POST['op'] == "editdbmp" )
 			{
 				// Now we convert fr DB insert!
-				$content['DisplayName'] = DB_RemoveBadChars($_POST['DisplayName']);
+				$content['DisplayName'] = DB_StripSlahes((string)$_POST['DisplayName']);
 
 				$result = DB_Query("SELECT ID FROM " . DB_MAPPINGS . " WHERE ID = " . $content['DBMPID']);
 				$myrow = DB_GetSingleRow($result, true);
@@ -473,10 +472,10 @@ if ( isset($_POST['op']) )
 						unset($content['SUBMAPPINGS']);
 						foreach ($_POST['Mappings'] as $myColKey)
 						{
-							if ( isset($_POST[$myColKey]) && strlen($_POST[$myColKey]) > 0 ) 
+							if ( DB_IsSafeIdentifier($myColKey) && isset($_POST[$myColKey]) && is_scalar($_POST[$myColKey]) && strlen((string)$_POST[$myColKey]) > 0 && DB_IsSafeIdentifier($_POST[$myColKey]) )
 							{
 								// Get FieldName
-								$myMappingFieldName = DB_StripSlahes($_POST[$myColKey]);
+								$myMappingFieldName = DB_StripSlahes((string)$_POST[$myColKey]);
 
 								if ( isset($content['SUBMAPPINGS']) ) 
 									$content['SUBMAPPINGS'] .= "," . $myColKey;
@@ -502,11 +501,11 @@ if ( isset($_POST['op']) )
 						if ( !isset($content['ISERROR']) ) 
 						{
 							// Edit the Search Entry now!
-							$result = DB_Query("UPDATE " . DB_MAPPINGS . " SET 
-								DisplayName = '" . $content['DisplayName'] . "', 
-								Mappings = '" . $content['SUBMAPPINGS'] . "' 
-								WHERE ID = " . $content['DBMPID']);
-							DB_FreeQuery($result);
+							DB_ExecutePrepared(
+								"UPDATE " . DB_MAPPINGS . " SET DisplayName = ?, Mappings = ? WHERE ID = ?",
+								"ssi",
+								array($content['DisplayName'], $content['SUBMAPPINGS'], intval($content['DBMPID']))
+							);
 
 							// Done redirect!
 							RedirectResult( GetAndReplaceLangStr( $content['LN_DBMP_HASBEENEDIT'], DB_StripSlahes($content['DisplayName']) ) , "dbmappings.php" );
@@ -535,6 +534,7 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	$i = 0; // Help counter!
 	foreach ($content['DBMP'] as &$myMappings )
 	{
+		$myMappings['DisplayNameHtml'] = HtmlEscapeText(isset($myMappings['DisplayName']) ? $myMappings['DisplayName'] : '');
 		// So internal Views can not be edited but seen
 		if ( is_numeric($myMappings['ID']) )
 		{
@@ -570,6 +570,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 			// Set other fields
 			$myMappings['MYMAPPINGS'][$myKey]['FieldID'] = $myKey;
 			$myMappings['MYMAPPINGS'][$myKey]['FieldMapping'] = $myMapping;
+			$myMappings['MYMAPPINGS'][$myKey]['FieldCaptionHtml'] = HtmlEscapeText($myMappings['MYMAPPINGS'][$myKey]['FieldCaption']);
+			$myMappings['MYMAPPINGS'][$myKey]['FieldMappingHtml'] = HtmlEscapeText($myMapping);
 			
 			// Set seperator
 			if ( $iBegin )
@@ -592,6 +594,14 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	// --- 
 }
+
+$content['DisplayNameHtml'] = HtmlEscapeAttribute(isset($content['DisplayName']) ? $content['DisplayName'] : '');
+if ( isset($content['SUBMAPPINGS']) && is_array($content['SUBMAPPINGS']) )
+	foreach ($content['SUBMAPPINGS'] as &$mappingEntry)
+	{
+		if ( isset($mappingEntry['MappingDbFieldName']) )
+			$mappingEntry['MappingDbFieldNameHtml'] = HtmlEscapeAttribute($mappingEntry['MappingDbFieldName']);
+	}
 // --- END Custom Code
 
 // --- BEGIN CREATE TITLE

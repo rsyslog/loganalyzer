@@ -155,7 +155,8 @@ if ( isset($_GET['op']) )
 		$content['chart_defaultfilter'] = ""; 
 		// Chart Field
 		$content['chart_field'] = SYSLOG_HOST;
-	        $content['chart_orderby'] = '';	
+	        $content['chart_orderby'] = 'count_desc';
+		$content['CHARTORDERBY'] = GetChartOrderOptions($content['chart_orderby']);
 		CreateChartFields($content['chart_field']);
 
 		// COMMON Fields
@@ -216,7 +217,8 @@ if ( isset($_GET['op']) )
 				// Chart Field
 				$content['chart_field'] = $myChart['chart_field'];
 				CreateChartFields($content['chart_field']);
-				$content['chart_orderby'] = $myChart['chart_orderby'];
+				$content['chart_orderby'] = NormalizeChartOrderKey($myChart['chart_orderby']);
+				$content['CHARTORDERBY'] = GetChartOrderOptions($content['chart_orderby']);
 
 				// COMMON Fields
 				$content['userid'] = $myChart['userid'];
@@ -318,7 +320,8 @@ if ( isset($_POST['op']) )
 	if ( isset($_POST['chart_type']) ) { $content['chart_type'] = intval($_POST['chart_type']); }
 	if ( isset($_POST['chart_width']) ) { $content['chart_width'] = intval($_POST['chart_width']); } else {$content['chart_width'] = 400; }
 	if ( isset($_POST['chart_field']) ) { $content['chart_field'] = DB_RemoveBadChars($_POST['chart_field']); }
-	if ( isset($_POST['chart_orderby']) ) { $content['chart_orderby'] = DB_RemoveBadChars($_POST['chart_orderby']); }
+	if ( isset($_POST['chart_orderby']) ) { $content['chart_orderby'] = NormalizeChartOrderKey($_POST['chart_orderby']); }
+	else { $content['chart_orderby'] = 'count_desc'; }
 	if ( isset($_POST['maxrecords']) ) { $content['maxrecords'] = intval($_POST['maxrecords']); }
 	if ( isset($_POST['showpercent']) ) { $content['showpercent'] = intval($_POST['showpercent']); } else {$content['showpercent'] = 0; }
 	if ( isset($_POST['chart_defaultfilter']) ) { $content['chart_defaultfilter'] = DB_RemoveBadChars($_POST['chart_defaultfilter']); }

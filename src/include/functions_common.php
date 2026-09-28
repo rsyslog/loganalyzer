@@ -44,6 +44,8 @@ include_once($gl_root_path . 'include/constants_logstream.php');
 
 include_once($gl_root_path . 'classes/class_template.php');
 include_once($gl_root_path . 'include/functions_themes.php');
+include_once($gl_root_path . 'include/functions_html.php');
+include_once($gl_root_path . 'include/functions_chart.php');
 include_once($gl_root_path . 'include/functions_db.php');
 include_once($gl_root_path . 'include/functions_config.php');
 // --- 
@@ -1055,7 +1057,7 @@ function InitConfigurationValues()
 
 	// --- Handle Optional Logo URL!
 	if ( strlen(GetConfigSetting("PhplogconLogoUrl", false)) > 0 ) 
-		$content['EXTRA_PHPLOGCON_LOGO'] = $CFG['PhplogconLogoUrl'];
+		$content['EXTRA_PHPLOGCON_LOGO'] = HtmlEscapeAttribute(SafeImageUrl($CFG['PhplogconLogoUrl'], $content['BASEPATH'] . "images/main/Header-Logo.png"));
 	else
 		$content['PhplogconLogoUrl'] = ""; // Init Option
 	// --- 
@@ -1168,7 +1170,7 @@ function DieWithErrorMsg( $szerrmsg )
 			"</td></tr>" . 
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Errordetails:</td>" .
 			"<td class=\"tableBackground\" align=\"left\">" .
-			$szerrmsg .
+			HtmlEscapeText($szerrmsg) .
 			"</td></tr></table>");
 		
 		// Print Detail error's if available
@@ -1177,7 +1179,7 @@ function DieWithErrorMsg( $szerrmsg )
 			print ("<table width=\"600\" align=\"center\" class=\"with_border_alternate ErrorMsg\" cellpadding=\"2\">" .
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Additional Errordetails:</td>" .
 			"<td class=\"tableBackground\" align=\"left\">" .
-			$content['detailederror'] .
+			HtmlEscapeText($content['detailederror']) .
 			"</td></tr></table>");
 		}
 
@@ -1212,16 +1214,20 @@ function DieWithFriendlyErrorMsg( $szerrmsg, $szLink = "", $szLinkLable = "" )
 			"</td></tr>" . 
 			"<tr><td class=\"cellmenu1_naked\" align=\"left\">Error:</td>" .
 			"<td class=\"tableBackground\" align=\"left\">" .
-			$szerrmsg .
+			HtmlEscapeText($szerrmsg) .
 			"</td></tr>";
 		if ( GetConfigSetting("MiscShowDebugMsg", 0, CFGLEVEL_USER) == 1 && isset($content['detailederror']) && strlen($content['detailederror']) > 0) {
 			echo "<tr><td class=\"cellmenu1_naked\" align=\"left\">Details:</td>" .
 			"<td class=\"tableBackground\" align=\"left\">" .
-			$content['detailederror'] . 
+			HtmlEscapeText($content['detailederror']) .
 			"</td></tr>";
 		}
-		if ( strlen($szLink) > 0 && strlen($szLinkLable) > 0 )
-			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"$gl_root_path$szLink\" target=\"\">$szLinkLable</a></td></tr>";
+		if ( strlen((string)$szLink) > 0 && strlen((string)$szLinkLable) > 0 )
+		{
+			$safeLink = HtmlEscapeAttribute(SecureRedirect($szLink));
+			$safeLinkLabel = HtmlEscapeText($szLinkLable);
+			echo "<tr><td class=\"tableBackground\" align=\"center\" colspan=\"2\"><a href=\"" . HtmlEscapeAttribute($gl_root_path) . $safeLink . "\" target=\"\">" . $safeLinkLabel . "</a></td></tr>";
+		}
 		echo 
 			"</table>" . 
 			"</body></html>"; 
@@ -1258,7 +1264,7 @@ function InitPageTitle()
 		$szReturn .= " :: " . $content['LN_ADMIN_CENTER'] . " :: ";
 
 	// return result
-	return $szReturn;
+	return HtmlEscapeText($szReturn);
 }
 
 function ReplaceLineBreaksInString($myStr)
@@ -1276,10 +1282,8 @@ function EscapeQuotesFromString($myStr)
 
 function GetStringWithHTMLCodes($myStr)
 {
-	global $content; 
-
 	// Replace all special characters with valid html representations
-	return htmlentities($myStr, ENT_NOQUOTES, $content['HeaderDefaultEncoding']); //"UTF-8");
+	return HtmlEscapeText($myStr);
 }
 
 function InitTemplateParser()
@@ -1292,7 +1296,12 @@ function InitTemplateParser()
 	$page -> set_path ( $gl_root_path . "templates/" );
 	
 	// Append correct Character encoding to HTML Header
-	$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=' . $content['HeaderDefaultEncoding'] . '" />';
+	$content['HeaderDefaultEncoding'] = HtmlOutputCharset($content['HeaderDefaultEncoding']);
+	$content['EXTRA_METATAGS'] .= '<meta http-equiv="Content-Type" content="text/html; charset=' . HtmlEscapeAttribute($content['HeaderDefaultEncoding']) . '" />';
+	$content['ERROR_MSG_HTML'] = HtmlEscapeText(isset($content['ERROR_MSG']) ? $content['ERROR_MSG'] : '');
+	$content['DETAILEDERROR_HTML'] = HtmlEscapeText(isset($content['detailederror']) ? $content['detailederror'] : '');
+	if ( isset($content['MSG_WARNING_DETAILS']) )
+		$content['MSG_WARNING_DETAILS_HTML'] = HtmlEscapeText($content['MSG_WARNING_DETAILS']);
 }
 
 function VerifyLanguage( $mylang ) 
@@ -1344,24 +1353,16 @@ function IncludeLanguageFile( $langfile, $failOnError = true )
 	}
 }
 
-function SecureRedirect( $szRedir ) 
-{
-	// Remove any domains from URI	
-	$szRedir = parse_url($szRedir, PHP_URL_PATH);
-	if (strlen($szRedir) == 0)
-		$szRedir = "index.php";
-	return $szRedir; 
-}
-
 function RedirectPage( $newpage )
 {
-	header("Location: $newpage");
+	header("Location: " . SecureRedirect($newpage));
 	exit;
 }
 
 function RedirectResult( $szMsg, $newpage )
 {
 	global $content;
+	$newpage = SecureRedirect($newpage);
 
 	if ( defined('PHPLOGCON_INERROR') )
 		DieWithErrorMsg( GetAndReplaceLangStr($content["LN_ERROR_REDIRECTABORTED"], $newpage) );
@@ -1841,18 +1842,25 @@ function PrintSecureUserCheck( $warningtext, $yesmsg, $nomsg )
 	global $content, $page;
 
 	// Copy properties
-	$content['warningtext'] = $warningtext;
-	$content['yesmsg'] = $yesmsg;
-	$content['nomsg'] = $nomsg;
+	$content['warningtext'] = HtmlEscapeText($warningtext);
+	$content['yesmsg'] = HtmlEscapeAttribute($yesmsg);
+	$content['nomsg'] = HtmlEscapeText($nomsg);
 
 	// Handle GET and POST input!
-	$content['form_url'] = $_SERVER['SCRIPT_NAME'] . "?";
+	$formQuery = array();
 	foreach ($_GET as $varname => $varvalue)
-		$content['form_url'] .= $varname . "=" . $varvalue . "&";
-	$content['form_url'] .= "verify=yes"; // Append verify!
+	{
+		if ( is_scalar($varvalue) )
+			$formQuery[(string)$varname] = (string)$varvalue;
+	}
+	$formQuery['verify'] = 'yes';
+	$content['form_url'] = HtmlEscapeAttribute($_SERVER['SCRIPT_NAME'] . '?' . http_build_query($formQuery));
 
 	foreach ($_POST as $varname => $varvalue)
-		$content['POST_VARIABLES'][] = array( "varname" => $varname, "varvalue" => $varvalue );
+	{
+		if ( is_scalar($varvalue) )
+			$content['POST_VARIABLES'][] = array( "varname" => HtmlEscapeAttribute($varname), "varvalue" => HtmlEscapeAttribute($varvalue) );
+	}
 
 	// --- BEGIN CREATE TITLE
 	$content['TITLE'] = InitPageTitle();

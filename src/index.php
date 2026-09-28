@@ -122,7 +122,7 @@ $content['main_pager_last_found'] = false;
 // Init Sorting variables
 $content['sorting'] = "";
 $content['searchstr'] = "";
-$content['searchstr_htmlform'] = GetConfigSetting("EventEmptySearchDefaultFilter", "", CFGLEVEL_USER);
+$content['searchstr_htmlform'] = HtmlEscapeAttribute(GetConfigSetting("EventEmptySearchDefaultFilter", "", CFGLEVEL_USER));
 $content['highlightstr'] = "";
 $content['highlightstr_htmlform'] = "";
 $content['EXPAND_HIGHLIGHT'] = "false";

@@ -6,7 +6,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p>{ERROR_MSG_HTML}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -121,7 +121,13 @@
 			</tr>
                         <tr>
                                 <td align="left" class="cellmenu2" nowrap><b>{LN_CHART_ORDERBY}</b></td>
-                                <td align="left" class="line1"><input type="text" name="chart_orderby" size="55" maxlength="255" value='{chart_orderby}' class="maxwidth"></td>
+                                <td align="left" class="line1">
+                                        <select name="chart_orderby" size="1" class="maxwidth">
+                                                <!-- BEGIN CHARTORDERBY -->
+                                                <option value="{value}" {selected}>{DisplayName}</option>
+                                                <!-- END CHARTORDERBY -->
+                                        </select>
+                                </td>
                         </tr>
 
 			<tr>

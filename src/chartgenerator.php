@@ -100,8 +100,10 @@ else
 
 if ( isset($_GET['orderby']) )
 {
-        $content['chart_orderby'] = $_GET['orderby'];
-}else { $content['chart_orderby'] = NULL; }
+	$content['chart_orderby'] = NormalizeChartOrderKey($_GET['orderby']);
+}
+else
+	$content['chart_orderby'] = 'count_desc';
 
 if ( isset($_GET['maxrecords']) ) 
 {
@@ -554,6 +556,7 @@ function OutpuCustomErrorMessage() {
 
 	// Create template Parser and output results
 	$content['TITLE'] .= " :: " . $content['LN_GEN_ERRORDETAILS'];
+	$content['error_details_html'] = HtmlEscapeErrorDetails(isset($content['error_details']) ? $content['error_details'] : '');
 	InitTemplateParser();
 	$page -> parser($content, "chartgenerator.html");
 	$page -> output(); 

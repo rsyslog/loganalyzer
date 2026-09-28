@@ -43,6 +43,8 @@ services:
       LOGANALYZER_SAMPLE_EVENTREPORTER: /samplelogs/EventReporter.log
       LOGANALYZER_SEED_SAMPLE_SOURCES: "1"
       LOGANALYZER_OVERWRITE_CONFIG: "1"
+      LOGANALYZER_E2E_SECURITY: "1"
+      LOGANALYZER_DISK_ALLOWED_EXTRA: /tmp/loganalyzer-e2e-allowed
     depends_on:
       db:
         condition: service_healthy

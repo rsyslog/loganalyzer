@@ -189,6 +189,12 @@ function CheckUserLogin( $username, $password )
 	// The admin field must be set!
 	if ( isset($myrow['is_admin']) )
 	{
+		// Do not turn an anonymous or lower-privilege session ID into an
+		// authenticated one. A failed rotation must fail the login closed.
+		if ( session_status() !== PHP_SESSION_ACTIVE || !session_regenerate_id(true) )
+			return false;
+		unset($_SESSION['SESSION_GROUPIDS']);
+		$content['SESSION_GROUPIDS'] = '';
 		$_SESSION['SESSION_LOGGEDIN'] = true;
 		$_SESSION['SESSION_USERNAME'] = $username;
 		$_SESSION['SESSION_USERID'] = $myrow['ID'];
@@ -216,7 +222,7 @@ function CheckUserLogin( $username, $password )
 		{
 			for($i = 0; $i < count($myrows); $i++)
 			{
-				if ( isset($content['SESSION_GROUPIDS']) ) 
+				if ( $content['SESSION_GROUPIDS'] !== '' )
 					$content['SESSION_GROUPIDS'] .= ", " . $myrows[$i]['groupid'];
 				else
 					$content['SESSION_GROUPIDS'] = $myrows[$i]['groupid'];
@@ -224,7 +230,10 @@ function CheckUserLogin( $username, $password )
 		}
 
 		// Copy into session as well
-		$_SESSION['SESSION_GROUPIDS'] = $content['SESSION_GROUPIDS'];
+		if ( $content['SESSION_GROUPIDS'] !== '' )
+			$_SESSION['SESSION_GROUPIDS'] = $content['SESSION_GROUPIDS'];
+		else
+			unset($content['SESSION_GROUPIDS']);
 		// ---
 
 		// ---Set LASTLOGIN Time!
@@ -462,6 +471,14 @@ function DoLogOff()
 	unset( $_SESSION['SESSION_USERNAME'] );
 	unset( $_SESSION['SESSION_USERID'] );
 	unset( $_SESSION['SESSION_ACCESSLEVEL'] );
+	unset( $_SESSION['SESSION_ISADMIN'] );
+	unset( $_SESSION['SESSION_ISREADONLY'] );
+	unset( $_SESSION['SESSION_GROUPIDS'] );
+	unset( $content['SESSION_USERNAME'], $content['SESSION_USERID'], $content['SESSION_ACCESSLEVEL'] );
+	unset( $content['SESSION_ISADMIN'], $content['SESSION_ISREADONLY'], $content['SESSION_GROUPIDS'] );
+	$content['SESSION_LOGGEDIN'] = false;
+	if ( session_status() === PHP_SESSION_ACTIVE )
+		session_regenerate_id(true);
 
 	// Redir to Index Page
 	RedirectPage( "index.php");

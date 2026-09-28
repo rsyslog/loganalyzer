@@ -26,6 +26,7 @@ $dbPass = getenv('LOGANALYZER_DB_PASSWORD') ?: 'loganalyzer';
 $pref = getenv('LOGANALYZER_TABLE_PREFIX') ?: 'logcon_';
 
 $loginReq = getenv('LOGANALYZER_LOGIN_REQUIRED') !== '0' ? 'true' : 'false';
+$reportOutputDir = getenv('LOGANALYZER_REPORT_OUTPUT_DIR') ?: '';
 
 require_once __DIR__ . '/env-disk-sources.php';
 
@@ -43,6 +44,7 @@ $replacements = [
     '$CFG[\'UserDBUser\'] = "";' => '$CFG[\'UserDBUser\'] = ' . var_export($dbUser, true) . ';',
     '$CFG[\'UserDBPass\'] = "";' => '$CFG[\'UserDBPass\'] = ' . var_export($dbPass, true) . ';',
     '$CFG[\'UserDBLoginRequired\'] = false;' => '$CFG[\'UserDBLoginRequired\'] = ' . $loginReq . ';',
+    '$CFG[\'ReportOutputDirectory\'] = "";' => '$CFG[\'ReportOutputDirectory\'] = ' . var_export($reportOutputDir, true) . ';',
 ];
 foreach ($replacements as $from => $to) {
     if (strpos($body, $from) === false) {

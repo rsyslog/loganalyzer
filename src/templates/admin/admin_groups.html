@@ -5,7 +5,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p>{ERROR_MSG_HTML}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -53,7 +53,7 @@
 			<td align="left" colspan="2" class="line0">
 		<!-- BEGIN USERS -->
 			<img src="{MENU_ADMINUSERS}" width="16">
-			<a href="{BASEPATH}admin/users.php?op=edit&id={userid}">{username}</a><b>{seperator}</b>
+			<a href="{BASEPATH}admin/users.php?op=edit&id={userid}">{username_html}</a><b>{seperator}</b>
 		<!-- END USERS -->
 			</td>
 		</tr>
@@ -105,7 +105,7 @@
 				<td align="left" class="line0" width="70%">
 					<select name="userid" size="1" class="maxwidth">
 						<!-- BEGIN SUBUSERS -->
-						<option value="{userid}">{username}</option>
+						<option value="{userid}">{username_html}</option>
 						<!-- END SUBUSERS -->
 					</select>
 				</td>
@@ -135,7 +135,7 @@
 				<td align="left" class="line0" width="70%">
 					<select name="userid" size="1" class="maxwidth">
 						<!-- BEGIN SUBRMUSERS -->
-						<option value="{userid}">{username}</option>
+						<option value="{userid}">{username_html}</option>
 						<!-- END SUBRMUSERS -->
 					</select>
 				</td>

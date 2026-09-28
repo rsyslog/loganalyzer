@@ -41,6 +41,8 @@ Do not bake secrets into the image. Recommended flow:
 
 **Persisted state:** database volume **`loganalyzer_mysql_data`**; config volume **`loganalyzer_config`** ( **`/persist/config.php`**, symlinked into the docroot). **`docker compose … down`** stops containers without dropping volumes; **`down -v`** is a full data reset.
 
+**Saved report files:** file output is opt-in. Mount a dedicated writable directory outside `/var/www/html` and set `LOGANALYZER_REPORT_OUTPUT_DIR` when generating `config.php`, or set `ReportOutputDirectory` in an existing persisted config. Saved report targets must be simple `.html` or `.pdf` filenames, not absolute paths. Review old report jobs before running them: unrestricted paths are rejected, not migrated. Keep the output directory private and non-executable by the web server.
+
 ### Docker helper scripts (install-focused)
 
 Small helpers beside the Compose files — run from **repository root**.

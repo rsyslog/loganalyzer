@@ -5,7 +5,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p>{ERROR_MSG}</p>
+		<p>{ERROR_MSG_HTML}</p>
 		</div>
 	<br><br>
 	<a href="javascript:history.back();" target="_top">{LN_GEN_ERRORRETURNPREV}</a>
@@ -33,7 +33,7 @@
 		<!-- BEGIN USERS -->
 		<tr>
 			<td align="center" class="{cssclass}"><b>{ID}</b></td>
-			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?op=edit&id={ID}">{username}</a></td>
+			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?op=edit&id={ID}">{username_html}</a></td>
 			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?miniop=setisadmin&id={ID}&newval={set_isadmin}" id="userisadminbutton{ID}"><img src="{is_isadmin_string}" width="16" title="{LN_USER_SETISADMIN}"></a></td>
 			<td align="center" class="{cssclass}"><a href="{BASEPATH}admin/users.php?miniop=setisreadonly&id={ID}&newval={set_isreadonly}" id="userisreadonlybutton{ID}"><img src="{is_readonly_string}" width="16" title="{LN_USER_SETISREADONLY}"></a></td>
 			<td align="center" class="{cssclass}">
@@ -58,7 +58,7 @@
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" width="30%" nowrap><b>{LN_USER_NAME}</b></td>
-				<td align="left" class="line0" width="70%"><input type="text" name="username" size="40" maxlength="64" value="{USERNAME}" class="maxwidth"></td>
+				<td align="left" class="line0" width="70%"><input type="text" name="username" size="40" maxlength="64" value="{USERNAME_HTML}" class="maxwidth"></td>
 			</tr>
 			<tr>
 				<td align="left" class="cellmenu2" nowrap><b>{LN_USER_PASSWORD1}</b></td>

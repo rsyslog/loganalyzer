@@ -5,7 +5,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_GEN_ERRORDETAILS}</div>
-		<p align="left">{ERROR_MSG}</p>
+		<p align="left">{ERROR_MSG_HTML}</p>
 		<p>
 			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank" rel="noopener noreferrer">
 			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">
@@ -79,7 +79,7 @@
 			<tr>
 				<td align="left" class="{srcssclass}" colspan="2">
 				<img src="{MENU_REPORTS}" width="16">
-				<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle}</a>
+				<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ID}&savedreportid={SavedReportID}">{customTitle_text}</a>
 				</td>
 				<td align="center" class="{srcssclass}">
 					&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ID}&savedreportid={SavedReportID}" target="_blank" rel="noopener noreferrer"><img src="{MENU_PLAY_GREEN}" width="16" title="{LN_REPORTS_RUNNOW}"></a>
@@ -197,7 +197,7 @@
 		<tr>
 			<td align="left" class="{srcssclass}">
 			<img src="{MENU_REPORTS}" width="16">
-			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle}</a>
+			<a href="{BASEPATH}admin/reports.php?op=editsavedreport&id={ReportID}&savedreportid={SavedReportID}">{customTitle_text}</a>
 			</td>
 			<td align="center" class="{srcssclass}">
 				&nbsp;<a href="{BASEPATH}reportgenerator.php?op=runreport&id={ReportID}&savedreportid={SavedReportID}" target="_blank" rel="noopener noreferrer"><img src="{MENU_CHART_PREVIEW}" width="16" title="{LN_REPORTS_RUNNOW}"></a>

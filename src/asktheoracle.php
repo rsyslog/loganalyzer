@@ -124,6 +124,7 @@ $i = 0;
 foreach( $content['Sources'] as $mySource )
 {
 	$myHelpLink['SourceName'] = $mySource['Name'];
+	$myHelpLink['SourceNameHtml'] = HtmlEscapeText($mySource['Name']);
 	$myHelpLink['MsgUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode($content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];
 //	$myHelpLink['MsgDisplayName'] = GetAndReplaceLangStr( $content['LN_ORACLE_SEARCHINFIELD'], "Message" );
 	$myHelpLink['SourceUrl'] = $content['BASEPATH'] . "index.php?filter=" . urlencode("source:=" . $content['oracle_query']) . "&search=Search&sourceid=" . $mySource['ID'];

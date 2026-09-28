@@ -28,11 +28,11 @@
 <!-- IF enabledoraclesearchstr="true" -->
 		<button id="buttonmoreinfo"><img src="{IMG_SPACER}" class="ui-icon ui-icon-star" title="{LN_GEN_MOREINFORMATION}">&nbsp;{LN_GEN_MOREINFORMATION}</button><script>CreateLinkFunction( "#buttonmoreinfo", "{oraclesearchlink}");</script>
 <!-- ENDIF enabledoraclesearchstr="true" -->
-		<button id="buttonlucky"><img src="{IMG_SPACER}" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaption}">&nbsp;{SearchCustomButtonCaption}</button>
+		<button id="buttonlucky"><img src="{IMG_SPACER}" class="ui-icon ui-icon-star" title="{SearchCustomButtonCaptionHtml}">&nbsp;{SearchCustomButtonCaptionHtml}</button>
 		<button id="buttonreset"><img src="{IMG_SPACER}" class="ui-icon ui-icon-power" title="{LN_SEARCH_RESET}">&nbsp;{LN_SEARCH_RESET}</button>
 		<button id="buttonhighlight"><span class="ui-button-text">{LN_HIGHLIGHT}</span></button>
 		<script> 
-			CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearch}{additional_url_sourceonly}"); 
+			CreateLinkFunction( "#buttonlucky", "?search={LN_SEARCH}&filter={SearchCustomButtonSearchUrl}{additional_url_sourceonly}");
 			// Custom Buttons
 			$("#buttonsearch").button()
 			.click(function() {
@@ -396,7 +396,7 @@
 <center>
 	<div class="table_with_border_second ErrorMsg" style="width:80%">
 		<div class="PriorityError">{LN_ERROR_NORECORDS} - {LN_GEN_ERRORDETAILS}</div>
-		<p align="left">{detailederror}</p>
+		<p align="left">{DETAILEDERROR_HTML}</p>
 		<p>
 			<a href="http://kb.monitorware.com/kbeventdb-list-12-Adiscon-phpLogCon-{detailederror_code}.html" target="_blank">
 			<img src="{MENU_HELP_ORANGE}" width="16" height="16" title="{LN_GEN_MOREINFORMATION}">

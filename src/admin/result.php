@@ -60,31 +60,25 @@ $content['REDIRSECONDS'] =  GetConfigSetting("AdminChangeWaitTime", 2, CFGLEVEL_
 // ***					*** //
 
 // --- CONTENT Vars
-if ( isset($_GET['redir']) )
-{
-	// Only automatically redirect if above 0
-	if ( $content['REDIRSECONDS'] > 0 ) 
-		$content['EXTRA_METATAGS'] = '<meta HTTP-EQUIV="REFRESH" CONTENT="' . $content['REDIRSECONDS'] . '; URL=' . urldecode($_GET['redir']) . '">';
+$safeRedirect = SecureRedirect(isset($_GET['redir']) ? $_GET['redir'] : 'index.php');
+$content['SZREDIR'] = HtmlEscapeText($safeRedirect);
 
-	// Set redir string
-	$content['SZREDIR'] = urldecode($_GET['redir']);
-}
-else
-{
-	$_GET['redir'] = "index.php";
-}
+// Only automatically redirect if above 0. The redirect is constrained to a
+// relative internal path before it is emitted into the meta tag or link.
+if ( $content['REDIRSECONDS'] > 0 )
+	$content['EXTRA_METATAGS'] = '<meta HTTP-EQUIV="REFRESH" CONTENT="' . intval($content['REDIRSECONDS']) . '; URL=' . HtmlEscapeAttribute($safeRedirect) . '">';
 
 if ( isset($_GET['msg']) )
-	$content['SZMSG'] = DB_StripSlahes($_GET['msg']);
+	$content['SZMSG'] = HtmlEscapeText(DB_StripSlahes(is_scalar($_GET['msg']) ? $_GET['msg'] : ''));
 else
-	$content['SZMSG'] = $content["LN_ADMIN_UNKNOWNSTATE"]; 
+	$content['SZMSG'] = HtmlEscapeText($content["LN_ADMIN_UNKNOWNSTATE"]);
 
 if ( $content['REDIRSECONDS'] > 0 ) {
-	$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "' in " . $content['REDIRSECONDS'] . " seconds";	// Title of the Page 
-	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTREDIRECT'], $content['SZREDIR'], $content['REDIRSECONDS']); 
+	$content['TITLE'] = HtmlEscapeText("LogAnalyzer - Redirecting to '" . $safeRedirect . "' in " . intval($content['REDIRSECONDS']) . " seconds");	// Title of the Page
+	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTREDIRECT'], HtmlEscapeAttribute($safeRedirect), intval($content['REDIRSECONDS']));
 } else {
-	$content['TITLE'] = "LogAnalyzer - Redirecting to '" . $content['SZREDIR'] . "'";	// Title of the Page 
-	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTCLICK'], $content['SZREDIR']); 
+	$content['TITLE'] = HtmlEscapeText("LogAnalyzer - Redirecting to '" . $safeRedirect . "'");	// Title of the Page
+	$content['LN_ADMIN_RESULTLINK'] = GetAndReplaceLangStr($content['LN_ADMIN_RESULTCLICK'], HtmlEscapeAttribute($safeRedirect));
 }
 // --- 
 

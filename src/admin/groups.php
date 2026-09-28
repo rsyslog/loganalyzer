@@ -475,6 +475,8 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 						" ORDER BY " . DB_USERS . ".username";
 			$result = DB_Query($sqlquery);
 			$content['GROUPS'][$i]['USERS'] = DB_GetAllRows($result, true);
+			foreach ($content['GROUPS'][$i]['USERS'] as &$groupUser)
+				$groupUser['username_html'] = HtmlEscapeText($groupUser['username']);
 
 			if ( isset($content['GROUPS'][$i]['USERS']) && count($content['GROUPS'][$i]['USERS']) > 0 )
 			{
@@ -493,6 +495,13 @@ if ( !isset($_POST['op']) && !isset($_GET['op']) )
 	}
 	else
 		$content['EMPTYGROUPS'] = "true";
+}
+
+foreach (array('SUBUSERS', 'SUBRMUSERS') as $subUserList)
+{
+	if ( isset($content[$subUserList]) && is_array($content[$subUserList]) )
+		foreach ($content[$subUserList] as &$subUser)
+			$subUser['username_html'] = HtmlEscapeText($subUser['username']);
 }
 
 // Helper function to delete SQL Data

@@ -1247,7 +1247,7 @@ class LogStreamMongoDB extends LogStream {
 	*
 	* @return integer Error stat
 	*/
-	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit)
+	public function GetCountSortedByField($szFieldId, $nFieldType, $nRecordLimit, $orderBy = 'count_desc')
 	{
 		global $content, $dbmapping, $fields;
 
@@ -1341,7 +1341,22 @@ class LogStreamMongoDB extends LogStream {
 			if ( count($aResult) > 0 )
 			{
 				// Sort Array
-				arsort($aResult,SORT_NUMERIC);
+				switch ( NormalizeChartOrderKey($orderBy) )
+				{
+					case 'count_asc':
+						asort($aResult, SORT_NUMERIC);
+						break;
+					case 'field_asc':
+						uksort($aResult, 'strnatcasecmp');
+						break;
+					case 'field_desc':
+						uksort($aResult, function($left, $right) { return strnatcasecmp($right, $left); });
+						break;
+					case 'count_desc':
+					default:
+						arsort($aResult, SORT_NUMERIC);
+						break;
+				}
 				// Check if we have to truncate the array
 				if ($nRecordLimit != 0 && count($aResult) > $nRecordLimit)
 				{	

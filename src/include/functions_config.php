@@ -96,6 +96,14 @@ function InitSource(&$mysource)
 			$content['Sources'][$iSourceID]['Description'] = "";
 		}
 
+		// Source names and descriptions may be created by a non-admin user and
+		// are rendered in the global source selector. Keep the stored values raw
+		// for application logic, but provide escaped display variants.
+		$mysource['NameHtml'] = HtmlEscapeText(isset($mysource['Name']) ? $mysource['Name'] : '');
+		$mysource['DescriptionHtml'] = HtmlEscapeText($mysource['Description']);
+		$content['Sources'][$iSourceID]['NameHtml'] = $mysource['NameHtml'];
+		$content['Sources'][$iSourceID]['DescriptionHtml'] = $mysource['DescriptionHtml'];
+
 		if ( !isset($mysource['defaultfilter']) )
 		{
 			$CFG['Sources'][$iSourceID]['defaultfilter'] = "";
@@ -581,7 +589,7 @@ function InitSourceConfigs()
 			&& strlen((string) $content['Sources'][$currentSourceID]['Description']) > 0
 		) {
 			$content['SourceDescriptionEnabled'] = true;
-			$content['SourceDescription'] = $content['Sources'][$currentSourceID]['Description'];
+			$content['SourceDescription'] = $content['Sources'][$currentSourceID]['DescriptionHtml'];
 		}
 
 		$currentViewID = $content['Sources'][$currentSourceID]['ViewID'];
@@ -759,6 +767,27 @@ function InitDiskAllowedSources()
 /*
 *	Helper function to load configured dbmappings from the database
 */
+function DB_ParseStoredMappingString($mappingString, $availableFields)
+{
+	$parsedMappings = array();
+	if ( !is_array($availableFields) )
+		return $parsedMappings;
+
+	foreach (explode(",", (string)$mappingString) as $mappingEntry)
+	{
+		$tmpMapping = explode("=>", $mappingEntry, 2);
+		if ( count($tmpMapping) != 2 )
+			continue;
+
+		$fieldId = trim($tmpMapping[0]);
+		$dbFieldName = trim($tmpMapping[1]);
+		if ( isset($availableFields[$fieldId]) && DB_IsSafeIdentifier($dbFieldName) )
+			$parsedMappings[$fieldId] = $dbFieldName;
+	}
+
+	return $parsedMappings;
+}
+
 function LoadDBMappingsFromDatabase()
 {
 	// Needed to make global
@@ -793,23 +822,10 @@ function LoadDBMappingsFromDatabase()
 		// Unpack the Columns and append to Views Array
 		foreach ($myrows as &$myMappings)
 		{
-			// Split into array
-			$tmpMappings = explode( ",", $myMappings['Mappings'] );
-			
-			//Loop through mappings
-			foreach ($tmpMappings as &$myMapping )
-			{
-				// Split subvalues
-				$tmpMapping = explode( "=>", $myMapping );
-
-				// check if field is valid
-				$fieldId = trim($tmpMapping[0]);
-				if ( isset($fields[$fieldId]) ) 
-				{
-					// Assign mappings
-					$myMappings['DBMAPPINGS'][$fieldId] = trim($tmpMapping[1]);
-				}
-			}
+			// Older installations may contain mappings written before identifier
+			// validation was added. Revalidate persisted DB identifiers before any
+			// log-stream code can interpolate them into SQL.
+			$myMappings['DBMAPPINGS'] = DB_ParseStoredMappingString($myMappings['Mappings'], $fields);
 
 			// Add Mapping to array
 			$dbmapping[ $myMappings['ID'] ] = $myMappings;

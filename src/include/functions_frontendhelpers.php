@@ -69,6 +69,11 @@ function InitFrontEndDefaults()
 	}
 	
 	// --- END Main Info Area
+
+	// These values are stored configuration, but are rendered both as HTML and
+	// as part of a JavaScript URL in the main search page.
+	$content['SearchCustomButtonCaptionHtml'] = HtmlEscapeText(isset($content['SearchCustomButtonCaption']) ? $content['SearchCustomButtonCaption'] : '');
+	$content['SearchCustomButtonSearchUrl'] = rawurlencode(isset($content['SearchCustomButtonSearch']) && is_scalar($content['SearchCustomButtonSearch']) ? (string)$content['SearchCustomButtonSearch'] : '');
 	
 	// Check if install file still exists
 	// NOT NEEDED ANYMORE InstallFileReminder();

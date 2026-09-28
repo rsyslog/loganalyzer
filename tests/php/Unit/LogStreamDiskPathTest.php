@@ -52,6 +52,9 @@ namespace LogAnalyzer\Tests\Unit {
     {
         /** Temporary file created once for the "file exists" test. */
         private static string $tmpFile = '';
+        private static string $symlinkPath = '';
+        private static string $symlinkDir = '';
+        private static string $symlinkTarget = '';
 
         public static function setUpBeforeClass(): void
         {
@@ -61,6 +64,15 @@ namespace LogAnalyzer\Tests\Unit {
 
             // Create a real, readable temporary file.
             self::$tmpFile = (string) tempnam(sys_get_temp_dir(), 'la_test_');
+
+			self::$symlinkDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'la_allowed_' . uniqid('', true);
+			mkdir(self::$symlinkDir);
+			$outsideFile = (string) tempnam(sys_get_temp_dir(), 'la_outside_');
+			self::$symlinkPath = self::$symlinkDir . DIRECTORY_SEPARATOR . 'escape.log';
+			if ( function_exists('symlink') && @symlink($outsideFile, self::$symlinkPath) )
+				self::$symlinkTarget = $outsideFile;
+			else
+				@unlink($outsideFile);
         }
 
         public static function tearDownAfterClass(): void
@@ -68,6 +80,12 @@ namespace LogAnalyzer\Tests\Unit {
             if (self::$tmpFile !== '' && file_exists(self::$tmpFile)) {
                 unlink(self::$tmpFile);
             }
+			if ( self::$symlinkPath !== '' && is_link(self::$symlinkPath) )
+				unlink(self::$symlinkPath);
+			if ( self::$symlinkDir !== '' && is_dir(self::$symlinkDir) )
+				rmdir(self::$symlinkDir);
+			if ( isset(self::$symlinkTarget) && self::$symlinkTarget !== '' && file_exists(self::$symlinkTarget) )
+				unlink(self::$symlinkTarget);
         }
 
         /**
@@ -77,13 +95,21 @@ namespace LogAnalyzer\Tests\Unit {
          */
         private function verify(string $fileName, array $allowedDirs): int
         {
+			return $this->makeStream($fileName, $allowedDirs)->Verify();
+		}
+
+		/**
+		 * @param string[] $allowedDirs
+		 */
+		private function makeStream(string $fileName, array $allowedDirs): \LogStreamDisk
+		{
             global $content;
             $content['DiskAllowed'] = $allowedDirs;
             $content['LN_ERROR_PATH_NOT_ALLOWED_EXTRA'] = '';
 
             $cfg = new \stdClass();
             $cfg->FileName = $fileName;
-            return (new \LogStreamDisk($cfg))->Verify();
+			return new \LogStreamDisk($cfg);
         }
 
         public function testFileInAllowedDirectoryPassesPathCheck(): void
@@ -92,6 +118,12 @@ namespace LogAnalyzer\Tests\Unit {
             // Verify() should return FILE_NOT_FOUND, not PATH_NOT_ALLOWED.
             self::assertSame(ERROR_FILE_NOT_FOUND, $this->verify('/var/log/la_test_nonexistent.log', ['/var/log/']));
         }
+
+		public function testTraversalToExistingFileIsDenied(): void
+		{
+			self::assertSame(ERROR_PATH_NOT_ALLOWED, $this->verify('/var/log/../../etc/passwd', ['/var/log']));
+			self::assertSame(ERROR_PATH_NOT_ALLOWED, $this->verify('/var/log/../www/html/config.php', ['/var/log']));
+		}
 
         public function testFileInSecondOfMultipleAllowedDirectoriesPassesPathCheck(): void
         {
@@ -142,5 +174,32 @@ namespace LogAnalyzer\Tests\Unit {
             $tmpDir = rtrim(sys_get_temp_dir(), '/') . '/';
             self::assertSame(SUCCESS, $this->verify(self::$tmpFile, [$tmpDir]));
         }
+
+		public function testRelativeExistingFileUsesCanonicalAllowedDirectory(): void
+		{
+			$originalDirectory = getcwd();
+			chdir(dirname(self::$tmpFile));
+			try {
+				self::assertSame(SUCCESS, $this->verify(basename(self::$tmpFile), ['.']));
+			} finally {
+				chdir($originalDirectory);
+			}
+		}
+
+		public function testMissingFileUnderAllowedDirectoryRemainsFileNotFound(): void
+		{
+			$tmpDir = rtrim(sys_get_temp_dir(), '/\\');
+			$stream = $this->makeStream($tmpDir . '/la_missing_future.log', [$tmpDir]);
+			self::assertSame(ERROR_FILE_NOT_FOUND, $stream->Verify());
+			self::assertTrue($stream->IsMissingFileAuthorized());
+		}
+
+		public function testSymlinkEscapeIsDenied(): void
+		{
+			if ( !is_link(self::$symlinkPath) )
+				self::markTestSkipped('Symlink creation is unavailable in this environment.');
+
+			self::assertSame(ERROR_PATH_NOT_ALLOWED, $this->verify(self::$symlinkPath, [self::$symlinkDir]));
+		}
     }
 }

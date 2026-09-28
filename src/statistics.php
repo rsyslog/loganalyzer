@@ -111,10 +111,8 @@ if ( isset($content['Charts']) )
 			else 
 				$myChart['chart_defaultfilter_urldecoded'] = "";
 
-			if ( isset($myChart['chart_orderby']) && strlen($myChart['chart_orderby']) > 0 )
-                                $myChart['chart_orderby_urldecoded']      = urlencode($myChart['chart_orderby']);
-                        else
-                                $myChart['chart_orderby_urldecoded'] = "";
+			$myChart['chart_orderby'] = NormalizeChartOrderKey(isset($myChart['chart_orderby']) ? $myChart['chart_orderby'] : '');
+			$myChart['chart_orderby_urldecoded'] = urlencode($myChart['chart_orderby']);
 
 			// ---
 
