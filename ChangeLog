@@ -2,6 +2,7 @@
 Version 5.0.2, 2026-09-28
 --------------------------------------------------------------------------------
 - Security fixes & hardening
+  - **Reporter credit:** Thank you to [@KHr00t](https://github.com/KHr00t) for responsibly reporting the security issues addressed in this release.
   - Prevent SQL injection in chart ordering and database-source mappings by validating supported identifiers and using parameterized database operations, including validation of persisted mappings.
   - Harden reflected and stored HTML output across administration, source, user, error, and confirmation views; constrain redirects to safe internal destinations.
   - Restrict disk-source reads to canonical, readable regular files beneath configured allowed directories, including protection against traversal, symlink escapes, and path-prefix collisions.

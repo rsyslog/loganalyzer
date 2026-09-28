@@ -7,6 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test ChangeLog release-note extraction
+        run: python3 .github/scripts/test_build_release_body.py
+
   php-lint:
     runs-on: ubuntu-latest
     strategy:

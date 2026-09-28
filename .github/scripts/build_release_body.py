@@ -14,7 +14,7 @@ import urllib.request
 
 
 def extract_changelog_block(changelog: str, version: str) -> str:
-    """Return lines from "Version {version}..." until the next long-dash separator."""
+    """Return a version heading and its block, skipping the heading separator."""
     if not version or not re.match(r"^[\d.]+$", version):
         return ""
     lines = changelog.splitlines()
@@ -31,6 +31,8 @@ def extract_changelog_block(changelog: str, version: str) -> str:
     for j in range(start_idx, len(lines)):
         line = lines[j]
         if j > start_idx and sep.match(line):
+            if j == start_idx + 1:
+                continue
             break
         out.append(line)
     return "\n".join(out) + "\n" if out else ""
