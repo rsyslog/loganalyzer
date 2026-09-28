@@ -1,6 +1,12 @@
 --------------------------------------------------------------------------------
-Version 5.0.2, 2026-05-07
+Version 5.0.2, 2026-09-28
 --------------------------------------------------------------------------------
+- Security fixes & hardening
+  - Prevent SQL injection in chart ordering and database-source mappings by validating supported identifiers and using parameterized database operations, including validation of persisted mappings.
+  - Harden reflected and stored HTML output across administration, source, user, error, and confirmation views; constrain redirects to safe internal destinations.
+  - Restrict disk-source reads to canonical, readable regular files beneath configured allowed directories, including protection against traversal, symlink escapes, and path-prefix collisions.
+  - Validate numeric query filters, strengthen session handling, and constrain generated report-file paths and output.
+  - Add PHPUnit and Playwright regression coverage for the security boundaries and affected workflows.
 - UI / themes
   - **Credit:** Modernization and flattened-layout direction inspired by community PR **#73** (*Simplified Layout*, 2021) from **[@Alfa-Soft](https://github.com/Alfa-Soft)** — https://github.com/rsyslog/loganalyzer/pull/73 — reworked for the current tree rather than merged verbatim.
   - Add optional **modern** theme (`themes/modern/`): flat slate styling for `main.css` and `jquery-ui-theme.css`; neutral `about.txt` metadata (directory key **`modern`** only).
