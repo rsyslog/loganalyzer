@@ -1,0 +1,25 @@
+.github/scripts/build_release_body.py
+  s_7034a37c187f79::t_da34f7f2b0d09a 17,34-35
+.github/scripts/test_build_release_body.py
+  s_7034a37c187f79::t_da34f7f2b0d09a 1-40
+ChangeLog
+  s_7034a37c187f79::t_da34f7f2b0d09a 5
+.github/workflows/php-ci.yml
+  s_7034a37c187f79::t_da34f7f2b0d09a 10-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75da3628c24cc964302cfc67f10c5ffa1ace4bf8",
+  "prompts": {},
+  "sessions": {
+    "s_7034a37c187f79": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b8f-e0f7-7b53-9dc1-a2cfbbfc5340",
+        "model": "gpt-6-luna"
+      },
+      "human_author": "Andre Lorbach <alorbach@adiscon.com>"
+    }
+  }
+}
